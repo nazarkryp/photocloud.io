@@ -1,0 +1,13 @@
+<div class="z-depth-1" style="background: white; border: 1px solid #efefef; margin-bottom: 25px;">
+    <div style="display:inline-flex;">
+        <div style="padding: 5px;">
+            <img src="{{post.user.pictureUri}}" alt="user" style="width: 45px; height:45px; object-fit:cover; border-radius: 90px;">
+        </div>
+        <div style="-webkit-box-flex: 1;">
+            <span>{{post.user.username}}</span>
+        </div>
+    </div>
+    <div>
+        <img src="{{post.attachments[0].uri}}" alt="attachment{{post.attachments[0].id}}" style="width: 600px; height:auto;">
+    </div>
+</div>
