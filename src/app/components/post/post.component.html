@@ -1,13 +1,48 @@
-<div class="z-depth-1" style="background: white; border: 1px solid #efefef; margin-bottom: 25px;">
-    <div style="display:inline-flex;">
-        <div style="padding: 5px;">
-            <img src="{{post.user.pictureUri}}" alt="user" style="width: 45px; height:45px; object-fit:cover; border-radius: 90px;">
-        </div>
-        <div style="-webkit-box-flex: 1;">
-            <span>{{post.user.username}}</span>
+<div class="post z-depth-2">
+    <div class="post-header" fxLayout="row">
+        <img class="post-avatar" src="{{post.user.pictureUri}}" alt="profile">
+        <div class="post-author" fxLayout="row" fxLayoutAlign="space-between center" fxFlex>
+            <a class="mat-body-1">{{post.user.username}}</a>
+            <button md-icon-button type="button">
+                <md-icon>expand_more</md-icon>
+            </button>
         </div>
     </div>
-    <div>
-        <img src="{{post.attachments[0].uri}}" alt="attachment{{post.attachments[0].id}}" style="width: 600px; height:auto;">
+    <div class="post-content">
+        <div class="post-content-buttons" fxLayout="row" fxLayoutAlign="space-between center" *ngIf="post.attachments.length > 1">
+            <div>
+                <button md-raised-button md-icon-button *ngIf="post.activeAttachment > 0" (click)="previous()">
+                    <md-icon class="post-icon">chevron_left</md-icon>
+                </button>
+            </div>
+            <div>
+                <button md-raised-button md-icon-button *ngIf="post.activeAttachment != post.attachments.length - 1" (click)="next()">
+                    <md-icon class="post-icon">chevron_right</md-icon>
+                </button>
+            </div>
+        </div>
+        <img class="attachment" src="{{post.attachments[post.activeAttachment].uri}}" alt="post-image">
+    </div>
+    <div class="post-footer">
+        <div fxLayout="row" fxLayoutAlign="space-between center">
+            <span><strong>{{post.likesCount}} likes</strong></span>
+        </div>
+        <div class="post-caption">
+            <a><strong>{{post.user.username}}</strong></a>
+            <span>{{post.caption}}</span>
+        </div>
+        <div>
+            <span class="post-created">{{post.created | timeAgo}}</span>
+        </div>
+    </div>
+    <hr/>
+    <div class="post-actions" fxLayout="row">
+        <button md-icon-button>
+            <md-icon>favorite_border</md-icon>
+        </button>
+        <input class="comment-input" type="text" placeholder="Add comment" />
+        <button md-icon-button mdTooltip="Copy to clipboard">
+            <md-icon>share</md-icon>
+        </button>
     </div>
 </div>
