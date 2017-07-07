@@ -3,9 +3,21 @@
         <img class="post-avatar" src="{{post.user.pictureUri}}" alt="profile">
         <div class="post-author" fxLayout="row" fxLayoutAlign="space-between center" fxFlex>
             <a class="mat-body-1">{{post.user.username}}</a>
-            <button md-icon-button type="button">
+            <div>
+                <button md-icon-button type="button" [mdMenuTriggerFor]="menu">
                 <md-icon>expand_more</md-icon>
             </button>
+                <md-menu #menu="mdMenu" xPosition="before">
+                    <button md-menu-item>
+                    <md-icon>edit</md-icon>
+                    <span>Edit</span>
+                </button>
+                    <button md-menu-item>
+                    <md-icon>delete</md-icon>
+                    <span>Remove</span>
+                </button>
+                </md-menu>
+            </div>
         </div>
     </div>
     <div class="post-content">

@@ -16,6 +16,7 @@ import { PostComponent } from './components/post/post.component';
 import { PostService } from './services/post.service';
 
 import { TimeAgoPipe } from 'time-ago-pipe';
+import { SigninComponent } from './components/signin/signin.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { TimeAgoPipe } from 'time-ago-pipe';
     PostsComponent,
     NavbarComponent,
     PostComponent,
-    TimeAgoPipe
+    TimeAgoPipe,
+    SigninComponent
   ],
   imports: [
     BrowserModule,

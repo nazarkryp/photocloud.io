@@ -1,10 +1,6 @@
 import { Attachment } from './attachment';
 
 export class Post {
-    constructor() {
-        this.activeAttachment = 0;
-    }
-
     id: number;
     caption: string;
     userHasLiked: boolean;
@@ -14,4 +10,8 @@ export class Post {
     created: Date;
     attachments: Attachment[];
     activeAttachment: number;
+
+    constructor() {
+        this.activeAttachment = 0;
+    }
 }
