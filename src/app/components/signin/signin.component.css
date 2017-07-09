@@ -1,0 +1,37 @@
+md-progress-bar {
+    margin: 0 -25px 0 -25px;
+    width: calc(100% + 50px);
+    height: 3px;
+}
+
+.content {
+    height: calc(100vh - 85px);
+}
+
+.form {
+    background-color: white;
+    width: 35%;
+    padding: 0 25px 25px 25px;
+}
+
+.md-padding {
+    padding: 16px 0 16px 0;
+}
+
+.md-padding .bottom {
+    padding: 0 0 16px 0;
+}
+
+.error {
+    text-align: center;
+    color: red;
+}
+
+.mat-headline {
+    margin-bottom: 5px;
+}
+
+.md-description {
+    color: gray;
+    font-weight: lighter;
+}

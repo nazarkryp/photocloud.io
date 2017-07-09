@@ -1,3 +1,23 @@
-<p>
-  signin works!
-</p>
+<div class="content" fxLayout="row" fxLayoutAlign="center center">
+    <form class="form z-depth-1" fxLayout="column" (ngSubmit)="signIn()">
+        <md-progress-bar class="example-margin" color="primary" mode="indeterminate" *ngIf="isLoading"></md-progress-bar>
+        <div class="md-padding" fxLayout="column">
+            <span class="mat-headline">Sign In</span>
+            <span class="mat-subhead md-description">to continue to PhotoCloud</span>
+        </div>
+        <div fxLayout="column">
+            <md-input-container fxFlex>
+                <input mdInput placeholder="Username" type="text" [(ngModel)]="account.username" name="username">
+            </md-input-container>
+            <md-input-container fxFlex>
+                <input mdInput placeholder="Password" type="password" [(ngModel)]="account.password" name="password">
+            </md-input-container>
+        </div>
+        <div class="md-padding" fxLayout="row" fxLayoutAlign="center center" *ngIf="errorMessage">
+            <span class="mat-subhead error">{{errorMessage}}</span>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="end center">
+            <button md-raised-button color="primary" type="sumbit">Sign In</button>
+        </div>
+    </form>
+</div>

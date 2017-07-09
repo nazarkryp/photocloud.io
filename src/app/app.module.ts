@@ -14,6 +14,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { PostComponent } from './components/post/post.component';
 
 import { PostService } from './services/post.service';
+import { AccountService } from './services/account.service';
 
 import { TimeAgoPipe } from 'time-ago-pipe';
 import { SigninComponent } from './components/signin/signin.component';
@@ -32,9 +33,10 @@ import { SigninComponent } from './components/signin/signin.component';
     AppRoutingModule,
     AppMaterialModule,
     FlexLayoutModule,
-    HttpModule
+    HttpModule,
+    FormsModule
   ],
-  providers: [PostService],
+  providers: [PostService, AccountService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
