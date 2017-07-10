@@ -5,6 +5,7 @@ body {
     background-color: #FAFAFA;
     color: #444444;
     font-family: Roboto, Helvetica Neue, sans-serif;
+    overflow-y: scroll;
 }
 
 .container {
