@@ -2,8 +2,13 @@
     <div class="toolbar-tools" fxLayout="row" fxLayoutAlign="center center">
         <div class="container" fxLayout="row" fxLayoutAlign="space-between center">
             <h1 class="logo" routerLink="/">photocloud</h1>
-            <img class="avatar" routerLink="/signin" src="https://res.cloudinary.com/dpfmyl1mn/image/upload/v1497310108/photocloud/prod/nazarkryp/qbcxbabvehewggo7hlay.jpg"
-                alt="user">
+            <div fxLayout="row">
+                <img class="avatar" routerLink="/signin" src="https://res.cloudinary.com/dpfmyl1mn/image/upload/v1497310108/photocloud/prod/nazarkryp/qbcxbabvehewggo7hlay.jpg"
+                    alt="user">
+                <button md-icon-button (click)="logout()">
+                        <md-icon>exit_to_app</md-icon>
+                </button>
+            </div>
         </div>
     </div>
 </md-toolbar>

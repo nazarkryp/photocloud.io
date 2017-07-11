@@ -3,6 +3,9 @@ import { Router } from '@angular/router';
 
 import { AccountService } from '../../services/account.service';
 import { AccessToken } from '../../common/models/token';
+import { TokenProvider } from '../../infrastructure/communication/token-provider';
+
+import { MessagingService } from '../../services/messaging.service';
 
 @Component({
     selector: 'app-signin',
@@ -11,14 +14,18 @@ import { AccessToken } from '../../common/models/token';
 })
 export class SigninComponent {
     account: any = {
-        username: 'nazarkryp',
-        password: 'Nk@809863'
+        username: '',
+        password: ''
     };
 
     isLoading: Boolean = false;
     errorMessage: string;
 
-    constructor(private accountService: AccountService, private router: Router) {
+    constructor(
+        private accountService: AccountService,
+        private router: Router,
+        private tokenProvider: TokenProvider,
+        private messagingService: MessagingService) {
     }
 
     signIn() {
@@ -34,7 +41,10 @@ export class SigninComponent {
     private onSuccess(response) {
         this.isLoading = false;
 
-        this.router.navigateByUrl('/');
+        this.messagingService.sendMessage(response);
+        // this.tokenProvider.setAccessToken(response);
+
+        // this.router.navigateByUrl('/');
     }
 
     private onError(response) {

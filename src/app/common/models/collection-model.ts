@@ -1,8 +1,7 @@
 import { Pagination } from './pagination';
-import { Post } from './post';
 
-export class CollectionModel {
+export class CollectionModel<T> {
     pagination: Pagination;
-    data: Post[];
+    data: T[];
     hasMoreItems: boolean;
 }

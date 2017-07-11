@@ -1,0 +1,19 @@
+<div fxLayout="column" fxLayoutAlign="center center">
+    <div class="user-posts">
+        <div class="post-item" *ngFor="let post of page.data; trackBy: index;">
+            <div class="image-container" fxLayout="column" fxLayoutAlign="center center">
+                <img class="thumbnail" src="{{post.attachments[0].uri}}" alt="{{post.attachments[0].uri}}">
+                <div class="after md-padding" fxLayout="row" fxLayoutAlign="space-between center">
+                    <div fxLayout="row" fxLayoutAlign="center center">
+                        <md-icon class="post-icon">favorite</md-icon>
+                        <span class="post-number">{{post.likesCount}}</span>
+                    </div>
+                    <div fxLayout="row" fxLayoutAlign="center center">
+                        <md-icon class="post-icon">mode_comment</md-icon>
+                        <span class="post-number">{{post.commentsCount}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

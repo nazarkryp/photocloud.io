@@ -15,9 +15,14 @@ import { PostComponent } from './components/post/post.component';
 
 import { PostService } from './services/post.service';
 import { AccountService } from './services/account.service';
+import { AuthenticationGuard } from './infrastructure/guards/authentication-guard.service';
+import { TokenProvider } from './infrastructure/communication/token-provider';
+import { WebApiClient } from './infrastructure/communication/webapi-client';
+import { MessagingService } from './services/messaging.service';
 
 import { TimeAgoPipe } from 'time-ago-pipe';
 import { SigninComponent } from './components/signin/signin.component';
+import { UserPostsComponent } from './components/user-posts/user-posts.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +31,8 @@ import { SigninComponent } from './components/signin/signin.component';
     NavbarComponent,
     PostComponent,
     TimeAgoPipe,
-    SigninComponent
+    SigninComponent,
+    UserPostsComponent
   ],
   imports: [
     BrowserModule,
@@ -36,7 +42,14 @@ import { SigninComponent } from './components/signin/signin.component';
     HttpModule,
     FormsModule
   ],
-  providers: [PostService, AccountService],
+  providers: [
+    PostService,
+    AccountService,
+    AuthenticationGuard,
+    TokenProvider,
+    WebApiClient,
+    MessagingService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

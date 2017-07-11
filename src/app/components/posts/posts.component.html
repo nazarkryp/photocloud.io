@@ -2,7 +2,7 @@
     <div class="posts-container" *ngIf="page">
         <app-post *ngFor="let post of page.data; trackBy: index;" [post]="post"></app-post>
         <div fxLayout="row" fxLayoutAlign="center center" *ngIf="page.hasMoreItems">
-            <button color="primary" md-raised-button (click)="getPosts()" [disabled]="isLoading">Load More</button>
+            <button md-raised-button (click)="getPosts()" [disabled]="isLoading">Load More</button>
         </div>
     </div>
 </div>

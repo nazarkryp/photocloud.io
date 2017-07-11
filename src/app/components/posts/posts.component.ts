@@ -13,7 +13,7 @@ import { CollectionModel } from '../../common/models/collection-model';
     styleUrls: ['./posts.component.css']
 })
 export class PostsComponent implements OnInit {
-    private page: CollectionModel = new CollectionModel();
+    private page: CollectionModel<Post> = new CollectionModel<Post>();
     private isLoading = false;
 
     constructor(private postService: PostService) {
@@ -25,7 +25,7 @@ export class PostsComponent implements OnInit {
         this.isLoading = true;
 
         this.postService.getPosts(this.page.pagination)
-            .then((response: CollectionModel) => {
+            .then((response: CollectionModel<Post>) => {
                 this.page.hasMoreItems = response.hasMoreItems;
                 this.page.pagination = response.pagination;
                 this.page.data = this.page.data.concat(response.data);
@@ -39,3 +39,4 @@ export class PostsComponent implements OnInit {
         this.getPosts();
     }
 }
+

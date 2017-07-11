@@ -1,5 +1,5 @@
 <div class="content" fxLayout="row" fxLayoutAlign="center center">
-    <form class="form z-depth-1" fxLayout="column" (ngSubmit)="signIn()">
+    <form class="form z-depth-1" fxLayout="column" (ngSubmit)="signIn()" autocomplete="off">
         <md-progress-bar class="example-margin" color="primary" mode="indeterminate" *ngIf="isLoading"></md-progress-bar>
         <div class="md-padding" fxLayout="column">
             <span class="mat-headline">Sign In</span>
@@ -7,10 +7,10 @@
         </div>
         <div fxLayout="column">
             <md-input-container fxFlex>
-                <input mdInput placeholder="Username" type="text" [(ngModel)]="account.username" name="username">
+                <input mdInput placeholder="Username" type="text" [(ngModel)]="account.username" name="username" autocomplete="off">
             </md-input-container>
             <md-input-container fxFlex>
-                <input mdInput placeholder="Password" type="password" [(ngModel)]="account.password" name="password">
+                <input mdInput placeholder="Password" type="password" [(ngModel)]="account.password" name="password" autocomplete="off">
             </md-input-container>
         </div>
         <div class="md-padding" fxLayout="row" fxLayoutAlign="center center" *ngIf="errorMessage">

@@ -2,7 +2,7 @@
     <div class="post-header" fxLayout="row">
         <img class="post-avatar" src="{{post.user.pictureUri}}" alt="profile">
         <div class="post-author" fxLayout="row" fxLayoutAlign="space-between center" fxFlex>
-            <a class="mat-body-1">{{post.user.username}}</a>
+            <a class="mat-body-1" [routerLink]="['/', post.user.username]">{{post.user.username}}</a>
             <div>
                 <button md-icon-button type="button" [mdMenuTriggerFor]="menu">
                 <md-icon>expand_more</md-icon>
@@ -53,7 +53,7 @@
             <md-icon>favorite_border</md-icon>
         </button>
         <input class="comment-input" type="text" placeholder="Add comment" />
-        <button md-icon-button mdTooltip="Copy to clipboard">
+        <button md-icon-button mdTooltip="Copy to clipboard" mdTooltipPosition="left">
             <md-icon>share</md-icon>
         </button>
     </div>
