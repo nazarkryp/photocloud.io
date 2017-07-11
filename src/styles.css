@@ -1,11 +1,19 @@
 @import '~@angular/material/prebuilt-themes/indigo-pink.css';
 @import url('https://fonts.googleapis.com/css?family=Roboto:300,400');
-
 body {
     background-color: #FAFAFA;
     color: #444444;
     font-family: Roboto, Helvetica Neue, sans-serif;
     overflow-y: scroll;
+}
+
+img {
+    pointer-events: none;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
 }
 
 .container {

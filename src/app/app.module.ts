@@ -25,31 +25,40 @@ import { SigninComponent } from './components/signin/signin.component';
 import { UserPostsComponent } from './components/user-posts/user-posts.component';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    PostsComponent,
-    NavbarComponent,
-    PostComponent,
-    TimeAgoPipe,
-    SigninComponent,
-    UserPostsComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    AppMaterialModule,
-    FlexLayoutModule,
-    HttpModule,
-    FormsModule
-  ],
-  providers: [
-    PostService,
-    AccountService,
-    AuthenticationGuard,
-    TokenProvider,
-    WebApiClient,
-    MessagingService
-  ],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        PostsComponent,
+        NavbarComponent,
+        PostComponent,
+        TimeAgoPipe,
+        SigninComponent,
+        UserPostsComponent
+    ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        AppMaterialModule,
+        FlexLayoutModule,
+        HttpModule,
+        FormsModule
+    ],
+    providers: [
+        PostService,
+        AccountService,
+        AuthenticationGuard,
+        TokenProvider,
+        WebApiClient,
+        MessagingService
+    ],
+    bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+    constructor(
+        private messagingService: MessagingService,
+        private tokenProvider: TokenProvider) {
+        const accessToken = this.tokenProvider.getAccessToken();
+        if (accessToken != null) {
+            this.messagingService.sendMessage(accessToken);
+        }
+    }
+}

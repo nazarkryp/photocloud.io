@@ -7,14 +7,14 @@ import { AccessToken } from '../../common/models/token';
 export class TokenProvider {
     getAccessToken(): AccessToken {
         const json = localStorage.getItem('token');
-        
+
         if (!json) {
             return null;
         }
 
-        // const data = JSON.parse(json);
+        const data = JSON.parse(json);
 
-        // return <AccessToken>data;
+        return <AccessToken>data;
     }
 
     setAccessToken(accessToken: AccessToken) {

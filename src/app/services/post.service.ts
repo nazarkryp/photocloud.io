@@ -19,7 +19,7 @@ export class PostService {
         let requestUri = 'https://krypapp.azurewebsites.net/posts';
 
         if (pagination != null && pagination.next != null) {
-            requestUri = requestUri + '&next=' + pagination.next;
+            requestUri = requestUri + '?next=' + pagination.next;
         }
 
         const accessToken = this.tokenProvider.getAccessToken();
@@ -33,7 +33,7 @@ export class PostService {
         let requestUri = 'https://krypapp.azurewebsites.net/posts/' + username;
 
         if (pagination != null && pagination.next != null) {
-            requestUri = requestUri + '&next=' + pagination.next;
+            requestUri = requestUri + '?next=' + pagination.next;
         }
 
         const accessToken = this.tokenProvider.getAccessToken();

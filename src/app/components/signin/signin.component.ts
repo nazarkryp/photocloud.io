@@ -38,18 +38,17 @@ export class SigninComponent {
             (error) => this.onError(error));
     }
 
-    private onSuccess(response) {
+    private onSuccess(accessToken: AccessToken) {
         this.isLoading = false;
 
-        this.messagingService.sendMessage(response);
-        // this.tokenProvider.setAccessToken(response);
+        this.messagingService.sendMessage(accessToken);
+        this.tokenProvider.setAccessToken(accessToken);
 
-        // this.router.navigateByUrl('/');
+        this.router.navigateByUrl('/');
     }
 
     private onError(response) {
         this.errorMessage = response.error;
-        console.log(response._body);
         this.isLoading = false;
     }
 }

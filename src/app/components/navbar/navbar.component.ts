@@ -1,8 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 
 import { TokenProvider } from '../../infrastructure/communication/token-provider';
 import { MessagingService } from '../../services/messaging.service';
+
+import { AccessToken } from '../../common/models/token';
 
 @Component({
     selector: 'app-navbar',
@@ -10,22 +13,29 @@ import { MessagingService } from '../../services/messaging.service';
     styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit, OnDestroy {
-    message: any;
     subscription: Subscription;
+    accessToken: AccessToken;
 
-    constructor(private messageService: MessagingService) {
+    constructor(
+        private messageService: MessagingService,
+        private tokenProvider: TokenProvider,
+        private router: Router) {
         this.subscription = this.messageService
             .getMessage()
-            .subscribe(message => {
-                this.message = message;
-                console.log(this.message);
+            .subscribe(accessToken => {
+                this.accessToken = accessToken;
             });
+    }
+
+    logout() {
+        localStorage.removeItem('token');
+        this.router.navigateByUrl('/signin');
     }
 
     ngOnInit(): void {
     }
 
     ngOnDestroy(): void {
-        this.subscription.unsubscribe();
+        // this.subscription.unsubscribe();
     }
 }
