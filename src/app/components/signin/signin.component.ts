@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 
 import { AccountService } from '../../services/account.service';
 import { AccessToken } from '../../common/models/token';
-import { TokenProvider } from '../../infrastructure/communication/token-provider';
 
 import { MessagingService } from '../../services/messaging.service';
 
@@ -24,31 +23,20 @@ export class SigninComponent {
     constructor(
         private accountService: AccountService,
         private router: Router,
-        private tokenProvider: TokenProvider,
         private messagingService: MessagingService) {
     }
 
-    signIn() {
+    async signIn() {
         this.isLoading = true;
         this.errorMessage = '';
 
-        this.accountService.signIn(this.account)
-            .then(
-            (response) => this.onSuccess(response),
-            (error) => this.onError(error));
-    }
-
-    private onSuccess(accessToken: AccessToken) {
-        this.isLoading = false;
-
-        this.messagingService.sendMessage(accessToken);
-        this.tokenProvider.setAccessToken(accessToken);
-
-        this.router.navigateByUrl('/');
-    }
-
-    private onError(response) {
-        this.errorMessage = response.error;
-        this.isLoading = false;
+        try {
+            const accessToken = await this.accountService.signIn(this.account);
+            this.router.navigateByUrl('/');
+        } catch (error) {
+            this.errorMessage = error.error;
+        } finally {
+            this.isLoading = false;
+        }
     }
 }

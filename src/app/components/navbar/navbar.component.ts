@@ -2,7 +2,6 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 
-import { TokenProvider } from '../../infrastructure/communication/token-provider';
 import { MessagingService } from '../../services/messaging.service';
 
 import { AccessToken } from '../../common/models/token';
@@ -18,7 +17,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
     constructor(
         private messageService: MessagingService,
-        private tokenProvider: TokenProvider,
         private router: Router) {
         this.subscription = this.messageService
             .getMessage()

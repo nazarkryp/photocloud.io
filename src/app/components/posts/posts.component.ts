@@ -21,22 +21,24 @@ export class PostsComponent implements OnInit {
         this.page.hasMoreItems = false;
     }
 
-    getPosts() {
+    async getPosts() {
         this.isLoading = true;
 
-        this.postService.getPosts(this.page.pagination)
-            .then((response: CollectionModel<Post>) => {
-                this.page.hasMoreItems = response.hasMoreItems;
-                this.page.pagination = response.pagination;
-                this.page.data = this.page.data.concat(response.data);
-                this.isLoading = false;
-            }, (error) => {
-                this.isLoading = false;
-            });
+        try {
+            const page = await this.postService.getPosts(this.page.pagination) as CollectionModel<Post>;
+
+            this.page.hasMoreItems = page.hasMoreItems;
+            this.page.pagination = page.pagination;
+            this.page.data = this.page.data.concat(page.data);
+        } catch (error) {
+
+        } finally {
+            this.isLoading = false;
+        }
     }
 
-    ngOnInit() {
-        this.getPosts();
+    async ngOnInit() {
+        await this.getPosts();
     }
 }
 

@@ -4,10 +4,10 @@ export class AccessToken {
     pictureUri: string;
     isPrivate: Boolean;
     isActive: Boolean;
-    refresh_token: string;
-    access_token: string;
-    expires_in: number;
-    issued: string;
-    expires: string;
-    token_type: string;
+    refreshToken: string;
+    accessToken: string;
+    tokenType: string;
+    expiresIn: number;
+    issued: Date;
+    expires: Date;
 }

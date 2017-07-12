@@ -16,8 +16,9 @@ import { PostComponent } from './components/post/post.component';
 import { PostService } from './services/post.service';
 import { AccountService } from './services/account.service';
 import { AuthenticationGuard } from './infrastructure/guards/authentication-guard.service';
-import { TokenProvider } from './infrastructure/communication/token-provider';
-import { WebApiClient } from './infrastructure/communication/webapi-client';
+import { SessionService } from './infrastructure/session/session.service';
+import { TokenService } from './infrastructure/security/token.service';
+import { WebApiClient } from './infrastructure/communication/webapi';
 import { MessagingService } from './services/messaging.service';
 
 import { TimeAgoPipe } from 'time-ago-pipe';
@@ -46,7 +47,8 @@ import { UserPostsComponent } from './components/user-posts/user-posts.component
         PostService,
         AccountService,
         AuthenticationGuard,
-        TokenProvider,
+        SessionService,
+        TokenService,
         WebApiClient,
         MessagingService
     ],
@@ -55,10 +57,6 @@ import { UserPostsComponent } from './components/user-posts/user-posts.component
 export class AppModule {
     constructor(
         private messagingService: MessagingService,
-        private tokenProvider: TokenProvider) {
-        const accessToken = this.tokenProvider.getAccessToken();
-        if (accessToken != null) {
-            this.messagingService.sendMessage(accessToken);
-        }
+        private tokenService: TokenService) {
     }
 }
