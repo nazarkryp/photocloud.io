@@ -21,3 +21,7 @@
 .toolbar-tools {
     flex: 1 1 auto;
 }
+
+.progress-bar {
+    height: 3px;
+}

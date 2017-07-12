@@ -5,13 +5,16 @@ import { environment } from '../../../environments/environment'
 import { SessionService } from '../session/session.service';
 import { AccessToken } from '../../common/models/token';
 
+import { CommunicationService } from '../communication/communication.service';
+
 @Injectable()
 export class TokenService {
     private refreshTimeout = 5;
 
     constructor(
         private sessionService: SessionService,
-        private http: Http) { }
+        private http: Http,
+        private communicationService: CommunicationService) { }
 
     async getAccessToken(): Promise<AccessToken> {
         let accessToken = this.sessionService.getSession();
@@ -19,16 +22,24 @@ export class TokenService {
         if (!accessToken) {
             return null;
         }
+
         const now = new Date();
-        const tokenExpirationTime = new Date(accessToken.expires);
-        const expiresIn = (tokenExpirationTime.getTime() - now.getTime()) / 1000 / 60;
+        const expiresIn = (accessToken.expires.getTime() - now.getTime()) / 1000 / 60;
         const useRefreshToken = accessToken.refreshToken && expiresIn < this.refreshTimeout;
 
         if (useRefreshToken && expiresIn > 0) {
-            console.log('Refreshing token...');
             accessToken = await this.refreshToken(accessToken.refreshToken);
             this.sessionService.setSession(accessToken);
         }
+
+        if (expiresIn <= 0) {
+            this.sessionService.clearSession();
+            this.communicationService.changeState(null);
+
+            return null;
+        }
+
+        this.communicationService.changeState(accessToken);
 
         return accessToken;
     }

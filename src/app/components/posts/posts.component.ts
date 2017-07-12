@@ -31,7 +31,6 @@ export class PostsComponent implements OnInit {
             this.page.pagination = page.pagination;
             this.page.data = this.page.data.concat(page.data);
         } catch (error) {
-
         } finally {
             this.isLoading = false;
         }

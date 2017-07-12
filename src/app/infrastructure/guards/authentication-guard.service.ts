@@ -11,7 +11,6 @@ export class AuthenticationGuard implements CanActivate {
 
     async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
         const accessToken = await this.tokenService.getAccessToken();
-
         if (accessToken != null && state.url === '/signin') {
             this.router.navigateByUrl('/');
             return false;

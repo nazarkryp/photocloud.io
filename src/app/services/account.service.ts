@@ -23,6 +23,10 @@ export class AccountService {
         return accessToken;
     }
 
+    signOut() {
+        this.sessionService.clearSession();
+    }
+
     private mapResponseToAccessToken(response: any): AccessToken {
         const accessToken = new AccessToken();
 

@@ -21,7 +21,12 @@ export class SessionService {
 
         const data = JSON.parse(json);
 
-        return <AccessToken>data;
+        const accessToken = <AccessToken>data;
+
+        accessToken.expires = new Date(accessToken.expires);
+        accessToken.issued = new Date(accessToken.issued);
+
+        return accessToken;
     }
 
     clearSession(): void {

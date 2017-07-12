@@ -19,7 +19,7 @@ import { AuthenticationGuard } from './infrastructure/guards/authentication-guar
 import { SessionService } from './infrastructure/session/session.service';
 import { TokenService } from './infrastructure/security/token.service';
 import { WebApiClient } from './infrastructure/communication/webapi';
-import { MessagingService } from './services/messaging.service';
+import { CommunicationService } from './infrastructure/communication/communication.service';
 
 import { TimeAgoPipe } from 'time-ago-pipe';
 import { SigninComponent } from './components/signin/signin.component';
@@ -50,13 +50,8 @@ import { UserPostsComponent } from './components/user-posts/user-posts.component
         SessionService,
         TokenService,
         WebApiClient,
-        MessagingService
+        CommunicationService
     ],
     bootstrap: [AppComponent]
 })
-export class AppModule {
-    constructor(
-        private messagingService: MessagingService,
-        private tokenService: TokenService) {
-    }
-}
+export class AppModule { }

@@ -1,10 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
+import { Router } from '@angular/router';
 
-import { MessagingService } from '../../services/messaging.service';
-
+import { AccountService } from '../../services/account.service';
 import { AccessToken } from '../../common/models/token';
+import { CommunicationService } from '../../infrastructure/communication/communication.service';
 
 @Component({
     selector: 'app-navbar',
@@ -12,28 +12,29 @@ import { AccessToken } from '../../common/models/token';
     styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit, OnDestroy {
-    subscription: Subscription;
-    accessToken: AccessToken;
+    private subscription: Subscription;
+    private accessToken: AccessToken;
 
     constructor(
-        private messageService: MessagingService,
+        private communicationService: CommunicationService,
+        private accountService: AccountService,
         private router: Router) {
-        this.subscription = this.messageService
-            .getMessage()
+    }
+
+    logout() {
+        this.accountService.signOut();
+        this.router.navigateByUrl('/signin');
+    }
+
+    ngOnInit(): void {
+        this.communicationService
+            .getState()
             .subscribe(accessToken => {
                 this.accessToken = accessToken;
             });
     }
 
-    logout() {
-        localStorage.removeItem('token');
-        this.router.navigateByUrl('/signin');
-    }
-
-    ngOnInit(): void {
-    }
-
     ngOnDestroy(): void {
-        // this.subscription.unsubscribe();
+        this.subscription.unsubscribe();
     }
 }

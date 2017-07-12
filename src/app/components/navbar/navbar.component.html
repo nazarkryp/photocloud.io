@@ -1,9 +1,10 @@
+<!-- <md-progress-bar class="progress-bar" color="warn" [value]="value"></md-progress-bar>  -->
 <md-toolbar class="navbar z-depth-1">
     <div class="toolbar-tools" fxLayout="row" fxLayoutAlign="center center">
         <div class="container" fxLayout="row" fxLayoutAlign="space-between center">
             <h1 class="logo" routerLink="/">photocloud</h1>
             <div fxLayout="row">
-                <img class="avatar" routerLink="['/', accessToken.userName]" src="https://res.cloudinary.com/dpfmyl1mn/image/upload/v1497310108/photocloud/prod/nazarkryp/qbcxbabvehewggo7hlay.jpg"
+                <img class="avatar" [routerLink]="['/', accessToken.username]" src="{{accessToken.pictureUri}}"
                     alt="user" *ngIf="accessToken">
                 <button md-icon-button (click)="logout()">
                     <md-icon>exit_to_app</md-icon>
