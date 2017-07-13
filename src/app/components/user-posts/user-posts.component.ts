@@ -22,10 +22,10 @@ import { CollectionModel } from '../../common/models/collection-model';
 export class UserPostsComponent implements OnInit, OnDestroy {
     private subscription: Subscription;
     private currentUser: CurrentUser;
-    private page: CollectionModel<Post> = new CollectionModel<Post>();
+    private page: CollectionModel<Post>;
     private isLoading = false;
     private isLoadingPosts: Boolean;
-    user: User = new User();
+    private user: User = new User();
 
     constructor(
         private accountService: AccountService,
@@ -33,7 +33,6 @@ export class UserPostsComponent implements OnInit, OnDestroy {
         private userService: UserService,
         private router: Router,
         private route: ActivatedRoute) {
-        this.page.data = new Array<Post>();
     }
 
     async getUser(): Promise<User> {
@@ -76,7 +75,8 @@ export class UserPostsComponent implements OnInit, OnDestroy {
         this.currentUser = this.accountService.getCurrentUser();
 
         this.subscription = this.route.params.subscribe(async params => {
-            this.user.username = this.route.snapshot.params['username'];
+            this.initializePage();
+            this.user.username = params['username'];
             this.isLoading = true;
             const user = await this.getUser();
 
@@ -96,5 +96,12 @@ export class UserPostsComponent implements OnInit, OnDestroy {
 
     ngOnDestroy(): void {
         this.subscription.unsubscribe();
+    }
+
+    private initializePage(): void {
+        this.page = new CollectionModel<Post>();
+        this.page.hasMoreItems = false;
+        this.page.pagination = null;
+        this.page.data = [];
     }
 }
