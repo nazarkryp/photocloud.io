@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 
 import { Subscription } from 'rxjs/Subscription';
 
+import { MdDialog } from '@angular/material';
+
 import { AccountService } from '../../services/account.service';
 import { PostService } from '../../services/post.service';
 import { UserService } from '../../services/user.service';
@@ -13,6 +15,8 @@ import { Post } from '../../common/models/post';
 import { Attachment } from '../../common/models/attachment';
 import { User } from '../../common/models/user';
 import { CollectionModel } from '../../common/models/collection-model';
+
+import { PostDetailsComponent } from '../shared/post-details/post-details.component';
 
 @Component({
     selector: 'app-user-posts',
@@ -32,7 +36,8 @@ export class UserPostsComponent implements OnInit, OnDestroy {
         private postService: PostService,
         private userService: UserService,
         private router: Router,
-        private route: ActivatedRoute) {
+        private route: ActivatedRoute,
+        public dialog: MdDialog) {
     }
 
     async getUser(): Promise<User> {
@@ -69,6 +74,12 @@ export class UserPostsComponent implements OnInit, OnDestroy {
     logout() {
         this.accountService.signOut();
         this.router.navigateByUrl('/signin');
+    }
+
+    openPostDialog(post: Post) {
+        const dialogRef = this.dialog.open(PostDetailsComponent, {
+            data: post
+        });
     }
 
     async ngOnInit() {

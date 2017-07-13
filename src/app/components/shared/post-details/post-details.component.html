@@ -1,0 +1,40 @@
+<div class="post-details" fxLayout="row" fxLayoutAlign="start stretch">
+    <div class="post-content">
+        <div class="post-content-buttons" fxLayout="row" fxLayoutAlign="space-between center" *ngIf="post.attachments.length > 1">
+            <div>
+                <button md-raised-button md-icon-button *ngIf="post.activeAttachment > 0" (click)="previous()">
+                    <md-icon class="post-icon">chevron_left</md-icon>
+                </button>
+            </div>
+            <div>
+                <button md-raised-button md-icon-button *ngIf="post.activeAttachment != post.attachments.length - 1" (click)="next()">
+                    <md-icon class="post-icon">chevron_right</md-icon>
+                </button>
+            </div>
+        </div>
+        <img class="attachment" src="{{post.attachments[post.activeAttachment].uri}}" alt="post-image">
+    </div>
+    <div fxLayout="column">
+        <div class="post-header" fxLayout="row">
+            <img class="post-avatar" [routerLink]="['/', post.user.username]" src="{{post.user.pictureUri}}" alt="profile">
+            <div class="post-author" fxLayout="row" fxLayoutAlign="space-between center" fxFlex>
+                <a class="mat-body-1" [routerLink]="['/', post.user.username]">{{post.user.username}}</a>
+                <div>
+                    <button md-icon-button type="button" [mdMenuTriggerFor]="menu">
+                <md-icon>expand_more</md-icon>
+            </button>
+                    <md-menu #menu="mdMenu" xPosition="before">
+                        <button md-menu-item>
+                    <md-icon>edit</md-icon>
+                    <span>Edit</span>
+                </button>
+                        <button md-menu-item>
+                    <md-icon>delete</md-icon>
+                    <span>Remove</span>
+                </button>
+                    </md-menu>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

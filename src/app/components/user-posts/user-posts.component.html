@@ -35,8 +35,8 @@
     </div>
     <div class="posts-container">
         <div class="user-posts">
-            <div class="post-item" *ngFor="let post of page.data; trackBy: index;">
-                <div class="image-container z-depth-3" fxLayout="column" fxLayoutAlign="center center">
+            <div class="post-item" *ngFor="let post of page.data;">
+                <div class="image-container z-depth-3" fxLayout="column" fxLayoutAlign="center center" (click)="openPostDialog(post)">
                     <img class="thumbnail" src="{{post.attachments[0].uri}}" alt="{{post.attachments[0].uri}}">
                     <div class="after md-padding" fxLayout="row" fxLayoutAlign="space-between center">
                         <div fxLayout="row" fxLayoutAlign="center center">

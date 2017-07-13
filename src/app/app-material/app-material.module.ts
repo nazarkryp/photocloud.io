@@ -11,7 +11,8 @@ import {
     MdTooltipModule,
     MdMenuModule,
     MdInputModule,
-    MdProgressBarModule
+    MdProgressBarModule,
+    MdDialogModule
 } from '@angular/material';
 
 @NgModule({
@@ -25,7 +26,8 @@ import {
         MdTooltipModule,
         MdMenuModule,
         MdInputModule,
-        MdProgressBarModule
+        MdProgressBarModule,
+        MdDialogModule
     ],
     exports: [
         MdToolbarModule,
@@ -36,7 +38,8 @@ import {
         MdTooltipModule,
         MdMenuModule,
         MdInputModule,
-        MdProgressBarModule
+        MdProgressBarModule,
+        MdDialogModule
     ]
 })
 export class AppMaterialModule { }

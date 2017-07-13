@@ -27,6 +27,7 @@ import { TimeAgoPipe } from 'time-ago-pipe';
 import { SigninComponent } from './components/signin/signin.component';
 import { UserPostsComponent } from './components/user-posts/user-posts.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
+import { PostDetailsComponent } from './components/shared/post-details/post-details.component';
 
 @NgModule({
     declarations: [
@@ -37,7 +38,11 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
         TimeAgoPipe,
         SigninComponent,
         UserPostsComponent,
-        NotFoundComponent
+        NotFoundComponent,
+        PostDetailsComponent
+    ],
+    entryComponents: [
+        PostDetailsComponent
     ],
     imports: [
         BrowserModule,

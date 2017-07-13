@@ -29,6 +29,7 @@ export class TokenService {
 
         if (useRefreshToken && expiresIn > 0) {
             accessToken = await this.refreshToken(accessToken.refreshToken);
+            // TODO: ADD MAPPING HERE
             this.sessionService.setSession(accessToken);
         }
 
@@ -54,5 +55,23 @@ export class TokenService {
 
     private handleError(error: any): Promise<any> {
         return Promise.reject(error.message || error);
+    }
+
+    private mapResponseToAccessToken(response: any): AccessToken {
+        const accessToken = new AccessToken();
+
+        accessToken.accessToken = response['access_token'];
+        accessToken.refreshToken = response['refresh_token'];
+        accessToken.tokenType = response['token_type'];
+        accessToken.expiresIn = response['expires_in'];
+        accessToken.issued = new Date(response['.issued']);
+        accessToken.expires = new Date(response['.expires']);
+        accessToken.userId = Number(response['userId']);
+        accessToken.username = response['userName'];
+        accessToken.isPrivate = response['isPrivate'];
+        accessToken.isActive = response['isActive'];
+        accessToken.pictureUri = response['pictureUri'];
+
+        return accessToken;
     }
 }
