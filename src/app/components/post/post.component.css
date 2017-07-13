@@ -42,6 +42,7 @@ hr {
     height: 50px;
     border-radius: 90px;
     object-fit: cover;
+    outline: none;
 }
 
 .post-author {
@@ -51,6 +52,12 @@ hr {
 .attachment {
     width: 100%;
     height: auto;
+    pointer-events: none;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
 }
 
 .comment-input {

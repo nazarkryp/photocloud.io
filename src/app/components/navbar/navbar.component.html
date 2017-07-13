@@ -3,13 +3,8 @@
     <div class="toolbar-tools" fxLayout="row" fxLayoutAlign="center center">
         <div class="container" fxLayout="row" fxLayoutAlign="space-between center">
             <h1 class="logo" routerLink="/">photocloud</h1>
-            <div fxLayout="row">
-                <img class="avatar" [routerLink]="['/', accessToken.username]" src="{{accessToken.pictureUri}}"
-                    alt="user" *ngIf="accessToken">
-                <button md-icon-button (click)="logout()">
-                    <md-icon>exit_to_app</md-icon>
-                </button>
-            </div>
+            <!-- <img class="avatar" [routerLink]="['/', accessToken.username]" src="{{accessToken.pictureUri}}" alt="user" *ngIf="accessToken"> -->
+            <img class="avatar" (click)='navigateToProfile()' src="{{accessToken.pictureUri}}" alt="user" *ngIf="accessToken">
         </div>
     </div>
 </md-toolbar>

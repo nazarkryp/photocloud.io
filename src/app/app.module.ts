@@ -14,16 +14,19 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { PostComponent } from './components/post/post.component';
 
 import { PostService } from './services/post.service';
+import { UserService } from './services/user.service';
 import { AccountService } from './services/account.service';
+import { CurrentUserService } from './infrastructure/services/current-user.service';
 import { AuthenticationGuard } from './infrastructure/guards/authentication-guard.service';
 import { SessionService } from './infrastructure/session/session.service';
 import { TokenService } from './infrastructure/security/token.service';
-import { WebApiClient } from './infrastructure/communication/webapi';
+import { HttpClient } from './infrastructure/communication/http';
 import { CommunicationService } from './infrastructure/communication/communication.service';
 
 import { TimeAgoPipe } from 'time-ago-pipe';
 import { SigninComponent } from './components/signin/signin.component';
 import { UserPostsComponent } from './components/user-posts/user-posts.component';
+import { NotFoundComponent } from './components/not-found/not-found.component';
 
 @NgModule({
     declarations: [
@@ -33,7 +36,8 @@ import { UserPostsComponent } from './components/user-posts/user-posts.component
         PostComponent,
         TimeAgoPipe,
         SigninComponent,
-        UserPostsComponent
+        UserPostsComponent,
+        NotFoundComponent
     ],
     imports: [
         BrowserModule,
@@ -45,11 +49,13 @@ import { UserPostsComponent } from './components/user-posts/user-posts.component
     ],
     providers: [
         PostService,
+        UserService,
         AccountService,
+        CurrentUserService,
         AuthenticationGuard,
         SessionService,
         TokenService,
-        WebApiClient,
+        HttpClient,
         CommunicationService
     ],
     bootstrap: [AppComponent]

@@ -1,0 +1,14 @@
+.content {
+    height: calc(100vh - 75px);
+    position: relative;
+}
+
+a {
+    text-decoration: none;
+    color: deeppink;
+}
+
+.error {
+    position: absolute;
+    top: 150px;
+}

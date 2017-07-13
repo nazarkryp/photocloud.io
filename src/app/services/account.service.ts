@@ -1,16 +1,18 @@
 import { Injectable } from '@angular/core';
 
-import { WebApiClient } from '../infrastructure/communication/webapi';
+import { HttpClient } from '../infrastructure/communication/http';
 import { SessionService } from '../infrastructure/session/session.service';
-
 import { AccessToken } from '../common/models/token';
+import { CurrentUser } from '../common/models/current-user';
+import { CommunicationService } from '../infrastructure/communication/communication.service';
 
 @Injectable()
 export class AccountService {
 
     constructor(
-        private http: WebApiClient,
-        private sessionService: SessionService) { }
+        private http: HttpClient,
+        private sessionService: SessionService,
+        private communicationService: CommunicationService) { }
 
     async signIn(account: any): Promise<AccessToken> {
         const body = 'grant_type=password&username=' + account.username + '&password=' + account.password;
@@ -25,6 +27,20 @@ export class AccountService {
 
     signOut() {
         this.sessionService.clearSession();
+        this.communicationService.changeState(null);
+    }
+
+    getCurrentUser(): CurrentUser {
+        const accessToken = this.sessionService.getSession();
+
+        const currentUser = new CurrentUser();
+        currentUser.id = accessToken.userId;
+        currentUser.username = accessToken.username;
+        currentUser.pictureUri = accessToken.pictureUri;
+        currentUser.isPrivate = accessToken.isPrivate;
+        currentUser.isActive = accessToken.isActive;
+
+        return currentUser;
     }
 
     private mapResponseToAccessToken(response: any): AccessToken {

@@ -6,4 +6,6 @@ export class User {
     isPrivate: boolean;
     isActive: boolean;
     pictureUri: string;
+    outgoingStatus: string;
+    incommingStatus: string;
 }

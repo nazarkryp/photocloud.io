@@ -9,13 +9,13 @@ import { CollectionModel } from '../common/models/collection-model';
 
 import { TokenService } from '../infrastructure/security/token.service';
 
-import { WebApiClient } from '../infrastructure/communication/webapi';
+import { HttpClient } from '../infrastructure/communication/http';
 
 @Injectable()
 export class PostService {
-    constructor(private http: WebApiClient, private tokenService: TokenService) { }
+    constructor(private http: HttpClient, private tokenService: TokenService) { }
 
-    getPosts(pagination: Pagination) {
+    getPosts(pagination: Pagination): Promise<CollectionModel<Post>> {
         let requestUri = 'posts';
 
         if (pagination != null && pagination.next != null) {
@@ -27,7 +27,7 @@ export class PostService {
             .catch(this.handleError);
     }
 
-    getUserPosts(username: string, pagination: Pagination) {
+    getUserPosts(username: string, pagination: Pagination): Promise<CollectionModel<Post>> {
         let requestUri = 'posts/' + username;
 
         if (pagination != null && pagination.next != null) {

@@ -5,7 +5,7 @@ import { TokenService } from '../security/token.service';
 import { environment } from '../../../environments/environment'
 
 @Injectable()
-export class WebApiClient {
+export class HttpClient {
     constructor(private http: Http, private tokenService: TokenService) { }
 
     async get(requestUri: string): Promise<Response> {

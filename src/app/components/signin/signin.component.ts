@@ -4,8 +4,6 @@ import { Router } from '@angular/router';
 import { AccountService } from '../../services/account.service';
 import { AccessToken } from '../../common/models/token';
 
-import { MessagingService } from '../../services/messaging.service';
-
 @Component({
     selector: 'app-signin',
     templateUrl: './signin.component.html',
@@ -22,8 +20,7 @@ export class SigninComponent {
 
     constructor(
         private accountService: AccountService,
-        private router: Router,
-        private messagingService: MessagingService) {
+        private router: Router) {
     }
 
     async signIn() {

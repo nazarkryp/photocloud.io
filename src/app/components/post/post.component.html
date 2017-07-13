@@ -1,6 +1,6 @@
 <div class="post z-depth-2">
     <div class="post-header" fxLayout="row">
-        <img class="post-avatar" src="{{post.user.pictureUri}}" alt="profile">
+        <img class="post-avatar" [routerLink]="['/', post.user.username]" src="{{post.user.pictureUri}}" alt="profile">
         <div class="post-author" fxLayout="row" fxLayoutAlign="space-between center" fxFlex>
             <a class="mat-body-1" [routerLink]="['/', post.user.username]">{{post.user.username}}</a>
             <div>
