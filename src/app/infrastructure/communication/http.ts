@@ -29,7 +29,7 @@ export class HttpClient {
             .toPromise();
     }
 
-    async delete(requestUri: string, data: any) {
+    async delete(requestUri: string) {
         const options = await this.getRequestOptions();
 
         return this.http.delete(environment.apiUri + requestUri, options)

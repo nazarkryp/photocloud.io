@@ -1,6 +1,6 @@
 # Photocloud
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.2.0.
+Client application for cloud-based photo-sharing system
 
 ## Development server
 

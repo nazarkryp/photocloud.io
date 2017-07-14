@@ -1,3 +1,5 @@
+import { RelationshipStatus } from './relationship-status';
+
 export class User {
     id: number;
     username: string;
@@ -6,6 +8,9 @@ export class User {
     isPrivate: boolean;
     isActive: boolean;
     pictureUri: string;
-    outgoingStatus: string;
-    incommingStatus: string;
+    outgoingStatus: RelationshipStatus;
+    incommingStatus: RelationshipStatus;
+    posts: number;
+    followers: number;
+    following: number;
 }

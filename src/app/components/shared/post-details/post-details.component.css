@@ -13,8 +13,11 @@ hr {
 }
 
 .post-details {
-    max-height: calc(100vh - 150px);
-    max-width: calc(100vw - 400px - 100px);
+    padding: 15px 15px;
+}
+
+md-dialog-content {
+    padding: 0;
 }
 
 .post {
@@ -35,8 +38,12 @@ hr {
 }
 
 .post-caption {
-    padding: 10px 0 10px 0;
+    padding: 10px 0 0 0;
     line-height: 1.6em;
+}
+
+.post-date {
+    padding: 10px 0 10px 0;
 }
 
 .post-actions {
@@ -56,10 +63,13 @@ hr {
 }
 
 .attachment {
-    width: 100%;
-    height: auto;
+    width: 100% auto;
+    height: 100% auto;
+    max-height: calc(100vh - 75px);
+    max-width: calc(100vw - 800px);
     pointer-events: none;
     user-select: none;
+    vertical-align: bottom;
     -moz-user-select: none;
     -webkit-user-drag: none;
     -webkit-user-select: none;
@@ -98,10 +108,10 @@ hr {
 }
 
 .mat-dialog-container {
-    background: red;
     padding: 0px !important;
 }
 
 md-dialog-container {
     padding: 0px !important;
 }
+

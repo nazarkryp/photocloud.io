@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
-
 import { environment } from '../../../environments/environment'
+import { CommunicationService } from '../communication/communication.service';
 import { SessionService } from '../session/session.service';
 import { AccessToken } from '../../common/models/token';
-
-import { CommunicationService } from '../communication/communication.service';
+import { TokenMapper } from '../../infrastructure/mapping/token.mapper';
 
 @Injectable()
 export class TokenService {
@@ -14,7 +13,8 @@ export class TokenService {
     constructor(
         private sessionService: SessionService,
         private http: Http,
-        private communicationService: CommunicationService) { }
+        private communicationService: CommunicationService,
+        private tokenMapper: TokenMapper) { }
 
     async getAccessToken(): Promise<AccessToken> {
         let accessToken = this.sessionService.getSession();
@@ -29,7 +29,7 @@ export class TokenService {
 
         if (useRefreshToken && expiresIn > 0) {
             accessToken = await this.refreshToken(accessToken.refreshToken);
-            // TODO: ADD MAPPING HERE
+
             this.sessionService.setSession(accessToken);
         }
 
@@ -50,28 +50,10 @@ export class TokenService {
 
         return this.http.post(environment.apiUri + 'authorize', data)
             .toPromise()
-            .then(response => response.json() as AccessToken);
+            .then(response => this.tokenMapper.mapResponseToAccessToken(response.json()));
     }
 
     private handleError(error: any): Promise<any> {
         return Promise.reject(error.message || error);
-    }
-
-    private mapResponseToAccessToken(response: any): AccessToken {
-        const accessToken = new AccessToken();
-
-        accessToken.accessToken = response['access_token'];
-        accessToken.refreshToken = response['refresh_token'];
-        accessToken.tokenType = response['token_type'];
-        accessToken.expiresIn = response['expires_in'];
-        accessToken.issued = new Date(response['.issued']);
-        accessToken.expires = new Date(response['.expires']);
-        accessToken.userId = Number(response['userId']);
-        accessToken.username = response['userName'];
-        accessToken.isPrivate = response['isPrivate'];
-        accessToken.isActive = response['isActive'];
-        accessToken.pictureUri = response['pictureUri'];
-
-        return accessToken;
     }
 }

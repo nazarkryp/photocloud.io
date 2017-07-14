@@ -1,5 +1,5 @@
-<div class="post-details" fxLayout="row" fxLayoutAlign="start stretch">
-    <div class="post-content">
+<div fxLayout="row" fxLayoutAlign="start stretch">
+    <div md-ripple class="post-content">
         <div class="post-content-buttons" fxLayout="row" fxLayoutAlign="space-between center" *ngIf="post.attachments.length > 1">
             <div>
                 <button md-raised-button md-icon-button *ngIf="post.activeAttachment > 0" (click)="previous()">
@@ -35,6 +35,27 @@
                     </md-menu>
                 </div>
             </div>
+        </div>
+        <hr/>
+        <div class="post-details" fxFlex>
+            <div fxLayout="row" fxLayoutAlign="space-between center">
+                <span><strong>{{post.likesCount}} likes</strong></span>
+            </div>
+            <div class="post-caption" *ngIf="post.caption">
+                <a><strong>{{post.user.username}}</strong></a>
+                <span>{{post.caption}}</span>
+            </div>
+            <div class="post-date">
+                <span class="post-created">{{post.created | timeAgo}}</span>
+            </div>
+        </div>
+        <hr/>
+        <div class="post-actions" fxLayout="row">
+            <button md-icon-button><md-icon>favorite_border</md-icon></button>
+            <input class="comment-input" type="text" placeholder="Add comment" />
+            <button md-icon-button mdTooltip="Copy to clipboard" mdTooltipPosition="left">
+            <md-icon>share</md-icon>
+        </button>
         </div>
     </div>
 </div>

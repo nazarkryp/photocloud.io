@@ -52,6 +52,7 @@ hr {
 .attachment {
     width: 100%;
     height: auto;
+    vertical-align: bottom;
     pointer-events: none;
     user-select: none;
     -moz-user-select: none;

@@ -20,7 +20,7 @@
             </div>
         </div>
     </div>
-    <div class="post-content">
+    <div md-ripple class="post-content">
         <div class="post-content-buttons" fxLayout="row" fxLayoutAlign="space-between center" *ngIf="post.attachments.length > 1">
             <div>
                 <button md-raised-button md-icon-button *ngIf="post.activeAttachment > 0" (click)="previous()">

@@ -14,6 +14,7 @@ import { CurrentUser } from '../../common/models/current-user';
 import { Post } from '../../common/models/post';
 import { Attachment } from '../../common/models/attachment';
 import { User } from '../../common/models/user';
+import { RelationshipStatus } from '../../common/models/relationship-status';
 import { CollectionModel } from '../../common/models/collection-model';
 
 import { PostDetailsComponent } from '../shared/post-details/post-details.component';
@@ -28,6 +29,7 @@ export class UserPostsComponent implements OnInit, OnDestroy {
     private currentUser: CurrentUser;
     private page: CollectionModel<Post>;
     private isLoading = false;
+    private isModifyingRelationship = false;
     private isLoadingPosts: Boolean;
     private user: User = new User();
 
@@ -82,6 +84,37 @@ export class UserPostsComponent implements OnInit, OnDestroy {
         });
     }
 
+    async modifyRelationship() {
+        this.isModifyingRelationship = true;
+        let action: number;
+
+        if (this.user.outgoingStatus === RelationshipStatus.None) {
+            action = 0;
+        } else if (this.user.outgoingStatus === RelationshipStatus.Following) {
+            action = 1;
+        } else if (this.user.outgoingStatus === RelationshipStatus.Requested) {
+            action = 1;
+        } else if (this.user.outgoingStatus === RelationshipStatus.Blocked) {
+            action = 4;
+        }
+        try {
+            await this.userService.modifyRelationship(this.user.id, {
+                action: action
+            });
+
+            if (action === 0) {
+                this.user.outgoingStatus = RelationshipStatus.Following;
+            } else if (action === 1) {
+                this.user.outgoingStatus = RelationshipStatus.None;
+            } else if (action === 1) {
+                this.user.outgoingStatus = RelationshipStatus.None;
+            }
+        } catch (error) {
+        } finally {
+            this.isModifyingRelationship = false;
+        }
+    }
+
     async ngOnInit() {
         this.currentUser = this.accountService.getCurrentUser();
 
@@ -95,7 +128,7 @@ export class UserPostsComponent implements OnInit, OnDestroy {
                 return;
             } else if (!user.isActive) {
                 console.log(`${user.username} is not active`);
-            } else if (user.isPrivate && user.outgoingStatus !== 'following') {
+            } else if (user.isPrivate && user.outgoingStatus !== RelationshipStatus.Following) {
                 console.log(`${user.username} is private`);
             } else {
                 await this.getPosts();

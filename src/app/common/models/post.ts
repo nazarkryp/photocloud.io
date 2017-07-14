@@ -1,4 +1,6 @@
 import { Attachment } from './attachment';
+import { Comment } from './comment';
+import { User } from './user';
 
 export class Post {
     id: number;
@@ -10,6 +12,8 @@ export class Post {
     created: Date;
     attachments: Attachment[];
     activeAttachment: number;
+    comments: Comment[];
+    likes: User[];
 
     constructor() {
         this.activeAttachment = 0;

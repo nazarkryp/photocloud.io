@@ -96,3 +96,7 @@
     font-weight: normal;
     padding-right: 10px;
 }
+
+.button-bordered {
+    border: 1px solid red;
+}
