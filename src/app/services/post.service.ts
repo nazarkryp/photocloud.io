@@ -9,11 +9,11 @@ import { CollectionModel } from '../common/models/collection-model';
 
 import { TokenService } from '../infrastructure/security/token.service';
 
-import { HttpClient } from '../infrastructure/communication/http';
+import { WebApiClient } from '../infrastructure/communication/http';
 
 @Injectable()
 export class PostService {
-    constructor(private http: HttpClient, private tokenService: TokenService) { }
+    constructor(private http: WebApiClient, private tokenService: TokenService) { }
 
     getPosts(pagination: Pagination): Promise<CollectionModel<Post>> {
         let requestUri = 'posts';

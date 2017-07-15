@@ -8,15 +8,15 @@ import { RelationshipStatus } from '../common/models/relationship-status';
 export class RelationshipActionPipe implements PipeTransform {
     transform(relationshipStatus: RelationshipStatus): string {
         if (relationshipStatus === RelationshipStatus.None) {
-            return 'Follow';
+            return 'follow';
         }
 
         if (relationshipStatus === RelationshipStatus.Following) {
-            return 'Unfollow';
+            return 'following';
         }
 
         if (relationshipStatus === RelationshipStatus.Requested) {
-            return 'Unfollow';
+            return 'requested';
         }
 
         return 'Unknown';

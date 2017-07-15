@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { HttpClient } from '../infrastructure/communication/http';
+import { WebApiClient } from '../infrastructure/communication/http';
 import { SessionService } from '../infrastructure/session/session.service';
 import { AccessToken } from '../common/models/token';
 import { CurrentUser } from '../common/models/current-user';
@@ -11,7 +11,7 @@ import { TokenMapper } from '../infrastructure/mapping/token.mapper';
 export class AccountService {
 
     constructor(
-        private http: HttpClient,
+        private http: WebApiClient,
         private sessionService: SessionService,
         private communicationService: CommunicationService,
         private tokenMapper: TokenMapper) { }

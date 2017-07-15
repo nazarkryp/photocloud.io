@@ -14,7 +14,7 @@
         </div>
         <img class="attachment" src="{{post.attachments[post.activeAttachment].uri}}" alt="post-image">
     </div>
-    <div fxLayout="column">
+    <div class="post-data" fxLayout="column">
         <div class="post-header" fxLayout="row">
             <img class="post-avatar" [routerLink]="['/', post.user.username]" src="{{post.user.pictureUri}}" alt="profile">
             <div class="post-author" fxLayout="row" fxLayoutAlign="space-between center" fxFlex>

@@ -26,7 +26,7 @@ import { CurrentUserService } from './infrastructure/services/current-user.servi
 import { AuthenticationGuard } from './infrastructure/guards/authentication-guard.service';
 import { SessionService } from './infrastructure/session/session.service';
 import { TokenService } from './infrastructure/security/token.service';
-import { HttpClient } from './infrastructure/communication/http';
+import { WebApiClient } from './infrastructure/communication/http';
 import { CommunicationService } from './infrastructure/communication/communication.service';
 
 import { TokenMapper } from './infrastructure/mapping/token.mapper';
@@ -68,7 +68,7 @@ import { RelationshipActionPipe } from './pipes/relationship-action.pipe';
         AuthenticationGuard,
         SessionService,
         TokenService,
-        HttpClient,
+        WebApiClient,
         CommunicationService,
         TokenMapper,
         UserMapper

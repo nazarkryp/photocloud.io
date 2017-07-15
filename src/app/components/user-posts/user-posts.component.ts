@@ -88,27 +88,19 @@ export class UserPostsComponent implements OnInit, OnDestroy {
         this.isModifyingRelationship = true;
         let action: number;
 
-        if (this.user.outgoingStatus === RelationshipStatus.None) {
+        if (this.user.incommingStatus === RelationshipStatus.None) {
             action = 0;
-        } else if (this.user.outgoingStatus === RelationshipStatus.Following) {
+        } else if (this.user.incommingStatus === RelationshipStatus.Following) {
             action = 1;
-        } else if (this.user.outgoingStatus === RelationshipStatus.Requested) {
+        } else if (this.user.incommingStatus === RelationshipStatus.Requested) {
             action = 1;
-        } else if (this.user.outgoingStatus === RelationshipStatus.Blocked) {
+        } else if (this.user.incommingStatus === RelationshipStatus.Blocked) {
             action = 4;
         }
         try {
-            await this.userService.modifyRelationship(this.user.id, {
+            this.user = await this.userService.modifyRelationship(this.user.id, {
                 action: action
             });
-
-            if (action === 0) {
-                this.user.outgoingStatus = RelationshipStatus.Following;
-            } else if (action === 1) {
-                this.user.outgoingStatus = RelationshipStatus.None;
-            } else if (action === 1) {
-                this.user.outgoingStatus = RelationshipStatus.None;
-            }
         } catch (error) {
         } finally {
             this.isModifyingRelationship = false;
@@ -128,7 +120,7 @@ export class UserPostsComponent implements OnInit, OnDestroy {
                 return;
             } else if (!user.isActive) {
                 console.log(`${user.username} is not active`);
-            } else if (user.isPrivate && user.outgoingStatus !== RelationshipStatus.Following) {
+            } else if (user.isPrivate && user.id !== this.currentUser.id && user.incommingStatus !== RelationshipStatus.Following) {
                 console.log(`${user.username} is private`);
             } else {
                 await this.getPosts();
