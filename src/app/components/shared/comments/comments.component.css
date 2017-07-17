@@ -1,0 +1,19 @@
+a {
+    text-decoration: none;
+    color: inherit;
+    padding-right: 5px;
+}
+
+.comments {
+    line-height: 1.8em;
+}
+
+.text-button {
+    font-size: 0.9em;
+    color: #555555;
+    cursor: pointer;
+}
+
+.text-button:hover {
+    color: #777;
+}

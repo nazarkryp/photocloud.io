@@ -1,3 +1,9 @@
-<p>
-  comments works!
-</p>
+<div class="comments">
+    <a class="text-button" (click)="getComments()" *ngIf="post.comments.length < post.commentsCount"><strong>show more comments</strong></a>
+    <div *ngFor="let comment of post.comments;" fxLayout="row">
+        <a [routerLink]="['/', comment.user.username]">
+        <strong>{{comment.user.username}}</strong>
+    </a>
+        <span>{{comment.text}}</span>
+    </div>
+</div>

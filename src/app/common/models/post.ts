@@ -14,8 +14,5 @@ export class Post {
     activeAttachment: number;
     comments: Comment[];
     likes: User[];
-
-    constructor() {
-        this.activeAttachment = 0;
-    }
+    isLoading: boolean;
 }

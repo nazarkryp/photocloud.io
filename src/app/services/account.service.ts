@@ -9,6 +9,7 @@ import { TokenMapper } from '../infrastructure/mapping/token.mapper';
 
 @Injectable()
 export class AccountService {
+    private currentUser: CurrentUser;
 
     constructor(
         private http: WebApiClient,
@@ -33,17 +34,22 @@ export class AccountService {
         this.communicationService.changeState(null);
     }
 
-    getCurrentUser(): CurrentUser {
+    getCurrentUser(refresh: boolean = true): CurrentUser {
+        if (this.currentUser && !refresh) {
+            return this.currentUser;
+        }
+
         const accessToken = this.sessionService.getSession();
 
-        const currentUser = new CurrentUser();
-        currentUser.id = accessToken.userId;
-        currentUser.username = accessToken.username;
-        currentUser.pictureUri = accessToken.pictureUri;
-        currentUser.isPrivate = accessToken.isPrivate;
-        currentUser.isActive = accessToken.isActive;
+        this.currentUser = new CurrentUser();
 
-        return currentUser;
+        this.currentUser.id = accessToken.userId;
+        this.currentUser.username = accessToken.username;
+        this.currentUser.pictureUri = accessToken.pictureUri;
+        this.currentUser.isPrivate = accessToken.isPrivate;
+        this.currentUser.isActive = accessToken.isActive;
+
+        return this.currentUser;
     }
 
     private handleError(error: any): Promise<any> {

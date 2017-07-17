@@ -19,6 +19,8 @@ import { CollectionModel } from '../../common/models/collection-model';
 
 import { PostDetailsComponent } from '../shared/post-details/post-details.component';
 
+import { NgProgressService } from 'ngx-progressbar';
+
 @Component({
     selector: 'app-user-posts',
     templateUrl: './user-posts.component.html',
@@ -30,7 +32,7 @@ export class UserPostsComponent implements OnInit, OnDestroy {
     private page: CollectionModel<Post>;
     private isLoading = false;
     private isModifyingRelationship = false;
-    private isLoadingPosts: Boolean;
+    private isLoadingPosts: boolean;
     private user: User = new User();
 
     constructor(
@@ -39,7 +41,8 @@ export class UserPostsComponent implements OnInit, OnDestroy {
         private userService: UserService,
         private router: Router,
         private route: ActivatedRoute,
-        public dialog: MdDialog) {
+        public dialog: MdDialog,
+        private progressService: NgProgressService) {
     }
 
     async getUser(): Promise<User> {
@@ -114,6 +117,7 @@ export class UserPostsComponent implements OnInit, OnDestroy {
             this.initializePage();
             this.user.username = params['username'];
             this.isLoading = true;
+            this.progressService.start();
             const user = await this.getUser();
 
             if (!user) {
@@ -127,6 +131,7 @@ export class UserPostsComponent implements OnInit, OnDestroy {
             }
 
             this.isLoading = false;
+            this.progressService.done();
         });
     }
 

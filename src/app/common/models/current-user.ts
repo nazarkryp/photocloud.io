@@ -3,7 +3,7 @@ export class CurrentUser {
     username: string;
     fullName: string;
     bio: string;
-    isPrivate: Boolean;
-    isActive: Boolean;
+    isPrivate: boolean;
+    isActive: boolean;
     pictureUri: string;
 }

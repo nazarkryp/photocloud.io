@@ -7,6 +7,8 @@ import { Attachment } from '../../common/models/attachment';
 import { User } from '../../common/models/user';
 import { CollectionModel } from '../../common/models/collection-model';
 
+import { NgProgressService } from 'ngx-progressbar';
+
 @Component({
     selector: 'app-posts',
     templateUrl: './posts.component.html',
@@ -16,12 +18,15 @@ export class PostsComponent implements OnInit {
     private page: CollectionModel<Post> = new CollectionModel<Post>();
     private isLoading = false;
 
-    constructor(private postService: PostService) {
+    constructor(
+        private postService: PostService,
+        private progressService: NgProgressService) {
         this.page.data = new Array<Post>();
         this.page.hasMoreItems = false;
     }
 
     async getPosts() {
+        this.progressService.start();
         this.isLoading = true;
 
         try {
@@ -33,6 +38,7 @@ export class PostsComponent implements OnInit {
         } catch (error) {
         } finally {
             this.isLoading = false;
+            this.progressService.done();
         }
     }
 

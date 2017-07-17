@@ -2,6 +2,9 @@ import { Component, OnInit, Input } from '@angular/core';
 
 import { Post } from '../../common/models/post';
 import { Attachment } from '../../common/models/attachment';
+import { CurrentUser } from '../../common/models/current-user';
+
+import { AccountService } from '../../services/account.service';
 
 @Component({
     selector: 'app-post',
@@ -10,7 +13,12 @@ import { Attachment } from '../../common/models/attachment';
 })
 export class PostComponent implements OnInit {
     @Input()
-    post: Post;
+    public post: Post;
+    private currentUser: CurrentUser;
+
+    constructor(
+        private accountService: AccountService
+    ) { }
 
     next() {
         if (this.post.activeAttachment < this.post.attachments.length - 1) {
@@ -26,5 +34,6 @@ export class PostComponent implements OnInit {
 
     ngOnInit() {
         this.post.activeAttachment = 0;
+        this.currentUser = this.accountService.getCurrentUser(false);
     }
 }

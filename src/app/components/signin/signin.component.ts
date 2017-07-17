@@ -15,7 +15,7 @@ export class SigninComponent {
         password: ''
     };
 
-    isLoading: Boolean = false;
+    isLoading: boolean = false;
     errorMessage: string;
 
     constructor(

@@ -3,8 +3,9 @@
     <div class="toolbar-tools" fxLayout="row" fxLayoutAlign="center center">
         <div class="container" fxLayout="row" fxLayoutAlign="space-between center">
             <h1 class="logo" routerLink="/">photocloud</h1>
-            <!-- <img class="avatar" [routerLink]="['/', accessToken.username]" src="{{accessToken.pictureUri}}" alt="user" *ngIf="accessToken"> -->
-            <img class="avatar" (click)='navigateToProfile()' src="{{accessToken.pictureUri}}" alt="user" *ngIf="accessToken">
+            <a [routerLink]="['/', accessToken.username]" fxLayout="row" fxLayoutAlign="center center" *ngIf="accessToken">
+                <img class="avatar" src="{{accessToken.pictureUri}}" alt="user">
+            </a>
         </div>
     </div>
 </md-toolbar>

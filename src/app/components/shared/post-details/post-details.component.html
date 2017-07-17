@@ -12,7 +12,8 @@
                 </button>
             </div>
         </div>
-        <img class="attachment" src="{{post.attachments[post.activeAttachment].uri}}" alt="post-image">
+        <img class="attachment" src="{{attachment.uri}}" alt="post-image" *ngFor="let attachment of post.attachments; let index = index;"
+            [hidden]="index !== post.activeAttachment">
     </div>
     <div class="post-data" fxLayout="column">
         <div class="post-header" fxLayout="row">

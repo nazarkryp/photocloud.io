@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http, RequestOptions, Headers, Response } from '@angular/http';
 
 import { TokenService } from '../security/token.service';
-import { environment } from '../../../environments/environment'
+import { environment } from '../../../environments/environment';
 
 @Injectable()
 export class WebApiClient {

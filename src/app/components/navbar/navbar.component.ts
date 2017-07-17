@@ -21,13 +21,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
         private router: Router) {
     }
 
-    navigateToProfile() {
-        const currentUser = this.accountService.getCurrentUser();
-
-        // this.router.navigateByUrl(`${currentUser.username}`);
-        this.router.navigate([`${currentUser.username}`]);
-    }
-
     ngOnInit(): void {
         this.communicationService
             .getState()

@@ -33,6 +33,8 @@ import { TokenMapper } from './infrastructure/mapping/token.mapper';
 import { UserMapper } from './infrastructure/mapping/user.mapper';
 
 import { TimeAgoPipe } from 'time-ago-pipe';
+import { NgProgressModule } from 'ngx-progressbar';
+
 import { RelationshipActionPipe } from './pipes/relationship-action.pipe';
 
 @NgModule({
@@ -58,10 +60,12 @@ import { RelationshipActionPipe } from './pipes/relationship-action.pipe';
         AppMaterialModule,
         FlexLayoutModule,
         HttpModule,
-        FormsModule
+        FormsModule,
+        NgProgressModule
     ],
     providers: [
         PostService,
+        CommentService,
         UserService,
         AccountService,
         CurrentUserService,

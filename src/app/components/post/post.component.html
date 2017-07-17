@@ -3,10 +3,8 @@
         <img class="post-avatar" [routerLink]="['/', post.user.username]" src="{{post.user.pictureUri}}" alt="profile">
         <div class="post-author" fxLayout="row" fxLayoutAlign="space-between center" fxFlex>
             <a class="mat-body-1" [routerLink]="['/', post.user.username]">{{post.user.username}}</a>
-            <div>
-                <button md-icon-button type="button" [mdMenuTriggerFor]="menu">
-                <md-icon>expand_more</md-icon>
-            </button>
+            <div *ngIf="post.user.id === currentUser.id">
+                <button md-icon-button type="button" [mdMenuTriggerFor]="menu"><md-icon>expand_more</md-icon></button>
                 <md-menu #menu="mdMenu" xPosition="before">
                     <button md-menu-item>
                     <md-icon>edit</md-icon>
@@ -33,17 +31,22 @@
                 </button>
             </div>
         </div>
-         <img class="attachment" src="{{post.attachments[post.activeAttachment].uri}}" alt="post-image"> 
+        <img class="attachment" src="{{attachment.uri}}" alt="post-image" *ngFor="let attachment of post.attachments; let index = index;"
+            [hidden]="index !== post.activeAttachment">
     </div>
+    <md-progress-bar class="progress-bar" color="warn" mode="indeterminate" *ngIf="post.isLoading"></md-progress-bar>
     <div class="post-footer">
         <div fxLayout="row" fxLayoutAlign="space-between center">
             <span><strong>{{post.likesCount}} likes</strong></span>
         </div>
-        <div class="post-caption">
-            <a><strong>{{post.user.username}}</strong></a>
+        <div class="post-caption" *ngIf="post.caption">
+            <a [routerLink]="['/', post.user.username]"><strong>{{post.user.username}}</strong></a>
             <span>{{post.caption}}</span>
         </div>
         <div>
+            <app-comments [post]="post"></app-comments>
+        </div>
+        <div class="post-date">
             <span class="post-created">{{post.created | timeAgo}}</span>
         </div>
     </div>

@@ -2,8 +2,8 @@ export class AccessToken {
     userId: number;
     username: string;
     pictureUri: string;
-    isPrivate: Boolean;
-    isActive: Boolean;
+    isPrivate: boolean;
+    isActive: boolean;
     refreshToken: string;
     accessToken: string;
     tokenType: string;
