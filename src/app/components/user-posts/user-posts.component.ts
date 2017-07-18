@@ -15,7 +15,7 @@ import { Post } from '../../common/models/post';
 import { Attachment } from '../../common/models/attachment';
 import { User } from '../../common/models/user';
 import { RelationshipStatus } from '../../common/models/relationship-status';
-import { CollectionModel } from '../../common/models/collection-model';
+import { Collection } from '../../common/models/collection-model';
 
 import { PostDetailsComponent } from '../shared/post-details/post-details.component';
 
@@ -29,7 +29,7 @@ import { NgProgressService } from 'ngx-progressbar';
 export class UserPostsComponent implements OnInit, OnDestroy {
     private subscription: Subscription;
     private currentUser: CurrentUser;
-    private page: CollectionModel<Post>;
+    private page: Collection<Post>;
     private isLoading = false;
     private isModifyingRelationship = false;
     private isLoadingPosts: boolean;
@@ -61,7 +61,7 @@ export class UserPostsComponent implements OnInit, OnDestroy {
         }
     }
 
-    async getPosts(): Promise<CollectionModel<Post>> {
+    async getPosts(): Promise<Collection<Post>> {
         this.isLoadingPosts = true;
 
         try {
@@ -140,7 +140,7 @@ export class UserPostsComponent implements OnInit, OnDestroy {
     }
 
     private initializePage(): void {
-        this.page = new CollectionModel<Post>();
+        this.page = new Collection<Post>();
         this.page.hasMoreItems = false;
         this.page.pagination = null;
         this.page.data = [];

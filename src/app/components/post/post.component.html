@@ -6,14 +6,14 @@
             <div *ngIf="post.user.id === currentUser.id">
                 <button md-icon-button type="button" [mdMenuTriggerFor]="menu"><md-icon>expand_more</md-icon></button>
                 <md-menu #menu="mdMenu" xPosition="before">
-                    <button md-menu-item>
-                    <md-icon>edit</md-icon>
-                    <span>Edit</span>
-                </button>
-                    <button md-menu-item>
-                    <md-icon>delete</md-icon>
-                    <span>Remove</span>
-                </button>
+                    <!-- <button md-menu-item>
+                        <md-icon>edit</md-icon>
+                        <span>Edit</span>
+                    </button> -->
+                    <button md-menu-item (click)="remove()">
+                        <md-icon>delete</md-icon>
+                        <span>Remove</span>
+                    </button>
                 </md-menu>
             </div>
         </div>
@@ -52,11 +52,11 @@
     </div>
     <hr/>
     <div class="post-actions" fxLayout="row">
-        <button md-icon-button>
+        <button [ngClass]="{ 'liked' : post.userHasLiked }" md-icon-button (click)="like()">
             <md-icon>favorite_border</md-icon>
         </button>
-        <input class="comment-input" type="text" placeholder="Add comment" />
-        <button md-icon-button mdTooltip="Copy to clipboard" mdTooltipPosition="left">
+        <input class="comment-input" type="text" placeholder="Add comment" [(ngModel)]="text" (keydown.enter)="createComment()" />
+        <button md-icon-button mdTooltip="Copy to clipboard" mdTooltipPosition="left" ngxClipboard [cbContent]="share()">
             <md-icon>share</md-icon>
         </button>
     </div>

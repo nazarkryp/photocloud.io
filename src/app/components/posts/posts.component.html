@@ -1,6 +1,6 @@
 <div fxLayout="column" fxLayoutAlign="start center" fxFlex>
     <div class="posts-container" *ngIf="page">
-        <app-post *ngFor="let post of page.data; trackBy: index;" [post]="post"></app-post>
+        <app-post *ngFor="let post of page.data; trackBy: index;" [post]="post" (onRemoved)="onRemoved($event)"></app-post>
         <div fxLayout="row" fxLayoutAlign="center center" *ngIf="page.hasMoreItems">
             <button md-raised-button (click)="getPosts()" [disabled]="isLoading">Load More</button>
         </div>

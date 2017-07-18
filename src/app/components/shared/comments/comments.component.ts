@@ -34,19 +34,6 @@ export class CommentsComponent implements OnInit {
         }
     }
 
-    async createComment() {
-        this.isLoading = true;
-        this.post.isLoading = true;
-
-        try {
-            this.post.comments = await this.commentService.getComments(this.post.id);
-        } catch (error) {
-        } finally {
-            this.isLoading = false;
-            this.post.isLoading = false;
-        }
-    }
-
     ngOnInit() {
     }
 }

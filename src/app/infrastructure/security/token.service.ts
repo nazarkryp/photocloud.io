@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment'
 import { CommunicationService } from '../communication/communication.service';
 import { SessionService } from '../session/session.service';
@@ -12,7 +12,7 @@ export class TokenService {
 
     constructor(
         private sessionService: SessionService,
-        private http: Http,
+        private http: HttpClient,
         private communicationService: CommunicationService,
         private tokenMapper: TokenMapper) { }
 
@@ -50,7 +50,8 @@ export class TokenService {
 
         return this.http.post(environment.apiUri + 'authorize', data)
             .toPromise()
-            .then(response => this.tokenMapper.mapResponseToAccessToken(response.json()));
+            .then(response => this.tokenMapper.mapResponseToAccessToken(response))
+            .catch(error => this.handleError(error));
     }
 
     private handleError(error: any): Promise<any> {

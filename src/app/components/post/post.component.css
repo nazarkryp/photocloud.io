@@ -101,3 +101,7 @@ hr {
     height: 3px;
     position: absolute;
 }
+
+.liked {
+    color: red;
+}

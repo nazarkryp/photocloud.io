@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpModule } from '@angular/http';
+// import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -33,9 +34,11 @@ import { TokenMapper } from './infrastructure/mapping/token.mapper';
 import { UserMapper } from './infrastructure/mapping/user.mapper';
 
 import { TimeAgoPipe } from 'time-ago-pipe';
+import { ClipboardModule } from 'ngx-clipboard';
 import { NgProgressModule } from 'ngx-progressbar';
 
 import { RelationshipActionPipe } from './pipes/relationship-action.pipe';
+import { CreatePostComponent } from './components/shared/create-post/create-post.component';
 
 @NgModule({
     declarations: [
@@ -49,7 +52,8 @@ import { RelationshipActionPipe } from './pipes/relationship-action.pipe';
         NotFoundComponent,
         PostDetailsComponent,
         RelationshipActionPipe,
-        CommentsComponent
+        CommentsComponent,
+        CreatePostComponent
     ],
     entryComponents: [
         PostDetailsComponent
@@ -59,9 +63,10 @@ import { RelationshipActionPipe } from './pipes/relationship-action.pipe';
         AppRoutingModule,
         AppMaterialModule,
         FlexLayoutModule,
-        HttpModule,
+        HttpClientModule,
         FormsModule,
-        NgProgressModule
+        NgProgressModule,
+        ClipboardModule
     ],
     providers: [
         PostService,

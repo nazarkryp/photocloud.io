@@ -21,8 +21,8 @@ export class AccountService {
         const body = 'grant_type=password&username=' + account.username + '&password=' + account.password;
 
         const accessToken = await this.http.post('authorize', body)
-            .then(response => this.tokenMapper.mapResponseToAccessToken(response.json()))
-            .catch(this.handleError);
+            .then(response => this.tokenMapper.mapResponseToAccessToken(response))
+            .catch(error => this.handleError(error));
 
         this.sessionService.setSession(accessToken);
 
@@ -53,6 +53,6 @@ export class AccountService {
     }
 
     private handleError(error: any): Promise<any> {
-        return Promise.reject(error.json());
+        return Promise.reject(error);
     }
 }

@@ -1,6 +1,6 @@
 import { Pagination } from './pagination';
 
-export class CollectionModel<T> {
+export class Collection<T> {
     pagination: Pagination;
     data: T[];
     hasMoreItems: boolean;

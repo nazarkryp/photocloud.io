@@ -13,14 +13,14 @@ export class UserService {
 
     getUser(username: string): Promise<User> {
         return this.WebApiClient.get(`users/${username}`)
-            .then(response => this.userMapper.mapResponseToUser(response.json()))
-            .catch(this.handleError);
+            .then(response => this.userMapper.mapResponseToUser(response))
+            .catch(error => this.handleError(error));
     }
 
     modifyRelationship(userId: number, relationshipModel: any) {
         return this.WebApiClient.put(`users/${userId}/relationship`, relationshipModel)
-            .then(response => this.userMapper.mapResponseToUser(response.json()))
-            .catch(this.handleError);
+            .then(response => this.userMapper.mapResponseToUser(response))
+            .catch(error => this.handleError(error));
     }
 
     private handleError(error: any): Promise<any> {
