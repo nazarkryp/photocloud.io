@@ -1,5 +1,5 @@
 <div [ngClass]="{ 'post-container' : !isDialog }" fxLayout="row" fxLayoutAlign="center center">
-    <div class="post" fxLayout="row" fxLayoutAlign="start stretch" *ngIf="post">
+    <div class="post z-depth-1" fxLayout="row" fxLayoutAlign="start stretch" *ngIf="post">
         <div md-ripple class="post-content">
             <div class="post-content-buttons" fxLayout="row" fxLayoutAlign="space-between center" *ngIf="post.attachments.length > 1">
                 <div>
