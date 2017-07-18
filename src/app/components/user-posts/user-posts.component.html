@@ -6,13 +6,14 @@
                 <div>
                     <span class="mat-display-1">{{user.username}}</span>
                 </div>
-                <button md-icon-button mdTooltip="Settings" mdTooltipPosition="above" *ngIf="user.id === currentUser.id">
+                <button md-icon-button mdTooltip="Settings" mdTooltipPosition="above" *ngIf="currentUser && user.id === currentUser.id">
                     <md-icon>settings</md-icon>
                 </button>
-                <button md-icon-button mdTooltip="Logout" mdTooltipPosition="above" (click)="logout()" *ngIf="user.id === currentUser.id">
+                <button md-icon-button mdTooltip="Logout" mdTooltipPosition="above" (click)="logout()" *ngIf="currentUser && user.id === currentUser.id">
                     <md-icon>exit_to_app</md-icon>
                 </button>
-                <button md-raised-button color="primary" *ngIf="user.id !== currentUser.id" (click)="modifyRelationship()" [disabled]="isModifyingRelationship">{{user.incommingStatus | relationshipAction | uppercase }}</button>
+                <button md-raised-button color="primary" *ngIf="currentUser && user.id !== currentUser.id" (click)="modifyRelationship()"
+                    [disabled]="isModifyingRelationship">{{user.incommingStatus | relationshipAction | uppercase }}</button>
             </div>
             <div class="md-padding" fxLayout="row" fxLayoutAlign="start center">
                 <div fxFlex>
@@ -35,6 +36,7 @@
         </div>
     </div>
     <div class="posts-container">
+        <app-error-box [error]="error" *ngIf="error"></app-error-box>
         <div class="user-posts">
             <div class="post-item" *ngFor="let post of page.data;">
                 <div class="image-container z-depth-3" fxLayout="column" fxLayoutAlign="center center" (click)="openPostDialog(post)">

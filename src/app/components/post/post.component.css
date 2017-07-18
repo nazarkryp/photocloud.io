@@ -22,6 +22,7 @@ hr {
 
 .post-header {
     padding: 10px;
+    width: 100%;
 }
 
 .post-footer {
@@ -50,7 +51,7 @@ hr {
     padding-left: 10px;
 }
 
-.attachment {
+.post-attachment {
     width: 100%;
     height: auto;
     vertical-align: bottom;

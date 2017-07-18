@@ -39,6 +39,7 @@ import { NgProgressModule } from 'ngx-progressbar';
 
 import { RelationshipActionPipe } from './pipes/relationship-action.pipe';
 import { CreatePostComponent } from './components/shared/create-post/create-post.component';
+import { ErrorBoxComponent } from './components/shared/error-box/error-box.component';
 
 @NgModule({
     declarations: [
@@ -53,7 +54,8 @@ import { CreatePostComponent } from './components/shared/create-post/create-post
         PostDetailsComponent,
         RelationshipActionPipe,
         CommentsComponent,
-        CreatePostComponent
+        CreatePostComponent,
+        ErrorBoxComponent
     ],
     entryComponents: [
         PostDetailsComponent

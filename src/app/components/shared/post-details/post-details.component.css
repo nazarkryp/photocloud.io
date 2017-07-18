@@ -18,18 +18,22 @@ hr {
 
 .post-data {
     max-width: 400px;
+    border: 1px solid #efefef;
 }
 
 md-dialog-content {
     padding: 0;
 }
 
+.post-container {
+    height: calc(100vh - 75px);
+    padding: 25px;
+}
+
 .post {
     background-color: white;
-    margin-bottom: 50px;
     position: relative;
     border-radius: 2px;
-    /*border: 1px solid #d8d8d8;*/
 }
 
 .post-header {
@@ -47,7 +51,7 @@ md-dialog-content {
 }
 
 .post-date {
-    padding: 10px 0 10px 0;
+    padding: 0;
 }
 
 .post-actions {
@@ -67,10 +71,12 @@ md-dialog-content {
 }
 
 .attachment {
-    width: 100% auto;
-    height: 100% auto;
+    width: auto;
+    height: auto;
     max-height: calc(100vh - 75px);
     max-width: calc(100vw - 800px);
+    min-height: 300px;
+    min-width: auto;
     pointer-events: none;
     user-select: none;
     vertical-align: bottom;

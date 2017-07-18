@@ -7,3 +7,4 @@ export { CurrentUser } from './current-user';
 export { RelationshipStatus } from './relationship-status';
 export { AccessToken } from './token';
 export { Collection } from './collection-model';
+export { Error } from './error';

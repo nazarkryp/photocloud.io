@@ -41,6 +41,10 @@ export class AccountService {
 
         const accessToken = this.sessionService.getSession();
 
+        if (accessToken == null) {
+            return null;
+        }
+
         this.currentUser = new CurrentUser();
 
         this.currentUser.id = accessToken.userId;

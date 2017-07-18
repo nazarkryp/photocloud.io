@@ -1,24 +1,12 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
-
+import { MdDialog } from '@angular/material';
 import { Subscription } from 'rxjs/Subscription';
 
-import { MdDialog } from '@angular/material';
-
-import { AccountService } from '../../services/account.service';
-import { PostService } from '../../services/post.service';
-import { UserService } from '../../services/user.service';
-
-import { CurrentUser } from '../../common/models/current-user';
-import { Post } from '../../common/models/post';
-import { Attachment } from '../../common/models/attachment';
-import { User } from '../../common/models/user';
-import { RelationshipStatus } from '../../common/models/relationship-status';
-import { Collection } from '../../common/models/collection-model';
-
+import { AccountService, PostService, UserService } from '../../services';
+import { CurrentUser, Post, Attachment, User, RelationshipStatus, Collection, Error } from '../../common/models';
 import { PostDetailsComponent } from '../shared/post-details/post-details.component';
-
 import { NgProgressService } from 'ngx-progressbar';
 
 @Component({
@@ -34,6 +22,7 @@ export class UserPostsComponent implements OnInit, OnDestroy {
     private isModifyingRelationship = false;
     private isLoadingPosts: boolean;
     private user: User = new User();
+    private error: Error;
 
     constructor(
         private accountService: AccountService,
@@ -123,9 +112,18 @@ export class UserPostsComponent implements OnInit, OnDestroy {
             if (!user) {
                 return;
             } else if (!user.isActive) {
-                console.log(`${user.username} is not active`);
-            } else if (user.isPrivate && user.id !== this.currentUser.id && user.incommingStatus !== RelationshipStatus.Following) {
-                console.log(`${user.username} is private`);
+                this.error = new Error('Account is not active');
+            } else if (user.isPrivate
+                && (!this.currentUser
+                    || user.id !== this.currentUser.id)
+                && user.incommingStatus !== RelationshipStatus.Following) {
+                if (this.currentUser) {
+                    this.error = new Error('Account is private',
+                        `Follow ${this.user.username} to see all their photos`);
+                } else {
+                    this.error = new Error('Account is private',
+                        `Already know ${this.user.username}? Sign in to see all their photos`);
+                }
             } else {
                 await this.getPosts();
             }
