@@ -32,7 +32,7 @@
     </div>
     <md-progress-bar class="progress-bar" color="warn" mode="indeterminate" *ngIf="post.isLoading"></md-progress-bar>
     <div class="post-footer">
-        <div fxLayout="row" fxLayoutAlign="space-between center">
+        <div class="likes" fxLayout="row" fxLayoutAlign="space-between center">
             <span><strong>{{post.likesCount}} likes</strong></span>
         </div>
         <div class="post-caption" *ngIf="post.caption">

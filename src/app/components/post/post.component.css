@@ -103,6 +103,10 @@ hr {
     position: absolute;
 }
 
+.likes {
+    padding-top: 10px;
+}
+
 .liked {
     color: red;
 }

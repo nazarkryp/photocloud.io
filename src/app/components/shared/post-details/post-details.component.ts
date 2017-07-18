@@ -6,7 +6,7 @@ import { ActivatedRoute } from '@angular/router';
 import { DOCUMENT } from '@angular/platform-browser';
 
 import { Post, User, Attachment, Comment, CurrentUser } from '../../../common/models';
-import { PostService, CommentService } from '../../../services';
+import { AccountService, PostService, CommentService } from '../../../services';
 import { NgProgressService } from 'ngx-progressbar';
 
 @Component({
@@ -29,6 +29,7 @@ export class PostDetailsComponent implements OnInit {
         private postService: PostService,
         private commentService: CommentService,
         private progressService: NgProgressService,
+        private accountService: AccountService,
         @Optional() public dialogRef: MdDialogRef<PostDetailsComponent>,
         @Optional() @Inject(MD_DIALOG_DATA) public post: Post,
         @Inject(DOCUMENT) private document: any) {
@@ -36,6 +37,8 @@ export class PostDetailsComponent implements OnInit {
             this.post.activeAttachment = 0;
             this.isDialog = true;
         }
+
+        this.currentUser = this.accountService.getCurrentUser();
     }
 
     next(): void {
