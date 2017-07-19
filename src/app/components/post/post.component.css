@@ -16,7 +16,7 @@ hr {
     background-color: white;
     margin-bottom: 50px;
     position: relative;
-    border-radius: 2px;
+    border-radius: 1px;
     /*border: 1px solid #d8d8d8;*/
 }
 
@@ -96,6 +96,8 @@ hr {
 .post-created {
     font-size: 14px;
     color: gray;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 .progress-bar {

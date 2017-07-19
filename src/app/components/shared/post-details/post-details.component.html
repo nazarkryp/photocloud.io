@@ -1,5 +1,5 @@
 <div [ngClass]="{ 'post-container' : !isDialog }" fxLayout="row" fxLayoutAlign="center center">
-    <div class="post z-depth-1" fxLayout="row" fxLayoutAlign="start stretch" *ngIf="post">
+    <div class="post" fxLayout="row" fxLayoutAlign="start stretch" *ngIf="post">
         <div md-ripple class="post-content">
             <div class="post-content-buttons" fxLayout="row" fxLayoutAlign="space-between center" *ngIf="post.attachments.length > 1">
                 <div>
@@ -20,11 +20,16 @@
             <div class="post-header" fxLayout="row">
                 <img class="post-avatar" [routerLink]="['/', post.user.username]" src="{{post.user.pictureUri}}" alt="profile">
                 <div class="post-author" fxLayout="row" fxLayoutAlign="space-between center" fxFlex>
-                    <a class="mat-body-1" [routerLink]="['/', post.user.username]">{{post.user.username}}</a>
+                    <div fxLayout="column">
+                        <a class="username" [routerLink]="['/', post.user.username]">{{post.user.username}}</a>
+                        <div class="post-date">
+                            <span class="post-created">{{post.created | timeAgo}}</span>
+                        </div>
+                    </div>
                     <div>
                         <button md-icon-button mdTooltip="Copy to clipboard" mdTooltipPosition="left" ngxClipboard [cbContent]="share()" (cbOnSuccess)="showToast('Copied to clipboard')">
-                    <md-icon>share</md-icon>
-                </button>
+                            <md-icon>share</md-icon>
+                        </button>
                         <md-menu #menu="mdMenu" xPosition="before">
                             <button md-menu-item>
                     <md-icon>edit</md-icon>
@@ -38,26 +43,26 @@
                     </div>
                 </div>
             </div>
-            <hr/>
             <div class="post-details" fxFlex>
                 <div fxLayout="row" fxLayoutAlign="space-between center">
                     <span><strong>{{post.likesCount}} likes</strong></span>
-                    <div class="post-date">
-                        <span class="post-created">{{post.created | timeAgo}}</span>
-                    </div>
                 </div>
                 <div class="post-caption" *ngIf="post.caption">
                     <a><strong>{{post.user.username}}</strong></a>
                     <span>{{post.caption}}</span>
                 </div>
-                <app-comments [post]="post"></app-comments>
+                <div class="comments">
+                    <span class="comments-header">Comments</span>
+                    <app-comments [post]="post"></app-comments>
+                </div>
             </div>
-            <hr *ngIf="currentUser" />
-            <div class="post-actions" fxLayout="row" *ngIf="currentUser">
-                <button [ngClass]="{ 'liked' : post.userHasLiked }" md-icon-button (click)="like()">
+            <div class="post-actions-wrapper">
+                <div class="post-details-actions" fxLayout="row" *ngIf="currentUser">
+                    <button class="like-button" [ngClass]="{ 'liked' : post.userHasLiked }" md-icon-button (click)="like()">
                     <md-icon>favorite_border</md-icon>
                 </button>
-                <input class="comment-input" type="text" placeholder="Add comment" [(ngModel)]="text" (keydown.enter)="createComment()" />
+                    <input class="post-details-comment-input" type="text" placeholder="Add comment" [(ngModel)]="text" (keydown.enter)="createComment()" />
+                </div>
             </div>
         </div>
     </div>

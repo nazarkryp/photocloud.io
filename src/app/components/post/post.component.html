@@ -46,7 +46,7 @@
             <span class="post-created">{{post.created | timeAgo}}</span>
         </div>
     </div>
-    <hr/>
+    <!-- <hr/> -->
     <div class="post-actions" fxLayout="row">
         <button [ngClass]="{ 'liked' : post.userHasLiked }" md-icon-button (click)="like()">
             <md-icon>favorite_border</md-icon>
