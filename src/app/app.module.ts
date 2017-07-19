@@ -15,8 +15,9 @@ import { PostComponent } from './components/post/post.component';
 import { SigninComponent } from './components/signin/signin.component';
 import { UserPostsComponent } from './components/user-posts/user-posts.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
-import { PostDetailsComponent } from './components/shared/post-details/post-details.component';
 import { CommentsComponent } from './components/shared/comments/comments.component';
+import { PostDetailsComponent } from './components/shared/post-details/post-details.component';
+import { CreatePostComponent } from './components/shared/create-post/create-post.component';
 
 import { PostService } from './services/post.service';
 import { CommentService } from './services/comment.service';
@@ -29,6 +30,7 @@ import { SessionService } from './infrastructure/session/session.service';
 import { TokenService } from './infrastructure/security/token.service';
 import { WebApiClient } from './infrastructure/communication/http';
 import { CommunicationService } from './infrastructure/communication/communication.service';
+import { ClipboardService } from './infrastructure/services/clipboard.service';
 
 import { TokenMapper } from './infrastructure/mapping/token.mapper';
 import { UserMapper } from './infrastructure/mapping/user.mapper';
@@ -36,9 +38,9 @@ import { UserMapper } from './infrastructure/mapping/user.mapper';
 import { TimeAgoPipe } from 'time-ago-pipe';
 import { ClipboardModule } from 'ngx-clipboard';
 import { NgProgressModule } from 'ngx-progressbar';
+import { FileUploadModule } from 'ng2-file-upload';
 
 import { RelationshipActionPipe } from './pipes/relationship-action.pipe';
-import { CreatePostComponent } from './components/shared/create-post/create-post.component';
 import { ErrorBoxComponent } from './components/shared/error-box/error-box.component';
 
 @NgModule({
@@ -51,14 +53,15 @@ import { ErrorBoxComponent } from './components/shared/error-box/error-box.compo
         SigninComponent,
         UserPostsComponent,
         NotFoundComponent,
-        PostDetailsComponent,
         RelationshipActionPipe,
         CommentsComponent,
-        CreatePostComponent,
-        ErrorBoxComponent
+        ErrorBoxComponent,
+        PostDetailsComponent,
+        CreatePostComponent
     ],
     entryComponents: [
-        PostDetailsComponent
+        PostDetailsComponent,
+        CreatePostComponent
     ],
     imports: [
         BrowserModule,
@@ -68,7 +71,8 @@ import { ErrorBoxComponent } from './components/shared/error-box/error-box.compo
         HttpClientModule,
         FormsModule,
         NgProgressModule,
-        ClipboardModule
+        ClipboardModule,
+        FileUploadModule
     ],
     providers: [
         PostService,
@@ -81,6 +85,7 @@ import { ErrorBoxComponent } from './components/shared/error-box/error-box.compo
         TokenService,
         WebApiClient,
         CommunicationService,
+        ClipboardService,
         TokenMapper,
         UserMapper
     ],

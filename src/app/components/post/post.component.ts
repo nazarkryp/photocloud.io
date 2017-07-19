@@ -1,5 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter, Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/platform-browser';
+import { MdSnackBar, MdSnackBarConfig } from '@angular/material';
+
 import { Post, Attachment, User, Comment, CurrentUser } from '../../common/models';
 import { AccountService, CommentService, PostService } from '../../services';
 
@@ -21,6 +23,7 @@ export class PostComponent implements OnInit {
         private accountService: AccountService,
         private commentService: CommentService,
         private postService: PostService,
+        public snackBar: MdSnackBar,
         @Inject(DOCUMENT) private document: any
     ) { }
 
@@ -46,6 +49,12 @@ export class PostComponent implements OnInit {
         const host = pathArray[2];
 
         return protocol + '//' + host + '/p/' + this.post.id;
+    }
+
+    showToast(message: string) {
+        const config = new MdSnackBarConfig();
+        config.duration = 1500;
+        const result = this.snackBar.open(message, null, config);
     }
 
     async createComment() {

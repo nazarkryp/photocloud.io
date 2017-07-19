@@ -2,3 +2,11 @@
     width: 600px;
     margin: 50px 0 50px 0;
 }
+
+.md-fab-bottom-right {
+    top: auto;
+    right: 35px;
+    bottom: 35px;
+    left: auto;
+    position: fixed;
+}

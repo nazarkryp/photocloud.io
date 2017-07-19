@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { MdDialog } from '@angular/material';
 import { NgProgressService } from 'ngx-progressbar';
 import { Post, User, Collection, Comment, Attachment } from '../../common/models';
 import { PostService } from '../../services';
+
+import { CreatePostComponent } from '../../components/shared/create-post/create-post.component';
 
 @Component({
     selector: 'app-posts',
@@ -14,9 +17,14 @@ export class PostsComponent implements OnInit {
 
     constructor(
         private postService: PostService,
-        private progressService: NgProgressService) {
+        private progressService: NgProgressService,
+        private dialog: MdDialog) {
         this.page.data = new Array<Post>();
         this.page.hasMoreItems = false;
+    }
+
+    createPost() {
+        const dialogRef = this.dialog.open(CreatePostComponent);
     }
 
     async getPosts() {

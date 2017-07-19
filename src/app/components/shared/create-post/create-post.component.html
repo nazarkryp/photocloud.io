@@ -1,3 +1,29 @@
-<p>
-  create-post works!
-</p>
+<div class="create-post-container" fxLayout="row" fxLayoutAlign="start start">
+    <div fxLayout="column" fxLayoutAlign="start start">
+        <h1 class="mat-headline">Create Post</h1>
+        <div fxLayout="row">
+            <button class="square-button z-depth-1" md-button>
+            <img class="thumbnail" src="https://res.cloudinary.com/dpfmyl1mn/image/upload/v1499946284/photocloud/prod/lanafeshchuk/vwbsm29n1guv0jvjlqem.jpg" alt="upload">
+        </button>
+            <button class="square-button z-depth-1" md-button>
+            <img class="thumbnail" src="https://res.cloudinary.com/dpfmyl1mn/image/upload/v1499946284/photocloud/prod/lanafeshchuk/vwbsm29n1guv0jvjlqem.jpg" alt="upload">
+        </button>
+            <button class="square-button " md-button>
+            <img class="thumbnail" src="https://res.cloudinary.com/dpfmyl1mn/image/upload/v1499946284/photocloud/prod/lanafeshchuk/vwbsm29n1guv0jvjlqem.jpg" alt="upload">
+        </button>
+            <input class="square-button z-depth-1" type="file" ng2FileSelect [uploader]="uploader" />
+            <!-- <button class="square-button z-depth-1" md-button ng2FileSelect [uploader]="uploader" type="file">
+            <md-icon>add</md-icon>
+        </button> -->
+        </div>
+        <div class="caption-container" fxLayout="column">
+            <label for="caption">Edit caption</label>
+            <input class="caption" mdInput [disabled]="isLoading" type="text" name="caption" autocomplete="off">
+        </div>
+        <button class="submit-button" md-raised-button color="primary">
+            Create Post
+        </button>
+        <div *ngFor="let item of uploader.queue">
+        </div>
+    </div>
+</div>

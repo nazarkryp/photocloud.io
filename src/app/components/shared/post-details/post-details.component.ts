@@ -1,9 +1,7 @@
 import { Component, Inject, ViewEncapsulation, Optional, OnInit, Input, Output, EventEmitter } from '@angular/core';
-
-import { MdDialogRef } from '@angular/material';
-import { MD_DIALOG_DATA } from '@angular/material';
-import { ActivatedRoute } from '@angular/router';
 import { DOCUMENT } from '@angular/platform-browser';
+import { MdDialogRef, MdSnackBarConfig, MdSnackBar, MD_DIALOG_DATA } from '@angular/material';
+import { ActivatedRoute } from '@angular/router';
 
 import { Post, User, Attachment, Comment, CurrentUser } from '../../../common/models';
 import { AccountService, PostService, CommentService } from '../../../services';
@@ -30,6 +28,7 @@ export class PostDetailsComponent implements OnInit {
         private commentService: CommentService,
         private progressService: NgProgressService,
         private accountService: AccountService,
+        private snackBar: MdSnackBar,
         @Optional() public dialogRef: MdDialogRef<PostDetailsComponent>,
         @Optional() @Inject(MD_DIALOG_DATA) public post: Post,
         @Inject(DOCUMENT) private document: any) {
@@ -41,33 +40,23 @@ export class PostDetailsComponent implements OnInit {
         this.currentUser = this.accountService.getCurrentUser();
     }
 
-    next(): void {
+    private next(): void {
         if (this.post.activeAttachment < this.post.attachments.length - 1) {
             this.post.activeAttachment++;
         }
     }
 
-    previous(): void {
+    private previous(): void {
         if (this.post.activeAttachment > 0) {
             this.post.activeAttachment--;
         }
     }
 
-    ngOnInit(): void {
-        if (!this.post) {
-            this.route.params.subscribe(async params => {
-                const postId = params['postId'];
-
-                this.getPost(postId);
-            });
-        }
-    }
-
-    remove() {
+    private remove(): void {
         this.onRemoved.emit(this.post);
     }
 
-    share() {
+    private share(): string {
         const pathArray = this.document.location.href.split('/');
         const protocol = pathArray[0];
         const host = pathArray[2];
@@ -75,7 +64,13 @@ export class PostDetailsComponent implements OnInit {
         return protocol + '//' + host + '/p/' + this.post.id;
     }
 
-    async createComment() {
+    private showToast(message: string) {
+        const config = new MdSnackBarConfig();
+        config.duration = 1500;
+        const result = this.snackBar.open(message, null, config);
+    }
+
+    private async createComment() {
         if (!this.text) {
             return;
         }
@@ -109,7 +104,7 @@ export class PostDetailsComponent implements OnInit {
         }
     }
 
-    async like() {
+    private async like() {
         try {
             if (this.post.userHasLiked) {
                 this.post.likesCount--;
@@ -137,6 +132,16 @@ export class PostDetailsComponent implements OnInit {
             this.post.activeAttachment = 0;
         } catch (error) { } finally {
             this.progressService.done();
+        }
+    }
+
+    ngOnInit(): void {
+        if (!this.post) {
+            this.route.params.subscribe(async params => {
+                const postId = params['postId'];
+
+                this.getPost(postId);
+            });
         }
     }
 }

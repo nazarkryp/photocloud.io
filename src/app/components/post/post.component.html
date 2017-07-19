@@ -52,7 +52,7 @@
             <md-icon>favorite_border</md-icon>
         </button>
         <input class="comment-input" type="text" placeholder="Add comment" [(ngModel)]="text" (keydown.enter)="createComment()" />
-        <button md-icon-button mdTooltip="Copy to clipboard" mdTooltipPosition="left" ngxClipboard [cbContent]="share()">
+        <button md-icon-button mdTooltip="Copy to clipboard" mdTooltipPosition="left" ngxClipboard [cbContent]="share()" (cbOnSuccess)="showToast('Copied to clipboard')">
             <md-icon>share</md-icon>
         </button>
     </div>

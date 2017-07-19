@@ -22,7 +22,7 @@
                 <div class="post-author" fxLayout="row" fxLayoutAlign="space-between center" fxFlex>
                     <a class="mat-body-1" [routerLink]="['/', post.user.username]">{{post.user.username}}</a>
                     <div>
-                        <button md-icon-button mdTooltip="Copy to clipboard" mdTooltipPosition="left" ngxClipboard [cbContent]="share()">
+                        <button md-icon-button mdTooltip="Copy to clipboard" mdTooltipPosition="left" ngxClipboard [cbContent]="share()" (cbOnSuccess)="showToast('Copied to clipboard')">
                     <md-icon>share</md-icon>
                 </button>
                         <md-menu #menu="mdMenu" xPosition="before">
