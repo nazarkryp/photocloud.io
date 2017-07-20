@@ -13,6 +13,7 @@ md-progress-bar {
     width: 35%;
     max-width: 400px;
     padding: 0 25px 25px 25px;
+    z-index: 999;
 }
 
 .md-padding {

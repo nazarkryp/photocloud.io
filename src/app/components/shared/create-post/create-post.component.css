@@ -1,14 +1,11 @@
 .upload-container {
-    width: 100%;
     overflow-x: hidden;
 }
 
 .create-post-container {
     background-color: #FAFAFA;
-    margin: -24px;
-    padding: 15px;
-    width: 675px;
-    height: auto;
+    /* margin: -24px; */
+    width: 400px;
 }
 
 
@@ -23,19 +20,19 @@
 } */
 
 .square-button {
-    background-color: white;
-    height: 150px;
-    width: 150px;
+    height: 75px;
+    width: 75px;
+    min-width: 75px;
     border-radius: 3px;
-    /* border: 1px solid #d8d8d8; */
+    border: 1px dashed #444444;
     padding: 0;
-    margin-right: 15px;
+    margin: 0 15px 0 0;
     display: inline-block;
 }
 
 .attachment-preview-image {
-    height: 150px;
-    width: 150px;
+    height: 75px;
+    width: 75px;
     object-fit: cover;
     overflow: hidden;
     position: absolute;
@@ -76,13 +73,14 @@
     position: relative;
     overflow-x: auto;
     width: 100%;
+    padding: 5px 0 0 0;
     white-space: nowrap;
     display: inline-block !important;
 }
 
 .attachment-preview-container {
-    width: 150px;
-    height: 150px;
+    width: 75px;
+    height: 75px;
     margin-right: 15px;
     display: inline-block;
 }
@@ -90,14 +88,24 @@
 .attachment-progress-container {
     background-color: rgba(0, 0, 0, .5);
     position: absolute;
-    width: 150px;
-    height: 150px;
+    width: 75px;
+    height: 75px;
     z-index: 999;
 }
 
 .progress {
-    font-size: 24px;
+    font-size: 17px;
     font-weight: lighter;
     position: absolute;
     color: white;
+}
+
+.create-post-footer {
+    margin-top: 15px;
+    width: 100%;
+}
+
+md-progress-spinner {
+    width: 65px !important;
+    height: 65px !important;
 }

@@ -29,7 +29,9 @@ export class CreatePostComponent implements OnInit {
         private accountService: AccountService,
         private tokenService: TokenService,
         @Optional() public dialogRef: MdDialogRef<CreatePostComponent>) {
-        this.uploader = new FileUploader({ url: environment.apiUri + 'attachments' });
+        this.uploader = new FileUploader({
+            url: environment.apiUri + 'attachments'
+        });
         this.post = new CreatePostModel();
         this.attachments = new Array<Attachment>();
     }

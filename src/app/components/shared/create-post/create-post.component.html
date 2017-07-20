@@ -1,27 +1,25 @@
-<div class="create-post-container" fxLayout="row" fxLayoutAlign="start start">
-    <div class="upload-container" fxLayout="column" fxLayoutAlign="start start">
-        <h1 class="mat-headline">Create Post</h1>
-        <div fxLayout="row">
-            <button md-button (click)="fileInput.click()" class="square-button z-depth-1">
-                <md-icon>add</md-icon>
+<div class="create-post-container" fxLayout="column" fxLayoutAlign="start start">
+    <div class="z-depth-1" *ngIf="attachments.length > 0" style="margin-bottom: 15px;">
+        <img src="{{attachments[0].uri}}" alt="preview" style="width: 400px; height: 400px;object-fit: cover;vertical-align: bottom;">
+    </div>
+    <div class="upload-container" fxLayout="column" fxLayoutAlign="end start">
+        <div class="attachment-container" fxLayout="row">
+            <button class="square-button" md-button (click)="fileInput.click()">
+                <div style="width: 70px; height: 70px;" fxLayout="row" fxLayoutAlign="center center">
+                    <md-icon style="position:absolute;">add</md-icon>
+                </div>
             </button>
-            <input #fileInput type="file" ng2FileSelect [uploader]="uploader" hidden multiple/>
-            <div class="attachment-container" fxLayout="row">
-                <div class="attachment-preview-container z-depth-1" *ngFor="let item of uploader.queue">
-                    <img class="attachment-preview-image" appImagePreview [image]="item?._file" alt="image-preview">
-                    <div class="attachment-progress-container" fxLayout="row" fxLayoutAlign="center center" *ngIf="!item.isUploaded">
-                        <md-progress-spinner strokeWidth="5" mode="indeterminate" color="accent"></md-progress-spinner>
-                        <span class="progress">{{item.progress}}%</span>
-                    </div>
+            <input #fileInput type="file" accept="image/*" ng2FileSelect [uploader]="uploader" hidden multiple/>
+            <div class="attachment-preview-container z-depth-1" *ngFor="let item of uploader.queue">
+                <img class="attachment-preview-image" appImagePreview [image]="item?._file" alt="image-preview">
+                <div class="attachment-progress-container" fxLayout="row" fxLayoutAlign="center center" *ngIf="!item.isUploaded">
+                    <md-progress-spinner strokeWidth="5" mode="determinate" value="{{item.progress}}" color="accent"></md-progress-spinner>
+                    <span class="progress">{{item.progress}}%</span>
                 </div>
             </div>
         </div>
-        <div class="caption-container" fxLayout="column">
-            <label for="caption">Edit caption</label>
-            <input class="caption" mdInput [disabled]="isLoading" type="text" name="caption" autocomplete="off">
-        </div>
-        <button class="submit-button" md-raised-button color="primary" (click)="createPost()">Create Post</button>
-        <div *ngFor="let item of uploader.queue">
-        </div>
+    </div>
+    <div class="create-post-footer" *ngIf="uploader.queue.length > 0 && !uploader.isUploading">
+        <button class="submit-button" md-raised-button color="accent" (click)="createPost()" [disabled]="uploader.isUploading">Create Post</button>
     </div>
 </div>

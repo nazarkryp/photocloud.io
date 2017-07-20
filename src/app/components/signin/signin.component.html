@@ -1,4 +1,5 @@
-<div class="content" fxLayout="row" fxLayoutAlign="center center">
+<div style="position: absolute; height: calc(40vh); width:100%; background: #e91e63;"></div>
+<div class="content" fxLayout="column" fxLayoutAlign="center center">
     <form class="form z-depth-1" fxLayout="column" (ngSubmit)="signIn()" autocomplete="off">
         <md-progress-bar color="primary" mode="indeterminate" *ngIf="isLoading"></md-progress-bar>
         <div class="md-padding" fxLayout="column">
@@ -17,7 +18,7 @@
             <span class="mat-subhead error">{{errorMessage}}</span>
         </div>
         <div fxLayout="row" fxLayoutAlign="end center">
-            <button md-raised-button color="primary" type="sumbit" [disabled]="isLoading">Sign In</button>
+            <button md-raised-button color="accent" type="sumbit" [disabled]="isLoading">Sign In</button>
         </div>
     </form>
 </div>
