@@ -12,7 +12,7 @@
                 <button md-icon-button mdTooltip="Logout" mdTooltipPosition="above" (click)="logout()" *ngIf="currentUser && user.id === currentUser.id">
                     <md-icon>exit_to_app</md-icon>
                 </button>
-                <button md-raised-button color="primary" *ngIf="currentUser && user.id !== currentUser.id" (click)="modifyRelationship()"
+                <button md-raised-button color="accent" *ngIf="currentUser && user.id !== currentUser.id" (click)="modifyRelationship()"
                     [disabled]="isModifyingRelationship">{{user.incommingStatus | relationshipAction | uppercase }}</button>
             </div>
             <div class="md-padding" fxLayout="row" fxLayoutAlign="start center">

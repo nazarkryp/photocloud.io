@@ -37,7 +37,7 @@
         </div>
         <div class="post-caption" *ngIf="post.caption">
             <a [routerLink]="['/', post.user.username]"><strong>{{post.user.username}}</strong></a>
-            <span>{{post.caption}}</span>
+            <app-caption caption="{{post.caption}}"></app-caption>
         </div>
         <div>
             <app-comments [post]="post"></app-comments>
@@ -49,7 +49,7 @@
     <!-- <hr/> -->
     <div class="post-actions" fxLayout="row">
         <button [ngClass]="{ 'liked' : post.userHasLiked }" md-icon-button (click)="like()">
-            <md-icon>favorite_border</md-icon>
+            <md-icon>favorite</md-icon>
         </button>
         <input class="comment-input" type="text" placeholder="Add comment" [(ngModel)]="text" (keydown.enter)="createComment()" />
         <button md-icon-button mdTooltip="Copy to clipboard" mdTooltipPosition="left" ngxClipboard [cbContent]="share()" (cbOnSuccess)="showToast('Copied to clipboard')">

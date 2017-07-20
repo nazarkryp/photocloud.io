@@ -25,7 +25,7 @@ md-progress-bar {
 
 .error {
     text-align: center;
-    color: red;
+    color: #e91e63;
 }
 
 .mat-headline {

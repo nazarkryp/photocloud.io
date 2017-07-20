@@ -3,9 +3,7 @@ import { Injectable } from '@angular/core';
 import { Headers, Http, RequestOptions } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 
-import { Post } from '../common/models/post';
-import { Pagination } from '../common/models/pagination';
-import { Collection } from '../common/models/collection-model';
+import { Collection, Pagination, Post, CreatePostModel } from '../common/models';
 
 import { TokenService } from '../infrastructure/security/token.service';
 
@@ -13,7 +11,15 @@ import { WebApiClient } from '../infrastructure/communication/http';
 
 @Injectable()
 export class PostService {
-    constructor(private http: WebApiClient, private tokenService: TokenService) { }
+    constructor(
+        private http: WebApiClient,
+        private tokenService: TokenService) { }
+
+    createPost(post: CreatePostModel) {
+        return this.http.post('posts', post)
+            .then(response => response as Post)
+            .catch(error => this.handleError(error));
+    }
 
     getPosts(pagination: Pagination): Promise<Collection<Post>> {
         let requestUri = 'posts';

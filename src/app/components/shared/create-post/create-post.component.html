@@ -1,28 +1,26 @@
 <div class="create-post-container" fxLayout="row" fxLayoutAlign="start start">
-    <div fxLayout="column" fxLayoutAlign="start start">
+    <div class="upload-container" fxLayout="column" fxLayoutAlign="start start">
         <h1 class="mat-headline">Create Post</h1>
         <div fxLayout="row">
-            <button class="square-button z-depth-1" md-button>
-            <img class="thumbnail" src="https://res.cloudinary.com/dpfmyl1mn/image/upload/v1497310108/photocloud/prod/nazarkryp/qbcxbabvehewggo7hlay.jpg" alt="upload">
-        </button>
-            <button class="square-button z-depth-1" md-button>
-            <img class="thumbnail" src="https://res.cloudinary.com/dpfmyl1mn/image/upload/v1497310108/photocloud/prod/nazarkryp/qbcxbabvehewggo7hlay.jpg" alt="upload">
-        </button>
-            <button class="square-button " md-button>
-            <img class="thumbnail" src="https://res.cloudinary.com/dpfmyl1mn/image/upload/v1497310108/photocloud/prod/nazarkryp/qbcxbabvehewggo7hlay.jpg" alt="upload">
-        </button>
-            <input class="square-button z-depth-1" type="file" ng2FileSelect [uploader]="uploader" />
-            <!-- <button class="square-button z-depth-1" md-button ng2FileSelect [uploader]="uploader" type="file">
-            <md-icon>add</md-icon>
-        </button> -->
+            <button md-button (click)="fileInput.click()" class="square-button z-depth-1">
+                <md-icon>add</md-icon>
+            </button>
+            <input #fileInput type="file" ng2FileSelect [uploader]="uploader" hidden multiple/>
+            <div class="attachment-container" fxLayout="row">
+                <div class="attachment-preview-container z-depth-1" *ngFor="let item of uploader.queue">
+                    <img class="attachment-preview-image" appImagePreview [image]="item?._file" alt="image-preview">
+                    <div class="attachment-progress-container" fxLayout="row" fxLayoutAlign="center center" *ngIf="!item.isUploaded">
+                        <md-progress-spinner strokeWidth="5" mode="indeterminate" color="accent"></md-progress-spinner>
+                        <span class="progress">{{item.progress}}%</span>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="caption-container" fxLayout="column">
             <label for="caption">Edit caption</label>
             <input class="caption" mdInput [disabled]="isLoading" type="text" name="caption" autocomplete="off">
         </div>
-        <button class="submit-button" md-raised-button color="primary">
-            Create Post
-        </button>
+        <button class="submit-button" md-raised-button color="primary" (click)="createPost()">Create Post</button>
         <div *ngFor="let item of uploader.queue">
         </div>
     </div>

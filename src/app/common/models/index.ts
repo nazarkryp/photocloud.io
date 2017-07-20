@@ -1,6 +1,7 @@
 export { Attachment } from './attachment';
 export { User } from './user';
 export { Post } from './post';
+export { CreatePostModel } from './create-post';
 export { Pagination } from './pagination';
 export { Comment } from './comment';
 export { CurrentUser } from './current-user';

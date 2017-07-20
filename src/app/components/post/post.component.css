@@ -26,7 +26,7 @@ hr {
 }
 
 .post-footer {
-    padding: 15px;
+    padding: 15px 15px 0px 15px;
 }
 
 .post-caption {
@@ -35,7 +35,7 @@ hr {
 }
 
 .post-actions {
-    padding: 10px;
+    padding: 0 10px 10px 10px;
 }
 
 .post-avatar {
@@ -98,6 +98,7 @@ hr {
     color: gray;
     text-transform: uppercase;
     letter-spacing: 1px;
+    font-weight: lighter;
 }
 
 .progress-bar {
@@ -110,5 +111,5 @@ hr {
 }
 
 .liked {
-    color: red;
+    color: #e91e63;
 }

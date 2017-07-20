@@ -12,6 +12,7 @@ import {
     MdMenuModule,
     MdInputModule,
     MdProgressBarModule,
+    MdProgressSpinnerModule,
     MdDialogModule,
     MdSnackBarModule,
     MdSidenavModule
@@ -29,6 +30,7 @@ import {
         MdMenuModule,
         MdInputModule,
         MdProgressBarModule,
+        MdProgressSpinnerModule,
         MdDialogModule,
         MdSnackBarModule,
         MdSidenavModule
@@ -43,6 +45,7 @@ import {
         MdMenuModule,
         MdInputModule,
         MdProgressBarModule,
+        MdProgressSpinnerModule,
         MdDialogModule,
         MdSnackBarModule,
         MdSidenavModule

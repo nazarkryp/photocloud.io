@@ -1,3 +1,8 @@
+.upload-container {
+    width: 100%;
+    overflow-x: hidden;
+}
+
 .create-post-container {
     background-color: #FAFAFA;
     margin: -24px;
@@ -25,13 +30,15 @@
     /* border: 1px solid #d8d8d8; */
     padding: 0;
     margin-right: 15px;
+    display: inline-block;
 }
 
-.thumbnail {
+.attachment-preview-image {
     height: 150px;
     width: 150px;
     object-fit: cover;
     overflow: hidden;
+    position: absolute;
 }
 
 .caption-container {
@@ -63,4 +70,34 @@
 
 .mat-headline {
     font-weight: lighter;
+}
+
+.attachment-container {
+    position: relative;
+    overflow-x: auto;
+    width: 100%;
+    white-space: nowrap;
+    display: inline-block !important;
+}
+
+.attachment-preview-container {
+    width: 150px;
+    height: 150px;
+    margin-right: 15px;
+    display: inline-block;
+}
+
+.attachment-progress-container {
+    background-color: rgba(0, 0, 0, .5);
+    position: absolute;
+    width: 150px;
+    height: 150px;
+    z-index: 999;
+}
+
+.progress {
+    font-size: 24px;
+    font-weight: lighter;
+    position: absolute;
+    color: white;
 }

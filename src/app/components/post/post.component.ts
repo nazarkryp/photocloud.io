@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, Inject } from '@angular/core';
+import { Component, ViewEncapsulation, OnInit, Input, Output, EventEmitter, Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/platform-browser';
 import { MdSnackBar, MdSnackBarConfig } from '@angular/material';
 
@@ -8,7 +8,8 @@ import { AccountService, CommentService, PostService } from '../../services';
 @Component({
     selector: 'app-post',
     templateUrl: './post.component.html',
-    styleUrls: ['./post.component.css']
+    styleUrls: ['./post.component.css'],
+    encapsulation: ViewEncapsulation.None
 })
 export class PostComponent implements OnInit {
     @Input() public post: Post;
@@ -113,6 +114,8 @@ export class PostComponent implements OnInit {
 
     ngOnInit() {
         this.post.activeAttachment = 0;
+        // tslint:disable-next-line:max-line-length
+        // this.post.caption = this.post.caption.replace(/#(\w+)/g, '<a class="hashtag" href="https://www.google.com/?q=$1" target="_blank" style="color: #e91e63;text-decoration: none;font-weight: bold;">$&</a>');
         this.currentUser = this.accountService.getCurrentUser(false);
     }
 }

@@ -49,7 +49,7 @@
                 </div>
                 <div class="post-caption" *ngIf="post.caption">
                     <a><strong>{{post.user.username}}</strong></a>
-                    <span>{{post.caption}}</span>
+                    <app-caption caption="{{post.caption}}"></app-caption>
                 </div>
                 <div class="comments">
                     <span class="comments-header">Comments</span>
@@ -61,7 +61,8 @@
                     <button class="like-button" [ngClass]="{ 'liked' : post.userHasLiked }" md-icon-button (click)="like()">
                     <md-icon>favorite_border</md-icon>
                 </button>
-                    <input class="post-details-comment-input" type="text" placeholder="Add comment" [(ngModel)]="text" (keydown.enter)="createComment()" />
+                    <input class="post-details-comment-input" type="text" placeholder="Add comment" [(ngModel)]="text" (keydown.enter)="createComment()"
+                    />
                 </div>
             </div>
         </div>

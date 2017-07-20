@@ -11,7 +11,7 @@ import { NgProgressService } from 'ngx-progressbar';
     selector: 'app-post-details',
     templateUrl: './post-details.component.html',
     styleUrls: ['./post-details.component.css'],
-    encapsulation: ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.Emulated
 })
 export class PostDetailsComponent implements OnInit {
     private isDialog: boolean;

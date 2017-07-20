@@ -42,6 +42,9 @@ import { FileUploadModule } from 'ng2-file-upload';
 
 import { RelationshipActionPipe } from './pipes/relationship-action.pipe';
 import { ErrorBoxComponent } from './components/shared/error-box/error-box.component';
+import { RawPipe } from './pipes/raw.pipe';
+import { CaptionComponent } from './components/shared/caption/caption.component';
+import { ImagePreviewDirective } from './directives/image-preview.directive';
 
 @NgModule({
     declarations: [
@@ -57,7 +60,10 @@ import { ErrorBoxComponent } from './components/shared/error-box/error-box.compo
         CommentsComponent,
         ErrorBoxComponent,
         PostDetailsComponent,
-        CreatePostComponent
+        CreatePostComponent,
+        RawPipe,
+        CaptionComponent,
+        ImagePreviewDirective
     ],
     entryComponents: [
         PostDetailsComponent,
