@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 // import { HttpModule } from '@angular/http';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -28,8 +28,9 @@ import { CurrentUserService } from './infrastructure/services/current-user.servi
 import { AuthenticationGuard } from './infrastructure/guards/authentication-guard.service';
 import { SessionService } from './infrastructure/session/session.service';
 import { TokenService } from './infrastructure/security/token.service';
-import { WebApiClient } from './infrastructure/communication/http';
-import { CommunicationService } from './infrastructure/communication/communication.service';
+import { TokenProvider } from './infrastructure/security';
+import { LegacyWebApiClient } from './infrastructure/communication/http';
+import { CommunicationService, WebApiClient, AuthenticationInterceptor } from './infrastructure/communication';
 import { ClipboardService } from './infrastructure/services/clipboard.service';
 
 import { TokenMapper } from './infrastructure/mapping/token.mapper';
@@ -89,8 +90,15 @@ import { ImagePreviewDirective } from './directives/image-preview.directive';
         AuthenticationGuard,
         SessionService,
         TokenService,
+        LegacyWebApiClient,
         WebApiClient,
         CommunicationService,
+        WebApiClient,
+        // {
+        //     provide: HTTP_INTERCEPTORS,
+        //     useClass: AuthenticationInterceptor,
+        //     multi: true
+        // },
         ClipboardService,
         TokenMapper,
         UserMapper

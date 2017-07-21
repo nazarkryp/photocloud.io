@@ -7,12 +7,12 @@ import { Collection, Pagination, Post, CreatePostModel } from '../common/models'
 
 import { TokenService } from '../infrastructure/security/token.service';
 
-import { WebApiClient } from '../infrastructure/communication/http';
+import { LegacyWebApiClient } from '../infrastructure/communication/http';
 
 @Injectable()
 export class PostService {
     constructor(
-        private http: WebApiClient,
+        private http: LegacyWebApiClient,
         private tokenService: TokenService) { }
 
     createPost(post: CreatePostModel) {

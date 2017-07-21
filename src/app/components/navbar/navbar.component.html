@@ -2,7 +2,8 @@
 <md-toolbar class="navbar z-depth-1">
     <div class="toolbar-tools" fxLayout="row" fxLayoutAlign="center center">
         <div class="container" fxLayout="row" fxLayoutAlign="space-between center">
-            <h1 class="logo" routerLink="/">photocloud</h1>
+            <button (click)="get()" md-button>GET</button>
+            <!-- <h1 class="logo" routerLink="/">photocloud</h1> -->
             <a [routerLink]="['/', accessToken.username]" fxLayout="row" fxLayoutAlign="center center" *ngIf="accessToken">
                 <img class="avatar" src="{{accessToken.pictureUri}}" alt="user">
             </a>

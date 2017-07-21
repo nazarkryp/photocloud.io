@@ -1,22 +1,27 @@
-import { Injectable } from '@angular/core';
+﻿import { Injectable } from '@angular/core';
 // import { Http, RequestOptions, Headers, Response } from '@angular/http';
 import { HttpClient, HttpResponse, HttpHeaders } from '@angular/common/http';
 import 'rxjs/add/operator/retry';
 import { Observable } from 'rxjs/Observable';
 
 import { TokenService } from '../security/token.service';
+import { Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
 
 @Injectable()
-export class WebApiClient {
-    constructor(private http: HttpClient, private tokenService: TokenService) { }
+export class LegacyWebApiClient {
+    constructor(
+        private http: HttpClient,
+        private router: Router,
+        private tokenService: TokenService) { }
 
     async get(requestUri: string): Promise<Object> {
         const headers = await this.getRequestHeaders();
 
         return this.http.get(environment.apiUri + requestUri, { headers: headers })
             .retry(3)
-            .toPromise();
+            .toPromise()
+            .catch(error => this.onError(error));
     }
 
     async post(requestUri: string, data: any): Promise<Object> {
@@ -63,5 +68,15 @@ export class WebApiClient {
         });
 
         return headers;
+    }
+
+    private onError(error: Response): Response {
+        if (error.status === 404) {
+            this.router.navigateByUrl('/404', {
+                skipLocationChange: true
+            });
+        }
+
+        return error;
     }
 }

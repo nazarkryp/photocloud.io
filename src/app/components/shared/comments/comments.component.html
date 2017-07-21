@@ -4,6 +4,6 @@
         <a [routerLink]="['/', comment.user.username]">
         <strong>{{comment.user.username}}</strong>
     </a>
-        <span>{{comment.text}}</span>
+        <span [innerHTML]="comment.text | raw"></span>
     </div>
 </div>
