@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { AccountService } from '../../services/account.service';
-import { AccessToken } from '../../common/models/token';
+import { UserLogin, AccessToken } from '../../common/models';
+import { AccountService } from '../../services';
 
 @Component({
     selector: 'app-signin',
@@ -10,30 +10,28 @@ import { AccessToken } from '../../common/models/token';
     styleUrls: ['./signin.component.css']
 })
 export class SigninComponent {
-    account: any = {
-        username: '',
-        password: ''
-    };
-
-    isLoading = false;
-    errorMessage: string;
+    private isLoading = false;
+    private errorMessage: string;
+    private account: UserLogin = new UserLogin();
 
     constructor(
         private accountService: AccountService,
         private router: Router) {
     }
 
-    async signIn() {
+    signIn() {
         this.isLoading = true;
         this.errorMessage = '';
 
-        try {
-            const accessToken = await this.accountService.signIn(this.account);
-            this.router.navigateByUrl('/');
-        } catch (error) {
-            this.errorMessage = error.error;
-        } finally {
-            this.isLoading = false;
-        }
+        this.accountService.signIn(this.account)
+            .finally(() => {
+                this.isLoading = false;
+            })
+            .subscribe(response => {
+                console.log('success');
+                this.router.navigateByUrl('/');
+            }, error => {
+                this.errorMessage = error.error.error;
+            });
     }
 }

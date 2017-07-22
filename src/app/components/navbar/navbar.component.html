@@ -1,9 +1,7 @@
-<!-- <md-progress-bar class="progress-bar" color="warn" [value]="value"></md-progress-bar>  -->
 <md-toolbar class="navbar z-depth-1">
     <div class="toolbar-tools" fxLayout="row" fxLayoutAlign="center center">
         <div class="container" fxLayout="row" fxLayoutAlign="space-between center">
-            <button (click)="get()" md-button>GET</button>
-            <!-- <h1 class="logo" routerLink="/">photocloud</h1> -->
+             <h1 class="logo" routerLink="/">photocloud</h1> 
             <a [routerLink]="['/', accessToken.username]" fxLayout="row" fxLayoutAlign="center center" *ngIf="accessToken">
                 <img class="avatar" src="{{accessToken.pictureUri}}" alt="user">
             </a>

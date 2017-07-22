@@ -11,7 +11,7 @@ import { Comment } from '../../../common/models/comment';
     templateUrl: './comments.component.html',
     styleUrls: ['./comments.component.css']
 })
-export class CommentsComponent implements OnInit {
+export class CommentsComponent {
     @Input()
     public post: Post;
 
@@ -21,19 +21,17 @@ export class CommentsComponent implements OnInit {
         private commentService: CommentService,
         private router: Router) { }
 
-    async getComments() {
+    getComments() {
         this.post.isLoading = true;
         this.isLoading = true;
 
-        try {
-            this.post.comments = await this.commentService.getComments(this.post.id);
-        } catch (error) {
-        } finally {
-            this.isLoading = false;
-            this.post.isLoading = false;
-        }
-    }
-
-    ngOnInit() {
+        this.commentService.getComments(this.post.id)
+            .finally(() => {
+                this.isLoading = false;
+                this.post.isLoading = false;
+            })
+            .subscribe(comments => {
+                this.post.comments = comments;
+            });
     }
 }

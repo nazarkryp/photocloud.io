@@ -27,32 +27,28 @@ export class PostsComponent implements OnInit {
         const dialogRef = this.dialog.open(CreatePostComponent);
     }
 
-    async getPosts() {
+    getPosts() {
         this.progressService.start();
-        this.isLoading = true;
 
-        try {
-            const page = await this.postService.getPosts(this.page.pagination) as Collection<Post>;
-
-            this.page.hasMoreItems = page.hasMoreItems;
-            this.page.pagination = page.pagination;
-            this.page.data = this.page.data.concat(page.data);
-        } catch (error) { } finally {
-            this.isLoading = false;
-            this.progressService.done();
-        }
+        this.postService.getPosts(this.page.pagination)
+            .finally(() => {
+                this.progressService.done();
+            })
+            .subscribe(page => {
+                this.page.hasMoreItems = page.hasMoreItems;
+                this.page.pagination = page.pagination;
+                this.page.data = this.page.data.concat(page.data);
+            });
     }
 
-    async onRemoved(post: Post) {
+    onRemoved(post: Post) {
         const indexToRemove = this.page.data.findIndex(p => p.id === post.id);
-
         this.page.data.splice(indexToRemove, 1);
-
-        await this.postService.removePost(post.id);
+        this.postService.removePost(post.id);
     }
 
-    async ngOnInit() {
-        await this.getPosts();
+    ngOnInit() {
+        this.getPosts();
     }
 }
 

@@ -1,7 +1,9 @@
 import { Component, Inject, ViewEncapsulation, Optional, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { DOCUMENT } from '@angular/platform-browser';
 import { MdDialogRef, MdSnackBarConfig, MdSnackBar, MD_DIALOG_DATA } from '@angular/material';
-import { ActivatedRoute } from '@angular/router';
+
+import { Observable, Subscription } from 'rxjs/Rx';
 
 import { Post, User, Attachment, Comment, CurrentUser } from '../../../common/models';
 import { AccountService, PostService, CommentService } from '../../../services';
@@ -70,7 +72,7 @@ export class PostDetailsComponent implements OnInit {
         const result = this.snackBar.open(message, null, config);
     }
 
-    private async createComment() {
+    createComment() {
         if (!this.text) {
             return;
         }
@@ -91,53 +93,57 @@ export class PostDetailsComponent implements OnInit {
 
         this.post.comments.push(comment);
 
-        try {
-            this.post.isLoading = true;
-            const createdComment = await this.commentService.createComment(this.post.id, { text: text });
-            comment.id = createdComment.id;
-            comment.date = createdComment.date;
-        } catch (error) {
-            const failedCommentIndex = this.post.comments.findIndex(p => !p.id);
-            this.post.comments.splice(failedCommentIndex, 1);
-        } finally {
-            this.post.isLoading = false;
-        }
+        this.commentService.createComment(this.post.id, { text: text })
+            .subscribe(createdComment => {
+                comment.id = createdComment.id;
+                comment.date = createdComment.date;
+            }, () => {
+                const failedCommentIndex = this.post.comments.findIndex(c => !c.id);
+                this.post.comments.splice(failedCommentIndex, 1);
+            });
+
     }
 
-    private async like() {
-        try {
-            if (this.post.userHasLiked) {
-                this.post.likesCount--;
-                this.post.userHasLiked = !this.post.userHasLiked;
-                await this.postService.removePostLike(this.post.id);
-            } else {
-                this.post.likesCount++;
-                this.post.userHasLiked = !this.post.userHasLiked;
-                await this.postService.likePost(this.post.id);
-            }
-        } catch (error) {
+    private like() {
+        let observable: Observable<{}>;
+
+        if (this.post.userHasLiked) {
+            this.post.likesCount--;
+            this.post.userHasLiked = !this.post.userHasLiked;
+            observable = this.postService.removePostLike(this.post.id);
+        } else {
+            this.post.likesCount++;
+            this.post.userHasLiked = !this.post.userHasLiked;
+            observable = this.postService.likePost(this.post.id);
+        }
+
+        observable.catch((error) => {
             if (this.post.userHasLiked) {
                 this.post.likesCount--;
             } else {
                 this.post.likesCount++;
             }
             this.post.userHasLiked = !this.post.userHasLiked;
-        } finally { }
+            return error;
+        });
     }
 
-    private async getPost(postId: number) {
-        try {
-            this.progressService.start();
-            this.post = await this.postService.getPostById(postId);
-            this.post.activeAttachment = 0;
-        } catch (error) { } finally {
-            this.progressService.done();
-        }
+    private getPost(postId: number) {
+        this.progressService.start();
+
+        this.postService.getPostById(postId)
+            .finally(() => {
+                this.progressService.done();
+            })
+            .subscribe(post => {
+                this.post = post;
+                this.post.activeAttachment = 0;
+            });
     }
 
     ngOnInit(): void {
         if (!this.post) {
-            this.route.params.subscribe(async params => {
+            this.route.params.subscribe(params => {
                 const postId = params['postId'];
 
                 this.getPost(postId);

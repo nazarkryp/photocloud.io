@@ -1,8 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MdDialog } from '@angular/material';
-import { Subscription } from 'rxjs/Subscription';
+import { Observable, Subscription } from 'rxjs/Rx';
 
 import { AccountService, PostService, UserService } from '../../services';
 import { CurrentUser, Post, Attachment, User, RelationshipStatus, Collection, Error } from '../../common/models';
@@ -34,35 +33,26 @@ export class UserPostsComponent implements OnInit, OnDestroy {
         private progressService: NgProgressService) {
     }
 
-    async getUser(): Promise<User> {
-        try {
-            const user = await this.userService.getUser(this.user.username);
-            this.user = user;
-
-            return this.user;
-        } catch (error) {
-            if (error.status === 404) {
-                this.router.navigateByUrl('/404', { skipLocationChange: true });
-            }
-
-            return null;
-        } finally {
-        }
+    private getUser(): Observable<User> {
+        return this.userService.getUser(this.user.username)
+            .do(user => this.user = user, error => {
+                if (error.status === 404) {
+                    this.router.navigateByUrl('/404', { skipLocationChange: true });
+                }
+            });
     }
 
-    async getPosts(): Promise<Collection<Post>> {
-        this.isLoadingPosts = true;
+    private getPosts() {
+        this.progressService.start();
 
-        try {
-            const page = await this.postService.getUserPosts(this.user.username, this.page.pagination);
-            this.page.hasMoreItems = page.hasMoreItems;
-            this.page.pagination = page.pagination;
-            this.page.data = this.page.data.concat(page.data);
-
-            return page;
-        } catch (error) { } finally {
-            this.isLoadingPosts = false;
-        }
+        this.postService.getUserPosts(this.user.username, this.page.pagination)
+            .subscribe(page => {
+                this.page.hasMoreItems = page.hasMoreItems;
+                this.page.pagination = page.pagination;
+                this.page.data = this.page.data.concat(page.data);
+            }, error => { }, () => {
+                this.progressService.done();
+            });
     }
 
     logout() {
@@ -76,8 +66,7 @@ export class UserPostsComponent implements OnInit, OnDestroy {
         });
     }
 
-    async modifyRelationship() {
-        this.isModifyingRelationship = true;
+    modifyRelationship() {
         let action: number;
 
         if (this.user.incommingStatus === RelationshipStatus.None) {
@@ -89,47 +78,50 @@ export class UserPostsComponent implements OnInit, OnDestroy {
         } else if (this.user.incommingStatus === RelationshipStatus.Blocked) {
             action = 4;
         }
-        try {
-            this.user = await this.userService.modifyRelationship(this.user.id, {
-                action: action
-            });
-        } catch (error) {
-        } finally {
+
+        this.isModifyingRelationship = true;
+        this.userService.modifyRelationship(this.user.id, {
+            action: action
+        }).subscribe(user => {
+            this.user = user;
+        }, error => { }, () => {
             this.isModifyingRelationship = false;
-        }
+        });
     }
 
-    async ngOnInit() {
+    ngOnInit() {
         this.currentUser = this.accountService.getCurrentUser();
 
         this.subscription = this.route.params.subscribe(async params => {
             this.initializePage();
             this.user.username = params['username'];
+
             this.isLoading = true;
             this.progressService.start();
-            const user = await this.getUser();
-
-            if (!user) {
-                return;
-            } else if (!user.isActive) {
-                this.error = new Error('Account is not active');
-            } else if (user.isPrivate
-                && (!this.currentUser
-                    || user.id !== this.currentUser.id)
-                && user.incommingStatus !== RelationshipStatus.Following) {
-                if (this.currentUser) {
-                    this.error = new Error('Account is private',
-                        `Follow ${this.user.username} to see all their photos`);
-                } else {
-                    this.error = new Error('Account is private',
-                        `Already know ${this.user.username}? Sign in to see all their photos`);
-                }
-            } else {
-                await this.getPosts();
-            }
-
-            this.isLoading = false;
-            this.progressService.done();
+            this.getUser()
+                .subscribe(user => {
+                    if (!user) {
+                        return;
+                    } else if (!user.isActive) {
+                        this.error = new Error('Account is not active');
+                    } else if (user.isPrivate
+                        && (!this.currentUser
+                            || user.id !== this.currentUser.id)
+                        && user.incommingStatus !== RelationshipStatus.Following) {
+                        if (this.currentUser) {
+                            this.error = new Error('Account is private',
+                                `Follow ${this.user.username} to see all their photos`);
+                        } else {
+                            this.error = new Error('Account is private',
+                                `Already know ${this.user.username}? Sign in to see all their photos`);
+                        }
+                    } else {
+                        this.getPosts();
+                    }
+                }, error => { }, () => {
+                    this.isLoading = false;
+                    this.progressService.done();
+                })
         });
     }
 

@@ -1,6 +1,7 @@
 import { Component, ViewEncapsulation, OnInit, Input, Output, EventEmitter, Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/platform-browser';
 import { MdSnackBar, MdSnackBarConfig } from '@angular/material';
+import { Observable, Subscription } from 'rxjs/Rx';
 
 import { Post, Attachment, User, Comment, CurrentUser } from '../../common/models';
 import { AccountService, CommentService, PostService } from '../../services';
@@ -58,10 +59,11 @@ export class PostComponent implements OnInit {
         const result = this.snackBar.open(message, null, config);
     }
 
-    async createComment() {
+    createComment() {
         if (!this.text) {
             return;
         }
+
         const text = this.text;
         this.text = '';
 
@@ -78,44 +80,53 @@ export class PostComponent implements OnInit {
 
         this.post.comments.push(comment);
 
-        try {
-            this.post.isLoading = true;
-            const createdComment = await this.commentService.createComment(this.post.id, { text: text });
-            comment.id = createdComment.id;
-            comment.date = createdComment.date;
-        } catch (error) {
-            const failedCommentIndex = this.post.comments.findIndex(p => !p.id);
-            this.post.comments.splice(failedCommentIndex, 1);
-        } finally {
-            this.post.isLoading = false;
-        }
+        this.commentService.createComment(this.post.id, { text: text })
+            .subscribe(createdComment => {
+                comment.id = createdComment.id;
+                comment.date = createdComment.date;
+            }, () => {
+                const failedCommentIndex = this.post.comments.findIndex(c => !c.id);
+                this.post.comments.splice(failedCommentIndex, 1);
+            });
+
     }
 
-    async like() {
-        try {
-            if (this.post.userHasLiked) {
-                this.post.likesCount--;
-                this.post.userHasLiked = !this.post.userHasLiked;
-                await this.postService.removePostLike(this.post.id);
-            } else {
-                this.post.likesCount++;
-                this.post.userHasLiked = !this.post.userHasLiked;
-                await this.postService.likePost(this.post.id);
-            }
-        } catch (error) {
-            if (this.post.userHasLiked) {
-                this.post.likesCount--;
-            } else {
-                this.post.likesCount++;
-            }
+    like() {
+        if (this.post.userHasLiked) {
+            this.post.likesCount--;
             this.post.userHasLiked = !this.post.userHasLiked;
-        } finally { }
+            this.postService.removePostLike(this.post.id)
+                .subscribe(() => {
+                    this.post.userHasLiked = false;
+                }, (error) => {
+                    if (this.post.userHasLiked) {
+                        this.post.likesCount--;
+                    } else {
+                        this.post.likesCount++;
+                    }
+                    this.post.userHasLiked = !this.post.userHasLiked;
+                    return error;
+                });
+        } else {
+            this.post.likesCount++;
+            this.post.userHasLiked = !this.post.userHasLiked;
+            this.postService.likePost(this.post.id)
+                .subscribe(() => {
+                    this.post.userHasLiked = true;
+                }, (error) => {
+                    if (this.post.userHasLiked) {
+                        this.post.likesCount--;
+                    } else {
+                        this.post.likesCount++;
+                    }
+                    this.post.userHasLiked = !this.post.userHasLiked;
+                    return error;
+                });
+        }
     }
 
     ngOnInit() {
         this.post.activeAttachment = 0;
-        // tslint:disable-next-line:max-line-length
-        // this.post.caption = this.post.caption.replace(/#(\w+)/g, '<a class="hashtag" href="https://www.google.com/?q=$1" target="_blank" style="color: #e91e63;text-decoration: none;font-weight: bold;">$&</a>');
         this.currentUser = this.accountService.getCurrentUser(false);
     }
 }

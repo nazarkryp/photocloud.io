@@ -28,9 +28,9 @@ import { CurrentUserService } from './infrastructure/services/current-user.servi
 import { AuthenticationGuard } from './infrastructure/guards/authentication-guard.service';
 import { SessionService } from './infrastructure/session/session.service';
 import { TokenService } from './infrastructure/security/token.service';
-import { TokenProvider } from './infrastructure/security';
+import { TokenProvider, AuthenticationInterceptor } from './infrastructure/security';
 import { LegacyWebApiClient } from './infrastructure/communication/http';
-import { CommunicationService, WebApiClient, AuthenticationInterceptor } from './infrastructure/communication';
+import { CommunicationService, WebApiClient } from './infrastructure/communication';
 import { ClipboardService } from './infrastructure/services/clipboard.service';
 
 import { TokenMapper } from './infrastructure/mapping/token.mapper';
@@ -94,11 +94,12 @@ import { ImagePreviewDirective } from './directives/image-preview.directive';
         WebApiClient,
         CommunicationService,
         WebApiClient,
-        // {
-        //     provide: HTTP_INTERCEPTORS,
-        //     useClass: AuthenticationInterceptor,
-        //     multi: true
-        // },
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: AuthenticationInterceptor,
+            multi: true
+        },
+        TokenProvider,
         ClipboardService,
         TokenMapper,
         UserMapper

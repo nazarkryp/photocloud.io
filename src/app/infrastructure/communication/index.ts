@@ -1,3 +1,2 @@
-export { WebApiClient } from './web-api-client.service';
-export { AuthenticationInterceptor } from './authentication-interceptor';
+export { WebApiClient } from './web-api-client';
 export { CommunicationService } from './communication.service';

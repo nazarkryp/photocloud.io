@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs/Rx';
 
-import { LegacyWebApiClient } from '../infrastructure/communication/http';
-import { SessionService } from '../infrastructure/session/session.service';
-import { AccessToken } from '../common/models/token';
-import { CurrentUser } from '../common/models/current-user';
+import { SessionService } from '../infrastructure/session';
+import { AccessToken, CurrentUser } from '../common/models';
 import { CommunicationService } from '../infrastructure/communication/communication.service';
+import { WebApiClient } from '../infrastructure/communication/web-api-client';
 import { TokenMapper } from '../infrastructure/mapping/token.mapper';
 
 @Injectable()
@@ -12,21 +12,23 @@ export class AccountService {
     private currentUser: CurrentUser;
 
     constructor(
-        private http: LegacyWebApiClient,
+        private webApiClient: WebApiClient,
         private sessionService: SessionService,
         private communicationService: CommunicationService,
         private tokenMapper: TokenMapper) { }
 
-    async signIn(account: any): Promise<AccessToken> {
+    signIn(account: any): Observable<AccessToken> {
         const body = 'grant_type=password&username=' + account.username + '&password=' + account.password;
 
-        const accessToken = await this.http.post('authorize', body)
-            .then(response => this.tokenMapper.mapResponseToAccessToken(response))
-            .catch(error => this.handleError(error));
-
-        this.sessionService.setSession(accessToken);
-
-        return accessToken;
+        return this.webApiClient.post('authorize', body)
+            .map(response => {
+                console.log('map');
+                return this.tokenMapper.mapResponseToAccessToken(response);
+            })
+            ._do(accessToken => {
+                console.log('_do');
+                this.sessionService.setSession(accessToken)
+            });
     }
 
     signOut() {
@@ -54,9 +56,5 @@ export class AccountService {
         this.currentUser.isActive = accessToken.isActive;
 
         return this.currentUser;
-    }
-
-    private handleError(error: any): Promise<any> {
-        return Promise.reject(error);
     }
 }

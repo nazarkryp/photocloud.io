@@ -1,12 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
-import 'rxjs/add/operator/map';
-import { HttpClient } from '@angular/common/http';
 
 import { AccessToken } from '../../common/models';
-
-import { SessionService } from '../session/session.service';
+import { SessionService } from '../session';
 import { TokenMapper } from '../mapping';
+import { WebApiClient } from '../communication';
 
 @Injectable()
 export class TokenProvider {
@@ -15,11 +13,11 @@ export class TokenProvider {
     constructor(
         private sessionService: SessionService,
         private tokenMapper: TokenMapper,
-        private httpClient: HttpClient
+        private webApiClient: WebApiClient
     ) { }
 
     getAccessToken(): Observable<AccessToken> {
-        let accessToken = this.sessionService.getSession();
+        const accessToken = this.sessionService.getSession();
 
         if (!accessToken) {
             return null;
@@ -30,16 +28,8 @@ export class TokenProvider {
         const useRefreshToken = accessToken.refreshToken && expiresIn < this.refreshTimeout;
 
         if (useRefreshToken && expiresIn > 0) {
-            const refreshTokenObservable = this.refreshToken(accessToken.refreshToken);
-
-            refreshTokenObservable.subscribe(token => {
-                accessToken = token;
-                this.sessionService.setSession(token);
-
-                return token;
-            });
-
-            return refreshTokenObservable;
+            return this.refreshToken(accessToken.refreshToken)
+                .do(response => this.sessionService.setSession(response));
         }
 
         if (expiresIn <= 0) {
@@ -52,9 +42,9 @@ export class TokenProvider {
     }
 
     private refreshToken(refreshToken: string): Observable<AccessToken> {
-        const data = `grant_type=refresh_token&refresh_token=${refreshToken}`;
+        const refreshTokenData = `grant_type=refresh_token&refresh_token=${refreshToken}`;
 
-        return this.httpClient.post('authorize', refreshToken)
+        return this.webApiClient.post<any>('authorize', refreshTokenData)
             .map(response => this.tokenMapper.mapResponseToAccessToken(response));
     }
 }

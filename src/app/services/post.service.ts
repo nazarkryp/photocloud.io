@@ -1,75 +1,51 @@
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs/Rx';
 
-import { Headers, Http, RequestOptions } from '@angular/http';
-import 'rxjs/add/operator/toPromise';
-
+import { WebApiClient } from '../infrastructure/communication';
 import { Collection, Pagination, Post, CreatePostModel } from '../common/models';
-
-import { TokenService } from '../infrastructure/security/token.service';
-
-import { LegacyWebApiClient } from '../infrastructure/communication/http';
 
 @Injectable()
 export class PostService {
     constructor(
-        private http: LegacyWebApiClient,
-        private tokenService: TokenService) { }
+        private webApiClient: WebApiClient) { }
 
     createPost(post: CreatePostModel) {
-        return this.http.post('posts', post)
-            .then(response => response as Post)
-            .catch(error => this.handleError(error));
+        return this.webApiClient.post<Post>('posts', post);
     }
 
-    getPosts(pagination: Pagination): Promise<Collection<Post>> {
+    getPosts(pagination: Pagination): Observable<Collection<Post>> {
         let requestUri = 'posts';
 
         if (pagination != null && pagination.next != null) {
             requestUri = requestUri + '?next=' + pagination.next;
         }
 
-        return this.http.get(requestUri)
-            .then(response => response as Collection<Post>)
-            .catch(error => this.handleError(error));
+        return this.webApiClient.get<Collection<Post>>(requestUri);
     }
 
-    getUserPosts(username: string, pagination: Pagination): Promise<Collection<Post>> {
+    getUserPosts(username: string, pagination: Pagination): Observable<Collection<Post>> {
         let requestUri = 'posts/' + username;
 
         if (pagination != null && pagination.next != null) {
             requestUri = requestUri + '?next=' + pagination.next;
         }
 
-        return this.http.get(requestUri)
-            .then(response => response as Collection<Post>)
-            .catch(error => this.handleError(error));
+        return this.webApiClient.get<Collection<Post>>(requestUri);
     }
 
-    getPostById(postId: number): Promise<Post> {
-        return this.http.get(`posts/${postId}`)
-            .then(response => response as Post)
-            .catch(error => this.handleError(error));
+    getPostById(postId: number): Observable<Post> {
+        return this.webApiClient.get<Post>(`posts/${postId}`);
     }
 
     removePost(postId: number) {
-        return this.http.delete(`posts/${postId}`)
-            .then(response => { })
-            .catch(error => this.handleError(error));
+        return this.webApiClient.delete(`posts/${postId}`);
     }
 
     likePost(postId: number) {
-        return this.http.post(`posts/${postId}/likes`, null)
-            .then(response => { })
-            .catch(error => this.handleError(error));
+        return this.webApiClient.post(`posts/${postId}/likes`, null);
     }
 
     removePostLike(postId: number) {
-        return this.http.delete(`posts/${postId}/likes`)
-            .then(response => { })
-            .catch(error => this.handleError(error));
-    }
-
-    private handleError(error: any): Promise<any> {
-        return Promise.reject(error.message || error);
+        return this.webApiClient.delete(`posts/${postId}/likes`);
     }
 }
