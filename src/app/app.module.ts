@@ -24,7 +24,6 @@ import { CommentService } from './services/comment.service';
 import { UserService } from './services/user.service';
 import { AccountService } from './services/account.service';
 
-import { CurrentUserService } from './infrastructure/services/current-user.service';
 import { AuthenticationGuard } from './infrastructure/guards/authentication-guard.service';
 import { SessionService } from './infrastructure/session/session.service';
 import { TokenService } from './infrastructure/security/token.service';
@@ -86,7 +85,6 @@ import { ImagePreviewDirective } from './directives/image-preview.directive';
         CommentService,
         UserService,
         AccountService,
-        CurrentUserService,
         AuthenticationGuard,
         SessionService,
         TokenService,

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MdDialog } from '@angular/material';
 import { NgProgressService } from 'ngx-progressbar';
-import { Post, User, Collection, Comment, Attachment } from '../../common/models';
-import { PostService } from '../../services';
+import { Post, User, Collection, Comment, Attachment, CurrentUser } from '../../common/models';
+import { AccountService, PostService } from '../../services';
 
 import { CreatePostComponent } from '../../components/shared/create-post/create-post.component';
 
@@ -14,8 +14,10 @@ import { CreatePostComponent } from '../../components/shared/create-post/create-
 export class PostsComponent implements OnInit {
     private page: Collection<Post> = new Collection<Post>();
     private isLoading = false;
+    private currentUser: CurrentUser;
 
     constructor(
+        private accountService: AccountService,
         private postService: PostService,
         private progressService: NgProgressService,
         private dialog: MdDialog) {
@@ -25,6 +27,14 @@ export class PostsComponent implements OnInit {
 
     createPost() {
         const dialogRef = this.dialog.open(CreatePostComponent);
+
+        dialogRef.afterClosed()
+            .subscribe(createdPost => {
+                if (createdPost) {
+                    createdPost.user.pictureUri = this.currentUser.pictureUri;
+                    this.page.data.unshift(createdPost);
+                }
+            });
     }
 
     getPosts() {
@@ -44,10 +54,12 @@ export class PostsComponent implements OnInit {
     onRemoved(post: Post) {
         const indexToRemove = this.page.data.findIndex(p => p.id === post.id);
         this.page.data.splice(indexToRemove, 1);
-        this.postService.removePost(post.id);
+        this.postService.removePost(post.id)
+            .subscribe();
     }
 
     ngOnInit() {
+        this.currentUser = this.accountService.getCurrentUser(false);
         this.getPosts();
     }
 }

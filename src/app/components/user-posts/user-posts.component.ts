@@ -51,6 +51,7 @@ export class UserPostsComponent implements OnInit, OnDestroy {
                 this.page.pagination = page.pagination;
                 this.page.data = this.page.data.concat(page.data);
             }, error => { }, () => {
+                this.isLoading = false;
                 this.progressService.done();
             });
     }
@@ -118,10 +119,10 @@ export class UserPostsComponent implements OnInit, OnDestroy {
                     } else {
                         this.getPosts();
                     }
-                }, error => { }, () => {
+                }, error => {
                     this.isLoading = false;
                     this.progressService.done();
-                })
+                });
         });
     }
 

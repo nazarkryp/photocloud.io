@@ -13,7 +13,7 @@ import { NgProgressService } from 'ngx-progressbar';
     selector: 'app-post-details',
     templateUrl: './post-details.component.html',
     styleUrls: ['./post-details.component.css'],
-    encapsulation: ViewEncapsulation.Emulated
+    encapsulation: ViewEncapsulation.None
 })
 export class PostDetailsComponent implements OnInit {
     private isDialog: boolean;
@@ -105,27 +105,37 @@ export class PostDetailsComponent implements OnInit {
     }
 
     private like() {
-        let observable: Observable<{}>;
-
         if (this.post.userHasLiked) {
             this.post.likesCount--;
             this.post.userHasLiked = !this.post.userHasLiked;
-            observable = this.postService.removePostLike(this.post.id);
+            this.postService.removePostLike(this.post.id)
+                .subscribe(() => {
+                    this.post.userHasLiked = false;
+                }, (error) => {
+                    if (this.post.userHasLiked) {
+                        this.post.likesCount--;
+                    } else {
+                        this.post.likesCount++;
+                    }
+                    this.post.userHasLiked = !this.post.userHasLiked;
+                    return error;
+                });
         } else {
             this.post.likesCount++;
             this.post.userHasLiked = !this.post.userHasLiked;
-            observable = this.postService.likePost(this.post.id);
+            this.postService.likePost(this.post.id)
+                .subscribe(() => {
+                    this.post.userHasLiked = true;
+                }, (error) => {
+                    if (this.post.userHasLiked) {
+                        this.post.likesCount--;
+                    } else {
+                        this.post.likesCount++;
+                    }
+                    this.post.userHasLiked = !this.post.userHasLiked;
+                    return error;
+                });
         }
-
-        observable.catch((error) => {
-            if (this.post.userHasLiked) {
-                this.post.likesCount--;
-            } else {
-                this.post.likesCount++;
-            }
-            this.post.userHasLiked = !this.post.userHasLiked;
-            return error;
-        });
     }
 
     private getPost(postId: number) {

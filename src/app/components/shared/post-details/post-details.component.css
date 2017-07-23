@@ -12,16 +12,9 @@ hr {
     border-top: 1px solid #d8d8d8;
 }
 
-.post-details {
-    padding: 15px 15px;
-}
-
-.post-data {
-    max-width: 400px;
-}
-
-md-dialog-content {
-    padding: 0;
+.single-post {
+    position: relative;
+    border-radius: 2px;
 }
 
 .post-container {
@@ -29,23 +22,54 @@ md-dialog-content {
     padding: 25px;
 }
 
-.post {
-    background-color: white;
-    position: relative;
-    border-radius: 2px;
-}
-
-.post-header {
-    padding: 10px;
+.post-details {
     width: 400px;
+    padding: 0 0 0 10px;
 }
 
-.post-footer {
-    padding: 15px;
+.post-details.dialog {
+    padding: 10px;
 }
 
-.post-caption {
+.post-details-header {
+    padding: 0px 0px 10px 0px;
+}
+
+.post-subheader {
+    width: 100%;
+    margin: 15px 0 0 0;
+}
+
+.post-details-content {
+    overflow-y: scroll;
     padding: 10px 0 0 0;
+}
+
+.content-header {
+    font-size: 1.1em;
+    font-weight: 300;
+    color: gray;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.post-details-footer {
+    padding-top: 5px;
+}
+
+.comment-box {
+    border: 2px solid #d8d8d8;
+    border-radius: 3px;
+    margin-left: 0px;
+    width: 100%;
+}
+
+.comment-box:hover {
+    border: 2px solid grey;
+}
+
+.post-details-caption {
+    padding: 0 0 0 0;
     line-height: 1.6em;
 }
 
@@ -54,7 +78,7 @@ md-dialog-content {
 }
 
 .post-actions-wrapper {
-    padding: 10px;
+    width: 100%;
 }
 
 .post-details-actions {
@@ -97,19 +121,20 @@ md-dialog-content {
 }
 
 .post-details-comment-input {
+    background: inherit;
     font-weight: lighter;
     outline: none;
     border: none;
     width: 100%;
+    padding: 10px;
 }
 
-.post-content {
-    width: 100%;
+.post-attachment-container {
     position: relative;
     height: auto;
 }
 
-.post-content .post-content-buttons {
+.post-attachment-container .post-attachment-buttons {
     position: absolute;
     opacity: 0;
     top: 50%;
@@ -119,13 +144,14 @@ md-dialog-content {
     padding: 0 10px 0 10px;
 }
 
-.post-content:not([disabled]):hover .post-content-buttons {
+.post-attachment-container:not([disabled]):hover .post-attachment-buttons {
     opacity: 1;
 }
 
-.post-created {
+.post-details-created {
     font-size: 0.9em;
     color: gray;
+    font-weight: lighter;
     /* text-transform: uppercase; */
     letter-spacing: 1px;
 }
@@ -136,18 +162,6 @@ md-dialog-content {
 
 md-dialog-container {
     padding: 0px !important;
-}
-
-.comments {
-    margin: 10px 0 0 0;
-}
-
-.comments-header {
-    font-size: 1.1em;
-    font-weight: bold;
-    color: gray;
-    text-transform: uppercase;
-    letter-spacing: 1px;
 }
 
 .like-button {

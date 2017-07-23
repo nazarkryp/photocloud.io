@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
 
+import { CommunicationService, WebApiClient } from '../infrastructure/communication';
 import { SessionService } from '../infrastructure/session';
 import { AccessToken, CurrentUser } from '../common/models';
-import { CommunicationService } from '../infrastructure/communication/communication.service';
-import { WebApiClient } from '../infrastructure/communication/web-api-client';
 import { TokenMapper } from '../infrastructure/mapping/token.mapper';
 
 @Injectable()

@@ -1,7 +1,7 @@
 <div [ngClass]="{ 'post-container' : !isDialog }" fxLayout="row" fxLayoutAlign="center center">
-    <div class="post" fxLayout="row" fxLayoutAlign="start stretch" *ngIf="post">
-        <div md-ripple class="post-content">
-            <div class="post-content-buttons" fxLayout="row" fxLayoutAlign="space-between center" *ngIf="post.attachments.length > 1">
+    <div class="single-post" fxLayout="row" fxLayoutAlign="start stretch" *ngIf="post">
+        <div md-ripple class="post-attachment-container">
+            <div class="post-attachment-buttons" fxLayout="row" fxLayoutAlign="space-between center" *ngIf="post.attachments.length > 1">
                 <div>
                     <button md-raised-button md-icon-button *ngIf="post.activeAttachment > 0" (click)="previous()">
                     <md-icon class="post-icon">chevron_left</md-icon>
@@ -16,53 +16,58 @@
             <img class="attachment" src="{{attachment.uri}}" alt="post-image" *ngFor="let attachment of post.attachments; let index = index;"
                 [hidden]="index !== post.activeAttachment">
         </div>
-        <div class="post-data" fxLayout="column">
-            <div class="post-header" fxLayout="row">
+        <div class="post-details" [ngClass]="{ 'dialog' : isDialog }" fxLayout="column">
+            <div class="post-details-header" fxLayout="row" fxLayoutAlign="start center">
                 <img class="post-avatar" [routerLink]="['/', post.user.username]" src="{{post.user.pictureUri}}" alt="profile">
                 <div class="post-author" fxLayout="row" fxLayoutAlign="space-between center" fxFlex>
                     <div fxLayout="column">
                         <a class="username" [routerLink]="['/', post.user.username]">{{post.user.username}}</a>
                         <div class="post-date">
-                            <span class="post-created">{{post.created | timeAgo}}</span>
+                            <span class="post-details-created">{{post.created | timeAgo}}</span>
                         </div>
                     </div>
-                    <div>
+                    <div fxLayout="row">
                         <button md-icon-button mdTooltip="Copy to clipboard" mdTooltipPosition="left" ngxClipboard [cbContent]="share()" (cbOnSuccess)="showToast('Copied to clipboard')">
                             <md-icon>share</md-icon>
                         </button>
                         <md-menu #menu="mdMenu" xPosition="before">
                             <button md-menu-item>
-                    <md-icon>edit</md-icon>
-                    <span>Edit</span>
-                </button>
+                                <md-icon>edit</md-icon>
+                                <span>Edit</span>
+                            </button>
                             <button md-menu-item>
-                    <md-icon>delete</md-icon>
-                    <span>Remove</span>
-                </button>
+                                <md-icon>delete</md-icon>
+                                <span>Remove</span>
+                            </button>
                         </md-menu>
                     </div>
                 </div>
             </div>
-            <div class="post-details" fxFlex>
+            <div fxLayout="column">
                 <div fxLayout="row" fxLayoutAlign="space-between center">
-                    <span><strong>{{post.likesCount}} likes</strong></span>
+                    <a>
+                        <strong>{{post.likesCount}} likes</strong>
+                    </a>
+                    <button class="like-button" [ngClass]="{ 'liked' : post.userHasLiked }" md-icon-button (click)="like()">
+                        <md-icon>favorite</md-icon>
+                    </button>
                 </div>
-                <div class="post-caption" *ngIf="post.caption">
-                    <a><strong>{{post.user.username}}</strong></a>
+                <div class="post-details-caption" *ngIf="post.caption">
+                    <a [routerLink]="['/', post.user.username]"><strong>{{post.user.username}}</strong></a>
                     <app-caption caption="{{post.caption}}"></app-caption>
                 </div>
-                <div class="comments">
-                    <span class="comments-header">Comments</span>
-                    <app-comments [post]="post"></app-comments>
-                </div>
             </div>
-            <div class="post-actions-wrapper">
-                <div class="post-details-actions" fxLayout="row" *ngIf="currentUser">
-                    <button class="like-button" [ngClass]="{ 'liked' : post.userHasLiked }" md-icon-button (click)="like()">
-                    <md-icon>favorite_border</md-icon>
-                </button>
+            <div class="post-details-content" fxLayout="column" fxFlex>
+                <span class="content-header">Comments</span>
+                <app-comments [post]="post"></app-comments>
+            </div>
+            <div class="post-details-footer" fxLayout="row" fxLayoutAlign="start center" *ngIf="currentUser">
+                <div class="comment-box" fxLayout="row">
                     <input class="post-details-comment-input" type="text" placeholder="Add comment" [(ngModel)]="text" (keydown.enter)="createComment()"
                     />
+                    <button md-icon-button (click)="createComment()">
+                        <md-icon style="color: #444444;">send</md-icon>
+                    </button>
                 </div>
             </div>
         </div>
