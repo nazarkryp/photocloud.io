@@ -1,13 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
 
 import { AccountService } from '../../services/account.service';
 import { AccessToken } from '../../common/models/token';
 import { CommunicationService } from '../../infrastructure/communication/communication.service';
-
-import { HttpClient } from '@angular/common/http';
-import { User } from '../../common/models';
 
 @Component({
     selector: 'app-navbar',
@@ -17,32 +14,32 @@ import { User } from '../../common/models';
 export class NavbarComponent implements OnInit, OnDestroy {
     private subscription: Subscription;
     private accessToken: AccessToken;
+    private renderToolbar: boolean;
 
     constructor(
-        private httpClient: HttpClient,
         private communicationService: CommunicationService,
         private accountService: AccountService,
         private router: Router) {
     }
 
-    get() {
-        this.httpClient.get<User>('https://krypapp.azurewebsites.net/users/nazarkryp')
-            .subscribe(user => {
-                console.log(user.pictureUri);
-            }, error => {
-                console.log(error);
-            });
-    }
-
     ngOnInit(): void {
-        this.communicationService
+        this.subscription = this.communicationService
             .getState()
             .subscribe(accessToken => {
                 this.accessToken = accessToken;
             });
+        this.router.events.subscribe((event: any): void => {
+            this.navigationInterceptor(event);
+        });
     }
 
     ngOnDestroy(): void {
         this.subscription.unsubscribe();
+    }
+
+    private navigationInterceptor(event): void {
+        if (event instanceof NavigationEnd) {
+            this.renderToolbar = this.router.url !== '/signin';
+        }
     }
 }

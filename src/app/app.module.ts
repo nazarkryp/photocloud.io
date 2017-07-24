@@ -26,9 +26,7 @@ import { AccountService } from './services/account.service';
 
 import { AuthenticationGuard } from './infrastructure/guards/authentication-guard.service';
 import { SessionService } from './infrastructure/session/session.service';
-import { TokenService } from './infrastructure/security/token.service';
 import { TokenProvider, AuthenticationInterceptor } from './infrastructure/security';
-import { LegacyWebApiClient } from './infrastructure/communication/http';
 import { CommunicationService, WebApiClient } from './infrastructure/communication';
 import { ClipboardService } from './infrastructure/services/clipboard.service';
 
@@ -87,8 +85,6 @@ import { ImagePreviewDirective } from './directives/image-preview.directive';
         AccountService,
         AuthenticationGuard,
         SessionService,
-        TokenService,
-        LegacyWebApiClient,
         WebApiClient,
         CommunicationService,
         WebApiClient,

@@ -29,7 +29,6 @@
     opacity: 0;
     border-style: none;
     padding: 0px 50px 0px 50px;
-    /*transition: opacity 0.1s linear;*/
 }
 
 .image-container:not([disabled]):hover .after {

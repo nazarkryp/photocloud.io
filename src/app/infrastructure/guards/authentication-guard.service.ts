@@ -1,32 +1,36 @@
-import { Injectable } from '@angular/core';
+﻿import { Injectable } from '@angular/core';
 import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
-import { TokenService } from '../security/token.service';
+
+import { CommunicationService } from '../communication';
+import { TokenProvider } from '../../infrastructure/security';
 
 @Injectable()
 export class AuthenticationGuard implements CanActivate {
-
     constructor(
         private router: Router,
-        private tokenService: TokenService) { }
+        private tokenProvider: TokenProvider,
+        private communicationService: CommunicationService) { }
 
-    async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-        const accessToken = await this.tokenService.getAccessToken();
+    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+        return this.tokenProvider.getAccessToken()
+            .map(accessToken => {
+                this.communicationService.changeState(accessToken);
+                if (accessToken != null && state.url === '/signin') {
+                    this.router.navigateByUrl('/');
+                    return false;
+                }
 
-        if (accessToken != null && state.url === '/signin') {
-            this.router.navigateByUrl('/');
-            return false;
-        }
+                if (accessToken == null && state.url === '/signin') {
+                    return true;
+                }
 
-        if (accessToken == null && state.url === '/signin') {
-            return true;
-        }
+                if (accessToken != null) {
+                    return true;
+                }
 
-        if (accessToken != null) {
-            return true;
-        }
+                this.router.navigateByUrl('/signin');
 
-        this.router.navigateByUrl('/signin');
-
-        return false;
+                return false;
+            });
     }
 }

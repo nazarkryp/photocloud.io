@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+﻿import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
 
 import { AccessToken } from '../../common/models';
@@ -20,7 +20,7 @@ export class TokenProvider {
         const accessToken = this.sessionService.getSession();
 
         if (!accessToken) {
-            return null;
+            return Observable.of(null);
         }
 
         const now = new Date();
@@ -35,7 +35,7 @@ export class TokenProvider {
         if (expiresIn <= 0) {
             this.sessionService.clearSession();
 
-            return null;
+            return Observable.of(null);
         }
 
         return Observable.of(accessToken);

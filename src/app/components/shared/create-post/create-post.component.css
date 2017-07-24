@@ -3,21 +3,8 @@
 }
 
 .create-post-container {
-    background-color: #FAFAFA;
-    /* margin: -24px; */
     width: 400px;
 }
-
-
-/* .upload-button {
-    background-color: white;
-    padding: 50px;
-    border-radius: 3px;
-    text-transform: uppercase;
-    font-size: 17px;
-    font-weight: bolder;
-    color: #444444;
-} */
 
 .square-button {
     height: 75px;
@@ -28,6 +15,17 @@
     padding: 0;
     margin: 0 15px 0 0;
     display: inline-block;
+}
+
+.big-preview {
+    width: 400px;
+    height: 400px;
+    object-fit: cover;
+    vertical-align: bottom;
+}
+
+.big-preview-container {
+    margin: 20px 0 10px 0;
 }
 
 .attachment-preview-image {

@@ -1,6 +1,10 @@
-<div style="position: absolute; height: calc(40vh); width:100%; background: #e91e63;"></div>
+<div style="position: absolute; height: calc(40vh); width:100%; background: #e91e63; color: white;" fxLayout="row" fxLayoutAlign="center center">
+    <h1 class="title">PhotoCloud</h1>
+</div>
 <div class="content" fxLayout="column" fxLayoutAlign="center center">
-    <form class="form z-depth-1" fxLayout="column" (ngSubmit)="signIn()" autocomplete="off">
+    <form class="form z-depth-1" [ngClass]="{ 'overlay' : isLoading }" fxLayout="column" (ngSubmit)="signIn()" autocomplete="off">
+        <div class="form-overlay">
+        </div>
         <md-progress-bar color="primary" mode="indeterminate" *ngIf="isLoading"></md-progress-bar>
         <div class="md-padding" fxLayout="column">
             <span class="mat-headline">Sign In</span>
@@ -8,17 +12,17 @@
         </div>
         <div fxLayout="column">
             <md-input-container fxFlex>
-                <input mdInput placeholder="Username" type="text" [(ngModel)]="account.username" name="username" autocomplete="off" [disabled]="isLoading">
+                <input mdInput placeholder="Username" type="text" [(ngModel)]="account.username" name="username" autocomplete="off">
             </md-input-container>
             <md-input-container fxFlex>
-                <input mdInput placeholder="Password" type="password" [(ngModel)]="account.password" name="password" autocomplete="off" [disabled]="isLoading">
+                <input mdInput placeholder="Password" type="password" [(ngModel)]="account.password" name="password" autocomplete="off">
             </md-input-container>
         </div>
-        <div class="md-padding" fxLayout="row" fxLayoutAlign="center center" *ngIf="errorMessage">
-            <span class="mat-subhead error">{{errorMessage}}</span>
+        <div class="error-container" fxLayout="row" fxLayoutAlign="center center">
+            <span class="mat-subhead error" *ngIf="errorMessage">{{errorMessage}}</span>
         </div>
         <div fxLayout="row" fxLayoutAlign="end center">
-            <button md-raised-button color="accent" type="sumbit" [disabled]="isLoading">Sign In</button>
+            <button md-raised-button color="accent" type="sumbit">Sign In</button>
         </div>
     </form>
 </div>

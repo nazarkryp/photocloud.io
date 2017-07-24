@@ -2,7 +2,7 @@ import { TestBed, inject } from '@angular/core/testing';
 
 import { UserMapper } from './user.mapper';
 
-describe('UserService', () => {
+describe('UserMapper', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [UserMapper]
