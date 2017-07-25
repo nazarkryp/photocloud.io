@@ -1,10 +1,12 @@
 ﻿import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Rx';
 
 import { AccessToken } from '../../common/models';
 import { SessionService } from '../session';
 import { TokenMapper } from '../mapping';
-import { WebApiClient } from '../communication';
+
+import { environment } from '../../../environments/environment';
 
 @Injectable()
 export class TokenProvider {
@@ -13,7 +15,7 @@ export class TokenProvider {
     constructor(
         private sessionService: SessionService,
         private tokenMapper: TokenMapper,
-        private webApiClient: WebApiClient
+        private httpClient: HttpClient
     ) { }
 
     getAccessToken(): Observable<AccessToken> {
@@ -44,7 +46,7 @@ export class TokenProvider {
     private refreshToken(refreshToken: string): Observable<AccessToken> {
         const refreshTokenData = `grant_type=refresh_token&refresh_token=${refreshToken}`;
 
-        return this.webApiClient.post<any>('authorize', refreshTokenData)
+        return this.httpClient.post<any>(environment.loginUri, refreshTokenData)
             .map(response => this.tokenMapper.mapResponseToAccessToken(response));
     }
 }

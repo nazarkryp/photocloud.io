@@ -1,10 +1,13 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Rx';
 
 import { CommunicationService, WebApiClient } from '../infrastructure/communication';
 import { SessionService } from '../infrastructure/session';
 import { AccessToken, CurrentUser } from '../common/models';
 import { TokenMapper } from '../infrastructure/mapping/token.mapper';
+
+import { environment } from '../../environments/environment';
 
 @Injectable()
 export class AccountService {
@@ -14,18 +17,17 @@ export class AccountService {
         private webApiClient: WebApiClient,
         private sessionService: SessionService,
         private communicationService: CommunicationService,
-        private tokenMapper: TokenMapper) { }
+        private tokenMapper: TokenMapper,
+        private httpClient: HttpClient) { }
 
     signIn(account: any): Observable<AccessToken> {
         const body = 'grant_type=password&username=' + account.username + '&password=' + account.password;
 
-        return this.webApiClient.post('authorize', body)
+        return this.httpClient.post(environment.loginUri, body)
             .map(response => {
-                console.log('map');
                 return this.tokenMapper.mapResponseToAccessToken(response);
             })
             ._do(accessToken => {
-                console.log('_do');
                 this.sessionService.setSession(accessToken)
             });
     }

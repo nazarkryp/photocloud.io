@@ -28,7 +28,6 @@ export class SigninComponent {
                 this.isLoading = false;
             })
             .subscribe(response => {
-                console.log('success');
                 this.router.navigateByUrl('/');
             }, error => {
                 this.errorMessage = error.error.error;
