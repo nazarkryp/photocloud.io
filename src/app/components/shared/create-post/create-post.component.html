@@ -16,7 +16,7 @@
             </div>
         </div>
     </div>
-    <div class="big-preview-container" class="z-depth-1" *ngIf="attachments.length > 0">
+    <div class="big-preview-container z-depth-1" *ngIf="attachments.length > 0">
         <img class="big-preview" src="{{attachments[0].uri}}" alt="preview">
     </div>
     <div class="create-post-footer" *ngIf="uploader.queue.length > 0 && !uploader.isUploading">

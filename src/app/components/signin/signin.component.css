@@ -64,3 +64,11 @@ md-progress-bar {
     color: gray;
     font-weight: lighter;
 }
+
+.top-container {
+    position: absolute;
+    height: calc(40vh);
+    width: 100%;
+    background: #e91e63;
+    color: white;
+}
