@@ -48,7 +48,7 @@
                     <a>
                         <strong>{{post.likesCount}} likes</strong>
                     </a>
-                    <button class="like-button" [ngClass]="{ 'liked' : post.userHasLiked }" md-icon-button (click)="like()">
+                    <button class="like-button" [ngClass]="{ 'liked' : post.userHasLiked }" md-icon-button (click)="like()" *ngIf="currentUser">
                         <md-icon>favorite</md-icon>
                     </button>
                 </div>

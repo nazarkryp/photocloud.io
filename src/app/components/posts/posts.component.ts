@@ -38,6 +38,7 @@ export class PostsComponent implements OnInit {
     }
 
     getPosts() {
+        this.isLoading = true;
         this.progressService.start();
 
         this.postService.getPosts(this.page.pagination)
@@ -48,6 +49,8 @@ export class PostsComponent implements OnInit {
                 this.page.hasMoreItems = page.hasMoreItems;
                 this.page.pagination = page.pagination;
                 this.page.data = this.page.data.concat(page.data);
+            }, (error) => { }, () => {
+                this.isLoading = false;
             });
     }
 

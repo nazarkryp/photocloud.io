@@ -18,6 +18,7 @@ md-progress-bar {
     background-color: white;
     width: 40%;
     max-width: 450px;
+    min-width: 400px;
     padding: 0 25px 25px 25px;
 }
 
