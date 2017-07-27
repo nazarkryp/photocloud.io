@@ -126,7 +126,10 @@ export class PostComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.post.activeAttachment = 0;
+        if (this.post) {
+            this.post.activeAttachment = 0;
+        }
+
         this.currentUser = this.accountService.getCurrentUser(false);
     }
 }

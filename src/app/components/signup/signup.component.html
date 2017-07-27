@@ -1,0 +1,44 @@
+<div class="content" fxLayout="column" fxLayoutAlign="start center">
+    <div class="primary-divider"></div>
+    <div class="sign-container" fxLayout="column" fxLayoutAlign="center center">
+        <div class="form-container">
+            <md-progress-bar color="primary" mode="indeterminate" *ngIf="isLoading"></md-progress-bar>
+            <div fxLayout="column" fxLayoutAlign="center center">
+                <h1 class="logo">PhotoCloud</h1>
+                <div class="header-container" fxLayout="column" fxLayoutAlign="center center">
+                    <span class="title">Sign Up</span>
+                    <div class="caption-container" fxLayout="row" fxLayoutAlign="center center">
+                        <span>Create account ang login to see photos and videos from your friends</span>
+                    </div>
+                </div>
+            </div>
+            <div fxLayout="column" fxLayoutAlign="start center">
+                <form class="form" (ngSubmit)="signUp()">
+                    <div fxLayout="column">
+                        <md-input-container fxFlex>
+                            <input mdInput placeholder="Username" type="text" [(ngModel)]="account.username" name="username" autocomplete="off">
+                        </md-input-container>
+                        <md-input-container fxFlex>
+                            <input mdInput placeholder="Email address" type="text" [(ngModel)]="account.email" name="username" autocomplete="off">
+                        </md-input-container>
+                        <md-input-container fxFlex>
+                            <input mdInput placeholder="Password" type="password" [(ngModel)]="account.password" name="password" autocomplete="off">
+                        </md-input-container>
+                        <md-input-container fxFlex>
+                            <input mdInput placeholder="Confirm Password" type="password" [(ngModel)]="account.confirmPassword" name="password" autocomplete="off">
+                        </md-input-container>
+                    </div>
+                    <div class="error-container" fxLayout="column" fxLayoutAlign="center center">
+                        <div fxLayout="column" fxLayoutAlign="center center" *ngIf="errors">
+                            <span class="mat-subhead error" *ngFor="let error of errors">{{error}}</span>
+                        </div>
+                    </div>
+                    <div fxLayout="row" fxLayoutAlign="end center">
+                        <button class="signup-button" md-raised-button color="accent" type="sumbit">Create Account</button>
+                    </div>
+                </form>
+                <a [routerLink]="['/signin']">Already have an account?</a>
+            </div>
+        </div>
+    </div>
+</div>

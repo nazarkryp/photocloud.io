@@ -15,12 +15,12 @@ export class AuthenticationGuard implements CanActivate {
         return this.tokenProvider.getAccessToken()
             .map(accessToken => {
                 this.communicationService.changeState(accessToken);
-                if (accessToken != null && state.url === '/signin') {
+                if (accessToken != null && (state.url === '/signin' || state.url === '/account/create')) {
                     this.router.navigateByUrl('/');
                     return false;
                 }
 
-                if (accessToken == null && state.url === '/signin') {
+                if (accessToken == null && (state.url === '/signin' || state.url === '/account/create')) {
                     return true;
                 }
 

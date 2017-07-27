@@ -41,7 +41,7 @@ hr {
 }
 
 .post-details-content {
-    overflow-y: scroll;
+    overflow-y: auto;
     padding: 10px 0 0 0;
 }
 
@@ -170,4 +170,8 @@ md-dialog-container {
 
 .liked {
     color: #e91e63;
+}
+
+.icon-send {
+    color: #444444;
 }

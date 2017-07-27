@@ -32,6 +32,10 @@ export class AccountService {
             });
     }
 
+    signUp(account: any) {
+        return this.httpClient.post(environment.apiUri + 'account', account);
+    }
+
     signOut() {
         this.sessionService.clearSession();
         this.communicationService.changeState(null);

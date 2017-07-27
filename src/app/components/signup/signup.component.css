@@ -62,6 +62,7 @@ a {
 .error-container {
     height: 75px;
     padding: 16px 0 16px 0;
+    line-height: 1.5em;
 }
 
 .md-padding {
@@ -94,7 +95,7 @@ a {
     color: white;
 }
 
-.signin-button {
+.signup-button {
     width: 100%;
 }
 

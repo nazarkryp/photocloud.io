@@ -48,8 +48,8 @@
                     <a>
                         <strong>{{post.likesCount}} likes</strong>
                     </a>
-                    <button class="like-button" [ngClass]="{ 'liked' : post.userHasLiked }" md-icon-button (click)="like()" *ngIf="currentUser">
-                        <md-icon>favorite</md-icon>
+                    <button class="like-button" md-icon-button (click)="like()" *ngIf="currentUser">
+                        <md-icon [ngClass]="{ 'liked' : post.userHasLiked }">favorite</md-icon>
                     </button>
                 </div>
                 <div class="post-details-caption" *ngIf="post.caption">
@@ -66,7 +66,7 @@
                     <input class="post-details-comment-input" type="text" placeholder="Add comment" [(ngModel)]="text" (keydown.enter)="createComment()"
                     />
                     <button md-icon-button (click)="createComment()">
-                        <md-icon style="color: #444444;">send</md-icon>
+                        <md-icon class="icon-send">send</md-icon>
                     </button>
                 </div>
             </div>

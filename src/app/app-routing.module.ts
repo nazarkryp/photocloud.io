@@ -7,6 +7,7 @@ import { UserPostsComponent } from './components/user-posts/user-posts.component
 import { SigninComponent } from './components/signin/signin.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { PostDetailsComponent } from './components/shared/post-details/post-details.component';
+import { SignupComponent } from './components/signup/signup.component';
 
 import { AuthenticationGuard } from './infrastructure/guards/authentication-guard.service';
 
@@ -19,6 +20,11 @@ const routes: Routes = [
     {
         path: 'signin',
         component: SigninComponent,
+        canActivate: [AuthenticationGuard]
+    },
+    {
+        path: 'account/create',
+        component: SignupComponent,
         canActivate: [AuthenticationGuard]
     },
     {

@@ -43,6 +43,7 @@ import { ErrorBoxComponent } from './components/shared/error-box/error-box.compo
 import { RawPipe } from './pipes/raw.pipe';
 import { CaptionComponent } from './components/shared/caption/caption.component';
 import { ImagePreviewDirective } from './directives/image-preview.directive';
+import { SignupComponent } from './components/signup/signup.component';
 
 @NgModule({
     declarations: [
@@ -61,7 +62,8 @@ import { ImagePreviewDirective } from './directives/image-preview.directive';
         CreatePostComponent,
         RawPipe,
         CaptionComponent,
-        ImagePreviewDirective
+        ImagePreviewDirective,
+        SignupComponent
     ],
     entryComponents: [
         PostDetailsComponent,
