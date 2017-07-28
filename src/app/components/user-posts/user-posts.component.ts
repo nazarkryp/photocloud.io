@@ -109,9 +109,9 @@ export class UserPostsComponent implements OnInit, OnDestroy {
                         this.getPosts();
                     }
                 }, error => {
-                }, () => {
                     this.isLoading = false;
                     this.progressService.done();
+                }, () => {
                 });
         });
     }
