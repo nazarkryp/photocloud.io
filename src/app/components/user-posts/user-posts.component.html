@@ -1,10 +1,10 @@
 <div fxLayout="column" fxLayoutAlign="center center" *ngIf="!isLoading">
     <div class="user-info" fxLayout="row" fxLayoutAlign="center end">
-        <img class="thumbnail-big z-depth-3" src="{{user.pictureUri}}" alt="profile" />
+        <img class="thumbnail-big" src="{{user.pictureUri}}" default="assets/images/user-default-image.png" alt="profile" />
         <div fxLayout="column" fxFlex>
             <div class="md-padding" fxLayout="row" fxLayoutAlign="space-between end">
                 <div>
-                    <span class="mat-display-1">{{user.username}}</span>
+                    <span class="mat-display-1">{{user.username}} </span>
                 </div>
                 <button md-icon-button mdTooltip="Settings" mdTooltipPosition="above" *ngIf="currentUser && user.id === currentUser.id">
                     <md-icon>settings</md-icon>
@@ -30,25 +30,28 @@
                 </div>
             </div>
             <div class="md-padding" fxLayout="row" fxLayoutAlign="start center">
-                <span class="mat-subhead full-name">{{user.fullName}}</span>
-                <span class="mat-subhead bio">{{user.bio}}</span>
+                <div>
+                    <span class="mat-subhead full-name">{{user.fullName}}</span>
+                </div>
+                <div>
+                    <span class="mat-subhead bio">{{user.bio}}</span>
+                </div>
             </div>
         </div>
     </div>
-    <div class="posts-container">
-        <app-error-box [error]="error" *ngIf="error"></app-error-box>
-        <div class="user-posts">
-            <div class="post-item" *ngFor="let post of page.data;">
+    <div class="posts-container" *ngIf="!error; else errorBox">
+        <div class="user-posts" *ngIf="page.data.length > 0; else emptyFeed;">
+            <div class="post-item" *ngFor="let post of page?.data;">
                 <div class="image-container z-depth-3" fxLayout="column" fxLayoutAlign="center center" (click)="openPostDialog(post)">
-                    <img class="thumbnail" src="{{post.attachments[0].uri}}" alt="{{post.attachments[0].uri}}">
+                    <img class="thumbnail" src="{{post?.attachments[0].uri}}" alt="{{post?.attachments[0].uri}}">
                     <div class="after md-padding" fxLayout="row" fxLayoutAlign="space-between center">
                         <div fxLayout="row" fxLayoutAlign="center center">
                             <md-icon class="post-icon">favorite</md-icon>
-                            <span class="post-number">{{post.likesCount}}</span>
+                            <span class="post-number">{{post?.likesCount}}</span>
                         </div>
                         <div fxLayout="row" fxLayoutAlign="center center">
                             <md-icon class="post-icon">mode_comment</md-icon>
-                            <span class="post-number">{{post.commentsCount}}</span>
+                            <span class="post-number">{{post?.commentsCount}}</span>
                         </div>
                     </div>
                 </div>
@@ -58,4 +61,19 @@
             <button md-raised-button (click)="getPosts()" [disabled]="isLoadingPosts">Load More</button>
         </div>
     </div>
+    <ng-template #errorBox>
+        <div class="info-container" fxLayout="row" fxLayoutAlign="center center">
+            <div fxLayout="row" fxLayoutAlign="center center">
+                <div class="error-box" fxLayout="column" fxLayoutAlign="start center">
+                    <span class="error-title">{{error.title}}</span>
+                    <p class="error-description">{{error.description}}</p>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+    <ng-template #emptyFeed>
+        <div class="info-container" fxLayout="row" fxLayoutAlign="center center">
+            <h1 class="info-message"><strong>{{user.username}}</strong> hasn't posted anything yet</h1>
+        </div>
+    </ng-template>
 </div>

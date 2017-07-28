@@ -3,7 +3,7 @@
         <div class="container" fxLayout="row" fxLayoutAlign="space-between center">
              <h1 class="logo" routerLink="/">photocloud</h1>
             <a [routerLink]="['/', accessToken.username]" fxLayout="row" fxLayoutAlign="center center" *ngIf="accessToken">
-                <img class="avatar" src="{{accessToken.pictureUri}}" alt="user">
+                <img class="avatar" src="{{accessToken.pictureUri}}" default="assets/images/user-default-image.png" alt="user">
             </a>
         </div>
     </div>

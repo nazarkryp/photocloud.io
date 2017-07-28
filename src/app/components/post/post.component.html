@@ -1,6 +1,6 @@
 <div class="post z-depth-1" *ngIf="post">
     <div class="post-header" fxLayout="row">
-        <img class="post-avatar" [routerLink]="['/', post.user.username]" src="{{post.user.pictureUri}}" alt="profile">
+        <img class="post-avatar" [routerLink]="['/', post.user.username]" src="{{post.user.pictureUri}}" default="assets/images/user-default-image.png" alt="profile">
         <div class="post-author" fxLayout="row" fxLayoutAlign="space-between center" fxFlex>
             <a class="mat-body-1" [routerLink]="['/', post.user.username]">{{post.user.username}}</a>
             <div fxLayout="row" fxLayout="center end" *ngIf="post.user.id === currentUser.id">

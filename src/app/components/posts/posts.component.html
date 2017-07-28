@@ -1,10 +1,15 @@
 <div fxLayout="column" fxLayoutAlign="start center" fxFlex>
-    <div class="posts-container" *ngIf="page">
+    <div class="posts-container" *ngIf="isLoading || page.data.length > 0; else emptyFeed;">
         <app-post *ngFor="let post of page.data; trackBy: index;" [post]="post" (onRemoved)="onRemoved($event)"></app-post>
         <div fxLayout="row" fxLayoutAlign="center center" *ngIf="page.hasMoreItems">
             <button md-raised-button (click)="getPosts()" [disabled]="isLoading">Load More</button>
         </div>
     </div>
+    <ng-template #emptyFeed>
+        <div class="message">
+            <h1>No one has posted anything yet</h1>
+        </div>
+    </ng-template>
 </div>
 <button class="md-fab-bottom-right" (click)="createPost()" md-fab>
     <md-icon>add</md-icon>

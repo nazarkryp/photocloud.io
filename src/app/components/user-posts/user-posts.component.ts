@@ -49,7 +49,9 @@ export class UserPostsComponent implements OnInit, OnDestroy {
             .subscribe(page => {
                 this.page.hasMoreItems = page.hasMoreItems;
                 this.page.pagination = page.pagination;
-                this.page.data = this.page.data.concat(page.data);
+                if (page.data) {
+                    this.page.data = this.page.data.concat(page.data);
+                }
             }, error => { }, () => {
                 this.isLoading = false;
                 this.progressService.done();
@@ -94,32 +96,20 @@ export class UserPostsComponent implements OnInit, OnDestroy {
         this.currentUser = this.accountService.getCurrentUser();
 
         this.subscription = this.route.params.subscribe(async params => {
-            this.initializePage();
-            this.user.username = params['username'];
-
             this.isLoading = true;
             this.progressService.start();
+            this.user.username = params['username'];
+
+            this.initializePage();
             this.getUser()
                 .subscribe(user => {
-                    if (!user) {
-                        return;
-                    } else if (!user.isActive) {
-                        this.error = new Error('Account is not active');
-                    } else if (user.isPrivate
-                        && (!this.currentUser
-                            || user.id !== this.currentUser.id)
-                        && user.incommingStatus !== RelationshipStatus.Following) {
-                        if (this.currentUser) {
-                            this.error = new Error('Account is private',
-                                `Follow ${this.user.username} to see all their photos`);
-                        } else {
-                            this.error = new Error('Account is private',
-                                `Already know ${this.user.username}? Sign in to see all their photos`);
-                        }
-                    } else {
+                    this.error = this.validateUserResponse(user);
+
+                    if (!this.error) {
                         this.getPosts();
                     }
                 }, error => {
+                }, () => {
                     this.isLoading = false;
                     this.progressService.done();
                 });
@@ -135,5 +125,21 @@ export class UserPostsComponent implements OnInit, OnDestroy {
         this.page.hasMoreItems = false;
         this.page.pagination = null;
         this.page.data = [];
+    }
+
+    private validateUserResponse(user: User): Error {
+        let error: Error;
+
+        if (!user.isActive) {
+            error = new Error('Account is not active');
+        } else if (user.isPrivate
+            && (!this.currentUser || user.id !== this.currentUser.id)
+            && user.incommingStatus !== RelationshipStatus.Following) {
+            error = this.currentUser
+                ? new Error('Account is private', `Follow ${this.user.username} to see all their photos`) :
+                new Error('Account is private', `Already know ${this.user.username}? Sign in to see all their photos`);
+        }
+
+        return error;
     }
 }

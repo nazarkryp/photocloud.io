@@ -60,6 +60,7 @@
     object-fit: cover;
     overflow: hidden;
     border-radius: 90px;
+    border: 1px solid #efefef;
 }
 
 .user-info {
@@ -88,6 +89,8 @@
     font-size: 17px;
     font-weight: bold;
     padding-right: 10px;
+     width: 100%;
+    white-space: pre;
 }
 
 .mat-subhead.bio {
@@ -98,4 +101,25 @@
 
 .button-bordered {
     border: 1px solid red;
+}
+
+.info-container {
+    height: 300px;
+}
+
+.info-message {
+    font-weight: 300;
+}
+
+.error-box {
+    padding: 50px;
+}
+
+.error-title {
+    font-weight: bold;
+    font-size: 1.5em;
+}
+
+.error-description {
+    font-size: 1.3em;
 }

@@ -18,7 +18,7 @@
         </div>
         <div class="post-details" [ngClass]="{ 'dialog' : isDialog }" fxLayout="column">
             <div class="post-details-header" fxLayout="row" fxLayoutAlign="start center">
-                <img class="post-avatar" [routerLink]="['/', post.user.username]" src="{{post.user.pictureUri}}" alt="profile">
+                <img class="post-avatar" [routerLink]="['/', post.user.username]" src="{{post.user.pictureUri}}" default="assets/images/user-default-image.png" alt="profile">
                 <div class="post-author" fxLayout="row" fxLayoutAlign="space-between center" fxFlex>
                     <div fxLayout="column">
                         <a class="username" [routerLink]="['/', post.user.username]">{{post.user.username}}</a>

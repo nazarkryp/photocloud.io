@@ -44,6 +44,7 @@ import { RawPipe } from './pipes/raw.pipe';
 import { CaptionComponent } from './components/shared/caption/caption.component';
 import { ImagePreviewDirective } from './directives/image-preview.directive';
 import { SignupComponent } from './components/signup/signup.component';
+import { DefaultImageDirective } from './directives/default-image.directive';
 
 @NgModule({
     declarations: [
@@ -63,7 +64,8 @@ import { SignupComponent } from './components/signup/signup.component';
         RawPipe,
         CaptionComponent,
         ImagePreviewDirective,
-        SignupComponent
+        SignupComponent,
+        DefaultImageDirective
     ],
     entryComponents: [
         PostDetailsComponent,
