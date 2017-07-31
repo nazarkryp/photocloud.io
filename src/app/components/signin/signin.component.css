@@ -6,7 +6,7 @@ md-progress-bar {
 
 a {
     text-decoration: none;
-    color: deeppink;
+    color: #e91e63;
 }
 
 .logo {
@@ -86,14 +86,6 @@ a {
     font-weight: lighter;
 }
 
-.top-container {
-    position: absolute;
-    height: calc(40vh);
-    width: 100%;
-    background: #e91e63;
-    color: white;
-}
-
 .signin-button {
     width: 100%;
 }
@@ -110,4 +102,9 @@ a {
 
 .form-container {
     padding: 0 25px 25px 25px;
+}
+
+.mat-progress-spinner {
+    height: 50px;
+    width: 50px;
 }

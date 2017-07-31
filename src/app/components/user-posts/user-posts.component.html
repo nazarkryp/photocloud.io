@@ -1,6 +1,8 @@
 <div fxLayout="column" fxLayoutAlign="center center" *ngIf="!isLoading">
     <div class="user-info" fxLayout="row" fxLayoutAlign="center end">
-        <img class="thumbnail-big" src="{{user.pictureUri}}" default="assets/images/user-default-image.png" alt="profile" />
+        <img class="thumbnail-big" src="{{user.pictureUri}}" default="assets/images/user-default-image.png" alt="profile" *ngIf="!currentUser || user.id !== currentUser.id"/> 
+        <img class="thumbnail-big" src="{{user.pictureUri}}" default="assets/images/user-default-image.png" alt="profile" (click)="fileInput.click()" *ngIf="currentUser && user.id === currentUser.id"/> 
+        <input #fileInput type="file" accept="image/*" ng2FileSelect [uploader]="uploader" hidden/>
         <div fxLayout="column" fxFlex>
             <div class="md-padding" fxLayout="row" fxLayoutAlign="space-between end">
                 <div>

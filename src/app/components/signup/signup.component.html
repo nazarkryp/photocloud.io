@@ -1,8 +1,7 @@
 <div class="content" fxLayout="column" fxLayoutAlign="start center">
     <div class="primary-divider"></div>
-    <div class="sign-container" fxLayout="column" fxLayoutAlign="center center">
+    <div fxLayout="column" fxLayoutAlign="start center">
         <div class="form-container">
-            <md-progress-bar color="primary" mode="indeterminate" *ngIf="isLoading"></md-progress-bar>
             <div fxLayout="column" fxLayoutAlign="center center">
                 <h1 class="logo">PhotoCloud</h1>
                 <div class="header-container" fxLayout="column" fxLayoutAlign="center center">
@@ -29,6 +28,7 @@
                         </md-input-container>
                     </div>
                     <div class="error-container" fxLayout="column" fxLayoutAlign="center center">
+                        <md-progress-spinner color="primary" mode="indeterminate" *ngIf="isLoading"></md-progress-spinner>
                         <div fxLayout="column" fxLayoutAlign="center center" *ngIf="errors">
                             <span class="mat-subhead error" *ngFor="let error of errors">{{error}}</span>
                         </div>

@@ -13,6 +13,7 @@ export class Post {
     attachments: Attachment[];
     activeAttachment: number;
     comments: Comment[];
+    user: User;
     likes: User[];
     isLoading: boolean;
 }

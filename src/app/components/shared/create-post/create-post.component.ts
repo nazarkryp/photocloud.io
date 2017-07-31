@@ -63,6 +63,7 @@ export class CreatePostComponent implements OnInit {
 
         this.postService.createPost(this.post)
             .subscribe(createdPost => {
+                createdPost.user.pictureUri = this.currentUser.pictureUri;
                 this.dialogRef.close(createdPost);
             });
     }

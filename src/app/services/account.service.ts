@@ -4,7 +4,7 @@ import { Observable } from 'rxjs/Rx';
 
 import { CommunicationService, WebApiClient } from '../infrastructure/communication';
 import { SessionService } from '../infrastructure/session';
-import { AccessToken, CurrentUser } from '../common/models';
+import { AccessToken, CurrentUser, User } from '../common/models';
 import { TokenMapper } from '../infrastructure/mapping/token.mapper';
 
 import { environment } from '../../environments/environment';
@@ -39,6 +39,10 @@ export class AccountService {
     signOut() {
         this.sessionService.clearSession();
         this.communicationService.changeState(null);
+    }
+
+    updateAccount(propertiesToUpdate: any): Observable<User> {
+        return this.webApiClient.patch('account', propertiesToUpdate);
     }
 
     getCurrentUser(refresh: boolean = true): CurrentUser {

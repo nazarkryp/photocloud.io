@@ -19,10 +19,7 @@ import { CommentsComponent } from './components/shared/comments/comments.compone
 import { PostDetailsComponent } from './components/shared/post-details/post-details.component';
 import { CreatePostComponent } from './components/shared/create-post/create-post.component';
 
-import { PostService } from './services/post.service';
-import { CommentService } from './services/comment.service';
-import { UserService } from './services/user.service';
-import { AccountService } from './services/account.service';
+import { AccountService, PostService, CommentService, UploaderService, UserService } from './services';
 
 import { AuthenticationGuard } from './infrastructure/guards/authentication-guard.service';
 import { SessionService } from './infrastructure/session/session.service';
@@ -87,6 +84,7 @@ import { DefaultImageDirective } from './directives/default-image.directive';
         CommentService,
         UserService,
         AccountService,
+        UploaderService,
         AuthenticationGuard,
         SessionService,
         WebApiClient,

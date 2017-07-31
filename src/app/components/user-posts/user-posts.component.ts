@@ -7,6 +7,9 @@ import { AccountService, PostService, UserService } from '../../services';
 import { CurrentUser, Post, Attachment, User, RelationshipStatus, Collection, Error } from '../../common/models';
 import { PostDetailsComponent } from '../shared/post-details/post-details.component';
 import { NgProgressService } from 'ngx-progressbar';
+import { UploaderService } from '../../services';
+import { FileUploader, FileUploaderOptions } from 'ng2-file-upload';
+import { environment } from '../../../environments/environment';
 
 @Component({
     selector: 'app-user-posts',
@@ -22,6 +25,7 @@ export class UserPostsComponent implements OnInit, OnDestroy {
     private isLoadingPosts: boolean;
     private user: User = new User();
     private error: Error;
+    private uploader: FileUploader;
 
     constructor(
         private accountService: AccountService,
@@ -30,7 +34,17 @@ export class UserPostsComponent implements OnInit, OnDestroy {
         private router: Router,
         private route: ActivatedRoute,
         public dialog: MdDialog,
-        private progressService: NgProgressService) {
+        private progressService: NgProgressService,
+        private uploaderService: UploaderService) {
+        this.uploader = uploaderService.createUploader((attachment) => this.onSuccessUpload(attachment));
+    }
+
+    private onSuccessUpload(attachment: Attachment) {
+        this.accountService.updateAccount({
+            pictureId: attachment.id
+        }).subscribe(user => {
+            this.user.pictureUri = user.pictureUri
+        });
     }
 
     private getUser(): Observable<User> {
@@ -118,6 +132,7 @@ export class UserPostsComponent implements OnInit, OnDestroy {
 
     ngOnDestroy(): void {
         this.subscription.unsubscribe();
+        this.uploader.destroy();
     }
 
     private initializePage(): void {

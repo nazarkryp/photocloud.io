@@ -1,8 +1,7 @@
 <div class="content" fxLayout="column" fxLayoutAlign="start center">
     <div class="primary-divider"></div>
-    <div class="sign-container" fxLayout="column" fxLayoutAlign="center center">
+    <div class="sign-container" fxLayout="column" fxLayoutAlign="start center">
         <div class="form-container">
-            <md-progress-bar color="primary" mode="indeterminate" *ngIf="isLoading"></md-progress-bar>
             <div fxLayout="column" fxLayoutAlign="center center">
                 <h1 class="logo">PhotoCloud</h1>
                 <div class="header-container" fxLayout="column" fxLayoutAlign="center center">
@@ -23,6 +22,7 @@
                         </md-input-container>
                     </div>
                     <div class="error-container" fxLayout="row" fxLayoutAlign="center center">
+                        <md-progress-spinner color="primary" mode="indeterminate" *ngIf="isLoading"></md-progress-spinner>
                         <span class="mat-subhead error" *ngIf="errorMessage">{{errorMessage}}</span>
                     </div>
                     <div fxLayout="row" fxLayoutAlign="end center">
@@ -34,69 +34,3 @@
         </div>
     </div>
 </div>
-
-<!-- <div class="content" fxLayout="column" fxLayoutAlign="start center">
-    <div style="width: 100%; height: 10px; background-color: #e91e63;"></div>
-    <div style="height: 100%;" fxLayout="column" fxLayoutAlign="center center">
-        <div class="z-depth-3" style="padding: 0 25px 25px 25px; background: white;">
-            <md-progress-bar color="primary" mode="indeterminate" *ngIf="isLoading"></md-progress-bar>
-            <div fxLayout="column" fxLayoutAlign="center center">
-                <h1 style="color: #e91e63; font-size: 5em; font-weight: lighter;margin-bottom: 20px;">PhotoCloud</h1>
-                <div style="height: 150px; margin-bottom: 20px;" fxLayout="column" fxLayoutAlign="center center">
-                    <span style="font-size: 3em; font-weight: normal;">Sign In</span>
-                    <div fxLayout="row" fxLayoutAlign="center center" style="height: 75px;">
-                        <span>Sign In to see photos and videos from your friends</span>
-                    </div>
-                </div>
-            </div>
-            <div fxLayout="column" fxLayoutAlign="start center">
-                <form (ngSubmit)="signIn()" style="width: 450px;">
-                    <div fxLayout="column">
-                        <md-input-container fxFlex>
-                            <input mdInput placeholder="Username" type="text" [(ngModel)]="account.username" name="username" autocomplete="off">
-                        </md-input-container>
-                        <md-input-container fxFlex>
-                            <input mdInput placeholder="Password" type="password" [(ngModel)]="account.password" name="password" autocomplete="off">
-                        </md-input-container>
-                    </div>
-                    <div class="error-container" fxLayout="row" fxLayoutAlign="center center">
-                        <span class="mat-subhead error" *ngIf="errorMessage">{{errorMessage}}</span>
-                    </div>
-                    <div fxLayout="row" fxLayoutAlign="end center">
-                        <button class="signin-button" md-raised-button color="accent" type="sumbit">Sign In</button>
-                    </div>
-                </form>
-                <div style="margin-top: 25px;">
-                    <a [routerLink]="['/account/create']">Don't have an account?</a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="content" fxLayout="column" fxLayoutAlign="start center">
-    <div style="width: 100%; height: 40%;background: #e91e63;" fxLayout="column" fxLayoutAlign="center center">
-        <h1 style="color:white; font-size: 5em; font-weight: lighter;">PhotoCloud</h1>
-    </div>
-    <div fxLayout="row" fxLayoutAlign="center start" style="height: 60%;">
-        <form (ngSubmit)="signIn()" style="width: 500px;">
-            <div fxLayout="row" fxLayoutAlign="start center" style="height: 100px;">
-                <span>Sign In to continue</span>
-            </div>
-            <div fxLayout="column">
-                <md-input-container fxFlex>
-                    <input mdInput placeholder="Username" type="text" [(ngModel)]="account.username" name="username" autocomplete="off">
-                </md-input-container>
-                <md-input-container fxFlex>
-                    <input mdInput placeholder="Password" type="password" [(ngModel)]="account.password" name="password" autocomplete="off">
-                </md-input-container>
-            </div>
-            <div class="error-container" fxLayout="row" fxLayoutAlign="center center">
-                <span class="mat-subhead error" *ngIf="errorMessage">{{errorMessage}}</span>
-            </div>
-            <div fxLayout="row" fxLayoutAlign="end center">
-                <button class="signin-button" md-raised-button color="accent" type="sumbit">Sign In</button>
-            </div>
-        </form>
-    </div>
-</div> -->

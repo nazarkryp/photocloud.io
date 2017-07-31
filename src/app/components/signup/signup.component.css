@@ -112,3 +112,8 @@ a {
 .form-container {
     padding: 0 25px 25px 25px;
 }
+
+.mat-progress-spinner {
+    height: 50px;
+    width: 50px;
+}
