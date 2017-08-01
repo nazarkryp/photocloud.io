@@ -21,7 +21,9 @@ export class UploaderService {
 
         this.getAuthenticationOptions()
             .subscribe(options => {
-                this.fileUploader.setOptions(options);
+                if (options) {
+                    this.fileUploader.setOptions(options);
+                }
             });
 
         this.fileUploader.onAfterAddingFile = (file) => {
@@ -41,6 +43,9 @@ export class UploaderService {
     private getAuthenticationOptions(): Observable<FileUploaderOptions> {
         return this.tokenProvider.getAccessToken()
             .map(accessToken => {
+                if (!accessToken) {
+                    return null;
+                }
                 const bearerToken = `Bearer ${accessToken.accessToken}`;
                 const headers: Array<{ name: string; value: string; }> = [];
                 headers.push({ name: 'Authorization', value: bearerToken });
