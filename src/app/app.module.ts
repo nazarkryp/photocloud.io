@@ -42,6 +42,7 @@ import { CaptionComponent } from './components/shared/caption/caption.component'
 import { ImagePreviewDirective } from './directives/image-preview.directive';
 import { SignupComponent } from './components/signup/signup.component';
 import { DefaultImageDirective } from './directives/default-image.directive';
+import { TagsComponent } from './components/explore/tags/tags.component';
 
 @NgModule({
     declarations: [
@@ -62,7 +63,8 @@ import { DefaultImageDirective } from './directives/default-image.directive';
         CaptionComponent,
         ImagePreviewDirective,
         SignupComponent,
-        DefaultImageDirective
+        DefaultImageDirective,
+        TagsComponent
     ],
     entryComponents: [
         PostDetailsComponent,

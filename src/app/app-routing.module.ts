@@ -8,6 +8,7 @@ import { SigninComponent } from './components/signin/signin.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { PostDetailsComponent } from './components/shared/post-details/post-details.component';
 import { SignupComponent } from './components/signup/signup.component';
+import { TagsComponent } from './components/explore/tags/tags.component';
 
 import { AuthenticationGuard } from './infrastructure/guards/authentication-guard.service';
 
@@ -38,6 +39,10 @@ const routes: Routes = [
     {
         path: 'p/:postId',
         component: PostDetailsComponent
+    },
+    {
+        path: 'explore/tags/:tag',
+        component: TagsComponent
     }
 ];
 
