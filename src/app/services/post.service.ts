@@ -33,6 +33,10 @@ export class PostService {
         return this.webApiClient.get<Collection<Post>>(requestUri);
     }
 
+    getPostsByTag(tag: string, pagination: Pagination) {
+        return this.webApiClient.get<Collection<Post>>(`posts/tags/${tag}`);
+    }
+
     getPostById(postId: number): Observable<Post> {
         return this.webApiClient.get<Post>(`posts/${postId}`);
     }

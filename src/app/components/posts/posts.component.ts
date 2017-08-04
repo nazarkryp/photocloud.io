@@ -48,7 +48,7 @@ export class PostsComponent implements OnInit {
             .subscribe(page => {
                 this.page.hasMoreItems = page.hasMoreItems;
                 this.page.pagination = page.pagination;
-                if (page.data){
+                if (page.data) {
                     this.page.data = this.page.data.concat(page.data);
                 }
             }, (error) => { }, () => {

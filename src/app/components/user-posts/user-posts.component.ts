@@ -4,7 +4,7 @@ import { MdDialog } from '@angular/material';
 import { Observable, Subscription } from 'rxjs/Rx';
 
 import { AccountService, PostService, UserService } from '../../services';
-import { CurrentUser, Post, Attachment, User, RelationshipStatus, Collection, Error } from '../../common/models';
+import { CurrentUser, Post, Attachment, User, RelationshipStatus, Collection, ValidationResult, Error } from '../../common/models';
 import { PostDetailsComponent } from '../shared/post-details/post-details.component';
 import { NgProgressService } from 'ngx-progressbar';
 import { UploaderService } from '../../services';
@@ -47,43 +47,52 @@ export class UserPostsComponent implements OnInit, OnDestroy {
         });
     }
 
-    private getUser(): Observable<User> {
-        return this.userService.getUser(this.user.username)
-            .do(user => this.user = user, error => {
+    private getUser(username: string): Observable<User> {
+        return this.userService.getUser(username)
+            .catch(error => {
                 if (error.status === 404) {
                     this.router.navigateByUrl('/404', { skipLocationChange: true });
                 }
+
+                return Observable.of(error);
             });
     }
 
     private getPosts() {
-        this.progressService.start();
+        this.isLoading = true;
+        if (!this.progressService.isStarted()) {
+            this.progressService.start();
+        }
 
         this.postService.getUserPosts(this.user.username, this.page.pagination)
-            .subscribe(page => {
-                this.page.hasMoreItems = page.hasMoreItems;
-                this.page.pagination = page.pagination;
-                if (page.data) {
-                    this.page.data = this.page.data.concat(page.data);
+            .finally(() => {
+                if (this.progressService.isStarted()) {
+                    this.progressService.done();
                 }
-            }, error => { }, () => {
+
                 this.isLoading = false;
-                this.progressService.done();
+            })
+            .subscribe((collection: Collection<Post>) => {
+                this.page.hasMoreItems = collection.hasMoreItems;
+                this.page.pagination = collection.pagination;
+                if (collection.data) {
+                    this.page.data = this.page.data.concat(collection.data);
+                }
             });
     }
 
-    logout() {
+    private logout() {
         this.accountService.signOut();
         this.router.navigateByUrl('/signin');
     }
 
-    openPostDialog(post: Post) {
+    private openPostDialog(post: Post) {
         const dialogRef = this.dialog.open(PostDetailsComponent, {
             data: post
         });
     }
 
-    modifyRelationship() {
+    private modifyRelationship() {
         let action: number;
 
         if (this.user.incommingStatus === RelationshipStatus.None) {
@@ -106,27 +115,37 @@ export class UserPostsComponent implements OnInit, OnDestroy {
         });
     }
 
-    ngOnInit() {
+    private getUserFeed(username: string) {
+        this.isLoading = true;
+        this.progressService.start();
+
+        this.getUser(username)
+            .subscribe((user: User) => {
+                const validationResult = this.validateUser(user);
+                this.user = user;
+
+                if (validationResult.hasErrors) {
+                    return Observable.throw(validationResult.error);
+                }
+
+                this.getPosts();
+            }, (error) => {
+                this.isLoading = false;
+                this.progressService.done();
+
+                if (error instanceof Error) {
+                    this.error = error;
+                }
+            });
+    }
+
+    public ngOnInit() {
         this.currentUser = this.accountService.getCurrentUser();
 
         this.subscription = this.route.params.subscribe(async params => {
-            this.isLoading = true;
-            this.progressService.start();
-            this.user.username = params['username'];
-
             this.initializePage();
-            this.getUser()
-                .subscribe(user => {
-                    this.error = this.validateUserResponse(user);
-
-                    if (!this.error) {
-                        this.getPosts();
-                    }
-                }, error => {
-                    this.isLoading = false;
-                    this.progressService.done();
-                }, () => {
-                });
+            const username = params['username'] as string;
+            this.getUserFeed(username);
         });
     }
 
@@ -142,19 +161,25 @@ export class UserPostsComponent implements OnInit, OnDestroy {
         this.page.data = [];
     }
 
-    private validateUserResponse(user: User): Error {
-        let error: Error;
+    private validateUser(user: User): ValidationResult {
+        const validationResult: ValidationResult = new ValidationResult();
 
-        if (!user.isActive) {
-            error = new Error('Account is not active');
+        if (!(user instanceof User)) {
+            validationResult.hasErrors = true;
+            validationResult.error = new Error('There is no Internet connection', 'Check your network cables, modem, and router');
+        } else if (!user.isActive) {
+            validationResult.hasErrors = true;
+            validationResult.error = new Error('Account is not active');
         } else if (user.isPrivate
             && (!this.currentUser || user.id !== this.currentUser.id)
             && user.incommingStatus !== RelationshipStatus.Following) {
-            error = this.currentUser
-                ? new Error('Account is private', `Follow ${this.user.username} to see all their photos`) :
-                new Error('Account is private', `Already know ${this.user.username}? Sign in to see all their photos`);
+            validationResult.hasErrors = true;
+            validationResult.error = new Error('Account is private');
+            validationResult.error.description = this.currentUser
+                ? `Follow ${this.user.username} to see all their photos` :
+                `Already know ${this.user.username}? Sign in to see all their photos`;
         }
 
-        return error;
+        return validationResult;
     }
 }

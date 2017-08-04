@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 
-import { Routes, RouterModule } from '@angular/router';
+import { Routes, RouterModule, Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 
 import { PostsComponent } from './components/posts/posts.component';
 import { UserPostsComponent } from './components/user-posts/user-posts.component';
@@ -16,38 +17,74 @@ const routes: Routes = [
     {
         path: '',
         component: PostsComponent,
-        canActivate: [AuthenticationGuard]
+        canActivate: [AuthenticationGuard],
+        data: {
+            title: 'PhotoCloud'
+        }
     },
     {
         path: 'signin',
         component: SigninComponent,
-        canActivate: [AuthenticationGuard]
+        canActivate: [AuthenticationGuard],
+        data: {
+            title: 'PhotoCloud - Sign In'
+        }
     },
     {
         path: 'account/create',
         component: SignupComponent,
-        canActivate: [AuthenticationGuard]
+        canActivate: [AuthenticationGuard],
+        data: {
+            title: 'PhotoCloud - Create Account'
+        }
     },
     {
         path: '404',
-        component: NotFoundComponent
+        component: NotFoundComponent,
+         data: {
+            title: 'PhotoCloud - Page Not Found'
+        }
     },
     {
         path: ':username',
-        component: UserPostsComponent
+        component: UserPostsComponent,
+        data: {
+            title: 'PhotoCloud'
+        }
     },
     {
         path: 'p/:postId',
-        component: PostDetailsComponent
+        component: PostDetailsComponent,
+        data: {
+            title: 'PhotoCloud - Post'
+        }
     },
     {
         path: 'explore/tags/:tag',
-        component: TagsComponent
+        component: TagsComponent,
+        data: {
+            title: `PhotoCloud - Explore Tags`
+        }
     }
 ];
+
+declare var ga;
 
 @NgModule({
     imports: [RouterModule.forRoot(routes)],
     exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+    constructor(router: Router, activatedRoute: ActivatedRoute, title: Title) {
+        router.events.filter(e => e instanceof NavigationEnd).subscribe((event) => {
+            const pageTitle = router.routerState.snapshot.root.children[0].data['title'];
+            if (pageTitle) {
+                title.setTitle(pageTitle);
+            } else if (pageTitle !== false) {
+                title.setTitle('My Default Title');
+            }
+
+            // ga('send', 'pageview', event.urlAfterRedirects);
+        });
+    }
+}

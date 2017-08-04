@@ -1,16 +1,16 @@
 ﻿import { Injectable, Injector } from '@angular/core';
-import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest } from '@angular/common/http';
+import { Router } from '@angular/router';
+import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs/Rx';
 
 import { TokenProvider } from './token-provider';
 import { AccessToken } from '../../common/models';
 import { CommunicationService } from '../communication';
 
-import { environment } from '../../../environments/environment';
-
 @Injectable()
 export class AuthenticationInterceptor implements HttpInterceptor {
     constructor(
+        private router: Router,
         private injector: Injector,
         private communicationService: CommunicationService) { }
 
@@ -26,7 +26,8 @@ export class AuthenticationInterceptor implements HttpInterceptor {
                 this.communicationService.changeState(accessToken);
 
                 if (!accessToken) {
-                    return next.handle(req);
+                    return next.handle(req)
+                        .catch((error: HttpErrorResponse) => this.handleUnauthenticatedRequest(error));;
                 }
 
                 const request = req.clone({
@@ -36,6 +37,14 @@ export class AuthenticationInterceptor implements HttpInterceptor {
                 });
 
                 return next.handle(request);
-            });
+            }).catch((error: HttpErrorResponse) => this.handleUnauthenticatedRequest(error));
+    }
+
+    private handleUnauthenticatedRequest(error: HttpErrorResponse) {
+        if (error.status === 401) {
+            this.router.navigateByUrl('/signin');
+        }
+
+        return Observable.throw(error);
     }
 }

@@ -1,3 +1,16 @@
-<p>
-  tags works!
-</p>
+<div class="posts-container" fxLayout="column" fxLayoutAlign="start center">
+    <div class="posts">
+        <div class="post z-depth-4" *ngFor="let post of page?.data;" fxLayout="column">
+            <img class="thumbnail" src="{{post.attachments[0].uri}}" alt="post">
+            <div class="post-description" fxLayout="column" fxLayoutAlign="start">
+                <a class="username" [routerLink]="['/', post.user.username]"><strong>{{post.user.username}}</strong></a>
+                <div class="post-caption" *ngIf="post.caption">
+                    <app-caption caption="{{post.caption}}"></app-caption>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="center center" *ngIf="page.hasMoreItems">
+        <button md-raised-button (click)="getPosts()" [disabled]="isLoading">Load More</button>
+    </div>
+</div>

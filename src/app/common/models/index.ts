@@ -11,3 +11,4 @@ export { Collection } from './collection-model';
 export { Error } from './error';
 export { UserLogin } from './user-login';
 export { IncommingUser } from './incomming-user';
+export { ValidationResult } from './validation-result';

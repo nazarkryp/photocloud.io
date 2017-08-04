@@ -1,7 +1,11 @@
 import { Pagination } from './pagination';
 
 export class Collection<T> {
-    pagination: Pagination;
-    data: T[];
-    hasMoreItems: boolean;
+    public pagination: Pagination;
+    public data: T[];
+    public hasMoreItems: boolean;
+
+    constructor() {
+        this.data = new Array<T>();
+    }
 }
