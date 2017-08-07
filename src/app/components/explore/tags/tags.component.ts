@@ -30,8 +30,7 @@ export class TagsComponent implements OnInit, OnDestroy {
 
     private getPosts(tag: string) {
         this.progressService.start();
-        // this.postService.getPostsByTag(tag, this.page.pagination)
-        this.postService.getUserPosts('lanafeshchuk', this.page.pagination)
+        this.postService.getPostsByTag(tag, this.page.pagination)
             .finally(() => {
                 this.progressService.done();
             })
