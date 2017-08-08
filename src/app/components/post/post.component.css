@@ -1,3 +1,7 @@
+textarea {
+    resize: none;
+}
+
 a {
     text-decoration: none;
     color: inherit;
@@ -69,6 +73,19 @@ hr {
     width: 100%;
 }
 
+.caption-input {
+    outline: none;
+    border: 2px solid #d8d8d8;
+    width: -webkit-fill-available;
+    padding: 12px 12px 12px 12px;
+    border-radius: 3px;
+    margin-bottom: 25px;
+}
+
+.save-button {
+    margin-right: 10px;
+}
+
 .post-content {
     width: 100%;
     position: relative;
@@ -96,8 +113,6 @@ hr {
 .post-created {
     font-size: 14px;
     color: gray;
-    text-transform: uppercase;
-    letter-spacing: 1px;
     font-weight: lighter;
 }
 

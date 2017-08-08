@@ -41,6 +41,10 @@ export class PostService {
         return this.webApiClient.get<Post>(`posts/${postId}`);
     }
 
+    update(post: Post): Observable<Post> {
+        return this.webApiClient.patch(`posts/${post.id}`, post);
+    }
+
     removePost(postId: number) {
         return this.webApiClient.delete(`posts/${postId}`);
     }

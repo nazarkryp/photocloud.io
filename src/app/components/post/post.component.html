@@ -1,11 +1,16 @@
 <div class="post z-depth-1" *ngIf="post">
-    <div class="post-header" fxLayout="row">
-        <img class="post-avatar" [routerLink]="['/', post.user.username]" src="{{post.user.pictureUri}}" default="assets/images/user-default-image.png" alt="profile">
+    <div class="post-header" fxLayout="row" *ngIf="!post.editing">
+        <img class="post-avatar" [routerLink]="['/', post.user.username]" src="{{post.user.pictureUri}}" default="assets/images/user-default-image.png"
+            alt="profile">
         <div class="post-author" fxLayout="row" fxLayoutAlign="space-between center" fxFlex>
-            <a class="mat-body-1" [routerLink]="['/', post.user.username]">{{post.user.username}}</a>
+            <a class="mat-body-1" [routerLink]="['/', post.user.username]">{{post.user.username}} {{post.id}}</a>
             <div fxLayout="row" fxLayout="center end" *ngIf="post.user.id === currentUser.id">
                 <button md-icon-button type="button" [mdMenuTriggerFor]="menu"><md-icon>expand_more</md-icon></button>
                 <md-menu #menu="mdMenu" xPosition="before">
+                    <button md-menu-item (click)="edit()">
+                        <md-icon>edit</md-icon>
+                        <span>Edit</span>
+                    </button>
                     <button md-menu-item (click)="remove()">
                         <md-icon>delete</md-icon>
                         <span>Remove</span>
@@ -31,7 +36,7 @@
             [hidden]="index !== post.activeAttachment">
     </div>
     <md-progress-bar class="progress-bar" color="warn" mode="indeterminate" *ngIf="post.isLoading"></md-progress-bar>
-    <div class="post-footer">
+    <div class="post-footer" *ngIf="!post.editing">
         <div class="likes" fxLayout="row" fxLayoutAlign="space-between center">
             <span><strong>{{post.likesCount}} likes</strong></span>
         </div>
@@ -46,8 +51,12 @@
             <span class="post-created">{{post.created | timeAgo}}</span>
         </div>
     </div>
-    <!-- <hr/> -->
-    <div class="post-actions" fxLayout="row">
+    <div class="post-footer" *ngIf="post.editing">
+        <div class="post-caption">
+            <textarea rows="5" class="caption-input" placeholder="Edit Caption" type="text" [(ngModel)]="caption"></textarea>
+        </div>
+    </div>
+    <div class="post-actions" fxLayout="row" *ngIf="!post.editing">
         <button [ngClass]="{ 'liked' : post.userHasLiked }" md-icon-button (click)="like()">
             <md-icon>favorite</md-icon>
         </button>
@@ -55,5 +64,9 @@
         <button md-icon-button mdTooltip="Copy to clipboard" mdTooltipPosition="left" ngxClipboard [cbContent]="share()" (cbOnSuccess)="showToast('Copied to clipboard')">
             <md-icon>share</md-icon>
         </button>
+    </div>
+    <div class="post-actions" fxLayout="row" fxLayoutAlign="end center" *ngIf="post.editing">
+        <button class="save-button" md-raised-button color="primary" (click)="update()">Save</button>
+        <button md-raised-button (click)="cancel()">Cancel</button>
     </div>
 </div>

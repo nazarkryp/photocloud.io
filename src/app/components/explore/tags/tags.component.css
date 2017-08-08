@@ -1,4 +1,4 @@
-a {
+﻿a {
     text-decoration: none;
     color: inherit;
 }
@@ -56,6 +56,12 @@ span {
     overflow: hidden;
     border-radius: 3px 3px 0 0;
     vertical-align: bottom;
+    pointer-events: none;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
 }
 
 .post-info {
@@ -85,6 +91,11 @@ span {
 .username {
     font-size: 1.1em;
     font-weight: lighter;
+}
+
+.date {
+    font-size: 0.9em;
+    color: gray;
 }
 
 .like-button {

@@ -16,4 +16,5 @@ export class Post {
     user: User;
     likes: User[];
     isLoading: boolean;
+    editing: boolean;
 }

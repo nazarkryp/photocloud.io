@@ -1,4 +1,4 @@
-<div class="posts-container" fxLayout="column" fxLayoutAlign="start center">
+﻿<div class="posts-container" fxLayout="column" fxLayoutAlign="start center">
     <div class="posts">
         <div class="post z-depth-1" *ngFor="let post of page?.data;" fxLayout="column">
             <div md-ripple class="thumbnail-container" style="height: 300px; width: 100%; position: relative;" (click)="openPostDialog(post)">
@@ -18,9 +18,12 @@
             </div>
             <div class="post-description" fxLayout="column" fxLayoutAlign="start">
                 <div fxLayout="row" fxLayoutAlign="space-between center">
-                    <a class="username" [routerLink]="['/', post.user.username]">
-                        <strong>{{post.user.username}}</strong>
-                    </a>
+                    <div fxLayout="column" fxLayoutAlign="center start">
+                        <a class="username" [routerLink]="['/', post.user.username]">
+                            <strong>{{post.user.username}}</strong>
+                        </a>
+                        <span class="date">{{post.created | timeAgo}}</span>
+                    </div>
                     <button class="like-button" md-icon-button (click)="like(post)" *ngIf="currentUser">
                         <md-icon [ngClass]="{ 'liked' : post.userHasLiked }">favorite</md-icon>
                     </button>

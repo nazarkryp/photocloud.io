@@ -18,6 +18,7 @@ export class PostComponent implements OnInit {
 
     private text: string;
     private shareLink: string;
+    private caption: string;
 
     private currentUser: CurrentUser;
 
@@ -89,6 +90,24 @@ export class PostComponent implements OnInit {
                 this.post.comments.splice(failedCommentIndex, 1);
             });
 
+    }
+
+    private edit() {
+        this.caption = this.post.caption;
+        this.post.editing = true;
+    }
+
+    private update() {
+        this.post.caption = this.caption;
+        this.postService.update(this.post)
+            .subscribe((post) => {
+                this.post.caption = post.caption;
+                this.post.editing = false;
+            });
+    }
+
+    private cancel() {
+        this.post.editing = false;
     }
 
     like() {
