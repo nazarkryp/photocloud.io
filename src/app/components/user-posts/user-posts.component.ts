@@ -59,7 +59,7 @@ export class UserPostsComponent implements OnInit, OnDestroy {
     }
 
     private getPosts() {
-        this.isLoading = true;
+        this.isLoadingPosts = true;
         if (!this.progressService.isStarted()) {
             this.progressService.start();
         }
@@ -69,7 +69,7 @@ export class UserPostsComponent implements OnInit, OnDestroy {
                 if (this.progressService.isStarted()) {
                     this.progressService.done();
                 }
-
+                this.isLoadingPosts = false;
                 this.isLoading = false;
             })
             .subscribe((collection: Collection<Post>) => {
@@ -123,19 +123,17 @@ export class UserPostsComponent implements OnInit, OnDestroy {
             .subscribe((user: User) => {
                 const validationResult = this.validateUser(user);
                 this.user = user;
-
-                if (validationResult.hasErrors) {
-                    return Observable.throw(validationResult.error);
+                if (!validationResult.hasErrors) {
+                    this.getPosts();
+                    return;
                 }
 
-                this.getPosts();
+                this.error = validationResult.error;
+                this.isLoading = false;
+                this.progressService.done();
             }, (error) => {
                 this.isLoading = false;
                 this.progressService.done();
-
-                if (error instanceof Error) {
-                    this.error = error;
-                }
             });
     }
 
@@ -159,6 +157,7 @@ export class UserPostsComponent implements OnInit, OnDestroy {
         this.page.hasMoreItems = false;
         this.page.pagination = null;
         this.page.data = [];
+        this.error = null;
     }
 
     private validateUser(user: User): ValidationResult {

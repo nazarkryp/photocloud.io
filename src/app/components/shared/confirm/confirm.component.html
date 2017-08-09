@@ -1,0 +1,8 @@
+<div class="confirm-modal" fxLayout="column" fxLayoutAlign="center" fxFlex>
+    <span class="submit-modal-title">{{title}}</span>
+    <span class="submit-modal-message">{{message}}</span>
+    <div fxLayout="row" fxLayoutAlign="end center">
+        <button class="confirm-button" md-raised-button color="primary" (click)="confirm()">Confirm</button>
+        <button md-raised-button (click)="cancel()">Cancel</button>
+    </div>
+</div>

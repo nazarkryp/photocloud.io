@@ -98,11 +98,14 @@ export class PostComponent implements OnInit {
     }
 
     private update() {
+        this.post.editing = false;
         this.post.caption = this.caption;
+        const backup = this.post.caption;
         this.postService.update(this.post)
             .subscribe((post) => {
                 this.post.caption = post.caption;
-                this.post.editing = false;
+            }, (error) => {
+                this.post.caption = backup;
             });
     }
 

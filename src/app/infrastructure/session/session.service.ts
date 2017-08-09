@@ -12,7 +12,7 @@ export class SessionService {
         localStorage.setItem(this.sessionKey, json);
     }
 
-    getSession(): AccessToken {
+    public getSession(): AccessToken {
         const json = localStorage.getItem(this.sessionKey);
 
         if (!json) {
@@ -29,7 +29,19 @@ export class SessionService {
         return accessToken;
     }
 
-    clearSession(): void {
+    public updateSession(propertiesToUpdate: any) {
+        const session = this.getSession();
+
+        const properties = Object.getOwnPropertyNames(propertiesToUpdate);
+
+        properties.forEach(propertyName => {
+            session[propertyName] = propertiesToUpdate[propertyName];
+        });
+
+        this.setSession(session);
+    }
+
+    public clearSession(): void {
         localStorage.removeItem(this.sessionKey);
     }
 }

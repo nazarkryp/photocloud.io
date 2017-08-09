@@ -3,7 +3,7 @@
         <img class="post-avatar" [routerLink]="['/', post.user.username]" src="{{post.user.pictureUri}}" default="assets/images/user-default-image.png"
             alt="profile">
         <div class="post-author" fxLayout="row" fxLayoutAlign="space-between center" fxFlex>
-            <a class="mat-body-1" [routerLink]="['/', post.user.username]">{{post.user.username}} {{post.id}}</a>
+            <a class="post-author-username" [routerLink]="['/', post.user.username]">{{post.user.username}}</a>
             <div fxLayout="row" fxLayout="center end" *ngIf="post.user.id === currentUser.id">
                 <button md-icon-button type="button" [mdMenuTriggerFor]="menu"><md-icon>expand_more</md-icon></button>
                 <md-menu #menu="mdMenu" xPosition="before">
@@ -53,7 +53,7 @@
     </div>
     <div class="post-footer" *ngIf="post.editing">
         <div class="post-caption">
-            <textarea rows="5" class="caption-input" placeholder="Edit Caption" type="text" [(ngModel)]="caption"></textarea>
+            <textarea rows="5" class="caption-input" placeholder="Edit Caption" type="text" [(ngModel)]="caption" fxFlex></textarea>
         </div>
     </div>
     <div class="post-actions" fxLayout="row" *ngIf="!post.editing">

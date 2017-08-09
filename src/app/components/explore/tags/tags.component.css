@@ -77,7 +77,6 @@ span {
 }
 
 .post-description {
-    color: #444444;
     padding: 10px;
     border-radius: 0 0 3px 3px;
 }
@@ -89,17 +88,18 @@ span {
 }
 
 .username {
+    color: #444444;
     font-size: 1.1em;
     font-weight: lighter;
 }
 
 .date {
     font-size: 0.9em;
-    color: gray;
+    color: #6B738A;
 }
 
 .like-button {
-    color: grey;
+    color: #6B738A;
 }
 
 .liked {

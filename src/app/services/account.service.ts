@@ -42,7 +42,10 @@ export class AccountService {
     }
 
     updateAccount(propertiesToUpdate: any): Observable<User> {
-        return this.webApiClient.patch('account', propertiesToUpdate);
+        return this.webApiClient.patch<User>('account', propertiesToUpdate)
+            .do(account => {
+                this.sessionService.updateSession(account);
+            });
     }
 
     getCurrentUser(refresh: boolean = true): CurrentUser {

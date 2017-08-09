@@ -55,6 +55,10 @@ hr {
     padding-left: 10px;
 }
 
+.post-author-username {
+    font-size: 1.0em;
+}
+
 .post-attachment {
     width: 100%;
     height: auto;
@@ -76,7 +80,6 @@ hr {
 .caption-input {
     outline: none;
     border: 2px solid #d8d8d8;
-    width: -webkit-fill-available;
     padding: 12px 12px 12px 12px;
     border-radius: 3px;
     margin-bottom: 25px;
@@ -92,6 +95,19 @@ hr {
     height: auto;
 }
 
+.post-content img {
+    max-width: 100%;
+    -moz-transition: all 0.3s;
+    -webkit-transition: all 0.3s;
+    transition: all 0.3s;
+}
+
+.post-content:hover img {
+    -moz-transform: scale(1.1);
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+}
+
 .post-content .post-content-buttons {
     position: absolute;
     opacity: 0;
@@ -100,6 +116,7 @@ hr {
     transform: translate(-50%, -50%);
     width: 100%;
     padding: 0 10px 0 10px;
+    z-index: 100;
 }
 
 .post-content:not([disabled]):hover .post-content-buttons {
@@ -112,7 +129,7 @@ hr {
 
 .post-created {
     font-size: 14px;
-    color: gray;
+    color: #6B738A;
     font-weight: lighter;
 }
 

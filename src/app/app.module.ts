@@ -43,6 +43,7 @@ import { ImagePreviewDirective } from './directives/image-preview.directive';
 import { SignupComponent } from './components/signup/signup.component';
 import { DefaultImageDirective } from './directives/default-image.directive';
 import { TagsComponent } from './components/explore/tags/tags.component';
+import { ConfirmComponent } from './components/shared/confirm/confirm.component';
 
 @NgModule({
     declarations: [
@@ -64,11 +65,13 @@ import { TagsComponent } from './components/explore/tags/tags.component';
         ImagePreviewDirective,
         SignupComponent,
         DefaultImageDirective,
-        TagsComponent
+        TagsComponent,
+        ConfirmComponent
     ],
     entryComponents: [
         PostDetailsComponent,
-        CreatePostComponent
+        CreatePostComponent,
+        ConfirmComponent
     ],
     imports: [
         BrowserModule,

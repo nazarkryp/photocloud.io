@@ -4,7 +4,8 @@ import { NgProgressService } from 'ngx-progressbar';
 import { Post, User, Collection, Comment, Attachment, CurrentUser } from '../../common/models';
 import { AccountService, PostService } from '../../services';
 
-import { CreatePostComponent } from '../../components/shared/create-post/create-post.component';
+import { CreatePostComponent } from '../shared/create-post/create-post.component';
+import { ConfirmComponent } from '../shared/confirm/confirm.component';
 
 @Component({
     selector: 'app-posts',
@@ -57,10 +58,21 @@ export class PostsComponent implements OnInit {
     }
 
     onRemoved(post: Post) {
-        const indexToRemove = this.page.data.findIndex(p => p.id === post.id);
-        this.page.data.splice(indexToRemove, 1);
-        this.postService.removePost(post.id)
-            .subscribe();
+        const dialogRef = this.dialog.open(ConfirmComponent, {
+            data: {
+                title: 'DELETE POST',
+                message: 'Are you sure you want you want to delete this post?'
+            }
+        });
+
+        dialogRef.afterClosed().subscribe(confirmed => {
+            if (confirmed) {
+                const indexToRemove = this.page.data.findIndex(p => p.id === post.id);
+                this.page.data.splice(indexToRemove, 1);
+                this.postService.removePost(post.id)
+                    .subscribe();
+            }
+        });
     }
 
     ngOnInit() {

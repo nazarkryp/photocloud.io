@@ -1,0 +1,19 @@
+.confirm-modal {
+    width: 500px;
+}
+
+.confirm-button {
+    margin-right: 15px;
+}
+
+.submit-modal-title {
+    font-weight: bold;
+    font-size: 1.3em;
+    margin-bottom: 20px;
+}
+
+.submit-modal-message {
+    font-weight: 300;
+    font-size: 1.1em;
+    margin-bottom: 20px;
+}

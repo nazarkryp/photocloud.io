@@ -1,5 +1,9 @@
 .hashtag {
-    color: #e91e63;
+    color: #17B0FB;
     text-decoration: none;
-    font-weight: normal;
+    font-weight: bold;
+}
+
+.hashtag:hover {
+    color: #e91e63;
 }
