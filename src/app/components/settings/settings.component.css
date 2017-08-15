@@ -1,0 +1,19 @@
+.settings-container {
+    background-color: white;
+    width: 700px;
+    padding: 25px;
+    margin: 50px;
+    color: #444444;
+}
+
+.item {
+    height: 67px;
+}
+
+.disabled {
+    color: rgba(0, 0, 0, 0.38);
+}
+
+.save-button {
+    margin-right: 15px;
+}

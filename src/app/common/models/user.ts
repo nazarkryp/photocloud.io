@@ -5,6 +5,7 @@ export class User {
     username: string;
     fullName: string;
     bio: string;
+    email: string;
     isPrivate: boolean;
     isActive: boolean;
     pictureUri: string;

@@ -10,6 +10,7 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
 import { PostDetailsComponent } from './components/shared/post-details/post-details.component';
 import { SignupComponent } from './components/signup/signup.component';
 import { TagsComponent } from './components/explore/tags/tags.component';
+import { SettingsComponent } from './components/settings/settings.component';
 
 import { AuthenticationGuard } from './infrastructure/guards/authentication-guard.service';
 
@@ -39,9 +40,17 @@ const routes: Routes = [
         }
     },
     {
+        path: 'account/edit',
+        component: SettingsComponent,
+        canActivate: [AuthenticationGuard],
+        data: {
+            title: 'PhotoCloud - Edit Account'
+        }
+    },
+    {
         path: '404',
         component: NotFoundComponent,
-         data: {
+        data: {
             title: 'PhotoCloud - Page Not Found'
         }
     },

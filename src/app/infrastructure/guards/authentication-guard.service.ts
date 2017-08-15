@@ -15,6 +15,7 @@ export class AuthenticationGuard implements CanActivate {
         return this.tokenProvider.getAccessToken()
             .map(accessToken => {
                 this.communicationService.changeState(accessToken);
+
                 if (accessToken != null && (state.url === '/signin' || state.url === '/account/create')) {
                     this.router.navigateByUrl('/');
                     return false;
@@ -22,6 +23,11 @@ export class AuthenticationGuard implements CanActivate {
 
                 if (accessToken == null && (state.url === '/signin' || state.url === '/account/create')) {
                     return true;
+                }
+
+                if (accessToken != null && !accessToken.isActive && (state.url !== '/account/edit')) {
+                    this.router.navigateByUrl('/account/edit');
+                    return false;
                 }
 
                 if (accessToken != null) {

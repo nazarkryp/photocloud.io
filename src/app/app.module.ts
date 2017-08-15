@@ -44,6 +44,7 @@ import { SignupComponent } from './components/signup/signup.component';
 import { DefaultImageDirective } from './directives/default-image.directive';
 import { TagsComponent } from './components/explore/tags/tags.component';
 import { ConfirmComponent } from './components/shared/confirm/confirm.component';
+import { SettingsComponent } from './components/settings/settings.component';
 
 @NgModule({
     declarations: [
@@ -66,7 +67,8 @@ import { ConfirmComponent } from './components/shared/confirm/confirm.component'
         SignupComponent,
         DefaultImageDirective,
         TagsComponent,
-        ConfirmComponent
+        ConfirmComponent,
+        SettingsComponent
     ],
     entryComponents: [
         PostDetailsComponent,

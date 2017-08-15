@@ -1,0 +1,34 @@
+<div fxLayout="row" fxLayoutAlign="center start" *ngIf="!isLoading">
+    <div class="settings-container z-depth-1" fxLayout="column">
+        <div fxLayout="row" fxLayoutAlign="start center">
+            <span class="mat-headline">Settings</span>
+        </div>
+        <md-input-container fxFlex>
+            <input mdInput placeholder="Username" type="text" [(ngModel)]="backup.username" [disabled]="!account.isActive" name="username"
+                (change)='onAccountChange()' autocomplete="off">
+        </md-input-container>
+        <md-input-container fxFlex>
+            <input mdInput placeholder="Full Name" type="text" [(ngModel)]="backup.fullName" [disabled]="!account.isActive" name="fullName"
+                (change)='onAccountChange()' autocomplete="off">
+        </md-input-container>
+        <md-input-container fxFlex>
+            <input mdInput placeholder="Bio" type="text" [(ngModel)]="backup.bio" [disabled]="!account.isActive" name="bio" (change)='onAccountChange()'
+                autocomplete="off">
+        </md-input-container>
+        <md-input-container fxFlex>
+            <input mdInput placeholder="Email Address" type="email" [(ngModel)]="backup.email" [disabled]="!account.isActive" name="email"
+                (change)='onAccountChange()' autocomplete="off">
+        </md-input-container>
+        <div class="item" fxLayout="row" fxLayoutAlign="end center" *ngIf="isModified">
+            <button class="save-button" md-raised-button color="primary">Save Changes</button>
+            <button md-raised-button (click)="cancel()">Cancel</button>
+        </div>
+        <div class="item" fxLayout="row" fxLayoutAlign="space-between center">
+            <span [ngClass]="{ 'disabled' : !account.isActive }">Private account</span>
+            <md-slide-toggle [(ngModel)]="account.isPrivate" [checked]="account.isPrivate" (change)='invertAccountPrivateStatus()' [disabled]="!account.isActive"></md-slide-toggle>
+        </div>
+        <div class="item" fxLayout="row" fxLayoutAlign="center center">
+            <button md-raised-button (click)="invertAccountStatus()">{{account.isActive ? 'Temporarily disable my account' : 'Activate my account'}}</button>
+        </div>
+    </div>
+</div>

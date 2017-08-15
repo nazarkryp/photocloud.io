@@ -15,8 +15,8 @@ export class TokenMapper {
         accessToken.expires = new Date(response['.expires']);
         accessToken.userId = Number(response['userId']);
         accessToken.username = response['userName'];
-        accessToken.isPrivate = response['isPrivate'];
-        accessToken.isActive = response['isActive'];
+        accessToken.isPrivate = JSON.parse(response['isPrivate']);
+        accessToken.isActive = JSON.parse(response['isActive']);
         accessToken.pictureUri = response['pictureUri'];
 
         return accessToken;

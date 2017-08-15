@@ -37,6 +37,7 @@ export class AccountService {
     }
 
     signOut() {
+        this.currentUser = null;
         this.sessionService.clearSession();
         this.communicationService.changeState(null);
     }
@@ -46,6 +47,10 @@ export class AccountService {
             .do(account => {
                 this.sessionService.updateSession(account);
             });
+    }
+
+    getAccountSettings(): Observable<User> {
+        return this.webApiClient.get<User>('account');
     }
 
     getCurrentUser(refresh: boolean = true): CurrentUser {
