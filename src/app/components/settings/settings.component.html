@@ -20,7 +20,7 @@
                 (change)='onAccountChange()' autocomplete="off">
         </md-input-container>
         <div class="item" fxLayout="row" fxLayoutAlign="end center" *ngIf="isModified">
-            <button class="save-button" md-raised-button color="primary">Save Changes</button>
+            <button class="save-button" md-raised-button color="primary" (click)="save()">Save Changes</button>
             <button md-raised-button (click)="cancel()">Cancel</button>
         </div>
         <div class="item" fxLayout="row" fxLayoutAlign="space-between center">

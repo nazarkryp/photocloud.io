@@ -8,7 +8,7 @@
                 <div>
                     <span class="mat-display-1">{{user.username}} </span>
                 </div>
-                <button md-icon-button mdTooltip="Settings" mdTooltipPosition="above" *ngIf="currentUser && user.id === currentUser.id">
+                <button md-icon-button routerLink="/account/edit" mdTooltip="Settings" mdTooltipPosition="above" *ngIf="currentUser && user.id === currentUser.id">
                     <md-icon>settings</md-icon>
                 </button>
                 <button md-icon-button mdTooltip="Logout" mdTooltipPosition="above" (click)="logout()" *ngIf="currentUser && user.id === currentUser.id">

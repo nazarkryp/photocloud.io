@@ -27,13 +27,13 @@ export class SettingsComponent implements OnInit {
 
     private save() {
         this.progressService.start();
-        this.accountService.updateAccount(this.account)
+        this.accountService.updateAccount(this.backup)
             .finally(() => {
                 this.progressService.done();
             })
             .subscribe(account => {
                 this.account = account;
-                this.copyTo(account, this.backup);
+                this.cancel();
             });
     }
 
