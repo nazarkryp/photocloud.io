@@ -25,3 +25,9 @@
 .progress-bar {
     height: 3px;
 }
+
+.notifications-button {
+    position: absolute;
+    right: 0;
+    margin-right: 10px;
+}

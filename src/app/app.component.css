@@ -1,0 +1,7 @@
+.md-fab-bottom-left {
+    top: auto;
+    right: 35px;
+    bottom: 35px;
+    right: auto;
+    position: fixed;
+}

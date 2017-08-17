@@ -45,6 +45,7 @@ import { DefaultImageDirective } from './directives/default-image.directive';
 import { TagsComponent } from './components/explore/tags/tags.component';
 import { ConfirmComponent } from './components/shared/confirm/confirm.component';
 import { SettingsComponent } from './components/settings/settings.component';
+import { NotificationsComponent } from './components/shared/notifications/notifications.component';
 
 @NgModule({
     declarations: [
@@ -68,7 +69,8 @@ import { SettingsComponent } from './components/settings/settings.component';
         DefaultImageDirective,
         TagsComponent,
         ConfirmComponent,
-        SettingsComponent
+        SettingsComponent,
+        NotificationsComponent
     ],
     entryComponents: [
         PostDetailsComponent,

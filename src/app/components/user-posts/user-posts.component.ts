@@ -175,8 +175,8 @@ export class UserPostsComponent implements OnInit, OnDestroy {
             validationResult.hasErrors = true;
             validationResult.error = new Error('Account is private');
             validationResult.error.description = this.currentUser
-                ? `Follow ${this.user.username} to see all their photos` :
-                `Already know ${this.user.username}? Sign in to see all their photos`;
+                ? `Follow ${user.username} to see all their photos` :
+                `Already know ${user.username}? Sign in to see all their photos`;
         }
 
         return validationResult;

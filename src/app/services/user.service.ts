@@ -11,12 +11,16 @@ export class UserService {
         private webApiClient: WebApiClient,
         private userMapper: UserMapper) { }
 
-    getUser(username: string): Observable<User> {
-        return this.webApiClient.get<any>(`users/${username}`)
+    public getUser(username: string): Observable<User> {
+        return this.webApiClient.get<User>(`users/${username}`)
             .map(response => this.userMapper.mapResponseToUser(response));
     }
 
-    modifyRelationship(userId: number, relationshipModel: any): Observable<User> {
+    public getIncommingRequests() {
+        return this.webApiClient.get<User[]>('users/requests/incomming');
+    }
+
+    public modifyRelationship(userId: number, relationshipModel: any): Observable<User> {
         return this.webApiClient.put(`users/${userId}/relationship`, relationshipModel)
             .map(response => this.userMapper.mapResponseToUser(response));
     }

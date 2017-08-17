@@ -1,10 +1,15 @@
 <md-toolbar class="navbar z-depth-1" *ngIf="renderToolbar">
     <div class="toolbar-tools" fxLayout="row" fxLayoutAlign="center center">
         <div class="container" fxLayout="row" fxLayoutAlign="space-between center">
-             <h1 class="logo" routerLink="/">photocloud</h1>
-            <a [routerLink]="['/', accessToken.username]" fxLayout="row" fxLayoutAlign="center center" *ngIf="accessToken">
-                <img class="avatar" src="{{accessToken.pictureUri}}" default="assets/images/user-default-image.png" alt="user">
-            </a>
+            <h1 class="logo" routerLink="/">photocloud</h1>
+            <div fxLayout="row">
+                <a [routerLink]="['/', accessToken.username]" fxLayout="row" fxLayoutAlign="center center" *ngIf="accessToken"><img class="avatar" src="{{accessToken.pictureUri}}" default="assets/images/user-default-image.png" alt="user"></a>
+            </div>
+        </div>
+        <div class="notifications-button">
+            <button md-icon-button style="margin-right: 10px;" (click)="openNotifications()">
+                    <md-icon>notifications</md-icon>
+            </button>
         </div>
     </div>
 </md-toolbar>
