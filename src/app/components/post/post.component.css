@@ -142,6 +142,10 @@ hr {
     padding-top: 10px;
 }
 
+.icon-button {
+    color: #444444;
+}
+
 .liked {
     color: #e91e63;
 }

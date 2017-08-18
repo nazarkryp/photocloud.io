@@ -8,9 +8,9 @@ h2 {
 }
 
 .notifications-header {
-    background: #e91e63;
-    color: white;
-    /* color: #444444; */
+    /* background: #e91e63;
+    color: white; */
+    color: #444444;
     height: 75px;
     padding: 0 15px 0 15px;
 }

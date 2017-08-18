@@ -18,6 +18,7 @@ export class TagsComponent implements OnInit, OnDestroy {
     private routeSubscription: Subscription;
     private page: Collection<Post> = new Collection<Post>();
     private currentUser: CurrentUser;
+    private tag: string;
 
     constructor(
         public dialog: MdDialog,
@@ -28,9 +29,9 @@ export class TagsComponent implements OnInit, OnDestroy {
         this.currentUser = this.accountService.getCurrentUser();
     }
 
-    private getPosts(tag: string) {
+    private getPosts() {
         this.progressService.start();
-        this.postService.getPostsByTag(tag, this.page.pagination)
+        this.postService.getPostsByTag(this.tag, this.page.pagination)
             .finally(() => {
                 this.progressService.done();
             })
@@ -85,8 +86,8 @@ export class TagsComponent implements OnInit, OnDestroy {
 
     public ngOnInit() {
         this.routeSubscription = this.route.params.subscribe(async params => {
-            const tag = params['tag'] as string;
-            this.getPosts(tag);
+            this.tag = params['tag'] as string;
+            this.getPosts();
         });
     }
 

@@ -13,12 +13,17 @@ import { User, RelationshipAction } from '../../../common/models';
 export class NotificationsComponent implements OnInit, OnDestroy {
     private incommingRequestsSubscription: Subscription;
     private incommingRequests: User[];
+    private isLoading: boolean;
 
     constructor(
         private userService: UserService) { }
 
     private getIncommingRequests() {
+        this.isLoading = true;
         this.incommingRequestsSubscription = this.userService.getIncommingRequests()
+            .finally(() => {
+                this.isLoading = false;
+            })
             .subscribe(incommingRequests => {
                 this.incommingRequests = incommingRequests;
             });
@@ -37,6 +42,11 @@ export class NotificationsComponent implements OnInit, OnDestroy {
     private removeIncommingRequest(user: User) {
         const indexToRemove = this.incommingRequests.findIndex(e => e.id === user.id);
         this.incommingRequests.splice(indexToRemove, 1);
+
+        this.userService.modifyRelationship(user.id, {
+            action: RelationshipAction.Reject
+        }).subscribe(userResult => {
+        }, error => { });
     }
 
     public ngOnInit() {

@@ -57,11 +57,11 @@
         </div>
     </div>
     <div class="post-actions" fxLayout="row" *ngIf="!post.editing">
-        <button [ngClass]="{ 'liked' : post.userHasLiked }" md-icon-button (click)="like()">
+        <button class="icon-button" [ngClass]="{ 'liked' : post.userHasLiked }" md-icon-button (click)="like()">
             <md-icon>favorite</md-icon>
         </button>
         <input class="comment-input" type="text" placeholder="Add comment" [(ngModel)]="text" (keydown.enter)="createComment()" />
-        <button md-icon-button mdTooltip="Copy to clipboard" mdTooltipPosition="left" ngxClipboard [cbContent]="share()" (cbOnSuccess)="showToast('Copied to clipboard')">
+        <button class="icon-button" md-icon-button mdTooltip="Copy to clipboard" mdTooltipPosition="left" ngxClipboard [cbContent]="share()" (cbOnSuccess)="showToast('Copied to clipboard')">
             <md-icon>share</md-icon>
         </button>
     </div>

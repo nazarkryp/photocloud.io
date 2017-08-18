@@ -34,7 +34,15 @@ export class PostService {
     }
 
     getPostsByTag(tag: string, pagination: Pagination) {
-        return this.webApiClient.get<Collection<Post>>(`posts/tags/${tag}`);
+        let requestUri = `posts/tags/${tag}`;
+
+        if (pagination != null && pagination.next != null) {
+            requestUri = requestUri + '?next=' + pagination.next;
+        }
+
+        console.log(requestUri);
+
+        return this.webApiClient.get<Collection<Post>>(requestUri);
     }
 
     getPostById(postId: number): Observable<Post> {

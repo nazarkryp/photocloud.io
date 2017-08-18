@@ -2,7 +2,7 @@
     <div class="notifications-header" fxlayout="row" fxLayoutAlign="center center">
         <h2>Incomming Request</h2>
     </div>
-    <div class="notifications-content" fxLayout="column" fxLayoutAlign="start start" fxFlex>
+    <div class="notifications-content" fxLayout="column" fxLayoutAlign="start start" fxFlex *ngIf="incommingRequests && incommingRequests.length !== 0; else noRequests">
         <div class="incomming-request" *ngFor="let user of incommingRequests" fxLayout="row">
             <img [routerLink]="['/', user.username]" class="incomming-request-avatar" src="{{user.pictureUri}}" alt="user-image">
             <div fxLayout="row" fxLayoutAlign="space-between center" fxFlex>
@@ -11,9 +11,15 @@
                 </div>
                 <div>
                     <button class="confirm-button" md-raised-button color="primary" (click)="confirmIncommingRequest(user)">Confirm</button>
-                    <button md-raised-button (click)="removeIncommingRequest()">Remove</button>
+                    <button md-raised-button (click)="removeIncommingRequest(user)">Remove</button>
                 </div>
             </div>
         </div>
     </div>
+    <ng-template #noRequests>
+        <div class="notifications-content" fxLayout="column" fxLayoutAlign="center center" fxFlex>
+            <md-spinner *ngIf="isLoading"></md-spinner>
+            <span *ngIf="!isLoading">No Incomming Requests</span>
+        </div>
+    </ng-template>
 </div>

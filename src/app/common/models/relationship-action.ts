@@ -3,5 +3,6 @@ export enum RelationshipAction {
     Unfollow = 1,
     Approve = 2,
     Ignore = 3,
-    Unignore = 4
+    Unignore = 4,
+    Reject = 5
 }
