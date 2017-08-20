@@ -2,11 +2,11 @@
     <div class="toolbar-tools" fxLayout="row" fxLayoutAlign="center center">
         <div class="container" fxLayout="row" fxLayoutAlign="space-between center">
             <h1 class="logo" routerLink="/">photocloud</h1>
-            <div fxLayout="row">
-                <a [routerLink]="['/', accessToken.username]" fxLayout="row" fxLayoutAlign="center center" *ngIf="accessToken"><img class="avatar" src="{{accessToken.pictureUri}}" default="assets/images/user-default-image.png" alt="user"></a>
+            <div fxLayout="row" *ngIf="currentUser">
+                <a [routerLink]="['/', currentUser.username]" fxLayout="row" fxLayoutAlign="center center"><img class="avatar" src="{{currentUser.pictureUri}}" default="assets/images/user-default-image.png" alt="user"></a>
             </div>
         </div>
-        <div class="notifications-button" *ngIf="accessToken && accessToken.isPrivate">
+        <div class="notifications-button" *ngIf="currentUser && currentUser.isPrivate">
             <button md-icon-button style="margin-right: 10px;" (click)="openNotifications()">
                     <md-icon>notifications</md-icon>
             </button>

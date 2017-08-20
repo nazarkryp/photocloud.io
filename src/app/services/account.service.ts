@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Rx';
 
-import { CommunicationService, WebApiClient } from '../infrastructure/communication';
+import { UserProvider } from '../infrastructure/providers/user.provider';
+import { WebApiClient } from '../infrastructure/communication';
 import { SessionService } from '../infrastructure/session';
 import { AccessToken, CurrentUser, User } from '../common/models';
 import { TokenMapper } from '../infrastructure/mapping/token.mapper';
@@ -16,7 +17,7 @@ export class AccountService {
     constructor(
         private webApiClient: WebApiClient,
         private sessionService: SessionService,
-        private communicationService: CommunicationService,
+        private userProvider: UserProvider,
         private tokenMapper: TokenMapper,
         private httpClient: HttpClient) { }
 
@@ -28,7 +29,7 @@ export class AccountService {
                 return this.tokenMapper.mapResponseToAccessToken(response);
             })
             ._do(accessToken => {
-                this.sessionService.setSession(accessToken)
+                this.userProvider.setCurrentUser(accessToken);
             });
     }
 
@@ -39,13 +40,13 @@ export class AccountService {
     signOut() {
         this.currentUser = null;
         this.sessionService.clearSession();
-        this.communicationService.changeState(null);
+        this.userProvider.setCurrentUser(null);
     }
 
     updateAccount(propertiesToUpdate: any): Observable<User> {
         return this.webApiClient.patch<User>('account', propertiesToUpdate)
             .do(account => {
-                this.sessionService.updateSession(account);
+                this.userProvider.updateCurrentUser(account);
             });
     }
 

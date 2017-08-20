@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
+import { UserProvider } from '../../infrastructure/providers';
 import { AccountService } from '../../services';
 import { CurrentUser, User } from '../../common/models';
 
@@ -19,6 +20,7 @@ export class SettingsComponent implements OnInit {
     private isLoading: boolean;
 
     constructor(
+        private userProvider: UserProvider,
         private accountService: AccountService,
         private progressService: NgProgressService) {
         this.account = new User();
@@ -32,8 +34,9 @@ export class SettingsComponent implements OnInit {
                 this.progressService.done();
             })
             .subscribe(account => {
-                this.account = account;
-                this.cancel();
+                this.updateAccount(account);
+                this.copyTo(this.account, this.backup);
+                this.onAccountChange();
             });
     }
 
@@ -57,7 +60,7 @@ export class SettingsComponent implements OnInit {
         }).finally(() => {
             this.isInvertingAccountPrivateStatus = false;
         }).subscribe(account => {
-            this.account.isPrivate = account.isPrivate;
+            this.updateAccount({ isPrivate: account.isPrivate });
             this.copyTo(account, this.backup);
         });
     }
@@ -73,7 +76,7 @@ export class SettingsComponent implements OnInit {
         }).finally(() => {
             this.isInvertingAccountStatus = false;
         }).subscribe(account => {
-            this.account.isActive = account.isActive;
+            this.updateAccount({ isActive: account.isActive });
             this.copyTo(account, this.backup);
         });
     }
@@ -86,10 +89,21 @@ export class SettingsComponent implements OnInit {
         });
     }
 
+    private updateAccount(propertiesToUpdate: any) {
+        const properties = Object.getOwnPropertyNames(propertiesToUpdate);
+
+        properties.forEach(propertyName => {
+            this.account[propertyName] = propertiesToUpdate[propertyName];
+        });
+
+        this.userProvider.updateCurrentUser(propertiesToUpdate);
+    }
+
     private equals<T>(source: T, target: T) {
         const properties = Object.getOwnPropertyNames(source);
 
         let areEqual = true;
+
         properties.forEach(propertyName => {
             if (target[propertyName] !== source[propertyName]) {
                 areEqual = false;
@@ -100,7 +114,7 @@ export class SettingsComponent implements OnInit {
         return areEqual;
     }
 
-    public ngOnInit() {
+    private getAccountSettings() {
         this.isLoading = true;
         this.progressService.start();
         this.accountService.getAccountSettings()
@@ -112,5 +126,9 @@ export class SettingsComponent implements OnInit {
                 this.account = account;
                 this.copyTo(account, this.backup);
             });
+    }
+
+    public ngOnInit() {
+        this.getAccountSettings();
     }
 }

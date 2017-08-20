@@ -24,6 +24,7 @@ import { AccountService, PostService, CommentService, UploaderService, UserServi
 import { AuthenticationGuard } from './infrastructure/guards/authentication-guard.service';
 import { SessionService } from './infrastructure/session/session.service';
 import { TokenProvider, AuthenticationInterceptor } from './infrastructure/security';
+import { UserProvider } from './infrastructure/providers';
 import { CommunicationService, WebApiClient } from './infrastructure/communication';
 import { ClipboardService } from './infrastructure/services/clipboard.service';
 
@@ -89,6 +90,7 @@ import { NotificationsComponent } from './components/shared/notifications/notifi
         FileUploadModule
     ],
     providers: [
+        UserProvider,
         PostService,
         CommentService,
         UserService,

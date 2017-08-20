@@ -2,18 +2,6 @@
     <div class="posts">
         <div class="post z-depth-1" *ngFor="let post of page?.data;" fxLayout="column">
             <div md-ripple class="thumbnail-container" style="height: 300px; width: 100%; position: relative;" (click)="openPostDialog(post)">
-                <!-- <div class="post-info" fxLayout="row" fxLayoutAlign="start end">
-                    <div style="width: 100%;" fxLayout="row" fxLayoutAlign="space-between center">
-                        <div fxLayout="row" fxLayoutAlign="start center">
-                            <span>100</span>
-                            <md-icon>mode_comment</md-icon>
-                        </div>
-                        <div fxLayout="row" fxLayoutAlign="end center">
-                            <span>100</span>
-                            <md-icon>favorite</md-icon>
-                        </div>
-                    </div>
-                </div> -->
                 <img class="thumbnail" src="{{post.attachments[0].uri}}" alt="post">
             </div>
             <div class="post-description" fxLayout="column" fxLayoutAlign="start">
@@ -28,9 +16,6 @@
                         <md-icon [ngClass]="{ 'liked' : post.userHasLiked }">favorite</md-icon>
                     </button>
                 </div>
-                <!-- <div class="post-caption" *ngIf="post.caption">
-                    <app-caption caption="{{post.caption}}"></app-caption>
-                </div> -->
             </div>
         </div>
     </div>

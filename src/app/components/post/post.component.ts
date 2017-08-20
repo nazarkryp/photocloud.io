@@ -1,10 +1,11 @@
-import { Component, ViewEncapsulation, OnInit, Input, Output, EventEmitter, Inject } from '@angular/core';
+import { Component, ViewEncapsulation, OnInit, OnDestroy, Input, Output, EventEmitter, Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/platform-browser';
 import { MdSnackBar, MdSnackBarConfig } from '@angular/material';
 import { Observable, Subscription } from 'rxjs/Rx';
 
+import { UserProvider } from '../../infrastructure/providers';
 import { Post, Attachment, User, Comment, CurrentUser } from '../../common/models';
-import { AccountService, CommentService, PostService } from '../../services';
+import { CommentService, PostService } from '../../services';
 
 @Component({
     selector: 'app-post',
@@ -12,7 +13,7 @@ import { AccountService, CommentService, PostService } from '../../services';
     styleUrls: ['./post.component.css'],
     encapsulation: ViewEncapsulation.None
 })
-export class PostComponent implements OnInit {
+export class PostComponent implements OnInit, OnDestroy {
     @Input() public post: Post;
     @Output() public onRemoved = new EventEmitter<Post>();
 
@@ -21,32 +22,38 @@ export class PostComponent implements OnInit {
     private caption: string;
 
     private currentUser: CurrentUser;
+    private currentUserSubscription: Subscription;
 
     constructor(
-        private accountService: AccountService,
+        public snackBar: MdSnackBar,
         private commentService: CommentService,
         private postService: PostService,
-        public snackBar: MdSnackBar,
+        private userProvider: UserProvider,
         @Inject(DOCUMENT) private document: any
-    ) { }
+    ) {
+        this.currentUserSubscription = this.userProvider.getCurrentUserAsObservable()
+            .subscribe(currentUser => {
+                this.currentUser = currentUser;
+            });
+    }
 
-    next() {
+    private next() {
         if (this.post.activeAttachment < this.post.attachments.length - 1) {
             this.post.activeAttachment++;
         }
     }
 
-    previous() {
+    private previous() {
         if (this.post.activeAttachment > 0) {
             this.post.activeAttachment--;
         }
     }
 
-    remove() {
+    private remove() {
         this.onRemoved.emit(this.post);
     }
 
-    share() {
+    private share() {
         const pathArray = this.document.location.href.split('/');
         const protocol = pathArray[0];
         const host = pathArray[2];
@@ -54,13 +61,13 @@ export class PostComponent implements OnInit {
         return protocol + '//' + host + '/p/' + this.post.id;
     }
 
-    showToast(message: string) {
+    private showToast(message: string) {
         const config = new MdSnackBarConfig();
         config.duration = 1500;
         const result = this.snackBar.open(message, null, config);
     }
 
-    createComment() {
+    private createComment() {
         if (!this.text) {
             return;
         }
@@ -113,7 +120,7 @@ export class PostComponent implements OnInit {
         this.post.editing = false;
     }
 
-    like() {
+    private like() {
         if (this.post.userHasLiked) {
             this.post.likesCount--;
             this.post.userHasLiked = !this.post.userHasLiked;
@@ -147,11 +154,13 @@ export class PostComponent implements OnInit {
         }
     }
 
-    ngOnInit() {
+    public ngOnInit() {
         if (this.post) {
             this.post.activeAttachment = 0;
         }
+    }
 
-        this.currentUser = this.accountService.getCurrentUser(false);
+    public ngOnDestroy() {
+        this.currentUserSubscription.unsubscribe();
     }
 }

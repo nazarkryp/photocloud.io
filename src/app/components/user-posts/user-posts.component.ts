@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MdDialog } from '@angular/material';
 import { Observable, Subscription } from 'rxjs/Rx';
 
+import { UserProvider } from '../../infrastructure/providers';
 import { AccountService, PostService, UserService } from '../../services';
 import { CurrentUser, Post, Attachment, User, RelationshipStatus, Collection, ValidationResult, Error } from '../../common/models';
 import { PostDetailsComponent } from '../shared/post-details/post-details.component';
@@ -19,6 +20,7 @@ import { environment } from '../../../environments/environment';
 export class UserPostsComponent implements OnInit, OnDestroy {
     private subscription: Subscription;
     private currentUser: CurrentUser;
+    private currentUserSubscription: Subscription;
     private page: Collection<Post>;
     private isLoading = false;
     private isModifyingRelationship = false;
@@ -31,12 +33,16 @@ export class UserPostsComponent implements OnInit, OnDestroy {
         private accountService: AccountService,
         private postService: PostService,
         private userService: UserService,
+        private userProvider: UserProvider,
         private router: Router,
         private route: ActivatedRoute,
         public dialog: MdDialog,
         private progressService: NgProgressService,
         private uploaderService: UploaderService) {
         this.uploader = uploaderService.createUploader((attachment) => this.onSuccessUpload(attachment));
+        this.currentUserSubscription = this.userProvider.getCurrentUserAsObservable().subscribe(currentUser => {
+            this.currentUser = currentUser;
+        });
     }
 
     private onSuccessUpload(attachment: Attachment) {
@@ -137,21 +143,6 @@ export class UserPostsComponent implements OnInit, OnDestroy {
             });
     }
 
-    public ngOnInit() {
-        this.currentUser = this.accountService.getCurrentUser();
-
-        this.subscription = this.route.params.subscribe(async params => {
-            this.initializePage();
-            const username = params['username'] as string;
-            this.getUserFeed(username);
-        });
-    }
-
-    ngOnDestroy(): void {
-        this.subscription.unsubscribe();
-        this.uploader.destroy();
-    }
-
     private initializePage(): void {
         this.page = new Collection<Post>();
         this.page.hasMoreItems = false;
@@ -180,5 +171,19 @@ export class UserPostsComponent implements OnInit, OnDestroy {
         }
 
         return validationResult;
+    }
+
+    public ngOnInit() {
+        this.subscription = this.route.params.subscribe(async params => {
+            this.initializePage();
+            const username = params['username'] as string;
+            this.getUserFeed(username);
+        });
+    }
+
+    public ngOnDestroy(): void {
+        this.subscription.unsubscribe();
+        this.uploader.destroy();
+        this.currentUserSubscription.unsubscribe();
     }
 }

@@ -1,8 +1,10 @@
-import { Component, Inject, ViewEncapsulation, Optional, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Inject, ViewEncapsulation, Optional, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
 import { MdDialogRef, MdSnackBarConfig, MdSnackBar, MD_DIALOG_DATA } from '@angular/material';
-import { Observable } from 'rxjs/Rx';
+import { Observable, Subscription } from 'rxjs/Rx';
+
 import { Post, User, Attachment, Comment, CurrentUser, CreatePostModel } from '../../../common/models';
 import { AccountService, PostService, CommentService } from '../../../services';
+import { UserProvider } from '../../../infrastructure/providers';
 import { TokenProvider } from '../../../infrastructure/security';
 import { NgProgressService } from 'ngx-progressbar';
 import { FileUploader, FileUploaderOptions } from 'ng2-file-upload';
@@ -15,8 +17,9 @@ import { environment } from '../../../../environments/environment';
     styleUrls: ['./create-post.component.css'],
     encapsulation: ViewEncapsulation.None
 })
-export class CreatePostComponent implements OnInit {
+export class CreatePostComponent implements OnInit, OnDestroy {
     private currentUser: CurrentUser;
+    private currentUserSubscription: Subscription;
     private maxItemsCount = 4;
 
     private attachments: Array<Attachment>;
@@ -26,6 +29,7 @@ export class CreatePostComponent implements OnInit {
 
     constructor(
         private postService: PostService,
+        private userProvider: UserProvider,
         private progressService: NgProgressService,
         private accountService: AccountService,
         private tokenProvider: TokenProvider,
@@ -35,11 +39,14 @@ export class CreatePostComponent implements OnInit {
         });
         this.post = new CreatePostModel();
         this.attachments = new Array<Attachment>();
+
+        this.currentUserSubscription = this.userProvider.getCurrentUserAsObservable()
+            .subscribe(currentUser => {
+                this.currentUser = currentUser;
+            });
     }
 
     ngOnInit() {
-        this.currentUser = this.accountService.getCurrentUser();
-
         this.getAuthenticationOptions()
             .subscribe(options => {
                 this.uploader.setOptions(options);
@@ -54,6 +61,10 @@ export class CreatePostComponent implements OnInit {
             const attachment = response as Attachment;
             this.attachments.push(attachment);
         };
+    }
+
+    ngOnDestroy() {
+        this.currentUserSubscription.unsubscribe();
     }
 
     createPost() {

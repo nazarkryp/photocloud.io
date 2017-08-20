@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { MdDialog } from '@angular/material';
 import { Subscription, Observable } from 'rxjs/Rx';
 
+import { UserProvider } from '../../../infrastructure/providers';
 import { PostDetailsComponent } from '../../shared/post-details/post-details.component';
 import { Collection, Post, CurrentUser } from '../../../common/models';
 import { PostService, AccountService } from '../../../services';
@@ -18,15 +19,20 @@ export class TagsComponent implements OnInit, OnDestroy {
     private routeSubscription: Subscription;
     private page: Collection<Post> = new Collection<Post>();
     private currentUser: CurrentUser;
+    private currentUserSubscription: Subscription;
     private tag: string;
 
     constructor(
         public dialog: MdDialog,
         private route: ActivatedRoute,
         private postService: PostService,
+        private userProvider: UserProvider,
         private accountService: AccountService,
         private progressService: NgProgressService) {
-        this.currentUser = this.accountService.getCurrentUser();
+        this.currentUserSubscription = this.userProvider.getCurrentUserAsObservable()
+            .subscribe(currentUser => {
+                this.currentUser = currentUser;
+            });
     }
 
     private getPosts() {
@@ -93,5 +99,6 @@ export class TagsComponent implements OnInit, OnDestroy {
 
     public ngOnDestroy(): void {
         this.routeSubscription.unsubscribe();
+        this.currentUserSubscription.unsubscribe();
     }
 }

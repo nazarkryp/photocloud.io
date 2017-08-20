@@ -1,10 +1,10 @@
-import { Component, Inject, ViewEncapsulation, Optional, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Inject, ViewEncapsulation, Optional, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DOCUMENT } from '@angular/platform-browser';
 import { MdDialogRef, MdSnackBarConfig, MdSnackBar, MD_DIALOG_DATA } from '@angular/material';
-
 import { Observable, Subscription } from 'rxjs/Rx';
 
+import { UserProvider } from '../../../infrastructure/providers';
 import { Post, User, Attachment, Comment, CurrentUser } from '../../../common/models';
 import { AccountService, PostService, CommentService } from '../../../services';
 import { NgProgressService } from 'ngx-progressbar';
@@ -15,7 +15,7 @@ import { NgProgressService } from 'ngx-progressbar';
     styleUrls: ['./post-details.component.css'],
     encapsulation: ViewEncapsulation.None
 })
-export class PostDetailsComponent implements OnInit {
+export class PostDetailsComponent implements OnInit, OnDestroy {
     private isDialog: boolean;
     @Output() public onRemoved = new EventEmitter<Post>();
 
@@ -23,10 +23,12 @@ export class PostDetailsComponent implements OnInit {
     private shareLink: string;
 
     private currentUser: CurrentUser;
+    private currentUserSubscription: Subscription;
 
     constructor(
         private route: ActivatedRoute,
         private postService: PostService,
+        private userProvider: UserProvider,
         private commentService: CommentService,
         private progressService: NgProgressService,
         private accountService: AccountService,
@@ -39,7 +41,10 @@ export class PostDetailsComponent implements OnInit {
             this.isDialog = true;
         }
 
-        this.currentUser = this.accountService.getCurrentUser();
+        this.userProvider.getCurrentUserAsObservable()
+            .subscribe(currentUser => {
+                this.currentUser = currentUser;
+            });
     }
 
     private next(): void {
@@ -151,7 +156,7 @@ export class PostDetailsComponent implements OnInit {
             });
     }
 
-    ngOnInit(): void {
+    public ngOnInit(): void {
         if (!this.post) {
             this.route.params.subscribe(params => {
                 const postId = params['postId'];
@@ -159,5 +164,9 @@ export class PostDetailsComponent implements OnInit {
                 this.getPost(postId);
             });
         }
+    }
+
+    public ngOnDestroy() {
+        this.currentUserSubscription.unsubscribe();
     }
 }

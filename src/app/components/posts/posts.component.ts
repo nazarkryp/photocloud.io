@@ -1,32 +1,39 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MdDialog } from '@angular/material';
-import { NgProgressService } from 'ngx-progressbar';
-import { Post, User, Collection, Comment, Attachment, CurrentUser } from '../../common/models';
-import { AccountService, PostService } from '../../services';
+import { Subscription } from 'rxjs/Rx';
 
+import { Post, User, Collection, Comment, Attachment, CurrentUser } from '../../common/models';
+import { UserProvider } from '../../infrastructure/providers';
+import { AccountService, PostService } from '../../services';
 import { CreatePostComponent } from '../shared/create-post/create-post.component';
 import { ConfirmComponent } from '../shared/confirm/confirm.component';
+import { NgProgressService } from 'ngx-progressbar';
 
 @Component({
     selector: 'app-posts',
     templateUrl: './posts.component.html',
     styleUrls: ['./posts.component.css']
 })
-export class PostsComponent implements OnInit {
+export class PostsComponent implements OnInit, OnDestroy {
     private page: Collection<Post> = new Collection<Post>();
     private isLoading = false;
     private currentUser: CurrentUser;
+    private currentUserSubscription: Subscription;
 
     constructor(
-        private accountService: AccountService,
         private postService: PostService,
+        private userProvider: UserProvider,
         private progressService: NgProgressService,
         private dialog: MdDialog) {
         this.page.data = new Array<Post>();
         this.page.hasMoreItems = false;
+        this.currentUserSubscription = this.userProvider.getCurrentUserAsObservable()
+            .subscribe(currentUser => {
+                this.currentUser = currentUser;
+            });
     }
 
-    createPost() {
+    private createPost() {
         const dialogRef = this.dialog.open(CreatePostComponent);
 
         dialogRef.afterClosed()
@@ -38,7 +45,7 @@ export class PostsComponent implements OnInit {
             });
     }
 
-    getPosts() {
+    private getPosts() {
         this.isLoading = true;
         this.progressService.start();
 
@@ -57,7 +64,7 @@ export class PostsComponent implements OnInit {
             });
     }
 
-    onRemoved(post: Post) {
+    private onRemoved(post: Post) {
         const dialogRef = this.dialog.open(ConfirmComponent, {
             data: {
                 title: 'DELETE POST',
@@ -75,9 +82,12 @@ export class PostsComponent implements OnInit {
         });
     }
 
-    ngOnInit() {
-        this.currentUser = this.accountService.getCurrentUser(false);
+    public ngOnInit() {
         this.getPosts();
+    }
+
+    public ngOnDestroy() {
+        this.currentUserSubscription.unsubscribe();
     }
 }
 

@@ -31,7 +31,6 @@ export class SessionService {
 
     public updateSession(propertiesToUpdate: any) {
         const session = this.getSession();
-
         const properties = Object.getOwnPropertyNames(propertiesToUpdate);
 
         properties.forEach(propertyName => {
