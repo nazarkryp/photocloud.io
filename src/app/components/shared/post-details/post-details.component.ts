@@ -41,7 +41,7 @@ export class PostDetailsComponent implements OnInit, OnDestroy {
             this.isDialog = true;
         }
 
-        this.userProvider.getCurrentUserAsObservable()
+        this.currentUserSubscription = this.userProvider.getCurrentUserAsObservable()
             .subscribe(currentUser => {
                 this.currentUser = currentUser;
             });
