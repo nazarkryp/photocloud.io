@@ -47,6 +47,7 @@ import { TagsComponent } from './components/explore/tags/tags.component';
 import { ConfirmComponent } from './components/shared/confirm/confirm.component';
 import { SettingsComponent } from './components/settings/settings.component';
 import { NotificationsComponent } from './components/shared/notifications/notifications.component';
+import { UsersComponent } from './components/shared/users/users.component';
 
 @NgModule({
     declarations: [
@@ -71,12 +72,14 @@ import { NotificationsComponent } from './components/shared/notifications/notifi
         TagsComponent,
         ConfirmComponent,
         SettingsComponent,
-        NotificationsComponent
+        NotificationsComponent,
+        UsersComponent
     ],
     entryComponents: [
         PostDetailsComponent,
         CreatePostComponent,
-        ConfirmComponent
+        ConfirmComponent,
+        UsersComponent
     ],
     imports: [
         BrowserModule,

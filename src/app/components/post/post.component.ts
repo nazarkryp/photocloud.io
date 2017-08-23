@@ -1,11 +1,12 @@
 import { Component, ViewEncapsulation, OnInit, OnDestroy, Input, Output, EventEmitter, Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/platform-browser';
-import { MdSnackBar, MdSnackBarConfig } from '@angular/material';
+import { MdSnackBar, MdDialog, MdSnackBarConfig } from '@angular/material';
 import { Observable, Subscription } from 'rxjs/Rx';
 
 import { UserProvider } from '../../infrastructure/providers';
 import { Post, Attachment, User, Comment, CurrentUser } from '../../common/models';
 import { CommentService, PostService } from '../../services';
+import { UsersComponent } from '../shared/users/users.component';
 
 @Component({
     selector: 'app-post',
@@ -25,6 +26,7 @@ export class PostComponent implements OnInit, OnDestroy {
     private currentUserSubscription: Subscription;
 
     constructor(
+        public dialog: MdDialog,
         public snackBar: MdSnackBar,
         private commentService: CommentService,
         private postService: PostService,
@@ -152,6 +154,13 @@ export class PostComponent implements OnInit, OnDestroy {
                     return error;
                 });
         }
+    }
+
+    private openLikesDialog(post: Post) {
+        const usersObservable = this.postService.getLikes(post.id);
+        const dialogRef = this.dialog.open(UsersComponent, {
+            data: usersObservable
+        });
     }
 
     public ngOnInit() {

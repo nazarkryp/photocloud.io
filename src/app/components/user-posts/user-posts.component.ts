@@ -40,9 +40,10 @@ export class UserPostsComponent implements OnInit, OnDestroy {
         private progressService: NgProgressService,
         private uploaderService: UploaderService) {
         this.uploader = uploaderService.createUploader((attachment) => this.onSuccessUpload(attachment));
-        this.currentUserSubscription = this.userProvider.getCurrentUserAsObservable().subscribe(currentUser => {
-            this.currentUser = currentUser;
-        });
+        this.currentUserSubscription = this.userProvider.getCurrentUserAsObservable()
+            .subscribe(currentUser => {
+                this.currentUser = currentUser;
+            });
     }
 
     private onSuccessUpload(attachment: Attachment) {

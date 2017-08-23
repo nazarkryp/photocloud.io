@@ -23,7 +23,9 @@ export class UserProvider {
             return null;
         }
 
-        return this.mapToCurrentUser(accessToken);
+        const currentUser = this.mapToCurrentUser(accessToken);
+
+        return currentUser;
     }
 
     public getCurrentUserAsObservable() {
@@ -33,11 +35,10 @@ export class UserProvider {
     public setCurrentUser(accessToken: AccessToken) {
         if (accessToken) {
             this.sessionService.setSession(accessToken);
+            const currentUser = this.mapToCurrentUser(accessToken);
+
+            this.$state.next(currentUser);
         }
-
-        const currentUser = this.mapToCurrentUser(accessToken);
-
-        this.$state.next(currentUser);
     }
 
     public updateCurrentUser(propertiesToUpdate: any) {

@@ -37,7 +37,7 @@
     </div>
     <md-progress-bar class="progress-bar" color="warn" mode="indeterminate" *ngIf="post.isLoading"></md-progress-bar>
     <div class="post-footer" *ngIf="!post.editing">
-        <div class="likes" fxLayout="row" fxLayoutAlign="space-between center">
+        <div class="likes" fxLayout="row" fxLayoutAlign="space-between center" (click)="openLikesDialog(post)">
             <span><strong>{{post.likesCount}} likes</strong></span>
         </div>
         <div class="post-caption" *ngIf="post.caption">
@@ -61,7 +61,8 @@
             <md-icon>favorite</md-icon>
         </button>
         <input class="comment-input" type="text" placeholder="Add comment" [(ngModel)]="text" (keydown.enter)="createComment()" />
-        <button class="icon-button" md-icon-button mdTooltip="Copy to clipboard" mdTooltipPosition="left" ngxClipboard [cbContent]="share()" (cbOnSuccess)="showToast('Copied to clipboard')">
+        <button class="icon-button" md-icon-button mdTooltip="Copy to clipboard" mdTooltipPosition="left" ngxClipboard [cbContent]="share()"
+            (cbOnSuccess)="showToast('Copied to clipboard')">
             <md-icon>share</md-icon>
         </button>
     </div>

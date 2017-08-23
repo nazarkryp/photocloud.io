@@ -1,0 +1,12 @@
+<div fxLayout="column" style="width: 600px; height: 75vh;">
+    <div *ngFor="let user of users" fxLayout="row">
+        <img class="post-avatar" [routerLink]="['/', user.username]" src="{{user.pictureUri}}" default="assets/images/user-default-image.png"
+            alt="profile">
+        <div class="post-author" fxLayout="row" fxLayoutAlign="space-between center" fxFlex>
+            <a class="post-author-username" [routerLink]="['/', user.username]">{{user.username}}</a>
+            <div fxLayout="row" fxLayout="center end" *ngIf="currentUser && user.id === currentUser.id">
+                <button md-button>FOLLOW</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,151 @@
+textarea {
+    resize: none;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+hr {
+    display: block;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    margin-left: 15px;
+    margin-right: 15px;
+    border-top: 1px solid #d8d8d8;
+}
+
+.post {
+    background-color: white;
+    margin-bottom: 50px;
+    position: relative;
+    border-radius: 3px;
+    /*border: 1px solid #d8d8d8;*/
+}
+
+.post-header {
+    padding: 10px;
+    width: 100%;
+}
+
+.post-footer {
+    padding: 15px 15px 0px 15px;
+}
+
+.post-caption {
+    padding: 10px 0 0 0;
+    line-height: 1.6em;
+}
+
+.post-actions {
+    padding: 0 10px 10px 10px;
+}
+
+.post-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 90px;
+    object-fit: cover;
+    outline: none;
+    cursor: pointer;
+}
+
+.post-author {
+    padding-left: 10px;
+}
+
+.post-author-username {
+    font-size: 1.0em;
+}
+
+.post-attachment {
+    width: 100%;
+    height: auto;
+    vertical-align: bottom;
+    pointer-events: none;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+}
+
+.comment-input {
+    outline: none;
+    border: none;
+    width: 100%;
+}
+
+.caption-input {
+    outline: none;
+    border: 2px solid #d8d8d8;
+    padding: 12px 12px 12px 12px;
+    border-radius: 3px;
+    margin-bottom: 25px;
+}
+
+.save-button {
+    margin-right: 10px;
+}
+
+.post-content {
+    width: 100%;
+    position: relative;
+    height: auto;
+}
+
+.post-content img {
+    max-width: 100%;
+    -moz-transition: all 0.3s;
+    -webkit-transition: all 0.3s;
+    transition: all 0.3s;
+}
+
+.post-content:hover img {
+    -moz-transform: scale(1.1);
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+}
+
+.post-content .post-content-buttons {
+    position: absolute;
+    opacity: 0;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    padding: 0 10px 0 10px;
+    z-index: 100;
+}
+
+.post-content:not([disabled]):hover .post-content-buttons {
+    opacity: 1;
+}
+
+.post-date {
+    padding: 10px 0 10px 0;
+}
+
+.post-created {
+    font-size: 14px;
+    color: #6B738A;
+    font-weight: lighter;
+}
+
+.progress-bar {
+    height: 3px;
+    position: absolute;
+}
+
+.likes {
+    padding-top: 10px;
+}
+
+.icon-button {
+    color: #444444;
+}
+
+.liked {
+    color: #e91e63;
+}

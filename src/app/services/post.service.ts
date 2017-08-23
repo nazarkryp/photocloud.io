@@ -2,12 +2,14 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
 
 import { WebApiClient } from '../infrastructure/communication';
-import { Collection, Pagination, Post, CreatePostModel } from '../common/models';
+import { UserMapper } from '../infrastructure/mapping';
+import { Collection, Pagination, Post, User, CreatePostModel } from '../common/models';
 
 @Injectable()
 export class PostService {
     constructor(
-        private webApiClient: WebApiClient) { }
+        private webApiClient: WebApiClient,
+        private userMapper: UserMapper) { }
 
     createPost(post: CreatePostModel) {
         return this.webApiClient.post<Post>('posts', post);
@@ -40,8 +42,6 @@ export class PostService {
             requestUri = requestUri + '?next=' + pagination.next;
         }
 
-        console.log(requestUri);
-
         return this.webApiClient.get<Collection<Post>>(requestUri);
     }
 
@@ -55,6 +55,11 @@ export class PostService {
 
     removePost(postId: number) {
         return this.webApiClient.delete(`posts/${postId}`);
+    }
+
+    public getLikes(postId: number): Observable<User[]> {
+        return this.webApiClient.get<User[]>(`posts/${postId}/likes`)
+            .map(response => response.map(e => this.userMapper.mapResponseToUser(e)));
     }
 
     likePost(postId: number) {
