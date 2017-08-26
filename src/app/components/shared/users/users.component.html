@@ -1,11 +1,14 @@
 <div fxLayout="column" style="width: 600px; height: 75vh;">
-    <div *ngFor="let user of users" fxLayout="row">
+    <div style="border-bottom: 1px solid #d8d8d8; padding-bottom: 20px;" fxLayout="row" fxLayoutAlign="center center">
+        <span>Likes</span>
+    </div>
+    <div *ngFor="let user of users" fxLayout="row" style="padding-bottom: 10px;border-bottom: 1px solid #efefef;margin-top:10px;">
         <img class="post-avatar" [routerLink]="['/', user.username]" src="{{user.pictureUri}}" default="assets/images/user-default-image.png"
             alt="profile">
         <div class="post-author" fxLayout="row" fxLayoutAlign="space-between center" fxFlex>
             <a class="post-author-username" [routerLink]="['/', user.username]">{{user.username}}</a>
-            <div fxLayout="row" fxLayout="center end" *ngIf="currentUser && user.id === currentUser.id">
-                <button md-button>FOLLOW</button>
+            <div fxLayout="row" fxLayout="center end">
+                <button md-raised-button color="primary">FOLLOW</button>
             </div>
         </div>
     </div>

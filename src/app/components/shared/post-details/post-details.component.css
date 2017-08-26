@@ -165,6 +165,10 @@ md-dialog-container {
     padding: 0px !important;
 }
 
+.likes-counter {
+    cursor: pointer;
+}
+
 .like-button {
     color: #6B738A;
 }

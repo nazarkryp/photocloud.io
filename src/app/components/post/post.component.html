@@ -38,7 +38,7 @@
     <md-progress-bar class="progress-bar" color="warn" mode="indeterminate" *ngIf="post.isLoading"></md-progress-bar>
     <div class="post-footer" *ngIf="!post.editing">
         <div class="likes" fxLayout="row" fxLayoutAlign="space-between center" (click)="openLikesDialog(post)">
-            <span><strong>{{post.likesCount}} likes</strong></span>
+            <span class="likes-counter"><strong>{{post.likesCount}} likes</strong></span>
         </div>
         <div class="post-caption" *ngIf="post.caption">
             <a [routerLink]="['/', post.user.username]"><strong>{{post.user.username}}</strong></a>

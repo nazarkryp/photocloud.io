@@ -142,6 +142,10 @@ hr {
     padding-top: 10px;
 }
 
+.likes-counter {
+    cursor: pointer;
+}
+
 .icon-button {
     color: #444444;
 }
