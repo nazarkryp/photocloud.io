@@ -149,3 +149,7 @@ hr {
 .liked {
     color: #e91e63;
 }
+
+.btn-relationships {
+    width: 150px;
+}
