@@ -1,4 +1,4 @@
-﻿a {
+a {
     text-decoration: none;
     color: inherit;
 }
@@ -104,4 +104,12 @@ span {
 
 .liked {
     color: #e91e63;
+}
+
+.multiple-attachments-icon {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    color: white;
+    z-index: 999;
 }

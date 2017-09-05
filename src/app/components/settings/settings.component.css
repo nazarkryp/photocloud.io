@@ -17,3 +17,11 @@
 .save-button {
     margin-right: 15px;
 }
+
+.mat-form-field {
+    width: 100%;
+}
+
+.mat-form-field-underline {
+    background: #d8d8d8;
+}

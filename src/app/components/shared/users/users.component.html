@@ -1,14 +1,14 @@
 <div fxLayout="column" style="width: 600px; height: 75vh;">
     <div style="border-bottom: 1px solid #d8d8d8; padding-bottom: 20px;" fxLayout="row" fxLayoutAlign="center center">
-        <span>Likes</span>
+        <span>{{title}}</span>
     </div>
     <div *ngFor="let user of users" fxLayout="row" style="padding-bottom: 10px;border-bottom: 1px solid #efefef;margin-top:10px;">
-        <img class="post-avatar" [routerLink]="['/', user.username]" src="{{user.pictureUri}}" default="assets/images/user-default-image.png"
+        <img class="user-avatar" [routerLink]="['/', user.username]" src="{{user.pictureUri}}" default="assets/images/user-default-image.png"
             alt="profile">
-        <div class="post-author" fxLayout="row" fxLayoutAlign="space-between center" fxFlex>
-            <a class="post-author-username" [routerLink]="['/', user.username]">{{user.username}}</a>
-            <div fxLayout="row" fxLayout="center end">
-                <button class="btn-relationships" md-raised-button color="primary" (click)="modifyRelationship()" [disabled]="isModifyingRelationship"
+        <div class="users-details-container" fxLayout="row" fxLayoutAlign="space-between center" fxFlex>
+            <a class="username" [routerLink]="['/', user.username]">{{user.username}}</a>
+            <div fxLayout="row" fxLayoutAlign="center end">
+                <button class="btn-relationships" md-raised-button color="primary" (click)="modifyRelationship(user)" [disabled]="modifying[user.id]"
                     *ngIf="currentUser && currentUser.id !== user.id">{{user.incommingStatus | relationshipAction | uppercase }}</button>
             </div>
         </div>

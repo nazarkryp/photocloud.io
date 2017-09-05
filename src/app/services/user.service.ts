@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subscription } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Rx';
 import { WebApiClient } from '../infrastructure/communication';
 
-import { User } from '../common/models/user';
+import { Collection, Pagination, User } from '../common/models';
 import { UserMapper } from '../infrastructure/mapping/user.mapper';
 
 @Injectable()
@@ -12,16 +12,37 @@ export class UserService {
         private userMapper: UserMapper) { }
 
     public getUser(username: string): Observable<User> {
-        return this.webApiClient.get<User>(`users/${username}`)
-            .map(response => this.userMapper.mapResponseToUser(response));
+        return this.webApiClient.get<User>(`users/${username}`);
     }
 
-    public getIncommingRequests() {
+    public getUsers(pagination: Pagination): Observable<Collection<User>> {
+        let requestUri = 'users';
+
+        if (pagination != null && pagination.next != null) {
+            requestUri = requestUri + '?next=' + pagination.next;
+        }
+
+        return this.webApiClient.get<Collection<User>>(requestUri);
+    }
+
+    public getIncommingRequests(): Observable<User[]> {
         return this.webApiClient.get<User[]>('users/requests/incomming');
     }
 
+    public getOutgoingRequests(): Observable<User[]> {
+        return this.webApiClient.get<User[]>('users/requests/outgoing');
+    }
+
     public modifyRelationship(userId: number, relationshipModel: any): Observable<User> {
-        return this.webApiClient.put(`users/${userId}/relationship`, relationshipModel)
+        return this.webApiClient.put<User>(`users/${userId}/relationship`, relationshipModel)
             .map(response => this.userMapper.mapResponseToUser(response));
+    }
+
+    public getFollowers(userId: number): Observable<User[]> {
+        return this.webApiClient.get<User[]>(`users/${userId}/followers`);
+    }
+
+    public getFollowings(userId: number): Observable<User[]> {
+        return this.webApiClient.get<User[]>(`users/${userId}/following`);
     }
 }

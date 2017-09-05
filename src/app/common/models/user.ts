@@ -9,9 +9,9 @@ export class User {
     isPrivate: boolean;
     isActive: boolean;
     pictureUri: string;
-    outgoingStatus: RelationshipStatus;
-    incommingStatus: RelationshipStatus;
     posts: number;
     followers: number;
     following: number;
+    outgoingStatus: number;
+    incommingStatus: number;
 }

@@ -159,7 +159,10 @@ export class PostComponent implements OnInit, OnDestroy {
     private openLikesDialog(post: Post) {
         const usersObservable = this.postService.getLikes(post.id);
         const dialogRef = this.dialog.open(UsersComponent, {
-            data: usersObservable
+            data: {
+                usersObservable: usersObservable,
+                title: "Likes"
+            }
         });
     }
 

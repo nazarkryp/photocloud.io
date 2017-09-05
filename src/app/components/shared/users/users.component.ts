@@ -16,15 +16,20 @@ export class UsersComponent implements OnInit, OnDestroy {
     private currentUser: CurrentUser;
     private usersObservableSubscription: Subscription;
     private currentUserSubscription: Subscription;
-    private isModifyingRelationship: boolean;
+    private modifying: { [id: number]: boolean } = {};
+    private title: string;
 
     constructor(
         public dialogRef: MdDialogRef<UsersComponent>,
-        @Inject(MD_DIALOG_DATA) private usersObservable: Observable<User[]>,
+        @Inject(MD_DIALOG_DATA) data: any,
         private userService: UserService,
         private userProvider: UserProvider) {
-        this.usersObservableSubscription = this.usersObservable.subscribe(users => {
+        this.title = data.title;
+        this.usersObservableSubscription = data.usersObservable.subscribe(users => {
             this.users = users;
+            users.map((user: User) => {
+                this.modifying[user.id] = false;
+            });
         });
 
         this.currentUserSubscription = this.userProvider.getCurrentUserAsObservable()
@@ -34,26 +39,27 @@ export class UsersComponent implements OnInit, OnDestroy {
     }
 
     private modifyRelationship(user: User) {
-        let action: number;
+        this.modifying[user.id] = true;
+        const action = this.getRelationshipAction(user.incommingStatus);
+        this.userService.modifyRelationship(user.id, { action: action })
+            .finally(() => {
+                this.modifying[user.id] = false;
+            })
+            .subscribe((userResponse: User) => {
+                user.incommingStatus = userResponse.incommingStatus;
+            }, error => { });
+    }
 
-        if (user.incommingStatus === RelationshipStatus.None) {
-            action = 0;
-        } else if (user.incommingStatus === RelationshipStatus.Following) {
-            action = 1;
-        } else if (user.incommingStatus === RelationshipStatus.Requested) {
-            action = 1;
-        } else if (user.incommingStatus === RelationshipStatus.Blocked) {
-            action = 4;
+    private getRelationshipAction(incommingStatus: RelationshipStatus): number {
+        if (incommingStatus === RelationshipStatus.Following) {
+            return 1;
+        } else if (incommingStatus === RelationshipStatus.Requested) {
+            return 1;
+        } else if (incommingStatus === RelationshipStatus.Blocked) {
+            return 4;
         }
 
-        this.isModifyingRelationship = true;
-        this.userService.modifyRelationship(user.id, {
-            action: action
-        }).subscribe(userResponse => {
-            user = userResponse;
-        }, error => { }, () => {
-            this.isModifyingRelationship = false;
-        });
+        return 0;
     }
 
     public ngOnInit() {

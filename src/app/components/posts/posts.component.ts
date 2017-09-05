@@ -4,7 +4,7 @@ import { Subscription } from 'rxjs/Rx';
 
 import { Post, User, Collection, Comment, Attachment, CurrentUser } from '../../common/models';
 import { UserProvider } from '../../infrastructure/providers';
-import { AccountService, PostService } from '../../services';
+import { PostService } from '../../services';
 import { CreatePostComponent } from '../shared/create-post/create-post.component';
 import { ConfirmComponent } from '../shared/confirm/confirm.component';
 import { NgProgressService } from 'ngx-progressbar';

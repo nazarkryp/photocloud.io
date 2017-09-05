@@ -108,3 +108,7 @@ a {
     height: 50px;
     width: 50px;
 }
+
+.mat-form-field {
+    width: 100%;
+}

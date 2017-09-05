@@ -1,6 +1,6 @@
 export enum RelationshipStatus {
-    None = 1,
-    Following = 2,
-    Requested = 3,
-    Blocked = 4
+    None = 0,
+    Following = 1,
+    Requested = 2,
+    Blocked = 3
 }

@@ -48,6 +48,7 @@ import { ConfirmComponent } from './components/shared/confirm/confirm.component'
 import { SettingsComponent } from './components/settings/settings.component';
 import { NotificationsComponent } from './components/shared/notifications/notifications.component';
 import { UsersComponent } from './components/shared/users/users.component';
+import { UserSearchComponent } from './components/explore/user-search/user-search.component';
 
 @NgModule({
     declarations: [
@@ -73,7 +74,8 @@ import { UsersComponent } from './components/shared/users/users.component';
         ConfirmComponent,
         SettingsComponent,
         NotificationsComponent,
-        UsersComponent
+        UsersComponent,
+        UserSearchComponent
     ],
     entryComponents: [
         PostDetailsComponent,

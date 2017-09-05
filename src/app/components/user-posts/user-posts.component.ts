@@ -7,10 +7,10 @@ import { UserProvider } from '../../infrastructure/providers';
 import { AccountService, PostService, UserService } from '../../services';
 import { CurrentUser, Post, Attachment, User, RelationshipStatus, Collection, ValidationResult, Error } from '../../common/models';
 import { PostDetailsComponent } from '../shared/post-details/post-details.component';
+import { UsersComponent } from '../shared/users/users.component';
 import { NgProgressService } from 'ngx-progressbar';
 import { UploaderService } from '../../services';
-import { FileUploader, FileUploaderOptions } from 'ng2-file-upload';
-import { environment } from '../../../environments/environment';
+import { FileUploader } from 'ng2-file-upload';
 
 @Component({
     selector: 'app-user-posts',
@@ -94,32 +94,41 @@ export class UserPostsComponent implements OnInit, OnDestroy {
     }
 
     private openPostDialog(post: Post) {
-        const dialogRef = this.dialog.open(PostDetailsComponent, {
+        this.dialog.open(PostDetailsComponent, {
             data: post
         });
     }
 
+    private getFollowers() {
+        const usersObservable = this.userService.getFollowers(this.user.id);
+        this.dialog.open(UsersComponent, {
+            data: {
+                usersObservable: usersObservable,
+                title: 'Followers'
+            }
+        });
+    }
+
+    private getFollowings() {
+        const usersObservable = this.userService.getFollowings(this.user.id);
+        this.dialog.open(UsersComponent, {
+            data: {
+                usersObservable: usersObservable,
+                title: 'Following'
+            }
+        });
+    }
+
     private modifyRelationship() {
-        let action: number;
-
-        if (this.user.incommingStatus === RelationshipStatus.None) {
-            action = 0;
-        } else if (this.user.incommingStatus === RelationshipStatus.Following) {
-            action = 1;
-        } else if (this.user.incommingStatus === RelationshipStatus.Requested) {
-            action = 1;
-        } else if (this.user.incommingStatus === RelationshipStatus.Blocked) {
-            action = 4;
-        }
-
+        const action = this.getRelationshipAction(this.user.incommingStatus);
         this.isModifyingRelationship = true;
         this.userService.modifyRelationship(this.user.id, {
             action: action
-        }).subscribe(user => {
-            this.user = user;
-        }, error => { }, () => {
+        }).finally(() => {
             this.isModifyingRelationship = false;
-        });
+        }).subscribe((user: User) => {
+            this.user = user;
+        }, () => { });
     }
 
     private getUserFeed(username: string) {
@@ -136,9 +145,7 @@ export class UserPostsComponent implements OnInit, OnDestroy {
                 }
 
                 this.error = validationResult.error;
-                this.isLoading = false;
-                this.progressService.done();
-            }, (error) => {
+            }, () => {
                 this.isLoading = false;
                 this.progressService.done();
             });
@@ -155,10 +162,7 @@ export class UserPostsComponent implements OnInit, OnDestroy {
     private validateUser(user: User): ValidationResult {
         const validationResult: ValidationResult = new ValidationResult();
 
-        if (!(user instanceof User)) {
-            validationResult.hasErrors = true;
-            validationResult.error = new Error('There is no Internet connection', 'Check your network cables, modem, and router');
-        } else if (!user.isActive) {
+        if (!user.isActive) {
             validationResult.hasErrors = true;
             validationResult.error = new Error('Account is not active');
         } else if (user.isPrivate
@@ -172,6 +176,18 @@ export class UserPostsComponent implements OnInit, OnDestroy {
         }
 
         return validationResult;
+    }
+
+    private getRelationshipAction(incommingStatus: RelationshipStatus): number {
+        if (incommingStatus === RelationshipStatus.Following) {
+            return 1;
+        } else if (incommingStatus === RelationshipStatus.Requested) {
+            return 1;
+        } else if (incommingStatus === RelationshipStatus.Blocked) {
+            return 4;
+        }
+
+        return 0;
     }
 
     public ngOnInit() {

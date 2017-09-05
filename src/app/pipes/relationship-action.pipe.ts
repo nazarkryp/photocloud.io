@@ -6,7 +6,7 @@ import { RelationshipStatus } from '../common/models/relationship-status';
     name: 'relationshipAction'
 })
 export class RelationshipActionPipe implements PipeTransform {
-    transform(relationshipStatus: RelationshipStatus): string {
+    transform(relationshipStatus: number): string {
         if (relationshipStatus === RelationshipStatus.None) {
             return 'follow';
         }
@@ -17,6 +17,10 @@ export class RelationshipActionPipe implements PipeTransform {
 
         if (relationshipStatus === RelationshipStatus.Requested) {
             return 'requested';
+        }
+
+        if (relationshipStatus === RelationshipStatus.Blocked) {
+            return 'unblock';
         }
 
         return 'Unknown';

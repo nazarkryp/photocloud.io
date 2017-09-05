@@ -5,6 +5,7 @@ import { Routes, RouterModule, Router, ActivatedRoute, NavigationEnd } from '@an
 
 import { PostsComponent } from './components/posts/posts.component';
 import { UserPostsComponent } from './components/user-posts/user-posts.component';
+import { UserSearchComponent } from './components/explore/user-search/user-search.component';
 import { SigninComponent } from './components/signin/signin.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { PostDetailsComponent } from './components/shared/post-details/post-details.component';
@@ -20,7 +21,7 @@ const routes: Routes = [
         component: PostsComponent,
         canActivate: [AuthenticationGuard],
         data: {
-            title: 'PhotoCloud'
+            title: 'PhotoCloud - Feed'
         }
     },
     {
@@ -58,7 +59,7 @@ const routes: Routes = [
         path: ':username',
         component: UserPostsComponent,
         data: {
-            title: 'PhotoCloud'
+            title: 'PhotoCloud - User\' Posts'
         }
     },
     {
@@ -72,7 +73,14 @@ const routes: Routes = [
         path: 'explore/tags/:tag',
         component: TagsComponent,
         data: {
-            title: `PhotoCloud - Explore Tags`
+            title: 'PhotoCloud - Explore Tags'
+        }
+    },
+    {
+        path: 'explore/people',
+        component: UserSearchComponent,
+        data: {
+            title: 'PhotoCloud - Discover People'
         }
     }
 ];

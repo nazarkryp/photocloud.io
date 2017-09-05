@@ -24,14 +24,14 @@
                     <span class="mat-title">{{user.posts}} </span>
                     <span class="mat-subhead">posts </span>
                 </div>
-                <div fxFlex>
+                <a md-button (click)="getFollowers()" fxFlex>
                     <span class="mat-title">{{user.followers}} </span>
                     <span class="mat-subhead">followers </span>
-                </div>
-                <div fxFlex>
+                </a>
+                <a md-button (click)="getFollowings()" fxFlex>
                     <span class="mat-title">{{user.following}} </span>
                     <span class="mat-subhead">following</span>
-                </div>
+                </a>
             </div>
             <div class="md-padding" fxLayout="row" fxLayoutAlign="start center">
                 <div>
@@ -48,6 +48,7 @@
             <div class="post-item" *ngFor="let post of page?.data;">
                 <div class="image-container z-depth-3" fxLayout="column" fxLayoutAlign="center center" (click)="openPostDialog(post)">
                     <img class="thumbnail" src="{{post?.attachments[0].uri}}" alt="{{post?.attachments[0].uri}}">
+                    <md-icon class="multiple-attachments-icon" *ngIf="post.attachments.length > 1">layers</md-icon>
                     <div class="after md-padding" fxLayout="row" fxLayoutAlign="space-between center">
                         <div fxLayout="row" fxLayoutAlign="center center">
                             <md-icon class="post-icon">favorite</md-icon>

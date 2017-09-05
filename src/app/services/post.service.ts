@@ -58,8 +58,7 @@ export class PostService {
     }
 
     public getLikes(postId: number): Observable<User[]> {
-        return this.webApiClient.get<User[]>(`posts/${postId}/likes`)
-            .map(response => response.map(e => this.userMapper.mapResponseToUser(e)));
+        return this.webApiClient.get<User[]>(`posts/${postId}/likes`);
     }
 
     likePost(postId: number) {

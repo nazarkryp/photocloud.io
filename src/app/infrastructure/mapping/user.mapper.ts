@@ -19,25 +19,25 @@ export class UserMapper {
         user.followers = response.followers;
         user.following = response.following;
 
-        if (response.incommingStatus === 'None') {
-            user.incommingStatus = RelationshipStatus.None;
-        } else if (response.incommingStatus === 'Following') {
-            user.incommingStatus = RelationshipStatus.Following;
-        } else if (response.incommingStatus === 'Requested') {
-            user.incommingStatus = RelationshipStatus.Requested;
-        } else if (response.incommingStatus === 'Blocked') {
-            user.incommingStatus = RelationshipStatus.Blocked;
-        }
+        //if (response.incommingStatus === 'None') {
+        //    user.incommingStatus = RelationshipStatus.None;
+        //} else if (response.incommingStatus === 'Following') {
+        //    user.incommingStatus = RelationshipStatus.Following;
+        //} else if (response.incommingStatus === 'Requested') {
+        //    user.incommingStatus = RelationshipStatus.Requested;
+        //} else if (response.incommingStatus === 'Blocked') {
+        //    user.incommingStatus = RelationshipStatus.Blocked;
+        //}
 
-        if (response.outgoingStatus === 'None') {
-            user.outgoingStatus = RelationshipStatus.None;
-        } else if (response.outgoingStatus === 'Following') {
-            user.outgoingStatus = RelationshipStatus.Following;
-        } else if (response.outgoingStatus === 'Requested') {
-            user.outgoingStatus = RelationshipStatus.Requested;
-        } else if (response.outgoingStatus === 'Blocked') {
-            user.outgoingStatus = RelationshipStatus.Blocked;
-        }
+        //if (response.outgoingStatus === 'None') {
+        //    user.outgoingStatus = RelationshipStatus.None;
+        //} else if (response.outgoingStatus === 'Following') {
+        //    user.outgoingStatus = RelationshipStatus.Following;
+        //} else if (response.outgoingStatus === 'Requested') {
+        //    user.outgoingStatus = RelationshipStatus.Requested;
+        //} else if (response.outgoingStatus === 'Blocked') {
+        //    user.outgoingStatus = RelationshipStatus.Blocked;
+        //}
 
         return user;
     }
