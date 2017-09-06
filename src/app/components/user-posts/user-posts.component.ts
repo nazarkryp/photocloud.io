@@ -144,6 +144,8 @@ export class UserPostsComponent implements OnInit, OnDestroy {
                     return;
                 }
 
+                this.isLoading = false;
+                this.progressService.done();
                 this.error = validationResult.error;
             }, () => {
                 this.isLoading = false;

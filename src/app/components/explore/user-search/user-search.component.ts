@@ -31,7 +31,6 @@ export class UserSearchComponent implements OnInit, OnDestroy {
     }
 
     private getUsers() {
-        this.isLoading = true;
         this.progressService.start();
 
         this.userService.getUsers(this.page.pagination)
@@ -80,6 +79,7 @@ export class UserSearchComponent implements OnInit, OnDestroy {
     }
 
     public ngOnInit() {
+        this.isLoading = true;
         this.getUsers();
     }
 

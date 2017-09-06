@@ -34,8 +34,7 @@ export class UserService {
     }
 
     public modifyRelationship(userId: number, relationshipModel: any): Observable<User> {
-        return this.webApiClient.put<User>(`users/${userId}/relationship`, relationshipModel)
-            .map(response => this.userMapper.mapResponseToUser(response));
+        return this.webApiClient.put<User>(`users/${userId}/relationship`, relationshipModel);
     }
 
     public getFollowers(userId: number): Observable<User[]> {
