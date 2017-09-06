@@ -1,16 +1,16 @@
 <div fxLayout="column" fxLayoutAlign="start center">
-    <div fxLayout="column" style="width: 600px; margin: 50px 0 50px 0;">
+    <div class="z-depth-1" fxLayout="column" style="width: 600px; margin: 50px 0 50px 0; padding: 15px; background: white;">
         <div style="border-bottom: 1px solid #d8d8d8; padding-bottom: 20px;" fxLayout="row" fxLayoutAlign="center center">
             <span>{{title}}</span>
         </div>
         <div *ngFor="let user of page.data" fxLayout="row" style="padding-bottom: 10px;border-bottom: 1px solid #efefef;margin-top:10px;">
             <img class="user-avatar" [routerLink]="['/', user.username]" src="{{user.pictureUri}}" default="assets/images/user-default-image.png"
-                 alt="profile">
+                alt="profile">
             <div class="users-details-container" fxLayout="row" fxLayoutAlign="space-between center" fxFlex>
                 <a class="username" [routerLink]="['/', user.username]">{{user.username}}</a>
                 <div fxLayout="row" fxLayoutAlign="center end">
                     <button class="btn-relationships" md-raised-button color="primary" (click)="modifyRelationship(user)" [disabled]="modifying[user.id]"
-                            *ngIf="currentUser && currentUser.id !== user.id">
+                        *ngIf="currentUser && currentUser.id !== user.id">
                         {{user.incommingStatus | relationshipAction | uppercase}}
                     </button>
                 </div>
