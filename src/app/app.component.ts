@@ -1,6 +1,8 @@
 import { Component, ViewChild, OnInit, OnDestroy } from '@angular/core';
+import { MdSidenav, MdIconRegistry } from '@angular/material';
 import { Subscription } from 'rxjs/Rx';
-import { MdSidenav } from '@angular/material';
+import { DomSanitizer } from '@angular/platform-browser';
+
 import { CommunicationService } from './infrastructure/communication/communication.service';
 
 @Component({
@@ -13,9 +15,14 @@ export class AppComponent implements OnInit, OnDestroy {
     notificationsSidenav: MdSidenav;
     private isOpened: boolean;
     private subscription: Subscription;
+    private text: string;
 
     constructor(
+        // private mdIconRegistry: MdIconRegistry,
+        // private sanitizer: DomSanitizer,
         private communicationService: CommunicationService) {
+        // mdIconRegistry.addSvgIcon('heart', sanitizer.bypassSecurityTrustResourceUrl('assets/svg/icons/heart.svg'));
+        this.text = 'sex';
         communicationService.getState()
             .subscribe(isOpened => {
                 this.isOpened = isOpened;

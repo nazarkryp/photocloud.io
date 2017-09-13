@@ -75,6 +75,7 @@ hr {
     outline: none;
     border: none;
     width: 100%;
+    padding-left: 7px;
 }
 
 .caption-input {
@@ -152,4 +153,8 @@ hr {
 
 .liked {
     color: #e91e63;
+}
+
+md-icon > svg {
+    stroke-width: 1px;
 }

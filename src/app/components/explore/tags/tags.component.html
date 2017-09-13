@@ -1,6 +1,10 @@
 <div class="posts-tags-content" fxLayout="row" fxLayoutAlign="center start">
-    <div class="posts-container" fxLayout="column" fxLayoutAlign="start center" fxFlex>
-        <div class="posts">
+    <div class="posts-tags-container" fxLayout="column" fxLayoutAlign="start center">
+        <div fxLayout="row" fxLayoutAlign="center center" style="margin: 0 0 50px 0;">
+            <span class="posts-tags-title">#{{tag}}</span>
+            <md-icon class="md-48">heart</md-icon>
+        </div>
+        <div class="tag-posts" fxFlex>
             <div class="post z-depth-1" *ngFor="let post of page?.data;" fxLayout="column">
                 <div md-ripple class="thumbnail-container" style="height: 300px; width: 100%; position: relative;" (click)="openPostDialog(post)">
                     <img class="thumbnail" src="{{post.attachments[0].uri}}" alt="post">

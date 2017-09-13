@@ -1,12 +1,13 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-// import { HttpModule } from '@angular/http';
+import { BrowserModule, DomSanitizer } from '@angular/platform-browser';
+import { HttpModule } from '@angular/http';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { MdIconRegistry } from '@angular/material';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppMaterialModule } from './app-material/app-material.module';
-import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { AppComponent } from './app.component';
 import { PostsComponent } from './components/posts/posts.component';
@@ -92,7 +93,8 @@ import { UserSearchComponent } from './components/explore/user-search/user-searc
         FormsModule,
         NgProgressModule,
         ClipboardModule,
-        FileUploadModule
+        FileUploadModule,
+        HttpModule
     ],
     providers: [
         UserProvider,
@@ -118,4 +120,10 @@ import { UserSearchComponent } from './components/explore/user-search/user-searc
     ],
     bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+    constructor(
+        private mdIconRegistry: MdIconRegistry,
+        private sanitizer: DomSanitizer) {
+        mdIconRegistry.addSvgIcon('heart', sanitizer.bypassSecurityTrustResourceUrl('assets/svg/icons/heart.svg'));
+    }
+}

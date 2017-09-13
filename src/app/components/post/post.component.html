@@ -58,7 +58,8 @@
     </div>
     <div class="post-actions" fxLayout="row" *ngIf="!post.editing">
         <button class="icon-button" [ngClass]="{ 'liked' : post.userHasLiked }" md-icon-button (click)="like()">
-            <md-icon>favorite</md-icon>
+            <!-- <md-icon>favorite</md-icon> -->
+            <md-icon svgIcon="heart" style="width: 75%; height: 75%;stroke-width: 1px;"></md-icon>
         </button>
         <input class="comment-input" type="text" placeholder="Add comment" [(ngModel)]="text" (keydown.enter)="createComment()" />
         <button class="icon-button" md-icon-button mdTooltip="Copy to clipboard" mdTooltipPosition="left" ngxClipboard [cbContent]="share()"
