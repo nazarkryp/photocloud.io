@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Optional, Inject } from '@angular/core';
+import { Component, OnInit, OnDestroy, Optional, Inject, ViewEncapsulation } from '@angular/core';
 import { MdDialogRef, MdSnackBarConfig, MdSnackBar, MD_DIALOG_DATA } from '@angular/material';
 import { Observable, Subscription } from 'rxjs/Rx';
 
@@ -9,7 +9,8 @@ import { UserProvider } from '../../../infrastructure/providers';
 @Component({
     selector: 'app-users',
     templateUrl: './users.component.html',
-    styleUrls: ['./users.component.css']
+    styleUrls: ['./users.component.css'],
+    encapsulation: ViewEncapsulation.None
 })
 export class UsersComponent implements OnInit, OnDestroy {
     private users: User[];

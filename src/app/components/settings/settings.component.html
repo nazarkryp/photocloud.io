@@ -1,5 +1,5 @@
 <div fxLayout="row" fxLayoutAlign="center start" *ngIf="!isLoading">
-    <div class="settings-container z-depth-1" fxLayout="column">
+    <div class="settings-container mat-elevation-z1" fxLayout="column">
         <div fxLayout="row" fxLayoutAlign="start center">
             <span class="mat-headline">Settings</span>
         </div>
@@ -25,7 +25,7 @@
         </div>
         <div class="item" fxLayout="row" fxLayoutAlign="space-between center">
             <span [ngClass]="{ 'disabled' : !account.isActive }">Private account</span>
-            <md-slide-toggle [(ngModel)]="account.isPrivate" [checked]="account.isPrivate" (change)='invertAccountPrivateStatus()' [disabled]="!account.isActive"></md-slide-toggle>
+            <md-slide-toggle [(ngModel)]="account.isPrivate" [checked]="account.isPrivate" (change)='invertAccountPrivateStatus($event)' [disabled]="!account.isActive"></md-slide-toggle>
         </div>
         <div class="item" fxLayout="row" fxLayoutAlign="center center">
             <button md-raised-button (click)="invertAccountStatus()">{{account.isActive ? 'Temporarily disable my account' : 'Activate my account'}}</button>

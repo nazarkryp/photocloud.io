@@ -154,7 +154,3 @@ hr {
 .liked {
     color: #e91e63;
 }
-
-md-icon > svg {
-    stroke-width: 1px;
-}

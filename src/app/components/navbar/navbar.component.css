@@ -20,14 +20,20 @@
 
 .toolbar-tools {
     flex: 1 1 auto;
+    position: relative;
 }
 
 .progress-bar {
     height: 3px;
 }
 
-.notifications-button {
+.navbar-actions {
     position: absolute;
     right: 0;
-    margin-right: 25px;
+    /* margin-right: 25px; */
+    /* width: 155px; */
+}
+
+md-icon>svg {
+    stroke-width: 0.7;
 }

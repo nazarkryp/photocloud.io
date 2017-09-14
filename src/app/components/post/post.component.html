@@ -1,4 +1,4 @@
-<div class="post z-depth-1" *ngIf="post">
+<div class="post mat-elevation-z1" *ngIf="post">
     <div class="post-header" fxLayout="row" *ngIf="!post.editing">
         <img class="post-avatar" [routerLink]="['/', post.user.username]" src="{{post.user.pictureUri}}" default="assets/images/user-default-image.png"
             alt="profile">
@@ -59,7 +59,8 @@
     <div class="post-actions" fxLayout="row" *ngIf="!post.editing">
         <button class="icon-button" [ngClass]="{ 'liked' : post.userHasLiked }" md-icon-button (click)="like()">
             <!-- <md-icon>favorite</md-icon> -->
-            <md-icon svgIcon="heart" style="width: 75%; height: 75%;stroke-width: 1px;"></md-icon>
+            <!-- <md-icon svgIcon="heart"></md-icon> -->
+            <md-icon>favorite_bordered</md-icon>
         </button>
         <input class="comment-input" type="text" placeholder="Add comment" [(ngModel)]="text" (keydown.enter)="createComment()" />
         <button class="icon-button" md-icon-button mdTooltip="Copy to clipboard" mdTooltipPosition="left" ngxClipboard [cbContent]="share()"

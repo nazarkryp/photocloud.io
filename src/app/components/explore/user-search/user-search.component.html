@@ -1,7 +1,8 @@
 <div fxLayout="column" fxLayoutAlign="start center">
-    <div class="z-depth-1" fxLayout="column" style="width: 600px; margin: 50px 0 50px 0; padding: 15px 15px 25px 15px; background: white;" *ngIf="!isLoading">
-        <div style="border-bottom: 1px solid #d8d8d8; padding-bottom: 20px;" fxLayout="row" fxLayoutAlign="center center">
-            <span>{{title}}</span>
+    <div class="mat-elevation-z1" fxLayout="column" style="width: 600px; margin: 50px 0 50px 0; padding: 15px 15px 25px 15px; background: white;"
+        *ngIf="!isLoading">
+        <div style="border-bottom: 1px solid #d8d8d8; padding: 5px 0 20px 0;" fxLayout="row" fxLayoutAlign="center center">
+            <span style="font-size: 24px; font-weight: lighter;">{{title}}</span>
         </div>
         <div *ngFor="let user of page.data" fxLayout="row" style="padding-bottom: 10px;border-bottom: 1px solid #efefef;margin-top:10px;">
             <img class="user-avatar" [routerLink]="['/', user.username]" src="{{user.pictureUri}}" default="assets/images/user-default-image.png"

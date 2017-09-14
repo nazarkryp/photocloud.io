@@ -7,7 +7,7 @@
                 </div>
             </button>
             <input #fileInput type="file" accept="image/*" ng2FileSelect [uploader]="uploader" hidden multiple/>
-            <div class="attachment-preview-container z-depth-1" *ngFor="let item of uploader.queue">
+            <div class="attachment-preview-container mat-elevation-z1" *ngFor="let item of uploader.queue">
                 <img class="attachment-preview-image" appImagePreview [image]="item?._file" alt="image-preview">
                 <div class="attachment-progress-container" fxLayout="row" fxLayoutAlign="center center" *ngIf="!item.isUploaded">
                     <md-progress-spinner strokeWidth="5" mode="determinate" value="{{item.progress}}" color="accent"></md-progress-spinner>
@@ -16,7 +16,7 @@
             </div>
         </div>
     </div>
-    <div class="big-preview-container z-depth-1" *ngIf="attachments.length > 0">
+    <div class="big-preview-container mat-elevation-z1" *ngIf="attachments.length > 0">
         <img class="big-preview" src="{{attachments[0].uri}}" alt="preview">
     </div>
     <div class="create-post-footer" *ngIf="uploader.queue.length > 0 && !uploader.isUploading">
