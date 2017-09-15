@@ -28,6 +28,7 @@ export class UserPostsComponent implements OnInit, OnDestroy {
     private user: User = new User();
     private error: Error;
     private uploader: FileUploader;
+    private canEditRelationship: boolean;
 
     constructor(
         private accountService: AccountService,

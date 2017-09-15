@@ -95,7 +95,12 @@
 }
 
 .md-padding {
-    padding: 16px 0px 0 16px;
+    padding: 0 16px 16px 16px;
+}
+
+.user-info-data {
+    margin: 7px 0 0 16px;
+    line-height: 3;
 }
 
 .user-details {
@@ -118,6 +123,11 @@
     font-size: 17px;
     font-weight: normal;
     padding-right: 10px;
+    position: absolute;
+}
+
+.bio-container {
+    line-height: 0;
 }
 
 .button-bordered {

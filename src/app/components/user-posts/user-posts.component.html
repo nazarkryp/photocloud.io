@@ -1,12 +1,12 @@
 <div fxLayout="column" fxLayoutAlign="center center" *ngIf="!isLoading">
-    <div class="user-info" fxLayout="row" fxLayoutAlign="center end">
+    <div class="user-info" fxLayout="row" fxLayoutAlign="center center">
         <img class="thumbnail-big" src="{{user.pictureUri}}" default="assets/images/user-default-image.png" alt="profile" *ngIf="!currentUser || user.id !== currentUser.id"
         />
         <img class="thumbnail-big pointer" src="{{user.pictureUri}}" appImagePreview [image]="uploader.queue[0]?._file" default="assets/images/user-default-image.png"
             alt="profile" (click)="fileInput.click()" *ngIf="currentUser && user.id === currentUser.id" />
         <input #fileInput type="file" accept="image/*" ng2FileSelect [uploader]="uploader" hidden/>
-        <div fxLayout="column" fxFlex>
-            <div class="md-padding" fxLayout="row" fxLayoutAlign="space-between end">
+        <div class="user-info-data" fxLayout="column" fxFlex>
+            <div fxLayout="row" fxLayoutAlign="space-between center">
                 <div>
                     <span class="mat-display-1">{{user.username}} </span>
                 </div>
@@ -16,28 +16,37 @@
                 <button md-icon-button mdTooltip="Logout" mdTooltipPosition="above" (click)="logout()" *ngIf="currentUser && user.id === currentUser.id">
                     <md-icon>exit_to_app</md-icon>
                 </button>
-                <button md-raised-button color="accent" *ngIf="currentUser && user.id !== currentUser.id" (click)="modifyRelationship()"
+                <button md-raised-button color="accent" *ngIf="currentUser && user.id !== currentUser.id && (user.isActive || (!user.isActive && user.incommingStatus !== 0))" (click)="modifyRelationship()"
                     [disabled]="isModifyingRelationship">{{user.incommingStatus | relationshipAction | uppercase }}</button>
             </div>
-            <div class="md-padding" fxLayout="row" fxLayoutAlign="start center">
+            <div fxLayout="row" fxLayoutAlign="start center" *ngIf="user.isActive">
                 <div fxFlex>
                     <span class="mat-title">{{user.posts}} </span>
                     <span class="mat-subhead">posts </span>
                 </div>
-                <a md-button (click)="getFollowers()" fxFlex>
+                <a md-button (click)="getFollowers()" *ngIf="currentUser" fxFlex>
                     <span class="mat-title">{{user.followers}} </span>
                     <span class="mat-subhead">followers </span>
                 </a>
-                <a md-button (click)="getFollowings()" fxFlex>
+                <div *ngIf="!currentUser" fxFlex>
+                    <span class="mat-title">{{user.followers}} </span>
+                    <span class="mat-subhead">followers </span>
+                </div>
+
+                <a md-button (click)="getFollowings()" *ngIf="currentUser" fxFlex>
                     <span class="mat-title">{{user.following}} </span>
                     <span class="mat-subhead">following</span>
                 </a>
+                <div *ngIf="!currentUser" fxFlex>
+                    <span class="mat-title">{{user.following}} </span>
+                    <span class="mat-subhead">following</span>
+                </div>
             </div>
-            <div class="md-padding" fxLayout="row" fxLayoutAlign="start center">
+            <div fxLayout="row" fxLayoutAlign="start center" *ngIf="user.isActive">
                 <div>
                     <span class="mat-subhead full-name">{{user.fullName}}</span>
                 </div>
-                <div>
+                <div class="bio-container">
                     <span class="mat-subhead bio">{{user.bio}}</span>
                 </div>
             </div>
