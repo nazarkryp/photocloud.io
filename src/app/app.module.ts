@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule, DomSanitizer } from '@angular/platform-browser';
 import { HttpModule } from '@angular/http';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MdIconRegistry } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
@@ -93,6 +93,7 @@ import { SearchBoxComponent } from './components/shared/search-box/search-box.co
         FlexLayoutModule,
         HttpClientModule,
         FormsModule,
+        ReactiveFormsModule,
         NgProgressModule,
         ClipboardModule,
         FileUploadModule,

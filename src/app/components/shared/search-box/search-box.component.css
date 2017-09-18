@@ -1,3 +1,8 @@
 ::ng-deep .mat-input-underline {
     display: none;
 }
+
+.search-spinner {
+    width: 25px;
+    height: 25px;
+}

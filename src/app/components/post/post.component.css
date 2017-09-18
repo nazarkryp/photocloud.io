@@ -76,6 +76,7 @@ hr {
     border: none;
     width: 100%;
     padding-left: 7px;
+    font-weight: 300;
 }
 
 .caption-input {

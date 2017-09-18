@@ -18,7 +18,7 @@
     </div>
     <ng-template #noRequests>
         <div class="notifications-content" fxLayout="column" fxLayoutAlign="center center" fxFlex>
-            <md-spinner *ngIf="isLoading"></md-spinner>
+            <md-spinner [strokeWidth]="5" *ngIf="isLoading"></md-spinner>
             <span *ngIf="!isLoading">No Incomming Requests</span>
         </div>
     </ng-template>

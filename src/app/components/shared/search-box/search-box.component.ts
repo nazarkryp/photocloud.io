@@ -12,23 +12,25 @@ import { Collection, User } from '../../../common/models';
     styleUrls: ['./search-box.component.css']
 })
 export class SearchBoxComponent implements OnInit {
-    private usersControl: FormControl;
+    private searchControl: FormControl;
     private users: Observable<User[]>;
-    private searchQuery: string;
+    private isSearching = false;
 
     constructor(
         private userService: UserService) {
-            this.usersControl = new FormControl();
-        }
+    }
 
-    private searchUsers() {
-        this.users = this.userService.searchUsers(this.searchQuery)
-            .map(collection => {
-                return collection.data;
-            });
+    private searchUsers(searchQuery: string) {
+        return this.userService.searchUsers(searchQuery)
+            .map(collection => collection.data);
     }
 
     ngOnInit() {
-        // this.searchUsers();
+        this.searchControl = new FormControl();
+        this.users = this.searchControl.valueChanges
+            .do(_ => this.isSearching = true)
+            .switchMap((searchQuery) =>
+                searchQuery ? this.searchUsers(searchQuery) : Observable.of(null))
+            .do(_ => this.isSearching = false);
     }
 }

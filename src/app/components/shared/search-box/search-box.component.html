@@ -1,10 +1,11 @@
-<md-form-field style="width: 600px; background: #f5f5f5;" floatPlaceholder="never">
+<div style="width: 600px; background: #f5f5f5; padding: 10px 12px; border-radius: 5px;" fxLayout="row" fxLayoutAlign="start center">
     <md-icon mdPrefix style="color: #616161;">search</md-icon>
-    <input mdInput type="text" [(ngModel)]="searchQuery" (change)="searchUsers()" placeholder="Search" [mdAutocomplete]="auto" aria-label="User">
+    <input mdInput type="text" placeholder="Search" [mdAutocomplete]="auto" [formControl]="searchControl" aria-label="User" style="width: 100%; background: #f5f5f5; color: #616161; border: none; outline: none; margin-left: 10px; font-size:16px; font-weight: 300;">
+    <md-spinner class="search-spinner" [strokeWidth]="10" *ngIf="isSearching"></md-spinner>
     <md-autocomplete #auto="mdAutocomplete">
         <md-option *ngFor="let user of users | async" [value]="user.username">
             <img style="vertical-align:middle;" aria-hidden src="{{user.pictureUri}}" height="25" />
             <span>{{ user.username }}</span>
         </md-option>
     </md-autocomplete>
-</md-form-field>
+</div>
