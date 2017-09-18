@@ -50,6 +50,7 @@ import { SettingsComponent } from './components/settings/settings.component';
 import { NotificationsComponent } from './components/shared/notifications/notifications.component';
 import { UsersComponent } from './components/shared/users/users.component';
 import { UserSearchComponent } from './components/explore/user-search/user-search.component';
+import { SearchBoxComponent } from './components/shared/search-box/search-box.component';
 
 @NgModule({
     declarations: [
@@ -76,7 +77,8 @@ import { UserSearchComponent } from './components/explore/user-search/user-searc
         SettingsComponent,
         NotificationsComponent,
         UsersComponent,
-        UserSearchComponent
+        UserSearchComponent,
+        SearchBoxComponent
     ],
     entryComponents: [
         PostDetailsComponent,

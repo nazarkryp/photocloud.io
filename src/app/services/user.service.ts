@@ -25,6 +25,10 @@ export class UserService {
         return this.webApiClient.get<Collection<User>>(requestUri);
     }
 
+    public searchUsers(query: string): Observable<Collection<User>> {
+        return this.webApiClient.get(`users/search?query=${query}`);
+    }
+
     public getIncommingRequests(): Observable<User[]> {
         return this.webApiClient.get<User[]>('users/requests/incomming');
     }

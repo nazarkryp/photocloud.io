@@ -1,22 +1,25 @@
 <md-toolbar class="navbar mat-elevation-z1" *ngIf="renderToolbar">
     <div class="toolbar-tools" fxLayout="row" fxLayoutAlign="center center">
-        <div class="container" fxLayout="row" fxLayoutAlign="space-between center">
-            <h1 class="logo" routerLink="/">photocloud</h1>
-            <div fxLayout="row" *ngIf="currentUser">
+        <div class="container" fxLayout="row" fxLayoutAlign="start center">
+            <div fxLayout="row" fxLayoutAlign="start center" style="width: -webkit-fill-available;">
+                <h1 class="logo" routerLink="/">photocloud</h1>
+            </div>
+            <div style="width:600px;">
+                <app-search-box></app-search-box>
+            </div>
+            <div fxLayout="row" fxLayoutAlign="end center" *ngIf="currentUser" style="width: -webkit-fill-available;">
                 <a [routerLink]="['/', currentUser.username]" fxLayout="row" fxLayoutAlign="center center"><img class="avatar" src="{{currentUser.pictureUri}}" default="assets/images/user-default-image.png" alt="user"></a>
             </div>
         </div>
         <div class="navbar-actions" *ngIf="currentUser" fxLayout="row" fxLayoutAlign="end center">
-            <div style="width: 64px; height: 64px; border-left: 1px solid #C8C8C8; border-right: 1px solid #C8C8C8;" fxLayout="row" fxLayoutAlign="center center">
+            <div class="custom-big-icon-container border-left" fxLayout="row" fxLayoutAlign="center center">
                 <button md-icon-button [routerLink]="['/explore/people']">
-                    <md-icon svgIcon="compass" style="color: #444444; width: 35px; height: 35px;"></md-icon>
-                    <!-- <md-icon>explore</md-icon> -->
+                    <md-icon class="custom-big-icon" svgIcon="compass"></md-icon>
                 </button>
             </div>
-            <div style="width: 64px; height: 64px; border-right: 1px solid #C8C8C8;" fxLayout="row" fxLayoutAlign="center center" *ngIf="currentUser && currentUser.isPrivate">
+            <div class="custom-big-icon-container" fxLayout="row" fxLayoutAlign="center center" *ngIf="currentUser && currentUser.isPrivate">
                 <button md-icon-button (click)="openNotifications()">
-                    <md-icon svgIcon="bell" style="color: #444444; width: 35px; height: 35px;"></md-icon>
-                    <!-- <md-icon>notifications</md-icon> -->
+                    <md-icon class="custom-big-icon" svgIcon="bell"></md-icon>
                 </button>
             </div>
         </div>
