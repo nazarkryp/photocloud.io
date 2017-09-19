@@ -1,8 +1,56 @@
-::ng-deep .mat-input-underline {
+::ng-deep .search-box>.mat-input-underline {
     display: none;
 }
 
-.search-spinner {
+.user-search-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 90px;
+    object-fit: cover;
+    outline: none;
+    cursor: pointer;
+    vertical-align: middle;
+}
+
+.search-box-container {
+    width: 600px;
+    position: relative;
+    color: #616161;
+    z-index: 777;
+}
+
+.search-box {
+    font-size: 16px;
+    font-weight: 300;
+    width: 100%;
+    border: none;
+    border-radius: 3px;
+    outline: none;
+    background: #F5F5F5;
+    padding: 12px 50px 12px 50px;
+    -webkit-transition: box-shadow 0.3s;
+    transition: box-shadow 0.3s;
+}
+
+.search-box:focus {
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+    background: white;
+}
+
+.search-box-icon {
+    position: absolute;
+    left: 12px;
+    pointer-events: none;
+}
+
+.search-box-spinner {
     width: 25px;
     height: 25px;
+    position: absolute;
+    right: 12px;
+}
+
+.search-box-icon-button {
+    position: absolute;
+    right: 0px;
 }

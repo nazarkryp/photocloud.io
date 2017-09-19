@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { Router } from '@angular/router';
+import { MdAutocompleteSelectedEvent } from '@angular/material';
 
 import { Observable } from 'rxjs/Rx';
 
@@ -15,8 +17,10 @@ export class SearchBoxComponent implements OnInit {
     private searchControl: FormControl;
     private users: Observable<User[]>;
     private isSearching = false;
+    private searchQuery: string;
 
     constructor(
+        private router: Router,
         private userService: UserService) {
     }
 
@@ -25,7 +29,22 @@ export class SearchBoxComponent implements OnInit {
             .map(collection => collection.data);
     }
 
-    ngOnInit() {
+    private onSelectionChanged(event: MdAutocompleteSelectedEvent) {
+        if (event.option.value) {
+            this.router.navigateByUrl(`/${event.option.value}`)
+                .then((navigationSuccess) => {
+                    if (navigationSuccess) {
+                        this.searchControl.setValue('')
+                    }
+                });
+        }
+    }
+
+    private clear() {
+        this.searchQuery = '';
+    }
+
+    public ngOnInit() {
         this.searchControl = new FormControl();
         this.users = this.searchControl.valueChanges
             .do(_ => this.isSearching = true)

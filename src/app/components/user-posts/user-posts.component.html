@@ -1,9 +1,8 @@
 <div fxLayout="column" fxLayoutAlign="center center" *ngIf="!isLoading">
     <div class="user-info" fxLayout="row" fxLayoutAlign="center center">
-        <img class="thumbnail-big" src="{{user.pictureUri}}" default="assets/images/user-default-image.png" alt="profile" *ngIf="!currentUser || user.id !== currentUser.id"
-        />
+        <img class="thumbnail-big" src="{{user.pictureUri}}" default="assets/images/user-default-image.png" alt="{{user.username}}" *ngIf="!currentUser || user.id !== currentUser.id"/>
         <img class="thumbnail-big pointer" src="{{user.pictureUri}}" appImagePreview [image]="uploader.queue[0]?._file" default="assets/images/user-default-image.png"
-            alt="profile" (click)="fileInput.click()" *ngIf="currentUser && user.id === currentUser.id" />
+            alt="{{user.username}}" (click)="fileInput.click()" *ngIf="currentUser && user.id === currentUser.id" />
         <input #fileInput type="file" accept="image/*" ng2FileSelect [uploader]="uploader" hidden/>
         <div class="user-info-data" fxLayout="column" fxFlex>
             <div fxLayout="row" fxLayoutAlign="space-between center">
@@ -56,7 +55,7 @@
         <div class="user-posts" *ngIf="isLoading || page.data.length > 0; else emptyFeed;">
             <div class="post-item" *ngFor="let post of page?.data;">
                 <div class="image-container mat-elevation-z3" fxLayout="column" fxLayoutAlign="center center" (click)="openPostDialog(post)">
-                    <img class="thumbnail" src="{{post?.attachments[0].uri}}" alt="{{post?.attachments[0].uri}}">
+                    <img class="thumbnail" src="{{post?.attachments[0].uri}}" alt="{{post?.caption}}">
                     <md-icon class="multiple-attachments-icon" *ngIf="post.attachments.length > 1">layers</md-icon>
                     <div class="after md-padding" fxLayout="row" fxLayoutAlign="space-between center">
                         <div fxLayout="row" fxLayoutAlign="center center">
