@@ -5,7 +5,7 @@
                 <h1 class="logo" routerLink="/">photocloud</h1>
             </div>
             <div style="width:600px;">
-                <app-search-box></app-search-box>
+                <app-search-box *ngIf="currentUser"></app-search-box>
             </div>
             <div fxLayout="row" fxLayoutAlign="end center" *ngIf="currentUser" style="width: -webkit-fill-available;">
                 <a [routerLink]="['/', currentUser.username]" fxLayout="row" fxLayoutAlign="center center"><img class="avatar" src="{{currentUser.pictureUri}}" default="assets/images/user-default-image.png" alt="user"></a>

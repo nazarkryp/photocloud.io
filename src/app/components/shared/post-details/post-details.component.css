@@ -49,10 +49,20 @@
     border-radius: 3px;
     margin-left: 0px;
     width: 100%;
+    color: #d8d8d8;
 }
 
 .comment-box:hover {
     border: 2px solid grey;
+    color: grey;
+}
+
+.comment-box:hover .send-button {
+    color: #444444;
+}
+
+.comment-box:hover .send-button:disabled {
+    color: grey;
 }
 
 .post-details-caption {
@@ -153,8 +163,4 @@
 
 .liked {
     color: #e91e63;
-}
-
-.icon-send {
-    color: #444444;
 }

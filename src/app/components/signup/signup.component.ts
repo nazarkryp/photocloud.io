@@ -1,3 +1,4 @@
+import { Error } from './../../common/models/error';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -29,8 +30,11 @@ export class SignupComponent {
             })
             .subscribe(response => {
                 this.router.navigateByUrl('/signin');
-            }, error => {
-                this.errors = error.error.error.modelState;
+            }, errorResponse => {
+                if (errorResponse.error) {
+                    const error = JSON.parse(errorResponse.error);
+                    this.errors = error.error.modelState;
+                }
             });
     }
 }

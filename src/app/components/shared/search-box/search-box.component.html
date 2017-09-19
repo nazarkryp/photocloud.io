@@ -1,6 +1,6 @@
 <div class="search-box-container" fxLayout="row" fxLayoutAlign="start center">
     <md-icon class="search-box-icon" mdPrefix>search</md-icon>
-    <input class="search-box" mdInput type="text" placeholder="Search" [(ngModel)]="searchQuery" [mdAutocomplete]="auto" [formControl]="searchControl"
+    <input class="search-box" type="text" placeholder="Search" [(ngModel)]="searchQuery" [mdAutocomplete]="auto" [formControl]="searchControl"
         aria-label="User">
     <md-spinner class="search-box-spinner" [strokeWidth]="10" *ngIf="isSearching"></md-spinner>
     <button class="search-box-icon-button" md-icon-button *ngIf="searchQuery && !isSearching" (click)="clear()">

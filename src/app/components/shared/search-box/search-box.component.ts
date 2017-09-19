@@ -16,7 +16,7 @@ import { Collection, User } from '../../../common/models';
 export class SearchBoxComponent implements OnInit {
     private searchControl: FormControl;
     private users: Observable<User[]>;
-    private isSearching = false;
+    private isSearching: boolean;
     private searchQuery: string;
 
     constructor(

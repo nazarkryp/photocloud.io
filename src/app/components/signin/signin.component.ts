@@ -1,3 +1,4 @@
+import { Error } from './../../common/models/error';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -29,8 +30,11 @@ export class SigninComponent {
             })
             .subscribe(response => {
                 this.router.navigateByUrl('/');
-            }, error => {
-                this.errorMessage = error.error.error;
+            }, errorResponse => {
+                if (errorResponse.error) {
+                    const error = JSON.parse(errorResponse.error);
+                    this.errorMessage = error.error;
+                }
             });
     }
 }
