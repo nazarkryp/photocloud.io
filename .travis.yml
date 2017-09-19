@@ -1,19 +1,11 @@
-dist: trusty
-sudo: false
-
 language: node_js
+
 node_js:
-  - "6"
+   - node # will use latest node
 
-cache:
-  directories:
-     - ./node_modules
+before_script: # commands to run before the build step
+   - npm install -g --silent @angular/cli
 
-install:
-  - npm install
+script: # the build step
+   - ng build -prod --aot=false
 
-script:
-  # Use Chromium instead of Chrome.
-  - export CHROME_BIN=chromium-browser
-  - xvfb-run -a npm run test -- --single-run --no-progress --browser=ChromeNoSandbox
-  - xvfb-run -a npm run e2e -- --no-progress --config=protractor-ci.conf.js

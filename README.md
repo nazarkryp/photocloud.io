@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/nazarkryp/photocloud.io.svg?branch=master)](https://travis-ci.org/nazarkryp/photocloud.io)
+
 # Photocloud
 
 Client application for cloud-based photo-sharing system
