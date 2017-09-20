@@ -25,9 +25,11 @@ import { AccountService, PostService, CommentService, UploaderService, UserServi
 import { AuthenticationGuard } from './infrastructure/guards/authentication-guard.service';
 import { SessionService } from './infrastructure/session/session.service';
 import { TokenProvider, AuthenticationInterceptor } from './infrastructure/security';
+import { NotFoundInterceptor, InternetConnectionInterceptor, CachingInterceptor } from './infrastructure/communication/interceptors';
 import { UserProvider } from './infrastructure/providers';
 import { CommunicationService, WebApiClient } from './infrastructure/communication';
 import { ClipboardService } from './infrastructure/services/clipboard.service';
+import { MemoryCache } from './infrastructure/cache/memory-cache';
 
 import { TokenMapper } from './infrastructure/mapping/token.mapper';
 import { UserMapper } from './infrastructure/mapping/user.mapper';
@@ -51,6 +53,7 @@ import { NotificationsComponent } from './components/shared/notifications/notifi
 import { UsersComponent } from './components/shared/users/users.component';
 import { UserSearchComponent } from './components/explore/user-search/user-search.component';
 import { SearchBoxComponent } from './components/shared/search-box/search-box.component';
+import { ConnectionErrorComponent } from './components/shared/connection-error/connection-error.component';
 
 @NgModule({
     declarations: [
@@ -78,7 +81,8 @@ import { SearchBoxComponent } from './components/shared/search-box/search-box.co
         NotificationsComponent,
         UsersComponent,
         UserSearchComponent,
-        SearchBoxComponent
+        SearchBoxComponent,
+        ConnectionErrorComponent
     ],
     entryComponents: [
         PostDetailsComponent,
@@ -116,6 +120,22 @@ import { SearchBoxComponent } from './components/shared/search-box/search-box.co
             useClass: AuthenticationInterceptor,
             multi: true
         },
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: NotFoundInterceptor,
+            multi: true
+        },
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: InternetConnectionInterceptor,
+            multi: true
+        },
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: CachingInterceptor,
+            multi: true
+        },
+        MemoryCache,
         TokenProvider,
         ClipboardService,
         TokenMapper,

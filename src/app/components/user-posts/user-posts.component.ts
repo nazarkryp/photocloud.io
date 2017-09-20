@@ -55,17 +55,6 @@ export class UserPostsComponent implements OnInit, OnDestroy {
         });
     }
 
-    private getUser(username: string): Observable<User> {
-        return this.userService.getUser(username)
-            .catch(error => {
-                if (error.status === 404) {
-                    this.router.navigateByUrl('/404', { skipLocationChange: true });
-                }
-
-                return Observable.of(error);
-            });
-    }
-
     private getPosts() {
         this.isLoadingPosts = true;
         if (!this.progressService.isStarted()) {
@@ -136,7 +125,7 @@ export class UserPostsComponent implements OnInit, OnDestroy {
         this.isLoading = true;
         this.progressService.start();
 
-        this.getUser(username)
+        this.userService.getUser(username)
             .subscribe((user: User) => {
                 const validationResult = this.validateUser(user);
                 this.user = user;
@@ -148,7 +137,11 @@ export class UserPostsComponent implements OnInit, OnDestroy {
                 this.isLoading = false;
                 this.progressService.done();
                 this.error = validationResult.error;
-            }, () => {
+            }, (error) => {
+                if (error.status === 0) {
+                    this.error = new Error('Connect to the internet', 'You\'re offline. Check your connection');
+                }
+
                 this.isLoading = false;
                 this.progressService.done();
             });

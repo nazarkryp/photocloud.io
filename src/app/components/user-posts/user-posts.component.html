@@ -1,6 +1,7 @@
 <div fxLayout="column" fxLayoutAlign="center center" *ngIf="!isLoading">
     <div class="user-info" fxLayout="row" fxLayoutAlign="center center">
-        <img class="thumbnail-big" src="{{user.pictureUri}}" default="assets/images/user-default-image.png" alt="{{user.username}}" *ngIf="!currentUser || user.id !== currentUser.id"/>
+        <img class="thumbnail-big" src="{{user.pictureUri}}" default="assets/images/user-default-image.png" alt="{{user.username}}"
+            *ngIf="!currentUser || user.id !== currentUser.id" />
         <img class="thumbnail-big pointer" src="{{user.pictureUri}}" appImagePreview [image]="uploader.queue[0]?._file" default="assets/images/user-default-image.png"
             alt="{{user.username}}" (click)="fileInput.click()" *ngIf="currentUser && user.id === currentUser.id" />
         <input #fileInput type="file" accept="image/*" ng2FileSelect [uploader]="uploader" hidden/>
@@ -15,8 +16,8 @@
                 <button md-icon-button mdTooltip="Logout" mdTooltipPosition="above" (click)="logout()" *ngIf="currentUser && user.id === currentUser.id">
                     <md-icon>exit_to_app</md-icon>
                 </button>
-                <button md-raised-button color="accent" *ngIf="currentUser && user.id !== currentUser.id && (user.isActive || (!user.isActive && user.incommingStatus !== 0))" (click)="modifyRelationship()"
-                    [disabled]="isModifyingRelationship">{{user.incommingStatus | relationshipAction | uppercase }}</button>
+                <button md-raised-button color="accent" *ngIf="currentUser && user.id !== currentUser.id && (user.isActive || (!user.isActive && user.incommingStatus !== 0))"
+                    (click)="modifyRelationship()" [disabled]="isModifyingRelationship">{{user.incommingStatus | relationshipAction | uppercase }}</button>
             </div>
             <div fxLayout="row" fxLayoutAlign="start center" *ngIf="user.isActive">
                 <div fxFlex>

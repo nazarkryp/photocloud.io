@@ -12,6 +12,7 @@ import { PostDetailsComponent } from './components/shared/post-details/post-deta
 import { SignupComponent } from './components/signup/signup.component';
 import { TagsComponent } from './components/explore/tags/tags.component';
 import { SettingsComponent } from './components/settings/settings.component';
+import { ConnectionErrorComponent } from './components/shared/connection-error/connection-error.component';
 
 import { AuthenticationGuard } from './infrastructure/guards/authentication-guard.service';
 
@@ -53,6 +54,13 @@ const routes: Routes = [
         component: NotFoundComponent,
         data: {
             title: 'PhotoCloud - Page Not Found'
+        }
+    },
+    {
+        path: 'nointernetconnection',
+        component: ConnectionErrorComponent,
+        data: {
+            title: 'Connect to the internet'
         }
     },
     {
