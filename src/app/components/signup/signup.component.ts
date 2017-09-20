@@ -34,6 +34,7 @@ export class SignupComponent {
                 if (errorResponse.error) {
                     const error = JSON.parse(errorResponse.error);
                     this.errors = error.error.modelState;
+                    console.log(this.errors);
                 }
             });
     }

@@ -15,11 +15,9 @@ export class NotFoundInterceptor implements HttpInterceptor {
             .catch((error) => {
                 if (error.status === 404) {
                     this.router.navigateByUrl('/404', { skipLocationChange: true });
-
-                    return Observable.throw(error);
                 }
 
-                return Observable.of(error);
+                return Observable.throw(error);
             });
     }
 }

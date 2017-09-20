@@ -1,5 +1,5 @@
-import { Error } from './../../common/models/error';
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroupDirective, NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { UserLogin, AccessToken } from '../../common/models';
@@ -36,5 +36,11 @@ export class SigninComponent {
                     this.errorMessage = error.error;
                 }
             });
+    }
+
+    myErrorStateMatcher(control: FormControl, form: FormGroupDirective | NgForm): boolean {
+        const isSubmitted = form && form.submitted;
+
+        return isSubmitted && (!!(control.invalid && (control.dirty || control.touched)));
     }
 }

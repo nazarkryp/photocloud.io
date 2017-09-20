@@ -3,22 +3,22 @@
         <div fxLayout="row" fxLayoutAlign="start center">
             <span class="mat-headline">Settings</span>
         </div>
-        <md-input-container fxFlex>
+        <md-form-field fxFlex>
             <input mdInput placeholder="Username" type="text" [(ngModel)]="backup.username" [disabled]="!account.isActive" name="username"
                 (change)='onAccountChange()' autocomplete="off">
-        </md-input-container>
-        <md-input-container fxFlex>
+        </md-form-field>
+        <md-form-field fxFlex>
             <input mdInput placeholder="Full Name" type="text" [(ngModel)]="backup.fullName" [disabled]="!account.isActive" name="fullName"
                 (change)='onAccountChange()' autocomplete="off">
-        </md-input-container>
-        <md-input-container fxFlex>
+        </md-form-field>
+        <md-form-field fxFlex>
             <input mdInput placeholder="Bio" type="text" [(ngModel)]="backup.bio" [disabled]="!account.isActive" name="bio" (change)='onAccountChange()'
                 autocomplete="off">
-        </md-input-container>
-        <md-input-container fxFlex>
+        </md-form-field>
+        <md-form-field fxFlex>
             <input mdInput placeholder="Email Address" type="email" [(ngModel)]="backup.email" [disabled]="!account.isActive" name="email"
                 (change)='onAccountChange()' autocomplete="off">
-        </md-input-container>
+        </md-form-field>
         <div class="item" fxLayout="row" fxLayoutAlign="end center" *ngIf="isModified">
             <button class="save-button" md-raised-button color="primary" (click)="save()">Save Changes</button>
             <button md-raised-button (click)="cancel()">Cancel</button>

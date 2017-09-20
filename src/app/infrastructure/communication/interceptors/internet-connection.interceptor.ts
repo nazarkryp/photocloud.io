@@ -19,7 +19,7 @@ export class InternetConnectionInterceptor implements HttpInterceptor {
                     return Observable.throw(error);
                 }
 
-                return Observable.of(error);
+                return Observable.throw(error);
             });
     }
 }
