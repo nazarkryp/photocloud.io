@@ -4,7 +4,6 @@ import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpResponse, Htt
 import { MemoryCache } from '../../cache/memory-cache';
 
 import { Observable } from 'rxjs/Rx';
-import { ErrorObservable } from 'rxjs/Observable/ErrorObservable';
 
 @Injectable()
 export class CachingInterceptor implements HttpInterceptor {

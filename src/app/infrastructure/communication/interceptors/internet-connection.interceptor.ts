@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpResponse, HttpErrorResponse } from '@angular/common/http';
 
 import { Observable } from 'rxjs/Rx';
-import { ErrorObservable } from 'rxjs/Observable/ErrorObservable';
 
 @Injectable()
 export class InternetConnectionInterceptor implements HttpInterceptor {

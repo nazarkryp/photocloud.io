@@ -18,15 +18,18 @@
                 </div>
                 <div fxLayout="column">
                     <md-form-field style="width: 100%;">
-                        <input mdInput placeholder="Username" type="text" [(ngModel)]="account.username" required [errorStateMatcher]="myErrorStateMatcher" name="username" autocomplete="off">
+                        <input mdInput placeholder="Username" type="text" [(ngModel)]="account.username" required [errorStateMatcher]="myErrorStateMatcher"
+                            name="username" autocomplete="off">
                         <md-icon mdSuffix>person</md-icon>
                     </md-form-field>
                     <md-form-field style="width: 100%;">
-                        <input mdInput placeholder="Password" type="password" [(ngModel)]="account.password" [errorStateMatcher]="myErrorStateMatcher" required name="password" autocomplete="off">
+                        <input mdInput placeholder="Password" type="password" [(ngModel)]="account.password" [errorStateMatcher]="myErrorStateMatcher"
+                            required name="password" autocomplete="off">
                         <md-icon mdSuffix>vpn_key</md-icon>
+                        <md-hint align="start"><a class="forgot-password-link" [routerLink]="['/account/create']">Forgot Password?</a></md-hint>
                     </md-form-field>
                 </div>
-                <div fxLayout="row" fxLayoutAlign="space-between center">
+                <div fxLayout="row" fxLayoutAlign="space-between center" style="margin-top: 10px;">
                     <a class="create-account-link" [routerLink]="['/account/create']">Don't have an account?</a>
                     <button class="signin-button" md-raised-button color="accent" type="sumbit">Sign In</button>
                 </div>
