@@ -127,6 +127,12 @@ export class SettingsComponent implements OnInit {
             .subscribe(account => {
                 this.account = account;
                 this.copyTo(account, this.backup);
+                const currentUser = this.userProvider.getCurrentUser();
+                const areEqual = this.equals(account, currentUser);
+
+                if (!areEqual) {
+                    this.updateAccount(account);
+                }
             });
     }
 

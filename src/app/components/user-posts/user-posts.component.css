@@ -87,7 +87,7 @@
 .user-info {
     height: 195px;
     width: 650px;
-    margin-bottom: 65px;
+    margin: 35px 0 0 0;
 }
 
 .mat-display-1 {

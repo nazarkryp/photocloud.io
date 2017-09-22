@@ -1,3 +1,2 @@
-export { NotFoundInterceptor } from './not-found.interceptor';
-export { InternetConnectionInterceptor } from './internet-connection.interceptor';
+export { HttpErrorInterceptor } from './http-error.interceptor';
 export { CachingInterceptor } from './caching.interceptor';

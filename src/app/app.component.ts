@@ -1,5 +1,5 @@
 import { Component, ViewChild, OnInit, OnDestroy } from '@angular/core';
-import { MdSidenav, MdIconRegistry } from '@angular/material';
+import { MdSidenav } from '@angular/material';
 import { Subscription } from 'rxjs/Rx';
 import { DomSanitizer } from '@angular/platform-browser';
 
@@ -11,19 +11,13 @@ import { CommunicationService } from './infrastructure/communication/communicati
     styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit, OnDestroy {
-    @ViewChild('notificationsSidenav')
-    notificationsSidenav: MdSidenav;
+    @ViewChild('notificationsSidenav') notificationsSidenav: MdSidenav;
     private isOpened: boolean;
-    private subscription: Subscription;
-    private text: string;
+    private communicationServiceSubscription: Subscription;
 
     constructor(
-        // private mdIconRegistry: MdIconRegistry,
-        // private sanitizer: DomSanitizer,
         private communicationService: CommunicationService) {
-        // mdIconRegistry.addSvgIcon('heart', sanitizer.bypassSecurityTrustResourceUrl('assets/svg/icons/heart.svg'));
-        this.text = 'sex';
-        communicationService.getState()
+        this.communicationServiceSubscription = communicationService.getState()
             .subscribe(isOpened => {
                 this.isOpened = isOpened;
             });
@@ -39,5 +33,6 @@ export class AppComponent implements OnInit, OnDestroy {
     }
 
     public ngOnDestroy(): void {
+        this.communicationServiceSubscription.unsubscribe();
     }
 }

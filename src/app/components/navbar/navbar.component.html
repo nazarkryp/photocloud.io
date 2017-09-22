@@ -10,6 +10,11 @@
             <div fxLayout="row" fxLayoutAlign="end center" *ngIf="currentUser" style="width: -webkit-fill-available;">
                 <a [routerLink]="['/', currentUser.username]" fxLayout="row" fxLayoutAlign="center center"><img class="avatar" src="{{currentUser.pictureUri}}" default="assets/images/user-default-image.png" alt="user"></a>
             </div>
+            <div fxLayout="row" fxLayoutAlign="end center" *ngIf="!currentUser" style="width: -webkit-fill-available;">
+                <button md-button [routerLink]="['/signin']" fxLayout="row" fxLayoutAlign="center center" color="primary" style="font-size: 17px; font-weight: 300;">
+                    SIGN IN
+                </button>
+            </div>
         </div>
         <div class="navbar-actions" *ngIf="currentUser" fxLayout="row" fxLayoutAlign="end center">
             <div class="custom-big-icon-container border-left" fxLayout="row" fxLayoutAlign="center center">

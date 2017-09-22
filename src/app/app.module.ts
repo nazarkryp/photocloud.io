@@ -3,6 +3,7 @@ import { BrowserModule, DomSanitizer } from '@angular/platform-browser';
 import { HttpModule } from '@angular/http';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 import { MdIconRegistry } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
@@ -20,14 +21,32 @@ import { CommentsComponent } from './components/shared/comments/comments.compone
 import { PostDetailsComponent } from './components/shared/post-details/post-details.component';
 import { CreatePostComponent } from './components/shared/create-post/create-post.component';
 
-import { AccountService, PostService, CommentService, UploaderService, UserService } from './services';
+import {
+    AccountService,
+    PostService,
+    CommentService,
+    UploaderService,
+    UserService
+} from './services';
 
 import { AuthenticationGuard } from './infrastructure/guards/authentication-guard.service';
 import { SessionService } from './infrastructure/session/session.service';
-import { TokenProvider, AuthenticationInterceptor } from './infrastructure/security';
-import { NotFoundInterceptor, InternetConnectionInterceptor, CachingInterceptor } from './infrastructure/communication/interceptors';
+
+import {
+    TokenProvider,
+    AuthenticationInterceptor
+} from './infrastructure/security';
+
+import {
+    HttpErrorInterceptor, CachingInterceptor
+} from './infrastructure/communication/interceptors';
+
 import { UserProvider } from './infrastructure/providers';
-import { CommunicationService, WebApiClient } from './infrastructure/communication';
+import {
+    CommunicationService,
+    WebApiClient
+} from './infrastructure/communication';
+
 import { ClipboardService } from './infrastructure/services/clipboard.service';
 import { MemoryCache } from './infrastructure/cache/memory-cache';
 
@@ -54,6 +73,14 @@ import { UsersComponent } from './components/shared/users/users.component';
 import { UserSearchComponent } from './components/explore/user-search/user-search.component';
 import { SearchBoxComponent } from './components/shared/search-box/search-box.component';
 import { ConnectionErrorComponent } from './components/shared/connection-error/connection-error.component';
+import { HttpConfiguration } from './infrastructure/communication/http.config';
+
+import {
+    HttpErrorFilter,
+    HttpNotFoundFilter,
+    AccountNotActiveFilter,
+    InternetConnectionFilter,
+} from './infrastructure/filters/http';
 
 @NgModule({
     declarations: [
@@ -114,6 +141,7 @@ import { ConnectionErrorComponent } from './components/shared/connection-error/c
         SessionService,
         WebApiClient,
         CommunicationService,
+        HttpConfiguration,
         WebApiClient,
         {
             provide: HTTP_INTERCEPTORS,
@@ -122,12 +150,7 @@ import { ConnectionErrorComponent } from './components/shared/connection-error/c
         },
         {
             provide: HTTP_INTERCEPTORS,
-            useClass: NotFoundInterceptor,
-            multi: true
-        },
-        {
-            provide: HTTP_INTERCEPTORS,
-            useClass: InternetConnectionInterceptor,
+            useClass: HttpErrorInterceptor,
             multi: true
         },
         {
@@ -145,10 +168,20 @@ import { ConnectionErrorComponent } from './components/shared/connection-error/c
 })
 export class AppModule {
     constructor(
+        private router: Router,
+        private userProvider: UserProvider,
         private mdIconRegistry: MdIconRegistry,
-        private sanitizer: DomSanitizer) {
+        private sanitizer: DomSanitizer,
+        private httpConfiguration: HttpConfiguration) {
         mdIconRegistry.addSvgIcon('heart', sanitizer.bypassSecurityTrustResourceUrl('assets/svg/icons/heart.svg'));
         mdIconRegistry.addSvgIcon('compass', sanitizer.bypassSecurityTrustResourceUrl('assets/svg/icons/compass.svg'));
         mdIconRegistry.addSvgIcon('bell', sanitizer.bypassSecurityTrustResourceUrl('assets/svg/icons/bell.svg'));
+        this.configureErrorFilters();
+    }
+
+    private configureErrorFilters() {
+        this.httpConfiguration.filters.push(new InternetConnectionFilter(this.router));
+        this.httpConfiguration.filters.push(new HttpNotFoundFilter(this.router));
+        this.httpConfiguration.filters.push(new AccountNotActiveFilter(this.userProvider, this.router));
     }
 }

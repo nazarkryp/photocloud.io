@@ -1,34 +1,63 @@
 <div fxLayout="row" fxLayoutAlign="center start" *ngIf="!isLoading">
-    <div class="settings-container mat-elevation-z1" fxLayout="column">
+    <md-accordion class="settings-container" fxLayout="column">
         <div fxLayout="row" fxLayoutAlign="start center">
             <span class="mat-headline">Settings</span>
         </div>
-        <md-form-field fxFlex>
-            <input mdInput placeholder="Username" type="text" [(ngModel)]="backup.username" [disabled]="!account.isActive" name="username"
-                (change)='onAccountChange()' autocomplete="off">
-        </md-form-field>
-        <md-form-field fxFlex>
-            <input mdInput placeholder="Full Name" type="text" [(ngModel)]="backup.fullName" [disabled]="!account.isActive" name="fullName"
-                (change)='onAccountChange()' autocomplete="off">
-        </md-form-field>
-        <md-form-field fxFlex>
-            <input mdInput placeholder="Bio" type="text" [(ngModel)]="backup.bio" [disabled]="!account.isActive" name="bio" (change)='onAccountChange()'
-                autocomplete="off">
-        </md-form-field>
-        <md-form-field fxFlex>
-            <input mdInput placeholder="Email Address" type="email" [(ngModel)]="backup.email" [disabled]="!account.isActive" name="email"
-                (change)='onAccountChange()' autocomplete="off">
-        </md-form-field>
-        <div class="item" fxLayout="row" fxLayoutAlign="end center" *ngIf="isModified">
-            <button class="save-button" md-raised-button color="primary" (click)="save()">Save Changes</button>
-            <button md-raised-button (click)="cancel()">Cancel</button>
-        </div>
-        <div class="item" fxLayout="row" fxLayoutAlign="space-between center">
-            <span [ngClass]="{ 'disabled' : !account.isActive }">Private account</span>
-            <md-slide-toggle [(ngModel)]="account.isPrivate" [checked]="account.isPrivate" (change)='invertAccountPrivateStatus($event)' [disabled]="!account.isActive"></md-slide-toggle>
-        </div>
-        <div class="item" fxLayout="row" fxLayoutAlign="center center">
-            <button md-raised-button (click)="invertAccountStatus()">{{account.isActive ? 'Temporarily disable my account' : 'Activate my account'}}</button>
-        </div>
-    </div>
+        <md-expansion-panel>
+            <md-expansion-panel-header>
+                <md-panel-title>
+                    Personal
+                </md-panel-title>
+                <md-panel-description>
+                </md-panel-description>
+            </md-expansion-panel-header>
+            <md-form-field style="width: 100%;">
+                <input mdInput placeholder="Username" type="text" [(ngModel)]="backup.username" [disabled]="!account.isActive" name="username"
+                    (change)='onAccountChange()' autocomplete="off">
+            </md-form-field>
+            <md-form-field style="width: 100%;">
+                <input mdInput placeholder="Full Name" type="text" [(ngModel)]="backup.fullName" [disabled]="!account.isActive" name="fullName"
+                    (change)='onAccountChange()' autocomplete="off">
+            </md-form-field>
+            <md-form-field style="width: 100%;">
+                <input mdInput placeholder="Bio" type="text" [(ngModel)]="backup.bio" [disabled]="!account.isActive" name="bio" (change)='onAccountChange()'
+                    autocomplete="off">
+            </md-form-field>
+            <md-form-field style="width: 100%;">
+                <input mdInput placeholder="Email Address" type="email" [(ngModel)]="backup.email" [disabled]="!account.isActive" name="email"
+                    (change)='onAccountChange()' autocomplete="off">
+            </md-form-field>
+            <div class="item" fxLayout="row" fxLayoutAlign="end center" *ngIf="isModified">
+                <button class="save-button" md-raised-button color="primary" (click)="save()">Save Changes</button>
+                <button md-raised-button (click)="cancel()">Cancel</button>
+            </div>
+        </md-expansion-panel>
+        <md-expansion-panel>
+            <md-expansion-panel-header>
+                <md-panel-title>
+                    Privacy
+                </md-panel-title>
+                <md-panel-description>
+                </md-panel-description>
+            </md-expansion-panel-header>
+            <div class="item" fxLayout="row" fxLayoutAlign="space-between center">
+                <span [ngClass]="{ 'disabled' : !account.isActive }">Private account</span>
+                <md-slide-toggle [(ngModel)]="account.isPrivate" [checked]="account.isPrivate" (change)='invertAccountPrivateStatus($event)'
+                    [disabled]="!account.isActive"></md-slide-toggle>
+            </div>
+        </md-expansion-panel>
+        <md-expansion-panel>
+            <md-expansion-panel-header>
+                <md-panel-title>
+                    Account
+                </md-panel-title>
+                <md-panel-description>
+                </md-panel-description>
+            </md-expansion-panel-header>
+            <div class="item" fxLayout="row" fxLayoutAlign="space-between center">
+                <span>Change account status</span>
+                <button md-raised-button color="primary" (click)="invertAccountStatus()">{{account.isActive ? 'DISABLE' : 'ACTIVATE'}}</button>
+            </div>
+        </md-expansion-panel>
+    </md-accordion>
 </div>
