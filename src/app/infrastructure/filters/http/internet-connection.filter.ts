@@ -12,7 +12,6 @@ export class InternetConnectionFilter implements HttpErrorFilter {
         private router: Router) { }
 
     public handle(response: HttpErrorResponse): Observable<HttpErrorResponse> {
-        console.log('HttpNotFoundFilter');
         if (response.status === HttpStatusCode.None) {
             this.router.navigateByUrl('/nointernetconnection', { skipLocationChange: true });
 

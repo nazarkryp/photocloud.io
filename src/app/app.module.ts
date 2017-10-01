@@ -80,6 +80,7 @@ import {
     HttpNotFoundFilter,
     AccountNotActiveFilter,
     InternetConnectionFilter,
+    AuthenticationErrorFilter
 } from './infrastructure/filters/http';
 
 @NgModule({
@@ -180,6 +181,7 @@ export class AppModule {
     }
 
     private configureErrorFilters() {
+        this.httpConfiguration.filters.push(new AuthenticationErrorFilter(this.router));
         this.httpConfiguration.filters.push(new InternetConnectionFilter(this.router));
         this.httpConfiguration.filters.push(new HttpNotFoundFilter(this.router));
         this.httpConfiguration.filters.push(new AccountNotActiveFilter(this.userProvider, this.router));

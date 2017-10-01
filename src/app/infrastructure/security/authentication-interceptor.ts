@@ -23,28 +23,17 @@ export class AuthenticationInterceptor implements HttpInterceptor {
 
         return tokenProvider.getAccessToken()
             .flatMap<AccessToken, HttpEvent<any>>((accessToken) => {
-                this.communicationService.changeState(accessToken);
-
                 if (!accessToken) {
-                    return next.handle(req)
-                        .catch((error: HttpErrorResponse) => this.handleUnauthenticatedRequest(error));;
+                    return next.handle(req);
                 }
 
                 const request = req.clone({
                     setHeaders: {
-                        Authorization: `Bearer ${accessToken.accessToken}`
+                        'Authorization': `Bearer ${accessToken.accessToken}`
                     }
                 });
 
                 return next.handle(request);
-            }).catch((error: HttpErrorResponse) => this.handleUnauthenticatedRequest(error));
-    }
-
-    private handleUnauthenticatedRequest(error: HttpErrorResponse) {
-        if (error.status === 401) {
-            this.router.navigateByUrl('/signin');
-        }
-
-        return Observable.throw(error);
+            });
     }
 }

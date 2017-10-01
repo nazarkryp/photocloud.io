@@ -187,10 +187,13 @@ export class UserPostsComponent implements OnInit, OnDestroy {
     }
 
     public ngOnInit() {
-        this.subscription = this.route.params.subscribe(async params => {
-            this.initializePage();
-            const username = params['username'] as string;
-            this.getUserFeed(username);
+        this.subscription = this.route.paramMap.subscribe(params => {
+            const username = params.get('username');
+
+            if (username) {
+                this.initializePage();
+                this.getUserFeed(username);
+            }
         });
     }
 

@@ -7,13 +7,13 @@ import { Observable } from 'rxjs/Rx';
 import { HttpStatusCode } from '../../../common/http';
 import { HttpErrorFilter } from './http-error.fitler';
 
-export class HttpNotFoundFilter implements HttpErrorFilter {
+export class AuthenticationErrorFilter implements HttpErrorFilter {
     constructor(
         private router: Router) { }
 
     public handle(response: HttpErrorResponse): Observable<HttpErrorResponse> {
-        if (response.status === HttpStatusCode.NotFount) {
-            this.router.navigateByUrl('/404', { skipLocationChange: true });
+        if (response.status === HttpStatusCode.Unauthorized) {
+            this.router.navigateByUrl('/signin');
 
             return Observable.throw(response);
         }

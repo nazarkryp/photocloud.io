@@ -15,7 +15,6 @@ export class AccountNotActiveFilter implements HttpErrorFilter {
         private router: Router) { }
 
     public handle(response: HttpErrorResponse): Observable<HttpErrorResponse> {
-        console.log('AccountNotActiveFilter');
         if (response.status === HttpStatusCode.Forbidden) {
             const responseError = JSON.parse(response.error);
 
