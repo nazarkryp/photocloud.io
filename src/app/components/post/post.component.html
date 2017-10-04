@@ -5,7 +5,9 @@
         <div class="post-author" fxLayout="row" fxLayoutAlign="space-between center" fxFlex>
             <a class="post-author-username" [routerLink]="['/', post.user.username]">{{post.user.username}}</a>
             <div fxLayout="row" fxLayout="center end" *ngIf="currentUser && post.user.id === currentUser.id">
-                <button md-icon-button type="button" [mdMenuTriggerFor]="menu"><md-icon>expand_more</md-icon></button>
+                <button md-icon-button type="button" [mdMenuTriggerFor]="menu">
+                    <md-icon>expand_more</md-icon>
+                </button>
                 <md-menu #menu="mdMenu" xPosition="before">
                     <button md-menu-item (click)="edit()">
                         <md-icon>edit</md-icon>
@@ -32,8 +34,12 @@
                 </button>
             </div>
         </div>
-        <img class="post-attachment" src="{{attachment.uri}}" alt="post-image" *ngFor="let attachment of post.attachments; let index = index;"
-            [hidden]="index !== post.activeAttachment">
+        <div *ngFor="let attachment of post.attachments; let index = index;" [hidden]="index !== post.activeAttachment">
+            <img class="post-attachment" src="{{attachment.uri}}" alt="post-image" *ngIf="attachment.type !== 1">
+            <video *ngIf="attachment.type === 1" autoplay loop>
+                <source src="{{attachment.uri}}">
+            </video>
+        </div>
     </div>
     <md-progress-bar class="progress-bar" color="warn" mode="indeterminate" *ngIf="post.isLoading"></md-progress-bar>
     <div class="post-footer" *ngIf="!post.editing">

@@ -25,6 +25,13 @@
     vertical-align: bottom;
 }
 
+.video-big-preview {
+    width: 400px;
+    height: 400px;
+    object-fit: fill;
+    vertical-align: bottom;
+}
+
 .big-preview-container {
     margin: 20px 0 10px 0;
 }
@@ -33,6 +40,14 @@
     height: 75px;
     width: 75px;
     object-fit: cover;
+    overflow: hidden;
+    position: absolute;
+}
+
+.attachment-preview-video {
+    height: 75px;
+    width: 75px;
+    object-fit: fill;
     overflow: hidden;
     position: absolute;
 }

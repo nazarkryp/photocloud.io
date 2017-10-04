@@ -21,6 +21,9 @@ import { CommentsComponent } from './components/shared/comments/comments.compone
 import { PostDetailsComponent } from './components/shared/post-details/post-details.component';
 import { CreatePostComponent } from './components/shared/create-post/create-post.component';
 
+// Resolvers
+import { UserResolver, UserListResolver } from './infrastructure/resolvers';
+
 import {
     AccountService,
     PostService,
@@ -154,16 +157,13 @@ import {
             useClass: HttpErrorInterceptor,
             multi: true
         },
-        {
-            provide: HTTP_INTERCEPTORS,
-            useClass: CachingInterceptor,
-            multi: true
-        },
         MemoryCache,
         TokenProvider,
         ClipboardService,
         TokenMapper,
-        UserMapper
+        UserMapper,
+        UserListResolver,
+        UserResolver
     ],
     bootstrap: [AppComponent]
 })

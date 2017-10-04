@@ -18,11 +18,11 @@ import { FileUploader } from 'ng2-file-upload';
     styleUrls: ['./user-posts.component.css']
 })
 export class UserPostsComponent implements OnInit, OnDestroy {
-    private subscription: Subscription;
+    private postSubscription$: Subscription;
+    private routeSubscription$: Subscription;
+    private currentUserSubscription$: Subscription;
     private currentUser: CurrentUser;
-    private currentUserSubscription: Subscription;
     private page: Collection<Post>;
-    private isLoading = false;
     private isModifyingRelationship = false;
     private isLoadingPosts: boolean;
     private user: User = new User();
@@ -41,7 +41,7 @@ export class UserPostsComponent implements OnInit, OnDestroy {
         private progressService: NgProgressService,
         private uploaderService: UploaderService) {
         this.uploader = uploaderService.createUploader((attachment) => this.onSuccessUpload(attachment));
-        this.currentUserSubscription = this.userProvider.getCurrentUserAsObservable()
+        this.currentUserSubscription$ = this.userProvider.getCurrentUserAsObservable()
             .subscribe(currentUser => {
                 this.currentUser = currentUser;
             });
@@ -61,19 +61,20 @@ export class UserPostsComponent implements OnInit, OnDestroy {
             this.progressService.start();
         }
 
-        this.postService.getUserPosts(this.user.username, this.page.pagination)
+        this.postSubscription$ = this.postService.getUserPosts(this.user.username, this.page.pagination)
             .finally(() => {
                 if (this.progressService.isStarted()) {
                     this.progressService.done();
                 }
+
                 this.isLoadingPosts = false;
-                this.isLoading = false;
             })
-            .subscribe((collection: Collection<Post>) => {
-                this.page.hasMoreItems = collection.hasMoreItems;
-                this.page.pagination = collection.pagination;
-                if (collection.data) {
-                    this.page.data = this.page.data.concat(collection.data);
+            .subscribe((page: Collection<Post>) => {
+                this.page.hasMoreItems = page.hasMoreItems;
+                this.page.pagination = page.pagination;
+
+                if (page.data) {
+                    this.page.data = this.page.data.concat(page.data);
                 }
             });
     }
@@ -121,32 +122,6 @@ export class UserPostsComponent implements OnInit, OnDestroy {
         }, () => { });
     }
 
-    private getUserFeed(username: string) {
-        this.isLoading = true;
-        this.progressService.start();
-
-        this.userService.getUser(username)
-            .subscribe((user: User) => {
-                const validationResult = this.validateUser(user);
-                this.user = user;
-                if (!validationResult.hasErrors) {
-                    this.getPosts();
-                    return;
-                }
-
-                this.isLoading = false;
-                this.progressService.done();
-                this.error = validationResult.error;
-            }, (error) => {
-                if (error.status === 0) {
-                    this.error = new Error('Connect to the internet', 'You\'re offline. Check your connection');
-                }
-
-                this.isLoading = false;
-                this.progressService.done();
-            });
-    }
-
     private initializePage(): void {
         this.page = new Collection<Post>();
         this.page.hasMoreItems = false;
@@ -187,19 +162,27 @@ export class UserPostsComponent implements OnInit, OnDestroy {
     }
 
     public ngOnInit() {
-        this.subscription = this.route.paramMap.subscribe(params => {
-            const username = params.get('username');
+        this.routeSubscription$ = this.route.paramMap.subscribe(params => {
+            this.initializePage();
+            this.user = this.route.snapshot.data['user'];
 
-            if (username) {
-                this.initializePage();
-                this.getUserFeed(username);
+            const result = this.validateUser(this.user);
+            if (result.hasErrors) {
+                this.progressService.done();
+                this.error = result.error;
+            } else {
+                this.getPosts();
             }
         });
     }
 
     public ngOnDestroy(): void {
-        this.subscription.unsubscribe();
+        if (this.postSubscription$ && !this.postSubscription$.closed) {
+            this.postSubscription$.unsubscribe();
+        }
+
         this.uploader.destroy();
-        this.currentUserSubscription.unsubscribe();
+        this.currentUserSubscription$.unsubscribe();
+        this.routeSubscription$.unsubscribe();
     }
 }

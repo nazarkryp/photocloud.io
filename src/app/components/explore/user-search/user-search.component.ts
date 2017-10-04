@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs/Rx';
+import { ActivatedRoute } from '@angular/router';
+import { Subscription, Observable } from 'rxjs/Rx';
 
 import { UserService } from '../../../services';
 import { UserProvider } from '../../../infrastructure/providers';
@@ -15,12 +16,13 @@ import { NgProgressService } from 'ngx-progressbar';
 export class UserSearchComponent implements OnInit, OnDestroy {
     private title = 'Explore People';
     private isLoading: boolean;
-    private page: Collection<User> = new Collection<User>();
+    private page: Collection<User>;
     private modifying: { [id: number]: boolean } = {};
     private currentUser: CurrentUser;
     private currentUserSubscription: Subscription;
 
     constructor(
+        private route: ActivatedRoute,
         private userService: UserService,
         private userProvider: UserProvider,
         private progressService: NgProgressService) {
@@ -38,18 +40,14 @@ export class UserSearchComponent implements OnInit, OnDestroy {
                 this.progressService.done();
                 this.isLoading = false;
             })
-            .map((page: Collection<User>) => {
-                page.data.map((user: User) => {
-                    this.modifying[user.id] = false;
-                });
-
-                return page;
-            })
             .subscribe((page: Collection<User>) => {
                 this.page.hasMoreItems = page.hasMoreItems;
                 this.page.pagination = page.pagination;
                 if (page.data) {
                     this.page.data = this.page.data.concat(page.data);
+                    page.data.map((user: User) => {
+                        this.modifying[user.id] = false;
+                    });
                 }
             }, () => { });
     }
@@ -79,8 +77,12 @@ export class UserSearchComponent implements OnInit, OnDestroy {
     }
 
     public ngOnInit() {
-        this.isLoading = true;
-        this.getUsers();
+        this.page = this.route.snapshot.data['page'];
+        if (this.page.data) {
+            this.page.data.map((user: User) => {
+                this.modifying[user.id] = false;
+            });
+        }
     }
 
     public ngOnDestroy() {

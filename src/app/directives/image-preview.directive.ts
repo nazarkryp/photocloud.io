@@ -13,6 +13,7 @@ export class ImagePreviewDirective implements OnChanges {
 
         reader.onloadend = function (e) {
             el.nativeElement.src = reader.result;
+            el.nativeElement.poster = reader.result;
         };
 
         if (this.image) {

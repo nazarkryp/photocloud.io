@@ -13,8 +13,8 @@ import { SignupComponent } from './components/signup/signup.component';
 import { TagsComponent } from './components/explore/tags/tags.component';
 import { SettingsComponent } from './components/settings/settings.component';
 import { ConnectionErrorComponent } from './components/shared/connection-error/connection-error.component';
-
 import { AuthenticationGuard } from './infrastructure/guards/authentication-guard.service';
+import { UserResolver, UserListResolver } from './infrastructure/resolvers';
 
 const routes: Routes = [
     {
@@ -66,6 +66,7 @@ const routes: Routes = [
     {
         path: ':username',
         component: UserPostsComponent,
+        resolve: { user: UserResolver },
         data: {
             title: 'PhotoCloud - User\' Posts'
         }
@@ -87,6 +88,7 @@ const routes: Routes = [
     {
         path: 'explore/people',
         component: UserSearchComponent,
+        resolve: { page: UserListResolver },
         data: {
             title: 'PhotoCloud - Discover People'
         }
