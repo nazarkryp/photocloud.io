@@ -13,8 +13,12 @@
                 </button>
                 </div>
             </div>
-            <img class="attachment" src="{{attachment.uri}}" alt="post-image" *ngFor="let attachment of post.attachments; let index = index;"
-                [hidden]="index !== post.activeAttachment">
+            <div *ngFor="let attachment of post.attachments; let index = index;" [hidden]="index !== post.activeAttachment">
+                <img class="attachment" src="{{attachment.uri}}" alt="post-image" *ngIf="attachment.type !== 1">
+                <video class="attachment" *ngIf="attachment.type === 1" autoplay loop>
+                    <source src="{{attachment.uri}}">
+                </video>
+            </div>
         </div>
         <div class="post-details" [ngClass]="{ 'dialog' : isDialog }" fxLayout="column">
             <div class="post-details-header" fxLayout="row" fxLayoutAlign="start center">
@@ -62,7 +66,8 @@
             </div>
             <div class="post-details-footer" fxLayout="row" fxLayoutAlign="start center" *ngIf="currentUser">
                 <div class="comment-box" fxLayout="row">
-                    <input class="post-details-comment-input" type="text" placeholder="Add comment" [(ngModel)]="text" (keydown.enter)="createComment()" />
+                    <input class="post-details-comment-input" type="text" placeholder="Add comment" [(ngModel)]="text" (keydown.enter)="createComment()"
+                    />
                     <button class="send-button" md-icon-button (click)="createComment()" [disabled]="!text">
                         <md-icon mdTooltip="{{!text ? 'Cannot send empty message' : 'Send'}}" mdTooltipPosition="left">send</md-icon>
                     </button>

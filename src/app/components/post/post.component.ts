@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation, OnInit, OnDestroy, Input, Output, EventEmitter, Inject } from '@angular/core';
+import { Component, ViewEncapsulation, OnInit, OnDestroy, Input, Output, EventEmitter, Inject, ViewChild } from '@angular/core';
 import { DOCUMENT } from '@angular/platform-browser';
 import { MdSnackBar, MdDialog, MdSnackBarConfig } from '@angular/material';
 import { Observable, Subscription } from 'rxjs/Rx';
@@ -17,6 +17,7 @@ import { UsersComponent } from '../shared/users/users.component';
 export class PostComponent implements OnInit, OnDestroy {
     @Input() public post: Post;
     @Output() public onRemoved = new EventEmitter<Post>();
+    @ViewChild('player') player: any;
 
     private text: string;
     private shareLink: string;
@@ -53,6 +54,18 @@ export class PostComponent implements OnInit, OnDestroy {
 
     private remove() {
         this.onRemoved.emit(this.post);
+    }
+
+    private play(event: any) {
+        if (!this.player) {
+            return;
+        }
+
+        if (this.player.nativeElement.paused) {
+            this.player.nativeElement.play();
+        } else {
+            this.player.nativeElement.pause();
+        }
     }
 
     private share() {
@@ -161,7 +174,7 @@ export class PostComponent implements OnInit, OnDestroy {
         const dialogRef = this.dialog.open(UsersComponent, {
             data: {
                 usersObservable: usersObservable,
-                title: "Likes"
+                title: 'Likes'
             }
         });
     }

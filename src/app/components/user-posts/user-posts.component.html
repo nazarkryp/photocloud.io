@@ -57,7 +57,10 @@
         <div class="user-posts" *ngIf="isLoadingPosts || page.data.length > 0; else emptyFeed;">
             <div class="post-item" *ngFor="let post of page?.data;">
                 <div class="image-container mat-elevation-z3" fxLayout="column" fxLayoutAlign="center center" (click)="openPostDialog(post)">
-                    <img class="thumbnail" src="{{post?.attachments[0].uri}}" alt="{{post?.caption}}">
+                    <img class="thumbnail" src="{{post?.attachments[0].uri}}" alt="{{post?.caption}}" *ngIf="post?.attachments[0].type !== 1">
+                    <video class="thumbnail" *ngIf="post?.attachments[0].type === 1">
+                        <source src="{{post?.attachments[0].uri}}">
+                    </video>
                     <md-icon class="multiple-attachments-icon" *ngIf="post.attachments.length > 1">layers</md-icon>
                     <div class="after md-padding" fxLayout="row" fxLayoutAlign="space-between center">
                         <div fxLayout="row" fxLayoutAlign="center center">

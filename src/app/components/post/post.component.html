@@ -34,9 +34,9 @@
                 </button>
             </div>
         </div>
-        <div *ngFor="let attachment of post.attachments; let index = index;" [hidden]="index !== post.activeAttachment">
+        <div (click)='play()' *ngFor="let attachment of post.attachments; let index = index;" [hidden]="index !== post.activeAttachment">
             <img class="post-attachment" src="{{attachment.uri}}" alt="post-image" *ngIf="attachment.type !== 1">
-            <video *ngIf="attachment.type === 1" autoplay loop>
+            <video class="post-attachment" *ngIf="attachment.type === 1" autoplay loop #player>
                 <source src="{{attachment.uri}}">
             </video>
         </div>
@@ -44,10 +44,14 @@
     <md-progress-bar class="progress-bar" color="warn" mode="indeterminate" *ngIf="post.isLoading"></md-progress-bar>
     <div class="post-footer" *ngIf="!post.editing">
         <div class="likes" fxLayout="row" fxLayoutAlign="space-between center" (click)="openLikesDialog(post)">
-            <span class="likes-counter"><strong>{{post.likesCount}} likes</strong></span>
+            <span class="likes-counter">
+                <strong>{{post.likesCount}} likes</strong>
+            </span>
         </div>
         <div class="post-caption" *ngIf="post.caption">
-            <a [routerLink]="['/', post.user.username]"><strong>{{post.user.username}}</strong></a>
+            <a [routerLink]="['/', post.user.username]">
+                <strong>{{post.user.username}}</strong>
+            </a>
             <app-caption caption="{{post.caption}}"></app-caption>
         </div>
         <div>
