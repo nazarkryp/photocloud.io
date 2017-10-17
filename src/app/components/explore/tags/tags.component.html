@@ -2,15 +2,15 @@
     <div class="posts-tags-container" fxLayout="column" fxLayoutAlign="start center">
         <div fxLayout="row" fxLayoutAlign="center center" style="margin: 0 0 50px 0;">
             <span class="posts-tags-title">#{{tag}}</span>
-            <md-icon class="md-48">heart</md-icon>
+            <mat-icon class="mat-48">heart</mat-icon>
         </div>
         <div class="tag-posts" fxFlex>
             <div class="post mat-elevation-z1" *ngFor="let post of page?.data;" fxLayout="column">
-                <div md-ripple class="thumbnail-container" style="height: 300px; width: 100%; position: relative;" (click)="openPostDialog(post)">
+                <div mat-ripple class="thumbnail-container" style="height: 300px; width: 100%; position: relative;" (click)="openPostDialog(post)">
                     <img class="thumbnail" src="{{post.attachments[0].uri}}" alt="post">
                 </div>
                 <div class="post-description" fxLayout="column" fxLayoutAlign="start">
-                    <md-icon class="multiple-attachments-icon" *ngIf="post.attachments.length > 1">layers</md-icon>
+                    <mat-icon class="multiple-attachments-icon" *ngIf="post.attachments.length > 1">layers</mat-icon>
                     <div fxLayout="row" fxLayoutAlign="space-between center">
                         <div fxLayout="column" fxLayoutAlign="center start">
                             <a class="username" [routerLink]="['/', post.user.username]">
@@ -18,15 +18,15 @@
                             </a>
                             <span class="date">{{post.created | timeAgo}}</span>
                         </div>
-                        <button class="like-button" md-icon-button (click)="like(post)" *ngIf="currentUser">
-                            <md-icon [ngClass]="{ 'liked' : post.userHasLiked }">favorite</md-icon>
+                        <button class="like-button" mat-icon-button (click)="like(post)" *ngIf="currentUser">
+                            <mat-icon [ngClass]="{ 'liked' : post.userHasLiked }">favorite</mat-icon>
                         </button>
                     </div>
                 </div>
             </div>
         </div>
         <div fxLayout="row" fxLayoutAlign="center center" *ngIf="page.hasMoreItems">
-            <button md-raised-button (click)="getPosts()" [disabled]="isLoading">Load More</button>
+            <button mat-raised-button (click)="getPosts()" [disabled]="isLoading">Load More</button>
         </div>
     </div>
 </div>

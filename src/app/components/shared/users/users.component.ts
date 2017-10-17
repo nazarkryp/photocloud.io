@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, Optional, Inject, ViewEncapsulation } from '@angular/core';
-import { MdDialogRef, MdSnackBarConfig, MdSnackBar, MD_DIALOG_DATA } from '@angular/material';
+import { MatDialogRef, MatSnackBarConfig, MatSnackBar, MAT_DIALOG_DATA } from '@angular/material';
 import { Observable, Subscription } from 'rxjs/Rx';
 
 import { CurrentUser, User, RelationshipStatus } from '../../../common/models';
@@ -21,8 +21,8 @@ export class UsersComponent implements OnInit, OnDestroy {
     private title: string;
 
     constructor(
-        public dialogRef: MdDialogRef<UsersComponent>,
-        @Inject(MD_DIALOG_DATA) data: any,
+        public dialogRef: MatDialogRef<UsersComponent>,
+        @Inject(MAT_DIALOG_DATA) data: any,
         private userService: UserService,
         private userProvider: UserProvider) {
         this.title = data.title;

@@ -10,7 +10,7 @@
             <div class="users-details-container" fxLayout="row" fxLayoutAlign="space-between center" fxFlex>
                 <a class="username" [routerLink]="['/', user.username]">{{user.username}}</a>
                 <div fxLayout="row" fxLayoutAlign="center end">
-                    <button class="btn-relationships" md-raised-button color="primary" (click)="modifyRelationship(user)" [disabled]="modifying[user.id]"
+                    <button class="btn-relationships" mat-raised-button color="primary" (click)="modifyRelationship(user)" [disabled]="modifying[user.id]"
                         *ngIf="currentUser && currentUser.id !== user.id">
                         {{user.incommingStatus | relationshipAction | uppercase}}
                     </button>
@@ -18,7 +18,7 @@
             </div>
         </div>
         <div fxLayout="row" fxLayoutAlign="center center" *ngIf="page.hasMoreItems" style="margin: 25px 0 0 0;">
-            <button md-raised-button (click)="getUsers()" [disabled]="isLoading">Load More</button>
+            <button mat-raised-button (click)="getUsers()" [disabled]="isLoading">Load More</button>
         </div>
     </div>
 </div>

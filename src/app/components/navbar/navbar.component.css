@@ -34,7 +34,7 @@
     /* width: 155px; */
 }
 
-md-icon>svg {
+mat-icon>svg {
     stroke-width: 0.7;
 }
 

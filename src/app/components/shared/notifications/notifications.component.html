@@ -10,15 +10,15 @@
                     <span [routerLink]="['/', user.username]">{{user.username}}</span>
                 </div>
                 <div>
-                    <button class="confirm-button" md-raised-button color="primary" (click)="confirmIncommingRequest(user)">Confirm</button>
-                    <button md-raised-button (click)="removeIncommingRequest(user)">Remove</button>
+                    <button class="confirm-button" mat-raised-button color="primary" (click)="confirmIncommingRequest(user)">Confirm</button>
+                    <button mat-raised-button (click)="removeIncommingRequest(user)">Remove</button>
                 </div>
             </div>
         </div>
     </div>
     <ng-template #noRequests>
         <div class="notifications-content" fxLayout="column" fxLayoutAlign="center center" fxFlex>
-            <md-spinner [strokeWidth]="5" *ngIf="isLoading"></md-spinner>
+            <mat-spinner [strokeWidth]="5" *ngIf="isLoading"></mat-spinner>
             <span *ngIf="!isLoading">No Incomming Requests</span>
         </div>
     </ng-template>

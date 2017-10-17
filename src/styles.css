@@ -4,7 +4,7 @@
 html,
 body,
 material-app,
-md-sidenav-container,
+mat-sidenav-container,
 .my-content {
     margin: 0;
     width: 100%;
@@ -54,7 +54,7 @@ body {
     margin: auto;
 }
 
-md-icon>svg {
+mat-icon>svg {
     stroke-width: 1px;
 }
 
@@ -67,7 +67,7 @@ a {
     color: inherit;
 }
 
-md-form-field {
+mat-form-field {
     width: 100%;
 }
 

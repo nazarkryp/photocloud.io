@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
-import { MdAutocompleteSelectedEvent } from '@angular/material';
+import { MatAutocompleteSelectedEvent } from '@angular/material';
 
 import { Observable } from 'rxjs/Rx';
 
@@ -29,7 +29,7 @@ export class SearchBoxComponent implements OnInit {
             .map(collection => collection.data);
     }
 
-    private onSelectionChanged(event: MdAutocompleteSelectedEvent) {
+    private onSelectionChanged(event: MatAutocompleteSelectedEvent) {
         if (event.option.value) {
             this.router.navigateByUrl(`/${event.option.value}`)
                 .then((navigationSuccess) => {

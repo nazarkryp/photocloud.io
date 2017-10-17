@@ -11,32 +11,32 @@
         </div>
         <div fxLayout="column" fxLayoutAlign="center start" style="position: absolute; width: 400px; right: 100px; z-index: 10;">
             <form class="mat-elevation-z1" (ngSubmit)="signUp()" style="position: relative; background: white; width: 100%; padding: 25px; height: 460px;">
-                <md-progress-bar mode="indeterminate" *ngIf="isLoading" style="position: absolute; top: 0; left: 0;"></md-progress-bar>
+                <mat-progress-bar mode="indeterminate" *ngIf="isLoading" style="position: absolute; top: 0; left: 0;"></mat-progress-bar>
                 <div fxLayout="column">
                     <span style="font-weight: 300; font-size: 34px;">PhotoCloud</span>
                     <p style="color: #777777;">Sign up to continue</p>
                 </div>
                 <div fxLayout="column">
-                    <md-form-field style="width: 100%;">
-                        <input mdInput placeholder="Username" type="text" [(ngModel)]="account.username" name="username" autocomplete="off">
-                        <md-icon mdSuffix>person</md-icon>
-                    </md-form-field>
-                    <md-form-field style="width: 100%;">
-                        <input mdInput placeholder="Email address" type="text" [(ngModel)]="account.email" name="username" autocomplete="off">
-                        <md-icon mdSuffix>email</md-icon>
-                    </md-form-field>
-                    <md-form-field style="width: 100%;">
-                        <input mdInput placeholder="Password" type="password" [(ngModel)]="account.password" name="password" autocomplete="off">
-                        <md-icon mdSuffix>vpn_key</md-icon>
-                    </md-form-field>
-                    <md-form-field style="width: 100%;">
-                        <input mdInput placeholder="Confirm Password" type="password" [(ngModel)]="account.confirmPassword" name="password" autocomplete="off">
-                        <md-icon mdSuffix>vpn_key</md-icon>
-                    </md-form-field>
+                    <mat-form-field style="width: 100%;">
+                        <input matInput placeholder="Username" type="text" [(ngModel)]="account.username" name="username" autocomplete="off">
+                        <mat-icon matSuffix>person</mat-icon>
+                    </mat-form-field>
+                    <mat-form-field style="width: 100%;">
+                        <input matInput placeholder="Email address" type="text" [(ngModel)]="account.email" name="username" autocomplete="off">
+                        <mat-icon matSuffix>email</mat-icon>
+                    </mat-form-field>
+                    <mat-form-field style="width: 100%;">
+                        <input matInput placeholder="Password" type="password" [(ngModel)]="account.password" name="password" autocomplete="off">
+                        <mat-icon matSuffix>vpn_key</mat-icon>
+                    </mat-form-field>
+                    <mat-form-field style="width: 100%;">
+                        <input matInput placeholder="Confirm Password" type="password" [(ngModel)]="account.confirmPassword" name="password" autocomplete="off">
+                        <mat-icon matSuffix>vpn_key</mat-icon>
+                    </mat-form-field>
                 </div>
                 <div fxLayout="row" fxLayoutAlign="space-between center">
                     <a class="signin-link" [routerLink]="['/signin']">Already have an account?</a>
-                    <button class="signin-button" md-raised-button color="accent" type="sumbit">Create Account</button>
+                    <button class="signin-button" mat-raised-button color="accent" type="sumbit">Create Account</button>
                 </div>
 
                 <div class="error-container" fxLayout="column" fxLayoutAlign="center center" *ngIf="errors">

@@ -1,15 +1,15 @@
 <div class="search-box-container" fxLayout="row" fxLayoutAlign="start center">
-    <md-icon class="search-box-icon" mdPrefix>search</md-icon>
-    <input class="search-box" type="text" placeholder="Search" [(ngModel)]="searchQuery" [mdAutocomplete]="auto" [formControl]="searchControl"
+    <mat-icon class="search-box-icon" matPrefix>search</mat-icon>
+    <input class="search-box" type="text" placeholder="Search" [(ngModel)]="searchQuery" [matAutocomplete]="auto" [formControl]="searchControl"
         aria-label="User">
-    <md-spinner class="search-box-spinner" [strokeWidth]="10" *ngIf="isSearching"></md-spinner>
-    <button class="search-box-icon-button" md-icon-button *ngIf="searchQuery && !isSearching" (click)="clear()">
-        <md-icon>clear</md-icon>
+    <mat-spinner class="search-box-spinner" [strokeWidth]="10" *ngIf="isSearching"></mat-spinner>
+    <button class="search-box-icon-button" mat-icon-button *ngIf="searchQuery && !isSearching" (click)="clear()">
+        <mat-icon>clear</mat-icon>
     </button>
-    <md-autocomplete #auto="mdAutocomplete" (optionSelected)="onSelectionChanged($event)">
-        <md-option *ngFor="let user of users | async" [value]="user.username">
+    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onSelectionChanged($event)">
+        <mat-option *ngFor="let user of users | async" [value]="user.username">
             <img class="user-search-avatar" src="{{user.pictureUri}}" default="assets/images/user-default-image.png" aria-hidden alt="" />
             <span>{{user.username}}</span>
-        </md-option>
-    </md-autocomplete>
+        </mat-option>
+    </mat-autocomplete>
 </div>

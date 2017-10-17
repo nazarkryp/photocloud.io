@@ -1,6 +1,6 @@
 import { Component, ViewEncapsulation, OnInit, OnDestroy, Input, Output, EventEmitter, Inject, ViewChild } from '@angular/core';
 import { DOCUMENT } from '@angular/platform-browser';
-import { MdSnackBar, MdDialog, MdSnackBarConfig } from '@angular/material';
+import { MatSnackBar, MatDialog, MatSnackBarConfig } from '@angular/material';
 import { Observable, Subscription } from 'rxjs/Rx';
 
 import { UserProvider } from '../../infrastructure/providers';
@@ -27,8 +27,8 @@ export class PostComponent implements OnInit, OnDestroy {
     private currentUserSubscription: Subscription;
 
     constructor(
-        public dialog: MdDialog,
-        public snackBar: MdSnackBar,
+        public dialog: MatDialog,
+        public snackBar: MatSnackBar,
         private commentService: CommentService,
         private postService: PostService,
         private userProvider: UserProvider,
@@ -77,7 +77,7 @@ export class PostComponent implements OnInit, OnDestroy {
     }
 
     private showToast(message: string) {
-        const config = new MdSnackBarConfig();
+        const config = new MatSnackBarConfig();
         config.duration = 1500;
         const result = this.snackBar.open(message, null, config);
     }

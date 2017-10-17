@@ -1,7 +1,7 @@
 import { Component, Inject, ViewEncapsulation, Optional, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DOCUMENT } from '@angular/platform-browser';
-import { MdDialogRef, MdSnackBarConfig, MdSnackBar, MD_DIALOG_DATA } from '@angular/material';
+import { MatDialogRef, MatSnackBarConfig, MatSnackBar, MAT_DIALOG_DATA } from '@angular/material';
 import { Observable, Subscription } from 'rxjs/Rx';
 
 import { UserProvider } from '../../../infrastructure/providers';
@@ -32,9 +32,9 @@ export class PostDetailsComponent implements OnInit, OnDestroy {
         private commentService: CommentService,
         private progressService: NgProgressService,
         private accountService: AccountService,
-        private snackBar: MdSnackBar,
-        @Optional() public dialogRef: MdDialogRef<PostDetailsComponent>,
-        @Optional() @Inject(MD_DIALOG_DATA) public post: Post,
+        private snackBar: MatSnackBar,
+        @Optional() public dialogRef: MatDialogRef<PostDetailsComponent>,
+        @Optional() @Inject(MAT_DIALOG_DATA) public post: Post,
         @Inject(DOCUMENT) private document: any) {
         if (post) {
             this.post.activeAttachment = 0;
@@ -72,7 +72,7 @@ export class PostDetailsComponent implements OnInit, OnDestroy {
     }
 
     private showToast(message: string) {
-        const config = new MdSnackBarConfig();
+        const config = new MatSnackBarConfig();
         config.duration = 1500;
         const result = this.snackBar.open(message, null, config);
     }

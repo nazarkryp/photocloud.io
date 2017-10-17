@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MdSlideToggleChange } from '@angular/material';
+import { MatSlideToggleChange } from '@angular/material';
 
 import { UserProvider } from '../../infrastructure/providers';
 import { AccountService } from '../../services';
@@ -50,7 +50,7 @@ export class SettingsComponent implements OnInit {
         this.isModified = !this.equals(this.account, this.backup);
     }
 
-    private invertAccountPrivateStatus(event: MdSlideToggleChange) {
+    private invertAccountPrivateStatus(event: MatSlideToggleChange) {
         if (this.isInvertingAccountPrivateStatus) {
             return;
         }

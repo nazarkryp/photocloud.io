@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { MdDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { Subscription } from 'rxjs/Rx';
 
 import { Post, User, Collection, Comment, Attachment, CurrentUser } from '../../common/models';
@@ -24,7 +24,7 @@ export class PostsComponent implements OnInit, OnDestroy {
         private postService: PostService,
         private userProvider: UserProvider,
         private progressService: NgProgressService,
-        private dialog: MdDialog) {
+        private dialog: MatDialog) {
         this.page.data = new Array<Post>();
         this.page.hasMoreItems = false;
         this.currentUserSubscription = this.userProvider.getCurrentUserAsObservable()

@@ -4,7 +4,7 @@ import { HttpModule } from '@angular/http';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { MdIconRegistry } from '@angular/material';
+import { MatIconRegistry } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -171,7 +171,7 @@ export class AppModule {
     constructor(
         private router: Router,
         private userProvider: UserProvider,
-        private mdIconRegistry: MdIconRegistry,
+        private mdIconRegistry: MatIconRegistry,
         private sanitizer: DomSanitizer,
         private httpConfiguration: HttpConfiguration) {
         mdIconRegistry.addSvgIcon('heart', sanitizer.bypassSecurityTrustResourceUrl('assets/svg/icons/heart.svg'));

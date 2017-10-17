@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MdDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { Observable, Subscription } from 'rxjs/Rx';
 
 import { UserProvider } from '../../infrastructure/providers';
@@ -37,7 +37,7 @@ export class UserPostsComponent implements OnInit, OnDestroy {
         private userProvider: UserProvider,
         private router: Router,
         private route: ActivatedRoute,
-        public dialog: MdDialog,
+        public dialog: MatDialog,
         private progressService: NgProgressService,
         private uploaderService: UploaderService) {
         this.uploader = uploaderService.createUploader((attachment) => this.onSuccessUpload(attachment));

@@ -1,5 +1,5 @@
 import { Component, Inject } from '@angular/core';
-import { MdDialogRef, MdSnackBarConfig, MdSnackBar, MD_DIALOG_DATA } from '@angular/material';
+import { MatDialogRef, MatSnackBarConfig, MatSnackBar, MAT_DIALOG_DATA } from '@angular/material';
 
 @Component({
     selector: 'app-confirm',
@@ -11,8 +11,8 @@ export class ConfirmComponent {
     private title: string;
 
     constructor(
-        public dialogRef: MdDialogRef<ConfirmComponent>,
-        @Inject(MD_DIALOG_DATA) public content: any) {
+        public dialogRef: MatDialogRef<ConfirmComponent>,
+        @Inject(MAT_DIALOG_DATA) public content: any) {
             this.title = this.content.title;
             this.message = this.content.message;
     }

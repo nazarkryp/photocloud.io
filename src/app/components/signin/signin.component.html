@@ -11,29 +11,30 @@
         </div>
         <div fxLayout="column" fxLayoutAlign="center start" style="position: absolute; width: 400px; right: 100px; z-index: 10;">
             <form class="mat-elevation-z1" (ngSubmit)="signIn()" style="position: relative; background: white; width: 100%; padding: 25px; height: 350px;">
-                <md-progress-bar mode="indeterminate" *ngIf="isLoading" style="position: absolute; top: 0; left: 0;"></md-progress-bar>
+                <mat-progress-bar mode="indeterminate" *ngIf="isLoading" style="position: absolute; top: 0; left: 0;"></mat-progress-bar>
                 <div fxLayout="column">
                     <span style="font-weight: 300; font-size: 34px;">PhotoCloud</span>
                     <p style="color: #777777;">Sign in to continue</p>
                 </div>
                 <div fxLayout="column">
-                    <md-form-field style="width: 100%;">
-                        <input mdInput type="text" placeholder="Username" [(ngModel)]="account.username" name="username" autocomplete="off" required
+                    <mat-form-field style="width: 100%;">
+                        <input matInput type="text" placeholder="Username" [(ngModel)]="account.username" name="username" autocomplete="off" required
                             [errorStateMatcher]="myErrorStateMatcher">
-                        <md-icon mdSuffix>person</md-icon>
-                    </md-form-field>
-                    <md-form-field style="width: 100%;">
-                        <input mdInput placeholder="Password" type="password" [(ngModel)]="account.password" [errorStateMatcher]="myErrorStateMatcher"
+                        <mat-icon matSuffix>person</mat-icon>
+                    </mat-form-field>
+                    <mat-form-field style="width: 100%;">
+                        <input matInput placeholder="Password" type="password" [(ngModel)]="account.password" [errorStateMatcher]="myErrorStateMatcher"
                             required name="password" autocomplete="off">
-                        <md-icon mdSuffix>vpn_key</md-icon>
-                        <md-hint align="start">
+                        <mat-icon matSuffix>vpn_key</mat-icon>
+                        <mat-hint align="start">
                             <a class="forgot-password-link" [routerLink]="['/account/create']">Forgot Password?</a>
-                        </md-hint>
-                    </md-form-field>
+                        </mat-hint>
+                    </mat-form-field>
                 </div>
                 <div fxLayout="row" fxLayoutAlign="space-between center" style="margin-top: 10px;">
                     <a class="create-account-link" [routerLink]="['/account/create']">Don't have an account?</a>
-                    <button class="signin-button" md-raised-button color="accent" type="sumbit">Sign In</button>
+                    <button class="signin-button" mat-raised-button color="accent" type="sumbit" (click)="signIn()">Sign In</button>
+                    <!-- <input type="submit" class="signin-button" mat-raised-button value="Sign In"> -->
                 </div>
                 <div class="error-container" fxLayout="row" fxLayoutAlign="center center">
                     <span class="mat-subhead error" *ngIf="errorMessage">{{errorMessage}}</span>

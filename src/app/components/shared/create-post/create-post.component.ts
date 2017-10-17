@@ -1,5 +1,5 @@
 import { Component, Inject, ViewEncapsulation, Optional, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
-import { MdDialogRef, MdSnackBarConfig, MdSnackBar, MD_DIALOG_DATA } from '@angular/material';
+import { MatDialogRef, MatSnackBarConfig, MatSnackBar, MAT_DIALOG_DATA } from '@angular/material';
 import { Observable, Subscription } from 'rxjs/Rx';
 
 import { Post, User, Attachment, Comment, CurrentUser, CreatePostModel } from '../../../common/models';
@@ -33,7 +33,7 @@ export class CreatePostComponent implements OnInit, OnDestroy {
         private progressService: NgProgressService,
         private accountService: AccountService,
         private tokenProvider: TokenProvider,
-        @Optional() public dialogRef: MdDialogRef<CreatePostComponent>) {
+        @Optional() public dialogRef: MatDialogRef<CreatePostComponent>) {
         this.uploader = new FileUploader({
             url: environment.apiUri + 'attachments'
         });

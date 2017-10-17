@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { MdDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { Subscription, Observable } from 'rxjs/Rx';
 
 import { UserProvider } from '../../../infrastructure/providers';
@@ -23,7 +23,7 @@ export class TagsComponent implements OnInit, OnDestroy {
     private tag: string;
 
     constructor(
-        public dialog: MdDialog,
+        public dialog: MatDialog,
         private route: ActivatedRoute,
         private postService: PostService,
         private userProvider: UserProvider,

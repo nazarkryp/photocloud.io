@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroupDirective, NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ErrorStateMatcher } from '@angular/material';
 
 import { UserLogin, AccessToken } from '../../common/models';
 import { AccountService } from '../../services';
@@ -14,13 +15,16 @@ export class SigninComponent {
     private isLoading = false;
     private errorMessage: string;
     private account: UserLogin = new UserLogin();
+    private myErrorStateMatcher: MyErrorStateMatcher;
 
     constructor(
         private accountService: AccountService,
         private router: Router) {
+        this.myErrorStateMatcher = new MyErrorStateMatcher();
     }
 
     signIn() {
+        console.log('SUBMIT');
         this.isLoading = true;
         this.errorMessage = '';
 
@@ -37,10 +41,11 @@ export class SigninComponent {
                 }
             });
     }
+}
 
-    myErrorStateMatcher(control: FormControl, form: FormGroupDirective | NgForm): boolean {
+class MyErrorStateMatcher implements ErrorStateMatcher {
+    isErrorState(control: FormControl, form: FormGroupDirective | NgForm): boolean {
         const isSubmitted = form && form.submitted;
-
         return isSubmitted && (!!(control.invalid && (control.dirty || control.touched)));
     }
 }

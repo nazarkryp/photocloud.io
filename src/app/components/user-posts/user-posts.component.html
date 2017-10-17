@@ -11,13 +11,13 @@
                 <div>
                     <span class="mat-display-1">{{user.username}} </span>
                 </div>
-                <button md-icon-button routerLink="/account/edit" mdTooltip="Settings" mdTooltipPosition="above" *ngIf="currentUser && user.id === currentUser.id">
-                    <md-icon>settings</md-icon>
+                <button mat-icon-button routerLink="/account/edit" matTooltip="Settings" matTooltipPosition="above" *ngIf="currentUser && user.id === currentUser.id">
+                    <mat-icon>settings</mat-icon>
                 </button>
-                <button md-icon-button mdTooltip="Logout" mdTooltipPosition="above" (click)="logout()" *ngIf="currentUser && user.id === currentUser.id">
-                    <md-icon>exit_to_app</md-icon>
+                <button mat-icon-button matTooltip="Logout" matTooltipPosition="above" (click)="logout()" *ngIf="currentUser && user.id === currentUser.id">
+                    <mat-icon>exit_to_app</mat-icon>
                 </button>
-                <button md-raised-button color="accent" *ngIf="currentUser && currentUser.isActive && user.id !== currentUser.id && (user.isActive || (!user.isActive && user.incommingStatus !== 0))"
+                <button mat-raised-button color="accent" *ngIf="currentUser && currentUser.isActive && user.id !== currentUser.id && (user.isActive || (!user.isActive && user.incommingStatus !== 0))"
                     (click)="modifyRelationship()" [disabled]="isModifyingRelationship">{{user.incommingStatus | relationshipAction | uppercase }}</button>
             </div>
             <div fxLayout="row" fxLayoutAlign="start center" *ngIf="user.isActive">
@@ -25,7 +25,7 @@
                     <span class="mat-title">{{user.posts}} </span>
                     <span class="mat-subhead">posts </span>
                 </div>
-                <a md-button (click)="getFollowers()" *ngIf="currentUser" fxFlex>
+                <a mat-button (click)="getFollowers()" *ngIf="currentUser" fxFlex>
                     <span class="mat-title">{{user.followers}} </span>
                     <span class="mat-subhead">followers </span>
                 </a>
@@ -34,7 +34,7 @@
                     <span class="mat-subhead">followers </span>
                 </div>
 
-                <a md-button (click)="getFollowings()" *ngIf="currentUser" fxFlex>
+                <a mat-button (click)="getFollowings()" *ngIf="currentUser" fxFlex>
                     <span class="mat-title">{{user.following}} </span>
                     <span class="mat-subhead">following</span>
                 </a>
@@ -61,14 +61,14 @@
                     <video class="thumbnail" *ngIf="post?.attachments[0].type === 1">
                         <source src="{{post?.attachments[0].uri}}">
                     </video>
-                    <md-icon class="multiple-attachments-icon" *ngIf="post.attachments.length > 1">layers</md-icon>
-                    <div class="after md-padding" fxLayout="row" fxLayoutAlign="space-between center">
+                    <mat-icon class="multiple-attachments-icon" *ngIf="post.attachments.length > 1">layers</mat-icon>
+                    <div class="after mat-padding" fxLayout="row" fxLayoutAlign="space-between center">
                         <div fxLayout="row" fxLayoutAlign="center center">
-                            <md-icon class="post-icon">favorite</md-icon>
+                            <mat-icon class="post-icon">favorite</mat-icon>
                             <span class="post-number">{{post?.likesCount}}</span>
                         </div>
                         <div fxLayout="row" fxLayoutAlign="center center">
-                            <md-icon class="post-icon">mode_comment</md-icon>
+                            <mat-icon class="post-icon">mode_comment</mat-icon>
                             <span class="post-number">{{post?.commentsCount}}</span>
                         </div>
                     </div>
@@ -76,7 +76,7 @@
             </div>
         </div>
         <div fxLayout="row" fxLayoutAlign="center center" *ngIf="page.hasMoreItems">
-            <button md-raised-button (click)="getPosts()" [disabled]="isLoadingPosts">Load More</button>
+            <button mat-raised-button (click)="getPosts()" [disabled]="isLoadingPosts">Load More</button>
         </div>
     </div>
     <ng-template #errorBox>

@@ -5,32 +5,32 @@
         <div class="post-author" fxLayout="row" fxLayoutAlign="space-between center" fxFlex>
             <a class="post-author-username" [routerLink]="['/', post.user.username]">{{post.user.username}}</a>
             <div fxLayout="row" fxLayout="center end" *ngIf="currentUser && post.user.id === currentUser.id">
-                <button md-icon-button type="button" [mdMenuTriggerFor]="menu">
-                    <md-icon>expand_more</md-icon>
+                <button mat-icon-button type="button" [matMenuTriggerFor]="menu">
+                    <mat-icon>expand_more</mat-icon>
                 </button>
-                <md-menu #menu="mdMenu" xPosition="before">
-                    <button md-menu-item (click)="edit()">
-                        <md-icon>edit</md-icon>
+                <mat-menu #menu="matMenu" xPosition="before">
+                    <button mat-menu-item (click)="edit()">
+                        <mat-icon>edit</mat-icon>
                         <span>Edit</span>
                     </button>
-                    <button md-menu-item (click)="remove()">
-                        <md-icon>delete</md-icon>
+                    <button mat-menu-item (click)="remove()">
+                        <mat-icon>delete</mat-icon>
                         <span>Remove</span>
                     </button>
-                </md-menu>
+                </mat-menu>
             </div>
         </div>
     </div>
-    <div md-ripple class="post-content">
+    <div mat-ripple class="post-content">
         <div class="post-content-buttons" fxLayout="row" fxLayoutAlign="space-between center" *ngIf="post.attachments.length > 1">
             <div>
-                <button md-raised-button md-icon-button *ngIf="post.activeAttachment > 0" (click)="previous()">
-                    <md-icon class="post-icon">chevron_left</md-icon>
+                <button mat-raised-button mat-icon-button *ngIf="post.activeAttachment > 0" (click)="previous()">
+                    <mat-icon class="post-icon">chevron_left</mat-icon>
                 </button>
             </div>
             <div>
-                <button md-raised-button md-icon-button *ngIf="post.activeAttachment != post.attachments.length - 1" (click)="next()">
-                    <md-icon class="post-icon">chevron_right</md-icon>
+                <button mat-raised-button mat-icon-button *ngIf="post.activeAttachment != post.attachments.length - 1" (click)="next()">
+                    <mat-icon class="post-icon">chevron_right</mat-icon>
                 </button>
             </div>
         </div>
@@ -41,7 +41,7 @@
             </video>
         </div>
     </div>
-    <md-progress-bar class="progress-bar" color="warn" mode="indeterminate" *ngIf="post.isLoading"></md-progress-bar>
+    <mat-progress-bar class="progress-bar" color="warn" mode="indeterminate" *ngIf="post.isLoading"></mat-progress-bar>
     <div class="post-footer" *ngIf="!post.editing">
         <div class="likes" fxLayout="row" fxLayoutAlign="space-between center" (click)="openLikesDialog(post)">
             <span class="likes-counter">
@@ -67,19 +67,19 @@
         </div>
     </div>
     <div class="post-actions" fxLayout="row" *ngIf="!post.editing">
-        <button class="icon-button" [ngClass]="{ 'liked' : post.userHasLiked }" md-icon-button (click)="like()">
-            <!-- <md-icon>favorite</md-icon> -->
-            <!-- <md-icon svgIcon="heart"></md-icon> -->
-            <md-icon>favorite_bordered</md-icon>
+        <button class="icon-button" [ngClass]="{ 'liked' : post.userHasLiked }" mat-icon-button (click)="like()">
+            <!-- <mat-icon>favorite</mat-icon> -->
+            <!-- <mat-icon svgIcon="heart"></mat-icon> -->
+            <mat-icon>favorite_bordered</mat-icon>
         </button>
         <input class="comment-input" type="text" placeholder="Add comment" [(ngModel)]="text" (keydown.enter)="createComment()" />
-        <button class="icon-button" md-icon-button mdTooltip="Copy to clipboard" mdTooltipPosition="left" ngxClipboard [cbContent]="share()"
+        <button class="icon-button" mat-icon-button matTooltip="Copy to clipboard" matTooltipPosition="left" ngxClipboard [cbContent]="share()"
             (cbOnSuccess)="showToast('Copied to clipboard')">
-            <md-icon>share</md-icon>
+            <mat-icon>share</mat-icon>
         </button>
     </div>
     <div class="post-actions" fxLayout="row" fxLayoutAlign="end center" *ngIf="post.editing">
-        <button class="save-button" md-raised-button color="primary" (click)="update()">Save</button>
-        <button md-raised-button (click)="cancel()">Cancel</button>
+        <button class="save-button" mat-raised-button color="primary" (click)="update()">Save</button>
+        <button mat-raised-button (click)="cancel()">Cancel</button>
     </div>
 </div>
