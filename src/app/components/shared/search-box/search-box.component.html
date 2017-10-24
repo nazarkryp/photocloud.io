@@ -2,7 +2,7 @@
     <mat-icon class="search-box-icon" matPrefix>search</mat-icon>
     <input class="search-box" type="text" placeholder="Search" [(ngModel)]="searchQuery" [matAutocomplete]="auto" [formControl]="searchControl"
         aria-label="User">
-    <mat-spinner class="search-box-spinner" [strokeWidth]="10" *ngIf="isSearching"></mat-spinner>
+    <mat-spinner class="search-box-spinner" [strokeWidth]="3" [diameter]="35" *ngIf="isSearching"></mat-spinner>
     <button class="search-box-icon-button" mat-icon-button *ngIf="searchQuery && !isSearching" (click)="clear()">
         <mat-icon>clear</mat-icon>
     </button>

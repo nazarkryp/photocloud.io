@@ -24,7 +24,6 @@ export class SigninComponent {
     }
 
     signIn() {
-        console.log('SUBMIT');
         this.isLoading = true;
         this.errorMessage = '';
 

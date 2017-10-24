@@ -7,7 +7,10 @@
         <div class="tag-posts" fxFlex>
             <div class="post mat-elevation-z1" *ngFor="let post of page?.data;" fxLayout="column">
                 <div mat-ripple class="thumbnail-container" style="height: 300px; width: 100%; position: relative;" (click)="openPostDialog(post)">
-                    <img class="thumbnail" src="{{post.attachments[0].uri}}" alt="post">
+                    <img class="thumbnail" src="{{post.attachments[0].uri}}" alt="post" *ngIf="post.attachments[0].type !== 1">
+                    <video class="thumbnail" *ngIf="post.attachments[0].type === 1" loop #player>
+                        <source src="{{post.attachments[0].uri}}">
+                    </video>
                 </div>
                 <div class="post-description" fxLayout="column" fxLayoutAlign="start">
                     <mat-icon class="multiple-attachments-icon" *ngIf="post.attachments.length > 1">layers</mat-icon>

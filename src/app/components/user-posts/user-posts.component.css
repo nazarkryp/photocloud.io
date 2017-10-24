@@ -7,14 +7,6 @@
     grid-template-columns: 300px 300px 300px;
     grid-gap: 30px;
     margin-bottom: 50px;
-    display: -ms-grid;
-    display: grid;
-    -ms-grid-columns: 1fr 1fr 1fr 1fr;
-    /* adjusted */
-    grid-template-columns: repeat( 4, 1fr);
-    -ms-grid-rows: 270px 270px 270px 270px;
-    /* adjusted */
-    grid-template-rows: repeat( 4, 270px);
 }
 
 .post-item {

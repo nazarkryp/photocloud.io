@@ -44,10 +44,8 @@
 }
 
 .search-box-spinner {
-    width: 25px;
-    height: 25px;
     position: absolute;
-    right: 12px;
+    right: 5px;
 }
 
 .search-box-icon-button {

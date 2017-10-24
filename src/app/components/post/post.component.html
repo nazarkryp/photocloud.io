@@ -36,7 +36,7 @@
         </div>
         <div (click)='play()' *ngFor="let attachment of post.attachments; let index = index;" [hidden]="index !== post.activeAttachment">
             <img class="post-attachment" src="{{attachment.uri}}" alt="post-image" *ngIf="attachment.type !== 1">
-            <video class="post-attachment" *ngIf="attachment.type === 1" autoplay loop #player>
+            <video class="post-attachment" *ngIf="attachment.type === 1"loop #player>
                 <source src="{{attachment.uri}}">
             </video>
         </div>

@@ -13,7 +13,7 @@
                     <source src="{{attachments[0].uri}}" *ngIf="attachments[0]">
                 </video>
                 <div class="attachment-progress-container" fxLayout="row" fxLayoutAlign="center center" *ngIf="!item.isUploaded">
-                    <mat-progress-spinner strokeWidth="5" mode="determinate" value="{{item.progress}}" color="accent"></mat-progress-spinner>
+                    <mat-progress-spinner [strokeWidth]="5" [diameter]="75" mode="determinate" value="{{item.progress}}" color="accent"></mat-progress-spinner>
                     <span class="progress">{{item.progress}}%</span>
                 </div>
             </div>
