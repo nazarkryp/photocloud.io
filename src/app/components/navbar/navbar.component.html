@@ -22,7 +22,7 @@
                     <mat-icon class="custom-big-icon" svgIcon="compass"></mat-icon>
                 </button>
             </div>
-            <div class="custom-big-icon-container" fxLayout="row" fxLayoutAlign="center center" *ngIf="currentUser && currentUser.isPrivate">
+            <div class="custom-big-icon-container" fxLayout="row" fxLayoutAlign="center center" *ngIf="currentUser && currentUser.isPrivate && currentUser.isActive">
                 <button mat-icon-button (click)="openNotifications()">
                     <mat-icon class="custom-big-icon" svgIcon="bell"></mat-icon>
                 </button>
