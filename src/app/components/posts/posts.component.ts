@@ -7,7 +7,7 @@ import { UserProvider } from '../../infrastructure/providers';
 import { PostService } from '../../services';
 import { CreatePostComponent } from '../shared/create-post/create-post.component';
 import { ConfirmComponent } from '../shared/confirm/confirm.component';
-import { NgProgressService } from 'ngx-progressbar';
+import { NgProgress } from 'ngx-progressbar';
 
 @Component({
     selector: 'app-posts',
@@ -23,7 +23,7 @@ export class PostsComponent implements OnInit, OnDestroy {
     constructor(
         private postService: PostService,
         private userProvider: UserProvider,
-        private progressService: NgProgressService,
+        private progressService: NgProgress,
         private dialog: MatDialog) {
         this.page.data = new Array<Post>();
         this.page.hasMoreItems = false;

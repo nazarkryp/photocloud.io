@@ -7,7 +7,7 @@ import { Observable, Subscription } from 'rxjs/Rx';
 import { UserProvider } from '../../../infrastructure/providers';
 import { Post, User, Attachment, Comment, CurrentUser } from '../../../common/models';
 import { AccountService, PostService, CommentService } from '../../../services';
-import { NgProgressService } from 'ngx-progressbar';
+import { NgProgress } from 'ngx-progressbar';
 
 @Component({
     selector: 'app-post-details',
@@ -30,7 +30,7 @@ export class PostDetailsComponent implements OnInit, OnDestroy {
         private postService: PostService,
         private userProvider: UserProvider,
         private commentService: CommentService,
-        private progressService: NgProgressService,
+        private progressService: NgProgress,
         private accountService: AccountService,
         private snackBar: MatSnackBar,
         @Optional() public dialogRef: MatDialogRef<PostDetailsComponent>,

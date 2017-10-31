@@ -8,7 +8,7 @@ import { PostDetailsComponent } from '../../shared/post-details/post-details.com
 import { Collection, Post, CurrentUser } from '../../../common/models';
 import { PostService, AccountService } from '../../../services';
 
-import { NgProgressService } from 'ngx-progressbar';
+import { NgProgress } from 'ngx-progressbar';
 
 @Component({
     selector: 'app-tags',
@@ -28,7 +28,7 @@ export class TagsComponent implements OnInit, OnDestroy {
         private postService: PostService,
         private userProvider: UserProvider,
         private accountService: AccountService,
-        private progressService: NgProgressService) {
+        private progressService: NgProgress) {
         this.currentUserSubscription = this.userProvider.getCurrentUserAsObservable()
             .subscribe(currentUser => {
                 this.currentUser = currentUser;

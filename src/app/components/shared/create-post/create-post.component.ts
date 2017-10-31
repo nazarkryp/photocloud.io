@@ -6,7 +6,7 @@ import { Post, User, Attachment, Comment, CurrentUser, CreatePostModel } from '.
 import { AccountService, PostService, CommentService } from '../../../services';
 import { UserProvider } from '../../../infrastructure/providers';
 import { TokenProvider } from '../../../infrastructure/security';
-import { NgProgressService } from 'ngx-progressbar';
+import { NgProgress } from 'ngx-progressbar';
 import { FileUploader, FileUploaderOptions } from 'ng2-file-upload';
 
 import { environment } from '../../../../environments/environment';
@@ -30,7 +30,7 @@ export class CreatePostComponent implements OnInit, OnDestroy {
     constructor(
         private postService: PostService,
         private userProvider: UserProvider,
-        private progressService: NgProgressService,
+        private progressService: NgProgress,
         private accountService: AccountService,
         private tokenProvider: TokenProvider,
         @Optional() public dialogRef: MatDialogRef<CreatePostComponent>) {

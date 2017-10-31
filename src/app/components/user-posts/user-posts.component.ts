@@ -8,7 +8,7 @@ import { AccountService, PostService, UserService } from '../../services';
 import { CurrentUser, Post, Attachment, User, RelationshipStatus, Collection, ValidationResult, Error } from '../../common/models';
 import { PostDetailsComponent } from '../shared/post-details/post-details.component';
 import { UsersComponent } from '../shared/users/users.component';
-import { NgProgressService } from 'ngx-progressbar';
+import { NgProgress } from 'ngx-progressbar';
 import { UploaderService } from '../../services';
 import { FileUploader } from 'ng2-file-upload';
 
@@ -38,7 +38,7 @@ export class UserPostsComponent implements OnInit, OnDestroy {
         private router: Router,
         private route: ActivatedRoute,
         public dialog: MatDialog,
-        private progressService: NgProgressService,
+        private progressService: NgProgress,
         private uploaderService: UploaderService) {
         this.uploader = uploaderService.createUploader((attachment) => this.onSuccessUpload(attachment));
         this.currentUserSubscription$ = this.userProvider.getCurrentUserAsObservable()

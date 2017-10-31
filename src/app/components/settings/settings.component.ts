@@ -5,7 +5,7 @@ import { UserProvider } from '../../infrastructure/providers';
 import { AccountService } from '../../services';
 import { CurrentUser, User } from '../../common/models';
 
-import { NgProgressService } from 'ngx-progressbar';
+import { NgProgress } from 'ngx-progressbar';
 
 @Component({
     selector: 'app-settings',
@@ -23,7 +23,7 @@ export class SettingsComponent implements OnInit {
     constructor(
         private userProvider: UserProvider,
         private accountService: AccountService,
-        private progressService: NgProgressService) {
+        private progressService: NgProgress) {
         this.account = new User();
         this.backup = new User();
     }

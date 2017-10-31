@@ -5,13 +5,13 @@ import { Observable } from 'rxjs/Rx';
 import { UserService } from '../../services';
 import { Collection, User } from '../../common/models';
 
-import { NgProgressService } from 'ngx-progressbar';
+import { NgProgress } from 'ngx-progressbar';
 
 @Injectable()
 export class UserListResolver implements Resolve<Collection<User>> {
     constructor(
         private userService: UserService,
-        private progressService: NgProgressService) { }
+        private progressService: NgProgress) { }
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot)
         : Collection<User> | Observable<Collection<User>> | Promise<Collection<User>> {

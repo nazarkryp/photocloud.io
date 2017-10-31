@@ -6,7 +6,7 @@ import { UserService } from '../../../services';
 import { UserProvider } from '../../../infrastructure/providers';
 import { Collection, User, CurrentUser, RelationshipAction, RelationshipStatus } from '../../../common/models';
 
-import { NgProgressService } from 'ngx-progressbar';
+import { NgProgress } from 'ngx-progressbar';
 
 @Component({
     selector: 'app-user-search',
@@ -25,7 +25,7 @@ export class UserSearchComponent implements OnInit, OnDestroy {
         private route: ActivatedRoute,
         private userService: UserService,
         private userProvider: UserProvider,
-        private progressService: NgProgressService) {
+        private progressService: NgProgress) {
         this.currentUserSubscription = this.userProvider.getCurrentUserAsObservable()
             .subscribe((user) => {
                 this.currentUser = user;
