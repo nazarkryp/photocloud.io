@@ -1,7 +1,7 @@
 import { Component, ViewEncapsulation, OnInit, OnDestroy, Input, Output, EventEmitter, Inject, ViewChild } from '@angular/core';
 import { DOCUMENT } from '@angular/platform-browser';
 import { MatSnackBar, MatDialog, MatSnackBarConfig } from '@angular/material';
-import { Observable, Subscription } from 'rxjs/Rx';
+import { Subscription } from 'rxjs/Subscription';
 
 import { UserProvider } from '../../infrastructure/providers';
 import { Post, Attachment, User, Comment, CurrentUser } from '../../common/models';
@@ -17,14 +17,14 @@ import { UsersComponent } from '../shared/users/users.component';
 export class PostComponent implements OnInit, OnDestroy {
     @Input() public post: Post;
     @Output() public onRemoved = new EventEmitter<Post>();
-    @ViewChild('player') player: any;
+    @ViewChild('player') public player: any;
 
-    private text: string;
-    private shareLink: string;
-    private caption: string;
+    public text: string;
+    public shareLink: string;
+    public caption: string;
 
-    private currentUser: CurrentUser;
-    private currentUserSubscription: Subscription;
+    public currentUser: CurrentUser;
+    public currentUserSubscription: Subscription;
 
     constructor(
         public dialog: MatDialog,
@@ -40,23 +40,23 @@ export class PostComponent implements OnInit, OnDestroy {
             });
     }
 
-    private next() {
+    public next() {
         if (this.post.activeAttachment < this.post.attachments.length - 1) {
             this.post.activeAttachment++;
         }
     }
 
-    private previous() {
+    public previous() {
         if (this.post.activeAttachment > 0) {
             this.post.activeAttachment--;
         }
     }
 
-    private remove() {
+    public remove() {
         this.onRemoved.emit(this.post);
     }
 
-    private play(event: any) {
+    public play(event: any) {
         if (!this.player) {
             return;
         }
@@ -68,7 +68,7 @@ export class PostComponent implements OnInit, OnDestroy {
         }
     }
 
-    private share() {
+    public share() {
         const pathArray = this.document.location.href.split('/');
         const protocol = pathArray[0];
         const host = pathArray[2];
@@ -76,13 +76,13 @@ export class PostComponent implements OnInit, OnDestroy {
         return protocol + '//' + host + '/p/' + this.post.id;
     }
 
-    private showToast(message: string) {
+    public showToast(message: string) {
         const config = new MatSnackBarConfig();
         config.duration = 1500;
         const result = this.snackBar.open(message, null, config);
     }
 
-    private createComment() {
+    public createComment() {
         if (!this.text) {
             return;
         }
@@ -114,12 +114,12 @@ export class PostComponent implements OnInit, OnDestroy {
 
     }
 
-    private edit() {
+    public edit() {
         this.caption = this.post.caption;
         this.post.editing = true;
     }
 
-    private update() {
+    public update() {
         this.post.editing = false;
         this.post.caption = this.caption;
         const backup = this.post.caption;
@@ -131,11 +131,11 @@ export class PostComponent implements OnInit, OnDestroy {
             });
     }
 
-    private cancel() {
+    public cancel() {
         this.post.editing = false;
     }
 
-    private like() {
+    public like() {
         if (this.post.userHasLiked) {
             this.post.likesCount--;
             this.post.userHasLiked = !this.post.userHasLiked;
@@ -169,7 +169,7 @@ export class PostComponent implements OnInit, OnDestroy {
         }
     }
 
-    private openLikesDialog(post: Post) {
+    public openLikesDialog(post: Post) {
         const usersObservable = this.postService.getLikes(post.id);
         const dialogRef = this.dialog.open(UsersComponent, {
             data: {

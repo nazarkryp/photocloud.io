@@ -75,25 +75,6 @@
     color: white;
 }
 
-.thumbnail-big {
-    width: 150px;
-    height: 150px;
-    object-fit: cover;
-    overflow: hidden;
-    border-radius: 90px;
-    border: 1px solid #efefef;
-}
-
-.user-info {
-    height: 195px;
-    width: 650px;
-    margin: 35px 0 0 0;
-}
-
-.mat-display-1 {
-    font-weight: lighter;
-}
-
 .mat-padding {
     padding: 0 16px 16px 16px;
 }
@@ -109,24 +90,6 @@
 
 .counters {
     margin-top: 16px;
-}
-
-.mat-subhead.full-name {
-    font-size: 17px;
-    font-weight: bold;
-    padding-right: 10px;
-    width: 100%;
-    white-space: pre;
-}
-
-.mat-subhead.bio {
-    font-size: 17px;
-    font-weight: normal;
-    padding-right: 10px;
-}
-
-.bio-container {
-    line-height: 0;
 }
 
 .button-bordered {

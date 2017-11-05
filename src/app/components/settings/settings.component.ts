@@ -13,12 +13,12 @@ import { NgProgress } from 'ngx-progressbar';
     styleUrls: ['./settings.component.css']
 })
 export class SettingsComponent implements OnInit {
-    private account: User;
-    private backup: User;
-    private isModified: boolean;
-    private isInvertingAccountStatus: boolean;
-    private isInvertingAccountPrivateStatus: boolean;
-    private isLoading: boolean;
+    public account: User;
+    public backup: User;
+    public isModified: boolean;
+    public isInvertingAccountStatus: boolean;
+    public isInvertingAccountPrivateStatus: boolean;
+    public isLoading: boolean;
 
     constructor(
         private userProvider: UserProvider,
@@ -28,7 +28,7 @@ export class SettingsComponent implements OnInit {
         this.backup = new User();
     }
 
-    private save() {
+    public save() {
         this.progressService.start();
         this.accountService.updateAccount(this.backup)
             .finally(() => {
@@ -41,16 +41,16 @@ export class SettingsComponent implements OnInit {
             });
     }
 
-    private cancel() {
+    public cancel() {
         this.copyTo(this.account, this.backup);
         this.onAccountChange();
     }
 
-    private onAccountChange() {
+    public onAccountChange() {
         this.isModified = !this.equals(this.account, this.backup);
     }
 
-    private invertAccountPrivateStatus(event: MatSlideToggleChange) {
+    public invertAccountPrivateStatus(event: MatSlideToggleChange) {
         if (this.isInvertingAccountPrivateStatus) {
             return;
         }
@@ -67,7 +67,7 @@ export class SettingsComponent implements OnInit {
         });
     }
 
-    private invertAccountStatus() {
+    public invertAccountStatus() {
         if (this.isInvertingAccountStatus) {
             return;
         }
@@ -83,7 +83,7 @@ export class SettingsComponent implements OnInit {
         });
     }
 
-    private copyTo<T>(source: T, target: T) {
+    public copyTo<T>(source: T, target: T) {
         const properties = Object.getOwnPropertyNames(source);
 
         properties.forEach(propertyName => {
@@ -91,7 +91,7 @@ export class SettingsComponent implements OnInit {
         });
     }
 
-    private updateAccount(propertiesToUpdate: any) {
+    public updateAccount(propertiesToUpdate: any) {
         const properties = Object.getOwnPropertyNames(propertiesToUpdate);
 
         properties.forEach(propertyName => {
@@ -101,7 +101,7 @@ export class SettingsComponent implements OnInit {
         this.userProvider.updateCurrentUser(propertiesToUpdate);
     }
 
-    private equals<T>(source: T, target: T) {
+    public equals<T>(source: T, target: T) {
         const properties = Object.getOwnPropertyNames(source);
 
         let areEqual = true;
@@ -116,7 +116,7 @@ export class SettingsComponent implements OnInit {
         return areEqual;
     }
 
-    private getAccountSettings() {
+    public getAccountSettings() {
         this.isLoading = true;
         this.progressService.start();
         this.accountService.getAccountSettings()

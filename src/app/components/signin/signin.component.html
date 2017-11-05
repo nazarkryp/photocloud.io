@@ -1,6 +1,8 @@
 <div fxLayout="row" fxLayoutAlign="space-between center" style="height: 100vh; color: #444444;">
     <div style="height: 390px; padding: 0 0 0 25px; width: 500px;" fxLayout="column" fxLayoutAlign="start start">
-        <h1 style="font-weight: 300;">Welcome to <strong>PhotoCloud</strong></h1>
+        <h1 style="font-weight: 300;">Welcome to
+            <strong>PhotoCloud</strong>
+        </h1>
         <p style="word-wrap: normal; line-height: 2.0;">
             Connect with your friends — and other fascinating people. Get in-the-moment updates on the things that interest you. And
             watch events unfold, in real time, from every angle.
@@ -17,12 +19,12 @@
                     <p style="color: #777777;">Sign in to continue</p>
                 </div>
                 <div fxLayout="column">
-                    <mat-form-field style="width: 100%;">
+                    <mat-form-field [hideRequiredMarker]="true" style="width: 100%;">
                         <input matInput type="text" placeholder="Username" [(ngModel)]="account.username" name="username" autocomplete="off" required
                             [errorStateMatcher]="myErrorStateMatcher">
                         <mat-icon matSuffix>person</mat-icon>
                     </mat-form-field>
-                    <mat-form-field style="width: 100%;">
+                    <mat-form-field [hideRequiredMarker]="true" style="width: 100%;">
                         <input matInput placeholder="Password" type="password" [(ngModel)]="account.password" [errorStateMatcher]="myErrorStateMatcher"
                             required name="password" autocomplete="off">
                         <mat-icon matSuffix>vpn_key</mat-icon>

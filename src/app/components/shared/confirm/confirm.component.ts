@@ -7,8 +7,8 @@ import { MatDialogRef, MatSnackBarConfig, MatSnackBar, MAT_DIALOG_DATA } from '@
     styleUrls: ['./confirm.component.css']
 })
 export class ConfirmComponent {
-    private message: string;
-    private title: string;
+    public message: string;
+    public title: string;
 
     constructor(
         public dialogRef: MatDialogRef<ConfirmComponent>,
@@ -17,11 +17,11 @@ export class ConfirmComponent {
             this.message = this.content.message;
     }
 
-    private confirm() {
+    public confirm() {
         this.dialogRef.close(true);
     }
 
-    private cancel() {
+    public cancel() {
         this.dialogRef.close(false);
     }
 }

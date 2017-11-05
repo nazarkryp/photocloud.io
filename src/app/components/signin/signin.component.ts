@@ -12,10 +12,10 @@ import { AccountService } from '../../services';
     styleUrls: ['./signin.component.css']
 })
 export class SigninComponent {
-    private isLoading = false;
-    private errorMessage: string;
-    private account: UserLogin = new UserLogin();
-    private myErrorStateMatcher: MyErrorStateMatcher;
+    public isLoading = false;
+    public errorMessage: string;
+    public account: UserLogin = new UserLogin();
+    public myErrorStateMatcher: MyErrorStateMatcher;
 
     constructor(
         private accountService: AccountService,
@@ -23,7 +23,7 @@ export class SigninComponent {
         this.myErrorStateMatcher = new MyErrorStateMatcher();
     }
 
-    signIn() {
+    public signIn() {
         this.isLoading = true;
         this.errorMessage = '';
 
@@ -35,8 +35,12 @@ export class SigninComponent {
                 this.router.navigateByUrl('/');
             }, errorResponse => {
                 if (errorResponse.error) {
-                    const error = JSON.parse(errorResponse.error);
-                    this.errorMessage = error.error;
+                    if (typeof (errorResponse.error) !== 'string') {
+                        this.errorMessage = errorResponse.error.error
+                    } else {
+                        const error = JSON.parse(errorResponse.error);
+                        this.errorMessage = error.error;
+                    }
                 }
             });
     }

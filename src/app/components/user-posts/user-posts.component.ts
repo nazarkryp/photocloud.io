@@ -9,8 +9,6 @@ import { CurrentUser, Post, Attachment, User, RelationshipStatus, Collection, Va
 import { PostDetailsComponent } from '../shared/post-details/post-details.component';
 import { UsersComponent } from '../shared/users/users.component';
 import { NgProgress } from 'ngx-progressbar';
-import { UploaderService } from '../../services';
-import { FileUploader } from 'ng2-file-upload';
 
 @Component({
     selector: 'app-user-posts',
@@ -18,17 +16,16 @@ import { FileUploader } from 'ng2-file-upload';
     styleUrls: ['./user-posts.component.css']
 })
 export class UserPostsComponent implements OnInit, OnDestroy {
-    private postSubscription$: Subscription;
-    private routeSubscription$: Subscription;
+    public postSubscription$: Subscription;
+    public routeSubscription$: Subscription;
     private currentUserSubscription$: Subscription;
-    private currentUser: CurrentUser;
-    private page: Collection<Post>;
-    private isModifyingRelationship = false;
-    private isLoadingPosts: boolean;
-    private user: User = new User();
-    private error: Error;
-    private uploader: FileUploader;
-    private canEditRelationship: boolean;
+    public currentUser: CurrentUser;
+    public page: Collection<Post>;
+    public isModifyingRelationship = false;
+    public isLoadingPosts: boolean;
+    public user: User = new User();
+    public error: Error;
+    public canEditRelationship: boolean;
 
     constructor(
         private accountService: AccountService,
@@ -38,24 +35,14 @@ export class UserPostsComponent implements OnInit, OnDestroy {
         private router: Router,
         private route: ActivatedRoute,
         public dialog: MatDialog,
-        private progressService: NgProgress,
-        private uploaderService: UploaderService) {
-        this.uploader = uploaderService.createUploader((attachment) => this.onSuccessUpload(attachment));
+        private progressService: NgProgress) {
         this.currentUserSubscription$ = this.userProvider.getCurrentUserAsObservable()
             .subscribe(currentUser => {
                 this.currentUser = currentUser;
             });
     }
 
-    private onSuccessUpload(attachment: Attachment) {
-        this.accountService.updateAccount({
-            pictureId: attachment.id
-        }).subscribe(user => {
-            this.user.pictureUri = user.pictureUri
-        });
-    }
-
-    private getPosts() {
+    public getPosts() {
         this.isLoadingPosts = true;
         if (!this.progressService.isStarted()) {
             this.progressService.start();
@@ -79,50 +66,13 @@ export class UserPostsComponent implements OnInit, OnDestroy {
             });
     }
 
-    private logout() {
-        this.accountService.signOut();
-        this.router.navigateByUrl('/signin');
-    }
-
-    private openPostDialog(post: Post) {
+    public openPostDialog(post: Post) {
         this.dialog.open(PostDetailsComponent, {
             data: post
         });
     }
 
-    private getFollowers() {
-        const usersObservable = this.userService.getFollowers(this.user.id);
-        this.dialog.open(UsersComponent, {
-            data: {
-                usersObservable: usersObservable,
-                title: 'Followers'
-            }
-        });
-    }
-
-    private getFollowings() {
-        const usersObservable = this.userService.getFollowings(this.user.id);
-        this.dialog.open(UsersComponent, {
-            data: {
-                usersObservable: usersObservable,
-                title: 'Following'
-            }
-        });
-    }
-
-    private modifyRelationship() {
-        const action = this.getRelationshipAction(this.user.incommingStatus);
-        this.isModifyingRelationship = true;
-        this.userService.modifyRelationship(this.user.id, {
-            action: action
-        }).finally(() => {
-            this.isModifyingRelationship = false;
-        }).subscribe((user: User) => {
-            this.user = user;
-        }, () => { });
-    }
-
-    private initializePage(): void {
+    public initializePage(): void {
         this.page = new Collection<Post>();
         this.page.hasMoreItems = false;
         this.page.pagination = null;
@@ -130,7 +80,7 @@ export class UserPostsComponent implements OnInit, OnDestroy {
         this.error = null;
     }
 
-    private validateUser(user: User): ValidationResult {
+    public validateUser(user: User): ValidationResult {
         const validationResult: ValidationResult = new ValidationResult();
 
         if (!user.isActive) {
@@ -147,18 +97,6 @@ export class UserPostsComponent implements OnInit, OnDestroy {
         }
 
         return validationResult;
-    }
-
-    private getRelationshipAction(incommingStatus: RelationshipStatus): number {
-        if (incommingStatus === RelationshipStatus.Following) {
-            return 1;
-        } else if (incommingStatus === RelationshipStatus.Requested) {
-            return 1;
-        } else if (incommingStatus === RelationshipStatus.Blocked) {
-            return 4;
-        }
-
-        return 0;
     }
 
     public ngOnInit() {
@@ -181,7 +119,6 @@ export class UserPostsComponent implements OnInit, OnDestroy {
             this.postSubscription$.unsubscribe();
         }
 
-        this.uploader.destroy();
         this.currentUserSubscription$.unsubscribe();
         this.routeSubscription$.unsubscribe();
     }

@@ -11,16 +11,16 @@ import { AccountService } from '../../services';
     styleUrls: ['./signup.component.css']
 })
 export class SignupComponent {
-    private isLoading = false;
-    private errors: string;
-    private account: IncommingUser = new IncommingUser();
+    public isLoading = false;
+    public errors: string;
+    public account: IncommingUser = new IncommingUser();
 
     constructor(
         private accountService: AccountService,
         private router: Router) {
     }
 
-    signUp() {
+    public signUp() {
         this.isLoading = true;
         this.errors = '';
 

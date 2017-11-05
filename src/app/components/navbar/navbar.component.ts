@@ -13,8 +13,8 @@ import { CurrentUser } from '../../common/models';
 })
 export class NavbarComponent implements OnInit, OnDestroy {
     private currentUserSubscription: Subscription;
-    private currentUser: CurrentUser;
-    private renderToolbar: boolean;
+    public currentUser: CurrentUser;
+    public renderToolbar: boolean;
     @Output() openNotificationsEvent = new EventEmitter<boolean>();
 
     constructor(
@@ -25,6 +25,12 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
     public openNotifications() {
         this.openNotificationsEvent.emit(true);
+    }
+
+    public navigationInterceptor(event): void {
+        if (event instanceof NavigationEnd) {
+            this.renderToolbar = this.router.url !== '/signin' && this.router.url !== '/account/create';
+        }
     }
 
     public ngOnInit(): void {
@@ -41,11 +47,5 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
     public ngOnDestroy(): void {
         this.currentUserSubscription.unsubscribe();
-    }
-
-    private navigationInterceptor(event): void {
-        if (event instanceof NavigationEnd) {
-            this.renderToolbar = this.router.url !== '/signin' && this.router.url !== '/account/create';
-        }
     }
 }

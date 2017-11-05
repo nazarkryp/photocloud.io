@@ -13,12 +13,12 @@ import { UserProvider } from '../../../infrastructure/providers';
     encapsulation: ViewEncapsulation.None
 })
 export class UsersComponent implements OnInit, OnDestroy {
-    private users: User[];
-    private currentUser: CurrentUser;
-    private usersObservableSubscription: Subscription;
-    private currentUserSubscription: Subscription;
-    private modifying: { [id: number]: boolean } = {};
-    private title: string;
+    public users: User[];
+    public currentUser: CurrentUser;
+    public usersObservableSubscription: Subscription;
+    public currentUserSubscription: Subscription;
+    public modifying: { [id: number]: boolean } = {};
+    public title: string;
 
     constructor(
         public dialogRef: MatDialogRef<UsersComponent>,
@@ -39,7 +39,7 @@ export class UsersComponent implements OnInit, OnDestroy {
             });
     }
 
-    private modifyRelationship(user: User) {
+    public modifyRelationship(user: User) {
         this.modifying[user.id] = true;
         const action = this.getRelationshipAction(user.incommingStatus);
         this.userService.modifyRelationship(user.id, { action: action })
@@ -51,7 +51,7 @@ export class UsersComponent implements OnInit, OnDestroy {
             }, error => { });
     }
 
-    private getRelationshipAction(incommingStatus: RelationshipStatus): number {
+    public getRelationshipAction(incommingStatus: RelationshipStatus): number {
         if (incommingStatus === RelationshipStatus.Following) {
             return 1;
         } else if (incommingStatus === RelationshipStatus.Requested) {

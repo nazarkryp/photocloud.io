@@ -12,16 +12,14 @@ import { Comment } from '../../../common/models/comment';
     styleUrls: ['./comments.component.css']
 })
 export class CommentsComponent {
-    @Input()
-    public post: Post;
-
-    private isLoading: boolean;
+    @Input() public post: Post;
+    public isLoading: boolean;
 
     constructor(
         private commentService: CommentService,
         private router: Router) { }
 
-    getComments() {
+    public getComments() {
         this.post.isLoading = true;
         this.isLoading = true;
 

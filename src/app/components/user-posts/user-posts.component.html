@@ -1,58 +1,5 @@
-<div fxLayout="column" fxLayoutAlign="center center" *ngIf="!isLoading">
-    <div class="user-info" fxLayout="row" fxLayoutAlign="center center">
-        <img class="thumbnail-big" src="{{user.pictureUri}}" default="assets/images/user-default-image.png" alt="{{user.username}}"
-            *ngIf="!currentUser || (currentUser && !currentUser.isActive) || user.id !== currentUser.id" />
-        <img class="thumbnail-big pointer" src="{{user.pictureUri}}" appImagePreview [image]="uploader.queue[0]?._file" default="assets/images/user-default-image.png"
-            alt="{{user.username}}" (click)="fileInput.click()" *ngIf="currentUser && currentUser.isActive && user.id === currentUser.id"
-        />
-        <input #fileInput type="file" accept="image/*" ng2FileSelect [uploader]="uploader" hidden/>
-        <div class="user-info-data" fxLayout="column" fxFlex>
-            <div fxLayout="row" fxLayoutAlign="space-between center">
-                <div>
-                    <span class="mat-display-1">{{user.username}} </span>
-                </div>
-                <button mat-icon-button routerLink="/account/edit" matTooltip="Settings" matTooltipPosition="above" *ngIf="currentUser && user.id === currentUser.id">
-                    <mat-icon>settings</mat-icon>
-                </button>
-                <button mat-icon-button matTooltip="Logout" matTooltipPosition="above" (click)="logout()" *ngIf="currentUser && user.id === currentUser.id">
-                    <mat-icon>exit_to_app</mat-icon>
-                </button>
-                <button mat-raised-button color="accent" *ngIf="currentUser && currentUser.isActive && user.id !== currentUser.id && (user.isActive || (!user.isActive && user.incommingStatus !== 0))"
-                    (click)="modifyRelationship()" [disabled]="isModifyingRelationship">{{user.incommingStatus | relationshipAction | uppercase }}</button>
-            </div>
-            <div fxLayout="row" fxLayoutAlign="start center" *ngIf="user.isActive">
-                <div fxFlex>
-                    <span class="mat-title">{{user.posts}} </span>
-                    <span class="mat-subhead">posts </span>
-                </div>
-                <a mat-button (click)="getFollowers()" *ngIf="currentUser" fxFlex>
-                    <span class="mat-title">{{user.followers}} </span>
-                    <span class="mat-subhead">followers </span>
-                </a>
-                <div *ngIf="!currentUser" fxFlex>
-                    <span class="mat-title">{{user.followers}} </span>
-                    <span class="mat-subhead">followers </span>
-                </div>
-
-                <a mat-button (click)="getFollowings()" *ngIf="currentUser" fxFlex>
-                    <span class="mat-title">{{user.following}} </span>
-                    <span class="mat-subhead">following</span>
-                </a>
-                <div *ngIf="!currentUser" fxFlex>
-                    <span class="mat-title">{{user.following}} </span>
-                    <span class="mat-subhead">following</span>
-                </div>
-            </div>
-            <div fxLayout="row" fxLayoutAlign="start center" *ngIf="user.isActive">
-                <div>
-                    <span class="mat-subhead full-name">{{user.fullName}}</span>
-                </div>
-                <div class="bio-container">
-                    <span class="mat-subhead bio">{{user.bio}}</span>
-                </div>
-            </div>
-        </div>
-    </div>
+<div fxLayout="column" fxLayoutAlign="center center">
+    <app-user-details [user]="user"></app-user-details>
     <div class="posts-container" *ngIf="!error; else errorBox">
         <div class="user-posts" *ngIf="isLoadingPosts || page.data.length > 0; else emptyFeed;">
             <div class="post-item" *ngFor="let post of page?.data;">
@@ -91,7 +38,8 @@
     </ng-template>
     <ng-template #emptyFeed>
         <div class="info-container" fxLayout="row" fxLayoutAlign="center center">
-            <h1 class="info-message"><strong>{{user.username}}</strong> hasn't posted anything yet</h1>
+            <h1 class="info-message">
+                <strong>{{user.username}}</strong> hasn't posted anything yet</h1>
         </div>
     </ng-template>
 </div>

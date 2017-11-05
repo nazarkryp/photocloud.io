@@ -3,11 +3,11 @@ import { Directive, ElementRef, Input, Renderer, OnChanges, SimpleChanges } from
 @Directive({ selector: 'img[appImagePreview]' })
 
 export class ImagePreviewDirective implements OnChanges {
-    @Input() image: any;
+    @Input() public image: any;
 
     constructor(private el: ElementRef, private renderer: Renderer) { }
 
-    ngOnChanges(changes: SimpleChanges) {
+    public ngOnChanges(changes: SimpleChanges) {
         const reader = new FileReader();
         const el = this.el;
 

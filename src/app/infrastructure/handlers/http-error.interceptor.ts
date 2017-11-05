@@ -9,9 +9,10 @@ import {
     HttpErrorResponse
 } from '@angular/common/http';
 
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/throw';
 
-import { HttpConfiguration } from '../http.config';
+import { HttpConfiguration } from 'app/infrastructure/configuration';
 
 @Injectable()
 export class HttpErrorInterceptor implements HttpInterceptor {

@@ -1,2 +1,2 @@
+export { GlobalErrorHandler } from './global-error.handler';
 export { HttpErrorInterceptor } from './http-error.interceptor';
-export { CachingInterceptor } from './caching.interceptor';

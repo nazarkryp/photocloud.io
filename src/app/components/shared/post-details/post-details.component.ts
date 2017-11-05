@@ -16,14 +16,14 @@ import { NgProgress } from 'ngx-progressbar';
     encapsulation: ViewEncapsulation.None
 })
 export class PostDetailsComponent implements OnInit, OnDestroy {
-    private isDialog: boolean;
+    public isDialog: boolean;
     @Output() public onRemoved = new EventEmitter<Post>();
 
-    private text: string;
-    private shareLink: string;
+    public text: string;
+    public shareLink: string;
 
-    private currentUser: CurrentUser;
-    private currentUserSubscription: Subscription;
+    public currentUser: CurrentUser;
+    public currentUserSubscription: Subscription;
 
     constructor(
         private route: ActivatedRoute,
@@ -47,23 +47,23 @@ export class PostDetailsComponent implements OnInit, OnDestroy {
             });
     }
 
-    private next(): void {
+    public next(): void {
         if (this.post.activeAttachment < this.post.attachments.length - 1) {
             this.post.activeAttachment++;
         }
     }
 
-    private previous(): void {
+    public previous(): void {
         if (this.post.activeAttachment > 0) {
             this.post.activeAttachment--;
         }
     }
 
-    private remove(): void {
+    public remove(): void {
         this.onRemoved.emit(this.post);
     }
 
-    private share(): string {
+    public share(): string {
         const pathArray = this.document.location.href.split('/');
         const protocol = pathArray[0];
         const host = pathArray[2];
@@ -71,13 +71,13 @@ export class PostDetailsComponent implements OnInit, OnDestroy {
         return protocol + '//' + host + '/p/' + this.post.id;
     }
 
-    private showToast(message: string) {
+    public showToast(message: string) {
         const config = new MatSnackBarConfig();
         config.duration = 1500;
         const result = this.snackBar.open(message, null, config);
     }
 
-    createComment() {
+    public createComment() {
         if (!this.text) {
             return;
         }
@@ -109,7 +109,7 @@ export class PostDetailsComponent implements OnInit, OnDestroy {
 
     }
 
-    private like() {
+    public like() {
         if (this.post.userHasLiked) {
             this.post.likesCount--;
             this.post.userHasLiked = !this.post.userHasLiked;
@@ -143,7 +143,7 @@ export class PostDetailsComponent implements OnInit, OnDestroy {
         }
     }
 
-    private getPost(postId: number) {
+    public getPost(postId: number) {
         this.progressService.start();
 
         this.postService.getPostById(postId)

@@ -14,22 +14,22 @@ import { Collection, User } from '../../../common/models';
     styleUrls: ['./search-box.component.css']
 })
 export class SearchBoxComponent implements OnInit {
-    private searchControl: FormControl;
-    private users: Observable<User[]>;
-    private isSearching: boolean;
-    private searchQuery: string;
+    public searchControl: FormControl;
+    public users: Observable<User[]>;
+    public isSearching: boolean;
+    public searchQuery: string;
 
     constructor(
         private router: Router,
         private userService: UserService) {
     }
 
-    private searchUsers(searchQuery: string) {
+    public searchUsers(searchQuery: string) {
         return this.userService.searchUsers(searchQuery)
             .map(collection => collection.data);
     }
 
-    private onSelectionChanged(event: MatAutocompleteSelectedEvent) {
+    public onSelectionChanged(event: MatAutocompleteSelectedEvent) {
         if (event.option.value) {
             this.router.navigateByUrl(`/${event.option.value}`)
                 .then((navigationSuccess) => {
@@ -40,7 +40,7 @@ export class SearchBoxComponent implements OnInit {
         }
     }
 
-    private clear() {
+    public clear() {
         this.searchQuery = '';
     }
 

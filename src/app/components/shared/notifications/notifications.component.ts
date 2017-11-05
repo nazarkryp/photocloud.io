@@ -1,5 +1,6 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs/Rx';
+import { Component, EventEmitter, Output, OnInit, OnDestroy } from '@angular/core';
+
+import { Subscription } from 'rxjs/Subscription';
 
 import { UserService } from '../../../services';
 
@@ -11,16 +12,18 @@ import { User, RelationshipAction } from '../../../common/models';
     styleUrls: ['./notifications.component.css']
 })
 export class NotificationsComponent implements OnInit, OnDestroy {
-    private incommingRequestsSubscription: Subscription;
-    private incommingRequests: User[];
-    private isLoading: boolean;
+    private incommingRequestsSubscription$: Subscription;
+    @Output() onClosing: EventEmitter<any> = new EventEmitter<any>();
+
+    public incommingRequests: User[];
+    public isLoading: boolean;
 
     constructor(
         private userService: UserService) { }
 
-    private getIncommingRequests() {
+    public getIncommingRequests() {
         this.isLoading = true;
-        this.incommingRequestsSubscription = this.userService.getIncommingRequests()
+        this.incommingRequestsSubscription$ = this.userService.getIncommingRequests()
             .finally(() => {
                 this.isLoading = false;
             })
@@ -29,24 +32,26 @@ export class NotificationsComponent implements OnInit, OnDestroy {
             });
     }
 
-    private confirmIncommingRequest(user: User) {
-        const indexToRemove = this.incommingRequests.findIndex(e => e.id === user.id);
-        this.incommingRequests.splice(indexToRemove, 1);
-
+    public confirmIncommingRequest(user: User) {
         this.userService.modifyRelationship(user.id, {
             action: RelationshipAction.Approve
         }).subscribe(userResult => {
-        }, error => { });
+            const indexToRemove = this.incommingRequests.findIndex(e => e.id === user.id);
+            this.incommingRequests.splice(indexToRemove, 1);
+        });
     }
 
-    private removeIncommingRequest(user: User) {
-        const indexToRemove = this.incommingRequests.findIndex(e => e.id === user.id);
-        this.incommingRequests.splice(indexToRemove, 1);
-
+    public removeIncommingRequest(user: User) {
         this.userService.modifyRelationship(user.id, {
             action: RelationshipAction.Reject
         }).subscribe(userResult => {
-        }, error => { });
+            const indexToRemove = this.incommingRequests.findIndex(e => e.id === user.id);
+            this.incommingRequests.splice(indexToRemove, 1);
+        });
+    }
+
+    public close() {
+        this.onClosing.emit({ ok: true });
     }
 
     public ngOnInit() {
@@ -54,6 +59,6 @@ export class NotificationsComponent implements OnInit, OnDestroy {
     }
 
     public ngOnDestroy(): void {
-        this.incommingRequestsSubscription.unsubscribe();
+        this.incommingRequestsSubscription$.unsubscribe();
     }
 }

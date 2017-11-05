@@ -1,6 +1,9 @@
-<div class="notifications" fxLayout="column">
-    <div class="notifications-header" fxlayout="row" fxLayoutAlign="center center">
-        <h2>Incomming Request</h2>
+<div class="notifications-box" fxLayout="column">
+    <div class="notifications-header" fxlayout="row" fxLayoutAlign="space-between center">
+        <span class="notification-box-title">Your notifications</span>
+        <button mat-icon-button (click)="close()">
+            <mat-icon>clear</mat-icon>
+        </button>
     </div>
     <div class="notifications-content" fxLayout="column" fxLayoutAlign="start start" fxFlex *ngIf="incommingRequests && incommingRequests.length !== 0; else noRequests">
         <div class="incomming-request" *ngFor="let user of incommingRequests" fxLayout="row">
@@ -18,7 +21,7 @@
     </div>
     <ng-template #noRequests>
         <div class="notifications-content" fxLayout="column" fxLayoutAlign="center center" fxFlex>
-            <mat-spinner [strokeWidth]="5" *ngIf="isLoading"></mat-spinner>
+            <mat-spinner [strokeWidth]="5" [diameter]="50" *ngIf="isLoading"></mat-spinner>
             <span *ngIf="!isLoading">No Incomming Requests</span>
         </div>
     </ng-template>

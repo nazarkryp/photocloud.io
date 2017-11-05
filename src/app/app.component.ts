@@ -1,7 +1,6 @@
 import { Component, ViewChild, OnInit, OnDestroy } from '@angular/core';
-import { MatSidenav } from '@angular/material';
-import { Subscription } from 'rxjs/Rx';
 import { DomSanitizer } from '@angular/platform-browser';
+import { MatSidenav } from '@angular/material';
 
 import { CommunicationService } from './infrastructure/communication/communication.service';
 
@@ -10,29 +9,15 @@ import { CommunicationService } from './infrastructure/communication/communicati
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit, OnDestroy {
-    @ViewChild('notificationsSidenav') notificationsSidenav: MatSidenav;
-    private isOpened: boolean;
-    private communicationServiceSubscription: Subscription;
+export class AppComponent {
+    @ViewChild('notificationsSidenav')
+    public notificationsSidenav: MatSidenav;
 
-    constructor(
-        private communicationService: CommunicationService) {
-        this.communicationServiceSubscription = communicationService.getState()
-            .subscribe(isOpened => {
-                this.isOpened = isOpened;
-            });
+    public openNotifications($event: boolean) {
+        this.notificationsSidenav.open();
     }
 
-    openNotifications($event: boolean) {
-        if ($event) {
-            this.notificationsSidenav.open();
-        }
-    }
-
-    public ngOnInit(): void {
-    }
-
-    public ngOnDestroy(): void {
-        this.communicationServiceSubscription.unsubscribe();
+    public closeNotifications($event: any) {
+        this.notificationsSidenav.close();
     }
 }

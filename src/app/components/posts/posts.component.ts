@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material';
-import { Subscription } from 'rxjs/Rx';
+import { Subscription } from 'rxjs/Subscription';
 
 import { Post, User, Collection, Comment, Attachment, CurrentUser } from '../../common/models';
 import { UserProvider } from '../../infrastructure/providers';
@@ -15,10 +15,10 @@ import { NgProgress } from 'ngx-progressbar';
     styleUrls: ['./posts.component.css']
 })
 export class PostsComponent implements OnInit, OnDestroy {
-    private page: Collection<Post> = new Collection<Post>();
-    private isLoading = false;
-    private currentUser: CurrentUser;
     private currentUserSubscription: Subscription;
+    public page: Collection<Post> = new Collection<Post>();
+    public isLoading = false;
+    public currentUser: CurrentUser;
 
     constructor(
         private postService: PostService,
@@ -33,7 +33,7 @@ export class PostsComponent implements OnInit, OnDestroy {
             });
     }
 
-    private createPost() {
+    public createPost() {
         const dialogRef = this.dialog.open(CreatePostComponent);
 
         dialogRef.afterClosed()
@@ -45,7 +45,7 @@ export class PostsComponent implements OnInit, OnDestroy {
             });
     }
 
-    private getPosts() {
+    public getPosts() {
         this.isLoading = true;
         this.progressService.start();
 
@@ -64,7 +64,7 @@ export class PostsComponent implements OnInit, OnDestroy {
             });
     }
 
-    private onRemoved(post: Post) {
+    public onRemoved(post: Post) {
         const dialogRef = this.dialog.open(ConfirmComponent, {
             data: {
                 title: 'DELETE POST',

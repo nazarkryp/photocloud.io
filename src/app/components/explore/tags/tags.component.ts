@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material';
-import { Subscription, Observable } from 'rxjs/Rx';
+import { Subscription } from 'rxjs/Subscription';
 
 import { UserProvider } from '../../../infrastructure/providers';
 import { PostDetailsComponent } from '../../shared/post-details/post-details.component';
@@ -16,11 +16,12 @@ import { NgProgress } from 'ngx-progressbar';
     styleUrls: ['./tags.component.css']
 })
 export class TagsComponent implements OnInit, OnDestroy {
-    private routeSubscription: Subscription;
-    private page: Collection<Post> = new Collection<Post>();
-    private currentUser: CurrentUser;
-    private currentUserSubscription: Subscription;
-    private tag: string;
+    private routeSubscription$: Subscription;
+    private currentUserSubscription$: Subscription;
+
+    public page: Collection<Post> = new Collection<Post>();
+    public currentUser: CurrentUser;
+    public tag: string;
 
     constructor(
         public dialog: MatDialog,
@@ -29,13 +30,13 @@ export class TagsComponent implements OnInit, OnDestroy {
         private userProvider: UserProvider,
         private accountService: AccountService,
         private progressService: NgProgress) {
-        this.currentUserSubscription = this.userProvider.getCurrentUserAsObservable()
+        this.currentUserSubscription$ = this.userProvider.getCurrentUserAsObservable()
             .subscribe(currentUser => {
                 this.currentUser = currentUser;
             });
     }
 
-    private getPosts() {
+    public getPosts() {
         this.progressService.start();
         this.postService.getPostsByTag(this.tag, this.page.pagination)
             .finally(() => {
@@ -50,7 +51,7 @@ export class TagsComponent implements OnInit, OnDestroy {
             });
     }
 
-    private like(post) {
+    public like(post) {
         if (post.userHasLiked) {
             post.likesCount--;
             post.userHasLiked = !post.userHasLiked;
@@ -84,21 +85,21 @@ export class TagsComponent implements OnInit, OnDestroy {
         }
     }
 
-    private openPostDialog(post: Post) {
+    public openPostDialog(post: Post) {
         const dialogRef = this.dialog.open(PostDetailsComponent, {
             data: post
         });
     }
 
     public ngOnInit() {
-        this.routeSubscription = this.route.params.subscribe(async params => {
+        this.routeSubscription$ = this.route.params.subscribe(async params => {
             this.tag = params['tag'] as string;
             this.getPosts();
         });
     }
 
     public ngOnDestroy(): void {
-        this.routeSubscription.unsubscribe();
-        this.currentUserSubscription.unsubscribe();
+        this.routeSubscription$.unsubscribe();
+        this.currentUserSubscription$.unsubscribe();
     }
 }

@@ -1,13 +1,13 @@
 import { Injectable, Injector } from '@angular/core';
 import { HttpRequest, HttpResponse } from '@angular/common/http';
 
-import { HttpCache } from './http-cache';
+import { IHttpCache } from './http-cache';
 
 import { SessionService } from './../session/session.service';
 import { AccessToken } from '../../common/models';
 
 @Injectable()
-export class MemoryCache implements HttpCache {
+export class MemoryCache implements IHttpCache {
     private dictionary: { [key: string]: Cache } = {};
 
     constructor(

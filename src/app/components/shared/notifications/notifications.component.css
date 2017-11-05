@@ -1,18 +1,14 @@
-h2 {
-    font-weight: lighter;
-}
-
-.notifications {
+.notifications-box {
     width: 420px;
     height: 100vh;
 }
 
 .notifications-header {
-    /* background: #e91e63;
-    color: white; */
     color: #444444;
     height: 75px;
     padding: 0 15px 0 15px;
+    font-size: 1.2em;
+    font-weight: lighter;
 }
 
 .notifications-content {

@@ -6,11 +6,6 @@ import { Component, ViewEncapsulation, OnInit, Input } from '@angular/core';
     styleUrls: ['./caption.component.css'],
     encapsulation: ViewEncapsulation.None
 })
-export class CaptionComponent implements OnInit {
+export class CaptionComponent {
     @Input() public caption: string;
-
-    constructor() { }
-
-    ngOnInit() {
-    }
 }

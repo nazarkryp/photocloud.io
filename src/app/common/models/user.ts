@@ -10,6 +10,7 @@ export class User {
     isActive: boolean;
     pictureUri: string;
     posts: number;
+    lastActive: Date;
     followers: number;
     following: number;
     outgoingStatus: number;

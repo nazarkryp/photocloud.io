@@ -5,10 +5,10 @@ import { Input, Directive, HostBinding, HostListener } from '@angular/core';
     selector: 'img[default]',
 })
 export class DefaultImageDirective {
-    @Input() default: string;
+    @Input() public default: string;
 
-    @HostBinding('attr.src') @Input() src;
-    @HostListener('error') updateUri() {
+    @HostBinding('attr.src') @Input() public src;
+    @HostListener('error') public updateUri() {
         this.src = this.default;
     }
 }

@@ -1,9 +1,17 @@
 import { Injectable, Injector } from '@angular/core';
 import { Router } from '@angular/router';
-import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpResponse, HttpErrorResponse } from '@angular/common/http';
-import { MemoryCache } from '../../cache/memory-cache';
+import {
+    HttpEvent,
+    HttpInterceptor,
+    HttpHandler,
+    HttpRequest,
+    HttpResponse,
+    HttpErrorResponse
+} from '@angular/common/http';
 
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
+
+import { MemoryCache } from 'app/infrastructure/caching';
 
 @Injectable()
 export class CachingInterceptor implements HttpInterceptor {

@@ -6,7 +6,7 @@ import { AccessToken } from '../../common/models/token';
 export class SessionService {
     private sessionKey = 'photocloud_session';
 
-    setSession(token: AccessToken): void {
+    public setSession(token: AccessToken): void {
         const json = JSON.stringify(token);
 
         localStorage.setItem(this.sessionKey, json);

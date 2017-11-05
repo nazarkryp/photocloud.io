@@ -1,9 +1,9 @@
 <ng-progress [thick]="true" [showSpinner]="false" [trickleSpeed]="75" color="#e91e63"></ng-progress>
 <mat-sidenav-container>
     <mat-sidenav #notificationsSidenav align="end">
-        <app-notifications *ngIf="notificationsSidenav.opened"></app-notifications>
+        <app-notifications (onClosing)="closeNotifications($event)" *ngIf="notificationsSidenav.opened"></app-notifications>
     </mat-sidenav>
-    <div class="my-content" fxLayout="column">
+    <div fxLayout="column">
         <app-navbar (openNotificationsEvent)="openNotifications($event)"></app-navbar>
         <router-outlet></router-outlet>
     </div>

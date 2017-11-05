@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Subscription, Observable } from 'rxjs/Rx';
+import { Subscription } from 'rxjs/Subscription';
 
 import { UserService } from '../../../services';
 import { UserProvider } from '../../../infrastructure/providers';
@@ -14,12 +14,12 @@ import { NgProgress } from 'ngx-progressbar';
     styleUrls: ['./user-search.component.css']
 })
 export class UserSearchComponent implements OnInit, OnDestroy {
-    private title = 'Explore People';
-    private isLoading: boolean;
-    private page: Collection<User>;
-    private modifying: { [id: number]: boolean } = {};
-    private currentUser: CurrentUser;
     private currentUserSubscription: Subscription;
+    public title = 'Explore People';
+    public isLoading: boolean;
+    public page: Collection<User>;
+    public modifying: { [id: number]: boolean } = {};
+    public currentUser: CurrentUser;
 
     constructor(
         private route: ActivatedRoute,
@@ -32,7 +32,7 @@ export class UserSearchComponent implements OnInit, OnDestroy {
             });
     }
 
-    private getUsers() {
+    public getUsers() {
         this.progressService.start();
 
         this.userService.getUsers(this.page.pagination)
@@ -52,7 +52,7 @@ export class UserSearchComponent implements OnInit, OnDestroy {
             }, () => { });
     }
 
-    private modifyRelationship(user: User) {
+    public modifyRelationship(user: User) {
         this.modifying[user.id] = true;
         const action = this.getRelationshipAction(user.incommingStatus);
         this.userService.modifyRelationship(user.id, { action: action })
@@ -64,7 +64,7 @@ export class UserSearchComponent implements OnInit, OnDestroy {
             }, error => { });
     }
 
-    private getRelationshipAction(incommingStatus: RelationshipStatus): number {
+    public getRelationshipAction(incommingStatus: RelationshipStatus): number {
         if (incommingStatus === RelationshipStatus.Following) {
             return 1;
         } else if (incommingStatus === RelationshipStatus.Requested) {

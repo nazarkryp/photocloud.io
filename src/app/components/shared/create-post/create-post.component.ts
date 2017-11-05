@@ -1,6 +1,8 @@
 import { Component, Inject, ViewEncapsulation, Optional, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
 import { MatDialogRef, MatSnackBarConfig, MatSnackBar, MAT_DIALOG_DATA } from '@angular/material';
-import { Observable, Subscription } from 'rxjs/Rx';
+
+import { Subscription } from 'rxjs/Subscription';
+import { Observable } from 'rxjs/Observable';
 
 import { Post, User, Attachment, Comment, CurrentUser, CreatePostModel } from '../../../common/models';
 import { AccountService, PostService, CommentService } from '../../../services';
@@ -18,13 +20,12 @@ import { environment } from '../../../../environments/environment';
     encapsulation: ViewEncapsulation.None
 })
 export class CreatePostComponent implements OnInit, OnDestroy {
-    private currentUser: CurrentUser;
+    public currentUser: CurrentUser;
     private currentUserSubscription: Subscription;
-    private maxItemsCount = 4;
+    public maxItemsCount = 4;
 
-    private attachments: Array<Attachment>;
-    private post: CreatePostModel;
-
+    public attachments: Array<Attachment>;
+    public post: CreatePostModel;
     public uploader: FileUploader;
 
     constructor(
@@ -46,7 +47,7 @@ export class CreatePostComponent implements OnInit, OnDestroy {
             });
     }
 
-    ngOnInit() {
+    public ngOnInit() {
         this.getAuthenticationOptions()
             .subscribe(options => {
                 this.uploader.setOptions(options);
@@ -63,11 +64,11 @@ export class CreatePostComponent implements OnInit, OnDestroy {
         };
     }
 
-    ngOnDestroy() {
+    public ngOnDestroy() {
         this.currentUserSubscription.unsubscribe();
     }
 
-    createPost() {
+    public createPost() {
         this.post.AttachmentIds = this.attachments.map((attachment) => {
             return attachment.id;
         });
@@ -79,7 +80,7 @@ export class CreatePostComponent implements OnInit, OnDestroy {
             });
     }
 
-    private getAuthenticationOptions(): Observable<FileUploaderOptions> {
+    public getAuthenticationOptions(): Observable<FileUploaderOptions> {
         return this.tokenProvider.getAccessToken()
             .map(accessToken => {
                 const bearerToken = `Bearer ${accessToken.accessToken}`;
