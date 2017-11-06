@@ -3,7 +3,7 @@
     <mat-sidenav #notificationsSidenav align="end">
         <app-notifications (onClosing)="closeNotifications($event)" *ngIf="notificationsSidenav.opened"></app-notifications>
     </mat-sidenav>
-    <div fxLayout="column">
+    <div class="my-content" fxLayout="column">
         <app-navbar (openNotificationsEvent)="openNotifications($event)"></app-navbar>
         <router-outlet></router-outlet>
     </div>

@@ -7,7 +7,7 @@
         />
         <input #fileInput type="file" accept="image/*" ng2FileSelect [uploader]="uploader" hidden/>
         <div style="margin-top: 34px;" *ngIf="user.lastActive">
-            <span style="font-weight: bold; text-transform: uppercase; color: #C8C8C8;">{{user.lastActive | timeAgo}}</span>
+            <span style="font-weight: bold; text-transform: uppercase; color: #C8C8C8;">{{user.lastActive | amCalendar}}</span>
         </div>
     </div>
     <div class="user-info-data" fxLayout="column" fxFlex>

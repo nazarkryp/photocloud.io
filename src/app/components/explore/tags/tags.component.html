@@ -19,7 +19,7 @@
                             <a class="username" [routerLink]="['/', post.user.username]">
                                 <strong>{{post.user.username}}</strong>
                             </a>
-                            <span class="date">{{post.created | timeAgo}}</span>
+                            <span class="date">{{post.created | amTimeAgo}}</span>
                         </div>
                         <button class="like-button" mat-icon-button (click)="like(post)" *ngIf="currentUser">
                             <mat-icon [ngClass]="{ 'liked' : post.userHasLiked }">favorite</mat-icon>

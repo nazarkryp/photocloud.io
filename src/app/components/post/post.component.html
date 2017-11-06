@@ -58,7 +58,7 @@
             <app-comments [post]="post"></app-comments>
         </div>
         <div class="post-date">
-            <span class="post-created">{{post.created | timeAgo}}</span>
+            <span class="post-created">{{post.created | amTimeAgo}}</span>
         </div>
     </div>
     <div class="post-footer" *ngIf="post.editing">

@@ -1,14 +1,17 @@
 <div fxLayout="column" fxLayoutAlign="start center">
-    <div class="mat-elevation-z1" fxLayout="column" style="width: 600px; margin: 50px 0 50px 0; padding: 15px 15px 25px 15px; background: white;"
+    <div class="mat-elevation-z1" fxLayout="column" style="width: 700px; margin: 50px 0 50px 0; padding: 24px; background: white;"
         *ngIf="!isLoading">
-        <div style="border-bottom: 1px solid #d8d8d8; padding: 5px 0 20px 0;" fxLayout="row" fxLayoutAlign="center center">
+        <div style="border-bottom: 1px solid #efefef; padding: 5px 0 20px 0;" fxLayout="row" fxLayoutAlign="center center">
             <span style="font-size: 24px; font-weight: lighter;">{{title}}</span>
         </div>
-        <div *ngFor="let user of page.data" fxLayout="row" style="padding-bottom: 10px;border-bottom: 1px solid #efefef;margin-top:10px;">
+        <div *ngFor="let user of page.data" fxLayout="row" style="margin-top:20px;">
             <img class="user-avatar" [routerLink]="['/', user.username]" src="{{user.pictureUri}}" default="assets/images/user-default-image.png"
                 alt="profile">
             <div class="users-details-container" fxLayout="row" fxLayoutAlign="space-between center" fxFlex>
-                <a class="username" [routerLink]="['/', user.username]">{{user.username}}</a>
+                <div fxLayout="column">
+                    <a class="username" [routerLink]="['/', user.username]">{{user.username}}</a>
+                    <span class="last-active" *ngIf="user.lastActive">{{user.lastActive | amCalendar | lowercase}}</span>
+                </div>
                 <div fxLayout="row" fxLayoutAlign="center end">
                     <button class="btn-relationships" mat-raised-button color="primary" (click)="modifyRelationship(user)" [disabled]="modifying[user.id]"
                         *ngIf="currentUser && currentUser.isActive && currentUser.id !== user.id">

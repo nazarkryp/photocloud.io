@@ -42,6 +42,7 @@ import {
         MatExpansionModule
     ],
     exports: [
+        BrowserAnimationsModule,
         MatToolbarModule,
         MatButtonModule,
         MatRippleModule,

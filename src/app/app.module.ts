@@ -23,9 +23,9 @@ import { CreatePostComponent } from './components/shared/create-post/create-post
 import { AuthenticationGuard } from './infrastructure/guards/authentication-guard.service';
 import { CommunicationService, WebApiClient } from './infrastructure/communication';
 
-import { TimeAgoPipe } from 'time-ago-pipe';
 import { ClipboardModule } from 'ngx-clipboard';
 import { NgProgressModule } from 'ngx-progressbar';
+import { MomentModule } from 'angular2-moment';
 import { FileUploadModule } from 'ng2-file-upload';
 
 import { RelationshipActionPipe } from './pipes/relationship-action.pipe';
@@ -62,7 +62,6 @@ import { UserDetailsComponent } from './components/shared/user-details/user-deta
         PostsComponent,
         NavbarComponent,
         PostComponent,
-        TimeAgoPipe,
         SigninComponent,
         UserPostsComponent,
         NotFoundComponent,
@@ -105,7 +104,8 @@ import { UserDetailsComponent } from './components/shared/user-details/user-deta
         FileUploadModule,
         HttpModule,
         ServiceModule,
-        InfrastructureModule
+        InfrastructureModule,
+        MomentModule
     ],
     providers: [
         AuthenticationGuard,

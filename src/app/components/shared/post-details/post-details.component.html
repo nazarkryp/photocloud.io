@@ -28,7 +28,7 @@
                     <div fxLayout="column">
                         <a class="username" [routerLink]="['/', post.user.username]">{{post.user.username}}</a>
                         <div class="post-date">
-                            <span class="post-details-created">{{post.created | timeAgo}}</span>
+                            <span class="post-details-created">{{post.created | amTimeAgo}}</span>
                         </div>
                     </div>
                     <div fxLayout="row">
