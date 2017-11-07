@@ -13,7 +13,7 @@ export class AuthenticationErrorFilter implements HttpErrorFilter {
 
     public handle(response: HttpErrorResponse): Observable<HttpErrorResponse> {
         if (response.status === HttpStatusCode.Unauthorized) {
-            this.router.navigateByUrl('/signin');
+            this.router.navigateByUrl('/account/signin');
 
             return Observable.throw(response);
         }

@@ -29,7 +29,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
     public navigationInterceptor(event): void {
         if (event instanceof NavigationEnd) {
-            this.renderToolbar = this.router.url !== '/signin' && this.router.url !== '/account/create';
+            this.renderToolbar = this.router.url !== '/account/signin' && this.router.url !== '/account/create';
         }
     }
 

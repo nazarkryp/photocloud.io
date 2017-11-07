@@ -13,7 +13,6 @@ import { AppComponent } from './app.component';
 import { PostsComponent } from './components/posts/posts.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { PostComponent } from './components/post/post.component';
-import { SigninComponent } from './components/signin/signin.component';
 import { UserPostsComponent } from './components/user-posts/user-posts.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { CommentsComponent } from './components/shared/comments/comments.component';
@@ -33,11 +32,9 @@ import { ErrorBoxComponent } from './components/shared/error-box/error-box.compo
 import { RawPipe } from './pipes/raw.pipe';
 import { CaptionComponent } from './components/shared/caption/caption.component';
 import { ImagePreviewDirective } from './directives/image-preview.directive';
-import { SignupComponent } from './components/signup/signup.component';
 import { DefaultImageDirective } from './directives/default-image.directive';
 import { TagsComponent } from './components/explore/tags/tags.component';
 import { ConfirmComponent } from './components/shared/confirm/confirm.component';
-import { SettingsComponent } from './components/settings/settings.component';
 import { NotificationsComponent } from './components/shared/notifications/notifications.component';
 import { UsersComponent } from './components/shared/users/users.component';
 import { UserSearchComponent } from './components/explore/user-search/user-search.component';
@@ -62,7 +59,6 @@ import { UserDetailsComponent } from './components/shared/user-details/user-deta
         PostsComponent,
         NavbarComponent,
         PostComponent,
-        SigninComponent,
         UserPostsComponent,
         NotFoundComponent,
         RelationshipActionPipe,
@@ -73,11 +69,9 @@ import { UserDetailsComponent } from './components/shared/user-details/user-deta
         RawPipe,
         CaptionComponent,
         ImagePreviewDirective,
-        SignupComponent,
         DefaultImageDirective,
         TagsComponent,
         ConfirmComponent,
-        SettingsComponent,
         NotificationsComponent,
         UsersComponent,
         UserSearchComponent,

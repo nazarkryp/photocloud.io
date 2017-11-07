@@ -92,7 +92,7 @@ export class UserDetailsComponent implements OnDestroy {
 
     public logout() {
         this.accountService.signOut();
-        this.router.navigateByUrl('/signin');
+        this.router.navigateByUrl('/account/signin');
     }
 
     public ngOnDestroy(): void {

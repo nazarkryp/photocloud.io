@@ -16,12 +16,12 @@ export class AuthenticationGuard implements CanActivate {
             .map(accessToken => {
                 this.communicationService.changeState(accessToken);
 
-                if (accessToken != null && (state.url === '/signin' || state.url === '/account/create')) {
+                if (accessToken != null && (state.url === '/account/signin' || state.url === '/account/create')) {
                     this.router.navigateByUrl('/');
                     return false;
                 }
 
-                if (accessToken == null && (state.url === '/signin' || state.url === '/account/create')) {
+                if (accessToken == null && (state.url === '/account/signin' || state.url === '/account/create')) {
                     return true;
                 }
 
@@ -34,7 +34,7 @@ export class AuthenticationGuard implements CanActivate {
                     return true;
                 }
 
-                this.router.navigateByUrl('/signin');
+                this.router.navigateByUrl('/account/signin');
 
                 return false;
             });

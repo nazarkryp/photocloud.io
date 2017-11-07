@@ -6,12 +6,9 @@ import { Routes, RouterModule, Router, ActivatedRoute, NavigationEnd } from '@an
 import { PostsComponent } from './components/posts/posts.component';
 import { UserPostsComponent } from './components/user-posts/user-posts.component';
 import { UserSearchComponent } from './components/explore/user-search/user-search.component';
-import { SigninComponent } from './components/signin/signin.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { PostDetailsComponent } from './components/shared/post-details/post-details.component';
-import { SignupComponent } from './components/signup/signup.component';
 import { TagsComponent } from './components/explore/tags/tags.component';
-import { SettingsComponent } from './components/settings/settings.component';
 import { ConnectionErrorComponent } from './components/shared/connection-error/connection-error.component';
 import { AuthenticationGuard } from './infrastructure/guards/authentication-guard.service';
 import { UserResolver, UserListResolver } from './infrastructure/resolvers';
@@ -26,28 +23,8 @@ const routes: Routes = [
         }
     },
     {
-        path: 'signin',
-        component: SigninComponent,
-        canActivate: [AuthenticationGuard],
-        data: {
-            title: 'PhotoCloud - Sign In'
-        }
-    },
-    {
-        path: 'account/create',
-        component: SignupComponent,
-        canActivate: [AuthenticationGuard],
-        data: {
-            title: 'PhotoCloud - Create Account'
-        }
-    },
-    {
-        path: 'account/edit',
-        component: SettingsComponent,
-        canActivate: [AuthenticationGuard],
-        data: {
-            title: 'PhotoCloud - Edit Account'
-        }
+        path: 'account',
+        loadChildren: './components/account/account.module#AccountModule'
     },
     {
         path: '404',
@@ -115,3 +92,20 @@ export class AppRoutingModule {
         });
     }
 }
+
+// {
+    //     path: 'account/create',
+    //     component: SignupComponent,
+    //     canActivate: [AuthenticationGuard],
+    //     data: {
+    //         title: 'PhotoCloud - Create Account'
+    //     }
+    // },
+    // {
+    //     path: 'account/edit',
+    //     component: SettingsComponent,
+    //     canActivate: [AuthenticationGuard],
+    //     data: {
+    //         title: 'PhotoCloud - Edit Account'
+    //     }
+    // },
