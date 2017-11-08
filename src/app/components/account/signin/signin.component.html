@@ -1,7 +1,20 @@
-<div style="height: 100vh;" fxLayout="column" fxLayoutAlign="center center">
-    <div style="width: 400px;height: 200px;" fxLayout="column">
-        <input type="text" placeholder="Username or email address" style="padding: 12px; border: 2px solid #efefef; border-radius: 5px; width: 100%; box-sizing: border-box;">
-        <input type="password" placeholder="Password" style="margin-top: 24px; padding: 12px; border: 2px solid #efefef; border-radius: 5px; width: 100%; box-sizing: border-box;">
-        <button mat-raised-button style="margin-top: 24px;">Sign In</button>
+<div style="height: calc(100vh - 75px);" fxLayout="column" fxLayoutAlign="center center">
+    <div style="width: 400px;" fxLayout="column">
+        <div fxLayout="column">
+            <span class="mat-headline">PhotoCloud</span>
+            <span class="mat-subhead" style="color: gray;">Login to continue or
+                <a class="primary" routerLink="/account/create">Create Account</a>
+            </span>
+        </div>
+        <input class="input" type="text" placeholder="Username or email address">
+        <input class="input" type="password" placeholder="Password">
+        <div fxLayout="row" fxLayoutAlign="start center" style="padding: 27px 0 0 0;">
+            <mat-checkbox>Remember me?</mat-checkbox>
+        </div>
+        <button mat-raised-button style="margin-top: 27px;" color="primary">
+            <div style="padding: 5px;">
+                <span>SIGN IN</span>
+            </div>
+        </button>
     </div>
 </div>

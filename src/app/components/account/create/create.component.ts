@@ -1,4 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
+import { DefaultErrorStateMatcher } from 'app/components/account/matchers';
 
 @Component({
     selector: 'app-create',
@@ -7,8 +9,18 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
     encapsulation: ViewEncapsulation.None
 })
 export class CreateComponent implements OnInit {
+    public matcher = new DefaultErrorStateMatcher();
+    public formGroup: FormGroup;
 
-    constructor() { }
+    constructor(private builder: FormBuilder) {
+        this.formGroup = this.builder.group({
+            username: new FormControl('', )
+        });
+    }
+
+    public createAccount() {
+        console.log('OK');
+    }
 
     ngOnInit() {
     }

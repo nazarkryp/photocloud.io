@@ -1,0 +1,17 @@
+.input {
+    padding: 12px;
+    border: 2px solid #efefef;
+    border-radius: 5px;
+    width: 100%;
+    box-sizing: border-box;
+    outline: none;
+    margin-top: 24px;
+}
+
+.primary {
+    color: #e91f63;
+}
+
+.mat-input-underline.mat-form-field-underline {
+    display: none;
+}

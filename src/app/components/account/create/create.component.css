@@ -1,0 +1,24 @@
+.mat-input-element.input {
+    padding: 12px;
+    border: 2px solid #efefef;
+    border-radius: 5px;
+    background-color: white;
+    color: #e91f63;
+}
+
+.primary {
+    color: #e91f63;
+}
+
+.mat-input-underline.mat-form-field-underline {
+    display: none;
+}
+
+.mat-input-placeholder-wrapper.mat-form-field-placeholder-wrapper {
+    position: static;
+}
+
+.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-placeholder,
+.mat-form-field-empty.mat-form-field-placeholder {
+    left: 15px;
+}

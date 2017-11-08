@@ -1,3 +1,32 @@
-<p>
-  create works!
-</p>
+<div style="height: calc(100vh - 75px);" fxLayout="column" fxLayoutAlign="center center">
+    <div style="width: 400px;" fxLayout="column">
+        <!-- <div fxLayout="column" style="margin-bottom: 24px;">
+            <span class="mat-headline">PhotoCloud</span>
+            <span class="mat-subhead" style="color: gray;">Create account or
+                <a class="primary" routerLink="/account/signin">Sign In</a> if already have one
+            </span>
+        </div> -->
+        <form (submit)="createAccount()">
+            <mat-form-field style="width: 100%;" floatPlaceholder="never" hideRequiredMarker="true">
+                <input class="input" matInput type="text" placeholder="Username" required>
+                <mat-error>
+                    this is test error message
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field style="width: 100%;" floatPlaceholder="never" hideRequiredMarker="true">
+                <input class="input" matInput type="text" placeholder="Email Address" required>
+            </mat-form-field>
+            <mat-form-field style="width: 100%;" floatPlaceholder="never" hideRequiredMarker="true">
+                <input class="input" matInput type="password" placeholder="Password" required>
+            </mat-form-field>
+            <mat-form-field style="width: 100%;" floatPlaceholder="never" hideRequiredMarker="true">
+                <input class="input" matInput type="password" placeholder="Confirm Password" required>
+            </mat-form-field>
+            <button mat-raised-button style="margin-top: 27px;" color="primary" type="submit">
+                <div style="padding: 5px;">
+                    <span>Create Account</span>
+                </div>
+            </button>
+        </form>
+    </div>
+</div>

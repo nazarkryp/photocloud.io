@@ -52,6 +52,7 @@ import {
     AuthenticationErrorFilter
 } from './infrastructure/filters/http';
 import { UserDetailsComponent } from './components/shared/user-details/user-details.component';
+import { FooterComponent } from './components/footer/footer.component';
 
 @NgModule({
     declarations: [
@@ -77,7 +78,8 @@ import { UserDetailsComponent } from './components/shared/user-details/user-deta
         UserSearchComponent,
         SearchBoxComponent,
         ConnectionErrorComponent,
-        UserDetailsComponent
+        UserDetailsComponent,
+        FooterComponent
     ],
     entryComponents: [
         PostDetailsComponent,
