@@ -5,7 +5,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { SessionService } from 'app/infrastructure/session';
 import { MemoryCache } from 'app/infrastructure/caching';
 import { TokenProvider, AuthenticationInterceptor } from 'app/infrastructure/security';
-import { GlobalErrorHandler, HttpErrorInterceptor } from 'app/infrastructure/handlers';
+import { HttpErrorInterceptor } from 'app/infrastructure/handlers';
 import { HttpConfiguration } from 'app/infrastructure/configuration';
 import { UserProvider } from 'app/infrastructure/providers';
 import { ClipboardService } from 'app/infrastructure/services';
@@ -41,10 +41,6 @@ import {
             provide: HTTP_INTERCEPTORS,
             useClass: HttpErrorInterceptor,
             multi: true
-        },
-        {
-            provide: ErrorHandler,
-            useClass: GlobalErrorHandler
         }
     ]
 })

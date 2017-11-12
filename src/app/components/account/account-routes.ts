@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 
 import { CreateComponent } from './create/create.component';
-import { SigninComponent } from './signin/signin.component';
+import { SignInComponent } from './signin/signin.component';
 import { EditComponent } from './edit/edit.component';
 import { RecoverComponent } from './recover/recover.component';
 
@@ -16,7 +16,7 @@ export const routes: Routes = [
     },
     {
         path: 'signin',
-        component: SigninComponent
+        component: SignInComponent
     },
     {
         path: 'edit',

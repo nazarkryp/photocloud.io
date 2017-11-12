@@ -5,3 +5,7 @@
     right: auto;
     position: fixed;
 }
+
+::ng-deep .mat-form-field-underline {
+    background: #d8d8d8;
+}

@@ -21,8 +21,8 @@ export class AccountService {
         private tokenMapper: TokenMapper,
         private httpClient: HttpClient) { }
 
-    signIn(account: any): Observable<AccessToken> {
-        const body = 'grant_type=password&username=' + account.username + '&password=' + account.password;
+    public signIn(username: string, password: string): Observable<AccessToken> {
+        const body = 'grant_type=password&username=' + username + '&password=' + password;
 
         return this.httpClient.post(environment.loginUri, body)
             .map(response => {

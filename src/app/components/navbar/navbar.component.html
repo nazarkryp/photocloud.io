@@ -8,12 +8,17 @@
                 <app-search-box *ngIf="currentUser"></app-search-box>
             </div>
             <div fxLayout="row" fxLayoutAlign="end center" *ngIf="currentUser" style="width: 100%;">
-                <a [routerLink]="['/', currentUser.username]" fxLayout="row" fxLayoutAlign="center center"><img class="avatar" src="{{currentUser.pictureUri}}" default="assets/images/user-default-image.png" alt="user"></a>
+                <a [routerLink]="['/', currentUser.username]" fxLayout="row" fxLayoutAlign="center center">
+                    <img class="avatar" src="{{currentUser.pictureUri}}" default="assets/images/user-default-image.png" alt="user">
+                </a>
             </div>
             <div fxLayout="row" fxLayoutAlign="end center" *ngIf="!currentUser" style="width: 100%;">
-                <button mat-button [routerLink]="['/account/signin']" fxLayout="row" fxLayoutAlign="center center" color="primary" style="font-size: 17px; font-weight: 300;">
+                <a style="font-size: 14px;" [routerLink]="['/account/create']" fxLayout="row" fxLayoutAlign="center center">
+                    CREATE ACCOUNT
+                </a>
+                <a style="font-size: 14px; margin-left: 12px;" [routerLink]="['/account/signin']" fxLayout="row" fxLayoutAlign="center center">
                     SIGN IN
-                </button>
+                </a>
             </div>
         </div>
         <div class="navbar-actions" *ngIf="currentUser" fxLayout="row" fxLayoutAlign="end center">

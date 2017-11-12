@@ -1,24 +1,83 @@
-.mat-input-element.input {
+.form-field {
+    width: 100%;
+}
+
+.input {
     padding: 12px;
     border: 2px solid #efefef;
     border-radius: 5px;
-    background-color: white;
-    color: #e91f63;
+    width: 100%;
+    box-sizing: border-box;
+    outline: none;
+    margin-top: 24px;
 }
 
 .primary {
     color: #e91f63;
 }
 
-.mat-input-underline.mat-form-field-underline {
-    display: none;
+.sign-in-form {
+    width: 448px;
+    background: white;
+    padding: 17px;
+    border-radius: 3px;
 }
 
-.mat-input-placeholder-wrapper.mat-form-field-placeholder-wrapper {
-    position: static;
+.signin-content {
+    height: calc(100vh);
+    margin: 0;
+    padding: 0;
+    /* font-family: "arial", heletica, sans-serif; */
+    /* font-size: 12px; */
+    background: #2980b9 url('https://static.tumblr.com/03fbbc566b081016810402488936fbae/pqpk3dn/MRSmlzpj3/tumblr_static_bg3.png') repeat 0 0;
+    -webkit-animation: 10s linear 0s normal none infinite animate;
+    -moz-animation: 10s linear 0s normal none infinite animate;
+    -ms-animation: 10s linear 0s normal none infinite animate;
+    -o-animation: 10s linear 0s normal none infinite animate;
+    animation: 10s linear 0s normal none infinite animate;
 }
 
-.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-placeholder,
-.mat-form-field-empty.mat-form-field-placeholder {
-    left: 15px;
+@-webkit-keyframes animate {
+    from {
+        background-position: 0 0;
+    }
+    to {
+        background-position: 500px 0;
+    }
+}
+
+@-moz-keyframes animate {
+    from {
+        background-position: 0 0;
+    }
+    to {
+        background-position: 500px 0;
+    }
+}
+
+@-ms-keyframes animate {
+    from {
+        background-position: 0 0;
+    }
+    to {
+        background-position: 500px 0;
+    }
+}
+
+@-o-keyframes animate {
+    from {
+        background-position: 0 0;
+    }
+    to {
+        background-position: 500px 0;
+    }
+}
+
+@keyframes animate {
+    from {
+        background-position: 0 0;
+    }
+    to {
+        background-position: 500px 0;
+    }
 }

@@ -24,7 +24,10 @@ const routes: Routes = [
     },
     {
         path: 'account',
-        loadChildren: './components/account/account.module#AccountModule'
+        loadChildren: './components/account/account.module#AccountModule',
+        canActivate: [
+            AuthenticationGuard
+        ]
     },
     {
         path: '404',
