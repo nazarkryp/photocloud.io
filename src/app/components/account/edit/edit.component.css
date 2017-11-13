@@ -1,0 +1,21 @@
+.settings-container {
+    padding: 25px 0 0 0;
+    margin: 50px;
+    color: #444444;
+}
+
+.item {
+    padding: 24px 24px 24px 24px;
+}
+
+.disabled {
+    color: rgba(0, 0, 0, 0.38);
+}
+
+.save-button {
+    margin-right: 15px;
+}
+
+.mat-form-field-underline {
+    background: #d8d8d8;
+}
