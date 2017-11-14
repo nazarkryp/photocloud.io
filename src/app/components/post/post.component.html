@@ -36,7 +36,7 @@
         </div>
         <div (click)='play()' *ngFor="let attachment of post.attachments; let index = index;" [hidden]="index !== post.activeAttachment">
             <img class="post-attachment" src="{{attachment.uri}}" alt="post-image" *ngIf="attachment.type !== 1">
-            <video class="post-attachment" *ngIf="attachment.type === 1"loop #player>
+            <video class="post-attachment" *ngIf="attachment.type === 1" loop #player>
                 <source src="{{attachment.uri}}">
             </video>
         </div>
@@ -61,15 +61,13 @@
             <span class="post-created">{{post.created | amTimeAgo}}</span>
         </div>
     </div>
-    <div class="post-footer" *ngIf="post.editing">
-        <div class="post-caption">
+    <div class="post-edit-footer" *ngIf="post.editing">
+        <div class="post-edit-caption">
             <textarea rows="5" class="caption-input" placeholder="Edit Caption" type="text" [(ngModel)]="caption" fxFlex></textarea>
         </div>
     </div>
     <div class="post-actions" fxLayout="row" *ngIf="!post.editing">
         <button class="icon-button" [ngClass]="{ 'liked' : post.userHasLiked }" mat-icon-button (click)="like()">
-            <!-- <mat-icon>favorite</mat-icon> -->
-            <!-- <mat-icon svgIcon="heart"></mat-icon> -->
             <mat-icon>favorite_bordered</mat-icon>
         </button>
         <input class="comment-input" type="text" placeholder="Add comment" [(ngModel)]="text" (keydown.enter)="createComment()" />
@@ -78,8 +76,8 @@
             <mat-icon>share</mat-icon>
         </button>
     </div>
-    <div class="post-actions" fxLayout="row" fxLayoutAlign="end center" *ngIf="post.editing">
-        <button class="save-button" mat-raised-button color="primary" (click)="update()">Save</button>
-        <button mat-raised-button (click)="cancel()">Cancel</button>
+    <div class="post-edit-actions" fxLayout="row" fxLayoutAlign="end center" *ngIf="post.editing">
+        <button class="save-button" mat-raised-button color="primary" (click)="update()">SAVE</button>
+        <button mat-button (click)="cancel()">CANCEl</button>
     </div>
 </div>

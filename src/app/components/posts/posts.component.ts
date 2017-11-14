@@ -1,4 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material';
 import { Subscription } from 'rxjs/Subscription';
 
@@ -21,9 +22,10 @@ export class PostsComponent implements OnInit, OnDestroy {
     public currentUser: CurrentUser;
 
     constructor(
+        private activatedRoute: ActivatedRoute,
         private postService: PostService,
         private userProvider: UserProvider,
-        private progressService: NgProgress,
+        private progress: NgProgress,
         private dialog: MatDialog) {
         this.page.data = new Array<Post>();
         this.page.hasMoreItems = false;
@@ -47,11 +49,11 @@ export class PostsComponent implements OnInit, OnDestroy {
 
     public getPosts() {
         this.isLoading = true;
-        this.progressService.start();
+        this.progress.start();
 
         this.postService.getPosts(this.page.pagination)
             .finally(() => {
-                this.progressService.done();
+                this.progress.done();
             })
             .subscribe(page => {
                 this.page.hasMoreItems = page.hasMoreItems;
@@ -83,7 +85,8 @@ export class PostsComponent implements OnInit, OnDestroy {
     }
 
     public ngOnInit() {
-        this.getPosts();
+        this.page = this.activatedRoute.snapshot.data['page'];
+        this.progress.done();
     }
 
     public ngOnDestroy() {

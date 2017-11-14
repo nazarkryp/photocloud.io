@@ -11,15 +11,16 @@ import { PostDetailsComponent } from './components/shared/post-details/post-deta
 import { TagsComponent } from './components/explore/tags/tags.component';
 import { ConnectionErrorComponent } from './components/shared/connection-error/connection-error.component';
 import { AuthenticationGuard } from './infrastructure/guards/authentication-guard.service';
-import { UserResolver, UserListResolver } from './infrastructure/resolvers';
+import { PostsResolver, UserResolver, UserListResolver } from './infrastructure/resolvers';
 
 const routes: Routes = [
     {
         path: '',
         component: PostsComponent,
         canActivate: [AuthenticationGuard],
+        resolve: { page: PostsResolver },
         data: {
-            title: 'PhotoCloud - Feed'
+            title: 'PhotoCloud'
         }
     },
     {
@@ -27,7 +28,10 @@ const routes: Routes = [
         loadChildren: './components/account/account.module#AccountModule',
         canActivate: [
             AuthenticationGuard
-        ]
+        ],
+        data: {
+            title: 'PhotoCloud - Account'
+        }
     },
     {
         path: '404',
@@ -87,28 +91,9 @@ export class AppRoutingModule {
             const pageTitle = router.routerState.snapshot.root.children[0].data['title'];
             if (pageTitle) {
                 title.setTitle(pageTitle);
-            } else if (pageTitle !== false) {
-                title.setTitle('My Default Title');
+            } else {
+                title.setTitle('PhotoCloud');
             }
-
-            // ga('send', 'pageview', event.urlAfterRedirects);
         });
     }
 }
-
-// {
-    //     path: 'account/create',
-    //     component: SignupComponent,
-    //     canActivate: [AuthenticationGuard],
-    //     data: {
-    //         title: 'PhotoCloud - Create Account'
-    //     }
-    // },
-    // {
-    //     path: 'account/edit',
-    //     component: SettingsComponent,
-    //     canActivate: [AuthenticationGuard],
-    //     data: {
-    //         title: 'PhotoCloud - Edit Account'
-    //     }
-    // },

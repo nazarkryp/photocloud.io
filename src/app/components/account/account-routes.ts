@@ -16,7 +16,10 @@ export const routes: Routes = [
     },
     {
         path: 'signin',
-        component: SignInComponent
+        component: SignInComponent,
+        data: {
+            title: 'PhotoCloud - Explore Tags'
+        }
     },
     {
         path: 'edit',

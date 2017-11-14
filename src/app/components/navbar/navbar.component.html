@@ -4,10 +4,10 @@
             <div fxLayout="row" fxLayoutAlign="start center" style="width: 100%;">
                 <h1 class="logo" routerLink="/">photocloud</h1>
             </div>
-            <div style="width:600px;">
+            <div style="search-box-container">
                 <app-search-box *ngIf="currentUser"></app-search-box>
             </div>
-            <div fxLayout="row" fxLayoutAlign="end center" *ngIf="currentUser" style="width: 100%;">
+            <div fxLayout="row" fxLayoutAlign="end center" *ngIf="currentUser" style="width: 100%">
                 <a [routerLink]="['/', currentUser.username]" fxLayout="row" fxLayoutAlign="center center">
                     <img class="avatar" src="{{currentUser.pictureUri}}" default="assets/images/user-default-image.png" alt="user">
                 </a>

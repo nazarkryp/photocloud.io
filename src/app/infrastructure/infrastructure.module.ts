@@ -10,7 +10,7 @@ import { HttpConfiguration } from 'app/infrastructure/configuration';
 import { UserProvider } from 'app/infrastructure/providers';
 import { ClipboardService } from 'app/infrastructure/services';
 import { TokenMapper, UserMapper } from 'app/infrastructure/mapping';
-import { UserListResolver, UserResolver } from 'app/infrastructure/resolvers';
+import { PostsResolver, UserListResolver, UserResolver } from 'app/infrastructure/resolvers';
 
 import {
     AccountNotActiveFilter,
@@ -30,6 +30,7 @@ import {
         UserMapper,
         MemoryCache,
         SessionService,
+        PostsResolver,
         UserListResolver,
         UserResolver,
         {

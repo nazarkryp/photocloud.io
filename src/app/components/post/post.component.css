@@ -33,9 +33,21 @@ hr {
     padding: 15px 15px 0px 15px;
 }
 
+.post-edit-footer {
+    padding: 15px 15px 15px 15px;
+}
+
 .post-caption {
     padding: 10px 0 0 0;
     line-height: 1.6em;
+}
+
+.post-edit-caption {
+    line-height: 1.6em;
+}
+
+.post-edit-actions {
+    padding: 0 15px 15px 15px;
 }
 
 .post-actions {
@@ -84,7 +96,6 @@ hr {
     border: 2px solid #d8d8d8;
     padding: 12px 12px 12px 12px;
     border-radius: 3px;
-    margin-bottom: 25px;
 }
 
 .save-button {

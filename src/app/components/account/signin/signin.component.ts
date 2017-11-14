@@ -1,10 +1,11 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { AbstractControl, FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { trigger, animate, style, transition, animateChild, group, query, stagger } from '@angular/animations';
 
 import { AccountService } from 'app/services/account.service';
 import { DefaultErrorStateMatcher } from 'app/components/account/matchers';
+import { NgProgress } from 'ngx-progressbar';
 
 @Component({
     selector: 'app-signin',
@@ -24,9 +25,9 @@ import { DefaultErrorStateMatcher } from 'app/components/account/matchers';
     ]
 })
 export class SignInComponent {
+    @ViewChild('usernameInput') usernameInput: ElementRef;
     public errorStateMatcher = new DefaultErrorStateMatcher();
     public formGroup: FormGroup;
-    public errorMessage: string;
     public isLoading: boolean;
 
     get username(): AbstractControl {
@@ -40,6 +41,7 @@ export class SignInComponent {
     constructor(
         private router: Router,
         private builder: FormBuilder,
+        private progress: NgProgress,
         private accountService: AccountService) {
         this.formGroup = this.builder.group({
             username: new FormControl('',
@@ -58,22 +60,21 @@ export class SignInComponent {
     }
 
     public signIn(username: string, password: string) {
-        this.errorMessage = '';
-
         if (this.formGroup.valid) {
-            this.isLoading = true;
+            this.progress.start();
+            this.formGroup.disable();
             this.accountService.signIn(username, password)
                 .subscribe(response => {
-                    this.isLoading = false;
                     this.router.navigateByUrl('/');
                 }, error => {
-                    this.isLoading = false;
-                    this.errorMessage = 'Sorry, your username or password was incorrect. Please check your username and password';
+                    this.formGroup.enable();
+                    this.formGroup.setErrors({
+                        'signInError':
+                            'Sorry, your username or password was incorrect. Please check your username and password'
+                    });
+                    this.progress.done();
+                    this.usernameInput.nativeElement.focus();
                 });
         }
-    }
-
-    public error(obj: any) {
-        console.log(obj);
     }
 }

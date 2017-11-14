@@ -11,21 +11,21 @@ export class PostService {
         private webApiClient: WebApiClient,
         private userMapper: UserMapper) { }
 
-    createPost(post: CreatePostModel) {
+    public createPost(post: CreatePostModel) {
         return this.webApiClient.post<Post>('posts', post);
     }
 
-    getPosts(pagination: Pagination): Observable<Collection<Post>> {
+    public getPosts(pagination: Pagination): Observable<Collection<Post>> {
         let requestUri = 'posts';
 
-        if (pagination != null && pagination.next != null) {
+        if (pagination && pagination.next != null) {
             requestUri = requestUri + '?next=' + pagination.next;
         }
 
         return this.webApiClient.get<Collection<Post>>(requestUri);
     }
 
-    getUserPosts(username: string, pagination: Pagination): Observable<Collection<Post>> {
+    public getUserPosts(username: string, pagination: Pagination): Observable<Collection<Post>> {
         let requestUri = 'posts/' + username;
 
         if (pagination != null && pagination.next != null) {
@@ -35,7 +35,7 @@ export class PostService {
         return this.webApiClient.get<Collection<Post>>(requestUri);
     }
 
-    getPostsByTag(tag: string, pagination: Pagination) {
+    public getPostsByTag(tag: string, pagination: Pagination) {
         let requestUri = `posts/tags/${tag}`;
 
         if (pagination != null && pagination.next != null) {
@@ -45,15 +45,15 @@ export class PostService {
         return this.webApiClient.get<Collection<Post>>(requestUri);
     }
 
-    getPostById(postId: number): Observable<Post> {
+    public getPostById(postId: number): Observable<Post> {
         return this.webApiClient.get<Post>(`posts/${postId}`);
     }
 
-    update(post: Post): Observable<Post> {
+    public update(post: Post): Observable<Post> {
         return this.webApiClient.patch(`posts/${post.id}`, post);
     }
 
-    removePost(postId: number) {
+    public removePost(postId: number) {
         return this.webApiClient.delete(`posts/${postId}`);
     }
 
@@ -61,11 +61,11 @@ export class PostService {
         return this.webApiClient.get<User[]>(`posts/${postId}/likes`);
     }
 
-    likePost(postId: number) {
+    public likePost(postId: number) {
         return this.webApiClient.post(`posts/${postId}/likes`, null);
     }
 
-    removePostLike(postId: number) {
+    public removePostLike(postId: number) {
         return this.webApiClient.delete(`posts/${postId}/likes`);
     }
 }

@@ -43,6 +43,7 @@ a {
 }
 
 .username {
+    color: #444444;
     font-size: 1.0em;
 }
 
@@ -143,7 +144,7 @@ a {
 
 .last-active {
     font-size: 0.85em;
-    color: #eb1863;
+    color: #c8c8c8;
     margin-top: 3px;
     font-weight: 400;
     letter-spacing: 1px;
