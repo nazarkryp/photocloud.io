@@ -2,6 +2,23 @@
     background-color: white;
 }
 
+@media screen and (max-width: 700px) {
+    .search-box-container {
+        display: none;
+    }
+    .container {
+        width: 100%;
+    }
+}
+
+.container {
+    width: 100%;
+}
+
+.search-box-container {
+    width: 600px;
+}
+
 .logo {
     font-weight: 300;
     font-size: 24px;
@@ -19,19 +36,13 @@
 }
 
 .toolbar-tools {
-    flex: 1 1 auto;
     position: relative;
-}
-
-.progress-bar {
-    height: 3px;
+    width: 100%;
 }
 
 .navbar-actions {
-    position: absolute;
-    right: 0;
-    /* margin-right: 25px; */
-    /* width: 155px; */
+    /* position: absolute;
+    right: 0; */
 }
 
 mat-icon>svg {
@@ -52,8 +63,4 @@ mat-icon>svg {
     color: #444444;
     width: 35px;
     height: 35px;
-}
-
-.search-box-container {
-    width: 600px;
 }

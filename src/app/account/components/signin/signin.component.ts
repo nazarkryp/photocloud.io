@@ -4,7 +4,7 @@ import { AbstractControl, FormGroup, FormBuilder, FormControl, Validators } from
 import { trigger, animate, style, transition, animateChild, group, query, stagger } from '@angular/animations';
 
 import { AccountService } from 'app/services/account.service';
-import { DefaultErrorStateMatcher } from 'app/components/account/matchers';
+import { DefaultErrorStateMatcher } from 'app/account/matchers';
 import { NgProgress } from 'ngx-progressbar';
 
 @Component({

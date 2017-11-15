@@ -1,9 +1,9 @@
 import { Routes } from '@angular/router';
 
-import { CreateComponent } from './create/create.component';
-import { SignInComponent } from './signin/signin.component';
-import { EditComponent } from './edit/edit.component';
-import { RecoverComponent } from './recover/recover.component';
+import { CreateComponent } from './components/create/create.component';
+import { SignInComponent } from './components/signin/signin.component';
+import { EditComponent } from './components/edit/edit.component';
+import { RecoverComponent } from './components/recover/recover.component';
 
 export const routes: Routes = [
     {

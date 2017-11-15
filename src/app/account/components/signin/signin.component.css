@@ -16,20 +16,41 @@
     color: #e91f63;
 }
 
+.disabled {
+    color: #9d9d9d;
+}
+
+.error-message {
+    color: #e91f63;
+    text-align: center;
+}
+
+.mat-spinner>* {
+    stroke: white !important;
+}
+
+
+/*
+.mat-input-underline.mat-form-field-underline {
+    display: none;
+} */
+
 .sign-in-form {
     width: 448px;
     background: white;
     padding: 17px;
     border-radius: 3px;
+    position: relative;
 }
 
 .signin-content {
     height: calc(100vh);
+    color: #444444;
     margin: 0;
     padding: 0;
     /* font-family: "arial", heletica, sans-serif; */
     /* font-size: 12px; */
-    background: #2980b9 url('https://static.tumblr.com/03fbbc566b081016810402488936fbae/pqpk3dn/MRSmlzpj3/tumblr_static_bg3.png') repeat 0 0;
+    background: #2980b9 url('/assets/images/tumblr_static_bg3.png') repeat 0 0;
     -webkit-animation: 10s linear 0s normal none infinite animate;
     -moz-animation: 10s linear 0s normal none infinite animate;
     -ms-animation: 10s linear 0s normal none infinite animate;

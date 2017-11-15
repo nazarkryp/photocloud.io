@@ -16,22 +16,17 @@
     color: #e91f63;
 }
 
-.error-message {
+.sign-up-error-message {
     color: #e91f63;
     text-align: center;
+    padding-bottom: 15px;
 }
 
 .mat-spinner>* {
     stroke: white !important;
 }
 
-
-/*
-.mat-input-underline.mat-form-field-underline {
-    display: none;
-} */
-
-.sign-in-form {
+.sign-up-form {
     width: 448px;
     background: white;
     padding: 17px;
@@ -39,13 +34,12 @@
     position: relative;
 }
 
-.signin-content {
+.signup-content {
+    overflow-y: scroll;
     height: calc(100vh);
     color: #444444;
     margin: 0;
     padding: 0;
-    /* font-family: "arial", heletica, sans-serif; */
-    /* font-size: 12px; */
     background: #2980b9 url('/assets/images/tumblr_static_bg3.png') repeat 0 0;
     -webkit-animation: 10s linear 0s normal none infinite animate;
     -moz-animation: 10s linear 0s normal none infinite animate;

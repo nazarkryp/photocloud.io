@@ -1,10 +1,14 @@
-h1 {
-    font-weight: lighter;
+@media screen and (max-width: 700px) {
+    .posts-container {
+        margin: 50px 0 50px 0;
+    }
 }
 
-.posts-container {
-    width: 600px;
-    margin: 50px 0 50px 0;
+@media screen and (min-width: 701px) {
+    .posts-container {
+        width: 600px;
+        margin: 50px 0 50px 0;
+    }
 }
 
 .mat-fab-bottom-right {

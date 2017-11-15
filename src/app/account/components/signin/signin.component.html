@@ -16,9 +16,6 @@
             <mat-error *ngIf="username.getError('required')">
                 Username is required
             </mat-error>
-            <mat-error *ngIf="username.getError('minlength')">
-                Username must be at least {{username.errors.minlength.requiredLength}}
-            </mat-error>
             <mat-error *ngIf="username.getError('pattern')">
                 Whitespaces are not allowed
             </mat-error>
@@ -28,22 +25,14 @@
             <mat-error *ngIf="password.getError('required')">
                 Password is required
             </mat-error>
-            <mat-error *ngIf="password.getError('minlength')">
-                Password must be at least {{password.errors.minlength.requiredLength}}
-            </mat-error>
-            <mat-error *ngIf="password.getError('pattern')">
-                Whitespaces are not allowed
-            </mat-error>
         </mat-form-field>
         <div style="margin-top: 17px;" fxLayout="row" fxLayoutAlign="end">
-            <a class="primary" routerLink="/account/recover">Forgot Password?</a>
+            <a class="primary" routerLink="/account/recover" *ngIf="!formGroup.disabled">Forgot Password?</a>
+            <span class="disabled" *ngIf="formGroup.disabled">Forgot Password?</span>
         </div>
         <div style="margin-top: 24px;" fxLayout="row" fxLayoutAlign="center" *ngIf="formGroup.hasError('signInError')">
             <span class="error-message">{{formGroup.errors.signInError}}</span>
         </div>
-        <!-- <div style="margin-top: 24px;" fxLayout="row" fxLayoutAlign="center" *ngIf="errorMessage">
-            <span class="error-message">{{errorMessage}}</span>
-        </div> -->
         <div style="margin-top: 34px;">
             <button type="submit" style="width: 100%;" mat-raised-button color="primary" [disabled]="formGroup.disabled">SIGN IN</button>
         </div>

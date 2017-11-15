@@ -25,7 +25,7 @@ const routes: Routes = [
     },
     {
         path: 'account',
-        loadChildren: './components/account/account.module#AccountModule',
+        loadChildren: 'app/account/account.module#AccountModule',
         canActivate: [
             AuthenticationGuard
         ],

@@ -6,6 +6,7 @@ import { UserProvider } from 'app/infrastructure/providers/user.provider';
 import { WebApiClient } from 'app/infrastructure/communication';
 import { SessionService } from 'app/infrastructure/session';
 import { AccessToken, CurrentUser, User } from 'app/common/models';
+import { CreateAccountRequestModel } from 'app/account/models/request';
 import { TokenMapper } from 'app/infrastructure/mapping/token.mapper';
 
 import { environment } from 'app/../environments/environment';
@@ -33,8 +34,8 @@ export class AccountService {
             });
     }
 
-    public create(account: any) {
-        return this.httpClient.post(environment.apiUri + 'account', account);
+    public create(accountRequestModel: CreateAccountRequestModel) {
+        return this.httpClient.post(environment.apiUri + 'account', accountRequestModel);
     }
 
     public signOut() {
