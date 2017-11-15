@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
 
 import { TokenProvider } from '../infrastructure/security/token-provider';
 import { Attachment } from '../common/models';

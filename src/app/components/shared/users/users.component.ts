@@ -1,6 +1,8 @@
 import { Component, OnInit, OnDestroy, Optional, Inject, ViewEncapsulation } from '@angular/core';
 import { MatDialogRef, MatSnackBarConfig, MatSnackBar, MAT_DIALOG_DATA } from '@angular/material';
-import { Observable, Subscription } from 'rxjs/Rx';
+
+import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
 
 import { CurrentUser, User, RelationshipStatus } from '../../../common/models';
 import { UserService } from '../../../services';

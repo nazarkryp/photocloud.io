@@ -3,7 +3,7 @@ import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatAutocompleteSelectedEvent } from '@angular/material';
 
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
 
 import { UserService } from 'app/services';
 import { Collection, User } from 'app/common/models';

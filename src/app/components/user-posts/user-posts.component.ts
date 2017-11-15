@@ -1,7 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material';
-import { Observable, Subscription } from 'rxjs/Rx';
+
+import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
 
 import { UserProvider } from '../../infrastructure/providers';
 import { AccountService, PostService, UserService } from '../../services';

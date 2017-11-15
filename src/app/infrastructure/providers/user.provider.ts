@@ -1,9 +1,12 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs/Rx';
 
-import { SessionService } from '../session';
-import { UserService } from '../../services/user.service';
-import { CurrentUser, AccessToken } from '../../common/models';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+
+import { SessionService } from 'app/infrastructure/session';
+import { UserService } from 'app/services';
+
+import { AccessToken } from 'app/common/models/token';
+import { CurrentUser } from 'app/common/models/current-user';
 
 @Injectable()
 export class UserProvider {

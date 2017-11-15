@@ -1,7 +1,7 @@
 ﻿import { Injectable, Injector } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpResponse, HttpErrorResponse } from '@angular/common/http';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
 
 import { TokenProvider } from './token-provider';
 import { AccessToken } from '../../common/models';

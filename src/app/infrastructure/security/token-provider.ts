@@ -1,12 +1,12 @@
 ﻿import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs/Rx';
 
-import { AccessToken } from '../../common/models';
-import { SessionService } from '../session';
-import { TokenMapper } from '../mapping';
+import { Observable } from 'rxjs/Observable';
 
-import { environment } from '../../../environments/environment';
+import { AccessToken } from 'app/common/models';
+import { SessionService } from 'app/infrastructure/session';
+import { TokenMapper } from 'app/infrastructure/mapping';
+import { environment } from 'app/../environments/environment';
 
 @Injectable()
 export class TokenProvider {

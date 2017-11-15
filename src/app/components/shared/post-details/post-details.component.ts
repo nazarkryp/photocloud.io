@@ -2,11 +2,13 @@ import { Component, Inject, ViewEncapsulation, Optional, OnInit, OnDestroy, Inpu
 import { ActivatedRoute } from '@angular/router';
 import { DOCUMENT } from '@angular/common';
 import { MatDialogRef, MatSnackBarConfig, MatSnackBar, MAT_DIALOG_DATA } from '@angular/material';
-import { Observable, Subscription } from 'rxjs/Rx';
 
-import { UserProvider } from '../../../infrastructure/providers';
-import { Post, User, Attachment, Comment, CurrentUser } from '../../../common/models';
-import { AccountService, PostService, CommentService } from '../../../services';
+import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
+
+import { UserProvider } from 'app/infrastructure/providers';
+import { Post, User, Attachment, Comment, CurrentUser } from 'app/common/models';
+import { PostService, CommentService } from 'app/services';
 import { NgProgress } from 'ngx-progressbar';
 
 @Component({
@@ -31,7 +33,6 @@ export class PostDetailsComponent implements OnInit, OnDestroy {
         private userProvider: UserProvider,
         private commentService: CommentService,
         private progressService: NgProgress,
-        private accountService: AccountService,
         private snackBar: MatSnackBar,
         @Optional() public dialogRef: MatDialogRef<PostDetailsComponent>,
         @Optional() @Inject(MAT_DIALOG_DATA) public post: Post,

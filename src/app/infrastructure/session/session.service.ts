@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { AccessToken } from '../../common/models/token';
+import { AccessToken } from 'app/common/models/token';
 
 @Injectable()
 export class SessionService {

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
 
 import { WebApiClient } from '../infrastructure/communication';
 import { Comment } from '../common/models/comment';

@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
 
-import { UserProvider } from '../infrastructure/providers/user.provider';
-import { WebApiClient } from '../infrastructure/communication';
-import { SessionService } from '../infrastructure/session';
-import { AccessToken, CurrentUser, User } from '../common/models';
-import { TokenMapper } from '../infrastructure/mapping/token.mapper';
+import { UserProvider } from 'app/infrastructure/providers/user.provider';
+import { WebApiClient } from 'app/infrastructure/communication';
+import { SessionService } from 'app/infrastructure/session';
+import { AccessToken, CurrentUser, User } from 'app/common/models';
+
+import { TokenMapper } from 'app/infrastructure/mapping/token.mapper';
 
 import { environment } from '../../environments/environment';
 

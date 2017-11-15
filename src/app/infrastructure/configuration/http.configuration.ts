@@ -1,5 +1,5 @@
 import { Injectable, Injector } from '@angular/core';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
 
 import { HttpErrorFilter } from 'app/infrastructure/filters/http';
 
