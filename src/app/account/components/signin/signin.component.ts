@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { AbstractControl, FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { trigger, animate, style, transition, animateChild, group, query, stagger } from '@angular/animations';
 
-import { AccountService } from 'app/services/account.service';
+import { AccountService } from 'app/account/services';
 import { DefaultErrorStateMatcher } from 'app/account/matchers';
 import { NgProgress } from 'ngx-progressbar';
 

@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 
 import {
-    AccountService,
     CommentService,
     PostService,
     UploaderService,
@@ -11,7 +10,6 @@ import {
 
 @NgModule({
     providers: [
-        AccountService,
         CommentService,
         MessagingService,
         PostService,

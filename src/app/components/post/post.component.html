@@ -34,6 +34,12 @@
                 </button>
             </div>
         </div>
+        <div class="post-content-buttons" fxLayout="row" fxLayoutAlign="center center" *ngIf="post.attachments[0].type === 1">
+            <div class="playpause">
+                <input type="checkbox" value="None" id="playpause" name="check" />
+                <label for="playpause" tabindex=1></label>
+            </div>
+        </div>
         <div (click)='play()' *ngFor="let attachment of post.attachments; let index = index;" [hidden]="index !== post.activeAttachment">
             <img class="post-attachment" src="{{attachment.uri}}" alt="post-image" *ngIf="attachment.type !== 1">
             <video class="post-attachment" *ngIf="attachment.type === 1" loop #player>

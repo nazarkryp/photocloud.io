@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatSlideToggleChange } from '@angular/material';
 
 import { UserProvider } from 'app/infrastructure/providers';
-import { AccountService } from 'app/services';
+import { AccountService } from 'app/account/services';
 import { CurrentUser, User } from 'app/common/models';
 
 import { NgProgress } from 'ngx-progressbar';

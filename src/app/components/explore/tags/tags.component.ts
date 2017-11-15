@@ -6,7 +6,8 @@ import { Subscription } from 'rxjs/Subscription';
 import { UserProvider } from '../../../infrastructure/providers';
 import { PostDetailsComponent } from '../../shared/post-details/post-details.component';
 import { Collection, Post, CurrentUser } from '../../../common/models';
-import { PostService, AccountService } from '../../../services';
+import { PostService } from 'app/services';
+import { AccountService } from 'app/account/services';
 
 import { NgProgress } from 'ngx-progressbar';
 

@@ -5,8 +5,9 @@ import { MatDialog } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 
+import { AccountService } from 'app/account/services';
 import { UserProvider } from '../../infrastructure/providers';
-import { AccountService, PostService, UserService } from '../../services';
+import { PostService, UserService } from '../../services';
 import { CurrentUser, Post, Attachment, User, RelationshipStatus, Collection, ValidationResult, Error } from '../../common/models';
 import { PostDetailsComponent } from '../shared/post-details/post-details.component';
 import { UsersComponent } from '../shared/users/users.component';
