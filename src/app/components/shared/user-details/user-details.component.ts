@@ -7,7 +7,8 @@ import { Observable } from 'rxjs/Observable';
 
 import { UserProvider } from 'app/infrastructure/providers';
 import { CurrentUser, Error, Attachment, RelationshipStatus, User } from 'app/common/models';
-import { UserService, UploaderService, AccountService } from 'app/services';
+import { UserService, UploaderService, } from 'app/services';
+import { AccountService } from 'app/account/services';
 import { FileUploader } from 'ng2-file-upload';
 import { UsersComponent } from 'app/components/shared/users/users.component';
 

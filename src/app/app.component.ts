@@ -2,8 +2,6 @@ import { Component, ViewChild, OnInit, OnDestroy } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatSidenav } from '@angular/material';
 
-import { CommunicationService } from './infrastructure/communication/communication.service';
-
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',

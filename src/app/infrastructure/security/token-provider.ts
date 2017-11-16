@@ -2,6 +2,7 @@
 import { HttpClient } from '@angular/common/http';
 
 import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/of';
 
 import { AccessToken } from 'app/common/models';
 import { SessionService } from 'app/infrastructure/session';

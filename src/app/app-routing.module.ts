@@ -87,13 +87,13 @@ declare var ga;
 })
 export class AppRoutingModule {
     constructor(router: Router, activatedRoute: ActivatedRoute, title: Title) {
-        router.events.filter(e => e instanceof NavigationEnd).subscribe((event) => {
-            const pageTitle = router.routerState.snapshot.root.children[0].data['title'];
-            if (pageTitle) {
-                title.setTitle(pageTitle);
-            } else {
-                title.setTitle('PhotoCloud');
-            }
-        });
+        // router.events.filter(e => e instanceof NavigationEnd).subscribe((event) => {
+        //     const pageTitle = router.routerState.snapshot.root.children[0].data['title'];
+        //     if (pageTitle) {
+        //         title.setTitle(pageTitle);
+        //     } else {
+        //         title.setTitle('PhotoCloud');
+        //     }
+        // });
     }
 }

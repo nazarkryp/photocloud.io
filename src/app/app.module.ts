@@ -20,7 +20,7 @@ import { PostDetailsComponent } from './components/shared/post-details/post-deta
 import { CreatePostComponent } from './components/shared/create-post/create-post.component';
 
 import { AuthenticationGuard } from './infrastructure/guards/authentication-guard.service';
-import { CommunicationService, WebApiClient } from './infrastructure/communication';
+import { AccountService } from 'app/account/services';
 
 import { ClipboardModule } from 'ngx-clipboard';
 import { NgProgressModule } from 'ngx-progressbar';
@@ -28,8 +28,9 @@ import { MomentModule } from 'angular2-moment';
 import { FileUploadModule } from 'ng2-file-upload';
 
 import { RelationshipActionPipe } from './pipes/relationship-action.pipe';
-import { ErrorBoxComponent } from './components/shared/error-box/error-box.component';
 import { RawPipe } from './pipes/raw.pipe';
+
+import { ErrorBoxComponent } from './components/shared/error-box/error-box.component';
 import { CaptionComponent } from './components/shared/caption/caption.component';
 import { ImagePreviewDirective } from './directives/image-preview.directive';
 import { DefaultImageDirective } from './directives/default-image.directive';
@@ -104,9 +105,8 @@ import { FooterComponent } from './components/footer/footer.component';
         MomentModule
     ],
     providers: [
+        AccountService,
         AuthenticationGuard,
-        WebApiClient,
-        CommunicationService,
         WebApiClient
     ],
     bootstrap: [AppComponent]

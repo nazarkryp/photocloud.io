@@ -5,7 +5,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { Observable } from 'rxjs/Observable';
 
 import { Post, User, Attachment, Comment, CurrentUser, CreatePostModel } from '../../../common/models';
-import { AccountService, PostService, CommentService } from '../../../services';
+import { PostService, CommentService } from '../../../services';
 import { UserProvider } from '../../../infrastructure/providers';
 import { TokenProvider } from '../../../infrastructure/security';
 import { NgProgress } from 'ngx-progressbar';
@@ -32,7 +32,6 @@ export class CreatePostComponent implements OnInit, OnDestroy {
         private postService: PostService,
         private userProvider: UserProvider,
         private progressService: NgProgress,
-        private accountService: AccountService,
         private tokenProvider: TokenProvider,
         @Optional() public dialogRef: MatDialogRef<CreatePostComponent>) {
         this.uploader = new FileUploader({
