@@ -1,27 +1,25 @@
-.navbar {
+.toolbar {
     background-color: white;
+    box-shadow: 0 3px 8px -3px rgba(0, 0, 0, 0.26);
 }
 
-@media screen and (max-width: 700px) {
+@media screen and (max-width: 860px) {
     .search-box-container {
         display: none;
     }
-    .container {
-        width: 100%;
-    }
-}
-
-.container {
-    width: 100%;
 }
 
 .search-box-container {
     width: 600px;
 }
 
+.container {
+    width: 100%;
+}
+
 .logo {
     font-weight: 300;
-    font-size: 24px;
+    font-size: 21px;
     cursor: pointer;
     outline: none;
 }
@@ -35,12 +33,7 @@
     outline: none;
 }
 
-.toolbar-tools {
-    position: relative;
-    width: 100%;
-}
-
-.navbar-actions {
+.toolbar-actions {
     /* position: absolute;
     right: 0; */
 }
@@ -60,7 +53,13 @@ mat-icon>svg {
 }
 
 .custom-big-icon {
+    cursor: pointer;
+    outline: none;
     color: #444444;
     width: 35px;
     height: 35px;
+}
+
+.custom-big-icon:hover {
+    color: #e91e63;
 }

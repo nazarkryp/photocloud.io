@@ -2,8 +2,9 @@
 import { Router } from '@angular/router';
 import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/mergeMap';
 
-import { TokenProvider } from 'app/infrastructure/security';
+import { TokenProvider } from './token-provider';
 import { AccessToken } from 'app/common/models';
 
 @Injectable()
@@ -20,7 +21,7 @@ export class AuthenticationInterceptor implements HttpInterceptor {
         const tokenProvider = this.injector.get(TokenProvider);
 
         return tokenProvider.getAccessToken()
-            .flatMap<AccessToken, HttpEvent<any>>((accessToken) => {
+            .mergeMap<AccessToken, HttpEvent<any>>((accessToken) => {
                 if (!accessToken) {
                     return next.handle(req);
                 }

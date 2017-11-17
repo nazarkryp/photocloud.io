@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatSlideToggleChange } from '@angular/material';
 
 import { UserProvider } from 'app/infrastructure/providers';
@@ -7,47 +9,70 @@ import { CurrentUser, User } from 'app/common/models';
 
 import { NgProgress } from 'ngx-progressbar';
 
+const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+
 @Component({
     selector: 'app-edit',
     templateUrl: './edit.component.html',
     styleUrls: ['./edit.component.css']
 })
 export class EditComponent implements OnInit {
-    public account: User;
     public backup: User;
-    public isModified: boolean;
     public isInvertingAccountStatus: boolean;
     public isInvertingAccountPrivateStatus: boolean;
-    public isLoading: boolean;
+    public isActive: boolean;
+    public isPrivate: boolean;
+
+    private formGroup: FormGroup;
 
     constructor(
+        private activatedRoute: ActivatedRoute,
+        private builder: FormBuilder,
         private userProvider: UserProvider,
         private accountService: AccountService,
-        private progressService: NgProgress) {
-        this.account = new User();
+        private progress: NgProgress) {
         this.backup = new User();
+
+        this.formGroup = this.builder.group({
+            username: new FormControl('',
+                Validators.compose([
+                    Validators.required,
+                    Validators.maxLength(50),
+                    Validators.minLength(3),
+                    Validators.pattern(/^\S*$/)])),
+            fullName: new FormControl('',
+                Validators.compose([
+                    Validators.maxLength(50)])),
+            bio: new FormControl('',
+                Validators.compose([
+                    Validators.maxLength(50)])),
+            email: new FormControl('',
+                Validators.compose([
+                    Validators.required,
+                    Validators.maxLength(50),
+                    Validators.pattern(EMAIL_REGEX)])),
+        });
     }
 
     public save() {
-        this.progressService.start();
+        this.progress.start();
         this.accountService.updateAccount(this.backup)
             .finally(() => {
-                this.progressService.done();
+                this.progress.done();
             })
             .subscribe(account => {
                 this.updateAccount(account);
-                this.copyTo(this.account, this.backup);
-                this.onAccountChange();
+                this.setup(account);
             });
     }
 
     public cancel() {
-        this.copyTo(this.account, this.backup);
-        this.onAccountChange();
-    }
+        this.formGroup.markAsPristine();
 
-    public onAccountChange() {
-        this.isModified = !this.equals(this.account, this.backup);
+        this.formGroup.get('username').setValue(this.backup.username);
+        this.formGroup.get('fullName').setValue(this.backup.fullName);
+        this.formGroup.get('bio').setValue(this.backup.bio);
+        this.formGroup.get('email').setValue(this.backup.email);
     }
 
     public invertAccountPrivateStatus(event: MatSlideToggleChange) {
@@ -62,6 +87,7 @@ export class EditComponent implements OnInit {
         }).finally(() => {
             this.isInvertingAccountPrivateStatus = false;
         }).subscribe(account => {
+            this.isPrivate = account.isPrivate;
             this.updateAccount({ isPrivate: account.isPrivate });
             this.copyTo(account, this.backup);
         });
@@ -74,10 +100,11 @@ export class EditComponent implements OnInit {
 
         this.isInvertingAccountStatus = true;
         this.accountService.updateAccount({
-            isActive: !this.account.isActive
+            isActive: !this.isActive
         }).finally(() => {
             this.isInvertingAccountStatus = false;
         }).subscribe(account => {
+            this.isActive = account.isActive;
             this.updateAccount({ isActive: account.isActive });
             this.copyTo(account, this.backup);
         });
@@ -95,48 +122,67 @@ export class EditComponent implements OnInit {
         const properties = Object.getOwnPropertyNames(propertiesToUpdate);
 
         properties.forEach(propertyName => {
-            this.account[propertyName] = propertiesToUpdate[propertyName];
+            const control = this.formGroup.get(propertyName);
+
+            if (control) {
+                control.setValue(propertiesToUpdate[propertyName]);
+            }
         });
 
         this.userProvider.updateCurrentUser(propertiesToUpdate);
+
+        if (!this.isActive) {
+            this.formGroup.disable();
+        } else {
+            this.formGroup.enable();
+        }
     }
 
     public equals<T>(source: T, target: T) {
         const properties = Object.getOwnPropertyNames(source);
 
-        let areEqual = true;
-
-        properties.forEach(propertyName => {
-            if (target[propertyName] !== source[propertyName]) {
-                areEqual = false;
-                return;
-            }
-        });
-
-        return areEqual;
-    }
-
-    public getAccountSettings() {
-        this.isLoading = true;
-        this.progressService.start();
-        this.accountService.getAccountSettings()
-            .finally(() => {
-                this.progressService.done();
-                this.isLoading = false;
-            })
-            .subscribe(account => {
-                this.account = account;
-                this.copyTo(account, this.backup);
-                const currentUser = this.userProvider.getCurrentUser();
-                const areEqual = this.equals(account, currentUser);
-
-                if (!areEqual) {
-                    this.updateAccount(account);
-                }
-            });
+        return !properties.some(propertyName => target[propertyName] !== source[propertyName]);
     }
 
     public ngOnInit() {
-        this.getAccountSettings();
+        const account = this.activatedRoute.snapshot.data['account'];
+
+        this.setup(account);
+
+        const currentUser = this.userProvider.getCurrentUser();
+        const areEqual = this.equals(account, currentUser);
+
+        if (!areEqual) {
+            this.updateAccount(account);
+        }
+
+        this.progress.done();
+
+        this.formGroup.valueChanges.subscribe(e => {
+            if (this.equals(this.backup, e)) {
+                this.formGroup.markAsPristine();
+            }
+        });
+    }
+
+    private setup(account: User) {
+        this.backup.username = account.username;
+        this.backup.fullName = account.fullName;
+        this.backup.bio = account.bio;
+        this.backup.email = account.email;
+
+        this.formGroup.get('username').setValue(account.username);
+        this.formGroup.get('fullName').setValue(account.fullName);
+        this.formGroup.get('bio').setValue(account.bio);
+        this.formGroup.get('email').setValue(account.email);
+
+        this.isActive = account.isActive;
+        this.isPrivate = account.isPrivate;
+
+        if (!this.isActive) {
+            this.formGroup.disable();
+        } else {
+            this.formGroup.enable();
+        }
     }
 }

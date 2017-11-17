@@ -15,6 +15,7 @@ import { RecoverComponent } from './components/recover/recover.component';
 import { routes } from './account-routes';
 import { AccountService } from 'app/account/services';
 import { AuthenticationGuard } from 'app/infrastructure/guards';
+import { EditResolver } from 'app/account/services/resolvers';
 
 @NgModule({
     imports: [
@@ -33,7 +34,8 @@ import { AuthenticationGuard } from 'app/infrastructure/guards';
     ],
     providers: [
         AuthenticationGuard,
-        AccountService
+        AccountService,
+        EditResolver
     ]
 })
 export class AccountModule { }

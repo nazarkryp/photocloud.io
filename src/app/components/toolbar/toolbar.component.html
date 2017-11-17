@@ -1,0 +1,28 @@
+<mat-toolbar class="toolbar" *ngIf="renderToolbar" fxLayout="row" fxLayoutAlign="center center">
+    <div fxLayout="row" fxLayoutAlign="space-between center" style="width: 100vw; padding: 0 24px;">
+        <div fxLayout="row" fxLayoutAlign="center center" fxFlex>
+            <h1 class="logo" routerLink="/">photocloud</h1>
+        </div>
+        <div class="search-box-container">
+            <app-search-box *ngIf="currentUser"></app-search-box>
+        </div>
+        <div fxFlex fxLayout="row" fxLayoutAlign="center center" *ngIf="!currentUser">
+            <button mat-button color="primary" style="font-size: 14px; font-weight: bold;" routerLink="/account/signin">
+                SIGN IN
+            </button>
+        </div>
+        <div *ngIf="currentUser" fxFlex fxLayout="row" fxLayoutAlign="end center">
+            <div class="custom-big-icon-container" fxLayout="row" fxLayoutAlign="center center" *ngIf="currentUser.isPrivate && currentUser.isActive">
+                <mat-icon class="custom-big-icon" svgIcon="bell" (click)="openNotifications()"></mat-icon>
+            </div>
+            <div class="custom-big-icon-container" fxLayout="row" fxLayoutAlign="center center">
+                <mat-icon [routerLink]="['/explore/people']" class="custom-big-icon" svgIcon="compass"></mat-icon>
+            </div>
+            <div class="custom-big-icon-container" fxLayout="row" fxLayoutAlign="center center">
+                <a [routerLink]="['/', currentUser.username]" fxLayout="row" fxLayoutAlign="center center">
+                    <img class="avatar" src="{{currentUser.pictureUri}}" default="assets/images/user-default-image.png" alt="user">
+                </a>
+            </div>
+        </div>
+    </div>
+</mat-toolbar>

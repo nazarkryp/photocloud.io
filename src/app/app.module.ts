@@ -11,7 +11,7 @@ import { AppMaterialModule } from './app-material/app-material.module';
 
 import { AppComponent } from './app.component';
 import { PostsComponent } from './components/posts/posts.component';
-import { NavbarComponent } from './components/navbar/navbar.component';
+import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { PostComponent } from './components/post/post.component';
 import { UserPostsComponent } from './components/user-posts/user-posts.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
@@ -54,12 +54,13 @@ import {
 } from './infrastructure/filters/http';
 import { UserDetailsComponent } from './components/shared/user-details/user-details.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { WebApiClient } from 'app/infrastructure/communication';
 
 @NgModule({
     declarations: [
         AppComponent,
         PostsComponent,
-        NavbarComponent,
+        ToolbarComponent,
         PostComponent,
         UserPostsComponent,
         NotFoundComponent,

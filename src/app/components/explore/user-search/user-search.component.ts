@@ -34,13 +34,18 @@ export class UserSearchComponent implements OnInit, OnDestroy {
 
     public getUsers() {
         this.progressService.start();
+        // this.isLoading = true;
 
         this.userService.getUsers(this.page.pagination)
             .finally(() => {
                 this.progressService.done();
-                this.isLoading = false;
+                // this.isLoading = false;
             })
             .subscribe((page: Collection<User>) => {
+                if (!this.page.pagination) {
+                    this.page = new Collection<User>();
+                }
+
                 this.page.hasMoreItems = page.hasMoreItems;
                 this.page.pagination = page.pagination;
                 if (page.data) {
@@ -83,6 +88,13 @@ export class UserSearchComponent implements OnInit, OnDestroy {
                 this.modifying[user.id] = false;
             });
         }
+    }
+
+    public refresh() {
+        // this.page = new Collection<User>();
+        this.page.pagination = null;
+        this.modifying = {};
+        this.getUsers();
     }
 
     public ngOnDestroy() {

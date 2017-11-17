@@ -5,6 +5,8 @@ import { SignInComponent } from './components/signin/signin.component';
 import { EditComponent } from './components/edit/edit.component';
 import { RecoverComponent } from './components/recover/recover.component';
 
+import { EditResolver } from 'app/account/services/resolvers';
+
 export const routes: Routes = [
     {
         path: '',
@@ -23,7 +25,10 @@ export const routes: Routes = [
     },
     {
         path: 'edit',
-        component: EditComponent
+        component: EditComponent,
+        resolve: {
+            account: EditResolver
+        }
     },
     {
         path: 'recover',

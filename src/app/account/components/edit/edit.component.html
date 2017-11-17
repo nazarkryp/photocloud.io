@@ -1,63 +1,35 @@
-<div fxLayout="row" fxLayoutAlign="center start" *ngIf="!isLoading">
-    <mat-accordion class="settings-container" fxLayout="column">
-        <div fxLayout="row" fxLayoutAlign="start center">
-            <span class="mat-headline">Settings</span>
+<div fxLayout="column" fxLayoutAlign="start center" *ngIf="!isLoading" style="padding: 34px 0;">
+    <div style="width: 600px; box-shadow: 0 3px 8px -3px rgba(0, 0, 0, 0.26); background: white; padding: 12px; box-sizing: border-box;">
+        <div>
+            <span style="font-weight:lighter; font-size: 24px;">Edit Account</span>
         </div>
-        <mat-expansion-panel>
-            <mat-expansion-panel-header>
-                <mat-panel-title>
-                    Personal
-                </mat-panel-title>
-                <mat-panel-description>
-                </mat-panel-description>
-            </mat-expansion-panel-header>
+        <form style="margin-top: 34px;" [formGroup]="formGroup" (ngSubmit)="save(usernameInput.value, passwordInput.value)">
             <mat-form-field style="width: 100%;">
-                <input matInput placeholder="Username" type="text" [(ngModel)]="backup.username" [disabled]="!account.isActive" name="username"
-                    (change)='onAccountChange()' autocomplete="off">
+                <input formControlName="username" matInput placeholder="Username" type="text" autocomplete="off">
             </mat-form-field>
             <mat-form-field style="width: 100%;">
-                <input matInput placeholder="Full Name" type="text" [(ngModel)]="backup.fullName" [disabled]="!account.isActive" name="fullName"
-                    (change)='onAccountChange()' autocomplete="off">
+                <input formControlName="fullName" matInput placeholder="Full Name" type="text" autocomplete="off">
             </mat-form-field>
             <mat-form-field style="width: 100%;">
-                <input matInput placeholder="Bio" type="text" [(ngModel)]="backup.bio" [disabled]="!account.isActive" name="bio" (change)='onAccountChange()'
-                    autocomplete="off">
+                <input formControlName="bio" matInput placeholder="Bio" type="text" autocomplete="off">
             </mat-form-field>
             <mat-form-field style="width: 100%;">
-                <input matInput placeholder="Email Address" type="email" [(ngModel)]="backup.email" [disabled]="!account.isActive" name="email"
-                    (change)='onAccountChange()' autocomplete="off">
+                <input formControlName="email" matInput placeholder="Email Address" type="email" autocomplete="off">
             </mat-form-field>
-            <div class="item" fxLayout="row" fxLayoutAlign="end center" *ngIf="isModified">
-                <button class="save-button" mat-raised-button color="primary" (click)="save()">Save Changes</button>
-                <button mat-raised-button (click)="cancel()">Cancel</button>
+            <div fxLayout="row" fxLayoutAlign="end center">
+                <button mat-raised-button color="primary" (click)="save()" *ngIf="formGroup.valid && formGroup.dirty">SAVE</button>
+                <button mat-button color=primary *ngIf="formGroup.dirty" (click)="cancel()">CANCEL</button>
             </div>
-        </mat-expansion-panel>
-        <mat-expansion-panel>
-            <mat-expansion-panel-header>
-                <mat-panel-title>
-                    Privacy
-                </mat-panel-title>
-                <mat-panel-description>
-                </mat-panel-description>
-            </mat-expansion-panel-header>
-            <div class="item" fxLayout="row" fxLayoutAlign="space-between center">
-                <span [ngClass]="{ 'disabled' : !account.isActive }">Private account</span>
-                <mat-slide-toggle [(ngModel)]="account.isPrivate" [checked]="account.isPrivate" (change)='invertAccountPrivateStatus($event)'
-                    [disabled]="!account.isActive"></mat-slide-toggle>
-            </div>
-        </mat-expansion-panel>
-        <mat-expansion-panel>
-            <mat-expansion-panel-header>
-                <mat-panel-title>
-                    Account
-                </mat-panel-title>
-                <mat-panel-description>
-                </mat-panel-description>
-            </mat-expansion-panel-header>
-            <div class="item" fxLayout="row" fxLayoutAlign="space-between center">
-                <span>Change account status</span>
-                <button mat-raised-button color="primary" (click)="invertAccountStatus()">{{account.isActive ? 'DISABLE' : 'ACTIVATE'}}</button>
-            </div>
-        </mat-expansion-panel>
-    </mat-accordion>
+        </form>
+
+        <div class="item" fxLayout="row" fxLayoutAlign="space-between center">
+            <span [ngClass]="{ 'disabled' : !isActive }">Private account</span>
+            <mat-slide-toggle [(ngModel)]="isPrivate" [checked]="isPrivate" (change)='invertAccountPrivateStatus($event)' [disabled]="!isActive"></mat-slide-toggle>
+        </div>
+
+        <div class="item" fxLayout="row" fxLayoutAlign="space-between center">
+            <span>Change account status</span>
+            <button mat-raised-button color="primary" (click)="invertAccountStatus()">{{isActive ? 'DISABLE' : 'ACTIVATE'}}</button>
+        </div>
+    </div>
 </div>

@@ -1,8 +1,11 @@
 <div fxLayout="column" fxLayoutAlign="start center">
-    <div class="mat-elevation-z1" fxLayout="column" style="width: 700px; margin: 50px 0 50px 0; padding: 24px; background: white;"
+    <div fxLayout="column" style="width: 600px; margin: 50px 0; padding: 12px; background: white; box-sizing: border-box;box-shadow: 0 3px 8px -3px rgba(0, 0, 0, 0.26);"
         *ngIf="!isLoading">
-        <div style="border-bottom: 1px solid #efefef; padding: 5px 0 20px 0;" fxLayout="row" fxLayoutAlign="center center">
-            <span style="font-size: 24px; font-weight: lighter;">{{title}}</span>
+        <div style="border-bottom: 1px solid #efefef; padding: 15px 0 20px 0;" fxLayout="row" fxLayoutAlign="space-between center">
+            <span style="font-size: 19px; font-weight: lighter;">EXPLORE PEOPLE</span>
+            <button mat-icon-button (click)="refresh()">
+                <mat-icon>refresh</mat-icon>
+            </button>
         </div>
         <div *ngFor="let user of page.data" fxLayout="row" style="margin-top:20px;">
             <img class="user-avatar" [routerLink]="['/', user.username]" src="{{user.pictureUri}}" default="assets/images/user-default-image.png"

@@ -1,4 +1,4 @@
-<div class="post mat-elevation-z1" *ngIf="post">
+<div class="post" *ngIf="post">
     <div class="post-header" fxLayout="row" *ngIf="!post.editing">
         <img class="post-avatar" [routerLink]="['/', post.user.username]" src="{{post.user.pictureUri}}" default="assets/images/user-default-image.png"
             alt="profile">
@@ -32,12 +32,6 @@
                 <button mat-raised-button mat-icon-button *ngIf="post.activeAttachment != post.attachments.length - 1" (click)="next()">
                     <mat-icon class="post-icon">chevron_right</mat-icon>
                 </button>
-            </div>
-        </div>
-        <div class="post-content-buttons" fxLayout="row" fxLayoutAlign="center center" *ngIf="post.attachments[0].type === 1">
-            <div class="playpause">
-                <input type="checkbox" value="None" id="playpause" name="check" />
-                <label for="playpause" tabindex=1></label>
             </div>
         </div>
         <div (click)='play()' *ngFor="let attachment of post.attachments; let index = index;" [hidden]="index !== post.activeAttachment">

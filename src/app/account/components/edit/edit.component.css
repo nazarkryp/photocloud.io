@@ -1,11 +1,10 @@
 .settings-container {
-    padding: 25px 0 0 0;
     margin: 50px;
     color: #444444;
 }
 
 .item {
-    padding: 24px 24px 24px 24px;
+    margin-top: 34px;
 }
 
 .disabled {

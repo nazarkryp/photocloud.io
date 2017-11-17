@@ -24,7 +24,7 @@
     font-weight: 300;
     width: 100%;
     border: none;
-    border-radius: 3px;
+    border-radius: 2px;
     outline: none;
     background: #F5F5F5;
     padding: 12px 50px 12px 50px;
@@ -33,8 +33,8 @@
 }
 
 .search-box:focus {
-    box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
     background: white;
+    box-shadow: 0 3px 8px -3px rgba(0, 0, 0, 0.26);
 }
 
 .search-box-icon {
