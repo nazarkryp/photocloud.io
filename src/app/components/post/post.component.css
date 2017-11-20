@@ -161,10 +161,22 @@ hr {
     cursor: pointer;
 }
 
-.icon-button {
-    color: #444444;
+.big-like-icon.liked {
+    color: #e91e63;
 }
 
-.liked {
-    color: #e91e63;
+.big-like-icon {
+    color: #444444;
+    cursor: pointer;
+    outline: none;
+    width: 27px;
+    height: 27px;
+}
+
+.big-like-icon>svg {
+    stroke-width: 1.5px;
+}
+
+.icon-button {
+    color: #444444;
 }

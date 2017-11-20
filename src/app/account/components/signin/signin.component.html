@@ -1,5 +1,5 @@
 <div class="signin-content" fxLayout="column" fxLayoutAlign="center center" @content>
-    <form class="mat-elevation-z3 sign-in-form" fxLayout="column" [formGroup]="formGroup" (ngSubmit)="signIn(usernameInput.value, passwordInput.value)">
+    <form class="mat-elevation-z3 signin-form" fxLayout="column" [formGroup]="formGroup" (ngSubmit)="signIn(usernameInput.value, passwordInput.value)">
         <!-- <mat-progress-bar mode="indeterminate" style="position: absolute; top: 0; margin: 0 -17px" *ngIf="isLoading"></mat-progress-bar> -->
         <div style="margin-bottom: 24px;" fxLayout="column">
             <div style="margin: 12px 0 34px 0;" fxLayout="row" fxLayoutAlign="center center">

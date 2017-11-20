@@ -67,10 +67,10 @@
         </div>
     </div>
     <div class="post-actions" fxLayout="row" *ngIf="!post.editing">
-        <button class="icon-button" [ngClass]="{ 'liked' : post.userHasLiked }" mat-icon-button (click)="like()">
-            <mat-icon>favorite_bordered</mat-icon>
-        </button>
-        <input class="comment-input" type="text" placeholder="Add comment" [(ngModel)]="text" (keydown.enter)="createComment()" />
+        <div fxLayout="row" fxLayoutAlign="center center">
+            <mat-icon class="big-like-icon" [ngClass]="{ 'liked' : post.userHasLiked }" svgIcon="heart" (click)="like()"></mat-icon>
+        </div>
+        <input class="comment-input" type="text" placeholder="Add Comment" [(ngModel)]="text" (keydown.enter)="createComment()" />
         <button class="icon-button" mat-icon-button matTooltip="Copy to clipboard" matTooltipPosition="left" ngxClipboard [cbContent]="share()"
             (cbOnSuccess)="showToast('Copied to clipboard')">
             <mat-icon>share</mat-icon>
@@ -78,6 +78,6 @@
     </div>
     <div class="post-edit-actions" fxLayout="row" fxLayoutAlign="end center" *ngIf="post.editing">
         <button class="save-button" mat-raised-button color="primary" (click)="update()">SAVE</button>
-        <button mat-button (click)="cancel()">CANCEl</button>
+        <button mat-button (click)="cancel()">CANCEL</button>
     </div>
 </div>

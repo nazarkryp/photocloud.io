@@ -33,11 +33,6 @@
     outline: none;
 }
 
-.toolbar-actions {
-    /* position: absolute;
-    right: 0; */
-}
-
 mat-icon>svg {
     stroke-width: 0.7;
 }

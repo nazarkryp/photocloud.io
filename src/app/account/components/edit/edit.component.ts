@@ -22,8 +22,7 @@ export class EditComponent implements OnInit {
     public isInvertingAccountPrivateStatus: boolean;
     public isActive: boolean;
     public isPrivate: boolean;
-
-    private formGroup: FormGroup;
+    public formGroup: FormGroup;
 
     constructor(
         private activatedRoute: ActivatedRoute,

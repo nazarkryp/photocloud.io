@@ -111,6 +111,7 @@
 .error-title {
     font-weight: bold;
     font-size: 1.5em;
+    color: #444444;
 }
 
 .error-description {

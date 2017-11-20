@@ -1,3 +1,72 @@
+@media screen and (max-width: 700px) {
+    .signup-form {
+        width: 100%;
+        border-radius: 0;
+        height: 100%;
+    }
+}
+
+@media screen and (min-width: 701px) {
+    .signup-form {
+        width: 448px;
+        border-radius: 3px;
+    }
+    .signup-content {
+        background: #2980b9 url('/assets/images/tumblr_static_bg3.png') repeat 0 0;
+        -webkit-animation: 10s linear 0s normal none infinite animate;
+        -moz-animation: 10s linear 0s normal none infinite animate;
+        -ms-animation: 10s linear 0s normal none infinite animate;
+        -o-animation: 10s linear 0s normal none infinite animate;
+        animation: 10s linear 0s normal none infinite animate;
+    }
+    @-webkit-keyframes animate {
+        from {
+            background-position: 0 0;
+        }
+        to {
+            background-position: 500px 0;
+        }
+    }
+    @-moz-keyframes animate {
+        from {
+            background-position: 0 0;
+        }
+        to {
+            background-position: 500px 0;
+        }
+    }
+    @-ms-keyframes animate {
+        from {
+            background-position: 0 0;
+        }
+        to {
+            background-position: 500px 0;
+        }
+    }
+    @-o-keyframes animate {
+        from {
+            background-position: 0 0;
+        }
+        to {
+            background-position: 500px 0;
+        }
+    }
+    @keyframes animate {
+        from {
+            background-position: 0 0;
+        }
+        to {
+            background-position: 500px 0;
+        }
+    }
+}
+
+.signup-form {
+    background: white;
+    padding: 17px;
+    position: relative;
+}
+
 .form-field {
     width: 100%;
 }
@@ -16,79 +85,22 @@
     color: #e91f63;
 }
 
-.sign-up-error-message {
+.disabled {
+    color: #9d9d9d;
+}
+
+.error-message {
     color: #e91f63;
     text-align: center;
-    padding-bottom: 15px;
 }
 
 .mat-spinner>* {
     stroke: white !important;
 }
 
-.sign-up-form {
-    width: 448px;
-    background: white;
-    padding: 17px;
-    border-radius: 3px;
-    position: relative;
-}
-
 .signup-content {
-    overflow-y: scroll;
     height: calc(100vh);
     color: #444444;
     margin: 0;
     padding: 0;
-    background: #2980b9 url('/assets/images/tumblr_static_bg3.png') repeat 0 0;
-    -webkit-animation: 10s linear 0s normal none infinite animate;
-    -moz-animation: 10s linear 0s normal none infinite animate;
-    -ms-animation: 10s linear 0s normal none infinite animate;
-    -o-animation: 10s linear 0s normal none infinite animate;
-    animation: 10s linear 0s normal none infinite animate;
-}
-
-@-webkit-keyframes animate {
-    from {
-        background-position: 0 0;
-    }
-    to {
-        background-position: 500px 0;
-    }
-}
-
-@-moz-keyframes animate {
-    from {
-        background-position: 0 0;
-    }
-    to {
-        background-position: 500px 0;
-    }
-}
-
-@-ms-keyframes animate {
-    from {
-        background-position: 0 0;
-    }
-    to {
-        background-position: 500px 0;
-    }
-}
-
-@-o-keyframes animate {
-    from {
-        background-position: 0 0;
-    }
-    to {
-        background-position: 500px 0;
-    }
-}
-
-@keyframes animate {
-    from {
-        background-position: 0 0;
-    }
-    to {
-        background-position: 500px 0;
-    }
 }

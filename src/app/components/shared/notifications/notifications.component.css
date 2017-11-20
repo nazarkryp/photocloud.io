@@ -4,11 +4,13 @@
 }
 
 .notifications-header {
-    color: #444444;
-    height: 75px;
-    padding: 0 15px 0 15px;
+    padding: 24px 15px 24px 15px;
+}
+
+.notification-box-title {
     font-size: 1.2em;
-    font-weight: lighter;
+    font-weight: bold;
+    color: #444444;
 }
 
 .notifications-content {
@@ -22,6 +24,7 @@
 
 .incomming-request-username {
     margin-left: 15px;
+    outline: none;
 }
 
 .incomming-request-avatar {
@@ -30,6 +33,7 @@
     height: 60px;
     object-fit: cover;
     overflow: hidden;
+    outline: none;
 }
 
 .confirm-button {

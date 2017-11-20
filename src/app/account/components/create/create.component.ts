@@ -17,7 +17,7 @@ const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA
     animations: [
         trigger('content', [
             transition(':enter', [
-                query('.sign-up-form', [
+                query('.signup-form', [
                     style({ transform: 'translateX(200px)', opacity: 0 }),
                     stagger(0, [
                         animate('500ms cubic-bezier(0.35, 0, 0.25, 1)', style('*'))

@@ -7,14 +7,12 @@
     </div>
     <div class="notifications-content" fxLayout="column" fxLayoutAlign="start start" fxFlex *ngIf="incommingRequests && incommingRequests.length !== 0; else noRequests">
         <div class="incomming-request" *ngFor="let user of incommingRequests" fxLayout="row">
-            <img [routerLink]="['/', user.username]" class="incomming-request-avatar" src="{{user.pictureUri}}" alt="user-image">
+            <img class="incomming-request-avatar" [routerLink]="['/', user.username]" src="{{user.pictureUri}}" alt="user-image" default="assets/images/user-default-image.png">
             <div fxLayout="row" fxLayoutAlign="space-between center" fxFlex>
-                <div class="incomming-request-username">
-                    <span [routerLink]="['/', user.username]">{{user.username}}</span>
-                </div>
+                <a class="incomming-request-username" [routerLink]="['/', user.username]">{{user.username}}</a>
                 <div>
-                    <button class="confirm-button" mat-raised-button color="primary" (click)="confirmIncommingRequest(user)">Confirm</button>
-                    <button mat-raised-button (click)="removeIncommingRequest(user)">Remove</button>
+                    <button class="confirm-button" mat-raised-button color="primary" (click)="confirmIncommingRequest(user)">CONFIRM</button>
+                    <button mat-button (click)="removeIncommingRequest(user)" color="primary">REMOVE</button>
                 </div>
             </div>
         </div>
@@ -23,6 +21,9 @@
         <div class="notifications-content" fxLayout="column" fxLayoutAlign="center center" fxFlex>
             <mat-spinner [strokeWidth]="5" [diameter]="50" *ngIf="isLoading"></mat-spinner>
             <span *ngIf="!isLoading">No Incomming Requests</span>
+            <button mat-icon-button (click)="getIncommingRequests()" *ngIf="!isLoading">
+                <mat-icon>refresh</mat-icon>
+            </button>
         </div>
     </ng-template>
 </div>

@@ -1,5 +1,5 @@
 <div class="signup-content" fxLayout="column" fxLayoutAlign="center center" @content>
-    <form class="mat-elevation-z3 sign-up-form" fxLayout="column" [formGroup]="formGroup" (ngSubmit)="createAccount()">
+    <form class="mat-elevation-z3 signup-form" fxLayout="column" [formGroup]="formGroup" (ngSubmit)="createAccount()">
         <div style="margin-bottom: 24px;" fxLayout="column">
             <div style="margin: 12px 0 34px 0;" fxLayout="row" fxLayoutAlign="center center">
                 <span style="font-size: 24px; font-weight: lighter;">Photo</span>
@@ -63,7 +63,7 @@
             </mat-error>
         </mat-form-field>
         <div style="margin-top: 24px;" fxLayout="column" fxLayoutAlign="center center" *ngIf="formGroup.hasError('signUpErrors')">
-            <span class="sign-up-error-message" *ngFor="let error of formGroup.errors.signUpErrors">{{error}}</span>
+            <span class="signup-error-message" *ngFor="let error of formGroup.errors.signUpErrors">{{error}}</span>
         </div>
         <div style="margin-top: 34px;">
             <button type="submit" style="width: 100%;" mat-raised-button color="primary" [disabled]="formGroup.disabled">CREATE ACCOUNT</button>
