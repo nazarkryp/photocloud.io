@@ -7,11 +7,20 @@ import { UserProvider } from '../../infrastructure/providers';
 import { Post, Attachment, User, Comment, CurrentUser } from '../../common/models';
 import { CommentService, PostService } from '../../services';
 import { UsersComponent } from '../shared/users/users.component';
+import { trigger, style, animate, transition } from '@angular/animations';
 
 @Component({
     selector: 'app-post',
     templateUrl: './post.component.html',
     styleUrls: ['./post.component.css'],
+    animations: [
+        trigger('enterTransition', [
+            transition(':enter', [
+                style({ transform: 'translateX(50px)', opacity: 0 }),
+                animate('1200ms cubic-bezier(0.35, 0, 0.25, 1)', style('*'))
+            ])
+        ])
+    ],
     encapsulation: ViewEncapsulation.None
 })
 export class PostComponent implements OnInit, OnDestroy {

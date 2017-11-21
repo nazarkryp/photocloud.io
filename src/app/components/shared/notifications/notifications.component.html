@@ -20,8 +20,8 @@
     <ng-template #noRequests>
         <div class="notifications-content" fxLayout="column" fxLayoutAlign="center center" fxFlex>
             <mat-spinner [strokeWidth]="5" [diameter]="50" *ngIf="isLoading"></mat-spinner>
-            <span *ngIf="!isLoading">No Incomming Requests</span>
-            <button mat-icon-button (click)="getIncommingRequests()" *ngIf="!isLoading">
+            <span *ngIf="!isLoading" [@enterTransition]>No Incomming Requests</span>
+            <button mat-icon-button (click)="getIncommingRequests()" *ngIf="!isLoading" [@enterTransition]>
                 <mat-icon>refresh</mat-icon>
             </button>
         </div>

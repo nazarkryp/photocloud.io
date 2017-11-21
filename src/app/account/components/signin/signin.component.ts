@@ -15,9 +15,9 @@ import { NgProgress } from 'ngx-progressbar';
         trigger('content', [
             transition(':enter', [
                 query('.signin-form', [
-                    style({ transform: 'translateX(200px)', opacity: 0 }),
+                    style({ transform: 'translateX(50px)', opacity: 0 }),
                     stagger(0, [
-                        animate('500ms cubic-bezier(0.35, 0, 0.25, 1)', style('*'))
+                        animate('1000ms cubic-bezier(0.35, 0, 0.25, 1)', style('*'))
                     ])
                 ])
             ])

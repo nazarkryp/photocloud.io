@@ -25,7 +25,7 @@
             <source src="{{attachments[0].uri}}">
         </video>
     </div>
-    <div class="create-post-footer" *ngIf="uploader.queue.length > 0 && !uploader.isUploading">
+    <div class="create-post-footer" *ngIf="uploader.queue.length > 0">
         <button class="submit-button" mat-raised-button color="accent" (click)="createPost()" [disabled]="uploader.isUploading">Create Post</button>
     </div>
 </div>
