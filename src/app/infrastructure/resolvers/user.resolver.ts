@@ -11,12 +11,16 @@ import { NgProgress } from 'ngx-progressbar';
 export class UserResolver implements Resolve<User> {
     constructor(
         private userService: UserService,
-        private progressService: NgProgress) { }
+        private progress: NgProgress) { }
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot)
         : User | Observable<User> | Promise<User> {
-        this.progressService.start();
+        this.progress.start();
         const username = route.paramMap.get('username');
-        return this.userService.getUser(username);
+        return this.userService.getUser(username)
+            .catch(error => {
+                this.progress.done();
+                return Observable.of(error);
+            });
     }
 }

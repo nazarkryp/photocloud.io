@@ -1,1 +1,1 @@
-export { HttpConfiguration } from './http.configuration';
+export { HttpErrorHandler } from './http.handler';

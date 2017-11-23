@@ -11,11 +11,14 @@ import { NgProgress } from 'ngx-progressbar';
 export class PostsResolver implements Resolve<Collection<Post>> {
     constructor(
         private postService: PostService,
-        private progressService: NgProgress) { }
+        private progress: NgProgress) { }
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot)
         : Collection<Post> | Observable<Collection<Post>> | Promise<Collection<Post>> {
-        this.progressService.start();
-        return this.postService.getPosts(null);
+        this.progress.start();
+        return this.postService.getPosts(null)
+            .catch(error => {
+                return Observable.of(error);
+            });
     }
 }

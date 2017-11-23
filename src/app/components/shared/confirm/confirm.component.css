@@ -1,20 +1,30 @@
 .confirm-modal {
     width: 500px;
-    padding: 15px;
+    padding: 6px 12px 12px 12px;
 }
 
 .confirm-button {
-    margin-right: 15px;
+    margin-left: 15px;
+}
+
+.confirm-modal-header {
+    padding: 0;
 }
 
 .submit-modal-title {
     font-weight: bold;
     font-size: 1.3em;
-    margin-bottom: 20px;
 }
 
 .submit-modal-message {
     font-weight: 300;
     font-size: 1.1em;
-    margin-bottom: 20px;
+}
+
+.submit-content {
+    margin-top: 12px;
+}
+
+.confirm-actions {
+    margin-top: 44px;
 }

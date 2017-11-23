@@ -38,7 +38,7 @@ export class UserPostsComponent implements OnInit, OnDestroy {
         private router: Router,
         private route: ActivatedRoute,
         public dialog: MatDialog,
-        private progressService: NgProgress) {
+        private progress: NgProgress) {
         this.currentUserSubscription$ = this.userProvider.getCurrentUserAsObservable()
             .subscribe(currentUser => {
                 this.currentUser = currentUser;
@@ -47,14 +47,14 @@ export class UserPostsComponent implements OnInit, OnDestroy {
 
     public getPosts() {
         this.isLoadingPosts = true;
-        if (!this.progressService.isStarted()) {
-            this.progressService.start();
+        if (!this.progress.isStarted()) {
+            this.progress.start();
         }
 
         this.postSubscription$ = this.postService.getUserPosts(this.user.username, this.page.pagination)
             .finally(() => {
-                if (this.progressService.isStarted()) {
-                    this.progressService.done();
+                if (this.progress.isStarted()) {
+                    this.progress.done();
                 }
 
                 this.isLoadingPosts = false;
@@ -109,7 +109,7 @@ export class UserPostsComponent implements OnInit, OnDestroy {
 
             const result = this.validateUser(this.user);
             if (result.hasErrors) {
-                this.progressService.done();
+                this.progress.done();
                 this.error = result.error;
             } else {
                 this.getPosts();

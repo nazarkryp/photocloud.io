@@ -14,7 +14,7 @@ export class UserListResolver implements Resolve<Collection<User>> {
 
     constructor(
         private userService: UserService,
-        private progressService: NgProgress) { }
+        private progress: NgProgress) { }
 
     public resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot)
         : Collection<User> | Observable<Collection<User>> | Promise<Collection<User>> {
@@ -22,11 +22,11 @@ export class UserListResolver implements Resolve<Collection<User>> {
             return this.users;
         }
 
-        this.progressService.start();
+        this.progress.start();
 
         const users = this.userService.getUsers(null)
             .do(() => {
-                this.progressService.done();
+                this.progress.done();
                 this.isLoading = false;
             });
 

@@ -13,22 +13,20 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/catch';
 
-import { HttpConfiguration } from 'app/infrastructure/configuration';
+import { HttpErrorHandler } from 'app/infrastructure/configuration';
 
 @Injectable()
 export class HttpErrorInterceptor implements HttpInterceptor {
     constructor(
-        private config: HttpConfiguration) { }
+        private errorHandler: HttpErrorHandler) { }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         return next.handle(req)
             .catch((errorResponse: HttpErrorResponse) => {
-                for (const filter of this.config.filters) {
-                    const error = filter.handle(errorResponse);
+                const error = this.errorHandler.handle(errorResponse);
 
-                    if (error) {
-                        return error;
-                    }
+                if (error) {
+                    return Observable.throw(error);
                 }
 
                 return Observable.throw(errorResponse);

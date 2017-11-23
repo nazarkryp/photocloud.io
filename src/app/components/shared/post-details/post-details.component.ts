@@ -32,7 +32,7 @@ export class PostDetailsComponent implements OnInit, OnDestroy {
         private postService: PostService,
         private userProvider: UserProvider,
         private commentService: CommentService,
-        private progressService: NgProgress,
+        private progress: NgProgress,
         private snackBar: MatSnackBar,
         @Optional() public dialogRef: MatDialogRef<PostDetailsComponent>,
         @Optional() @Inject(MAT_DIALOG_DATA) public post: Post,
@@ -145,11 +145,11 @@ export class PostDetailsComponent implements OnInit, OnDestroy {
     }
 
     public getPost(postId: number) {
-        this.progressService.start();
+        this.progress.start();
 
         this.postService.getPostById(postId)
             .finally(() => {
-                this.progressService.done();
+                this.progress.done();
             })
             .subscribe(post => {
                 this.post = post;

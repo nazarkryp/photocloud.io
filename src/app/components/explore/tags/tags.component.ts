@@ -30,7 +30,7 @@ export class TagsComponent implements OnInit, OnDestroy {
         private postService: PostService,
         private userProvider: UserProvider,
         private accountService: AccountService,
-        private progressService: NgProgress) {
+        private progress: NgProgress) {
         this.currentUserSubscription$ = this.userProvider.getCurrentUserAsObservable()
             .subscribe(currentUser => {
                 this.currentUser = currentUser;
@@ -38,10 +38,10 @@ export class TagsComponent implements OnInit, OnDestroy {
     }
 
     public getPosts() {
-        this.progressService.start();
+        this.progress.start();
         this.postService.getPostsByTag(this.tag, this.page.pagination)
             .finally(() => {
-                this.progressService.done();
+                this.progress.done();
             })
             .subscribe(page => {
                 this.page.hasMoreItems = page.hasMoreItems;

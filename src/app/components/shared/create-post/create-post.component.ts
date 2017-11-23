@@ -31,7 +31,7 @@ export class CreatePostComponent implements OnInit, OnDestroy {
     constructor(
         private postService: PostService,
         private userProvider: UserProvider,
-        private progressService: NgProgress,
+        private progress: NgProgress,
         private tokenProvider: TokenProvider,
         @Optional() public dialogRef: MatDialogRef<CreatePostComponent>) {
         this.uploader = new FileUploader({

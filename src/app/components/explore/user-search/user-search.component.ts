@@ -25,7 +25,7 @@ export class UserSearchComponent implements OnInit, OnDestroy {
         private route: ActivatedRoute,
         private userService: UserService,
         private userProvider: UserProvider,
-        private progressService: NgProgress) {
+        private progress: NgProgress) {
         this.currentUserSubscription = this.userProvider.getCurrentUserAsObservable()
             .subscribe((user) => {
                 this.currentUser = user;
@@ -33,12 +33,12 @@ export class UserSearchComponent implements OnInit, OnDestroy {
     }
 
     public getUsers() {
-        this.progressService.start();
+        this.progress.start();
         // this.isLoading = true;
 
         this.userService.getUsers(this.page.pagination)
             .finally(() => {
-                this.progressService.done();
+                this.progress.done();
                 // this.isLoading = false;
             })
             .subscribe((page: Collection<User>) => {

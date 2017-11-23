@@ -2,16 +2,17 @@ import { Injectable } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 
+import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
 import { Observable } from 'rxjs/Observable';
 
-import { HttpStatusCode } from '../../../common/http';
+import { HttpStatusCode } from 'app/common/http';
 import { HttpErrorFilter } from './http-error.fitler';
 
 export class InternetConnectionFilter implements HttpErrorFilter {
     constructor(
         private router: Router) { }
 
-    public handle(response: HttpErrorResponse): Observable<HttpErrorResponse> {
+    public handle(response: HttpErrorResponse): ErrorObservable {
         if (response.status === HttpStatusCode.None) {
             this.router.navigateByUrl('/nointernetconnection', { skipLocationChange: true });
 

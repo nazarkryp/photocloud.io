@@ -6,7 +6,7 @@ import { SessionService } from 'app/infrastructure/session';
 import { MemoryCache } from 'app/infrastructure/caching';
 import { TokenProvider, AuthenticationInterceptor } from 'app/infrastructure/security';
 import { HttpErrorInterceptor } from 'app/infrastructure/handlers';
-import { HttpConfiguration } from 'app/infrastructure/configuration';
+import { HttpErrorHandler } from 'app/infrastructure/configuration';
 import { UserProvider } from 'app/infrastructure/providers';
 import { ClipboardService } from 'app/infrastructure/services';
 import { TokenMapper, UserMapper } from 'app/infrastructure/mapping';
@@ -23,7 +23,7 @@ import {
 @NgModule({
     providers: [
         ClipboardService,
-        HttpConfiguration,
+        HttpErrorHandler,
         UserProvider,
         TokenProvider,
         TokenMapper,
@@ -49,7 +49,7 @@ export class InfrastructureModule {
     constructor(
         router: Router,
         private userProvider: UserProvider,
-        private httpConfiguration: HttpConfiguration) {
+        private httpConfiguration: HttpErrorHandler) {
         this.configureErrorFilters(router);
     }
 
