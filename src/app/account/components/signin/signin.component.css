@@ -12,7 +12,7 @@
         border-radius: 3px;
     }
     .signin-content {
-        background: #2980b9 url('/assets/images/tumblr_static_bg3.png') repeat 0 0;
+        background: white url('/assets/images/tumblr_static_bg3.png') repeat 0 0;
         -webkit-animation: 10s linear 0s normal none infinite animate;
         -moz-animation: 10s linear 0s normal none infinite animate;
         -ms-animation: 10s linear 0s normal none infinite animate;
