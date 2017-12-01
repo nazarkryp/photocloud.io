@@ -1,4 +1,50 @@
-.upload-container {
+.create-post-container {
+    width: 50%;
+    min-width: 400px;
+    padding: 12px;
+    overflow: hidden;
+}
+
+.attachments-content {
+    flex: 1;
+    display: flex;
+    overflow: auto;
+    display: -ms-grid;
+    -ms-grid-columns: min-content;
+}
+
+.attachments-container {
+    display: flex;
+    overflow-x: auto;
+    width: 100%;
+    box-sizing: border-box;
+    min-width: min-content;
+    width: -moz-min-content;
+    width: -webkit-min-content;
+}
+
+.uploaded-attachment-mini {
+    position: relative;
+    height: 75px;
+    width: 75px;
+    border-radius: 2px;
+    margin-left: 12px;
+    border: 1px dashed #d8d8d8;
+    box-sizing: border-box;
+}
+
+.attachments-container> :first-child.uploaded-attachment-mini {
+    margin-left: 0;
+}
+
+.uploaded-attachment-mini>img {
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+}
+
+
+/* .upload-container {
     overflow-x: hidden;
 }
 
@@ -122,4 +168,4 @@
 mat-progress-spinner {
     width: 65px !important;
     height: 65px !important;
-}
+} */

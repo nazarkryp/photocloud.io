@@ -1,4 +1,41 @@
-<div class="create-post-container" fxLayout="column" fxLayoutAlign="start start">
+<div class="create-post-container" fxLayout="column">
+    <div style="position: relative; padding: 0 0 12px 0;" fxLayout="row" fxLayoutAlign="center center">
+        <span style="font-size: 17px; font-weight: bold;">Create Post</span>
+        <a mat-ripple style="position: absolute; right: 0; font-weight: bold; font-size: 14px; color: #e91e63;">CREATE</a>
+    </div>
+    <div class="attachments-content">
+        <div class="attachments-container" fxLayout="row">
+            <div class="uploaded-attachment-mini" fxLayout="row" fxLayoutAlign="center center" mat-ripple>
+                <mat-icon>add</mat-icon>
+            </div>
+            <div class="uploaded-attachment-mini" fxLayout="row" fxLayoutAlign="center center" mat-ripple>
+                <img src="https://instagram.flwo1-1.fna.fbcdn.net/t51.2885-19/s150x150/21688721_351078682015062_2472408545396523008_a.jpg"
+                    alt="photo">
+            </div>
+            <div class="uploaded-attachment-mini" fxLayout="row" fxLayoutAlign="center center" mat-ripple>
+                <img src="https://instagram.flwo1-1.fna.fbcdn.net/t51.2885-19/s150x150/20759372_1084306455033495_8313690971355217920_a.jpg"
+                    alt="photo">
+            </div>
+            <div class="uploaded-attachment-mini" fxLayout="row" fxLayoutAlign="center center" mat-ripple>
+                <img src="https://instagram.flwo1-1.fna.fbcdn.net/t51.2885-19/s150x150/22344924_752938484889871_6048268681048227840_n.jpg"
+                    alt="photo">
+            </div>
+            <!-- <div class="uploaded-attachment-mini" fxLayout="row" fxLayoutAlign="center center" mat-ripple>
+                <img src="https://instagram.flwo1-1.fna.fbcdn.net/t51.2885-19/s150x150/22351696_2003467819864665_4983180060803465216_n.jpg"
+                    alt="photo">
+            </div> -->
+            <!-- <div class="uploaded-attachment-mini" fxLayout="row" fxLayoutAlign="center center" mat-ripple>
+                <img src="https://instagram.flwo1-1.fna.fbcdn.net/t51.2885-15/e35/23970234_150581019032264_6237223495198048256_n.jpg" alt="photo">
+            </div> -->
+        </div>
+    </div>
+    <div style="box-sizing: border-box; margin-top: 12px;">
+        <img style="width: 100%;" src="https://instagram.flwo1-1.fna.fbcdn.net/t51.2885-19/s150x150/21688721_351078682015062_2472408545396523008_a.jpg"
+            alt="preview-big">
+    </div>
+</div>
+
+<!-- <div class="create-post-container" fxLayout="column" fxLayoutAlign="start start">
     <div class="upload-container" fxLayout="column" fxLayoutAlign="end start">
         <div class="attachment-container" fxLayout="row">
             <button class="square-button" mat-button (click)="fileInput.click()">
@@ -28,4 +65,4 @@
     <div class="create-post-footer" *ngIf="uploader.queue.length > 0">
         <button class="submit-button" mat-raised-button color="accent" (click)="createPost()" [disabled]="uploader.isUploading">Create Post</button>
     </div>
-</div>
+</div> -->
