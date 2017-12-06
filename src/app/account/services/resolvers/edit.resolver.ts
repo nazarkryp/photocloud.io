@@ -17,6 +17,6 @@ export class EditResolver implements Resolve<AccountModule> {
     public resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot)
         : AccountModule | Observable<AccountModule> | Promise<AccountModule> {
         this.progress.start();
-        return this.accountService.getAccountSettings();
+        return this.accountService.getAccount();
     }
 }

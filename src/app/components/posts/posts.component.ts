@@ -42,6 +42,10 @@ export class PostsComponent implements OnInit, OnDestroy {
             .subscribe(createdPost => {
                 if (createdPost) {
                     createdPost.user.pictureUri = this.currentUser.pictureUri;
+                    if (!this.page.data) {
+                        this.page.data = new Array<Post>();
+                    }
+
                     this.page.data.unshift(createdPost);
                 }
             });
@@ -85,7 +89,9 @@ export class PostsComponent implements OnInit, OnDestroy {
     }
 
     public ngOnInit() {
+        console.log('OK');
         this.page = this.activatedRoute.snapshot.data['page'];
+        debugger;
         this.progress.done();
     }
 

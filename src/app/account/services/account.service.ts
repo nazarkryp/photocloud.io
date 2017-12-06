@@ -51,11 +51,11 @@ export class AccountService {
             });
     }
 
-    public getAccountSettings(): Observable<User> {
+    public getAccount(): Observable<CurrentUser> {
         return this.webApiClient.get<User>('account');
     }
 
-    public getCurrentUser(refresh: boolean = true): CurrentUser {
+    public retrieveCurrentUser(refresh: boolean = true): CurrentUser {
         if (this.currentUser && !refresh) {
             return this.currentUser;
         }

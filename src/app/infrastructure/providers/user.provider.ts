@@ -4,6 +4,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import { SessionService } from 'app/infrastructure/session';
 import { UserService } from 'app/services';
+import { AccountService } from 'app/account/services';
 
 import { AccessToken } from 'app/common/models/token';
 import { CurrentUser } from 'app/common/models/current-user';
@@ -13,10 +14,18 @@ export class UserProvider {
     private $state: BehaviorSubject<CurrentUser>;
 
     constructor(
+        private accountService: AccountService,
         private userService: UserService,
         private sessionService: SessionService) {
         const currentUser = this.getCurrentUser();
         this.$state = new BehaviorSubject<CurrentUser>(currentUser);
+    }
+
+    public refreshCurrentUser() {
+        this.accountService.getAccount()
+            .subscribe(accountSettings => {
+
+            });
     }
 
     public getCurrentUser() {
@@ -56,6 +65,9 @@ export class UserProvider {
         const currentUser: CurrentUser = new CurrentUser(
             accessToken.userId,
             accessToken.username,
+            '',
+            '',
+            '',
             accessToken.isPrivate,
             accessToken.isActive,
             accessToken.pictureUri

@@ -19,7 +19,13 @@
     position: fixed;
 }
 
-.message {
+.message-container {
     position: absolute;
-    top: 40%;
+    top: 50%;
+}
+
+.message {
+    color: #444444;
+    font-weight: lighter;
+    font-size: 1.7em;
 }

@@ -5,7 +5,7 @@ import { MatSlideToggleChange } from '@angular/material';
 
 import { UserProvider } from 'app/infrastructure/providers';
 import { AccountService } from 'app/account/services';
-import { CurrentUser, User } from 'app/common/models';
+import { CurrentUser } from 'app/common/models';
 
 import { NgProgress } from 'ngx-progressbar';
 
@@ -17,7 +17,7 @@ const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA
     styleUrls: ['./edit.component.css']
 })
 export class EditComponent implements OnInit {
-    public backup: User;
+    public backup: CurrentUser = new CurrentUser();
     public isInvertingAccountStatus: boolean;
     public isInvertingAccountPrivateStatus: boolean;
     public isActive: boolean;
@@ -30,7 +30,6 @@ export class EditComponent implements OnInit {
         private userProvider: UserProvider,
         private accountService: AccountService,
         private progress: NgProgress) {
-        this.backup = new User();
 
         this.formGroup = this.builder.group({
             username: new FormControl('',
@@ -54,8 +53,9 @@ export class EditComponent implements OnInit {
     }
 
     public save() {
+        const propertiesToUpdate = this.getPropertiesToUpdate();
         this.progress.start();
-        this.accountService.updateAccount(this.backup)
+        this.accountService.updateAccount(propertiesToUpdate)
             .finally(() => {
                 this.progress.done();
             })
@@ -123,7 +123,7 @@ export class EditComponent implements OnInit {
         properties.forEach(propertyName => {
             const control = this.formGroup.get(propertyName);
 
-            if (control) {
+            if (control && control.value !== propertiesToUpdate[propertyName]) {
                 control.setValue(propertiesToUpdate[propertyName]);
             }
         });
@@ -145,7 +145,6 @@ export class EditComponent implements OnInit {
 
     public ngOnInit() {
         const account = this.activatedRoute.snapshot.data['account'];
-
         this.setup(account);
 
         const currentUser = this.userProvider.getCurrentUser();
@@ -164,7 +163,7 @@ export class EditComponent implements OnInit {
         });
     }
 
-    private setup(account: User) {
+    private setup(account: CurrentUser) {
         this.backup.username = account.username;
         this.backup.fullName = account.fullName;
         this.backup.bio = account.bio;
@@ -178,10 +177,19 @@ export class EditComponent implements OnInit {
         this.isActive = account.isActive;
         this.isPrivate = account.isPrivate;
 
-        if (!this.isActive) {
-            this.formGroup.disable();
-        } else {
+        if (account.isActive) {
             this.formGroup.enable();
+        } else {
+            this.formGroup.disable();
         }
+    }
+
+    private getPropertiesToUpdate(): any {
+        return {
+            username: this.formGroup.get('username').value,
+            fullName: this.formGroup.get('fullName').value,
+            bio: this.formGroup.get('bio').value,
+            email: this.formGroup.get('email').value
+        };
     }
 }
