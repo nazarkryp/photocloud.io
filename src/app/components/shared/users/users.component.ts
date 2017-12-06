@@ -6,7 +6,7 @@ import { Subscription } from 'rxjs/Subscription';
 
 import { CurrentUser, User, RelationshipStatus } from '../../../common/models';
 import { UserService } from '../../../services';
-import { UserProvider } from '../../../infrastructure/providers';
+import { CurrentUserService } from 'app/infrastructure/services';
 
 @Component({
     selector: 'app-users',
@@ -26,7 +26,7 @@ export class UsersComponent implements OnInit, OnDestroy {
         public dialogRef: MatDialogRef<UsersComponent>,
         @Inject(MAT_DIALOG_DATA) data: any,
         private userService: UserService,
-        private userProvider: UserProvider) {
+        private currentUserService: CurrentUserService) {
         this.title = data.title;
         this.usersObservableSubscription = data.usersObservable.subscribe(users => {
             this.users = users;
@@ -35,7 +35,7 @@ export class UsersComponent implements OnInit, OnDestroy {
             });
         });
 
-        this.currentUserSubscription = this.userProvider.getCurrentUserAsObservable()
+        this.currentUserSubscription = this.currentUserService.getCurrentUser()
             .subscribe(currentUser => {
                 this.currentUser = currentUser;
             });

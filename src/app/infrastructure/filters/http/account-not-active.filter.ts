@@ -8,11 +8,11 @@ import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
 
 import { HttpStatusCode } from 'app/common/http';
 import { HttpErrorFilter } from './http-error.fitler';
-import { UserProvider } from 'app/infrastructure/providers';
+import { CurrentUserService } from 'app/infrastructure/services';
 
 export class AccountNotActiveFilter implements HttpErrorFilter {
     constructor(
-        private userProvider: UserProvider,
+        private currentUserService: CurrentUserService,
         private router: Router) { }
 
     public handle(response: HttpErrorResponse): ErrorObservable {
@@ -26,7 +26,7 @@ export class AccountNotActiveFilter implements HttpErrorFilter {
             }
 
             if (responseError.error.status === 1000) {
-                this.userProvider.updateCurrentUser({ isActive: false });
+                this.currentUserService.updateCurrentUser({ isActive: false });
                 this.router.navigateByUrl('/account/edit', { skipLocationChange: true });
 
                 return Observable.throw(response);

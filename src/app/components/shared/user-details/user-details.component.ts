@@ -5,7 +5,7 @@ import { MatDialog } from '@angular/material';
 import { Subscription } from 'rxjs/Subscription';
 import { Observable } from 'rxjs/Observable';
 
-import { UserProvider } from 'app/infrastructure/providers';
+import { CurrentUserService } from 'app/infrastructure/services';
 import { CurrentUser, Error, Attachment, RelationshipStatus, User } from 'app/common/models';
 import { UserService, UploaderService, } from 'app/services';
 import { AccountService } from 'app/account/services';
@@ -30,10 +30,10 @@ export class UserDetailsComponent implements OnDestroy {
         private dialog: MatDialog,
         private accountService: AccountService,
         private uploaderService: UploaderService,
-        private userProvider: UserProvider,
+        private currentUserService: CurrentUserService,
         private userService: UserService) {
         this.uploader = uploaderService.createUploader((attachment) => this.onSuccessUpload(attachment));
-        this.currentUserSubscription$ = this.userProvider.getCurrentUserAsObservable()
+        this.currentUserSubscription$ = this.currentUserService.getCurrentUser()
             .subscribe(currentUser => {
                 this.currentUser = currentUser;
             });

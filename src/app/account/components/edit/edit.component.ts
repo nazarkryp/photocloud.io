@@ -3,11 +3,11 @@ import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatSlideToggleChange } from '@angular/material';
 
-import { UserProvider } from 'app/infrastructure/providers';
 import { AccountService } from 'app/account/services';
 import { CurrentUser } from 'app/common/models';
 
 import { NgProgress } from 'ngx-progressbar';
+import { CurrentUserService } from 'app/infrastructure/services';
 
 const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
@@ -27,7 +27,7 @@ export class EditComponent implements OnInit {
     constructor(
         private activatedRoute: ActivatedRoute,
         private builder: FormBuilder,
-        private userProvider: UserProvider,
+        private currentUserService: CurrentUserService,
         private accountService: AccountService,
         private progress: NgProgress) {
 
@@ -128,7 +128,7 @@ export class EditComponent implements OnInit {
             }
         });
 
-        this.userProvider.updateCurrentUser(propertiesToUpdate);
+        this.currentUserService.updateCurrentUser(propertiesToUpdate);
 
         if (!this.isActive) {
             this.formGroup.disable();
@@ -147,20 +147,22 @@ export class EditComponent implements OnInit {
         const account = this.activatedRoute.snapshot.data['account'];
         this.setup(account);
 
-        const currentUser = this.userProvider.getCurrentUser();
-        const areEqual = this.equals(account, currentUser);
+        this.currentUserService.getCurrentUser()
+            .subscribe(currentUser => {
+                const areEqual = this.equals(account, currentUser);
 
-        if (!areEqual) {
-            this.updateAccount(account);
-        }
+                if (!areEqual) {
+                    this.updateAccount(account);
+                }
 
-        this.progress.done();
+                this.progress.done();
 
-        this.formGroup.valueChanges.subscribe(e => {
-            if (this.equals(this.backup, e)) {
-                this.formGroup.markAsPristine();
-            }
-        });
+                this.formGroup.valueChanges.subscribe(e => {
+                    if (this.equals(this.backup, e)) {
+                        this.formGroup.markAsPristine();
+                    }
+                });
+            });
     }
 
     private setup(account: CurrentUser) {

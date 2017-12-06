@@ -2,11 +2,11 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 
-import { UserService } from '../../../services';
-import { UserProvider } from '../../../infrastructure/providers';
-import { Collection, User, CurrentUser, RelationshipAction, RelationshipStatus } from '../../../common/models';
+import { UserService } from 'app/services';
+import { Collection, User, CurrentUser, RelationshipAction, RelationshipStatus } from 'app/common/models';
 
 import { NgProgress } from 'ngx-progressbar';
+import { CurrentUserService } from 'app/infrastructure/services';
 
 @Component({
     selector: 'app-user-search',
@@ -24,9 +24,9 @@ export class UserSearchComponent implements OnInit, OnDestroy {
     constructor(
         private route: ActivatedRoute,
         private userService: UserService,
-        private userProvider: UserProvider,
+        private currentUserService: CurrentUserService,
         private progress: NgProgress) {
-        this.currentUserSubscription = this.userProvider.getCurrentUserAsObservable()
+        this.currentUserSubscription = this.currentUserService.getCurrentUser()
             .subscribe((user) => {
                 this.currentUser = user;
             });

@@ -4,14 +4,14 @@ import { MatDialogRef, MatSnackBarConfig, MatSnackBar, MAT_DIALOG_DATA } from '@
 import { Subscription } from 'rxjs/Subscription';
 import { Observable } from 'rxjs/Observable';
 
-import { Post, User, Attachment, Comment, CurrentUser, CreatePostModel } from '../../../common/models';
-import { PostService, CommentService } from '../../../services';
-import { UserProvider } from '../../../infrastructure/providers';
-import { TokenProvider } from '../../../infrastructure/security';
+import { Post, User, Attachment, Comment, CurrentUser, CreatePostModel } from 'app/common/models';
+import { PostService, CommentService } from 'app/services';
+import { CurrentUserService } from 'app/infrastructure/services';
+import { TokenProvider } from 'app/infrastructure/security';
 import { NgProgress } from 'ngx-progressbar';
 import { FileUploader, FileUploaderOptions } from 'ng2-file-upload';
 
-import { environment } from '../../../../environments/environment';
+import { environment } from 'app/../environments/environment';
 
 @Component({
     selector: 'app-create-post',
@@ -30,7 +30,7 @@ export class CreatePostComponent implements OnInit, OnDestroy {
 
     constructor(
         private postService: PostService,
-        private userProvider: UserProvider,
+        private currentUserService: CurrentUserService,
         private progress: NgProgress,
         private tokenProvider: TokenProvider,
         @Optional() public dialogRef: MatDialogRef<CreatePostComponent>) {
@@ -40,7 +40,7 @@ export class CreatePostComponent implements OnInit, OnDestroy {
         this.post = new CreatePostModel();
         this.attachments = new Array<Attachment>();
 
-        this.currentUserSubscription = this.userProvider.getCurrentUserAsObservable()
+        this.currentUserSubscription = this.currentUserService.getCurrentUser()
             .subscribe(currentUser => {
                 this.currentUser = currentUser;
             });

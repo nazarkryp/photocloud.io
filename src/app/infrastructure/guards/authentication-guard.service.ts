@@ -2,33 +2,36 @@
 import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/take';
 
 import { TokenProvider } from 'app/infrastructure/security';
+import { CurrentUserService } from 'app/infrastructure/services';
 
 @Injectable()
 export class AuthenticationGuard implements CanActivate {
     constructor(
         private router: Router,
-        private tokenProvider: TokenProvider) { }
+        private currentUserService: CurrentUserService) { }
 
-    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-        return this.tokenProvider.getAccessToken()
-            .map(accessToken => {
-                if (accessToken != null && (state.url === '/account/signin' || state.url === '/account/create')) {
+    public canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+        return this.currentUserService.getCurrentUser()
+            .take(1)
+            .map(currentUser => {
+                if (currentUser != null && (state.url === '/account/signin' || state.url === '/account/create')) {
                     this.router.navigateByUrl('/');
                     return false;
                 }
 
-                if (accessToken == null && (state.url === '/account/signin' || state.url === '/account/create')) {
+                if (currentUser == null && (state.url === '/account/signin' || state.url === '/account/create')) {
                     return true;
                 }
 
-                if (accessToken != null && !accessToken.isActive && (state.url !== '/account/edit')) {
+                if (currentUser != null && !currentUser.isActive && (state.url !== '/account/edit')) {
                     this.router.navigateByUrl('/account/edit');
                     return false;
                 }
 
-                if (accessToken != null) {
+                if (currentUser != null) {
                     return true;
                 }
 

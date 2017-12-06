@@ -3,9 +3,9 @@ import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material';
 import { Subscription } from 'rxjs/Subscription';
 
-import { UserProvider } from '../../../infrastructure/providers';
-import { PostDetailsComponent } from '../../shared/post-details/post-details.component';
-import { Collection, Post, CurrentUser } from '../../../common/models';
+import { CurrentUserService } from 'app/infrastructure/services';
+import { PostDetailsComponent } from 'app/components/shared/post-details/post-details.component';
+import { Collection, Post, CurrentUser } from 'app/common/models';
 import { PostService } from 'app/services';
 import { AccountService } from 'app/account/services';
 
@@ -18,7 +18,7 @@ import { NgProgress } from 'ngx-progressbar';
 })
 export class TagsComponent implements OnInit, OnDestroy {
     private routeSubscription$: Subscription;
-    private currentUserSubscription$: Subscription;
+    private currentUserSubscription: Subscription;
 
     public page: Collection<Post> = new Collection<Post>();
     public currentUser: CurrentUser;
@@ -28,10 +28,10 @@ export class TagsComponent implements OnInit, OnDestroy {
         public dialog: MatDialog,
         private route: ActivatedRoute,
         private postService: PostService,
-        private userProvider: UserProvider,
+        private currentUserService: CurrentUserService,
         private accountService: AccountService,
         private progress: NgProgress) {
-        this.currentUserSubscription$ = this.userProvider.getCurrentUserAsObservable()
+        this.currentUserSubscription = this.currentUserService.getCurrentUser()
             .subscribe(currentUser => {
                 this.currentUser = currentUser;
             });
@@ -101,6 +101,6 @@ export class TagsComponent implements OnInit, OnDestroy {
 
     public ngOnDestroy(): void {
         this.routeSubscription$.unsubscribe();
-        this.currentUserSubscription$.unsubscribe();
+        this.currentUserSubscription.unsubscribe();
     }
 }

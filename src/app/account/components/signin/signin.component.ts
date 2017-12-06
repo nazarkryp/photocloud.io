@@ -3,9 +3,9 @@ import { Router } from '@angular/router';
 import { AbstractControl, FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { trigger, animate, style, transition, animateChild, group, query, stagger } from '@angular/animations';
 
-import { AccountService } from 'app/account/services';
 import { DefaultErrorStateMatcher } from 'app/account/matchers';
 import { NgProgress } from 'ngx-progressbar';
+import { CurrentUserService } from 'app/infrastructure/services/current-user.service';
 
 @Component({
     selector: 'app-signin',
@@ -42,7 +42,7 @@ export class SignInComponent {
         private router: Router,
         private builder: FormBuilder,
         private progress: NgProgress,
-        private accountService: AccountService) {
+        private currentUserService: CurrentUserService) {
         this.formGroup = this.builder.group({
             username: new FormControl('',
                 Validators.compose([
@@ -63,7 +63,7 @@ export class SignInComponent {
         if (this.formGroup.valid) {
             this.progress.start();
             this.formGroup.disable();
-            this.accountService.signIn(username, password)
+            this.currentUserService.signIn(username, password)
                 .subscribe(response => {
                     this.router.navigateByUrl('/');
                 }, error => {

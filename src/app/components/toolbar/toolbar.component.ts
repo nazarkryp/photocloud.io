@@ -2,7 +2,7 @@ import { Component, Input, Output, EventEmitter, OnInit, OnDestroy } from '@angu
 import { Router, NavigationEnd } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 
-import { UserProvider } from '../../infrastructure/providers';
+import { CurrentUserService } from 'app/infrastructure/services';
 import { AccountService } from 'app/account/services';
 import { CurrentUser } from '../../common/models';
 
@@ -18,7 +18,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     @Output() openNotificationsEvent = new EventEmitter<boolean>();
 
     constructor(
-        private userProvider: UserProvider,
+        private currentUserService: CurrentUserService,
         private accountService: AccountService,
         private router: Router) {
     }
@@ -40,8 +40,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             this.navigationInterceptor(event);
         });
 
-        this.currentUserSubscription = this.userProvider
-            .getCurrentUserAsObservable()
+        this.currentUserSubscription = this.currentUserService.getCurrentUser()
             .subscribe(currentUser => {
                 this.currentUser = currentUser;
             });

@@ -2,9 +2,9 @@ import { Component, Input, Output, EventEmitter, OnInit, OnDestroy } from '@angu
 import { Router, NavigationEnd } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 
-import { UserProvider } from '../../infrastructure/providers';
 import { AccountService } from 'app/account/services';
-import { CurrentUser } from '../../common/models';
+import { CurrentUser } from 'app/common/models';
+import { CurrentUserService } from 'app/infrastructure/services';
 
 @Component({
     selector: 'app-footer',
@@ -20,7 +20,7 @@ export class FooterComponent implements OnInit, OnDestroy {
     @Output() openNotificationsEvent = new EventEmitter<boolean>();
 
     constructor(
-        private userProvider: UserProvider,
+        private currentUserService: CurrentUserService,
         private accountService: AccountService,
         private router: Router) {
     }
@@ -40,8 +40,8 @@ export class FooterComponent implements OnInit, OnDestroy {
             this.navigationInterceptor(event);
         });
 
-        this.currentUserSubscription = this.userProvider
-            .getCurrentUserAsObservable()
+        this.currentUserSubscription = this.currentUserService
+            .getCurrentUser()
             .subscribe(currentUser => {
                 this.currentUser = currentUser;
             });

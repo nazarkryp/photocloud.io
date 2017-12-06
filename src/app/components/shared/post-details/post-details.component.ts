@@ -6,7 +6,7 @@ import { MatDialogRef, MatSnackBarConfig, MatSnackBar, MAT_DIALOG_DATA } from '@
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 
-import { UserProvider } from 'app/infrastructure/providers';
+import { CurrentUserService } from 'app/infrastructure/services';
 import { Post, User, Attachment, Comment, CurrentUser } from 'app/common/models';
 import { PostService, CommentService } from 'app/services';
 import { NgProgress } from 'ngx-progressbar';
@@ -30,7 +30,7 @@ export class PostDetailsComponent implements OnInit, OnDestroy {
     constructor(
         private route: ActivatedRoute,
         private postService: PostService,
-        private userProvider: UserProvider,
+        private currentUserService: CurrentUserService,
         private commentService: CommentService,
         private progress: NgProgress,
         private snackBar: MatSnackBar,
@@ -42,7 +42,7 @@ export class PostDetailsComponent implements OnInit, OnDestroy {
             this.isDialog = true;
         }
 
-        this.currentUserSubscription = this.userProvider.getCurrentUserAsObservable()
+        this.currentUserSubscription = this.currentUserService.getCurrentUser()
             .subscribe(currentUser => {
                 this.currentUser = currentUser;
             });

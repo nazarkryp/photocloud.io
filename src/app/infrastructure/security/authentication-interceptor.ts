@@ -4,8 +4,8 @@ import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpResponse, Htt
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/mergeMap';
 
+import { AccessToken } from 'app/infrastructure/security';
 import { TokenProvider } from './token-provider';
-import { AccessToken } from 'app/common/models';
 
 @Injectable()
 export class AuthenticationInterceptor implements HttpInterceptor {

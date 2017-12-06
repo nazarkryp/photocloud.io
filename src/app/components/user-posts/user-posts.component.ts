@@ -6,7 +6,7 @@ import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 
 import { AccountService } from 'app/account/services';
-import { UserProvider } from '../../infrastructure/providers';
+import { CurrentUserService } from 'app/infrastructure/services';
 import { PostService, UserService } from '../../services';
 import { CurrentUser, Post, Attachment, User, RelationshipStatus, Collection, ValidationResult, Error } from '../../common/models';
 import { PostDetailsComponent } from '../shared/post-details/post-details.component';
@@ -34,12 +34,12 @@ export class UserPostsComponent implements OnInit, OnDestroy {
         private accountService: AccountService,
         private postService: PostService,
         private userService: UserService,
-        private userProvider: UserProvider,
+        private currentUserService: CurrentUserService,
         private router: Router,
         private route: ActivatedRoute,
         public dialog: MatDialog,
         private progress: NgProgress) {
-        this.currentUserSubscription$ = this.userProvider.getCurrentUserAsObservable()
+        this.currentUserSubscription$ = this.currentUserService.getCurrentUser()
             .subscribe(currentUser => {
                 this.currentUser = currentUser;
             });

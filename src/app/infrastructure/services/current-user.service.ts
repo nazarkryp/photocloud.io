@@ -8,6 +8,7 @@ import { CurrentUser } from 'app/common/models';
 import { UserService } from 'app/services';
 import { AccountService } from 'app/account/services';
 import { LocalStorageService } from 'app/infrastructure/services/storage';
+import { TokenProvider } from 'app/infrastructure/security';
 
 @Injectable()
 export class CurrentUserService {
@@ -16,6 +17,7 @@ export class CurrentUserService {
     private state: ReplaySubject<CurrentUser> = new ReplaySubject<CurrentUser>();
 
     constructor(
+        private tokenProvider: TokenProvider,
         private storageService: LocalStorageService,
         private userService: UserService,
         private accountService: AccountService) { }
@@ -32,16 +34,26 @@ export class CurrentUserService {
             .mergeMap<CurrentUser, CurrentUser>(currentUser => {
                 this.currentUser = currentUser;
                 this.saveCurrentUser(currentUser);
-                this.state.next(currentUser);
                 return this.state.asObservable();
             });
     }
 
+    public signIn(username: string, password: string): Observable<any> {
+        return this.accountService.signIn(username, password)
+            .do(accessToken => {
+                this.tokenProvider.setAccessToken(accessToken);
+            });
+    }
+
     public updateCurrentUser(propertiesToUpdate: any): Observable<CurrentUser> {
-        this.accountService.updateAccount(propertiesToUpdate);
+        return this.accountService.updateAccount(propertiesToUpdate)
+            .do(currentUser => {
+                this.saveCurrentUser(currentUser);
+            });
     }
 
     private saveCurrentUser(currentUser: CurrentUser) {
+        this.state.next(currentUser);
         this.storageService.set<CurrentUser>(this.currentUserStorageKey, currentUser);
     }
 

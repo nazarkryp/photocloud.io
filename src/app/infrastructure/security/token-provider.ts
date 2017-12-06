@@ -4,23 +4,24 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 
-import { AccessToken } from 'app/common/models';
-import { SessionService } from 'app/infrastructure/session';
+import { LocalStorageService } from 'app/infrastructure/services/storage';
+import { AccessToken } from 'app/infrastructure/security';
 import { TokenMapper } from 'app/infrastructure/mapping';
 import { environment } from 'app/../environments/environment';
 
 @Injectable()
 export class TokenProvider {
     private refreshTimeout = 5;
+    private tokenStorageKey = 'photocloud-access-token';
 
     constructor(
-        private sessionService: SessionService,
+        private storageService: LocalStorageService,
         private tokenMapper: TokenMapper,
         private httpClient: HttpClient
     ) { }
 
-    getAccessToken(): Observable<AccessToken> {
-        const accessToken = this.sessionService.getSession();
+    public getAccessToken(): Observable<AccessToken> {
+        const accessToken = this.storageService.get<AccessToken>(this.tokenStorageKey, AccessToken);
 
         if (!accessToken) {
             return Observable.of(null);
@@ -32,11 +33,11 @@ export class TokenProvider {
 
         if (useRefreshToken && expiresIn > 0) {
             return this.refreshToken(accessToken.refreshToken)
-                .do(response => this.sessionService.setSession(response));
+                .do(response => this.storageService.set<AccessToken>(this.tokenStorageKey, response));
         }
 
         if (expiresIn <= 0) {
-            this.sessionService.clearSession();
+            this.storageService.clear();
 
             return Observable.of(null);
         }
@@ -44,10 +45,14 @@ export class TokenProvider {
         return Observable.of(accessToken);
     }
 
+    public setAccessToken(accessToken: AccessToken) {
+        this.storageService.set<AccessToken>(this.tokenStorageKey, accessToken);
+    }
+
     private refreshToken(refreshToken: string): Observable<AccessToken> {
         const refreshTokenData = `grant_type=refresh_token&refresh_token=${refreshToken}`;
 
         return this.httpClient.post<any>(environment.loginUri, refreshTokenData)
-            .map(response => this.tokenMapper.mapResponseToAccessToken(response));
+            .map(tokenResponse => this.tokenMapper.mapResponseToAccessToken(tokenResponse));
     }
 }

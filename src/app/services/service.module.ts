@@ -4,14 +4,12 @@ import {
     CommentService,
     PostService,
     UploaderService,
-    UserService,
-    MessagingService
+    UserService
 } from 'app/services';
 
 @NgModule({
     providers: [
         CommentService,
-        MessagingService,
         PostService,
         UploaderService,
         UserService

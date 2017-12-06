@@ -2,10 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 
-import { UserProvider } from 'app/infrastructure/providers/user.provider';
 import { WebApiClient } from 'app/infrastructure/communication';
-import { SessionService } from 'app/infrastructure/session';
-import { AccessToken, CurrentUser, User } from 'app/common/models';
+import { CurrentUser, User } from 'app/common/models';
+import { AccessToken } from 'app/infrastructure/security';
 import { CreateAccountRequestModel } from 'app/account/models/request';
 import { TokenMapper } from 'app/infrastructure/mapping/token.mapper';
 
@@ -17,8 +16,6 @@ export class AccountService {
 
     constructor(
         private webApiClient: WebApiClient,
-        private sessionService: SessionService,
-        private userProvider: UserProvider,
         private tokenMapper: TokenMapper,
         private httpClient: HttpClient) { }
 
@@ -28,9 +25,6 @@ export class AccountService {
         return this.httpClient.post(environment.loginUri, body)
             .map(response => {
                 return this.tokenMapper.mapResponseToAccessToken(response);
-            })
-            ._do(accessToken => {
-                this.userProvider.setCurrentUser(accessToken);
             });
     }
 
@@ -40,40 +34,13 @@ export class AccountService {
 
     public signOut() {
         this.currentUser = null;
-        this.sessionService.clearSession();
-        this.userProvider.setCurrentUser(null);
     }
 
-    public updateAccount(propertiesToUpdate: any): Observable<User> {
-        return this.webApiClient.patch<User>('account', propertiesToUpdate)
-            .do(account => {
-                this.userProvider.updateCurrentUser(account);
-            });
+    public updateAccount(propertiesToUpdate: any): Observable<CurrentUser> {
+        return this.webApiClient.patch<User>('account', propertiesToUpdate);
     }
 
     public getAccount(): Observable<CurrentUser> {
         return this.webApiClient.get<User>('account');
-    }
-
-    public retrieveCurrentUser(refresh: boolean = true): CurrentUser {
-        if (this.currentUser && !refresh) {
-            return this.currentUser;
-        }
-
-        const accessToken = this.sessionService.getSession();
-
-        if (accessToken == null) {
-            return null;
-        }
-
-        this.currentUser = new CurrentUser();
-
-        this.currentUser.id = accessToken.userId;
-        this.currentUser.username = accessToken.username;
-        this.currentUser.pictureUri = accessToken.pictureUri;
-        this.currentUser.isPrivate = accessToken.isPrivate;
-        this.currentUser.isActive = accessToken.isActive;
-
-        return this.currentUser;
     }
 }

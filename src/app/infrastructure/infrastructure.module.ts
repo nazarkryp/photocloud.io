@@ -2,12 +2,11 @@ import { NgModule, ErrorHandler } from '@angular/core';
 import { Router } from '@angular/router';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
-import { SessionService } from 'app/infrastructure/session';
 import { MemoryCache } from 'app/infrastructure/caching';
 import { TokenProvider, AuthenticationInterceptor } from 'app/infrastructure/security';
 import { HttpErrorInterceptor } from 'app/infrastructure/handlers';
 import { HttpErrorHandler } from 'app/infrastructure/configuration';
-import { UserProvider } from 'app/infrastructure/providers';
+import { CurrentUserService } from 'app/infrastructure/services';
 import { ClipboardService } from 'app/infrastructure/services';
 import { TokenMapper, UserMapper } from 'app/infrastructure/mapping';
 import { PostsResolver, UserListResolver, UserResolver } from 'app/infrastructure/resolvers';
@@ -24,12 +23,11 @@ import {
     providers: [
         ClipboardService,
         HttpErrorHandler,
-        UserProvider,
+        CurrentUserService,
         TokenProvider,
         TokenMapper,
         UserMapper,
         MemoryCache,
-        SessionService,
         PostsResolver,
         UserListResolver,
         UserResolver,
@@ -48,7 +46,7 @@ import {
 export class InfrastructureModule {
     constructor(
         router: Router,
-        private userProvider: UserProvider,
+        private currentUserService: CurrentUserService,
         private httpConfiguration: HttpErrorHandler) {
         this.configureErrorFilters(router);
     }
@@ -57,6 +55,6 @@ export class InfrastructureModule {
         this.httpConfiguration.filters.push(new AuthenticationErrorFilter(router));
         this.httpConfiguration.filters.push(new InternetConnectionFilter(router));
         this.httpConfiguration.filters.push(new HttpNotFoundFilter(router));
-        this.httpConfiguration.filters.push(new AccountNotActiveFilter(this.userProvider, router));
+        this.httpConfiguration.filters.push(new AccountNotActiveFilter(this.currentUserService, router));
     }
 }

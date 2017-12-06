@@ -4,7 +4,7 @@ import { MatDialog } from '@angular/material';
 import { Subscription } from 'rxjs/Subscription';
 
 import { Post, User, Collection, Comment, Attachment, CurrentUser } from '../../common/models';
-import { UserProvider } from '../../infrastructure/providers';
+import { CurrentUserService } from 'app/infrastructure/services';
 import { PostService } from '../../services';
 import { CreatePostComponent } from '../shared/create-post/create-post.component';
 import { ConfirmComponent } from '../shared/confirm/confirm.component';
@@ -24,12 +24,12 @@ export class PostsComponent implements OnInit, OnDestroy {
     constructor(
         private activatedRoute: ActivatedRoute,
         private postService: PostService,
-        private userProvider: UserProvider,
+        private currentUserService: CurrentUserService,
         private progress: NgProgress,
         private dialog: MatDialog) {
         this.page.data = new Array<Post>();
         this.page.hasMoreItems = false;
-        this.currentUserSubscription = this.userProvider.getCurrentUserAsObservable()
+        this.currentUserSubscription = this.currentUserService.getCurrentUser()
             .subscribe(currentUser => {
                 this.currentUser = currentUser;
             });

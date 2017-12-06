@@ -3,7 +3,7 @@ import { DOCUMENT } from '@angular/common';
 import { MatSnackBar, MatDialog, MatSnackBarConfig } from '@angular/material';
 import { Subscription } from 'rxjs/Subscription';
 
-import { UserProvider } from '../../infrastructure/providers';
+import { CurrentUserService } from 'app/infrastructure/services';
 import { Post, Attachment, User, Comment, CurrentUser } from '../../common/models';
 import { CommentService, PostService } from '../../services';
 import { UsersComponent } from '../shared/users/users.component';
@@ -40,10 +40,10 @@ export class PostComponent implements OnInit, OnDestroy {
         public snackBar: MatSnackBar,
         private commentService: CommentService,
         private postService: PostService,
-        private userProvider: UserProvider,
+        private currentUserService: CurrentUserService,
         @Inject(DOCUMENT) private document: any
     ) {
-        this.currentUserSubscription = this.userProvider.getCurrentUserAsObservable()
+        this.currentUserSubscription = this.currentUserService.getCurrentUser()
             .subscribe(currentUser => {
                 this.currentUser = currentUser;
             });

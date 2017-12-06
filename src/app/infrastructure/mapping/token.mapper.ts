@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { AccessToken } from '../../common/models/token';
+import { AccessToken } from 'app/infrastructure/security';
 
 @Injectable()
 export class TokenMapper {
@@ -13,11 +13,6 @@ export class TokenMapper {
         accessToken.expiresIn = response['expires_in'];
         accessToken.issued = new Date(response['.issued']);
         accessToken.expires = new Date(response['.expires']);
-        accessToken.userId = Number(response['userId']);
-        accessToken.username = response['userName'];
-        accessToken.isPrivate = JSON.parse(response['isPrivate']);
-        accessToken.isActive = JSON.parse(response['isActive']);
-        accessToken.pictureUri = response['pictureUri'];
 
         return accessToken;
     }
