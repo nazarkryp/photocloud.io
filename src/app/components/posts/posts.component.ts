@@ -89,9 +89,7 @@ export class PostsComponent implements OnInit, OnDestroy {
     }
 
     public ngOnInit() {
-        console.log('OK');
         this.page = this.activatedRoute.snapshot.data['page'];
-        debugger;
         this.progress.done();
     }
 

@@ -55,6 +55,7 @@ import {
 import { UserDetailsComponent } from './components/shared/user-details/user-details.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { WebApiClient } from 'app/infrastructure/communication';
+import { LocalStorageService } from 'app/infrastructure/services/storage';
 
 @NgModule({
     declarations: [
@@ -108,7 +109,8 @@ import { WebApiClient } from 'app/infrastructure/communication';
     providers: [
         AccountService,
         AuthenticationGuard,
-        WebApiClient
+        WebApiClient,
+        LocalStorageService
     ],
     bootstrap: [AppComponent]
 })

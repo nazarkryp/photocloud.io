@@ -5,8 +5,8 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 
 import { LocalStorageService } from 'app/infrastructure/services/storage';
-import { AccessToken } from 'app/infrastructure/security';
-import { TokenMapper } from 'app/infrastructure/mapping';
+import { AccessToken } from 'app/infrastructure/security/access-token.model';
+import { TokenMapper } from 'app/infrastructure/mapping/token.mapper';
 import { environment } from 'app/../environments/environment';
 
 @Injectable()
@@ -21,7 +21,7 @@ export class TokenProvider {
     ) { }
 
     public getAccessToken(): Observable<AccessToken> {
-        const accessToken = this.storageService.get<AccessToken>(this.tokenStorageKey, AccessToken);
+        const accessToken = this.retrieveAccessToken();
 
         if (!accessToken) {
             return Observable.of(null);
@@ -54,5 +54,16 @@ export class TokenProvider {
 
         return this.httpClient.post<any>(environment.loginUri, refreshTokenData)
             .map(tokenResponse => this.tokenMapper.mapResponseToAccessToken(tokenResponse));
+    }
+
+    private retrieveAccessToken(): AccessToken {
+        const accessToken = this.storageService.get<AccessToken>(this.tokenStorageKey, AccessToken);
+
+        if (accessToken) {
+            accessToken.expires = new Date(accessToken.expires);
+            accessToken.issued = new Date(accessToken.issued);
+        }
+
+        return accessToken;
     }
 }

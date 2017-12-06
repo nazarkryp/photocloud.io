@@ -8,7 +8,6 @@ import { Observable } from 'rxjs/Observable';
 import { CurrentUserService } from 'app/infrastructure/services';
 import { CurrentUser, Error, Attachment, RelationshipStatus, User } from 'app/common/models';
 import { UserService, UploaderService, } from 'app/services';
-import { AccountService } from 'app/account/services';
 import { FileUploader } from 'ng2-file-upload';
 import { UsersComponent } from 'app/components/shared/users/users.component';
 
@@ -28,7 +27,6 @@ export class UserDetailsComponent implements OnDestroy {
     constructor(
         private router: Router,
         private dialog: MatDialog,
-        private accountService: AccountService,
         private uploaderService: UploaderService,
         private currentUserService: CurrentUserService,
         private userService: UserService) {
@@ -40,7 +38,7 @@ export class UserDetailsComponent implements OnDestroy {
     }
 
     private onSuccessUpload(attachment: Attachment) {
-        this.accountService.updateAccount({
+        this.currentUserService.updateCurrentUser({
             pictureId: attachment.id
         }).subscribe(user => {
             this.user.pictureUri = user.pictureUri
@@ -92,8 +90,10 @@ export class UserDetailsComponent implements OnDestroy {
     }
 
     public logout() {
-        this.accountService.signOut();
+        this.currentUserService.signOut();
+        console.log('redirect');
         this.router.navigateByUrl('/account/signin');
+        console.log('redirected');
     }
 
     public ngOnDestroy(): void {

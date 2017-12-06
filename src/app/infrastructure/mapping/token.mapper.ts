@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { AccessToken } from 'app/infrastructure/security';
+import { AccessToken } from 'app/infrastructure/security/access-token.model';
 
 @Injectable()
 export class TokenMapper {

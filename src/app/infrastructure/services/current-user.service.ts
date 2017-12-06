@@ -9,6 +9,7 @@ import { UserService } from 'app/services';
 import { AccountService } from 'app/account/services';
 import { LocalStorageService } from 'app/infrastructure/services/storage';
 import { TokenProvider } from 'app/infrastructure/security';
+import { AccessToken } from 'app/infrastructure/security/access-token.model';
 
 @Injectable()
 export class CurrentUserService {
@@ -25,15 +26,13 @@ export class CurrentUserService {
     public getCurrentUser(refresh: boolean = false)
         : Observable<CurrentUser> {
         this.currentUser = this.retrieveCurrentUser();
-
-        if (this.currentUser && !refresh) {
+        if (!refresh) {
+            this.state.next(this.currentUser);
             return this.state.asObservable();
         }
 
-        return this.accountService.getAccount()
+        return this.getAccount()
             .mergeMap<CurrentUser, CurrentUser>(currentUser => {
-                this.currentUser = currentUser;
-                this.saveCurrentUser(currentUser);
                 return this.state.asObservable();
             });
     }
@@ -42,7 +41,13 @@ export class CurrentUserService {
         return this.accountService.signIn(username, password)
             .do(accessToken => {
                 this.tokenProvider.setAccessToken(accessToken);
+            }).flatMap<AccessToken, CurrentUser>(accessToken => {
+                return this.getAccount();
             });
+    }
+
+    public signOut() {
+        this.storageService.clear();
     }
 
     public updateCurrentUser(propertiesToUpdate: any): Observable<CurrentUser> {
@@ -59,5 +64,13 @@ export class CurrentUserService {
 
     private retrieveCurrentUser(): CurrentUser {
         return this.storageService.get<CurrentUser>(this.currentUserStorageKey, CurrentUser);
+    }
+
+    private getAccount(): Observable<CurrentUser> {
+        return this.accountService.getAccount()
+            .do(currentUser => {
+                this.currentUser = currentUser;
+                this.saveCurrentUser(currentUser);
+            });
     }
 }
