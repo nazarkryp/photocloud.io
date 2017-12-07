@@ -37,4 +37,3 @@ testem.log
 Thumbs.db
 dist/
 .vs/
-package-lock.json
