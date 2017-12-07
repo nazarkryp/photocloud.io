@@ -10,14 +10,14 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
 import { PostDetailsComponent } from './components/shared/post-details/post-details.component';
 import { TagsComponent } from './components/explore/tags/tags.component';
 import { ConnectionErrorComponent } from './components/shared/connection-error/connection-error.component';
-import { AuthenticationGuard } from './infrastructure/guards/authentication-guard.service';
+import { AuthenticationGuardService } from './infrastructure/guards/authentication-guard.service';
 import { PostsResolver, UserResolver, UserListResolver } from './infrastructure/resolvers';
 
 const routes: Routes = [
     {
         path: '',
         component: PostsComponent,
-        canActivate: [AuthenticationGuard],
+        canActivate: [AuthenticationGuardService],
         resolve: { page: PostsResolver },
         data: {
             title: 'PhotoCloud'
@@ -27,7 +27,7 @@ const routes: Routes = [
         path: 'account',
         loadChildren: 'app/account/account.module#AccountModule',
         canActivate: [
-            AuthenticationGuard
+            AuthenticationGuardService
         ],
         data: {
             title: 'PhotoCloud - Account'

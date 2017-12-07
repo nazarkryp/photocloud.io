@@ -19,7 +19,7 @@ import { CommentsComponent } from './components/shared/comments/comments.compone
 import { PostDetailsComponent } from './components/shared/post-details/post-details.component';
 import { CreatePostComponent } from './components/shared/create-post/create-post.component';
 
-import { AuthenticationGuard } from './infrastructure/guards/authentication-guard.service';
+import { AuthenticationGuardService } from './infrastructure/guards/authentication-guard.service';
 import { AccountService } from 'app/account/services';
 
 import { ClipboardModule } from 'ngx-clipboard';
@@ -56,6 +56,7 @@ import { UserDetailsComponent } from './components/shared/user-details/user-deta
 import { FooterComponent } from './components/footer/footer.component';
 import { WebApiClient } from 'app/infrastructure/communication';
 import { LocalStorageService } from 'app/infrastructure/services/storage';
+import { SplashScreenComponent } from './components/shared/splash-screen/splash-screen.component';
 
 @NgModule({
     declarations: [
@@ -82,7 +83,8 @@ import { LocalStorageService } from 'app/infrastructure/services/storage';
         SearchBoxComponent,
         ConnectionErrorComponent,
         UserDetailsComponent,
-        FooterComponent
+        FooterComponent,
+        SplashScreenComponent
     ],
     entryComponents: [
         PostDetailsComponent,
@@ -108,7 +110,7 @@ import { LocalStorageService } from 'app/infrastructure/services/storage';
     ],
     providers: [
         AccountService,
-        AuthenticationGuard,
+        AuthenticationGuardService,
         WebApiClient,
         LocalStorageService
     ],

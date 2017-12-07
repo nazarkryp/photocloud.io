@@ -1,1 +1,1 @@
-export { AuthenticationGuard } from './authentication-guard.service';
+export { AuthenticationGuardService } from './authentication-guard.service';

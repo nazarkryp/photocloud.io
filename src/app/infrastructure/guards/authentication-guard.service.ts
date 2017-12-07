@@ -8,36 +8,34 @@ import { TokenProvider } from 'app/infrastructure/security';
 import { CurrentUserService } from 'app/infrastructure/services';
 
 @Injectable()
-export class AuthenticationGuard implements CanActivate {
+export class AuthenticationGuardService implements CanActivate {
     constructor(
         private router: Router,
         private currentUserService: CurrentUserService) { }
 
     public canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-        return this.currentUserService.getCurrentUser()
-            .take(1)
-            .map(currentUser => {
-                if (currentUser != null && (state.url === '/account/signin' || state.url === '/account/create')) {
-                    this.router.navigateByUrl('/');
-                    return false;
-                }
+        const currentUser = this.currentUserService.retrieveCurrentUser()
 
-                if (currentUser == null && (state.url === '/account/signin' || state.url === '/account/create')) {
-                    return true;
-                }
+        if (currentUser != null && (state.url === '/account/signin' || state.url === '/account/create')) {
+            this.router.navigateByUrl('/');
+            return false;
+        }
 
-                if (currentUser != null && !currentUser.isActive && (state.url !== '/account/edit')) {
-                    this.router.navigateByUrl('/account/edit');
-                    return false;
-                }
+        if (currentUser == null && (state.url === '/account/signin' || state.url === '/account/create')) {
+            return true;
+        }
 
-                if (currentUser != null) {
-                    return true;
-                }
+        if (currentUser != null && !currentUser.isActive && (state.url !== '/account/edit')) {
+            this.router.navigateByUrl('/account/edit');
+            return false;
+        }
 
-                this.router.navigateByUrl('/account/signin');
+        if (currentUser != null) {
+            return true;
+        }
 
-                return false;
-            });
+        this.router.navigateByUrl('/account/signin');
+
+        return false;
     }
 }

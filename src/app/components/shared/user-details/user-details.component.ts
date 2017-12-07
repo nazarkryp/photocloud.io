@@ -17,7 +17,7 @@ import { UsersComponent } from 'app/components/shared/users/users.component';
     styleUrls: ['./user-details.component.css']
 })
 export class UserDetailsComponent implements OnDestroy {
-    private currentUserSubscription$: Subscription;
+    private currentUserSubscription: Subscription;
 
     @Input() public user;
     public currentUser: CurrentUser;
@@ -31,7 +31,7 @@ export class UserDetailsComponent implements OnDestroy {
         private currentUserService: CurrentUserService,
         private userService: UserService) {
         this.uploader = uploaderService.createUploader((attachment) => this.onSuccessUpload(attachment));
-        this.currentUserSubscription$ = this.currentUserService.getCurrentUser()
+        this.currentUserSubscription = this.currentUserService.getCurrentUser()
             .subscribe(currentUser => {
                 this.currentUser = currentUser;
             });
@@ -91,14 +91,12 @@ export class UserDetailsComponent implements OnDestroy {
 
     public logout() {
         this.currentUserService.signOut();
-        console.log('redirect');
         this.router.navigateByUrl('/account/signin');
-        console.log('redirected');
     }
 
     public ngOnDestroy(): void {
-        if (this.currentUserSubscription$) {
-            this.currentUserSubscription$.unsubscribe();
+        if (this.currentUserSubscription) {
+            this.currentUserSubscription.unsubscribe();
         }
 
         this.uploader.destroy();

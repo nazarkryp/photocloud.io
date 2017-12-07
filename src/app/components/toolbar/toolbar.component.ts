@@ -27,19 +27,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         this.openNotificationsEvent.emit(true);
     }
 
-    public navigationInterceptor(event): void {
-        if (event instanceof NavigationEnd) {
-            this.renderToolbar = this.router.url !== '/account/signin'
-                && this.router.url !== '/account/create'
-                && this.router.url !== '/account/recover';
-        }
-    }
-
     public ngOnInit(): void {
-        this.router.events.subscribe((event: any): void => {
-            this.navigationInterceptor(event);
-        });
-
         this.currentUserSubscription = this.currentUserService.getCurrentUser()
             .subscribe(currentUser => {
                 this.currentUser = currentUser;

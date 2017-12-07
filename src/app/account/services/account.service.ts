@@ -41,6 +41,6 @@ export class AccountService {
     }
 
     public getAccount(): Observable<CurrentUser> {
-        return this.webApiClient.get<User>('account');
+        return this.webApiClient.get<CurrentUser>('account');
     }
 }

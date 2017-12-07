@@ -42,7 +42,7 @@
         </div>
     </div>
     <mat-progress-bar class="progress-bar" color="warn" mode="indeterminate" *ngIf="post.isLoading"></mat-progress-bar>
-    <div class="post-footer" *ngIf="!post.editing" [@enterTransition]>
+    <div class="post-footer" *ngIf="!post.editing">
         <div class="likes" fxLayout="row" fxLayoutAlign="space-between center" (click)="openLikesDialog(post)">
             <span class="likes-counter">
                 <strong>{{post.likesCount}} likes</strong>
@@ -61,12 +61,12 @@
             <span class="post-created">{{post.created | amTimeAgo}}</span>
         </div>
     </div>
-    <div class="post-edit-footer" *ngIf="post.editing" [@enterTransition]>
+    <div class="post-edit-footer" *ngIf="post.editing">
         <div class="post-edit-caption">
             <textarea rows="5" class="caption-input" placeholder="Edit Caption" type="text" [(ngModel)]="caption" fxFlex></textarea>
         </div>
     </div>
-    <div class="post-actions" fxLayout="row" *ngIf="!post.editing" [@enterTransition]>
+    <div class="post-actions" fxLayout="row" *ngIf="!post.editing">
         <div fxLayout="row" fxLayoutAlign="center center">
             <mat-icon class="big-like-icon" [ngClass]="{ 'liked' : post.userHasLiked }" svgIcon="heart" (click)="like()"></mat-icon>
         </div>
@@ -76,7 +76,7 @@
             <mat-icon>share</mat-icon>
         </button>
     </div>
-    <div class="post-edit-actions" fxLayout="row" fxLayoutAlign="end center" *ngIf="post.editing" [@enterTransition]>
+    <div class="post-edit-actions" fxLayout="row" fxLayoutAlign="end center" *ngIf="post.editing">
         <button mat-button (click)="cancel()">CANCEL</button>
         <button mat-raised-button color="primary" (click)="update()">SAVE</button>
     </div>

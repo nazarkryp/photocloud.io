@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AbstractControl, FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { trigger, animate, style, transition, animateChild, group, query, stagger } from '@angular/animations';
@@ -27,7 +27,7 @@ const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA
         ])
     ]
 })
-export class CreateComponent implements OnInit {
+export class CreateComponent {
     public errorStateMatcher = new DefaultErrorStateMatcher();
     public formGroup: FormGroup;
 
@@ -134,12 +134,5 @@ export class CreateComponent implements OnInit {
                     this.progress.done();
                 });
         }
-    }
-
-    public error(obj: any) {
-        console.log(obj);
-    }
-
-    public ngOnInit() {
     }
 }
