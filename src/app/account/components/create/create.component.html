@@ -6,7 +6,8 @@
                 <span style="font-size: 34px; font-weight: bold;">Cloud</span>
             </div>
             <span style="color: gray;">Create account to continue or
-                <a class="primary" routerLink="/account/signin">Sign In</a> if already have one
+                <a class="primary" routerLink="/account/signin" *ngIf="!formGroup.disabled">Sign In</a>
+                <span class="disabled" *ngIf="formGroup.disabled">Sign In</span> if already have one
             </span>
         </div>
         <mat-form-field class="form-field">

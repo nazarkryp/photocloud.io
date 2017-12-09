@@ -21,7 +21,7 @@ import { CurrentUserService } from 'app/infrastructure/services';
 export class AppComponent implements OnInit {
     @ViewChild('notificationsSidenav')
     public notificationsSidenav: MatSidenav;
-    public renderToolbar = true;
+    public renderToolbar = false;
     public initialLoad = true;
 
     constructor(

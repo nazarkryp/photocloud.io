@@ -18,6 +18,7 @@ const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA
 })
 export class EditComponent implements OnInit {
     public backup: CurrentUser = new CurrentUser();
+    public currentUser: CurrentUser;
     public isInvertingAccountStatus: boolean;
     public isInvertingAccountPrivateStatus: boolean;
     public isActive: boolean;
@@ -144,15 +145,14 @@ export class EditComponent implements OnInit {
     }
 
     public ngOnInit() {
-        const account = this.activatedRoute.snapshot.data['account'];
-        this.setup(account);
-
+        this.currentUser = this.activatedRoute.snapshot.data['account'];
+        this.setup(this.currentUser);
         this.currentUserService.getCurrentUser()
             .subscribe(currentUser => {
-                const areEqual = this.equals(account, currentUser);
+                const areEqual = this.equals(this.currentUser, currentUser);
 
                 if (!areEqual) {
-                    this.updateAccount(account);
+                    this.updateAccount(this.currentUser);
                 }
 
                 this.progress.done();

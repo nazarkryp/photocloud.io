@@ -14,7 +14,7 @@ import { AccessToken } from 'app/infrastructure/security/access-token.model';
 @Injectable()
 export class CurrentUserService {
     private currentUserStorageKey = 'photocloud-current-user';
-    private state: ReplaySubject<CurrentUser> = new ReplaySubject<CurrentUser>();
+    private state: ReplaySubject<CurrentUser> = new ReplaySubject<CurrentUser>(1);
 
     constructor(
         private tokenProvider: TokenProvider,

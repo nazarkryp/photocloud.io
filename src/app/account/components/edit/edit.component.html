@@ -3,6 +3,10 @@
         <div>
             <span style="font-weight:lighter; font-size: 24px;">Edit Account</span>
         </div>
+        <div fxLayout="row" fxLayoutAlign="center center" style="padding-top: .75rem;">
+            <img style="width: 75px; height: 75px; border-radius: 90px; object-fit: cover;" src="{{currentUser.pictureUri}}" default="assets/images/user-default-image.png"
+                alt="user">
+        </div>
         <form style="margin-top: 34px;" [formGroup]="formGroup" (ngSubmit)="save()">
             <mat-form-field style="width: 100%;">
                 <input formControlName="username" matInput placeholder="Username" type="text" autocomplete="off">

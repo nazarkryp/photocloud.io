@@ -17,7 +17,6 @@ export class AccountNotActiveFilter implements HttpErrorFilter {
 
     public handle(response: HttpErrorResponse): ErrorObservable {
         if (response.status === HttpStatusCode.Forbidden) {
-            debugger;
             let responseError;
             if (typeof response.error === 'string') {
                 responseError = JSON.parse(response.error);

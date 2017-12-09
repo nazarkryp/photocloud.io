@@ -1,3 +1,5 @@
+<video class="background-video" src="http://res.cloudinary.com/dpfmyl1mn/video/upload/v1512734461/photocloud/628513837.mp4"
+    autoplay loop playsinline muted></video>
 <div class="signin-content" fxLayout="column" fxLayoutAlign="center center" @content>
     <form class="mat-elevation-z3 signin-form" fxLayout="column" [formGroup]="formGroup" (ngSubmit)="signIn(usernameInput.value, passwordInput.value)">
         <!-- <mat-progress-bar mode="indeterminate" style="position: absolute; top: 0; margin: 0 -17px" *ngIf="isLoading"></mat-progress-bar> -->
@@ -7,7 +9,8 @@
                 <span style="font-size: 34px; font-weight: bold;">Cloud</span>
             </div>
             <span style="color: gray;">Login to continue or
-                <a class="primary" routerLink="/account/create">Create Account</a>
+                <a class="primary" routerLink="/account/create" *ngIf="!formGroup.disabled">Create Account</a>
+                <span class="disabled" *ngIf="formGroup.disabled">Create Account</span>
             </span>
         </div>
         <mat-form-field class="form-field">
