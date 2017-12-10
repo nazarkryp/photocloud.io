@@ -1,6 +1,28 @@
-<div fxLayout="column" fxLayoutAlign="center center">
+<div class="user-posts-container" fxLayout="column" fxLayoutAlign="center center">
     <app-user-details [user]="user"></app-user-details>
-    <div class="posts-container" *ngIf="!error; else errorBox">
+
+    <div class="user-posts" *ngIf="!error; else errorBox">
+        <div *ngFor="let post of page?.data;">
+            <div class="mat-elevation-z1 user-post" (click)="openPostDialog(post)">
+                <img class="user-post-image" src="{{post?.attachments[0].uri}}" alt="post-image">
+                <mat-icon class="multiple-attachments-icon" *ngIf="post.attachments.length > 1">layers</mat-icon>
+                <div class="user-post-details" fxLayout="row" fxLayoutAlign="space-between center">
+                    <div fxLayout="row" fxLayoutAlign="center center">
+                        <mat-icon class="post-icon">favorite</mat-icon>
+                        <span class="post-number">{{post?.likesCount}}</span>
+                    </div>
+                    <div fxLayout="row" fxLayoutAlign="center center">
+                        <mat-icon class="post-icon">mode_comment</mat-icon>
+                        <span class="post-number">{{post?.commentsCount}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="center center" *ngIf="page.hasMoreItems">
+        <button mat-raised-button (click)="getPosts()" [disabled]="isLoadingPosts">Load More</button>
+    </div>
+    <!-- <div class="posts-container" *ngIf="!error; else errorBox">
         <div class="user-posts" *ngIf="isLoadingPosts || page.data.length > 0; else emptyFeed;">
             <div class="post-item" *ngFor="let post of page?.data;">
                 <div class="image-container mat-elevation-z3" fxLayout="column" fxLayoutAlign="center center" (click)="openPostDialog(post)">
@@ -25,21 +47,23 @@
         <div fxLayout="row" fxLayoutAlign="center center" *ngIf="page.hasMoreItems">
             <button mat-raised-button (click)="getPosts()" [disabled]="isLoadingPosts">Load More</button>
         </div>
-    </div>
-    <ng-template #errorBox>
-        <div class="info-container" fxLayout="row" fxLayoutAlign="center center">
-            <div fxLayout="row" fxLayoutAlign="center center">
-                <div class="error-box" fxLayout="column" fxLayoutAlign="start center">
-                    <span class="error-title">{{error.title}}</span>
-                    <p class="error-description">{{error.description}}</p>
-                </div>
+    </div> -->
+</div>
+
+<ng-template #errorBox>
+    <div class="info-container" fxLayout="row" fxLayoutAlign="center center">
+        <div fxLayout="row" fxLayoutAlign="center center">
+            <div class="error-box" fxLayout="column" fxLayoutAlign="start center">
+                <span class="error-title">{{error.title}}</span>
+                <p class="error-description">{{error.description}}</p>
             </div>
         </div>
-    </ng-template>
-    <ng-template #emptyFeed>
-        <div class="info-container" fxLayout="row" fxLayoutAlign="center center">
-            <h1 class="info-message">
-                <strong>{{user.username}}</strong> hasn't posted anything yet</h1>
-        </div>
-    </ng-template>
-</div>
+    </div>
+</ng-template>
+
+<ng-template #emptyFeed>
+    <div class="info-container" fxLayout="row" fxLayoutAlign="center center">
+        <h1 class="info-message">
+            <strong>{{user.username}}</strong> hasn't posted anything yet</h1>
+    </div>
+</ng-template>

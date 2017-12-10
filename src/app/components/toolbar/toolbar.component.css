@@ -48,11 +48,6 @@ mat-icon>svg {
 .custom-big-icon-container {
     width: 64px;
     height: 64px;
-    border-right: 1px solid #C8C8C8;
-}
-
-.custom-big-icon-container.border-left {
-    border-left: 1px solid #C8C8C8;
 }
 
 .custom-big-icon {

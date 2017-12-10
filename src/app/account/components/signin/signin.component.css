@@ -1,7 +1,7 @@
 .signin-content {
+    background-color: #FAFAFA;
     position: relative;
     height: calc(100vh);
-    color: #444444;
     margin: 0;
     padding: 0;
 }
@@ -25,7 +25,7 @@
     }
     .signin-form {
         width: 448px;
-        border-radius: 3px;
+        border-radius: 4px;
     }
 }
 
@@ -39,16 +39,6 @@
     width: 100%;
 }
 
-.input {
-    padding: 12px;
-    border: 2px solid #efefef;
-    border-radius: 5px;
-    width: 100%;
-    box-sizing: border-box;
-    outline: none;
-    margin-top: 24px;
-}
-
 .primary {
     color: #e91f63;
 }
@@ -60,8 +50,4 @@
 .error-message {
     color: #e91f63;
     text-align: center;
-}
-
-.mat-spinner>* {
-    stroke: white !important;
 }

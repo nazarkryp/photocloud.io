@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { MatAutocompleteSelectedEvent } from '@angular/material';
 
 import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/debounceTime';
 
 import { UserService } from 'app/services';
 import { Collection, User } from 'app/common/models';
@@ -50,6 +51,7 @@ export class SearchBoxComponent implements OnInit {
     public ngOnInit() {
         this.searchControl = new FormControl();
         this.users = this.searchControl.valueChanges
+            .debounceTime(800)
             .do(_ => {
                 if (this.searchQuery) {
                     this.progress.start();

@@ -11,14 +11,6 @@
     }
 }
 
-.mat-fab-bottom-right {
-    top: auto;
-    right: 35px;
-    bottom: 35px;
-    left: auto;
-    position: fixed;
-}
-
 .message-container {
     position: absolute;
     top: 50%;
@@ -28,4 +20,12 @@
     color: #444444;
     font-weight: lighter;
     font-size: 1.7em;
+}
+
+.mat-fab-bottom-right {
+    top: auto;
+    right: 35px;
+    bottom: 35px;
+    left: auto;
+    position: fixed;
 }

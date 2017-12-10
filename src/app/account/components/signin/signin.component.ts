@@ -29,6 +29,7 @@ export class SignInComponent {
     public errorStateMatcher = new DefaultErrorStateMatcher();
     public formGroup: FormGroup;
     public isLoading: boolean;
+    public signInError: string;
 
     get username(): AbstractControl {
         return this.formGroup.get('username');
@@ -61,6 +62,7 @@ export class SignInComponent {
 
     public signIn(username: string, password: string) {
         if (this.formGroup.valid) {
+            this.signInError = null;
             this.progress.start();
             this.formGroup.disable();
             this.currentUserService.signIn(username, password)
@@ -68,10 +70,7 @@ export class SignInComponent {
                     this.router.navigateByUrl('/');
                 }, error => {
                     this.formGroup.enable();
-                    this.formGroup.setErrors({
-                        'signInError':
-                            'Sorry, your username or password was incorrect. Please check your username and password'
-                    });
+                    this.signInError = 'Sorry, your username or password was incorrect. Please check your username and password';
                     this.progress.done();
                     this.usernameInput.nativeElement.focus();
                 });

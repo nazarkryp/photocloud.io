@@ -1,11 +1,14 @@
 <ng-progress [thick]="true" [showSpinner]="false" [trickleSpeed]="200" [speed]="300" color="#e91e63"></ng-progress>
-<mat-sidenav-container>
+<!-- <app-splash-screen style="position: absolute; z-index: 999;" *ngIf="initialLoad"></app-splash-screen> -->
+<mat-sidenav-container *ngIf="!initialLoad">
     <mat-sidenav #notificationsSidenav align="end">
         <app-notifications (onClosing)="closeNotifications($event)" *ngIf="notificationsSidenav.opened"></app-notifications>
     </mat-sidenav>
     <div class="my-content" fxLayout="column">
-        <!-- <app-splash-screen style="position: absolute; z-index: 999;" *ngIf="initialLoad"></app-splash-screen> -->
         <app-toolbar *ngIf="renderToolbar" (openNotificationsEvent)="openNotifications($event)"></app-toolbar>
-        <router-outlet></router-outlet>
+        <div style="min-height: calc(100vh - 64px - 64px)">
+            <router-outlet></router-outlet>
+        </div>
+        <app-footer *ngIf="renderToolbar"></app-footer>
     </div>
 </mat-sidenav-container>

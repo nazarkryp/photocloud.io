@@ -1,4 +1,17 @@
 .footer {
-    padding: 0 25px 0 25px;
-    height: 75px;
+    color: gray;
+    padding: 0 85px;
+    height: 64px;
+    font-size: 0.8em;
+}
+
+.footer-links>a {
+    color: #ea1f62;
+    margin-left: .75rem;
+    cursor: pointer;
+}
+
+.footer-links>a:hover {
+    color: #a01745;
+    margin-left: .75rem;
 }

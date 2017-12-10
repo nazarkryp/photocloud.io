@@ -9,7 +9,8 @@ import {
     MatProgressSpinnerModule,
     MatProgressBarModule,
     MatExpansionModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    MatGridListModule
 } from '@angular/material';
 
 @NgModule({
@@ -22,7 +23,8 @@ import {
         MatProgressSpinnerModule,
         MatProgressBarModule,
         MatExpansionModule,
-        MatSlideToggleModule
+        MatSlideToggleModule,
+        MatGridListModule
     ],
     exports: [
         MatInputModule,
@@ -33,7 +35,8 @@ import {
         MatProgressSpinnerModule,
         MatProgressBarModule,
         MatExpansionModule,
-        MatSlideToggleModule
+        MatSlideToggleModule,
+        MatGridListModule
     ]
 })
 export class AccountMaterialModule { }

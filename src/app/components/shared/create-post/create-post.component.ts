@@ -90,4 +90,8 @@ export class CreatePostComponent implements OnInit, OnDestroy {
                 return options;
             });
     }
+
+    public setDetault(attachment) {
+
+    }
 }

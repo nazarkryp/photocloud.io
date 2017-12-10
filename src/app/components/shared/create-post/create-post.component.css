@@ -1,8 +1,8 @@
 .create-post-container {
-    width: 50%;
-    min-width: 400px;
+    width: 450px;
     padding: 12px;
-    overflow: hidden;
+    overflow-y: auto;
+    max-height: 100vh;
 }
 
 .attachments-content {
@@ -23,7 +23,7 @@
     width: -webkit-min-content;
 }
 
-.uploaded-attachment-mini {
+.upload-attachment-button {
     position: relative;
     height: 75px;
     width: 75px;
@@ -33,7 +33,16 @@
     box-sizing: border-box;
 }
 
-.attachments-container> :first-child.uploaded-attachment-mini {
+.uploaded-attachment-mini {
+    position: relative;
+    height: 75px;
+    width: 75px;
+    border-radius: 2px;
+    margin-left: 12px;
+    box-sizing: border-box;
+}
+
+.attachments-container> :first-child.upload-attachment-button {
     margin-left: 0;
 }
 
@@ -41,6 +50,21 @@
     object-fit: cover;
     height: 100%;
     width: 100%;
+}
+
+.attachment-progress-container {
+    background-color: rgba(0, 0, 0, .5);
+    position: absolute;
+    width: 75px;
+    height: 75px;
+    z-index: 999;
+}
+
+.progress {
+    font-size: 17px;
+    font-weight: lighter;
+    position: absolute;
+    color: white;
 }
 
 
@@ -143,21 +167,6 @@
     height: 75px;
     margin-right: 15px;
     display: inline-block;
-}
-
-.attachment-progress-container {
-    background-color: rgba(0, 0, 0, .5);
-    position: absolute;
-    width: 75px;
-    height: 75px;
-    z-index: 999;
-}
-
-.progress {
-    font-size: 17px;
-    font-weight: lighter;
-    position: absolute;
-    color: white;
 }
 
 .create-post-footer {

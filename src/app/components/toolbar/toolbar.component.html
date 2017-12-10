@@ -21,7 +21,7 @@
                 </div>
                 <div class="custom-big-icon-container" fxLayout="row" fxLayoutAlign="center center">
                     <a [routerLink]="['/', currentUser.username]" fxLayout="row" fxLayoutAlign="center center">
-                        <img class="avatar" src="{{currentUser.pictureUri}}" default="assets/images/user-default-image.png" alt="user">
+                        <img class="avatar" src="{{currentUser.pictureUri}}" default="assets/images/user-default-image.png" alt="{{currentUser.username}}">
                     </a>
                 </div>
             </div>

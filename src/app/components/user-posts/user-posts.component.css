@@ -1,18 +1,36 @@
-.posts-container {
-    margin: 50px 0 50px 0;
-}
-
-.user-posts {
-    display: grid;
-    grid-template-columns: 300px 300px 300px;
-    grid-gap: 30px;
+.user-posts-container {
     margin-bottom: 50px;
 }
 
-.post-item {
-    width: 300px;
-    height: 300px;
-    /*padding: 20px;*/
+.user-posts-container>div {
+    margin-top: 50px;
+}
+
+.user-posts {
+    width: 100%;
+    max-width: 960px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-gap: 30px;
+}
+
+.user-post {
+    position: relative;
+}
+
+.user-post:after {
+    content: "";
+    display: block;
+    padding-bottom: 100%;
+}
+
+.user-post-image {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    vertical-align: bottom;
+    border-radius: 2px;
 }
 
 .image-container {
@@ -22,7 +40,7 @@
     overflow: hidden;
 }
 
-.image-container .after {
+.user-post .user-post-details {
     position: absolute;
     width: 100%;
     height: 100%;
@@ -33,13 +51,14 @@
     z-index: 100;
 }
 
-.image-container:not([disabled]):hover .after {
+.user-post:not([disabled]):hover .user-post-details {
     cursor: pointer;
     background: rgba(0, 0, 0, .4);
     opacity: 1;
     width: 100%;
     height: 100%;
     z-index: 100;
+    padding: 0 2.75rem;
 }
 
 .image-container img {
@@ -53,13 +72,6 @@
     -moz-transform: scale(1.1);
     -webkit-transform: scale(1.1);
     transform: scale(1.1);
-}
-
-.thumbnail {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    overflow: hidden;
 }
 
 .pointer {

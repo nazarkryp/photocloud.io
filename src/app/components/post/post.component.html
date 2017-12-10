@@ -71,7 +71,7 @@
             <mat-icon class="big-like-icon" [ngClass]="{ 'liked' : post.userHasLiked }" svgIcon="heart" (click)="like()"></mat-icon>
         </div>
         <input class="comment-input" type="text" placeholder="Add Comment" [(ngModel)]="text" (keydown.enter)="createComment()" />
-        <button class="icon-button" mat-icon-button matTooltip="Copy to clipboard" matTooltipPosition="left" ngxClipboard [cbContent]="share()"
+        <button class="icon-button" mat-icon-button matTooltip="Share" matTooltipPosition="left" ngxClipboard [cbContent]="share()"
             (cbOnSuccess)="showToast('Copied to clipboard')">
             <mat-icon>share</mat-icon>
         </button>
