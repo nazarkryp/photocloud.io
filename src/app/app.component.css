@@ -6,14 +6,21 @@ h1 {
     font-weight: lighter;
 }
 
+::ng-deep .mat-form-field-underline {
+    background: #d8d8d8;
+}
+
+.my-content {
+    margin: 0;
+    width: 100%;
+    min-height: 100vh;
+    /* overflow-y: scroll; */
+}
+
 .mat-fab-bottom-left {
     top: auto;
     right: 35px;
     bottom: 35px;
     right: auto;
     position: fixed;
-}
-
-::ng-deep .mat-form-field-underline {
-    background: #d8d8d8;
 }

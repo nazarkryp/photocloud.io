@@ -6,7 +6,7 @@
     </mat-sidenav>
     <div class="my-content" fxLayout="column">
         <app-toolbar *ngIf="renderToolbar" (openNotificationsEvent)="openNotifications($event)"></app-toolbar>
-        <div style="min-height: calc(100vh - 64px - 64px)">
+        <div style="min-height: calc(100vh - 64px - 64px);">
             <router-outlet></router-outlet>
         </div>
         <app-footer *ngIf="renderToolbar"></app-footer>

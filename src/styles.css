@@ -1,21 +1,9 @@
-/* @import '~@angular/material/prebuilt-themes/indigo-pink.css'; */
-
 @import url('https://fonts.googleapis.com/css?family=Roboto:300,400');
-html,
-body,
-material-app,
-mat-sidenav-container,
-.my-content {
-    margin: 0;
-    width: 100%;
-    min-height: 100vh;
-    overflow-y: scroll;
-}
-
 body {
     background-color: #FAFAFA;
     color: #444444;
     font-family: Roboto, sans-serif;
+    overflow-y: scroll;
 }
 
 .container {
