@@ -4,8 +4,8 @@ import { MatDialogRef, MatSnackBarConfig, MatSnackBar, MAT_DIALOG_DATA } from '@
 import { Subscription } from 'rxjs/Subscription';
 import { Observable } from 'rxjs/Observable';
 
-import { Post, User, Attachment, Comment, CurrentUser, CreatePostModel } from 'app/common/models';
-import { PostService, CommentService } from 'app/services';
+import { Media, User, Attachment, Comment, CurrentUser, CreateMediaModel } from 'app/common/models';
+import { MediaService, CommentService } from 'app/services';
 import { CurrentUserService } from 'app/infrastructure/services';
 import { TokenProvider } from 'app/infrastructure/security';
 import { NgProgress } from 'ngx-progressbar';
@@ -15,8 +15,8 @@ import { environment } from 'app/../environments/environment';
 
 @Component({
     selector: 'app-create-post',
-    templateUrl: './create-post.component.html',
-    styleUrls: ['./create-post.component.css'],
+    templateUrl: './create-media.component.html',
+    styleUrls: ['./create-media.component.css'],
     encapsulation: ViewEncapsulation.None
 })
 export class CreatePostComponent implements OnInit, OnDestroy {
@@ -25,11 +25,11 @@ export class CreatePostComponent implements OnInit, OnDestroy {
     public maxItemsCount = 4;
 
     public attachments: Array<Attachment>;
-    public post: CreatePostModel;
+    public post: CreateMediaModel;
     public uploader: FileUploader;
 
     constructor(
-        private postService: PostService,
+        private mediaService: MediaService,
         private currentUserService: CurrentUserService,
         private progress: NgProgress,
         private tokenProvider: TokenProvider,
@@ -37,7 +37,7 @@ export class CreatePostComponent implements OnInit, OnDestroy {
         this.uploader = new FileUploader({
             url: environment.apiUri + 'attachments'
         });
-        this.post = new CreatePostModel();
+        this.post = new CreateMediaModel();
         this.attachments = new Array<Attachment>();
 
         this.currentUserSubscription = this.currentUserService.getCurrentUser()
@@ -72,7 +72,7 @@ export class CreatePostComponent implements OnInit, OnDestroy {
             return attachment.id;
         });
 
-        this.postService.createPost(this.post)
+        this.mediaService.createPost(this.post)
             .subscribe(createdPost => {
                 createdPost.user.pictureUri = this.currentUser.pictureUri;
                 this.dialogRef.close(createdPost);

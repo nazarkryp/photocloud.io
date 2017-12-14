@@ -4,15 +4,15 @@ import { MatSnackBar, MatDialog, MatSnackBarConfig } from '@angular/material';
 import { Subscription } from 'rxjs/Subscription';
 
 import { CurrentUserService } from 'app/infrastructure/services';
-import { Post, Attachment, User, Comment, CurrentUser } from '../../common/models';
-import { CommentService, PostService } from '../../services';
+import { Media, Attachment, User, Comment, CurrentUser } from '../../common/models';
+import { CommentService, MediaService } from '../../services';
 import { UsersComponent } from '../shared/users/users.component';
 import { trigger, style, animate, transition } from '@angular/animations';
 
 @Component({
     selector: 'app-post',
-    templateUrl: './post.component.html',
-    styleUrls: ['./post.component.css'],
+    templateUrl: './media.component.html',
+    styleUrls: ['./media.component.css'],
     animations: [
         trigger('enterTransition', [
             transition(':enter', [
@@ -24,8 +24,8 @@ import { trigger, style, animate, transition } from '@angular/animations';
     encapsulation: ViewEncapsulation.None
 })
 export class PostComponent implements OnInit, OnDestroy {
-    @Input() public post: Post;
-    @Output() public onRemoved = new EventEmitter<Post>();
+    @Input() public media: Media;
+    @Output() public onRemoved = new EventEmitter<Media>();
     @ViewChild('player') public player: any;
 
     public text: string;
@@ -39,7 +39,7 @@ export class PostComponent implements OnInit, OnDestroy {
         public dialog: MatDialog,
         public snackBar: MatSnackBar,
         private commentService: CommentService,
-        private postService: PostService,
+        private mediaService: MediaService,
         private currentUserService: CurrentUserService,
         @Inject(DOCUMENT) private document: any
     ) {
@@ -50,19 +50,19 @@ export class PostComponent implements OnInit, OnDestroy {
     }
 
     public next() {
-        if (this.post.activeAttachment < this.post.attachments.length - 1) {
-            this.post.activeAttachment++;
+        if (this.media.activeAttachment < this.media.attachments.length - 1) {
+            this.media.activeAttachment++;
         }
     }
 
     public previous() {
-        if (this.post.activeAttachment > 0) {
-            this.post.activeAttachment--;
+        if (this.media.activeAttachment > 0) {
+            this.media.activeAttachment--;
         }
     }
 
     public remove() {
-        this.onRemoved.emit(this.post);
+        this.onRemoved.emit(this.media);
     }
 
     public play(event: any) {
@@ -82,7 +82,7 @@ export class PostComponent implements OnInit, OnDestroy {
         const protocol = pathArray[0];
         const host = pathArray[2];
 
-        return protocol + '//' + host + '/p/' + this.post.id;
+        return protocol + '//' + host + '/p/' + this.media.id;
     }
 
     public showToast(message: string) {
@@ -99,8 +99,8 @@ export class PostComponent implements OnInit, OnDestroy {
         const text = this.text;
         this.text = '';
 
-        if (!this.post.comments) {
-            this.post.comments = new Array<Comment>();
+        if (!this.media.comments) {
+            this.media.comments = new Array<Comment>();
         }
 
         const comment = new Comment();
@@ -110,76 +110,76 @@ export class PostComponent implements OnInit, OnDestroy {
         comment.user.id = this.currentUser.id;
         comment.user.username = this.currentUser.username;
 
-        this.post.comments.push(comment);
+        this.media.comments.push(comment);
 
-        this.commentService.createComment(this.post.id, { text: text })
+        this.commentService.createComment(this.media.id, { text: text })
             .subscribe(createdComment => {
                 comment.id = createdComment.id;
                 comment.date = createdComment.date;
             }, () => {
-                const failedCommentIndex = this.post.comments.findIndex(c => !c.id);
-                this.post.comments.splice(failedCommentIndex, 1);
+                const failedCommentIndex = this.media.comments.findIndex(c => !c.id);
+                this.media.comments.splice(failedCommentIndex, 1);
             });
 
     }
 
     public edit() {
-        this.caption = this.post.caption;
-        this.post.editing = true;
+        this.caption = this.media.caption;
+        this.media.editing = true;
     }
 
     public update() {
-        this.post.editing = false;
-        this.post.caption = this.caption;
-        const backup = this.post.caption;
-        this.postService.update(this.post)
-            .subscribe((post) => {
-                this.post.caption = post.caption;
+        this.media.editing = false;
+        this.media.caption = this.caption;
+        const backup = this.media.caption;
+        this.mediaService.update(this.media)
+            .subscribe((media) => {
+                this.media.caption = media.caption;
             }, (error) => {
-                this.post.caption = backup;
+                this.media.caption = backup;
             });
     }
 
     public cancel() {
-        this.post.editing = false;
+        this.media.editing = false;
     }
 
     public like() {
-        if (this.post.userHasLiked) {
-            this.post.likesCount--;
-            this.post.userHasLiked = !this.post.userHasLiked;
-            this.postService.removePostLike(this.post.id)
+        if (this.media.userHasLiked) {
+            this.media.likesCount--;
+            this.media.userHasLiked = !this.media.userHasLiked;
+            this.mediaService.removePostLike(this.media.id)
                 .subscribe(() => {
-                    this.post.userHasLiked = false;
+                    this.media.userHasLiked = false;
                 }, (error) => {
-                    if (this.post.userHasLiked) {
-                        this.post.likesCount--;
+                    if (this.media.userHasLiked) {
+                        this.media.likesCount--;
                     } else {
-                        this.post.likesCount++;
+                        this.media.likesCount++;
                     }
-                    this.post.userHasLiked = !this.post.userHasLiked;
+                    this.media.userHasLiked = !this.media.userHasLiked;
                     return error;
                 });
         } else {
-            this.post.likesCount++;
-            this.post.userHasLiked = !this.post.userHasLiked;
-            this.postService.likePost(this.post.id)
+            this.media.likesCount++;
+            this.media.userHasLiked = !this.media.userHasLiked;
+            this.mediaService.likePost(this.media.id)
                 .subscribe(() => {
-                    this.post.userHasLiked = true;
+                    this.media.userHasLiked = true;
                 }, (error) => {
-                    if (this.post.userHasLiked) {
-                        this.post.likesCount--;
+                    if (this.media.userHasLiked) {
+                        this.media.likesCount--;
                     } else {
-                        this.post.likesCount++;
+                        this.media.likesCount++;
                     }
-                    this.post.userHasLiked = !this.post.userHasLiked;
+                    this.media.userHasLiked = !this.media.userHasLiked;
                     return error;
                 });
         }
     }
 
-    public openLikesDialog(post: Post) {
-        const usersObservable = this.postService.getLikes(post.id);
+    public openLikesDialog(media: Media) {
+        const usersObservable = this.mediaService.getLikes(media.id);
         const dialogRef = this.dialog.open(UsersComponent, {
             data: {
                 usersObservable: usersObservable,
@@ -189,8 +189,8 @@ export class PostComponent implements OnInit, OnDestroy {
     }
 
     public ngOnInit() {
-        if (this.post) {
-            this.post.activeAttachment = 0;
+        if (this.media) {
+            this.media.activeAttachment = 0;
         }
     }
 

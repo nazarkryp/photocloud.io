@@ -4,30 +4,30 @@
     color: #444444;
 }
 
-.post-container {
+.media-container {
     height: calc(100vh - 75px);
     padding: 25px;
 }
 
-.post-details {
+.media-details {
     width: 400px;
     padding: 0 0 0 10px;
 }
 
-.post-details.dialog {
+.media-details.dialog {
     padding: 10px;
 }
 
-.post-details-header {
+.media-details-header {
     padding: 0px 0px 10px 0px;
 }
 
-.post-subheader {
+.media-subheader {
     width: 100%;
     margin: 15px 0 0 0;
 }
 
-.post-details-content {
+.media-details-content {
     overflow-y: auto;
     padding: 10px 0 0 0;
 }
@@ -40,7 +40,7 @@
     letter-spacing: 1px;
 }
 
-.post-details-footer {
+.media-details-footer {
     padding-top: 5px;
 }
 
@@ -65,26 +65,26 @@
     color: grey;
 }
 
-.post-details-caption {
+.media-details-caption {
     padding: 0 0 0 0;
     line-height: 1.6em;
 }
 
-.post-date {
+.media-date {
     padding: 0;
 }
 
-.post-actions-wrapper {
+.media-actions-wrapper {
     width: 100%;
 }
 
-.post-details-actions {
+.media-details-actions {
     border: 2px solid #efefef;
     border-radius: 4px;
     padding: 3px;
 }
 
-.post-avatar {
+.media-avatar {
     width: 50px;
     height: 50px;
     border-radius: 90px;
@@ -92,7 +92,7 @@
     outline: none;
 }
 
-.post-author {
+.media-author {
     padding-left: 10px;
 }
 
@@ -117,7 +117,7 @@
     -ms-user-select: none;
 }
 
-.post-details-comment-input {
+.media-details-comment-input {
     background: inherit;
     font-weight: lighter;
     outline: none;
@@ -126,12 +126,12 @@
     padding: 10px;
 }
 
-.post-attachment-container {
+.media-attachment-container {
     position: relative;
     height: auto;
 }
 
-.post-attachment-container .post-attachment-buttons {
+.media-attachment-container .media-attachment-buttons {
     position: absolute;
     opacity: 0;
     top: 50%;
@@ -141,11 +141,11 @@
     padding: 0 10px 0 10px;
 }
 
-.post-attachment-container:not([disabled]):hover .post-attachment-buttons {
+.media-attachment-container:not([disabled]):hover .media-attachment-buttons {
     opacity: 1;
 }
 
-.post-details-created {
+.media-details-created {
     font-size: 0.9em;
     color: #6B738A;
     font-weight: lighter;

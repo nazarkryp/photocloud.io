@@ -1,6 +1,6 @@
 <div class="comments">
-    <a class="text-button" (click)="getComments()" *ngIf="post.comments.length < post.commentsCount"><strong>show more comments</strong></a>
-    <div *ngFor="let comment of post.comments;" fxLayout="row">
+    <a class="text-button" (click)="getComments()" *ngIf="media.comments.length < media.commentsCount"><strong>show more comments</strong></a>
+    <div *ngFor="let comment of media.comments;" fxLayout="row">
         <a [routerLink]="['/', comment.user.username]">
         <strong>{{comment.user.username}}</strong>
     </a>

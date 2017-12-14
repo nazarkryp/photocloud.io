@@ -76,7 +76,7 @@ span {
     -ms-user-select: none;
 }
 
-.post-info {
+.media-info {
     background-image: -webkit-linear-gradient(180deg, transparent 75%, #222222 100%);
     background-image: -moz-linear-gradient(180deg, transparent 75%, #222222 100%);
     background-image: -o-linear-gradient(180deg, transparent 75%, #222222 100%);
@@ -88,12 +88,12 @@ span {
     padding: 10px;
 }
 
-.post-description {
+.media-description {
     padding: 10px;
     border-radius: 0 0 3px 3px;
 }
 
-.post-caption {
+.media-caption {
     padding: 10px 0 0 0;
     line-height: 1.3em;
     overflow: hidden;

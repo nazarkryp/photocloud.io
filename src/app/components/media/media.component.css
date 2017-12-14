@@ -24,37 +24,37 @@ hr {
     box-shadow: 0 3px 8px -3px rgba(0, 0, 0, 0.26);
 }
 
-.post-header {
+.media-header {
     padding: 10px;
     width: 100%;
 }
 
-.post-footer {
+.media-footer {
     padding: 15px 15px 0px 15px;
 }
 
-.post-edit-footer {
+.media-edit-footer {
     padding: 15px 15px 15px 15px;
 }
 
-.post-caption {
+.media-caption {
     padding: 10px 0 0 0;
     line-height: 1.6em;
 }
 
-.post-edit-caption {
+.media-edit-caption {
     line-height: 1.6em;
 }
 
-.post-edit-actions {
+.media-edit-actions {
     padding: 0 15px 15px 15px;
 }
 
-.post-actions {
+.media-actions {
     padding: 0 10px 10px 10px;
 }
 
-.post-avatar {
+.media-avatar {
     width: 50px;
     height: 50px;
     border-radius: 90px;
@@ -63,15 +63,15 @@ hr {
     cursor: pointer;
 }
 
-.post-author {
+.media-author {
     padding-left: 10px;
 }
 
-.post-author-username {
+.media-author-username {
     font-size: 1.0em;
 }
 
-.post-attachment {
+.media-attachment {
     width: 100%;
     height: auto;
     vertical-align: bottom;
@@ -100,28 +100,28 @@ hr {
     font-weight: lighter;
 }
 
-.post-content {
+.media-content {
     width: 100%;
     position: relative;
     height: auto;
 }
 
-.post-content img,
-.post-content video {
+.media-content img,
+.media-content video {
     max-width: 100%;
     -moz-transition: all 0.3s;
     -webkit-transition: all 0.3s;
     transition: all 0.3s;
 }
 
-.post-content:hover img,
-.post-content:hover video {
+.media-content:hover img,
+.media-content:hover video {
     -moz-transform: scale(1.1);
     -webkit-transform: scale(1.1);
     transform: scale(1.1);
 }
 
-.post-content .post-content-buttons {
+.media-content .media-content-buttons {
     position: absolute;
     opacity: 0;
     top: 50%;
@@ -132,15 +132,15 @@ hr {
     z-index: 100;
 }
 
-.post-content:not([disabled]):hover .post-content-buttons {
+.media-content:not([disabled]):hover .media-content-buttons {
     opacity: 1;
 }
 
-.post-date {
+.media-date {
     padding: 10px 0 10px 0;
 }
 
-.post-created {
+.media-created {
     font-size: 14px;
     color: #6B738A;
     font-weight: lighter;

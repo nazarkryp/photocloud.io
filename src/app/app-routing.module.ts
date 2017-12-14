@@ -7,18 +7,18 @@ import { PostsComponent } from './components/posts/posts.component';
 import { UserPostsComponent } from './components/user-posts/user-posts.component';
 import { UserSearchComponent } from './components/explore/user-search/user-search.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
-import { PostDetailsComponent } from './components/shared/post-details/post-details.component';
+import { MediaDetailsComponent } from './components/shared/media-details/media-details.component';
 import { TagsComponent } from './components/explore/tags/tags.component';
 import { ConnectionErrorComponent } from './components/shared/connection-error/connection-error.component';
 import { AuthenticationGuardService } from './infrastructure/guards/authentication-guard.service';
-import { PostsResolver, UserResolver, UserListResolver } from './infrastructure/resolvers';
+import { MediaResolver, UserResolver, UserListResolver } from './infrastructure/resolvers';
 
 const routes: Routes = [
     {
         path: '',
         component: PostsComponent,
         canActivate: [AuthenticationGuardService],
-        resolve: { page: PostsResolver },
+        resolve: { page: MediaResolver },
         data: {
             title: 'PhotoCloud'
         }
@@ -57,7 +57,7 @@ const routes: Routes = [
     },
     {
         path: 'p/:postId',
-        component: PostDetailsComponent,
+        component: MediaDetailsComponent,
         data: {
             title: 'PhotoCloud - Post'
         }

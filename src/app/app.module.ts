@@ -12,12 +12,12 @@ import { AppMaterialModule } from './app-material/app-material.module';
 import { AppComponent } from './app.component';
 import { PostsComponent } from './components/posts/posts.component';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
-import { PostComponent } from './components/post/post.component';
+import { PostComponent } from './components/media/media.component';
 import { UserPostsComponent } from './components/user-posts/user-posts.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { CommentsComponent } from './components/shared/comments/comments.component';
-import { PostDetailsComponent } from './components/shared/post-details/post-details.component';
-import { CreatePostComponent } from './components/shared/create-post/create-post.component';
+import { MediaDetailsComponent } from './components/shared/media-details/media-details.component';
+import { CreatePostComponent } from './components/shared/create-media/create-media.component';
 
 import { AuthenticationGuardService } from './infrastructure/guards/authentication-guard.service';
 import { AccountService } from 'app/account/services';
@@ -69,7 +69,7 @@ import { SplashScreenComponent } from './components/shared/splash-screen/splash-
         RelationshipActionPipe,
         CommentsComponent,
         ErrorBoxComponent,
-        PostDetailsComponent,
+        MediaDetailsComponent,
         CreatePostComponent,
         RawPipe,
         CaptionComponent,
@@ -87,7 +87,7 @@ import { SplashScreenComponent } from './components/shared/splash-screen/splash-
         SplashScreenComponent
     ],
     entryComponents: [
-        PostDetailsComponent,
+        MediaDetailsComponent,
         CreatePostComponent,
         ConfirmComponent,
         UsersComponent

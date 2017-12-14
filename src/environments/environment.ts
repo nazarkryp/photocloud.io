@@ -5,6 +5,6 @@
 
 export const environment = {
     production: false,
-    apiUri: 'https://krypapp.azurewebsites.net/api/',
+    apiUri: 'https://krypapp.azurewebsites.net/v1/',
     loginUri: 'https://krypapp.azurewebsites.net/authorize'
 };

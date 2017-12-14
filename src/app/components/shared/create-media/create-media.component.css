@@ -1,4 +1,4 @@
-.create-post-container {
+.create-media-container {
     width: 450px;
     padding: 12px;
     overflow-y: auto;
@@ -72,7 +72,7 @@
     overflow-x: hidden;
 }
 
-.create-post-container {
+.create-media-container {
     padding: 12px;
     width: 424px;
 }
@@ -169,7 +169,7 @@
     display: inline-block;
 }
 
-.create-post-footer {
+.create-media-footer {
     margin-top: 15px;
     width: 100%;
 }

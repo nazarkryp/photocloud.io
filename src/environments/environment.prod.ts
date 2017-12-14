@@ -1,5 +1,5 @@
 export const environment = {
     production: true,
-    apiUri: '/api/',
+    apiUri: '/v1/',
     loginUri: '/authorize'
 };

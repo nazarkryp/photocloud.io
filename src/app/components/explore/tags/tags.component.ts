@@ -4,9 +4,9 @@ import { MatDialog } from '@angular/material';
 import { Subscription } from 'rxjs/Subscription';
 
 import { CurrentUserService } from 'app/infrastructure/services';
-import { PostDetailsComponent } from 'app/components/shared/post-details/post-details.component';
-import { Collection, Post, CurrentUser } from 'app/common/models';
-import { PostService } from 'app/services';
+import { MediaDetailsComponent } from 'app/components/shared/media-details/media-details.component';
+import { Page, Media, CurrentUser } from 'app/common/models';
+import { MediaService } from 'app/services';
 import { AccountService } from 'app/account/services';
 
 import { NgProgress } from 'ngx-progressbar';
@@ -20,14 +20,14 @@ export class TagsComponent implements OnInit, OnDestroy {
     private routeSubscription$: Subscription;
     private currentUserSubscription: Subscription;
 
-    public page: Collection<Post> = new Collection<Post>();
+    public page: Page<Media> = new Page<Media>();
     public currentUser: CurrentUser;
     public tag: string;
 
     constructor(
         public dialog: MatDialog,
         private route: ActivatedRoute,
-        private postService: PostService,
+        private mediaService: MediaService,
         private currentUserService: CurrentUserService,
         private accountService: AccountService,
         private progress: NgProgress) {
@@ -39,7 +39,7 @@ export class TagsComponent implements OnInit, OnDestroy {
 
     public getPosts() {
         this.progress.start();
-        this.postService.getPostsByTag(this.tag, this.page.pagination)
+        this.mediaService.getPostsByTag(this.tag, this.page.pagination)
             .finally(() => {
                 this.progress.done();
             })
@@ -56,7 +56,7 @@ export class TagsComponent implements OnInit, OnDestroy {
         if (post.userHasLiked) {
             post.likesCount--;
             post.userHasLiked = !post.userHasLiked;
-            this.postService.removePostLike(post.id)
+            this.mediaService.removePostLike(post.id)
                 .subscribe(() => {
                     post.userHasLiked = false;
                 }, (error) => {
@@ -71,7 +71,7 @@ export class TagsComponent implements OnInit, OnDestroy {
         } else {
             post.likesCount++;
             post.userHasLiked = !post.userHasLiked;
-            this.postService.likePost(post.id)
+            this.mediaService.likePost(post.id)
                 .subscribe(() => {
                     post.userHasLiked = true;
                 }, (error) => {
@@ -86,8 +86,8 @@ export class TagsComponent implements OnInit, OnDestroy {
         }
     }
 
-    public openPostDialog(post: Post) {
-        const dialogRef = this.dialog.open(PostDetailsComponent, {
+    public openPostDialog(post: Media) {
+        const dialogRef = this.dialog.open(MediaDetailsComponent, {
             data: post
         });
     }

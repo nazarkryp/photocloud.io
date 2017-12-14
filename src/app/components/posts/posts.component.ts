@@ -3,11 +3,11 @@ import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material';
 import { Subscription } from 'rxjs/Subscription';
 
-import { Post, User, Collection, Comment, Attachment, CurrentUser } from '../../common/models';
+import { Media, User, Page, Comment, Attachment, CurrentUser } from '../../common/models';
 import { CurrentUserService } from 'app/infrastructure/services';
-import { PostService } from '../../services';
-import { CreatePostComponent } from '../shared/create-post/create-post.component';
-import { ConfirmComponent } from '../shared/confirm/confirm.component';
+import { MediaService } from 'app/services';
+import { CreatePostComponent } from 'app/components/shared/create-media/create-media.component';
+import { ConfirmComponent } from 'app/components/shared/confirm/confirm.component';
 import { NgProgress } from 'ngx-progressbar';
 
 @Component({
@@ -17,17 +17,17 @@ import { NgProgress } from 'ngx-progressbar';
 })
 export class PostsComponent implements OnInit, OnDestroy {
     private currentUserSubscription: Subscription;
-    public page: Collection<Post> = new Collection<Post>();
+    public page: Page<Media> = new Page<Media>();
     public isLoading = false;
     public currentUser: CurrentUser;
 
     constructor(
         private activatedRoute: ActivatedRoute,
-        private postService: PostService,
+        private mediaService: MediaService,
         private currentUserService: CurrentUserService,
         private progress: NgProgress,
         private dialog: MatDialog) {
-        this.page.data = new Array<Post>();
+        this.page.data = new Array<Media>();
         this.page.hasMoreItems = false;
         this.currentUserSubscription = this.currentUserService.getCurrentUser()
             .subscribe(currentUser => {
@@ -43,7 +43,7 @@ export class PostsComponent implements OnInit, OnDestroy {
                 if (createdPost) {
                     createdPost.user.pictureUri = this.currentUser.pictureUri;
                     if (!this.page.data) {
-                        this.page.data = new Array<Post>();
+                        this.page.data = new Array<Media>();
                     }
 
                     this.page.data.unshift(createdPost);
@@ -55,7 +55,7 @@ export class PostsComponent implements OnInit, OnDestroy {
         this.isLoading = true;
         this.progress.start();
 
-        this.postService.getPosts(this.page.pagination)
+        this.mediaService.getPosts(this.page.pagination)
             .finally(() => {
                 this.progress.done();
             })
@@ -70,7 +70,7 @@ export class PostsComponent implements OnInit, OnDestroy {
             });
     }
 
-    public onRemoved(post: Post) {
+    public onRemoved(post: Media) {
         const dialogRef = this.dialog.open(ConfirmComponent, {
             data: {
                 title: 'DELETE POST',
@@ -82,7 +82,7 @@ export class PostsComponent implements OnInit, OnDestroy {
             if (confirmed) {
                 const indexToRemove = this.page.data.findIndex(p => p.id === post.id);
                 this.page.data.splice(indexToRemove, 1);
-                this.postService.removePost(post.id)
+                this.mediaService.removePost(post.id)
                     .subscribe();
             }
         });

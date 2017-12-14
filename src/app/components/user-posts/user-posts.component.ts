@@ -7,9 +7,9 @@ import { Subscription } from 'rxjs/Subscription';
 
 import { AccountService } from 'app/account/services';
 import { CurrentUserService } from 'app/infrastructure/services';
-import { PostService, UserService } from '../../services';
-import { CurrentUser, Post, Attachment, User, RelationshipStatus, Collection, ValidationResult, Error } from '../../common/models';
-import { PostDetailsComponent } from '../shared/post-details/post-details.component';
+import { MediaService, UserService } from '../../services';
+import { CurrentUser, Media, Attachment, User, RelationshipStatus, Page, ValidationResult, Error } from '../../common/models';
+import { MediaDetailsComponent } from 'app/components/shared/media-details/media-details.component';
 import { UsersComponent } from '../shared/users/users.component';
 import { NgProgress } from 'ngx-progressbar';
 
@@ -23,7 +23,7 @@ export class UserPostsComponent implements OnInit, OnDestroy {
     public routeSubscription$: Subscription;
     private currentUserSubscription$: Subscription;
     public currentUser: CurrentUser;
-    public page: Collection<Post>;
+    public page: Page<Media>;
     public isModifyingRelationship = false;
     public isLoadingPosts: boolean;
     public user: User = new User();
@@ -32,7 +32,7 @@ export class UserPostsComponent implements OnInit, OnDestroy {
 
     constructor(
         private accountService: AccountService,
-        private postService: PostService,
+        private mediaService: MediaService,
         private userService: UserService,
         private currentUserService: CurrentUserService,
         private router: Router,
@@ -51,7 +51,7 @@ export class UserPostsComponent implements OnInit, OnDestroy {
             this.progress.start();
         }
 
-        this.postSubscription$ = this.postService.getUserPosts(this.user.username, this.page.pagination)
+        this.postSubscription$ = this.mediaService.getUserPosts(this.user.username, this.page.pagination)
             .finally(() => {
                 if (this.progress.isStarted()) {
                     this.progress.done();
@@ -59,7 +59,7 @@ export class UserPostsComponent implements OnInit, OnDestroy {
 
                 this.isLoadingPosts = false;
             })
-            .subscribe((page: Collection<Post>) => {
+            .subscribe((page: Page<Media>) => {
                 this.page.hasMoreItems = page.hasMoreItems;
                 this.page.pagination = page.pagination;
 
@@ -69,14 +69,14 @@ export class UserPostsComponent implements OnInit, OnDestroy {
             });
     }
 
-    public openPostDialog(post: Post) {
-        this.dialog.open(PostDetailsComponent, {
+    public openPostDialog(post: Media) {
+        this.dialog.open(MediaDetailsComponent, {
             data: post
         });
     }
 
     public initializePage(): void {
-        this.page = new Collection<Post>();
+        this.page = new Page<Media>();
         this.page.hasMoreItems = false;
         this.page.pagination = null;
         this.page.data = [];

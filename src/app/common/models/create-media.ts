@@ -1,6 +1,6 @@
 import { Attachment } from './attachment';
 
-export class CreatePostModel {
+export class CreateMediaModel {
     caption: string;
     AttachmentIds: number[];
     AllowComments?: boolean;

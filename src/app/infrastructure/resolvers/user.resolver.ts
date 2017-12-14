@@ -3,7 +3,7 @@ import { Resolve, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/r
 import { Observable } from 'rxjs/Observable';
 
 import { UserService } from '../../services';
-import { Collection, User } from '../../common/models';
+import { Page, User } from '../../common/models';
 
 import { NgProgress } from 'ngx-progressbar';
 

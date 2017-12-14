@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 
 import { UserService } from 'app/services';
-import { Collection, User, CurrentUser, RelationshipAction, RelationshipStatus } from 'app/common/models';
+import { Page, User, CurrentUser, RelationshipAction, RelationshipStatus } from 'app/common/models';
 
 import { NgProgress } from 'ngx-progressbar';
 import { CurrentUserService } from 'app/infrastructure/services';
@@ -17,7 +17,7 @@ export class UserSearchComponent implements OnInit, OnDestroy {
     private currentUserSubscription: Subscription;
     public title = 'Explore People';
     public isLoading: boolean;
-    public page: Collection<User>;
+    public page: Page<User>;
     public modifying: { [id: number]: boolean } = {};
     public currentUser: CurrentUser;
 
@@ -41,9 +41,9 @@ export class UserSearchComponent implements OnInit, OnDestroy {
                 this.progress.done();
                 // this.isLoading = false;
             })
-            .subscribe((page: Collection<User>) => {
+            .subscribe((page: Page<User>) => {
                 if (!this.page.pagination) {
-                    this.page = new Collection<User>();
+                    this.page = new Page<User>();
                 }
 
                 this.page.hasMoreItems = page.hasMoreItems;

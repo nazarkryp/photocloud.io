@@ -2,7 +2,7 @@ import { Attachment } from './attachment';
 import { Comment } from './comment';
 import { User } from './user';
 
-export class Post {
+export class Media {
     id: number;
     caption: string;
     userHasLiked: boolean;

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { WebApiClient } from '../infrastructure/communication';
 
-import { Collection, Pagination, User } from '../common/models';
+import { Page, Pagination, User } from '../common/models';
 import { UserMapper } from '../infrastructure/mapping/user.mapper';
 
 @Injectable()
@@ -15,17 +15,17 @@ export class UserService {
         return this.webApiClient.get<User>(`users/${username}`);
     }
 
-    public getUsers(pagination: Pagination): Observable<Collection<User>> {
+    public getUsers(pagination: Pagination): Observable<Page<User>> {
         let requestUri = 'users';
 
         if (pagination != null && pagination.next != null) {
             requestUri = requestUri + '?next=' + pagination.next;
         }
 
-        return this.webApiClient.get<Collection<User>>(requestUri);
+        return this.webApiClient.get<Page<User>>(requestUri);
     }
 
-    public searchUsers(query: string): Observable<Collection<User>> {
+    public searchUsers(query: string): Observable<Page<User>> {
         return this.webApiClient.get(`users/search?query=${query}`);
     }
 

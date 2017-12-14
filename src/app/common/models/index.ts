@@ -1,12 +1,12 @@
 export { Attachment } from './attachment';
 export { User } from './user';
-export { Post } from './post';
-export { CreatePostModel } from './create-post';
+export { Media } from './media';
+export { CreateMediaModel } from './create-media';
 export { Pagination } from './pagination';
 export { Comment } from './comment';
 export { CurrentUser } from './current-user';
 export { RelationshipStatus } from './relationship-status';
-export { Collection } from './collection-model';
+export { Page } from './page.model';
 export { Error } from './error';
 export { UserLogin } from './user-login';
 export { IncommingUser } from './incomming-user';

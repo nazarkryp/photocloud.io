@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 
 import {
     CommentService,
-    PostService,
+    MediaService,
     UploaderService,
     UserService
 } from 'app/services';
@@ -10,7 +10,7 @@ import {
 @NgModule({
     providers: [
         CommentService,
-        PostService,
+        MediaService,
         UploaderService,
         UserService
     ]

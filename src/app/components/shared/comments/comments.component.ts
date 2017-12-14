@@ -1,10 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { CommentService } from '../../../services/comment.service';
+import { CommentService } from 'app/services';
 
-import { Post } from '../../../common/models/post';
-import { Comment } from '../../../common/models/comment';
+import { Media } from 'app/common/models/media';
+import { Comment } from 'app/common/models/comment';
 
 @Component({
     selector: 'app-comments',
@@ -12,7 +12,7 @@ import { Comment } from '../../../common/models/comment';
     styleUrls: ['./comments.component.css']
 })
 export class CommentsComponent {
-    @Input() public post: Post;
+    @Input() public media: Media;
     public isLoading: boolean;
 
     constructor(
@@ -20,16 +20,16 @@ export class CommentsComponent {
         private router: Router) { }
 
     public getComments() {
-        this.post.isLoading = true;
+        this.media.isLoading = true;
         this.isLoading = true;
 
-        this.commentService.getComments(this.post.id)
+        this.commentService.getComments(this.media.id)
             .finally(() => {
                 this.isLoading = false;
-                this.post.isLoading = false;
+                this.media.isLoading = false;
             })
             .subscribe(comments => {
-                this.post.comments = comments;
+                this.media.comments = comments;
             });
     }
 }

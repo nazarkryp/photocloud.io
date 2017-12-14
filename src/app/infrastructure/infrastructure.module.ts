@@ -10,7 +10,7 @@ import { CurrentUserService } from 'app/infrastructure/services';
 import { LocalStorageService } from 'app/infrastructure/services/storage';
 import { ClipboardService } from 'app/infrastructure/services';
 import { TokenMapper, UserMapper } from 'app/infrastructure/mapping';
-import { PostsResolver, UserListResolver, UserResolver } from 'app/infrastructure/resolvers';
+import { MediaResolver, UserListResolver, UserResolver } from 'app/infrastructure/resolvers';
 
 import {
     AccountNotActiveFilter,
@@ -30,7 +30,7 @@ import {
         TokenMapper,
         UserMapper,
         MemoryCache,
-        PostsResolver,
+        MediaResolver,
         UserListResolver,
         UserResolver,
         {

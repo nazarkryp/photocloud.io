@@ -20,7 +20,7 @@ export class CachingInterceptor implements HttpInterceptor {
         private router: Router) { }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        if (req.method !== 'GET' || !req.url.includes('api/posts')) {
+        if (req.method !== 'GET' || !req.url.includes('v1/media')) {
             return next.handle(req);
         }
 
