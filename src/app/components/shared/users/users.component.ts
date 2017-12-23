@@ -4,7 +4,8 @@ import { MatDialogRef, MatSnackBarConfig, MatSnackBar, MAT_DIALOG_DATA } from '@
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 
-import { CurrentUser, User, RelationshipStatus } from '../../../common/models';
+import { CurrentUserViewModel, UserViewModel } from 'app/models/view';
+import { RelationshipStatus } from 'app/models/shared';
 import { UserService } from '../../../services';
 import { CurrentUserService } from 'app/infrastructure/services';
 
@@ -15,8 +16,8 @@ import { CurrentUserService } from 'app/infrastructure/services';
     encapsulation: ViewEncapsulation.None
 })
 export class UsersComponent implements OnInit, OnDestroy {
-    public users: User[];
-    public currentUser: CurrentUser;
+    public users: UserViewModel[];
+    public currentUser: CurrentUserViewModel;
     public usersObservableSubscription: Subscription;
     public currentUserSubscription: Subscription;
     public modifying: { [id: number]: boolean } = {};
@@ -30,7 +31,7 @@ export class UsersComponent implements OnInit, OnDestroy {
         this.title = data.title;
         this.usersObservableSubscription = data.usersObservable.subscribe(users => {
             this.users = users;
-            users.map((user: User) => {
+            users.map((user: UserViewModel) => {
                 this.modifying[user.id] = false;
             });
         });
@@ -41,14 +42,14 @@ export class UsersComponent implements OnInit, OnDestroy {
             });
     }
 
-    public modifyRelationship(user: User) {
+    public modifyRelationship(user: UserViewModel) {
         this.modifying[user.id] = true;
         const action = this.getRelationshipAction(user.incommingStatus);
         this.userService.modifyRelationship(user.id, { action: action })
             .finally(() => {
                 this.modifying[user.id] = false;
             })
-            .subscribe((userResponse: User) => {
+            .subscribe((userResponse: UserViewModel) => {
                 user.incommingStatus = userResponse.incommingStatus;
             }, error => { });
     }

@@ -1,10 +1,11 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, ViewEncapsulation } from '@angular/core';
 import { MatDialogRef, MatSnackBarConfig, MatSnackBar, MAT_DIALOG_DATA } from '@angular/material';
 
 @Component({
     selector: 'app-confirm',
     templateUrl: './confirm.component.html',
-    styleUrls: ['./confirm.component.css']
+    styleUrls: ['./confirm.component.css'],
+    encapsulation: ViewEncapsulation.None
 })
 export class ConfirmComponent {
     public message: string;
@@ -13,8 +14,8 @@ export class ConfirmComponent {
     constructor(
         public dialogRef: MatDialogRef<ConfirmComponent>,
         @Inject(MAT_DIALOG_DATA) public content: any) {
-            this.title = this.content.title;
-            this.message = this.content.message;
+        this.title = this.content.title;
+        this.message = this.content.message;
     }
 
     public confirm() {

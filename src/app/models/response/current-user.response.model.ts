@@ -1,4 +1,4 @@
-export class CurrentUser {
+export class CurrentUserResponse {
     public id: number;
     public username: string;
     public fullName: string;

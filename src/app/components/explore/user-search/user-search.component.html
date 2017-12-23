@@ -4,7 +4,7 @@
         <div style="border-bottom: 1px solid #efefef; padding: 15px 0 20px 0;" fxLayout="row" fxLayoutAlign="space-between center">
             <span style="font-size: 19px; font-weight: lighter;">EXPLORE PEOPLE</span>
             <button mat-icon-button (click)="refresh()">
-                <mat-icon>refresh</mat-icon>
+                <mat-icon class="mat-36 thin">refresh</mat-icon>
             </button>
         </div>
         <div *ngFor="let user of page.data" fxLayout="row" style="margin-top:20px;">
@@ -24,7 +24,7 @@
             </div>
         </div>
         <div fxLayout="row" fxLayoutAlign="center center" *ngIf="page.hasMoreItems" style="margin: 25px 0 0 0;">
-            <button mat-raised-button (click)="getUsers()" [disabled]="isLoading">Load More</button>
+            <button class="btn-default" mat-button (click)="getUsers()" [disabled]="isLoading">Load More</button>
         </div>
     </div>
 </div>

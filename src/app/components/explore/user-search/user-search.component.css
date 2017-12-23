@@ -149,3 +149,12 @@ a {
     font-weight: 400;
     letter-spacing: 1px;
 }
+
+.btn-default {
+    width: 100%;
+    background: #efefef;
+    color: gray;
+    text-transform: uppercase;
+    font-size: 0.8em;
+    letter-spacing: 1px;
+}

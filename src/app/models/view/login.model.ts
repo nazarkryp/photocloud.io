@@ -1,6 +1,6 @@
-export class UserLogin {
-    username: string;
-    password: string;
+export class LoginViewModel {
+    public username: string;
+    public password: string;
 
     constructor(username?: string, password?: string) {
         this.username = username;

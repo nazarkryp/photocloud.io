@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 
-import { Error } from '../../../common/models';
+import { Error } from 'app/models/shared';
 
 @Component({
     selector: 'app-error-box',

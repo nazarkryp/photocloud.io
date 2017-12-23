@@ -27,13 +27,14 @@
         </form>
 
         <div class="item" fxLayout="row" fxLayoutAlign="space-between center">
-            <span [ngClass]="{ 'disabled' : !isActive }">Private account</span>
-            <mat-slide-toggle [(ngModel)]="isPrivate" [checked]="isPrivate" (change)='invertAccountPrivateStatus($event)' [disabled]="!isActive"></mat-slide-toggle>
+            <span [ngClass]="{ 'disabled' : !currentUser.isActive }">Private account</span>
+            <mat-slide-toggle [(ngModel)]="currentUser.isPrivate" [checked]="currentUser.isPrivate" (change)='invertAccountPrivateStatus($event)'
+                [disabled]="!currentUser.isActive"></mat-slide-toggle>
         </div>
 
         <div class="item" fxLayout="row" fxLayoutAlign="space-between center">
             <span>Change account status</span>
-            <button mat-raised-button color="primary" (click)="invertAccountStatus()">{{isActive ? 'DISABLE' : 'ACTIVATE'}}</button>
+            <button mat-raised-button color="primary" (click)="invertAccountStatus()">{{currentUser.isActive ? 'DISABLE' : 'ACTIVATE'}}</button>
         </div>
     </div>
 </div>

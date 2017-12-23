@@ -19,9 +19,14 @@ import {
     HttpNotFoundFilter,
     InternetConnectionFilter
 } from 'app/infrastructure/filters/http';
+import { AttachmentMapper, CommentMapper, MediaMapper, PaginationMapper } from 'app/infrastructure/mapping';
 
 @NgModule({
     providers: [
+        AttachmentMapper,
+        CommentMapper,
+        MediaMapper,
+        PaginationMapper,
         ClipboardService,
         HttpErrorHandler,
         CurrentUserService,

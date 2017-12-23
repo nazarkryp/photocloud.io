@@ -4,29 +4,29 @@
             <div class="media-attachment-buttons" fxLayout="row" fxLayoutAlign="space-between center" *ngIf="media.attachments.length > 1">
                 <div>
                     <button mat-raised-button mat-icon-button *ngIf="media.activeAttachment > 0" (click)="previous()">
-                    <mat-icon class="media-icon">chevron_left</mat-icon>
-                </button>
+                        <mat-icon class="media-icon">chevron_left</mat-icon>
+                    </button>
                 </div>
                 <div>
                     <button mat-raised-button mat-icon-button *ngIf="media.activeAttachment != media.attachments.length - 1" (click)="next()">
-                    <mat-icon class="media-icon">chevron_right</mat-icon>
-                </button>
+                        <mat-icon class="media-icon">chevron_right</mat-icon>
+                    </button>
                 </div>
             </div>
-            <div *ngFor="let attachment of media.attachments; let index = index;" [hidden]="index !== media.activeAttachment">
+            <div (click)='play()' *ngFor="let attachment of media.attachments; let index = index;" [hidden]="index !== media.activeAttachment">
                 <img class="attachment" src="{{attachment.uri}}" alt="media-image" *ngIf="attachment.type !== 1">
-                <video class="attachment" *ngIf="attachment.type === 1" loop>
+                <video class="attachment" *ngIf="attachment.type === 1" loop #player>
                     <source src="{{attachment.uri}}">
                 </video>
             </div>
         </div>
-        <div class="media-details" [ngClass]="{ 'dialog' : isDialog }" fxLayout="column">
+        <div class="media-details-container" [ngClass]="{ 'dialog' : isDialog }" fxLayout="column">
             <div class="media-details-header" fxLayout="row" fxLayoutAlign="start center">
                 <img class="media-avatar" [routerLink]="['/', media.user.username]" src="{{media.user.pictureUri}}" default="assets/images/user-default-image.png"
                     alt="profile">
-                <div class="media-author" fxLayout="row" fxLayoutAlign="space-between center" fxFlex>
+                <div fxLayout="row" fxLayoutAlign="space-between center" fxFlex>
                     <div fxLayout="column">
-                        <a class="username" [routerLink]="['/', media.user.username]">{{media.user.username}}</a>
+                        <a class="media-details-username" [routerLink]="['/', media.user.username]">{{media.user.username}}</a>
                         <div class="media-date">
                             <span class="media-details-created">{{media.created | amTimeAgo}}</span>
                         </div>
@@ -48,29 +48,31 @@
                     </div>
                 </div>
             </div>
-            <div fxLayout="column">
-                <div fxLayout="row" fxLayoutAlign="space-between center">
-                    <span class="likes-counter"><strong>{{media.likesCount}} likes</strong></span>
-                    <button class="like-button" mat-icon-button (click)="like()" *ngIf="currentUser">
-                        <mat-icon [ngClass]="{ 'liked' : media.userHasLiked }">favorite</mat-icon>
-                    </button>
-                </div>
-                <div class="media-details-caption" *ngIf="media.caption">
-                    <a [routerLink]="['/', media.user.username]"><strong>{{media.user.username}}</strong></a>
-                    <app-caption caption="{{media.caption}}"></app-caption>
-                </div>
+            <div fxLayout="row" fxLayoutAlign="space-between center">
+                <span class="likes-counter">
+                    <strong>{{media.likesCount}} likes</strong>
+                </span>
+                <button class="like-button" mat-icon-button (click)="like()" *ngIf="currentUser">
+                    <mat-icon class="mat-24" [ngClass]="{ 'liked' : media.userHasLiked }" svgIcon="heart"></mat-icon>
+                </button>
             </div>
-            <div class="media-details-content" fxLayout="column" fxFlex>
-                <span class="content-header">Comments</span>
-                <app-comments [media]="media"></app-comments>
+            <div class="media-details-caption" *ngIf="media.caption">
+                <a [routerLink]="['/', media.user.username]">
+                    <strong>{{media.user.username}}</strong>
+                </a>
+                <app-caption caption="{{media.caption}}"></app-caption>
+            </div>
+            <div class="media-details-comments-container" fxLayout="column" fxFlex>
+                <span class="media-details-comments-header">Comments</span>
+                <app-comments style="font-size: 0.95em;" [media]="media"></app-comments>
             </div>
             <div class="media-details-footer" fxLayout="row" fxLayoutAlign="start center" *ngIf="currentUser">
                 <div class="comment-box" fxLayout="row">
-                    <input class="media-details-comment-input" type="text" placeholder="Add comment" [(ngModel)]="text" (keydown.enter)="createComment()"
+                    <input class="media-details-comment-input" type="text" placeholder="Type your comment..." [(ngModel)]="text" (keydown.enter)="createComment()"
                     />
-                    <button class="send-button" mat-icon-button (click)="createComment()" [disabled]="!text">
+                    <!-- <button class="send-button" mat-icon-button (click)="createComment()" [disabled]="!text">
                         <mat-icon matTooltip="{{!text ? 'Cannot send empty message' : 'Send'}}" matTooltipPosition="left">send</mat-icon>
-                    </button>
+                    </button> -->
                 </div>
             </div>
         </div>

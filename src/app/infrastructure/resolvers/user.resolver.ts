@@ -3,18 +3,19 @@ import { Resolve, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/r
 import { Observable } from 'rxjs/Observable';
 
 import { UserService } from '../../services';
-import { Page, User } from '../../common/models';
+import { PageViewModel, UserViewModel } from 'app/models/view';
+
 
 import { NgProgress } from 'ngx-progressbar';
 
 @Injectable()
-export class UserResolver implements Resolve<User> {
+export class UserResolver implements Resolve<UserViewModel> {
     constructor(
         private userService: UserService,
         private progress: NgProgress) { }
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot)
-        : User | Observable<User> | Promise<User> {
+        : UserViewModel | Observable<UserViewModel> | Promise<UserViewModel> {
         this.progress.start();
         const username = route.paramMap.get('username');
         return this.userService.getUser(username)

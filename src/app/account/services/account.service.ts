@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 
 import { WebApiClient } from 'app/infrastructure/communication';
-import { CurrentUser, User } from 'app/common/models';
+import { CurrentUserViewModel, UserViewModel } from 'app/models/view';
 import { AccessToken } from 'app/infrastructure/security';
 import { CreateAccountRequestModel } from 'app/account/models/request';
 import { TokenMapper } from 'app/infrastructure/mapping/token.mapper';
@@ -12,7 +12,7 @@ import { environment } from 'app/../environments/environment';
 
 @Injectable()
 export class AccountService {
-    private currentUser: CurrentUser;
+    private currentUser: CurrentUserViewModel;
 
     constructor(
         private webApiClient: WebApiClient,
@@ -36,11 +36,11 @@ export class AccountService {
         this.currentUser = null;
     }
 
-    public updateAccount(propertiesToUpdate: any): Observable<CurrentUser> {
-        return this.webApiClient.patch<User>('account', propertiesToUpdate);
+    public updateAccount(propertiesToUpdate: any): Observable<CurrentUserViewModel> {
+        return this.webApiClient.patch<UserViewModel>('account', propertiesToUpdate);
     }
 
-    public getAccount(): Observable<CurrentUser> {
-        return this.webApiClient.get<CurrentUser>('account');
+    public getAccount(): Observable<CurrentUserViewModel> {
+        return this.webApiClient.get<CurrentUserViewModel>('account');
     }
 }

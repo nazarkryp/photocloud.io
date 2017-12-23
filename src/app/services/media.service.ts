@@ -3,53 +3,67 @@ import { Observable } from 'rxjs/Observable';
 
 import { WebApiClient } from '../infrastructure/communication';
 import { UserMapper } from '../infrastructure/mapping';
-import { Page, Pagination, Media, User, CreateMediaModel } from '../common/models';
+import { PageViewModel, PaginationViewModel, MediaViewModel, UserViewModel, CreateMediaModel } from 'app/models/view';
+import { PageResponse, MediaResponse } from 'app/models/response';
+import { MediaMapper } from 'app/infrastructure/mapping';
+import { PageMapper } from 'app/infrastructure/mapping';
+import { PaginationMapper } from 'app/infrastructure/mapping';
 
 @Injectable()
 export class MediaService {
-    constructor(
-        private webApiClient: WebApiClient,
-        private userMapper: UserMapper) { }
+    private pageMapper: PageMapper<MediaResponse, MediaViewModel>;
 
-    public createPost(post: CreateMediaModel) {
-        return this.webApiClient.post<Media>('media', post);
+    constructor(
+        private paginationMapper: PaginationMapper,
+        private mediaMapper: MediaMapper,
+        private webApiClient: WebApiClient,
+        private userMapper: UserMapper) {
+        this.pageMapper = new PageMapper(this.mediaMapper);
     }
 
-    public getPosts(pagination: Pagination): Observable<Page<Media>> {
+    public createPost(post: CreateMediaModel) {
+        return this.webApiClient.post<MediaViewModel>('media', post);
+    }
+
+    public getPosts(pagination: PaginationViewModel): Observable<PageViewModel<MediaViewModel>> {
         let requestUri = 'media/recent';
 
         if (pagination && pagination.next != null) {
             requestUri = requestUri + '?next=' + pagination.next;
         }
 
-        return this.webApiClient.get<Page<Media>>(requestUri);
+        return this.webApiClient.get<PageResponse<MediaResponse>>(requestUri)
+            .map(page => {
+                const pageViewModel = this.pageMapper.mapFromResponse(page);
+                return pageViewModel;
+            });
     }
 
-    public getUserPosts(username: string, pagination: Pagination): Observable<Page<Media>> {
+    public getUserPosts(username: string, pagination: PaginationViewModel): Observable<PageViewModel<MediaViewModel>> {
         let requestUri = 'media/' + username;
 
         if (pagination != null && pagination.next != null) {
             requestUri = requestUri + '?next=' + pagination.next;
         }
 
-        return this.webApiClient.get<Page<Media>>(requestUri);
+        return this.webApiClient.get<PageViewModel<MediaViewModel>>(requestUri);
     }
 
-    public getPostsByTag(tag: string, pagination: Pagination) {
+    public getPostsByTag(tag: string, pagination: PaginationViewModel) {
         let requestUri = `media/tags/${tag}`;
 
         if (pagination != null && pagination.next != null) {
             requestUri = requestUri + '?next=' + pagination.next;
         }
 
-        return this.webApiClient.get<Page<Media>>(requestUri);
+        return this.webApiClient.get<PageViewModel<MediaViewModel>>(requestUri);
     }
 
-    public getPostById(postId: number): Observable<Media> {
-        return this.webApiClient.get<Media>(`media/${postId}`);
+    public getPostById(postId: number): Observable<MediaViewModel> {
+        return this.webApiClient.get<MediaViewModel>(`media/${postId}`);
     }
 
-    public update(post: Media): Observable<Media> {
+    public update(post: MediaViewModel): Observable<MediaViewModel> {
         return this.webApiClient.patch(`media/${post.id}`, post);
     }
 
@@ -57,8 +71,8 @@ export class MediaService {
         return this.webApiClient.delete(`media/${postId}`);
     }
 
-    public getLikes(postId: number): Observable<User[]> {
-        return this.webApiClient.get<User[]>(`media/${postId}/likes`);
+    public getLikes(postId: number): Observable<UserViewModel[]> {
+        return this.webApiClient.get<UserViewModel[]>(`media/${postId}/likes`);
     }
 
     public likePost(postId: number) {

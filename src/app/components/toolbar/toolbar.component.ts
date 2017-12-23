@@ -4,7 +4,7 @@ import { Subscription } from 'rxjs/Subscription';
 
 import { CurrentUserService } from 'app/infrastructure/services';
 import { AccountService } from 'app/account/services';
-import { CurrentUser } from '../../common/models';
+import { CurrentUserViewModel } from 'app/models/view';
 
 @Component({
     selector: 'app-toolbar',
@@ -13,7 +13,7 @@ import { CurrentUser } from '../../common/models';
 })
 export class ToolbarComponent implements OnInit, OnDestroy {
     private currentUserSubscription: Subscription;
-    public currentUser: CurrentUser;
+    public currentUser: CurrentUserViewModel;
     public renderToolbar: boolean;
     @Output() openNotificationsEvent = new EventEmitter<boolean>();
 

@@ -52,7 +52,7 @@ const routes: Routes = [
         component: UserPostsComponent,
         resolve: { user: UserResolver },
         data: {
-            title: 'PhotoCloud - User\' Posts'
+            title: 'PhotoCloud - UserViewModel\' Posts'
         }
     },
     {

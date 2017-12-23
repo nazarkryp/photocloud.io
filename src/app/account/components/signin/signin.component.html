@@ -33,8 +33,8 @@
             <a class="primary" routerLink="/account/recover" *ngIf="!formGroup.disabled">Forgot Password?</a>
             <span class="disabled" *ngIf="formGroup.disabled">Forgot Password?</span>
         </div>
-        <div style="margin-top: 24px;" fxLayout="row" fxLayoutAlign="center" *ngIf="formGroup.hasError('signInError')">
-            <span class="error-message">{{formGroup.errors.signInError}}</span>
+        <div style="margin-top: 24px;" fxLayout="row" fxLayoutAlign="center" *ngIf="signInError">
+            <span class="error-message">{{signInError}}</span>
         </div>
         <div style="margin-top: 34px;">
             <button type="submit" style="width: 100%;" mat-raised-button color="primary" [disabled]="formGroup.disabled">SIGN IN</button>

@@ -6,6 +6,15 @@ body {
     overflow-y: scroll;
 }
 
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+mat-icon>svg {
+    /* stroke-width: 1px; */
+}
+
 .container {
     width: 75%;
 }
@@ -14,15 +23,44 @@ body {
     margin: auto;
 }
 
-mat-icon>svg {
-    stroke-width: 1px;
-}
-
 .mat-dialog-container {
     padding: 0px !important;
 }
 
-a {
-    text-decoration: none;
-    color: inherit;
+.mat-icon.mat-18 {
+    font-size: 18px !important;
+    height: 18px !important;
+    width: 18px !important;
+}
+
+.mat-icon.mat-24 {
+    font-size: 24px !important;
+    height: 24px !important;
+    width: 24px !important;
+}
+
+.mat-icon.mat-36 {
+    font-size: 36px !important;
+    height: 36px !important;
+    width: 100% !important;
+}
+
+.mat-icon.mat-48 {
+    font-size: 48px !important;
+    height: 48px !important;
+    width: 48px !important;
+}
+
+.mat-icon.mat-72 {
+    font-size: 72px !important;
+    height: 72px !important;
+    width: 72px !important;
+}
+
+.mat-icon.mat-18.thin svg,
+.mat-icon.mat-24.thin svg,
+.mat-icon.mat-36.thin svg,
+.mat-icon.mat-48.thin svg,
+.mat-icon.mat-72.thin svg{
+    stroke-width: 1.0px;
 }

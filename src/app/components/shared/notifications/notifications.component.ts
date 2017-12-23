@@ -5,7 +5,8 @@ import { Subscription } from 'rxjs/Subscription';
 
 import { UserService } from '../../../services';
 
-import { User, RelationshipAction } from '../../../common/models';
+import { UserViewModel } from 'app/models/view';
+import { RelationshipAction } from 'app/models/shared';
 
 @Component({
     selector: 'app-notifications',
@@ -24,7 +25,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
     private incommingRequestsSubscription$: Subscription;
     @Output() onClosing: EventEmitter<any> = new EventEmitter<any>();
 
-    public incommingRequests: User[];
+    public incommingRequests: UserViewModel[];
     public isLoading: boolean;
 
     constructor(
@@ -41,7 +42,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
             });
     }
 
-    public confirmIncommingRequest(user: User) {
+    public confirmIncommingRequest(user: UserViewModel) {
         this.userService.modifyRelationship(user.id, {
             action: RelationshipAction.Approve
         }).subscribe(userResult => {
@@ -50,7 +51,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
         });
     }
 
-    public removeIncommingRequest(user: User) {
+    public removeIncommingRequest(user: UserViewModel) {
         this.userService.modifyRelationship(user.id, {
             action: RelationshipAction.Reject
         }).subscribe(userResult => {

@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
 import { Observable } from 'rxjs/Observable';
 
-import { HttpStatusCode } from 'app/common/http';
+import { HttpStatusCode } from 'app/models/common/http';
 import { HttpErrorFilter } from './http-error.fitler';
 
 export class HttpNotFoundFilter implements HttpErrorFilter {

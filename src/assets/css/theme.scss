@@ -1,7 +1,9 @@
 @import '~@angular/material/theming';
+@import '~@covalent/core/theming/all-theme';
 @include mat-core();
-$my-app-primary: mat-palette($mat-pink);
-$my-app-accent: mat-palette($mat-pink, 500, 900, A100);
-$my-app-warn: mat-palette($mat-red);
-$my-app-theme: mat-light-theme($my-app-primary, $my-app-accent, $my-app-warn);
-@include angular-material-theme($my-app-theme);
+$primary: mat-palette($mat-pink);
+$accent: mat-palette($mat-pink, 500, 900, A100);
+$warn: mat-palette($mat-red);
+$theme: mat-light-theme($primary, $accent, $warn);
+@include covalent-theme($theme);
+@include angular-material-theme($theme);

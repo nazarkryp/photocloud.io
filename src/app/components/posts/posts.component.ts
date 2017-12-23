@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material';
 import { Subscription } from 'rxjs/Subscription';
 
-import { Media, User, Page, Comment, Attachment, CurrentUser } from '../../common/models';
+import { MediaViewModel, UserViewModel, PageViewModel, CommentViewModel, AttachmentViewModel, CurrentUserViewModel } from 'app/models/view';
 import { CurrentUserService } from 'app/infrastructure/services';
 import { MediaService } from 'app/services';
 import { CreatePostComponent } from 'app/components/shared/create-media/create-media.component';
@@ -17,9 +17,9 @@ import { NgProgress } from 'ngx-progressbar';
 })
 export class PostsComponent implements OnInit, OnDestroy {
     private currentUserSubscription: Subscription;
-    public page: Page<Media> = new Page<Media>();
+    public page: PageViewModel<MediaViewModel> = new PageViewModel<MediaViewModel>();
     public isLoading = false;
-    public currentUser: CurrentUser;
+    public currentUser: CurrentUserViewModel;
 
     constructor(
         private activatedRoute: ActivatedRoute,
@@ -27,7 +27,7 @@ export class PostsComponent implements OnInit, OnDestroy {
         private currentUserService: CurrentUserService,
         private progress: NgProgress,
         private dialog: MatDialog) {
-        this.page.data = new Array<Media>();
+        this.page.data = new Array<MediaViewModel>();
         this.page.hasMoreItems = false;
         this.currentUserSubscription = this.currentUserService.getCurrentUser()
             .subscribe(currentUser => {
@@ -43,7 +43,7 @@ export class PostsComponent implements OnInit, OnDestroy {
                 if (createdPost) {
                     createdPost.user.pictureUri = this.currentUser.pictureUri;
                     if (!this.page.data) {
-                        this.page.data = new Array<Media>();
+                        this.page.data = new Array<MediaViewModel>();
                     }
 
                     this.page.data.unshift(createdPost);
@@ -70,7 +70,7 @@ export class PostsComponent implements OnInit, OnDestroy {
             });
     }
 
-    public onRemoved(post: Media) {
+    public onRemoved(post: MediaViewModel) {
         const dialogRef = this.dialog.open(ConfirmComponent, {
             data: {
                 title: 'DELETE POST',

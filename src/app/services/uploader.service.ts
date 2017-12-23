@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
 import { TokenProvider } from '../infrastructure/security/token-provider';
-import { Attachment } from '../common/models';
+import { AttachmentViewModel } from 'app/models/view';
 import { FileUploader, FileUploaderOptions } from 'ng2-file-upload';
 import { environment } from '../../environments/environment';
 
@@ -14,7 +14,7 @@ export class UploaderService {
         private tokenProvider: TokenProvider) {
     }
 
-    public createUploader(onSuccess: (attachment: Attachment) => void): FileUploader {
+    public createUploader(onSuccess: (attachment: AttachmentViewModel) => void): FileUploader {
         this.fileUploader = new FileUploader({
             url: environment.apiUri + 'attachments'
         });
@@ -32,7 +32,7 @@ export class UploaderService {
 
         this.fileUploader.onCompleteItem = (item: any, json: any, status: any, headers: any) => {
             const response = JSON.parse(json);
-            const attachment = response as Attachment;
+            const attachment = response as AttachmentViewModel;
 
             onSuccess(attachment);
         };

@@ -4,7 +4,7 @@ import { MatDialogRef, MatSnackBarConfig, MatSnackBar, MAT_DIALOG_DATA } from '@
 import { Subscription } from 'rxjs/Subscription';
 import { Observable } from 'rxjs/Observable';
 
-import { Media, User, Attachment, Comment, CurrentUser, CreateMediaModel } from 'app/common/models';
+import { MediaViewModel, UserViewModel, AttachmentViewModel, CommentViewModel, CurrentUserViewModel, CreateMediaModel } from 'app/models/view';
 import { MediaService, CommentService } from 'app/services';
 import { CurrentUserService } from 'app/infrastructure/services';
 import { TokenProvider } from 'app/infrastructure/security';
@@ -20,11 +20,11 @@ import { environment } from 'app/../environments/environment';
     encapsulation: ViewEncapsulation.None
 })
 export class CreatePostComponent implements OnInit, OnDestroy {
-    public currentUser: CurrentUser;
+    public currentUser: CurrentUserViewModel;
     private currentUserSubscription: Subscription;
     public maxItemsCount = 4;
 
-    public attachments: Array<Attachment>;
+    public attachments: Array<AttachmentViewModel>;
     public post: CreateMediaModel;
     public uploader: FileUploader;
 
@@ -38,7 +38,7 @@ export class CreatePostComponent implements OnInit, OnDestroy {
             url: environment.apiUri + 'attachments'
         });
         this.post = new CreateMediaModel();
-        this.attachments = new Array<Attachment>();
+        this.attachments = new Array<AttachmentViewModel>();
 
         this.currentUserSubscription = this.currentUserService.getCurrentUser()
             .subscribe(currentUser => {
@@ -58,7 +58,7 @@ export class CreatePostComponent implements OnInit, OnDestroy {
 
         this.uploader.onCompleteItem = (item: any, json: any, status: any, headers: any) => {
             const response = JSON.parse(json);
-            const attachment = response as Attachment;
+            const attachment = response as AttachmentViewModel;
             this.attachments.push(attachment);
         };
     }
@@ -68,7 +68,7 @@ export class CreatePostComponent implements OnInit, OnDestroy {
     }
 
     public createPost() {
-        this.post.AttachmentIds = this.attachments.map((attachment) => {
+        this.post.attachmentIds = this.attachments.map((attachment) => {
             return attachment.id;
         });
 
@@ -91,7 +91,7 @@ export class CreatePostComponent implements OnInit, OnDestroy {
             });
     }
 
-    public setDetault(attachment) {
-
+    public setAsDefault(item) {
+        console.log(item);
     }
 }

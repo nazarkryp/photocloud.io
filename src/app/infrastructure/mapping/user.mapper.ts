@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
 
-import { User } from '../../common/models/user';
-import { RelationshipStatus } from '../../common/models/relationship-status';
+import { UserResponse } from 'app/models/response';
+import { UserViewModel } from 'app/models/view';
+import { RelationshipStatus } from 'app/models/shared';
+import { IMapper } from 'app/infrastructure/mapping/mapper';
 
 @Injectable()
-export class UserMapper {
-    public mapResponseToUser(response: any): User {
-        const user = new User();
+export class UserMapper implements IMapper<UserResponse, UserViewModel> {
+    public mapFromResponse(response: UserResponse): UserViewModel {
+        const user = new UserViewModel();
 
         user.id = response.id;
         user.username = response.username;
@@ -19,26 +21,10 @@ export class UserMapper {
         user.followers = response.followers;
         user.following = response.following;
 
-        //if (response.incommingStatus === 'None') {
-        //    user.incommingStatus = RelationshipStatus.None;
-        //} else if (response.incommingStatus === 'Following') {
-        //    user.incommingStatus = RelationshipStatus.Following;
-        //} else if (response.incommingStatus === 'Requested') {
-        //    user.incommingStatus = RelationshipStatus.Requested;
-        //} else if (response.incommingStatus === 'Blocked') {
-        //    user.incommingStatus = RelationshipStatus.Blocked;
-        //}
-
-        //if (response.outgoingStatus === 'None') {
-        //    user.outgoingStatus = RelationshipStatus.None;
-        //} else if (response.outgoingStatus === 'Following') {
-        //    user.outgoingStatus = RelationshipStatus.Following;
-        //} else if (response.outgoingStatus === 'Requested') {
-        //    user.outgoingStatus = RelationshipStatus.Requested;
-        //} else if (response.outgoingStatus === 'Blocked') {
-        //    user.outgoingStatus = RelationshipStatus.Blocked;
-        //}
-
         return user;
+    }
+
+    public mapFromResponseArray(responseArray: UserResponse[]): UserViewModel[] {
+        return responseArray.map(e => this.mapFromResponse(e));
     }
 }

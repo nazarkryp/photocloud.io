@@ -58,6 +58,8 @@ import { WebApiClient } from 'app/infrastructure/communication';
 import { LocalStorageService } from 'app/infrastructure/services/storage';
 import { SplashScreenComponent } from './components/shared/splash-screen/splash-screen.component';
 
+import { CovalentLayoutModule, CovalentStepsModule, CovalentNotificationsModule } from '@covalent/core';
+
 @NgModule({
     declarations: [
         AppComponent,
@@ -106,7 +108,10 @@ import { SplashScreenComponent } from './components/shared/splash-screen/splash-
         HttpModule,
         ServiceModule,
         InfrastructureModule,
-        MomentModule
+        MomentModule,
+        CovalentLayoutModule,
+        CovalentStepsModule,
+        CovalentNotificationsModule
     ],
     providers: [
         AccountService,

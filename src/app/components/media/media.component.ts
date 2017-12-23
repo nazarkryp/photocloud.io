@@ -4,9 +4,9 @@ import { MatSnackBar, MatDialog, MatSnackBarConfig } from '@angular/material';
 import { Subscription } from 'rxjs/Subscription';
 
 import { CurrentUserService } from 'app/infrastructure/services';
-import { Media, Attachment, User, Comment, CurrentUser } from '../../common/models';
-import { CommentService, MediaService } from '../../services';
-import { UsersComponent } from '../shared/users/users.component';
+import { MediaViewModel, AttachmentViewModel, UserViewModel, CommentViewModel, CurrentUserViewModel } from 'app/models/view';
+import { CommentService, MediaService } from 'app/services';
+import { UsersComponent } from 'app/components/shared/users/users.component';
 import { trigger, style, animate, transition } from '@angular/animations';
 
 @Component({
@@ -24,15 +24,15 @@ import { trigger, style, animate, transition } from '@angular/animations';
     encapsulation: ViewEncapsulation.None
 })
 export class PostComponent implements OnInit, OnDestroy {
-    @Input() public media: Media;
-    @Output() public onRemoved = new EventEmitter<Media>();
+    @Input() public media: MediaViewModel;
+    @Output() public onRemoved = new EventEmitter<MediaViewModel>();
     @ViewChild('player') public player: any;
 
     public text: string;
     public shareLink: string;
     public caption: string;
 
-    public currentUser: CurrentUser;
+    public currentUser: CurrentUserViewModel;
     public currentUserSubscription: Subscription;
 
     constructor(
@@ -100,13 +100,13 @@ export class PostComponent implements OnInit, OnDestroy {
         this.text = '';
 
         if (!this.media.comments) {
-            this.media.comments = new Array<Comment>();
+            this.media.comments = new Array<CommentViewModel>();
         }
 
-        const comment = new Comment();
+        const comment = new CommentViewModel();
         comment.text = text;
         comment.date = new Date();
-        comment.user = new User();
+        comment.user = new UserViewModel();
         comment.user.id = this.currentUser.id;
         comment.user.username = this.currentUser.username;
 
@@ -178,7 +178,7 @@ export class PostComponent implements OnInit, OnDestroy {
         }
     }
 
-    public openLikesDialog(media: Media) {
+    public openLikesDialog(media: MediaViewModel) {
         const usersObservable = this.mediaService.getLikes(media.id);
         const dialogRef = this.dialog.open(UsersComponent, {
             data: {

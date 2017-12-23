@@ -1,26 +1,28 @@
 import { Injectable } from '@angular/core';
+
 import { Observable } from 'rxjs/Observable';
 
-import { WebApiClient } from '../infrastructure/communication';
-import { Comment } from '../common/models/comment';
+import { WebApiClient } from 'app/infrastructure/communication';
+import { CommentViewModel, } from 'app/models/view';
 
 @Injectable()
 export class CommentService {
-    constructor(private webApiClient: WebApiClient) { }
+    constructor(
+        private webApiClient: WebApiClient) { }
 
-    getComments(postId: number): Observable<Comment[]> {
-        return this.webApiClient.get(`posts/${postId}/comments`);
+    public getComments(mediaId: number): Observable<CommentViewModel[]> {
+        return this.webApiClient.get(`media/${mediaId}/comments`);
     }
 
-    createComment(postId: number, comment: any): Observable<Comment> {
-        return this.webApiClient.post(`posts/${postId}/comments`, comment);
+    public createComment(mediaId: number, comment: any): Observable<CommentViewModel> {
+        return this.webApiClient.post(`media/${mediaId}/comments`, comment);
     }
 
-    editComment(postId: number, commentId: number, comment) {
-        return this.webApiClient.put(`posts/${postId}/comments/${commentId}`, comment);
+    public editComment(mediaId: number, commentId: number, comment) {
+        return this.webApiClient.put(`media/${mediaId}/comments/${commentId}`, comment);
     }
 
-    removeComment(postId: number, commentId: number) {
-        return this.webApiClient.delete(`posts/${postId}/comments/${commentId}`);
+    public removeComment(mediaId: number, commentId: number) {
+        return this.webApiClient.delete(`media/${mediaId}/comments/${commentId}`);
     }
 }

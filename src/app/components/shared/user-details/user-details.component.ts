@@ -6,7 +6,8 @@ import { Subscription } from 'rxjs/Subscription';
 import { Observable } from 'rxjs/Observable';
 
 import { CurrentUserService } from 'app/infrastructure/services';
-import { CurrentUser, Error, Attachment, RelationshipStatus, User } from 'app/common/models';
+import { CurrentUserViewModel, AttachmentViewModel, UserViewModel } from 'app/models/view';
+import { Error, RelationshipStatus } from 'app/models/shared';
 import { UserService, UploaderService, } from 'app/services';
 import { FileUploader } from 'ng2-file-upload';
 import { UsersComponent } from 'app/components/shared/users/users.component';
@@ -20,7 +21,7 @@ export class UserDetailsComponent implements OnDestroy {
     private currentUserSubscription: Subscription;
 
     @Input() public user;
-    public currentUser: CurrentUser;
+    public currentUser: CurrentUserViewModel;
     public uploader: FileUploader;
     public isModifyingRelationship: boolean;
 
@@ -37,7 +38,7 @@ export class UserDetailsComponent implements OnDestroy {
             });
     }
 
-    private onSuccessUpload(attachment: Attachment) {
+    private onSuccessUpload(attachment: AttachmentViewModel) {
         this.currentUserService.updateCurrentUser({
             pictureId: attachment.id
         }).subscribe(user => {
@@ -72,7 +73,7 @@ export class UserDetailsComponent implements OnDestroy {
             action: action
         }).finally(() => {
             this.isModifyingRelationship = false;
-        }).subscribe((user: User) => {
+        }).subscribe((user: UserViewModel) => {
             this.user = user;
         });
     }

@@ -8,7 +8,8 @@ import { Subscription } from 'rxjs/Subscription';
 import { AccountService } from 'app/account/services';
 import { CurrentUserService } from 'app/infrastructure/services';
 import { MediaService, UserService } from '../../services';
-import { CurrentUser, Media, Attachment, User, RelationshipStatus, Page, ValidationResult, Error } from '../../common/models';
+import { CurrentUserViewModel, MediaViewModel, AttachmentViewModel, UserViewModel, PageViewModel } from 'app/models/view';
+import { Error, RelationshipStatus, ValidationResult, } from 'app/models/shared'
 import { MediaDetailsComponent } from 'app/components/shared/media-details/media-details.component';
 import { UsersComponent } from '../shared/users/users.component';
 import { NgProgress } from 'ngx-progressbar';
@@ -19,14 +20,14 @@ import { NgProgress } from 'ngx-progressbar';
     styleUrls: ['./user-posts.component.css']
 })
 export class UserPostsComponent implements OnInit, OnDestroy {
-    public postSubscription$: Subscription;
+    public postSubscription: Subscription;
     public routeSubscription$: Subscription;
     private currentUserSubscription$: Subscription;
-    public currentUser: CurrentUser;
-    public page: Page<Media>;
+    public currentUser: CurrentUserViewModel;
+    public page: PageViewModel<MediaViewModel>;
     public isModifyingRelationship = false;
     public isLoadingPosts: boolean;
-    public user: User = new User();
+    public user: UserViewModel = new UserViewModel();
     public error: Error;
     public canEditRelationship: boolean;
 
@@ -51,7 +52,7 @@ export class UserPostsComponent implements OnInit, OnDestroy {
             this.progress.start();
         }
 
-        this.postSubscription$ = this.mediaService.getUserPosts(this.user.username, this.page.pagination)
+        this.postSubscription = this.mediaService.getUserPosts(this.user.username, this.page.pagination)
             .finally(() => {
                 if (this.progress.isStarted()) {
                     this.progress.done();
@@ -59,7 +60,7 @@ export class UserPostsComponent implements OnInit, OnDestroy {
 
                 this.isLoadingPosts = false;
             })
-            .subscribe((page: Page<Media>) => {
+            .subscribe((page: PageViewModel<MediaViewModel>) => {
                 this.page.hasMoreItems = page.hasMoreItems;
                 this.page.pagination = page.pagination;
 
@@ -69,21 +70,21 @@ export class UserPostsComponent implements OnInit, OnDestroy {
             });
     }
 
-    public openPostDialog(post: Media) {
+    public openPostDialog(post: MediaViewModel) {
         this.dialog.open(MediaDetailsComponent, {
             data: post
         });
     }
 
     public initializePage(): void {
-        this.page = new Page<Media>();
+        this.page = new PageViewModel<MediaViewModel>();
         this.page.hasMoreItems = false;
         this.page.pagination = null;
         this.page.data = [];
         this.error = null;
     }
 
-    public validateUser(user: User): ValidationResult {
+    public validateUser(user: UserViewModel): ValidationResult {
         const validationResult: ValidationResult = new ValidationResult();
 
         if (!user.isActive) {
@@ -118,8 +119,8 @@ export class UserPostsComponent implements OnInit, OnDestroy {
     }
 
     public ngOnDestroy(): void {
-        if (this.postSubscription$ && !this.postSubscription$.closed) {
-            this.postSubscription$.unsubscribe();
+        if (this.postSubscription && !this.postSubscription.closed) {
+            this.postSubscription.unsubscribe();
         }
 
         this.currentUserSubscription$.unsubscribe();

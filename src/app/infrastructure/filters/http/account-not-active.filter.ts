@@ -1,4 +1,4 @@
-import { Error } from './../../../common/models/error';
+import { Error } from 'app/models/shared';
 import { Injectable } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
 
-import { HttpStatusCode } from 'app/common/http';
+import { HttpStatusCode } from 'app/models/common/http';
 import { HttpErrorFilter } from './http-error.fitler';
 import { CurrentUserService } from 'app/infrastructure/services';
 

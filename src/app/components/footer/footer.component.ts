@@ -3,7 +3,7 @@ import { Router, NavigationEnd } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 
 import { AccountService } from 'app/account/services';
-import { CurrentUser } from 'app/common/models';
+import { CurrentUserViewModel } from 'app/models/view';
 import { CurrentUserService } from 'app/infrastructure/services';
 
 @Component({

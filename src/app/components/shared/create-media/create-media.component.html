@@ -14,7 +14,8 @@
                 <div class="upload-attachment-button" fxLayout="row" fxLayoutAlign="center center" mat-ripple (click)="fileInput.click()">
                     <mat-icon>add</mat-icon>
                 </div>
-                <div *ngFor="let item of uploader.queue" class="uploaded-attachment-mini" fxLayout="row" fxLayoutAlign="center center" mat-ripple>
+                <div *ngFor="let item of uploader.queue" class="uploaded-attachment-mini" fxLayout="row" fxLayoutAlign="center center" mat-ripple
+                    (click)="setAsDefault(item)">
                     <img appImagePreview [image]="item?._file" alt="photo">
                     <div class="attachment-progress-container" fxLayout="row" fxLayoutAlign="center center" *ngIf="!item.isUploaded">
                         <mat-progress-spinner [strokeWidth]="3" [diameter]="60" mode="determinate" value="{{item.progress}}" color="accent"></mat-progress-spinner>
@@ -27,10 +28,8 @@
     <div style="margin-top: 15px;" *ngIf="attachments.length > 0">
         <textarea [(ngModel)]="post.caption" placeholder="Edit description" style="box-sizing: border-box; background: #efefef; border-radius: 2px; padding: 12px; font-weight: lighter; border: none; outline: none; width: 100%;"></textarea>
     </div>
-    <div style="box-sizing: border-box; margin-top: 12px; position: relative;" *ngIf="attachments.length > 0">
-        <div class="mat-elevation-z1" style="position: relative;" mat-ripple>
-            <img src="{{attachments[0].uri}}" style="width: 100%; border-radius: 2px; vertical-align: bottom;" alt="preview-big">
-        </div>
+    <div class="big-preview mat-elevation-z1" *ngIf="attachments.length > 0" mat-ripple>
+        <img class="big-preview-thumbnail" src="{{attachments[0].uri}}" alt="preview-big">
     </div>
     <div style="margin-top: 12px;" *ngIf="attachments.length > 0">
         <mat-slide-toggle [disabled]="attachments.length === 1">Set as cover</mat-slide-toggle>

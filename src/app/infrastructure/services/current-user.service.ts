@@ -4,7 +4,7 @@ import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/mergeMap';
 
-import { CurrentUser } from 'app/common/models';
+import { CurrentUserViewModel } from 'app/models/view';
 import { UserService } from 'app/services';
 import { AccountService } from 'app/account/services';
 import { LocalStorageService } from 'app/infrastructure/services/storage';
@@ -14,7 +14,7 @@ import { AccessToken } from 'app/infrastructure/security/access-token.model';
 @Injectable()
 export class CurrentUserService {
     private currentUserStorageKey = 'photocloud-current-user';
-    private state: ReplaySubject<CurrentUser> = new ReplaySubject<CurrentUser>(1);
+    private state: ReplaySubject<CurrentUserViewModel> = new ReplaySubject<CurrentUserViewModel>(1);
 
     constructor(
         private tokenProvider: TokenProvider,
@@ -25,27 +25,9 @@ export class CurrentUserService {
         this.state.next(currentUser);
     }
 
-    public getCurrentUser(refresh: boolean = false): Observable<CurrentUser> {
-        if (refresh) {
-            const currentUser = this.retrieveCurrentUser();
-
-            if (currentUser) {
-                return this.accountService.getAccount()
-                    .mergeMap<CurrentUser, CurrentUser>(serverCurrentUser => {
-                        this.saveCurrentUser(serverCurrentUser);
-
-                        this.state.next(serverCurrentUser)
-                        return this.state.asObservable();
-                    });
-            }
-        }
-
-        return this.state.asObservable();
-    }
-
     public signIn(username: string, password: string): Observable<any> {
         return this.accountService.signIn(username, password)
-            .mergeMap<AccessToken, CurrentUser>(accessToken => {
+            .mergeMap<AccessToken, CurrentUserViewModel>(accessToken => {
                 this.tokenProvider.setAccessToken(accessToken);
                 return this.accountService.getAccount()
                     .map(currentUser => {
@@ -59,19 +41,37 @@ export class CurrentUserService {
         this.storageService.clear();
     }
 
-    public updateCurrentUser(propertiesToUpdate: any): Observable<CurrentUser> {
+    public getCurrentUser(refresh: boolean = false): Observable<CurrentUserViewModel> {
+        if (refresh) {
+            const currentUser = this.retrieveCurrentUser();
+
+            if (currentUser) {
+                return this.accountService.getAccount()
+                    .mergeMap<CurrentUserViewModel, CurrentUserViewModel>(serverCurrentUser => {
+                        this.saveCurrentUser(serverCurrentUser);
+
+                        this.state.next(serverCurrentUser)
+                        return this.state.asObservable();
+                    });
+            }
+        }
+
+        return this.state.asObservable();
+    }
+
+    public updateCurrentUser(propertiesToUpdate: any): Observable<CurrentUserViewModel> {
         return this.accountService.updateAccount(propertiesToUpdate)
             .do(currentUser => {
                 this.saveCurrentUser(currentUser);
             });
     }
 
-    public retrieveCurrentUser(): CurrentUser {
-        return this.storageService.get<CurrentUser>(this.currentUserStorageKey, CurrentUser);
+    public retrieveCurrentUser(): CurrentUserViewModel {
+        return this.storageService.get<CurrentUserViewModel>(this.currentUserStorageKey, CurrentUserViewModel);
     }
 
-    private saveCurrentUser(currentUser: CurrentUser) {
+    private saveCurrentUser(currentUser: CurrentUserViewModel) {
         this.state.next(currentUser);
-        this.storageService.set<CurrentUser>(this.currentUserStorageKey, currentUser);
+        this.storageService.set<CurrentUserViewModel>(this.currentUserStorageKey, currentUser);
     }
 }

@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
-import { RelationshipStatus } from '../common/models/relationship-status';
+import { RelationshipStatus } from 'app/models/shared';
 
 @Pipe({
     name: 'relationshipAction'

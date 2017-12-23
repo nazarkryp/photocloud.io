@@ -4,8 +4,14 @@
     <div class="user-posts" *ngIf="!error; else errorBox">
         <div *ngFor="let post of page?.data;">
             <div class="mat-elevation-z1 user-post" (click)="openPostDialog(post)">
-                <img class="user-media-image" src="{{post?.attachments[0].uri}}" alt="media-image">
-                <mat-icon class="multiple-attachments-icon" *ngIf="post.attachments.length > 1">layers</mat-icon>
+                <img class="user-media-thumbnail" src="{{post?.attachments[0].uri}}" alt="media-image" *ngIf="post?.attachments[0].type !== 1">
+                <video class="user-media-thumbnail" *ngIf="post?.attachments[0].type === 1">
+                    <source src="{{post?.attachments[0].uri}}">
+                </video>
+                <div class="multiple-attachments-icon-container" fxLayout="row" fxLayoutAlign="start center" *ngIf="post.attachments.length > 1 || post?.attachments[0].type === 1">
+                    <mat-icon class="multiple-attachments-icon" *ngIf="post.attachments[0].type === 1">videocam</mat-icon>
+                    <mat-icon class="multiple-attachments-icon" *ngIf="post.attachments.length > 1">layers</mat-icon>
+                </div>
                 <div class="user-media-details" fxLayout="row" fxLayoutAlign="space-between center">
                     <div fxLayout="row" fxLayoutAlign="center center">
                         <mat-icon class="media-icon">favorite</mat-icon>

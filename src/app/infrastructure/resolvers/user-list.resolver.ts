@@ -3,21 +3,21 @@ import { Resolve, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/r
 import { Observable } from 'rxjs/Observable';
 
 import { UserService } from '../../services';
-import { Page, User } from '../../common/models';
+import { PageViewModel, UserViewModel } from 'app/models/view';
 
 import { NgProgress } from 'ngx-progressbar';
 
 @Injectable()
-export class UserListResolver implements Resolve<Page<User>> {
+export class UserListResolver implements Resolve<PageViewModel<UserViewModel>> {
     private isLoading: boolean;
-    private users: Observable<Page<User>>;
+    private users: Observable<PageViewModel<UserViewModel>>;
 
     constructor(
         private userService: UserService,
         private progress: NgProgress) { }
 
     public resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot)
-        : Page<User> | Observable<Page<User>> | Promise<Page<User>> {
+        : PageViewModel<UserViewModel> | Observable<PageViewModel<UserViewModel>> | Promise<PageViewModel<UserViewModel>> {
         if (this.isLoading && this.users) {
             return this.users;
         }

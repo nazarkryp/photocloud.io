@@ -1,4 +1,4 @@
-import { Component, Inject, ViewEncapsulation, Optional, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Inject, ViewEncapsulation, Optional, OnInit, OnDestroy, Input, Output, EventEmitter, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DOCUMENT } from '@angular/common';
 import { MatDialogRef, MatSnackBarConfig, MatSnackBar, MAT_DIALOG_DATA } from '@angular/material';
@@ -7,7 +7,7 @@ import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 
 import { CurrentUserService } from 'app/infrastructure/services';
-import { Media, User, Attachment, Comment, CurrentUser } from 'app/common/models';
+import { MediaViewModel, UserViewModel, AttachmentViewModel, CommentViewModel, CurrentUserViewModel } from 'app/models/view';
 import { MediaService, CommentService } from 'app/services';
 import { NgProgress } from 'ngx-progressbar';
 
@@ -19,12 +19,13 @@ import { NgProgress } from 'ngx-progressbar';
 })
 export class MediaDetailsComponent implements OnInit, OnDestroy {
     public isDialog: boolean;
-    @Output() public onRemoved = new EventEmitter<Media>();
+    @Output() public onRemoved = new EventEmitter<MediaViewModel>();
+    @ViewChild('player') public player: any;
 
     public text: string;
     public shareLink: string;
 
-    public currentUser: CurrentUser;
+    public currentUser: CurrentUserViewModel;
     public currentUserSubscription: Subscription;
 
     constructor(
@@ -35,7 +36,7 @@ export class MediaDetailsComponent implements OnInit, OnDestroy {
         private progress: NgProgress,
         private snackBar: MatSnackBar,
         @Optional() public dialogRef: MatDialogRef<MediaDetailsComponent>,
-        @Optional() @Inject(MAT_DIALOG_DATA) public media: Media,
+        @Optional() @Inject(MAT_DIALOG_DATA) public media: MediaViewModel,
         @Inject(DOCUMENT) private document: any) {
         if (media) {
             this.media.activeAttachment = 0;
@@ -57,6 +58,18 @@ export class MediaDetailsComponent implements OnInit, OnDestroy {
     public previous(): void {
         if (this.media.activeAttachment > 0) {
             this.media.activeAttachment--;
+        }
+    }
+
+    public play(event: any) {
+        if (!this.player) {
+            return;
+        }
+
+        if (this.player.nativeElement.paused) {
+            this.player.nativeElement.play();
+        } else {
+            this.player.nativeElement.pause();
         }
     }
 
@@ -87,13 +100,13 @@ export class MediaDetailsComponent implements OnInit, OnDestroy {
         this.text = '';
 
         if (!this.media.comments) {
-            this.media.comments = new Array<Comment>();
+            this.media.comments = new Array<CommentViewModel>();
         }
 
-        const comment = new Comment();
+        const comment = new CommentViewModel();
         comment.text = text;
         comment.date = new Date();
-        comment.user = new User();
+        comment.user = new UserViewModel();
         comment.user.id = this.currentUser.id;
         comment.user.username = this.currentUser.username;
 

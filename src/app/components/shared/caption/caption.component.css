@@ -7,3 +7,7 @@
 .hashtag:hover {
     color: #e91e63;
 }
+
+.caption-text {
+    letter-spacing: 1px;
+}

@@ -58,6 +58,14 @@ mat-icon>svg {
     height: 35px;
 }
 
-.custom-big-icon:hover {
+.toolbar-actions>* {
+    margin-right: 1.5rem;
+}
+
+.toolbar-actions>:last-child {
+    margin-right: 0;
+}
+
+.mat-icon-button .mat-icon:hover {
     color: #e91e63;
 }
