@@ -68,7 +68,8 @@ a {
 
 .btn-icon {
     cursor: pointer;
-    color: #6B738A;
+    /* color: #444444; */
+    color: #444444;
     outline: none;
 }
 

@@ -15,18 +15,14 @@
                     </video>
                     <mat-icon class="multiple-attachments-icon" *ngIf="post.attachments.length > 1">layers</mat-icon>
                 </div>
-                <div class="media-description" fxLayout="row" fxLayoutAlign="space-between center">
+                <div class="media-description" fxLayout="row" fxLayoutAlign="space-between start">
                     <div class="tag-user-info" fxLayout="column" fxLayoutAlign="center start">
                         <a class="tag-media-username" [routerLink]="['/', post.user.username]">
                             {{post.user.username}}
                         </a>
                         <span class="tag-media-date">{{post.created | amTimeAgo}}</span>
                     </div>
-                    <div fxLayout="row" fxLayoutAlign="center center">
-                        <span class="likes-count" [ngClass]="{ 'liked' : post.userHasLiked }" *ngIf="post.likesCount > 0">{{post.likesCount}}</span>
-                        <mat-icon svgIcon="heart" class="btn-icon mat-36 thin" [ngClass]="{ 'liked' : post.userHasLiked }" (click)="like(post)"
-                            *ngIf="currentUser"></mat-icon>
-                    </div>
+                    <mat-icon class="btn-icon mat-24 thin" [ngClass]="{ 'liked' : post.userHasLiked }" (click)="like(post)" *ngIf="currentUser">favorite</mat-icon>
                 </div>
             </div>
         </div>

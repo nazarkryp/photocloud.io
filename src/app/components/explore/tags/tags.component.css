@@ -84,28 +84,10 @@
     -ms-user-select: none;
 }
 
-.media-info {
-    background-image: -webkit-linear-gradient(180deg, transparent 75%, #222222 100%);
-    background-image: -moz-linear-gradient(180deg, transparent 75%, #222222 100%);
-    background-image: -o-linear-gradient(180deg, transparent 75%, #222222 100%);
-    background-image: linear-gradient(180deg, transparent 75%, #222222 100%);
-    color: white;
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    padding: 10px;
-}
-
 .media-description {
-    padding: 10px;
-    border-radius: 0 0 3px 3px;
+    padding: .5rem;
+    border-radius: 0 0 2px 2px;
     width: 100%;
-}
-
-.media-caption {
-    padding: 10px 0 0 0;
-    line-height: 1.3em;
-    overflow: hidden;
 }
 
 .tag-media-username {
@@ -116,7 +98,7 @@
 
 .tag-media-date {
     font-size: 0.8em;
-    color: #6B738A;
+    color: #444444;
     font-weight: lighter;
 }
 
@@ -133,7 +115,7 @@
 }
 
 .likes-count {
-    color: #6B738A;
+    color: #444444;
     margin-right: .5rem;
     font-weight: lighter;
     font-size: 1.3em;

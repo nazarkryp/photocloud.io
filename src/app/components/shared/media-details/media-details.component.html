@@ -21,7 +21,7 @@
             </div>
         </div>
         <div class="media-details-container" [ngClass]="{ 'dialog' : isDialog }" fxLayout="column">
-            <div class="media-details-header" fxLayout="row" fxLayoutAlign="start center">
+            <div class="media-details-header" fxLayout="row" fxLayoutAlign="start center" style="padding-bottom: .7rem; border-bottom: 1px solid #d8d8d8;">
                 <img class="media-avatar" [routerLink]="['/', media.user.username]" src="{{media.user.pictureUri}}" default="assets/images/user-default-image.png"
                     alt="profile">
                 <div fxLayout="row" fxLayoutAlign="space-between center" fxFlex>
@@ -34,6 +34,10 @@
                     <button class="btn-relationships" mat-button *ngIf="currentUser && currentUser.id != media.user.id">FOLLOW</button>
                 </div>
             </div>
+            <div fxLayout="row" fxLayoutAlign="start center" style="margin-top: 1.0rem;">
+                <mat-icon class="mat-18" style="color: #444444;">favorite</mat-icon>
+                <span style="font-weight: bold; font-size: .9em; color: #444444; margin-left: .5rem;">{{media.commentsCount}} likes</span>
+            </div>
             <div class="media-details-caption" *ngIf="media.caption">
                 <a [routerLink]="['/', media.user.username]">
                     <strong>{{media.user.username}}</strong>
@@ -44,25 +48,15 @@
                 <span class="media-details-comments-header">Comments</span>
                 <app-comments style="font-size: 0.95em;" [media]="media"></app-comments>
             </div>
-            <div fxLayout="row" fxLayoutAlign="start center" style="padding-bottom: 12px;">
-                <div style="padding-right: 5px; border-right: 1px solid #6B738A; margin-right: 7px;">
-                    <button class="like-button" mat-icon-button (click)="like()" *ngIf="currentUser">
-                        <mat-icon class="mat-36 thin" [ngClass]="{ 'liked' : media.userHasLiked }" svgIcon="heart"></mat-icon>
-                    </button>
+            <div fxLayout="row" fxLayoutAlign="space-between center" *ngIf="currentUser" style="border-top: 1px solid #d8d8d8; padding-top: .7rem;">
+                <div fxLayout="row" fxLayoutAlign="start center" *ngIf="currentUser">
+                    <mat-icon class="btn-icon mat-24" [ngClass]="{ 'liked' : media.userHasLiked }" (click)="like()">favorite</mat-icon>
+                    <mat-icon class="btn-icon mat-24" svgIcon="comment" style="margin-left: .7rem;"></mat-icon>
+                    <mat-icon class="btn-icon mat-24" style="margin-left: .7rem;">share</mat-icon>
                 </div>
-                <span class="likes-counter">
-                    {{media.likesCount}} likes
-                </span>
+                <mat-icon class="btn-icon mat-24 thin">more_horiz</mat-icon>
             </div>
-            <div fxLayout="row" style="box-shadow: 0 -3px 8px -3px rgba(0, 0, 0, 0.26); margin: 0 -1.1rem -1.1rem -1.1rem;">
-                <input class="media-details-comment-input" type="text" placeholder="Type your comment..." [(ngModel)]="text" (keydown.enter)="createComment()"
-                />
-            </div>
-            <!-- <div class="media-details-footer" fxLayout="row" fxLayoutAlign="start center" *ngIf="currentUser">
-                <div class="comment-box" fxLayout="row">
-                    <input class="media-details-comment-input" type="text" placeholder="Type your comment..." [(ngModel)]="text" (keydown.enter)="createComment()">
-                </div>
-            </div> -->
+            
         </div>
     </div>
 </div>

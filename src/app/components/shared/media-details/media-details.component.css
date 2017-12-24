@@ -11,19 +11,11 @@
 
 .media-details-container {
     width: 400px;
-    padding-left: 1rem;
+    padding-left: .7rem;
 }
 
 .media-details-container.dialog {
-    padding: 1rem;
-}
-
-.media-details-container>* {
-    /* margin-top: 0.75rem; */
-}
-
-.media-details-container>:first-child {
-    margin-top: 0;
+    padding: .7rem;
 }
 
 .media-details-header>:first-child {
@@ -38,7 +30,7 @@
 .media-details-comments-header {
     font-size: 1.1em;
     font-weight: lighter;
-    color: #6B738A;
+    color: #444444;
     text-transform: uppercase;
     letter-spacing: 1px;
 }
@@ -71,7 +63,7 @@
 .media-details-caption {
     font-size: 0.95em;
     line-height: 1.6em;
-    margin-top: 1rem;
+    margin-top: .7rem;
 }
 
 .media-date {
@@ -96,7 +88,7 @@
     outline: none;
 }
 
-.media-details-info{
+.media-details-info {
     line-height: 1.1;
 }
 
@@ -106,7 +98,7 @@
 }
 
 .btn-relationships {
-    color: #6B738A;
+    color: #444444;
     background-color: #efefef;
 }
 
@@ -130,12 +122,9 @@
     background: inherit;
     font-weight: lighter;
     outline: none;
-    border: none;
-    width: 100%;
-    /* border: 1px solid #d8d8d8; */
-    border-bottom: none;
+    border: 1px solid #d8d8d8;
     border-radius: 2px;
-    padding: 16px 12px;
+    padding: .7rem .7rem;
     font-size: .9em;
 }
 
@@ -160,7 +149,7 @@
 
 .media-details-created {
     font-size: 0.8em;
-    color: #6B738A;
+    color: #444444;
     font-weight: lighter;
     /* text-transform: uppercase; */
     /* letter-spacing: 1px; */
@@ -170,10 +159,6 @@
     font-size: .9em;
     cursor: pointer;
     font-weight: normal;
-}
-
-.like-button {
-    color: #6B738A;
 }
 
 .liked {

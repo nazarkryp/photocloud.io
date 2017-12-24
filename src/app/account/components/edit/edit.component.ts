@@ -63,8 +63,8 @@ export class EditComponent implements OnInit {
         }).finally(() => {
             this.isInvertingAccountPrivateStatus = false;
         }).subscribe(account => {
-            this.currentUser = account;
-            this.copyTo(account, this.backup);
+            this.currentUser.isPrivate = account.isPrivate;
+            this.backup.isPrivate = account.isPrivate;
         });
     }
 
@@ -79,8 +79,9 @@ export class EditComponent implements OnInit {
         }).finally(() => {
             this.isInvertingAccountStatus = false;
         }).subscribe(account => {
-            this.currentUser = account;
-            this.copyTo(account, this.backup);
+            this.currentUser.isActive = account.isActive;
+            this.backup.isActive = account.isActive;
+            this.refreshFormControls();
         });
     }
 
@@ -107,11 +108,7 @@ export class EditComponent implements OnInit {
         this.formGroup.get('bio').setValue(currentUser.bio);
         this.formGroup.get('email').setValue(currentUser.email);
 
-        if (currentUser.isActive) {
-            this.formGroup.enable();
-        } else {
-            this.formGroup.disable();
-        }
+        this.refreshFormControls();
     }
 
     private compare<T>(source: T, target: T) {
@@ -148,5 +145,13 @@ export class EditComponent implements OnInit {
                 Validators.pattern(EMAIL_REGEX)
             ])),
         });
+    }
+
+    private refreshFormControls() {
+        if (this.currentUser.isActive) {
+            this.formGroup.enable();
+        } else {
+            this.formGroup.disable();
+        }
     }
 }
