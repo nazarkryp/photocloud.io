@@ -11,10 +11,10 @@ a {
 
 .text-button {
     font-size: 0.9em;
-    color: #555555;
+    color: #757575;
     cursor: pointer;
 }
 
 .text-button:hover {
-    color: #777;
+    color: #e91e63;
 }

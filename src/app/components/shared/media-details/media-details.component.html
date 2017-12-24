@@ -25,36 +25,14 @@
                 <img class="media-avatar" [routerLink]="['/', media.user.username]" src="{{media.user.pictureUri}}" default="assets/images/user-default-image.png"
                     alt="profile">
                 <div fxLayout="row" fxLayoutAlign="space-between center" fxFlex>
-                    <div fxLayout="column">
+                    <div class="media-details-info" fxLayout="column">
                         <a class="media-details-username" [routerLink]="['/', media.user.username]">{{media.user.username}}</a>
                         <div class="media-date">
                             <span class="media-details-created">{{media.created | amTimeAgo}}</span>
                         </div>
                     </div>
-                    <div fxLayout="row">
-                        <button mat-icon-button matTooltip="Copy to clipboard" matTooltipPosition="left" ngxClipboard [cbContent]="share()" (cbOnSuccess)="showToast('Copied to clipboard')">
-                            <mat-icon>share</mat-icon>
-                        </button>
-                        <mat-menu #menu="matMenu" xPosition="before">
-                            <button mat-menu-item>
-                                <mat-icon>edit</mat-icon>
-                                <span>Edit</span>
-                            </button>
-                            <button mat-menu-item>
-                                <mat-icon>delete</mat-icon>
-                                <span>Remove</span>
-                            </button>
-                        </mat-menu>
-                    </div>
+                    <button class="btn-relationships" mat-button *ngIf="currentUser && currentUser.id != media.user.id">FOLLOW</button>
                 </div>
-            </div>
-            <div fxLayout="row" fxLayoutAlign="space-between center">
-                <span class="likes-counter">
-                    <strong>{{media.likesCount}} likes</strong>
-                </span>
-                <button class="like-button" mat-icon-button (click)="like()" *ngIf="currentUser">
-                    <mat-icon class="mat-24" [ngClass]="{ 'liked' : media.userHasLiked }" svgIcon="heart"></mat-icon>
-                </button>
             </div>
             <div class="media-details-caption" *ngIf="media.caption">
                 <a [routerLink]="['/', media.user.username]">
@@ -66,15 +44,25 @@
                 <span class="media-details-comments-header">Comments</span>
                 <app-comments style="font-size: 0.95em;" [media]="media"></app-comments>
             </div>
-            <div class="media-details-footer" fxLayout="row" fxLayoutAlign="start center" *ngIf="currentUser">
-                <div class="comment-box" fxLayout="row">
-                    <input class="media-details-comment-input" type="text" placeholder="Type your comment..." [(ngModel)]="text" (keydown.enter)="createComment()"
-                    />
-                    <!-- <button class="send-button" mat-icon-button (click)="createComment()" [disabled]="!text">
-                        <mat-icon matTooltip="{{!text ? 'Cannot send empty message' : 'Send'}}" matTooltipPosition="left">send</mat-icon>
-                    </button> -->
+            <div fxLayout="row" fxLayoutAlign="start center" style="padding-bottom: 12px;">
+                <div style="padding-right: 5px; border-right: 1px solid #6B738A; margin-right: 7px;">
+                    <button class="like-button" mat-icon-button (click)="like()" *ngIf="currentUser">
+                        <mat-icon class="mat-36 thin" [ngClass]="{ 'liked' : media.userHasLiked }" svgIcon="heart"></mat-icon>
+                    </button>
                 </div>
+                <span class="likes-counter">
+                    {{media.likesCount}} likes
+                </span>
             </div>
+            <div fxLayout="row" style="box-shadow: 0 -3px 8px -3px rgba(0, 0, 0, 0.26); margin: 0 -1.1rem -1.1rem -1.1rem;">
+                <input class="media-details-comment-input" type="text" placeholder="Type your comment..." [(ngModel)]="text" (keydown.enter)="createComment()"
+                />
+            </div>
+            <!-- <div class="media-details-footer" fxLayout="row" fxLayoutAlign="start center" *ngIf="currentUser">
+                <div class="comment-box" fxLayout="row">
+                    <input class="media-details-comment-input" type="text" placeholder="Type your comment..." [(ngModel)]="text" (keydown.enter)="createComment()">
+                </div>
+            </div> -->
         </div>
     </div>
 </div>

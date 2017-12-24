@@ -1,11 +1,7 @@
 <div fxLayout="column" fxLayoutAlign="start center" style="padding: 34px 0;">
-    <div style="width: 600px; box-shadow: 0 3px 8px -3px rgba(0, 0, 0, 0.26); background: white; padding: 24px; box-sizing: border-box;">
-        <div>
-            <span style="font-weight:lighter; font-size: 24px;">Edit Account</span>
-        </div>
-        <div fxLayout="row" fxLayoutAlign="center center" style="padding-top: .75rem;">
-            <img style="width: 75px; height: 75px; border-radius: 90px; object-fit: cover;" src="{{currentUser.pictureUri}}" default="assets/images/user-default-image.png"
-                alt="user">
+    <div style="width: 600px; box-shadow: 0 3px 8px -3px rgba(0, 0, 0, 0.26); background: white; border-radius: 2px; padding: 24px; box-sizing: border-box;">
+        <div fxLayout="row" fxLayoutAlign="center center">
+            <img style="width: 7rem; height: 7rem; object-fit: cover; border-radius: 90px;" src="{{currentUser.pictureUri}}" default="assets/images/user-default-image.png">
         </div>
         <form style="margin-top: 34px;" [formGroup]="formGroup" (ngSubmit)="save()">
             <mat-form-field style="width: 100%;">

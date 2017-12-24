@@ -8,6 +8,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppMaterialModule } from './app-material/app-material.module';
+import { SharedModule } from 'app/shared/shared.module';
 
 import { AppComponent } from './app.component';
 import { PostsComponent } from './components/posts/posts.component';
@@ -32,8 +33,6 @@ import { RawPipe } from './pipes/raw.pipe';
 
 import { ErrorBoxComponent } from './components/shared/error-box/error-box.component';
 import { CaptionComponent } from './components/shared/caption/caption.component';
-import { ImagePreviewDirective } from './directives/image-preview.directive';
-import { DefaultImageDirective } from './directives/default-image.directive';
 import { TagsComponent } from './components/explore/tags/tags.component';
 import { ConfirmComponent } from './components/shared/confirm/confirm.component';
 import { NotificationsComponent } from './components/shared/notifications/notifications.component';
@@ -75,8 +74,6 @@ import { CovalentLayoutModule, CovalentStepsModule, CovalentNotificationsModule 
         CreatePostComponent,
         RawPipe,
         CaptionComponent,
-        ImagePreviewDirective,
-        DefaultImageDirective,
         TagsComponent,
         ConfirmComponent,
         NotificationsComponent,
@@ -111,7 +108,8 @@ import { CovalentLayoutModule, CovalentStepsModule, CovalentNotificationsModule 
         MomentModule,
         CovalentLayoutModule,
         CovalentStepsModule,
-        CovalentNotificationsModule
+        CovalentNotificationsModule,
+        SharedModule
     ],
     providers: [
         AccountService,
@@ -128,5 +126,6 @@ export class AppModule {
         mdIconRegistry.addSvgIcon('heart', sanitizer.bypassSecurityTrustResourceUrl('assets/svg/icons/heart.svg'));
         mdIconRegistry.addSvgIcon('compass', sanitizer.bypassSecurityTrustResourceUrl('assets/svg/icons/compass.svg'));
         mdIconRegistry.addSvgIcon('bell', sanitizer.bypassSecurityTrustResourceUrl('assets/svg/icons/bell.svg'));
+        mdIconRegistry.addSvgIcon('refresh', sanitizer.bypassSecurityTrustResourceUrl('assets/svg/icons/refresh.svg'));
     }
 }

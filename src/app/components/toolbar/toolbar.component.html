@@ -2,7 +2,7 @@
     <div class="mat-toolbar-layout">
         <div fxLayout="row" fxLayoutAlign="space-between center">
             <div class="logo-container" fxLayout="row" fxLayoutAlign="center center" fxFlex>
-                <h1 class="logo" routerLink="/">photocloud</h1>
+                <h1 class="logo" routerLink="/">thephotocloud</h1>
             </div>
             <div class="search-box-container">
                 <app-search-box *ngIf="currentUser"></app-search-box>
@@ -13,16 +13,12 @@
                 </button>
             </div>
             <div class="toolbar-actions" *ngIf="currentUser" fxLayout="row" fxLayoutAlign="end center" fxFlex>
-                <button mat-icon-button [routerLink]="['/explore/people']">
-                    <td-notification-count [notifications]="none">
-                        <mat-icon class="mat-36 thin" svgIcon="compass"></mat-icon>
-                    </td-notification-count>
-                </button>
-                <button mat-icon-button *ngIf="currentUser.isPrivate && currentUser.isActive">
-                    <td-notification-count color="warn" positionX="before" [notifications]="1" (click)="openNotifications()">
-                        <mat-icon class="mat-36 thin" svgIcon="bell"></mat-icon>
-                    </td-notification-count>
-                </button>
+                <td-notification-count [notifications]="none" [routerLink]="['/explore/people']">
+                    <mat-icon class="btn-icon mat-36 thin" svgIcon="compass"></mat-icon>
+                </td-notification-count>
+                <td-notification-count color="warn" positionX="before" [notifications]="1" (click)="openNotifications()" *ngIf="currentUser.isPrivate && currentUser.isActive">
+                    <mat-icon class="btn-icon mat-36 thin" svgIcon="bell"></mat-icon>
+                </td-notification-count>
                 <div fxLayout="row" fxLayoutAlign="center center">
                     <a [routerLink]="['/', currentUser.username]" fxLayout="row" fxLayoutAlign="center center">
                         <img class="avatar" src="{{currentUser.pictureUri}}" default="assets/images/user-default-image.png" alt="{{currentUser.username}}">

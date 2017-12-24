@@ -1,9 +1,11 @@
 <div class="comments">
-    <a class="text-button" (click)="getComments()" *ngIf="media.comments.length < media.commentsCount"><strong>show more comments</strong></a>
+    <a class="text-button" (click)="getComments()" *ngIf="media.comments.length < media.commentsCount">
+        <strong>view all {{media.commentsCount}} comments</strong>
+    </a>
     <div *ngFor="let comment of media.comments;" fxLayout="row">
         <a [routerLink]="['/', comment.user.username]">
-        <strong>{{comment.user.username}}</strong>
-    </a>
+            <strong>{{comment.user.username}}</strong>
+        </a>
         <span [innerHTML]="comment.text | raw"></span>
     </div>
 </div>

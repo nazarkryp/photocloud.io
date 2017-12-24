@@ -1,7 +1,7 @@
-<div class="user-posts-container" fxLayout="column" fxLayoutAlign="center center">
+<div class="user-media-container" fxLayout="column" fxLayoutAlign="center center">
     <app-user-details [user]="user"></app-user-details>
 
-    <div class="user-posts" *ngIf="!error; else errorBox">
+    <div class="user-media" *ngIf="!error; else errorBox">
         <div *ngFor="let post of page?.data;">
             <div class="mat-elevation-z1 user-post" (click)="openPostDialog(post)">
                 <img class="user-media-thumbnail" src="{{post?.attachments[0].uri}}" alt="media-image" *ngIf="post?.attachments[0].type !== 1">
@@ -29,7 +29,7 @@
         <button mat-raised-button (click)="getPosts()" [disabled]="isLoadingPosts">Load More</button>
     </div>
     <!-- <div class="posts-container" *ngIf="!error; else errorBox">
-        <div class="user-posts" *ngIf="isLoadingPosts || page.data.length > 0; else emptyFeed;">
+        <div class="user-media" *ngIf="isLoadingPosts || page.data.length > 0; else emptyFeed;">
             <div class="media-item" *ngFor="let post of page?.data;">
                 <div class="image-container mat-elevation-z3" fxLayout="column" fxLayoutAlign="center center" (click)="openPostDialog(post)">
                     <img class="thumbnail" src="{{post?.attachments[0].uri}}" alt="{{post?.caption}}" *ngIf="post?.attachments[0].type !== 1">

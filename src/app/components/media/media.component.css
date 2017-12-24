@@ -137,13 +137,14 @@ hr {
 }
 
 .media-date {
-    padding: 10px 0 10px 0;
+    padding: .5rem 0;
 }
 
 .media-created {
-    font-size: 14px;
-    color: #6B738A;
+    font-size: 0.8em;
+    color: #757575;
     font-weight: lighter;
+    text-transform: uppercase;
 }
 
 .progress-bar {
@@ -159,7 +160,7 @@ hr {
     cursor: pointer;
 }
 
-.big-like-icon.liked {
+.liked {
     color: #e91e63;
 }
 

@@ -66,6 +66,15 @@ mat-icon>svg {
     margin-right: 0;
 }
 
-.mat-icon-button .mat-icon:hover {
+td-notification-count,
+td-notification-count .mat-icon {
+    outline: none;
+}
+
+td-notification-count .btn-icon {
+    color: #333333;
+}
+
+td-notification-count .btn-icon:hover {
     color: #e91e63;
 }

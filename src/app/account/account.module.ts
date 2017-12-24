@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { AccountMaterialModule } from './account-material.module';
+import { SharedModule } from 'app/shared/shared.module';
 
 import { SignInComponent } from './components/signin/signin.component';
 import { CreateComponent } from './components/create/create.component';
@@ -24,6 +25,7 @@ import { EditResolver } from 'app/account/services/resolvers';
         FlexLayoutModule,
         FormsModule,
         ReactiveFormsModule,
+        SharedModule,
         RouterModule.forChild(routes)
     ],
     declarations: [

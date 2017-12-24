@@ -1,11 +1,9 @@
 <div fxLayout="column" fxLayoutAlign="start center">
-    <div fxLayout="column" style="width: 600px; margin: 50px 0; padding: 12px; background: white; box-sizing: border-box;box-shadow: 0 3px 8px -3px rgba(0, 0, 0, 0.26);"
+    <div fxLayout="column" style="width: 600px; margin: 50px 0; padding: .7rem; background: white; box-sizing: border-box;box-shadow: 0 3px 8px -3px rgba(0, 0, 0, 0.26);"
         *ngIf="!isLoading">
-        <div style="border-bottom: 1px solid #efefef; padding: 15px 0 20px 0;" fxLayout="row" fxLayoutAlign="space-between center">
-            <span style="font-size: 19px; font-weight: lighter;">EXPLORE PEOPLE</span>
-            <button mat-icon-button (click)="refresh()">
-                <mat-icon class="mat-36 thin">refresh</mat-icon>
-            </button>
+        <div style="padding-bottom: .7rem; border-bottom: 1px solid #efefef;" fxLayout="row" fxLayoutAlign="space-between center">
+            <span style="font-size: 19px; font-weight: lighter;">Discover People</span>
+            <mat-icon class="btn-icon mat-24" (click)="refresh()" svgIcon="refresh"></mat-icon>
         </div>
         <div *ngFor="let user of page.data" fxLayout="row" style="margin-top:20px;">
             <img class="user-avatar" [routerLink]="['/', user.username]" src="{{user.pictureUri}}" default="assets/images/user-default-image.png"
@@ -16,8 +14,7 @@
                     <span class="last-active" *ngIf="user.lastActive">{{user.lastActive | amCalendar | lowercase}}</span>
                 </div>
                 <div fxLayout="row" fxLayoutAlign="center end">
-                    <button class="btn-relationships" mat-raised-button color="primary" (click)="modifyRelationship(user)" [disabled]="modifying[user.id]"
-                        *ngIf="currentUser && currentUser.isActive && currentUser.id !== user.id">
+                    <button class="btn-relationships" mat-button (click)="modifyRelationship(user)" [disabled]="modifying[user.id]" *ngIf="currentUser && currentUser.isActive && currentUser.id !== user.id">
                         {{user.incommingStatus | relationshipAction | uppercase}}
                     </button>
                 </div>

@@ -1,6 +1,6 @@
 <div class="create-media-container" fxLayout="column">
     <div>
-        <div style="position: relative; padding: 0 0 12px 0; border-bottom: 1px solid #efefef;" fxLayout="row" fxLayoutAlign="center center">
+        <div style="position: relative; padding: 0 0 12px 0;">
             <span style="font-size: 17px; font-weight: bold;">CREATE POST</span>
             <a *ngIf="uploader.queue.length > 0 && !uploader.isUploading" style="position: absolute; right: 0; font-weight: bold; font-size: 16px; color: #e91e63; letter-spacing: 1px; cursor: pointer;"
                 (click)="createPost()">NEXT</a>

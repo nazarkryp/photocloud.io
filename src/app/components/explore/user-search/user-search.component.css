@@ -139,14 +139,15 @@ a {
 }
 
 .btn-relationships {
-    width: 150px;
+    color: #6B738A;
+    background-color: #efefef;
 }
 
 .last-active {
-    font-size: 0.85em;
+    font-size: 0.8em;
     color: #c8c8c8;
     margin-top: 3px;
-    font-weight: 400;
+    font-weight: lighter;
     letter-spacing: 1px;
 }
 

@@ -1,47 +1,55 @@
-a {
+/* a {
     text-decoration: none;
     color: inherit;
-}
+} */
 
-span {
+
+/* span {
     display: block;
     width: 100%;
     overflow: hidden !important;
     text-overflow: ellipsis;
     position: relative;
-}
+} */
 
-.posts-tags-content {}
-
-.posts-tags-container {
+.tags-container {
     margin: 50px 0 50px 0;
-    width: 100%;
-    max-width: 960px !important;
+    width: 960px;
 }
 
-.posts-tags-title {
-    font-size: 34px;
-    font-weight: 300;
+.tags-header {
+    line-height: 1.7;
 }
 
-.tag-posts {
+.tags-title {
+    font-size: 1.7em;
+    font-weight: normal;
+}
+
+.tags-subtitle {
+    font-size: 1.3em;
+}
+
+.tag-media {
+    margin: 50px 0;
     width: 100%;
+    max-width: 960px;
     display: grid;
-    grid-template-columns: repeat(auto-fit, 300px);
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     grid-gap: 30px;
-    margin-bottom: 50px;
 }
 
 .post {
     background-color: white;
-    border-radius: 3px;
+    border-radius: 2px;
     width: 300px;
     max-height: 400px;
     position: relative;
+    box-shadow: 0 3px 8px -3px rgba(0, 0, 0, 0.26);
 }
 
 .thumbnail-container {
-    border-radius: 3px 3px 0 0;
+    border-radius: 2px 2px 0 0;
     overflow: hidden;
 }
 
@@ -91,6 +99,7 @@ span {
 .media-description {
     padding: 10px;
     border-radius: 0 0 3px 3px;
+    width: 100%;
 }
 
 .media-caption {
@@ -99,29 +108,37 @@ span {
     overflow: hidden;
 }
 
-.username {
+.tag-media-username {
     color: #444444;
-    font-size: 1.1em;
+    font-size: 1.3em;
     font-weight: lighter;
 }
 
-.date {
-    font-size: 0.9em;
+.tag-media-date {
+    font-size: 0.8em;
     color: #6B738A;
-}
-
-.like-button {
-    color: #6B738A;
-}
-
-.liked {
-    color: #e91e63;
+    font-weight: lighter;
 }
 
 .multiple-attachments-icon {
     position: absolute;
-    top: 15px;
-    right: 15px;
+    top: .7rem;
+    right: .7rem;
     color: white;
     z-index: 777;
+}
+
+.tag-user-info {
+    line-height: 1.7rem;
+}
+
+.likes-count {
+    color: #6B738A;
+    margin-right: .5rem;
+    font-weight: lighter;
+    font-size: 1.3em;
+}
+
+.liked {
+    color: #e91e63;
 }

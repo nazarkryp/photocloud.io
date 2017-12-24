@@ -37,8 +37,8 @@ export class EditComponent implements OnInit {
             .finally(() => {
                 this.progress.done();
             })
-            .subscribe(account => {
-                this.setup(account);
+            .subscribe(currentUser => {
+                this.setup(currentUser);
             });
     }
 
@@ -92,74 +92,31 @@ export class EditComponent implements OnInit {
         });
     }
 
-    // public updateAccount(propertiesToUpdate: any) {
-    //     const properties = Object.getOwnPropertyNames(propertiesToUpdate);
-
-    //     properties.forEach(propertyName => {
-    //         const control = this.formGroup.get(propertyName);
-
-    //         if (control && control.value !== propertiesToUpdate[propertyName]) {
-    //             control.setValue(propertiesToUpdate[propertyName]);
-    //         }
-    //     });
-
-    //     this.currentUserService.updateCurrentUser(propertiesToUpdate);
-
-    //     if (!this.currentUser.isActive) {
-    //         this.formGroup.disable();
-    //     } else {
-    //         this.formGroup.enable();
-    //     }
-    // }
-
-    public compare<T>(source: T, target: T) {
-        const properties = Object.getOwnPropertyNames(source);
-
-        return !properties.some(propertyName => target[propertyName] !== source[propertyName]);
-    }
-
     public ngOnInit() {
         this.currentUser = this.activatedRoute.snapshot.data['account'];
         this.setup(this.currentUser);
         this.progress.done();
-        // this.currentUserService.getCurrentUser()
-        //     .subscribe(currentUser => {
-        //         const areEqual = this.compare(this.currentUser, currentUser);
-
-        //         if (!areEqual) {
-        //             this.currentUserService.updateCurrentUser(this.currentUser)
-        //                 .subscribe(cu => {
-        //                     this.currentUser = cu;
-        //                     this.setup(this.currentUser);
-        //                     this.progress.done();
-        //                 });
-        //         } else {
-        //             this.currentUser = currentUser;
-        //             this.setup(this.currentUser);
-        //             this.progress.done();
-        //         }
-        //     });
     }
 
-    private setup(account: CurrentUserViewModel) {
-        this.backup.username = account.username;
-        this.backup.fullName = account.fullName;
-        this.backup.bio = account.bio;
-        this.backup.email = account.email;
+    private setup(currentUser: CurrentUserViewModel) {
+        this.formGroup.markAsPristine();
+        this.copyTo(currentUser, this.backup);
 
-        this.formGroup.get('username').setValue(account.username);
-        this.formGroup.get('fullName').setValue(account.fullName);
-        this.formGroup.get('bio').setValue(account.bio);
-        this.formGroup.get('email').setValue(account.email);
+        this.formGroup.get('username').setValue(currentUser.username);
+        this.formGroup.get('fullName').setValue(currentUser.fullName);
+        this.formGroup.get('bio').setValue(currentUser.bio);
+        this.formGroup.get('email').setValue(currentUser.email);
 
-        this.currentUser.isActive = account.isActive;
-        this.currentUser.isPrivate = account.isPrivate;
-
-        if (account.isActive) {
+        if (currentUser.isActive) {
             this.formGroup.enable();
         } else {
             this.formGroup.disable();
         }
+    }
+
+    private compare<T>(source: T, target: T) {
+        const properties = Object.getOwnPropertyNames(source);
+        return !properties.some(propertyName => target[propertyName] !== source[propertyName]);
     }
 
     private getPropertiesToUpdate(): any {

@@ -1,7 +1,7 @@
 <div class="notifications-box" fxLayout="column">
     <div class="notifications-header" fxlayout="row" fxLayoutAlign="space-between center">
         <span class="notification-box-title">Your notifications</span>
-        <button mat-icon-button (click)="close()">
+        <button mat-icon-button (click)="close()" tabindex="-1">
             <mat-icon>clear</mat-icon>
         </button>
     </div>
@@ -22,7 +22,7 @@
             <mat-spinner [strokeWidth]="5" [diameter]="50" *ngIf="isLoading"></mat-spinner>
             <span *ngIf="!isLoading" [@enterTransition]>No Incomming Requests</span>
             <button mat-icon-button (click)="getIncommingRequests()" *ngIf="!isLoading" [@enterTransition]>
-                <mat-icon>refresh</mat-icon>
+                <mat-icon class="mat-36" svgIcon="refresh">refresh</mat-icon>
             </button>
         </div>
     </ng-template>
