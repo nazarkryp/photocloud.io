@@ -11,7 +11,7 @@
             <div class="users-details-container" fxLayout="row" fxLayoutAlign="space-between center" fxFlex>
                 <div fxLayout="column">
                     <a class="username" [routerLink]="['/', user.username]">{{user.username}}</a>
-                    <span class="last-active" *ngIf="user.lastActive">{{user.lastActive | amCalendar | lowercase}}</span>
+                    <span class="last-active" *ngIf="user.lastActive">{{user.lastActive | timeAgo | lowercase}}</span>
                 </div>
                 <div fxLayout="row" fxLayoutAlign="center end">
                     <button class="btn-relationships" mat-button (click)="modifyRelationship(user)" [disabled]="modifying[user.id]" *ngIf="currentUser && currentUser.isActive && currentUser.id !== user.id">

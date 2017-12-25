@@ -25,7 +25,6 @@ import { AccountService } from 'app/account/services';
 
 import { ClipboardModule } from 'ngx-clipboard';
 import { NgProgressModule } from 'ngx-progressbar';
-import { MomentModule } from 'angular2-moment';
 import { FileUploadModule } from 'ng2-file-upload';
 
 import { RelationshipActionPipe } from './pipes/relationship-action.pipe';
@@ -56,8 +55,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { WebApiClient } from 'app/infrastructure/communication';
 import { LocalStorageService } from 'app/infrastructure/services/storage';
 import { SplashScreenComponent } from './components/shared/splash-screen/splash-screen.component';
-
-import { CovalentLayoutModule, CovalentStepsModule, CovalentNotificationsModule } from '@covalent/core';
+import { CovalentModule } from 'app/core/covalent.module';
 
 @NgModule({
     declarations: [
@@ -105,10 +103,7 @@ import { CovalentLayoutModule, CovalentStepsModule, CovalentNotificationsModule 
         HttpModule,
         ServiceModule,
         InfrastructureModule,
-        MomentModule,
-        CovalentLayoutModule,
-        CovalentStepsModule,
-        CovalentNotificationsModule,
+        CovalentModule,
         SharedModule
     ],
     providers: [

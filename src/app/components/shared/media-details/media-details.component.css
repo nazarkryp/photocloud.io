@@ -28,8 +28,7 @@
 }
 
 .media-details-comments-header {
-    font-size: 1.1em;
-    font-weight: lighter;
+    font-size: 1em;
     color: #444444;
     text-transform: uppercase;
     letter-spacing: 1px;
@@ -100,6 +99,8 @@
 .btn-relationships {
     color: #444444;
     background-color: #efefef;
+    border-radius: 2px;
+    line-height: 27px;
 }
 
 .attachment {

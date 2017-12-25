@@ -20,7 +20,7 @@
                         <a class="tag-media-username" [routerLink]="['/', post.user.username]">
                             {{post.user.username}}
                         </a>
-                        <span class="tag-media-date">{{post.created | amTimeAgo}}</span>
+                        <span class="tag-media-date">{{post.created | timeAgo}}</span>
                     </div>
                     <mat-icon class="btn-icon mat-24 thin" [ngClass]="{ 'liked' : post.userHasLiked }" (click)="like(post)" *ngIf="currentUser">favorite</mat-icon>
                 </div>

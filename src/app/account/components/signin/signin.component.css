@@ -25,7 +25,7 @@
     } */
     .signin-form {
         width: 448px;
-        border-radius: 4px;
+        border-radius: 2px;
     }
     .signin-content {
         background: #2980b9 url('/assets/images/tumblr_static_bg3.png') repeat 0 0;
@@ -78,8 +78,9 @@
 }
 
 .signin-form {
+    font-size: .9em;
     background: white;
-    padding: 17px;
+    padding: .7rem;
     position: relative;
 }
 

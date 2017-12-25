@@ -2,6 +2,13 @@ import { Component, Inject, ViewEncapsulation, Optional, OnInit, OnDestroy, Inpu
 import { ActivatedRoute } from '@angular/router';
 import { DOCUMENT } from '@angular/common';
 import { MatDialogRef, MatSnackBarConfig, MatSnackBar, MAT_DIALOG_DATA } from '@angular/material';
+import {
+    TdBounceAnimation,
+    TdFlashAnimation,
+    TdHeadshakeAnimation,
+    TdJelloAnimation,
+    TdPulseAnimation
+} from '@covalent/core';
 
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
@@ -15,9 +22,17 @@ import { NgProgress } from 'ngx-progressbar';
     selector: 'app-media-details',
     templateUrl: './media-details.component.html',
     styleUrls: ['./media-details.component.css'],
+    animations: [
+        TdBounceAnimation(),     // using implicit anchor name 'tdBounce' in template
+        TdFlashAnimation(),     // using implicit anchor name 'tdFlash' in template
+        TdHeadshakeAnimation(), // using implicit anchor name 'tdHeadshake' in template
+        TdJelloAnimation(),     // using implicit anchor name 'tdJello' in template
+        TdPulseAnimation({ duration: 200 })     // using implicit anchor name 'tdPulse' in template
+    ],
     encapsulation: ViewEncapsulation.None
 })
 export class MediaDetailsComponent implements OnInit, OnDestroy {
+    public bounceState = false;
     public isDialog: boolean;
     @Output() public onRemoved = new EventEmitter<MediaViewModel>();
     @ViewChild('player') public player: any;
@@ -124,6 +139,7 @@ export class MediaDetailsComponent implements OnInit, OnDestroy {
     }
 
     public like() {
+        this.bounceState = !this.bounceState;
         if (this.media.userHasLiked) {
             this.media.likesCount--;
             this.media.userHasLiked = !this.media.userHasLiked;

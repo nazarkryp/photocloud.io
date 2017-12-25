@@ -140,8 +140,7 @@ a {
 
 .btn-relationships {
     color: #444444;
-    /* background-color: #efefef; */
-    border: 2px solid #444444;
+    background-color: #efefef;
     border-radius: 2px;
     line-height: 27px;
 }

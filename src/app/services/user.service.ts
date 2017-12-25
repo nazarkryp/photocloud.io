@@ -4,6 +4,7 @@ import { WebApiClient } from '../infrastructure/communication';
 
 import { PageViewModel, PaginationViewModel, UserViewModel } from 'app/models/view';
 import { UserMapper } from '../infrastructure/mapping/user.mapper';
+import { ValidationResult } from 'app/models/common';
 
 @Injectable()
 export class UserService {
@@ -13,6 +14,13 @@ export class UserService {
 
     public getUser(username: string): Observable<UserViewModel> {
         return this.webApiClient.get<UserViewModel>(`users/${username}`);
+    }
+
+    public checkIfUserExists(username: string): Observable<boolean> {
+        return this.webApiClient.get<ValidationResult>(`users/${username}/validate`)
+            .map(data => {
+                return data.success;
+            });
     }
 
     public getUsers(pagination: PaginationViewModel): Observable<PageViewModel<UserViewModel>> {

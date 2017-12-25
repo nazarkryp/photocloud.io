@@ -6,7 +6,11 @@ import { trigger, animate, style, transition, animateChild, group, query, stagge
 import { CreateAccountRequestModel } from 'app/account/models/request';
 import { AccountService } from 'app/account/services';
 import { DefaultErrorStateMatcher } from 'app/account/matchers';
+import { ReactiveFormControl } from 'app/account/models/controls';
+
 import { NgProgress } from 'ngx-progressbar';
+import { Observable } from 'rxjs/Observable';
+import { UserService } from 'app/services';
 
 const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
@@ -55,6 +59,7 @@ export class CreateComponent {
         private router: Router,
         private builder: FormBuilder,
         private accountService: AccountService,
+        private userService: UserService,
         private progress: NgProgress) {
         const validator = {
             validator: (e) => {
@@ -63,12 +68,12 @@ export class CreateComponent {
         };
 
         this.formGroup = this.builder.group({
-            username: new FormControl('',
+            username: new ReactiveFormControl('',
                 Validators.compose([
                     Validators.required,
                     Validators.maxLength(50),
                     Validators.minLength(3),
-                    Validators.pattern(/^\S*$/)])),
+                    Validators.pattern(/^\S*$/)]), [this.validateUsername.bind(this)]),
             fullName: new FormControl('',
                 Validators.compose([
                     Validators.maxLength(50)])),
@@ -90,6 +95,29 @@ export class CreateComponent {
                     Validators.minLength(6),
                     Validators.pattern(/^\S*$/)]))
         }, validator);
+    }
+
+    public validateUsername(reactiveFormControl: ReactiveFormControl): Promise<{ [key: string]: any; }> | Observable<{ [key: string]: any; }> {
+        return reactiveFormControl.valueChanges.debounceTime(500)
+            ._do(() => {
+                reactiveFormControl.isValidating = true;
+            })
+            .switchMap(e => {
+                return this.userService.checkIfUserExists(reactiveFormControl.value)
+                    .map(result => {
+                        if (!result) {
+                            reactiveFormControl.setErrors({
+                                'unique': true
+                            });
+                        }
+                        return {
+                            'unique': result
+                        };
+                    });
+            })
+            ._do(() => {
+                reactiveFormControl.isValidating = false;
+            });
     }
 
     private validate(formGroup: FormGroup) {
@@ -126,8 +154,6 @@ export class CreateComponent {
                 }, errorResponse => {
                     this.progress.done();
                     this.formGroup.enable();
-
-
                     this.formGroup.setErrors({
                         'signUpErrors': errorResponse.error.error.modelState
                     });
