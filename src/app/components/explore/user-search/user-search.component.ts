@@ -35,12 +35,11 @@ export class UserSearchComponent implements OnInit, OnDestroy {
 
     public getUsers() {
         this.progress.start();
-        // this.isLoading = true;
 
         this.userService.getUsers(this.page.pagination)
             .finally(() => {
                 this.progress.done();
-                // this.isLoading = false;
+                this.isLoading = false;
             })
             .subscribe((page: PageViewModel<UserViewModel>) => {
                 if (!this.page.pagination) {
@@ -92,7 +91,7 @@ export class UserSearchComponent implements OnInit, OnDestroy {
     }
 
     public refresh() {
-        // this.page = new Collection<UserViewModel>();
+        this.isLoading = true;
         this.page.pagination = null;
         this.modifying = {};
         this.getUsers();

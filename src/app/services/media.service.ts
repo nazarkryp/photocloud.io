@@ -21,11 +21,11 @@ export class MediaService {
         this.pageMapper = new PageMapper(this.mediaMapper);
     }
 
-    public createPost(post: CreateMediaModel) {
-        return this.webApiClient.post<MediaViewModel>('media', post);
+    public createMedia(createMediaModel: CreateMediaModel) {
+        return this.webApiClient.post<MediaViewModel>('media', createMediaModel);
     }
 
-    public getPosts(pagination: PaginationViewModel): Observable<PageViewModel<MediaViewModel>> {
+    public getRecentMedia(pagination: PaginationViewModel): Observable<PageViewModel<MediaViewModel>> {
         let requestUri = 'media/recent';
 
         if (pagination && pagination.next != null) {
@@ -39,7 +39,7 @@ export class MediaService {
             });
     }
 
-    public getUserPosts(username: string, pagination: PaginationViewModel): Observable<PageViewModel<MediaViewModel>> {
+    public getUserMedia(username: string, pagination: PaginationViewModel): Observable<PageViewModel<MediaViewModel>> {
         let requestUri = 'media/' + username;
 
         if (pagination != null && pagination.next != null) {
@@ -49,7 +49,7 @@ export class MediaService {
         return this.webApiClient.get<PageViewModel<MediaViewModel>>(requestUri);
     }
 
-    public getPostsByTag(tag: string, pagination: PaginationViewModel) {
+    public getMediaByTag(tag: string, pagination: PaginationViewModel) {
         let requestUri = `media/tags/${tag}`;
 
         if (pagination != null && pagination.next != null) {
@@ -59,27 +59,27 @@ export class MediaService {
         return this.webApiClient.get<PageViewModel<MediaViewModel>>(requestUri);
     }
 
-    public getPostById(postId: number): Observable<MediaViewModel> {
-        return this.webApiClient.get<MediaViewModel>(`media/${postId}`);
+    public getMediaById(mediaId: number): Observable<MediaViewModel> {
+        return this.webApiClient.get<MediaViewModel>(`media/${mediaId}`);
     }
 
-    public update(post: MediaViewModel): Observable<MediaViewModel> {
-        return this.webApiClient.patch(`media/${post.id}`, post);
+    public update(media: MediaViewModel): Observable<MediaViewModel> {
+        return this.webApiClient.patch(`media/${media.id}`, media);
     }
 
-    public removePost(postId: number) {
-        return this.webApiClient.delete(`media/${postId}`);
+    public removeMedia(mediaId: number) {
+        return this.webApiClient.delete(`media/${mediaId}`);
     }
 
-    public getLikes(postId: number): Observable<UserViewModel[]> {
-        return this.webApiClient.get<UserViewModel[]>(`media/${postId}/likes`);
+    public getLikes(mediaId: number): Observable<UserViewModel[]> {
+        return this.webApiClient.get<UserViewModel[]>(`media/${mediaId}/likes`);
     }
 
-    public likePost(postId: number) {
-        return this.webApiClient.post(`media/${postId}/likes`, null);
+    public addMediaLike(mediaId: number) {
+        return this.webApiClient.post(`media/${mediaId}/likes`, null);
     }
 
-    public removePostLike(postId: number) {
-        return this.webApiClient.delete(`media/${postId}/likes`);
+    public removeMediaLike(mediaId: number) {
+        return this.webApiClient.delete(`media/${mediaId}/likes`);
     }
 }

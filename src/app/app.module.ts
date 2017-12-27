@@ -11,14 +11,14 @@ import { AppMaterialModule } from './app-material/app-material.module';
 import { SharedModule } from 'app/shared/shared.module';
 
 import { AppComponent } from './app.component';
-import { PostsComponent } from './components/posts/posts.component';
+import { MediaComponent } from './components/media/media.component';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
-import { PostComponent } from './components/media/media.component';
-import { UserPostsComponent } from './components/user-posts/user-posts.component';
+import { MediaItemComponent } from './components/media-item/media-item.component';
+import { UserMediaComponent } from './components/user-media/user-media.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { CommentsComponent } from './components/shared/comments/comments.component';
 import { MediaDetailsComponent } from './components/shared/media-details/media-details.component';
-import { CreatePostComponent } from './components/shared/create-media/create-media.component';
+import { CreateMediaComponent } from './components/shared/create-media/create-media.component';
 
 import { AuthenticationGuardService } from './infrastructure/guards/authentication-guard.service';
 import { AccountService } from 'app/account/services';
@@ -60,16 +60,16 @@ import { CovalentModule } from 'app/core/covalent.module';
 @NgModule({
     declarations: [
         AppComponent,
-        PostsComponent,
+        MediaComponent,
         ToolbarComponent,
-        PostComponent,
-        UserPostsComponent,
+        MediaItemComponent,
+        UserMediaComponent,
         NotFoundComponent,
         RelationshipActionPipe,
         CommentsComponent,
         ErrorBoxComponent,
         MediaDetailsComponent,
-        CreatePostComponent,
+        CreateMediaComponent,
         RawPipe,
         CaptionComponent,
         TagsComponent,
@@ -85,7 +85,7 @@ import { CovalentModule } from 'app/core/covalent.module';
     ],
     entryComponents: [
         MediaDetailsComponent,
-        CreatePostComponent,
+        CreateMediaComponent,
         ConfirmComponent,
         UsersComponent
     ],

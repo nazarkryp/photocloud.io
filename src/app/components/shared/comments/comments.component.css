@@ -1,9 +1,3 @@
-a {
-    text-decoration: none;
-    color: inherit;
-    padding-right: 5px;
-}
-
 .comments {
     margin-top: 5px;
     line-height: 1.9em;
@@ -11,10 +5,25 @@ a {
 
 .text-button {
     font-size: 0.9em;
+    font-weight: bold;
     color: #757575;
     cursor: pointer;
 }
 
 .text-button:hover {
     color: #e91e63;
+}
+
+.text-button.disabled,
+.text-button.disabled:hover {
+    color: #C8C8C8;
+}
+
+.comment-username {
+    color: #444444;
+    font-weight: bold;
+}
+
+.comment-text {
+    margin-left: .25rem;
 }

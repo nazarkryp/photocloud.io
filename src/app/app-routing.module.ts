@@ -3,8 +3,8 @@ import { Title } from '@angular/platform-browser';
 
 import { Routes, RouterModule, Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 
-import { PostsComponent } from './components/posts/posts.component';
-import { UserPostsComponent } from './components/user-posts/user-posts.component';
+import { MediaComponent } from './components/media/media.component';
+import { UserMediaComponent } from './components/user-media/user-media.component';
 import { UserSearchComponent } from './components/explore/user-search/user-search.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { MediaDetailsComponent } from './components/shared/media-details/media-details.component';
@@ -16,7 +16,7 @@ import { MediaResolver, UserResolver, UserListResolver } from './infrastructure/
 const routes: Routes = [
     {
         path: '',
-        component: PostsComponent,
+        component: MediaComponent,
         canActivate: [AuthenticationGuardService],
         resolve: { page: MediaResolver },
         data: {
@@ -49,14 +49,14 @@ const routes: Routes = [
     },
     {
         path: ':username',
-        component: UserPostsComponent,
+        component: UserMediaComponent,
         resolve: { user: UserResolver },
         data: {
             title: 'PhotoCloud - UserViewModel\' Posts'
         }
     },
     {
-        path: 'p/:postId',
+        path: 'p/:mediaId',
         component: MediaDetailsComponent,
         data: {
             title: 'PhotoCloud - Post'

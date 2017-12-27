@@ -1,79 +1,68 @@
-import { Component, Inject, ViewEncapsulation, Optional, OnInit, OnDestroy, Input, Output, EventEmitter, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, ViewEncapsulation, OnInit, OnDestroy, Input, Output, EventEmitter, Inject, ViewChild } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
-import { MatDialogRef, MatSnackBarConfig, MatSnackBar, MAT_DIALOG_DATA } from '@angular/material';
-import {
-    TdBounceAnimation,
-    TdFlashAnimation,
-    TdHeadshakeAnimation,
-    TdJelloAnimation,
-    TdPulseAnimation
-} from '@covalent/core';
-
-import { Observable } from 'rxjs/Observable';
+import { MatSnackBar, MatDialog, MatSnackBarConfig } from '@angular/material';
 import { Subscription } from 'rxjs/Subscription';
 
 import { CurrentUserService } from 'app/infrastructure/services';
-import { MediaViewModel, UserViewModel, AttachmentViewModel, CommentViewModel, CurrentUserViewModel } from 'app/models/view';
-import { MediaService, CommentService } from 'app/services';
-import { NgProgress } from 'ngx-progressbar';
+import { MediaViewModel, AttachmentViewModel, UserViewModel, CommentViewModel, CurrentUserViewModel } from 'app/models/view';
+import { CommentService, MediaService } from 'app/services';
+import { UsersComponent } from 'app/components/shared/users/users.component';
+import { trigger, style, animate, transition } from '@angular/animations';
 
 @Component({
-    selector: 'app-media-details',
-    templateUrl: './media-details.component.html',
-    styleUrls: ['./media-details.component.css'],
+    selector: 'app-media-item',
+    templateUrl: './media-item.component.html',
+    styleUrls: ['./media-item.component.css'],
     animations: [
-        TdBounceAnimation(),     // using implicit anchor name 'tdBounce' in template
-        TdFlashAnimation(),     // using implicit anchor name 'tdFlash' in template
-        TdHeadshakeAnimation(), // using implicit anchor name 'tdHeadshake' in template
-        TdJelloAnimation(),     // using implicit anchor name 'tdJello' in template
-        TdPulseAnimation({ duration: 200 })     // using implicit anchor name 'tdPulse' in template
+        trigger('enterTransition', [
+            transition(':enter', [
+                style({ transform: 'translateX(50px)', opacity: 0 }),
+                animate('1200ms cubic-bezier(0.35, 0, 0.25, 1)', style('*'))
+            ])
+        ])
     ],
     encapsulation: ViewEncapsulation.None
 })
-export class MediaDetailsComponent implements OnInit, OnDestroy {
-    public bounceState = false;
-    public isDialog: boolean;
+export class MediaItemComponent implements OnInit, OnDestroy {
+    @Input() public media: MediaViewModel;
     @Output() public onRemoved = new EventEmitter<MediaViewModel>();
     @ViewChild('player') public player: any;
 
     public text: string;
     public shareLink: string;
+    public caption: string;
 
     public currentUser: CurrentUserViewModel;
     public currentUserSubscription: Subscription;
 
     constructor(
-        private route: ActivatedRoute,
+        public dialog: MatDialog,
+        public snackBar: MatSnackBar,
+        private commentService: CommentService,
         private mediaService: MediaService,
         private currentUserService: CurrentUserService,
-        private commentService: CommentService,
-        private progress: NgProgress,
-        private snackBar: MatSnackBar,
-        @Optional() public dialogRef: MatDialogRef<MediaDetailsComponent>,
-        @Optional() @Inject(MAT_DIALOG_DATA) public media: MediaViewModel,
-        @Inject(DOCUMENT) private document: any) {
-        if (media) {
-            this.media.activeAttachment = 0;
-            this.isDialog = true;
-        }
-
+        @Inject(DOCUMENT) private document: any
+    ) {
         this.currentUserSubscription = this.currentUserService.getCurrentUser()
             .subscribe(currentUser => {
                 this.currentUser = currentUser;
             });
     }
 
-    public next(): void {
+    public next() {
         if (this.media.activeAttachment < this.media.attachments.length - 1) {
             this.media.activeAttachment++;
         }
     }
 
-    public previous(): void {
+    public previous() {
         if (this.media.activeAttachment > 0) {
             this.media.activeAttachment--;
         }
+    }
+
+    public remove() {
+        this.onRemoved.emit(this.media);
     }
 
     public play(event: any) {
@@ -88,11 +77,7 @@ export class MediaDetailsComponent implements OnInit, OnDestroy {
         }
     }
 
-    public remove(): void {
-        this.onRemoved.emit(this.media);
-    }
-
-    public share(): string {
+    public share() {
         const pathArray = this.document.location.href.split('/');
         const protocol = pathArray[0];
         const host = pathArray[2];
@@ -138,8 +123,28 @@ export class MediaDetailsComponent implements OnInit, OnDestroy {
 
     }
 
+    public edit() {
+        this.caption = this.media.caption;
+        this.media.editing = true;
+    }
+
+    public update() {
+        this.media.editing = false;
+        this.media.caption = this.caption;
+        const backup = this.media.caption;
+        this.mediaService.update(this.media)
+            .subscribe((media) => {
+                this.media.caption = media.caption;
+            }, (error) => {
+                this.media.caption = backup;
+            });
+    }
+
+    public cancel() {
+        this.media.editing = false;
+    }
+
     public like() {
-        this.bounceState = !this.bounceState;
         if (this.media.userHasLiked) {
             this.media.likesCount--;
             this.media.userHasLiked = !this.media.userHasLiked;
@@ -173,26 +178,19 @@ export class MediaDetailsComponent implements OnInit, OnDestroy {
         }
     }
 
-    public getMedia(mediaId: number) {
-        this.progress.start();
-
-        this.mediaService.getMediaById(mediaId)
-            .finally(() => {
-                this.progress.done();
-            })
-            .subscribe(media => {
-                this.media = media;
-                this.media.activeAttachment = 0;
-            });
+    public openLikesDialog(media: MediaViewModel) {
+        const usersObservable = this.mediaService.getLikes(media.id);
+        const dialogRef = this.dialog.open(UsersComponent, {
+            data: {
+                usersObservable: usersObservable,
+                title: 'Likes'
+            }
+        });
     }
 
-    public ngOnInit(): void {
-        if (!this.media) {
-            this.route.params.subscribe(params => {
-                const mediaId = params['mediaId'];
-
-                this.getMedia(mediaId);
-            });
+    public ngOnInit() {
+        if (this.media) {
+            this.media.activeAttachment = 0;
         }
     }
 

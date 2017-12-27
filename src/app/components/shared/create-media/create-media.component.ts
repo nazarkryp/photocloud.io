@@ -14,18 +14,18 @@ import { FileUploader, FileUploaderOptions } from 'ng2-file-upload';
 import { environment } from 'app/../environments/environment';
 
 @Component({
-    selector: 'app-create-post',
+    selector: 'app-create-media',
     templateUrl: './create-media.component.html',
     styleUrls: ['./create-media.component.css'],
     encapsulation: ViewEncapsulation.None
 })
-export class CreatePostComponent implements OnInit, OnDestroy {
+export class CreateMediaComponent implements OnInit, OnDestroy {
     public currentUser: CurrentUserViewModel;
     private currentUserSubscription: Subscription;
     public maxItemsCount = 4;
 
     public attachments: Array<AttachmentViewModel>;
-    public post: CreateMediaModel;
+    public media: CreateMediaModel;
     public uploader: FileUploader;
 
     constructor(
@@ -33,11 +33,11 @@ export class CreatePostComponent implements OnInit, OnDestroy {
         private currentUserService: CurrentUserService,
         private progress: NgProgress,
         private tokenProvider: TokenProvider,
-        @Optional() public dialogRef: MatDialogRef<CreatePostComponent>) {
+        @Optional() public dialogRef: MatDialogRef<CreateMediaComponent>) {
         this.uploader = new FileUploader({
             url: environment.apiUri + 'attachments'
         });
-        this.post = new CreateMediaModel();
+        this.media = new CreateMediaModel();
         this.attachments = new Array<AttachmentViewModel>();
 
         this.currentUserSubscription = this.currentUserService.getCurrentUser()
@@ -68,11 +68,11 @@ export class CreatePostComponent implements OnInit, OnDestroy {
     }
 
     public createPost() {
-        this.post.attachmentIds = this.attachments.map((attachment) => {
+        this.media.attachmentIds = this.attachments.map((attachment) => {
             return attachment.id;
         });
 
-        this.mediaService.createPost(this.post)
+        this.mediaService.createMedia(this.media)
             .subscribe(createdPost => {
                 createdPost.user.pictureUri = this.currentUser.pictureUri;
                 this.dialogRef.close(createdPost);

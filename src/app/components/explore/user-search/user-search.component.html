@@ -1,26 +1,28 @@
 <div fxLayout="column" fxLayoutAlign="start center">
-    <div fxLayout="column" style="width: 600px; margin: 50px 0; padding: .7rem; background: white; box-sizing: border-box;box-shadow: 0 3px 8px -3px rgba(0, 0, 0, 0.26);"
-        *ngIf="!isLoading">
-        <div style="padding-bottom: .7rem; border-bottom: 1px solid #efefef;" fxLayout="row" fxLayoutAlign="space-between center">
-            <span style="font-size: 19px; font-weight: lighter;">Discover People</span>
-            <mat-icon class="btn-icon mat-24" (click)="refresh()" svgIcon="refresh"></mat-icon>
+    <div class="user-search-container" fxLayout="column">
+        <div style="padding: .7rem 0 1.4rem 0; border-bottom: 1px solid #efefef;" fxLayout="row" fxLayoutAlign="space-between center">
+            <span style="font-size: 1.3em; font-weight: lighter;">Discover People</span>
+            <button mat-icon-button [disabled]="isLoading" (click)="refresh()">
+                <mat-icon class="btn-icon mat-24" [ngClass]="{ 'disabled' : isLoading }" svgIcon="refresh"></mat-icon>
+            </button>
         </div>
-        <div *ngFor="let user of page.data" fxLayout="row" style="margin-top:20px;">
-            <img class="user-avatar" [routerLink]="['/', user.username]" src="{{user.pictureUri}}" default="assets/images/user-default-image.png"
-                alt="profile">
-            <div class="users-details-container" fxLayout="row" fxLayoutAlign="space-between center" fxFlex>
-                <div fxLayout="column">
-                    <a class="username" [routerLink]="['/', user.username]">{{user.username}}</a>
-                    <span class="last-active" *ngIf="user.lastActive">{{user.lastActive | timeAgo | lowercase}}</span>
-                </div>
-                <div fxLayout="row" fxLayoutAlign="center end">
-                    <button class="btn-relationships" mat-button (click)="modifyRelationship(user)" [disabled]="modifying[user.id]" *ngIf="currentUser && currentUser.isActive && currentUser.id !== user.id">
-                        {{user.incommingStatus | relationshipAction | uppercase}}
-                    </button>
+        <div class="search-results-container">
+            <div class="search-result" *ngFor="let user of page.data" fxLayout="row" fxLayoutAlign="start center" style="margin-top:20px;">
+                <img [routerLink]="['/', user.username]" src="{{user.pictureUri}}" default="assets/images/user-default-image.png" alt="profile">
+                <div class="search-result-user-details" fxLayout="row" fxLayoutAlign="space-between start" fxFlex>
+                    <div fxLayout="column">
+                        <a class="search-result-username" [routerLink]="['/', user.username]">{{user.username}}</a>
+                        <span class="search-result-last-active" *ngIf="user.lastActive">{{user.lastActive | timeAgo | lowercase}}</span>
+                    </div>
+                    <div fxLayout="row" fxLayoutAlign="center end">
+                        <button class="btn-relationships" mat-button (click)="modifyRelationship(user)" [disabled]="modifying[user.id]" *ngIf="currentUser && currentUser.isActive && currentUser.id !== user.id">
+                            {{user.incommingStatus | relationshipAction | uppercase}}
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
-        <div fxLayout="row" fxLayoutAlign="center center" *ngIf="page.hasMoreItems" style="margin: 25px 0 0 0;">
+        <div fxLayout="row" fxLayoutAlign="center center" *ngIf="page.hasMoreItems" style="border-top: 1px solid #efefef; padding-top: 1rem;">
             <button class="btn-default" mat-button (click)="getUsers()" [disabled]="isLoading">Load More</button>
         </div>
     </div>

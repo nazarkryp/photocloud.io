@@ -1,17 +1,3 @@
-/* a {
-    text-decoration: none;
-    color: inherit;
-} */
-
-
-/* span {
-    display: block;
-    width: 100%;
-    overflow: hidden !important;
-    text-overflow: ellipsis;
-    position: relative;
-} */
-
 .tags-container {
     margin: 50px 0 50px 0;
     width: 960px;
@@ -39,7 +25,7 @@
     grid-gap: 30px;
 }
 
-.post {
+.tag-media-item {
     background-color: white;
     border-radius: 2px;
     width: 300px;
@@ -98,7 +84,7 @@
 
 .tag-media-date {
     font-size: 0.8em;
-    color: #444444;
+    color: gray;
     font-weight: lighter;
 }
 

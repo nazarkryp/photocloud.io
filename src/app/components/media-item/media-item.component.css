@@ -16,6 +16,14 @@ hr {
     border-top: 1px solid #d8d8d8;
 }
 
+.media {
+    background-color: white;
+    margin-bottom: 50px;
+    position: relative;
+    border-radius: 3px;
+    box-shadow: 0 3px 8px -3px rgba(0, 0, 0, 0.26);
+}
+
 .media-header {
     padding: 10px;
     width: 100%;
@@ -25,16 +33,28 @@ hr {
     padding: 15px 15px 0px 15px;
 }
 
+.media-edit-footer {
+    padding: 15px 15px 15px 15px;
+}
+
 .media-caption {
     padding: 10px 0 0 0;
     line-height: 1.6em;
+}
+
+.media-edit-caption {
+    line-height: 1.6em;
+}
+
+.media-edit-actions {
+    padding: 0 15px 15px 15px;
 }
 
 .media-actions {
     padding: 0 10px 10px 10px;
 }
 
-.user-avatar {
+.media-avatar {
     width: 50px;
     height: 50px;
     border-radius: 90px;
@@ -43,11 +63,11 @@ hr {
     cursor: pointer;
 }
 
-.users-details-container {
+.media-author {
     padding-left: 10px;
 }
 
-.username {
+.media-author-username {
     font-size: 1.0em;
 }
 
@@ -67,18 +87,17 @@ hr {
     outline: none;
     border: none;
     width: 100%;
+    padding-left: .7rem;
+    font-weight: 300;
 }
 
 .caption-input {
     outline: none;
-    border: 2px solid #d8d8d8;
+    background: #efefef;
+    border: 0px solid #d8d8d8;
     padding: 12px 12px 12px 12px;
-    border-radius: 3px;
-    margin-bottom: 25px;
-}
-
-.save-button {
-    margin-right: 10px;
+    border-radius: 2px;
+    font-weight: lighter;
 }
 
 .media-content {
@@ -87,14 +106,16 @@ hr {
     height: auto;
 }
 
-.media-content img {
+.media-content img,
+.media-content video {
     max-width: 100%;
     -moz-transition: all 0.3s;
     -webkit-transition: all 0.3s;
     transition: all 0.3s;
 }
 
-.media-content:hover img {
+.media-content:hover img,
+.media-content:hover video {
     -moz-transform: scale(1.1);
     -webkit-transform: scale(1.1);
     transform: scale(1.1);
@@ -116,13 +137,14 @@ hr {
 }
 
 .media-date {
-    padding: 10px 0 10px 0;
+    padding: .5rem 0;
 }
 
 .media-created {
-    font-size: 14px;
-    color: #444444;
+    font-size: 0.8em;
+    color: #757575;
     font-weight: lighter;
+    text-transform: uppercase;
 }
 
 .progress-bar {
@@ -134,10 +156,26 @@ hr {
     padding-top: 10px;
 }
 
-.icon-button {
-    color: #444444;
+.likes-counter {
+    cursor: pointer;
 }
 
 .liked {
     color: #e91e63;
+}
+
+.big-like-icon {
+    color: #444444;
+    cursor: pointer;
+    outline: none;
+    width: 27px;
+    height: 27px;
+}
+
+.big-like-icon>svg {
+    stroke-width: 1.5px;
+}
+
+.icon-button {
+    color: #444444;
 }

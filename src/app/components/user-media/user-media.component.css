@@ -14,11 +14,12 @@
     grid-gap: 30px;
 }
 
-.user-post {
+.user-media-item {
     position: relative;
+    overflow: hidden;
 }
 
-.user-post:after {
+.user-media-item:after {
     content: "";
     display: block;
     padding-bottom: 100%;
@@ -40,7 +41,7 @@
     overflow: hidden;
 }
 
-.user-post .user-media-details {
+.user-media-item .user-media-details {
     position: absolute;
     width: 100%;
     height: 100%;
@@ -51,7 +52,7 @@
     z-index: 100;
 }
 
-.user-post:not([disabled]):hover .user-media-details {
+.user-media-item:not([disabled]):hover .user-media-details {
     cursor: pointer;
     background: rgba(0, 0, 0, .4);
     opacity: 1;
@@ -61,14 +62,16 @@
     padding: 0 2.75rem;
 }
 
-.image-container img {
+.user-media-item img,
+.user-media-item video {
     max-width: 100%;
     -moz-transition: all 0.3s;
     -webkit-transition: all 0.3s;
     transition: all 0.3s;
 }
 
-.image-container:hover img {
+.user-media-item:hover img,
+.user-media-item:hover video {
     -moz-transform: scale(1.1);
     -webkit-transform: scale(1.1);
     transform: scale(1.1);

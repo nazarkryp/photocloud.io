@@ -1,200 +1,100 @@
-import { Component, ViewEncapsulation, OnInit, OnDestroy, Input, Output, EventEmitter, Inject, ViewChild } from '@angular/core';
-import { DOCUMENT } from '@angular/common';
-import { MatSnackBar, MatDialog, MatSnackBarConfig } from '@angular/material';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { MatDialog } from '@angular/material';
 import { Subscription } from 'rxjs/Subscription';
 
+import { MediaViewModel, UserViewModel, PageViewModel, CommentViewModel, AttachmentViewModel, CurrentUserViewModel } from 'app/models/view';
 import { CurrentUserService } from 'app/infrastructure/services';
-import { MediaViewModel, AttachmentViewModel, UserViewModel, CommentViewModel, CurrentUserViewModel } from 'app/models/view';
-import { CommentService, MediaService } from 'app/services';
-import { UsersComponent } from 'app/components/shared/users/users.component';
-import { trigger, style, animate, transition } from '@angular/animations';
+import { MediaService } from 'app/services';
+import { CreateMediaComponent } from 'app/components/shared/create-media/create-media.component';
+import { ConfirmComponent } from 'app/components/shared/confirm/confirm.component';
+import { NgProgress } from 'ngx-progressbar';
 
 @Component({
-    selector: 'app-post',
+    selector: 'app-posts',
     templateUrl: './media.component.html',
-    styleUrls: ['./media.component.css'],
-    animations: [
-        trigger('enterTransition', [
-            transition(':enter', [
-                style({ transform: 'translateX(50px)', opacity: 0 }),
-                animate('1200ms cubic-bezier(0.35, 0, 0.25, 1)', style('*'))
-            ])
-        ])
-    ],
-    encapsulation: ViewEncapsulation.None
+    styleUrls: ['./media.component.css']
 })
-export class PostComponent implements OnInit, OnDestroy {
-    @Input() public media: MediaViewModel;
-    @Output() public onRemoved = new EventEmitter<MediaViewModel>();
-    @ViewChild('player') public player: any;
-
-    public text: string;
-    public shareLink: string;
-    public caption: string;
-
+export class MediaComponent implements OnInit, OnDestroy {
+    private currentUserSubscription: Subscription;
+    public page: PageViewModel<MediaViewModel> = new PageViewModel<MediaViewModel>();
+    public isLoading = false;
     public currentUser: CurrentUserViewModel;
-    public currentUserSubscription: Subscription;
 
     constructor(
-        public dialog: MatDialog,
-        public snackBar: MatSnackBar,
-        private commentService: CommentService,
+        private activatedRoute: ActivatedRoute,
         private mediaService: MediaService,
         private currentUserService: CurrentUserService,
-        @Inject(DOCUMENT) private document: any
-    ) {
+        private progress: NgProgress,
+        private dialog: MatDialog) {
+        this.page.data = new Array<MediaViewModel>();
+        this.page.hasMoreItems = false;
         this.currentUserSubscription = this.currentUserService.getCurrentUser()
             .subscribe(currentUser => {
                 this.currentUser = currentUser;
             });
     }
 
-    public next() {
-        if (this.media.activeAttachment < this.media.attachments.length - 1) {
-            this.media.activeAttachment++;
-        }
-    }
+    public createPost() {
+        const dialogRef = this.dialog.open(CreateMediaComponent);
 
-    public previous() {
-        if (this.media.activeAttachment > 0) {
-            this.media.activeAttachment--;
-        }
-    }
+        dialogRef.afterClosed()
+            .subscribe(createdPost => {
+                if (createdPost) {
+                    createdPost.user.pictureUri = this.currentUser.pictureUri;
+                    if (!this.page.data) {
+                        this.page.data = new Array<MediaViewModel>();
+                    }
 
-    public remove() {
-        this.onRemoved.emit(this.media);
-    }
-
-    public play(event: any) {
-        if (!this.player) {
-            return;
-        }
-
-        if (this.player.nativeElement.paused) {
-            this.player.nativeElement.play();
-        } else {
-            this.player.nativeElement.pause();
-        }
-    }
-
-    public share() {
-        const pathArray = this.document.location.href.split('/');
-        const protocol = pathArray[0];
-        const host = pathArray[2];
-
-        return protocol + '//' + host + '/p/' + this.media.id;
-    }
-
-    public showToast(message: string) {
-        const config = new MatSnackBarConfig();
-        config.duration = 1500;
-        const result = this.snackBar.open(message, null, config);
-    }
-
-    public createComment() {
-        if (!this.text) {
-            return;
-        }
-
-        const text = this.text;
-        this.text = '';
-
-        if (!this.media.comments) {
-            this.media.comments = new Array<CommentViewModel>();
-        }
-
-        const comment = new CommentViewModel();
-        comment.text = text;
-        comment.date = new Date();
-        comment.user = new UserViewModel();
-        comment.user.id = this.currentUser.id;
-        comment.user.username = this.currentUser.username;
-
-        this.media.comments.push(comment);
-
-        this.commentService.createComment(this.media.id, { text: text })
-            .subscribe(createdComment => {
-                comment.id = createdComment.id;
-                comment.date = createdComment.date;
-            }, () => {
-                const failedCommentIndex = this.media.comments.findIndex(c => !c.id);
-                this.media.comments.splice(failedCommentIndex, 1);
-            });
-
-    }
-
-    public edit() {
-        this.caption = this.media.caption;
-        this.media.editing = true;
-    }
-
-    public update() {
-        this.media.editing = false;
-        this.media.caption = this.caption;
-        const backup = this.media.caption;
-        this.mediaService.update(this.media)
-            .subscribe((media) => {
-                this.media.caption = media.caption;
-            }, (error) => {
-                this.media.caption = backup;
+                    this.page.data.unshift(createdPost);
+                }
             });
     }
 
-    public cancel() {
-        this.media.editing = false;
+    public getPosts() {
+        this.isLoading = true;
+        this.progress.start();
+
+        this.mediaService.getRecentMedia(this.page.pagination)
+            .finally(() => {
+                this.progress.done();
+            })
+            .subscribe(page => {
+                this.page.hasMoreItems = page.hasMoreItems;
+                this.page.pagination = page.pagination;
+                if (page.data) {
+                    this.page.data = this.page.data.concat(page.data);
+                }
+            }, (error) => { }, () => {
+                this.isLoading = false;
+            });
     }
 
-    public like() {
-        if (this.media.userHasLiked) {
-            this.media.likesCount--;
-            this.media.userHasLiked = !this.media.userHasLiked;
-            this.mediaService.removePostLike(this.media.id)
-                .subscribe(() => {
-                    this.media.userHasLiked = false;
-                }, (error) => {
-                    if (this.media.userHasLiked) {
-                        this.media.likesCount--;
-                    } else {
-                        this.media.likesCount++;
-                    }
-                    this.media.userHasLiked = !this.media.userHasLiked;
-                    return error;
-                });
-        } else {
-            this.media.likesCount++;
-            this.media.userHasLiked = !this.media.userHasLiked;
-            this.mediaService.likePost(this.media.id)
-                .subscribe(() => {
-                    this.media.userHasLiked = true;
-                }, (error) => {
-                    if (this.media.userHasLiked) {
-                        this.media.likesCount--;
-                    } else {
-                        this.media.likesCount++;
-                    }
-                    this.media.userHasLiked = !this.media.userHasLiked;
-                    return error;
-                });
-        }
-    }
-
-    public openLikesDialog(media: MediaViewModel) {
-        const usersObservable = this.mediaService.getLikes(media.id);
-        const dialogRef = this.dialog.open(UsersComponent, {
+    public onRemoved(media: MediaViewModel) {
+        const dialogRef = this.dialog.open(ConfirmComponent, {
             data: {
-                usersObservable: usersObservable,
-                title: 'Likes'
+                title: 'DELETE POST',
+                message: 'Are you sure you want you want to delete this media?'
+            }
+        });
+
+        dialogRef.afterClosed().subscribe(confirmed => {
+            if (confirmed) {
+                const indexToRemove = this.page.data.findIndex(p => p.id === media.id);
+                this.page.data.splice(indexToRemove, 1);
+                this.mediaService.removeMedia(media.id)
+                    .subscribe();
             }
         });
     }
 
     public ngOnInit() {
-        if (this.media) {
-            this.media.activeAttachment = 0;
-        }
+        this.page = this.activatedRoute.snapshot.data['page'];
+        this.progress.done();
     }
 
     public ngOnDestroy() {
         this.currentUserSubscription.unsubscribe();
     }
 }
+

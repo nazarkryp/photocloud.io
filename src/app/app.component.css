@@ -10,6 +10,11 @@ h1 {
     background: #d8d8d8;
 }
 
+.root-container {
+    height: 100vh;
+    overflow-y: hidden;
+}
+
 .my-content {
     margin: 0;
     width: 100%;

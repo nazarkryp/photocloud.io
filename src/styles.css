@@ -3,7 +3,7 @@ body {
     background-color: #FAFAFA;
     color: #444444;
     font-family: Roboto, sans-serif;
-    overflow-y: scroll;
+    overflow-y: hidden;
 }
 
 a {
@@ -66,17 +66,38 @@ a {
     stroke-width: .9px;
 }
 
-.btn-icon {
+.mat-icon.btn-icon {
     cursor: pointer;
-    /* color: #444444; */
     color: #444444;
     outline: none;
 }
 
-.btn-icon:hover {
+.mat-icon.btn-icon:hover {
     color: #e91e63;
 }
 
-.btn-icon.warn {
+.mat-icon.btn-icon.warn {
     color: #e91e63;
+}
+
+.mat-icon.btn-icon.disabled {
+    color: gray;
+}
+
+.mat-button.btn-relationships {
+    background-color: #efefef;
+    color: gray;
+    border-radius: 2px;
+    font-weight: bold;
+    line-height: 27px;
+}
+
+.mat-button.btn-default {
+    width: 100%;
+    background: #efefef;
+    color: gray;
+    text-transform: uppercase;
+    font-size: 0.8em;
+    letter-spacing: 1px;
+    font-weight: bold;
 }

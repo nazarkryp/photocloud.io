@@ -26,7 +26,7 @@
         </div>
     </div>
     <div style="margin-top: 15px;" *ngIf="attachments.length > 0">
-        <textarea [(ngModel)]="post.caption" placeholder="Edit description" style="box-sizing: border-box; background: #efefef; border-radius: 2px; padding: 12px; font-weight: lighter; border: none; outline: none; width: 100%;"></textarea>
+        <textarea [(ngModel)]="media.caption" placeholder="Edit description" style="box-sizing: border-box; background: #efefef; border-radius: 2px; padding: 12px; font-weight: lighter; border: none; outline: none; width: 100%;"></textarea>
     </div>
     <div class="big-preview mat-elevation-z1" *ngIf="attachments.length > 0" mat-ripple>
         <img class="big-preview-thumbnail" src="{{attachments[0].uri}}" alt="preview-big">

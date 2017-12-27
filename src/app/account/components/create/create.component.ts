@@ -35,8 +35,8 @@ export class CreateComponent {
     public errorStateMatcher = new DefaultErrorStateMatcher();
     public formGroup: FormGroup;
 
-    get username(): AbstractControl {
-        return this.formGroup.get('username');
+    get username(): ReactiveFormControl {
+        return this.formGroup.get('username') as ReactiveFormControl;
     }
 
     get fullName(): AbstractControl {
@@ -105,14 +105,13 @@ export class CreateComponent {
             .switchMap(e => {
                 return this.userService.checkIfUserExists(reactiveFormControl.value)
                     .map(result => {
+                        const error = { 'unique': true };
+
                         if (!result) {
-                            reactiveFormControl.setErrors({
-                                'unique': true
-                            });
+                            reactiveFormControl.setErrors(error);
                         }
-                        return {
-                            'unique': result
-                        };
+
+                        return !result ? error : null;
                     });
             })
             ._do(() => {

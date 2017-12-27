@@ -1,5 +1,5 @@
 .recover-content {
-    overflow-y: scroll;
+    overflow-y: hidden;
     height: calc(100vh);
     color: #444444;
     margin: 0;

@@ -28,7 +28,5 @@ export class MediaViewModel {
         const hours = created.getHours();
         newDate.setHours(hours - offset);
         this._created = newDate;
-
-        console.log(`${created} - ${newDate}`);
     }
 }

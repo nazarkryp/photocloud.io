@@ -1,11 +1,11 @@
 <div class="comments">
-    <a class="text-button" (click)="getComments()" *ngIf="media.comments.length < media.commentsCount">
-        <strong>view all {{media.commentsCount}} comments</strong>
+    <a class="text-button" [ngClass]="{'disabled' : isLoading}" (click)="getComments()" *ngIf="media.comments.length < media.commentsCount">
+        view all {{media.commentsCount}} comments
     </a>
     <div *ngFor="let comment of media.comments;" fxLayout="row">
-        <a [routerLink]="['/', comment.user.username]">
-            <strong>{{comment.user.username}}</strong>
+        <a class="comment-username" [routerLink]="['/', comment.user.username]">
+            {{comment.user.username}}
         </a>
-        <span [innerHTML]="comment.text | raw"></span>
+        <span class="comment-text" [innerHTML]="comment.text | raw"></span>
     </div>
 </div>

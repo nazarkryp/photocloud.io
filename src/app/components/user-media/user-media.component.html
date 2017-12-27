@@ -2,49 +2,49 @@
     <app-user-details [user]="user"></app-user-details>
 
     <div class="user-media" *ngIf="!error; else errorBox">
-        <div *ngFor="let post of page?.data;">
-            <div class="mat-elevation-z1 user-post" (click)="openPostDialog(post)">
-                <img class="user-media-thumbnail" src="{{post?.attachments[0].uri}}" alt="media-image" *ngIf="post?.attachments[0].type !== 1">
-                <video class="user-media-thumbnail" *ngIf="post?.attachments[0].type === 1">
-                    <source src="{{post?.attachments[0].uri}}">
+        <div *ngFor="let media of page?.data;">
+            <div class="mat-elevation-z1 user-media-item" (click)="openPostDialog(media)">
+                <img class="user-media-thumbnail" src="{{media?.attachments[0].uri}}" alt="media-image" *ngIf="media?.attachments[0].type !== 1">
+                <video class="user-media-thumbnail" *ngIf="media?.attachments[0].type === 1">
+                    <source src="{{media?.attachments[0].uri}}">
                 </video>
-                <div class="multiple-attachments-icon-container" fxLayout="row" fxLayoutAlign="start center" *ngIf="post.attachments.length > 1 || post?.attachments[0].type === 1">
-                    <mat-icon class="multiple-attachments-icon" *ngIf="post.attachments[0].type === 1">videocam</mat-icon>
-                    <mat-icon class="multiple-attachments-icon" *ngIf="post.attachments.length > 1">layers</mat-icon>
+                <div class="multiple-attachments-icon-container" fxLayout="row" fxLayoutAlign="start center" *ngIf="media.attachments.length > 1 || media?.attachments[0].type === 1">
+                    <mat-icon class="multiple-attachments-icon" *ngIf="media.attachments[0].type === 1">videocam</mat-icon>
+                    <mat-icon class="multiple-attachments-icon" *ngIf="media.attachments.length > 1">layers</mat-icon>
                 </div>
                 <div class="user-media-details" fxLayout="row" fxLayoutAlign="space-between center">
                     <div fxLayout="row" fxLayoutAlign="center center">
                         <mat-icon class="media-icon">favorite</mat-icon>
-                        <span class="media-number">{{post?.likesCount}}</span>
+                        <span class="media-number">{{media?.likesCount}}</span>
                     </div>
                     <div fxLayout="row" fxLayoutAlign="center center">
                         <mat-icon class="media-icon">mode_comment</mat-icon>
-                        <span class="media-number">{{post?.commentsCount}}</span>
+                        <span class="media-number">{{media?.commentsCount}}</span>
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <div fxLayout="row" fxLayoutAlign="center center" *ngIf="page.hasMoreItems">
-        <button mat-raised-button (click)="getPosts()" [disabled]="isLoadingPosts">Load More</button>
+        <button class="btn-default" mat-button (click)="getPosts()" [disabled]="isLoadingPosts">Load More</button>
     </div>
-    <!-- <div class="posts-container" *ngIf="!error; else errorBox">
+    <!-- <div class="media-container" *ngIf="!error; else errorBox">
         <div class="user-media" *ngIf="isLoadingPosts || page.data.length > 0; else emptyFeed;">
-            <div class="media-item" *ngFor="let post of page?.data;">
-                <div class="image-container mat-elevation-z3" fxLayout="column" fxLayoutAlign="center center" (click)="openPostDialog(post)">
-                    <img class="thumbnail" src="{{post?.attachments[0].uri}}" alt="{{post?.caption}}" *ngIf="post?.attachments[0].type !== 1">
-                    <video class="thumbnail" *ngIf="post?.attachments[0].type === 1">
-                        <source src="{{post?.attachments[0].uri}}">
+            <div class="media-item" *ngFor="let media of page?.data;">
+                <div class="image-container mat-elevation-z3" fxLayout="column" fxLayoutAlign="center center" (click)="openPostDialog(media)">
+                    <img class="thumbnail" src="{{media?.attachments[0].uri}}" alt="{{media?.caption}}" *ngIf="media?.attachments[0].type !== 1">
+                    <video class="thumbnail" *ngIf="media?.attachments[0].type === 1">
+                        <source src="{{media?.attachments[0].uri}}">
                     </video>
-                    <mat-icon class="multiple-attachments-icon" *ngIf="post.attachments.length > 1">layers</mat-icon>
+                    <mat-icon class="multiple-attachments-icon" *ngIf="media.attachments.length > 1">layers</mat-icon>
                     <div class="after mat-padding" fxLayout="row" fxLayoutAlign="space-between center">
                         <div fxLayout="row" fxLayoutAlign="center center">
                             <mat-icon class="media-icon">favorite</mat-icon>
-                            <span class="media-number">{{post?.likesCount}}</span>
+                            <span class="media-number">{{media?.likesCount}}</span>
                         </div>
                         <div fxLayout="row" fxLayoutAlign="center center">
                             <mat-icon class="media-icon">mode_comment</mat-icon>
-                            <span class="media-number">{{post?.commentsCount}}</span>
+                            <span class="media-number">{{media?.commentsCount}}</span>
                         </div>
                     </div>
                 </div>

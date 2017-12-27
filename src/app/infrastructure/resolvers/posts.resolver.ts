@@ -16,7 +16,7 @@ export class MediaResolver implements Resolve<PageViewModel<MediaViewModel>> {
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot)
         : PageViewModel<MediaViewModel> | Observable<PageViewModel<MediaViewModel>> | Promise<PageViewModel<MediaViewModel>> {
         this.progress.start();
-        return this.mediaService.getPosts(null)
+        return this.mediaService.getRecentMedia(null)
             .catch(error => {
                 return Observable.of(error);
             });

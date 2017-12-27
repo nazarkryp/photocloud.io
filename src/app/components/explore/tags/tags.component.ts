@@ -39,7 +39,7 @@ export class TagsComponent implements OnInit, OnDestroy {
 
     public getPosts() {
         this.progress.start();
-        this.mediaService.getPostsByTag(this.tag, this.page.pagination)
+        this.mediaService.getMediaByTag(this.tag, this.page.pagination)
             .finally(() => {
                 this.progress.done();
             })
@@ -52,43 +52,43 @@ export class TagsComponent implements OnInit, OnDestroy {
             });
     }
 
-    public like(post) {
-        if (post.userHasLiked) {
-            post.likesCount--;
-            post.userHasLiked = !post.userHasLiked;
-            this.mediaService.removePostLike(post.id)
+    public like(media) {
+        if (media.userHasLiked) {
+            media.likesCount--;
+            media.userHasLiked = !media.userHasLiked;
+            this.mediaService.removeMediaLike(media.id)
                 .subscribe(() => {
-                    post.userHasLiked = false;
+                    media.userHasLiked = false;
                 }, (error) => {
-                    if (post.userHasLiked) {
-                        post.likesCount--;
+                    if (media.userHasLiked) {
+                        media.likesCount--;
                     } else {
-                        post.likesCount++;
+                        media.likesCount++;
                     }
-                    post.userHasLiked = !post.userHasLiked;
+                    media.userHasLiked = !media.userHasLiked;
                     return error;
                 });
         } else {
-            post.likesCount++;
-            post.userHasLiked = !post.userHasLiked;
-            this.mediaService.likePost(post.id)
+            media.likesCount++;
+            media.userHasLiked = !media.userHasLiked;
+            this.mediaService.addMediaLike(media.id)
                 .subscribe(() => {
-                    post.userHasLiked = true;
+                    media.userHasLiked = true;
                 }, (error) => {
-                    if (post.userHasLiked) {
-                        post.likesCount--;
+                    if (media.userHasLiked) {
+                        media.likesCount--;
                     } else {
-                        post.likesCount++;
+                        media.likesCount++;
                     }
-                    post.userHasLiked = !post.userHasLiked;
+                    media.userHasLiked = !media.userHasLiked;
                     return error;
                 });
         }
     }
 
-    public openPostDialog(post: MediaViewModel) {
+    public openPostDialog(media: MediaViewModel) {
         const dialogRef = this.dialog.open(MediaDetailsComponent, {
-            data: post
+            data: media
         });
     }
 

@@ -15,11 +15,11 @@ import { UsersComponent } from '../shared/users/users.component';
 import { NgProgress } from 'ngx-progressbar';
 
 @Component({
-    selector: 'app-user-posts',
-    templateUrl: './user-posts.component.html',
-    styleUrls: ['./user-posts.component.css']
+    selector: 'app-user-media',
+    templateUrl: './user-media.component.html',
+    styleUrls: ['./user-media.component.css']
 })
-export class UserPostsComponent implements OnInit, OnDestroy {
+export class UserMediaComponent implements OnInit, OnDestroy {
     public postSubscription: Subscription;
     public routeSubscription$: Subscription;
     private currentUserSubscription$: Subscription;
@@ -52,7 +52,7 @@ export class UserPostsComponent implements OnInit, OnDestroy {
             this.progress.start();
         }
 
-        this.postSubscription = this.mediaService.getUserPosts(this.user.username, this.page.pagination)
+        this.postSubscription = this.mediaService.getUserMedia(this.user.username, this.page.pagination)
             .finally(() => {
                 if (this.progress.isStarted()) {
                     this.progress.done();
@@ -70,9 +70,9 @@ export class UserPostsComponent implements OnInit, OnDestroy {
             });
     }
 
-    public openPostDialog(post: MediaViewModel) {
+    public openPostDialog(media: MediaViewModel) {
         this.dialog.open(MediaDetailsComponent, {
-            data: post
+            data: media
         });
     }
 

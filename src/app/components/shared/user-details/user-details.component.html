@@ -26,8 +26,8 @@
         </div>
         <div fxLayout="row" fxLayoutAlign="start center" *ngIf="user.isActive">
             <div fxFlex>
-                <span class="mat-title">{{user.posts}} </span>
-                <span class="mat-subhead">posts </span>
+                <span class="mat-title">{{user.media}} </span>
+                <span class="mat-subhead">media </span>
             </div>
             <a mat-button (click)="getFollowers()" *ngIf="currentUser" fxFlex>
                 <span class="mat-title">{{user.followers}} </span>
