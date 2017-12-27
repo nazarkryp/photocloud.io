@@ -8,3 +8,4 @@ export { PageViewModel } from './page.model';
 export { PaginationViewModel } from './pagination.model';
 export { UserViewModel } from './user.model';
 export { CurrentUserViewModel } from './current-user.model';
+export { UpdateMediaModel } from './update-media.model';

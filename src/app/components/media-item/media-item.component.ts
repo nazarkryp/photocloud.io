@@ -4,10 +4,11 @@ import { MatSnackBar, MatDialog, MatSnackBarConfig } from '@angular/material';
 import { Subscription } from 'rxjs/Subscription';
 
 import { CurrentUserService } from 'app/infrastructure/services';
-import { MediaViewModel, AttachmentViewModel, UserViewModel, CommentViewModel, CurrentUserViewModel } from 'app/models/view';
+import { MediaViewModel, AttachmentViewModel, UserViewModel, CommentViewModel, CurrentUserViewModel, UpdateMediaModel } from 'app/models/view';
 import { CommentService, MediaService } from 'app/services';
 import { UsersComponent } from 'app/components/shared/users/users.component';
 import { trigger, style, animate, transition } from '@angular/animations';
+import { EditMediaService } from 'app/shared/services';
 
 @Component({
     selector: 'app-media-item',
@@ -30,7 +31,7 @@ export class MediaItemComponent implements OnInit, OnDestroy {
 
     public text: string;
     public shareLink: string;
-    public caption: string;
+    public updateMediaModel: UpdateMediaModel;
 
     public currentUser: CurrentUserViewModel;
     public currentUserSubscription: Subscription;
@@ -41,6 +42,7 @@ export class MediaItemComponent implements OnInit, OnDestroy {
         private commentService: CommentService,
         private mediaService: MediaService,
         private currentUserService: CurrentUserService,
+        private editMediaService: EditMediaService,
         @Inject(DOCUMENT) private document: any
     ) {
         this.currentUserSubscription = this.currentUserService.getCurrentUser()
@@ -124,24 +126,21 @@ export class MediaItemComponent implements OnInit, OnDestroy {
     }
 
     public edit() {
-        this.caption = this.media.caption;
+        this.updateMediaModel = this.editMediaService.createUpdateModel(this.media);
         this.media.editing = true;
     }
 
+    public removeAttachment(attachmentToRemove: AttachmentViewModel) {
+        this.editMediaService.removeAttachment(this.updateMediaModel, attachmentToRemove);
+    }
+
     public update() {
-        this.media.editing = false;
-        this.media.caption = this.caption;
-        const backup = this.media.caption;
-        this.mediaService.update(this.media)
-            .subscribe((media) => {
-                this.media.caption = media.caption;
-            }, (error) => {
-                this.media.caption = backup;
-            });
+        this.editMediaService.update(this.media, this.updateMediaModel);
     }
 
     public cancel() {
         this.media.editing = false;
+        this.updateMediaModel = null;
     }
 
     public like() {

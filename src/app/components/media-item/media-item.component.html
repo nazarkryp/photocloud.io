@@ -61,7 +61,7 @@
     </div>
     <div class="media-edit-footer" *ngIf="media.editing">
         <div class="media-edit-caption">
-            <textarea rows="5" class="caption-input" placeholder="Edit Caption" type="text" [(ngModel)]="caption" fxFlex></textarea>
+            <textarea rows="5" class="caption-input" placeholder="Edit Caption" type="text" [(ngModel)]="updateMediaModel.caption" fxFlex></textarea>
         </div>
     </div>
     <div class="media-actions" fxLayout="row" *ngIf="!media.editing">

@@ -14,19 +14,20 @@ import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 
 import { CurrentUserService } from 'app/infrastructure/services';
-import { MediaViewModel, UserViewModel, AttachmentViewModel, CommentViewModel, CurrentUserViewModel } from 'app/models/view';
+import { MediaViewModel, UserViewModel, AttachmentViewModel, CommentViewModel, CurrentUserViewModel, UpdateMediaModel } from 'app/models/view';
 import { MediaService, CommentService } from 'app/services';
 import { NgProgress } from 'ngx-progressbar';
+import { EditMediaService } from 'app/shared/services';
 
 @Component({
     selector: 'app-media-details',
     templateUrl: './media-details.component.html',
     styleUrls: ['./media-details.component.css'],
     animations: [
-        TdBounceAnimation(),     // using implicit anchor name 'tdBounce' in template
-        TdFlashAnimation(),     // using implicit anchor name 'tdFlash' in template
-        TdHeadshakeAnimation(), // using implicit anchor name 'tdHeadshake' in template
-        TdJelloAnimation(),     // using implicit anchor name 'tdJello' in template
+        TdBounceAnimation(),                    // using implicit anchor name 'tdBounce' in template
+        TdFlashAnimation(),                     // using implicit anchor name 'tdFlash' in template
+        TdHeadshakeAnimation(),                 // using implicit anchor name 'tdHeadshake' in template
+        TdJelloAnimation(),                     // using implicit anchor name 'tdJello' in template
         TdPulseAnimation({ duration: 200 })     // using implicit anchor name 'tdPulse' in template
     ],
     encapsulation: ViewEncapsulation.None
@@ -37,9 +38,9 @@ export class MediaDetailsComponent implements OnInit, OnDestroy {
     @Output() public onRemoved = new EventEmitter<MediaViewModel>();
     @ViewChild('player') public player: any;
 
+    public updateMediaModel: UpdateMediaModel;
     public text: string;
     public shareLink: string;
-
     public currentUser: CurrentUserViewModel;
     public currentUserSubscription: Subscription;
 
@@ -48,12 +49,13 @@ export class MediaDetailsComponent implements OnInit, OnDestroy {
         private mediaService: MediaService,
         private currentUserService: CurrentUserService,
         private commentService: CommentService,
+        private editMediaService: EditMediaService,
         private progress: NgProgress,
         private snackBar: MatSnackBar,
         @Optional() public dialogRef: MatDialogRef<MediaDetailsComponent>,
         @Optional() @Inject(MAT_DIALOG_DATA) public media: MediaViewModel,
         @Inject(DOCUMENT) private document: any) {
-        if (media) {
+        if (this.media) {
             this.media.activeAttachment = 0;
             this.isDialog = true;
         }
@@ -171,6 +173,24 @@ export class MediaDetailsComponent implements OnInit, OnDestroy {
                     return error;
                 });
         }
+    }
+
+    public edit() {
+        this.updateMediaModel = this.editMediaService.createUpdateModel(this.media);
+        this.media.editing = true;
+    }
+
+    public removeAttachment(attachmentToRemove: AttachmentViewModel) {
+        this.editMediaService.removeAttachment(this.updateMediaModel, attachmentToRemove);
+    }
+
+    public update() {
+        this.editMediaService.update(this.media, this.updateMediaModel);
+    }
+
+    public cancel() {
+        this.media.editing = false;
+        this.updateMediaModel = null;
     }
 
     public getMedia(mediaId: number) {

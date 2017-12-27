@@ -20,7 +20,7 @@
                 </video>
             </div>
         </div>
-        <div class="media-details-container" [ngClass]="{ 'dialog' : isDialog }" fxLayout="column">
+        <div class="media-details-container" [ngClass]="{ 'dialog' : isDialog }" fxLayout="column" *ngIf="!media.editing; else editingTemplate">
             <div>
                 <div class="media-details-header" fxLayout="row" fxLayoutAlign="start center" style="padding-bottom: .7rem; border-bottom: 1px solid #d8d8d8;">
                     <img class="media-avatar" [routerLink]="['/', media.user.username]" src="{{media.user.pictureUri}}" default="assets/images/user-default-image.png"
@@ -33,54 +33,33 @@
                             </div>
                         </div>
                         <button class="btn-relationships" mat-button *ngIf="currentUser && currentUser.id !== media.user.id">FOLLOW</button>
-                        <button mat-icon-button *ngIf="currentUser && currentUser.id === media.user.id && !media.editing" (click)="media.editing = !media.editing">
+                        <button mat-icon-button *ngIf="currentUser && currentUser.id === media.user.id" (click)="edit()">
                             <mat-icon class="btn-icon mat-24">edit</mat-icon>
                         </button>
                     </div>
                 </div>
             </div>
-            <div fxLayout="row" fxLayoutAlign="space-between center" style="margin-top: 1.0rem;" *ngIf="!media.editing">
+            <div fxLayout="row" fxLayoutAlign="space-between center" style="margin-top: 1.3rem;">
                 <div fxLayout="row" fxLayoutAlign="start center">
                     <mat-icon class="mat-18" style="color: #444444;">favorite</mat-icon>
                     <span style="font-weight: bold; font-size: .9em; color: #444444; margin-left: .5rem;">{{media.likesCount}} likes</span>
                 </div>
             </div>
-            <div class="media-details-caption" *ngIf="media.caption || media.editing">
-                <a [routerLink]="['/', media.user.username]" *ngIf="!media.editing">
+            <div class="media-details-caption" *ngIf="media.caption">
+                <a [routerLink]="['/', media.user.username]">
                     <strong>{{media.user.username}}</strong>
                 </a>
-                <app-caption caption="{{media.caption}}" *ngIf="!media.editing"></app-caption>
-                <div *ngIf="media.editing" fxLayout="column" style="padding-top: .5rem;">
-                    <span style="padding-bottom: .5rem; font-weight: bold;">Edit caption</span>
-                    <input class="media-details-caption-edit" [(ngModel)]="media.caption">
-                    <div fxLayout="row" fxLayoutAlign="end center" style="padding: .5rem 0;">
-                        <button mat-icon-button (click)="media.editing = !media.editing">
-                            <mat-icon class="btn-icon">check</mat-icon>
-                        </button>
-                        <button mat-icon-button (click)="media.editing = !media.editing">
-                            <mat-icon class="btn-icon">clear</mat-icon>
-                        </button>
-                    </div>
-                </div>
+                <app-caption caption="{{media.caption}}"></app-caption>
             </div>
-            <div class="media-details-comments-container" fxLayout="column" fxFlex *ngIf="!media.editing">
+            <div class="media-details-comments-container" fxLayout="column" fxFlex>
                 <span class="media-details-comments-header">Comments</span>
                 <div *ngIf="media.commentsCount === 0" fxLayout="column" fxLayoutAlign="center center" style="height: 100%;">
                     <span style="font-weight: normal; font-size: .9em; color: gray; letter-spacing: 1px; text-transform: uppercase;">No comments yet</span>
                 </div>
                 <app-comments style="font-size: 0.95em;" [media]="media" *ngIf="media.commentsCount > 0"></app-comments>
             </div>
-            <div fxLayout="column" *ngIf="media.editing" style="padding: .7rem 0; height: 100%; box-sizing: border-box;">
-                <div *ngFor="let attachment of media.attachments; let index = index;" fxLayout="row" fxLayoutAlign="space-between start"
-                    style="margin-bottom: 0.5rem;">
-                    <img src="{{attachment.uri}}" alt="attachment" style="width: 75px; height: 75px; border-radius: 2px; object-fit: cover;">
-                    <button mat-icon-button>
-                        <mat-icon class="btn-icon">clear</mat-icon>
-                    </button>
-                </div>
-            </div>
             <div>
-                <div fxLayout="row" fxLayoutAlign="space-between center" *ngIf="currentUser" style="border-top: 1px solid #d8d8d8; padding-top: .7rem;">
+                <div fxLayout="row" fxLayoutAlign="space-between center" style="border-top: 1px solid #d8d8d8; padding-top: .7rem;">
                     <div fxLayout="row" fxLayoutAlign="start center" *ngIf="currentUser">
                         <mat-icon [@tdJello]="bounceState" class="btn-icon mat-24" [ngClass]="{ 'liked' : media.userHasLiked }" (click)="like()">favorite</mat-icon>
                         <mat-icon class="btn-icon mat-24" svgIcon="comment" style="margin-left: .7rem;"></mat-icon>
@@ -91,3 +70,30 @@
         </div>
     </div>
 </div>
+
+<ng-template #editingTemplate>
+    <div class="media-details-container" [ngClass]="{ 'dialog' : isDialog }" fxLayout="column">
+        <div class="media-details-caption-edit" fxLayout="column">
+            <span style="padding-bottom: .5rem; font-weight: bold;">Edit caption</span>
+            <input placeholder="Write a caption..." [(ngModel)]="updateMediaModel.caption">
+        </div>
+        <div class="media-details-edit-attachments" fxFlex>
+            <div *ngFor="let attachment of media.attachments; let index = index;">
+                <div class="media-details-edit-item">
+                    <img class="media-details-edit-thumbnail" src="{{attachment.uri}}" alt="attachment">
+                    <div class="media-details-edit-after" fxLayout="row" fxLayoutAlign="space-between center">
+                        <div style="position: absolute; right: 0; top: 0;">
+                            <mat-icon class="btn-icon-light">clear</mat-icon>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="border-top: 1px solid #d8d8d8; padding-top: .7rem;">
+            <div fxLayout="row" fxLayoutAlign="start center">
+                <button mat-raised-button color="primary" (click)="update()">SAVE</button>
+                <button mat-button (click)="cancel()">CANCEL</button>
+            </div>
+        </div>
+    </div>
+</ng-template>

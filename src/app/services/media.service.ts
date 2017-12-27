@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
+
 import { Observable } from 'rxjs/Observable';
 
-import { WebApiClient } from '../infrastructure/communication';
-import { UserMapper } from '../infrastructure/mapping';
-import { PageViewModel, PaginationViewModel, MediaViewModel, UserViewModel, CreateMediaModel } from 'app/models/view';
+import { WebApiClient } from 'app/infrastructure/communication';
+import { UserMapper } from 'app/infrastructure/mapping';
+import { PageViewModel, PaginationViewModel, MediaViewModel, UserViewModel, CreateMediaModel, UpdateMediaModel } from 'app/models/view';
 import { PageResponse, MediaResponse } from 'app/models/response';
 import { MediaMapper } from 'app/infrastructure/mapping';
 import { PageMapper } from 'app/infrastructure/mapping';
@@ -46,7 +47,11 @@ export class MediaService {
             requestUri = requestUri + '?next=' + pagination.next;
         }
 
-        return this.webApiClient.get<PageViewModel<MediaViewModel>>(requestUri);
+        return this.webApiClient.get<PageResponse<MediaResponse>>(requestUri)
+            .map(page => {
+                const pageViewModel = this.pageMapper.mapFromResponse(page);
+                return pageViewModel;
+            });
     }
 
     public getMediaByTag(tag: string, pagination: PaginationViewModel) {
@@ -56,14 +61,18 @@ export class MediaService {
             requestUri = requestUri + '?next=' + pagination.next;
         }
 
-        return this.webApiClient.get<PageViewModel<MediaViewModel>>(requestUri);
+        return this.webApiClient.get<PageResponse<MediaResponse>>(requestUri)
+            .map(page => {
+                const pageViewModel = this.pageMapper.mapFromResponse(page);
+                return pageViewModel;
+            });
     }
 
     public getMediaById(mediaId: number): Observable<MediaViewModel> {
         return this.webApiClient.get<MediaViewModel>(`media/${mediaId}`);
     }
 
-    public update(media: MediaViewModel): Observable<MediaViewModel> {
+    public update(media: UpdateMediaModel): Observable<MediaViewModel> {
         return this.webApiClient.patch(`media/${media.id}`, media);
     }
 

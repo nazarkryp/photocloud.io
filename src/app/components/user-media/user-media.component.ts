@@ -71,8 +71,12 @@ export class UserMediaComponent implements OnInit, OnDestroy {
     }
 
     public openPostDialog(media: MediaViewModel) {
-        this.dialog.open(MediaDetailsComponent, {
+        const dialog = this.dialog.open(MediaDetailsComponent, {
             data: media
+        });
+
+        dialog.afterClosed().subscribe(() => {
+            media.editing = false;
         });
     }
 

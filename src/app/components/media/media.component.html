@@ -5,12 +5,13 @@
             <button class="btn-default" mat-button (click)="getPosts()" [disabled]="isLoading">Load More</button>
         </div>
     </div>
-    <ng-template #emptyFeed>
-        <div class="message-container">
-            <span class="message">No one has posted anything yet</span>
-        </div>
-    </ng-template>
 </div>
 <button class="mat-fab-bottom-right" (click)="createPost()" mat-fab>
     <mat-icon>add</mat-icon>
 </button>
+
+<ng-template #emptyFeed>
+    <div class="message-container">
+        <span class="message">No one has posted anything yet</span>
+    </div>
+</ng-template>

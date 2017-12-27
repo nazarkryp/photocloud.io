@@ -3,7 +3,7 @@ body {
     background-color: #FAFAFA;
     color: #444444;
     font-family: Roboto, sans-serif;
-    overflow-y: hidden;
+    overflow-y: auto;
 }
 
 a {
@@ -72,7 +72,14 @@ a {
     outline: none;
 }
 
-.mat-icon.btn-icon:hover {
+.mat-icon.btn-icon-light {
+    cursor: pointer;
+    color: white;
+    outline: none;
+}
+
+.mat-icon.btn-icon:hover,
+.mat-icon.btn-icon-light:hover {
     color: #e91e63;
 }
 
@@ -80,7 +87,8 @@ a {
     color: #e91e63;
 }
 
-.mat-icon.btn-icon.disabled {
+.mat-icon.btn-icon.disabled,
+.mat-icon.btn-icon-light:disabled {
     color: gray;
 }
 

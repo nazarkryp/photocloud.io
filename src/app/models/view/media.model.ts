@@ -16,7 +16,7 @@ export class MediaViewModel {
     public comments: CommentViewModel[];
     public user: UserViewModel;
     public likes: UserViewModel[];
-    public editing: boolean;
+    public editing = false;
 
     public get created(): Date {
         return this._created;

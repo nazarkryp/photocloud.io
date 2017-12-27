@@ -28,32 +28,6 @@
     <div fxLayout="row" fxLayoutAlign="center center" *ngIf="page.hasMoreItems">
         <button class="btn-default" mat-button (click)="getPosts()" [disabled]="isLoadingPosts">Load More</button>
     </div>
-    <!-- <div class="media-container" *ngIf="!error; else errorBox">
-        <div class="user-media" *ngIf="isLoadingPosts || page.data.length > 0; else emptyFeed;">
-            <div class="media-item" *ngFor="let media of page?.data;">
-                <div class="image-container mat-elevation-z3" fxLayout="column" fxLayoutAlign="center center" (click)="openPostDialog(media)">
-                    <img class="thumbnail" src="{{media?.attachments[0].uri}}" alt="{{media?.caption}}" *ngIf="media?.attachments[0].type !== 1">
-                    <video class="thumbnail" *ngIf="media?.attachments[0].type === 1">
-                        <source src="{{media?.attachments[0].uri}}">
-                    </video>
-                    <mat-icon class="multiple-attachments-icon" *ngIf="media.attachments.length > 1">layers</mat-icon>
-                    <div class="after mat-padding" fxLayout="row" fxLayoutAlign="space-between center">
-                        <div fxLayout="row" fxLayoutAlign="center center">
-                            <mat-icon class="media-icon">favorite</mat-icon>
-                            <span class="media-number">{{media?.likesCount}}</span>
-                        </div>
-                        <div fxLayout="row" fxLayoutAlign="center center">
-                            <mat-icon class="media-icon">mode_comment</mat-icon>
-                            <span class="media-number">{{media?.commentsCount}}</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div fxLayout="row" fxLayoutAlign="center center" *ngIf="page.hasMoreItems">
-            <button mat-raised-button (click)="getPosts()" [disabled]="isLoadingPosts">Load More</button>
-        </div>
-    </div> -->
 </div>
 
 <ng-template #errorBox>
