@@ -1,7 +1,7 @@
 <div class="confirm-modal" fxLayout="column" fxLayoutAlign="center" fxFlex>
     <div class="confirm-modal-header" fxLayout="row" fxLayoutAlign="space-between center">
         <span class="submit-modal-title">{{title}}</span>
-        <button mat-icon-button (click)="cancel()">
+        <button mat-icon-button (click)="cancel()" tabindex="-1">
             <mat-icon>clear</mat-icon>
         </button>
     </div>
@@ -9,10 +9,10 @@
         <span class="submit-modal-message">{{message}}</span>
     </div>
     <div class="confirm-actions" fxLayout="row" fxLayoutAlign="end center">
-        <button mat-button (click)="cancel()">
+        <button mat-button (click)="cancel()" tabindex="-1">
             <strong>CANCEL</strong>
         </button>
-        <button class="confirm-button" mat-raised-button color="primary" (click)="confirm()">
+        <button class="confirm-button" mat-raised-button color="primary" (click)="confirm()" tabindex="0">
             <strong>REMOVE</strong>
         </button>
     </div>

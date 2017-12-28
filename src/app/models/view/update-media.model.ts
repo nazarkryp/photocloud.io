@@ -1,9 +1,9 @@
-import { AttachmentViewModel } from 'app/models/view/attachment.model';
+import { UpdateAttachmentViewModel } from 'app/models/view/update-attachment.model';
 
 export class UpdateMediaModel {
     public id: number;
     public caption: string;
     public allowComments: boolean;
     public attachmentsToRemove: number[];
-    public attachments: AttachmentViewModel[];
+    public attachments: UpdateAttachmentViewModel[];
 }

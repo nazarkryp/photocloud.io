@@ -1,4 +1,4 @@
-<div [ngClass]="{ 'media-container' : !isDialog }" fxLayout="row" fxLayoutAlign="center center">
+<div [ngClass]="{ 'media-details-container' : !isDialog }" fxLayout="row" fxLayoutAlign="center center">
     <div class="single-media" fxLayout="row" fxLayoutAlign="start stretch" *ngIf="media">
         <div mat-ripple class="media-attachment-container">
             <div class="media-attachment-buttons" fxLayout="row" fxLayoutAlign="space-between center" *ngIf="media.attachments.length > 1">
@@ -20,10 +20,11 @@
                 </video>
             </div>
         </div>
-        <div class="media-details-container" fxLayout="column" *ngIf="!media.editing; else editingTemplate">
+        <div class="media-details-info-container" fxLayout="column" *ngIf="!media.editing; else editingTemplate">
             <div>
                 <div class="media-details-header" fxLayout="row" fxLayoutAlign="start center" style="padding-bottom: .7rem; border-bottom: 1px solid #d8d8d8;">
-                    <img class="media-avatar" [routerLink]="['/', media.user.username]" src="{{media.user.pictureUri}}" default="assets/images/user-default-image.png" alt="profile">
+                    <img class="media-avatar" [routerLink]="['/', media.user.username]" src="{{media.user.pictureUri}}" default="assets/images/user-default-image.png"
+                        alt="profile">
                     <div fxLayout="row" fxLayoutAlign="space-between center" fxFlex>
                         <div class="media-details-info" fxLayout="column">
                             <a class="media-details-username" [routerLink]="['/', media.user.username]">{{media.user.username}}</a>
@@ -71,27 +72,36 @@
 </div>
 
 <ng-template #editingTemplate>
-    <div class="media-details-container" [ngClass]="{ 'dialog' : isDialog }" fxLayout="column">
+    <div class="media-details-info-container" [ngClass]="{ 'dialog' : isDialog }" fxLayout="column">
         <div class="media-details-caption-edit" fxLayout="column">
             <span style="padding-bottom: .5rem; font-weight: bold;">Edit caption</span>
             <textarea type="text" rows="5" placeholder="Write a caption..." [(ngModel)]="updateMediaModel.caption"></textarea>
         </div>
+        <div style="padding-top: .5rem;">
+            <mat-slide-toggle [(ngModel)]="updateMediaModel.allowComments" labelPosition="before">Allow comments</mat-slide-toggle>
+        </div>
         <div class="media-details-edit-attachments" fxFlex>
-            <div *ngFor="let attachment of media.attachments; let index = index;">
-                <div class="media-details-edit-item">
-                    <img class="media-details-edit-thumbnail" src="{{attachment.uri}}" alt="attachment">
-                    <div class="media-details-edit-after" fxLayout="row" fxLayoutAlign="space-between center">
-                        <div style="position: absolute; right: 0; top: 0;">
-                            <mat-icon class="btn-icon-light">clear</mat-icon>
-                        </div>
+            <div *ngFor="let attachment of updateMediaModel.attachments; let index = index;">
+                <div class="media-details-edit-item" [ngClass]="{ 'removed' : attachment.removed }">
+                    <div class="media-details-edit-after">
+                        <mat-icon class="btn-icon-light" (click)="removeAttachment(attachment)">clear</mat-icon>
                     </div>
+                    <div class="media-details-edit-removed" fxLayout="column" fxLayoutAlign="center center">
+                        <span>Removed</span>
+                        <a>Undo</a>
+                    </div>
+                    <img class="media-details-edit-thumbnail" src="{{attachment.uri}}" alt="attachment">
                 </div>
             </div>
+            <!-- updateMediaModel.attachmentsToRemove.find(id => id === attachment.id) -->
         </div>
         <div style="border-top: 1px solid #d8d8d8; padding-top: .7rem;">
-            <div fxLayout="row" fxLayoutAlign="start center">
-                <button mat-raised-button color="primary" (click)="update()">SAVE</button>
-                <button mat-button (click)="cancel()">CANCEL</button>
+            <div fxLayout="row" fxLayoutAlign="space-between center">
+                <div fxLayout="row" fxLayoutAlign="start center">
+                    <button mat-raised-button color="primary" (click)="update()">SAVE</button>
+                    <button mat-button (click)="cancel()">CANCEL</button>
+                </div>
+                <!-- <mat-slide-toggle [(ngModel)]="updateMediaModel.allowComments" labelPosition="before">Allow comments</mat-slide-toggle> -->
             </div>
         </div>
     </div>

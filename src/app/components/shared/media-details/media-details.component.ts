@@ -1,7 +1,7 @@
 import { Component, Inject, ViewEncapsulation, Optional, OnInit, OnDestroy, Input, Output, EventEmitter, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DOCUMENT } from '@angular/common';
-import { MatDialogRef, MatSnackBarConfig, MatSnackBar, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialogRef, MatSnackBarConfig, MatSnackBar, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
 import {
     TdBounceAnimation,
     TdFlashAnimation,
@@ -13,8 +13,10 @@ import {
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 
+import { ConfirmComponent } from 'app/components/shared/confirm/confirm.component';
+
 import { CurrentUserService } from 'app/infrastructure/services';
-import { MediaViewModel, UserViewModel, AttachmentViewModel, CommentViewModel, CurrentUserViewModel, UpdateMediaModel } from 'app/models/view';
+import { MediaViewModel, UserViewModel, CommentViewModel, CurrentUserViewModel, UpdateMediaModel, UpdateAttachmentViewModel } from 'app/models/view';
 import { MediaService, CommentService } from 'app/services';
 import { NgProgress } from 'ngx-progressbar';
 import { EditMediaService } from 'app/shared/services';
@@ -52,6 +54,7 @@ export class MediaDetailsComponent implements OnInit, OnDestroy {
         private editMediaService: EditMediaService,
         private progress: NgProgress,
         private snackBar: MatSnackBar,
+        private dialog: MatDialog,
         @Optional() public dialogRef: MatDialogRef<MediaDetailsComponent>,
         @Optional() @Inject(MAT_DIALOG_DATA) public media: MediaViewModel,
         @Inject(DOCUMENT) private document: any) {
@@ -180,7 +183,7 @@ export class MediaDetailsComponent implements OnInit, OnDestroy {
         this.media.editing = true;
     }
 
-    public removeAttachment(attachmentToRemove: AttachmentViewModel) {
+    public removeAttachment(attachmentToRemove: UpdateAttachmentViewModel) {
         this.editMediaService.removeAttachment(this.updateMediaModel, attachmentToRemove);
     }
 

@@ -11,3 +11,4 @@ export { CurrentUserViewModel } from './current-user.model';
 export { UpdateMediaModel } from './update-media.model';
 export { ErrorViewModel } from './error.model';
 export { UserMediaViewModel } from './user-media.model';
+export { UpdateAttachmentViewModel } from './update-attachment.model';

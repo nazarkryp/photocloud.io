@@ -4,7 +4,7 @@ import { MatSnackBar, MatDialog, MatSnackBarConfig } from '@angular/material';
 import { Subscription } from 'rxjs/Subscription';
 
 import { CurrentUserService } from 'app/infrastructure/services';
-import { MediaViewModel, AttachmentViewModel, UserViewModel, CommentViewModel, CurrentUserViewModel, UpdateMediaModel } from 'app/models/view';
+import { MediaViewModel, UserViewModel, CommentViewModel, CurrentUserViewModel, UpdateMediaModel, UpdateAttachmentViewModel } from 'app/models/view';
 import { CommentService, MediaService } from 'app/services';
 import { UsersComponent } from 'app/components/shared/users/users.component';
 import { trigger, style, animate, transition } from '@angular/animations';
@@ -129,7 +129,7 @@ export class MediaItemComponent implements OnInit, OnDestroy {
         this.media.editing = true;
     }
 
-    public removeAttachment(attachmentToRemove: AttachmentViewModel) {
+    public removeAttachment(attachmentToRemove: UpdateAttachmentViewModel) {
         this.editMediaService.removeAttachment(this.updateMediaModel, attachmentToRemove);
     }
 

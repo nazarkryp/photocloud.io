@@ -98,6 +98,8 @@ a {
     border-radius: 2px;
     font-weight: bold;
     line-height: 27px;
+    min-width: 110px;
+    padding: 2px 0;
 }
 
 .mat-button.btn-default {

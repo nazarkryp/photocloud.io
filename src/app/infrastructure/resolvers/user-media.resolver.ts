@@ -28,7 +28,6 @@ export class UserMediaResolver implements Resolve<UserViewModel> {
         return this.userService.getUser(username)
             .mergeMap<UserViewModel, UserMediaViewModel>(user => {
                 userMedia.user = user;
-                console.log(user);
                 const validationResult = this.validateUser(user);
                 if (validationResult.hasErrors) {
                     userMedia.error = validationResult.error;

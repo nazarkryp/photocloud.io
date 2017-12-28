@@ -91,6 +91,5 @@ export class CreateMediaComponent implements OnInit, OnDestroy {
     }
 
     public setAsDefault(item) {
-        console.log(item);
     }
 }

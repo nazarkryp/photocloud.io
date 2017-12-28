@@ -2,31 +2,32 @@
     color: #444444;
 }
 
-h1 {
-    font-weight: lighter;
-}
-
 ::ng-deep .mat-form-field-underline {
     background: #d8d8d8;
 }
 
-.root-container {
+.sidenav-container {
     min-height: 100vh;
+    height: 100%;
     overflow-y: hidden;
+    position: relative;
 }
 
 .my-content {
     margin: 0;
     width: 100%;
     min-height: 100vh;
-    overflow-y: hidden;
+    height: 100%;
+    overflow-y: scroll;
+    position: relative;
 }
 
 .router-container {
-    min-height: calc(100vh - 128px);
+    position: relative;
+    min-height: calc(100vh - 228px);
     overflow-y: hidden;
     padding: 3rem 0;
-    box-sizing: border-box;
+    box-sizing: content-box;
 }
 
 .mat-fab-bottom-left {
