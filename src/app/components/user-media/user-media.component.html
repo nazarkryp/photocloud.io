@@ -1,49 +1,46 @@
-<div class="user-media-container" fxLayout="column" fxLayoutAlign="center center">
-    <app-user-details [user]="user"></app-user-details>
+<div class="user-media-container" fxLayout="column" fxLayoutAlign="start center">
+    <app-user-details [user]="userMedia.user"></app-user-details>
 
-    <div class="user-media" *ngIf="!error; else errorBox">
-        <div *ngFor="let media of page?.data;">
-            <div class="mat-elevation-z1 user-media-item" (click)="openPostDialog(media)">
-                <img class="user-media-thumbnail" src="{{media?.attachments[0].uri}}" alt="media-image" *ngIf="media?.attachments[0].type !== 1">
-                <video class="user-media-thumbnail" *ngIf="media?.attachments[0].type === 1">
-                    <source src="{{media?.attachments[0].uri}}">
-                </video>
-                <div class="multiple-attachments-icon-container" fxLayout="row" fxLayoutAlign="start center" *ngIf="media.attachments.length > 1 || media?.attachments[0].type === 1">
-                    <mat-icon class="multiple-attachments-icon" *ngIf="media.attachments[0].type === 1">videocam</mat-icon>
-                    <mat-icon class="multiple-attachments-icon" *ngIf="media.attachments.length > 1">layers</mat-icon>
-                </div>
-                <div class="user-media-details" fxLayout="row" fxLayoutAlign="space-between center">
-                    <div fxLayout="row" fxLayoutAlign="center center">
-                        <mat-icon class="media-icon">favorite</mat-icon>
-                        <span class="media-number">{{media?.likesCount}}</span>
+    <div style="width: 100%;" *ngIf="!userMedia.error; else errorBox" fxLayout="column" fxLayoutAlign="center center">
+        <div class="user-media">
+            <div *ngFor="let media of userMedia.page?.data;">
+                <div class="mat-elevation-z1 user-media-item" (click)="openPostDialog(media)">
+                    <img class="user-media-thumbnail" src="{{media?.attachments[0].uri}}" alt="media-image" *ngIf="media?.attachments[0].type !== 1">
+                    <video class="user-media-thumbnail" *ngIf="media?.attachments[0].type === 1">
+                        <source src="{{media?.attachments[0].uri}}">
+                    </video>
+                    <div class="multiple-attachments-icon-container" fxLayout="row" fxLayoutAlign="start center" *ngIf="media.attachments.length > 1 || media?.attachments[0].type === 1">
+                        <mat-icon class="multiple-attachments-icon" *ngIf="media.attachments[0].type === 1">videocam</mat-icon>
+                        <mat-icon class="multiple-attachments-icon" *ngIf="media.attachments.length > 1">layers</mat-icon>
                     </div>
-                    <div fxLayout="row" fxLayoutAlign="center center">
-                        <mat-icon class="media-icon">mode_comment</mat-icon>
-                        <span class="media-number">{{media?.commentsCount}}</span>
+                    <div class="user-media-details" fxLayout="row" fxLayoutAlign="space-between center">
+                        <div fxLayout="row" fxLayoutAlign="center center">
+                            <mat-icon class="media-icon">favorite</mat-icon>
+                            <span class="media-number">{{media?.likesCount}}</span>
+                        </div>
+                        <div fxLayout="row" fxLayoutAlign="center center">
+                            <mat-icon class="media-icon">mode_comment</mat-icon>
+                            <span class="media-number">{{media?.commentsCount}}</span>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div fxLayout="row" fxLayoutAlign="center center" *ngIf="page.hasMoreItems">
-        <button class="btn-default" mat-button (click)="getPosts()" [disabled]="isLoadingPosts">Load More</button>
+        <div fxLayout="row" fxLayoutAlign="center center" *ngIf="userMedia.page.hasMoreItems">
+            <button class="btn-default" mat-button (click)="getMedia()" [disabled]="progress.isStarted()">Load More</button>
+        </div>
     </div>
 </div>
 
 <ng-template #errorBox>
-    <div class="info-container" fxLayout="row" fxLayoutAlign="center center">
-        <div fxLayout="row" fxLayoutAlign="center center">
-            <div class="error-box" fxLayout="column" fxLayoutAlign="start center">
-                <span class="error-title">{{error.title}}</span>
-                <p class="error-description">{{error.description}}</p>
-            </div>
-        </div>
+    <div fxLayout="column" fxLayoutAlign="center center" fxFlex>
+        <app-user-media-error [error]="userMedia.error"></app-user-media-error>
     </div>
 </ng-template>
 
 <ng-template #emptyFeed>
     <div class="info-container" fxLayout="row" fxLayoutAlign="center center">
         <h1 class="info-message">
-            <strong>{{user.username}}</strong> hasn't posted anything yet</h1>
+            <strong>{{userMedia.user.username}}</strong> hasn't posted anything yet</h1>
     </div>
 </ng-template>

@@ -9,3 +9,5 @@ export { PaginationViewModel } from './pagination.model';
 export { UserViewModel } from './user.model';
 export { CurrentUserViewModel } from './current-user.model';
 export { UpdateMediaModel } from './update-media.model';
+export { ErrorViewModel } from './error.model';
+export { UserMediaViewModel } from './user-media.model';

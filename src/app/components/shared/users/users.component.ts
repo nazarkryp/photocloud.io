@@ -6,14 +6,13 @@ import { Subscription } from 'rxjs/Subscription';
 
 import { CurrentUserViewModel, UserViewModel } from 'app/models/view';
 import { RelationshipStatus } from 'app/models/shared';
-import { UserService } from '../../../services';
+import { UserService } from 'app/services';
 import { CurrentUserService } from 'app/infrastructure/services';
 
 @Component({
     selector: 'app-users',
     templateUrl: './users.component.html',
-    styleUrls: ['./users.component.css'],
-    encapsulation: ViewEncapsulation.None
+    styleUrls: ['./users.component.css']
 })
 export class UsersComponent implements OnInit, OnDestroy {
     public users: UserViewModel[];

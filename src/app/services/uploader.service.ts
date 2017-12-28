@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
-import { TokenProvider } from '../infrastructure/security/token-provider';
+import { TokenProvider } from 'app/infrastructure/security/token-provider';
 import { AttachmentViewModel } from 'app/models/view';
 import { FileUploader, FileUploaderOptions } from 'ng2-file-upload';
-import { environment } from '../../environments/environment';
+import { environment } from 'app/../environments/environment';
 
 @Injectable()
 export class UploaderService {

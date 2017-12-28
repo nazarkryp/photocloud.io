@@ -1,8 +1,12 @@
-<div fxLayout="column" fxLayoutAlign="start center" fxFlex>
+<div fxLayout="column" fxLayoutAlign="start center">
     <div class="media-container" *ngIf="isLoading || (page && page.data && page.data.length > 0); else emptyFeed;">
-        <app-media-item *ngFor="let media of page.data; trackBy: index;" [media]="media" (onRemoved)="onRemoved($event)"></app-media-item>
-        <div fxLayout="row" fxLayoutAlign="center center" *ngIf="page.hasMoreItems">
-            <button class="btn-default" mat-button (click)="getPosts()" [disabled]="isLoading">Load More</button>
+        <div>
+            <div class="media-item-container" *ngFor="let media of page.data; trackBy: index;">
+                <app-media-item [media]="media" (onRemoved)="onRemoved($event)"></app-media-item>
+            </div>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="center center" *ngIf="page.hasMoreItems" style="border-top: 1px solid #efefef; padding-top: 1rem;">
+            <button class="btn-default" mat-button (click)="getMedia()" [disabled]="isLoading">Load More</button>
         </div>
     </div>
 </div>

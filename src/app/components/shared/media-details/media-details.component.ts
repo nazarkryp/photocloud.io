@@ -23,14 +23,14 @@ import { EditMediaService } from 'app/shared/services';
     selector: 'app-media-details',
     templateUrl: './media-details.component.html',
     styleUrls: ['./media-details.component.css'],
+    encapsulation: ViewEncapsulation.None,
     animations: [
         TdBounceAnimation(),                    // using implicit anchor name 'tdBounce' in template
         TdFlashAnimation(),                     // using implicit anchor name 'tdFlash' in template
         TdHeadshakeAnimation(),                 // using implicit anchor name 'tdHeadshake' in template
         TdJelloAnimation(),                     // using implicit anchor name 'tdJello' in template
         TdPulseAnimation({ duration: 200 })     // using implicit anchor name 'tdPulse' in template
-    ],
-    encapsulation: ViewEncapsulation.None
+    ]
 })
 export class MediaDetailsComponent implements OnInit, OnDestroy {
     public bounceState = false;

@@ -1,20 +1,24 @@
-.settings-container {
-    margin: 50px;
+.edit-container {
+    width: 600px;
+    box-shadow: 0 3px 8px -3px rgba(0, 0, 0, 0.26);
     color: #444444;
+    background: white;
+    border-radius: 2px;
+    padding: 24px;
+    box-sizing: border-box;
 }
 
-.item {
-    margin-top: 34px;
+.edit-container img {
+    width: 7rem;
+    height: 7rem;
+    object-fit: cover;
+    border-radius: 90px;
 }
 
-.disabled {
+.edit-container .item {
+    margin-top: 2rem;
+}
+
+.edit-container .disabled {
     color: rgba(0, 0, 0, 0.38);
-}
-
-.save-button {
-    margin-right: 15px;
-}
-
-.mat-form-field-underline {
-    background: #d8d8d8;
 }

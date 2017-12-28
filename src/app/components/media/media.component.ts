@@ -51,7 +51,7 @@ export class MediaComponent implements OnInit, OnDestroy {
             });
     }
 
-    public getPosts() {
+    public getMedia() {
         this.isLoading = true;
         this.progress.start();
 
@@ -90,7 +90,6 @@ export class MediaComponent implements OnInit, OnDestroy {
 
     public ngOnInit() {
         this.page = this.activatedRoute.snapshot.data['page'];
-        this.progress.done();
     }
 
     public ngOnDestroy() {

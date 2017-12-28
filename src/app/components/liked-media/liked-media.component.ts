@@ -1,45 +1,46 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material';
+
 import { Subscription } from 'rxjs/Subscription';
+import 'rxjs/add/operator/delay';
 
-import { CurrentUserService } from 'app/infrastructure/services';
-import { MediaDetailsComponent } from 'app/components/shared/media-details/media-details.component';
-import { PageViewModel, MediaViewModel, CurrentUserViewModel } from 'app/models/view';
+import { MediaViewModel, PageViewModel, CurrentUserViewModel } from 'app/models/view';
+import { MediaDetailsComponent } from 'app/components/shared/media-details';
 import { MediaService } from 'app/services';
+import { CurrentUserService } from 'app/infrastructure/services';
 import { AccountService } from 'app/account/services';
-
 import { NgProgress } from 'ngx-progressbar';
 
 @Component({
-    selector: 'app-tags',
-    templateUrl: './tags.component.html',
-    styleUrls: ['./tags.component.css']
+    selector: 'app-liked-media',
+    templateUrl: './liked-media.component.html',
+    styleUrls: ['./liked-media.component.css']
 })
-export class TagsComponent implements OnInit, OnDestroy {
-    private routeSubscription$: Subscription;
+export class LikedMediaComponent implements OnInit, OnDestroy {
     private currentUserSubscription: Subscription;
 
     public page: PageViewModel<MediaViewModel> = new PageViewModel<MediaViewModel>();
     public currentUser: CurrentUserViewModel;
-    public tag: string;
 
     constructor(
+        private location: Location,
         public dialog: MatDialog,
         private route: ActivatedRoute,
         private mediaService: MediaService,
         private currentUserService: CurrentUserService,
         private accountService: AccountService,
         private progress: NgProgress) {
-        this.currentUserSubscription = this.currentUserService.getCurrentUser()
-            .subscribe(currentUser => {
-                this.currentUser = currentUser;
-            });
+        this.currentUserSubscription = this.currentUserService.getCurrentUser().subscribe(currentUser => {
+            this.currentUser = currentUser;
+        })
     }
 
-    public getMedia() {
+    public getLikedMedia() {
         this.progress.start();
-        this.mediaService.getMediaByTag(this.tag, this.page.pagination)
+
+        this.mediaService.getLikedMedia(this.page.pagination)
             .finally(() => {
                 this.progress.done();
             })
@@ -93,14 +94,12 @@ export class TagsComponent implements OnInit, OnDestroy {
     }
 
     public ngOnInit() {
-        this.routeSubscription$ = this.route.params.subscribe(async params => {
-            this.tag = params['tag'] as string;
-            this.getMedia();
-        });
+        this.page = this.route.snapshot.data['page'];
     }
 
     public ngOnDestroy(): void {
-        this.routeSubscription$.unsubscribe();
-        this.currentUserSubscription.unsubscribe();
+        if (this.currentUserSubscription && !this.currentUserSubscription.closed) {
+            this.currentUserSubscription.unsubscribe();
+        }
     }
 }

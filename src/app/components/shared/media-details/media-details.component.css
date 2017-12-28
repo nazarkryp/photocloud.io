@@ -1,14 +1,15 @@
 .media-container {
-    height: calc(100vh - 75px);
-    padding: 25px;
+    height: calc(100vh - 228px);
+}
+
+.media-container .single-media {
+    border: 1px solid #efefef;
+    border-radius: 2px;
+    background: white;
 }
 
 .media-details-container {
     width: 400px;
-    padding-left: .7rem;
-}
-
-.media-details-container.dialog {
     padding: .7rem;
 }
 
@@ -156,7 +157,8 @@
 
 /* editing */
 
-.media-details-caption-edit input {
+.media-details-caption-edit textarea {
+    resize: none;
     width: 100%;
     border: 1px solid #d8d8d8;
     border-radius: 2px;
@@ -197,21 +199,17 @@
 }
 
 .media-details-edit-item .media-details-edit-after {
+    background: rgba(0, 0, 0, .4);
     position: absolute;
     width: 100%;
     height: 100%;
-    opacity: 0;
-    border-style: none;
-    padding: 0px 50px 0px 50px;
+    border: none;
     z-index: 100;
+    cursor: default;
+    border-radius: 2px;
+    opacity: 0;
 }
 
 .media-details-edit-item:not([disabled]):hover .media-details-edit-after {
-    cursor: pointer;
-    background: rgba(0, 0, 0, .4);
     opacity: 1;
-    width: 100%;
-    height: 100%;
-    z-index: 100;
-    padding: 0 2.75rem;
 }

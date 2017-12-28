@@ -21,8 +21,7 @@ import { EditMediaService } from 'app/shared/services';
                 animate('1200ms cubic-bezier(0.35, 0, 0.25, 1)', style('*'))
             ])
         ])
-    ],
-    encapsulation: ViewEncapsulation.None
+    ]
 })
 export class MediaItemComponent implements OnInit, OnDestroy {
     @Input() public media: MediaViewModel;

@@ -20,11 +20,10 @@
                 </video>
             </div>
         </div>
-        <div class="media-details-container" [ngClass]="{ 'dialog' : isDialog }" fxLayout="column" *ngIf="!media.editing; else editingTemplate">
+        <div class="media-details-container" fxLayout="column" *ngIf="!media.editing; else editingTemplate">
             <div>
                 <div class="media-details-header" fxLayout="row" fxLayoutAlign="start center" style="padding-bottom: .7rem; border-bottom: 1px solid #d8d8d8;">
-                    <img class="media-avatar" [routerLink]="['/', media.user.username]" src="{{media.user.pictureUri}}" default="assets/images/user-default-image.png"
-                        alt="profile">
+                    <img class="media-avatar" [routerLink]="['/', media.user.username]" src="{{media.user.pictureUri}}" default="assets/images/user-default-image.png" alt="profile">
                     <div fxLayout="row" fxLayoutAlign="space-between center" fxFlex>
                         <div class="media-details-info" fxLayout="column">
                             <a class="media-details-username" [routerLink]="['/', media.user.username]">{{media.user.username}}</a>
@@ -75,7 +74,7 @@
     <div class="media-details-container" [ngClass]="{ 'dialog' : isDialog }" fxLayout="column">
         <div class="media-details-caption-edit" fxLayout="column">
             <span style="padding-bottom: .5rem; font-weight: bold;">Edit caption</span>
-            <input placeholder="Write a caption..." [(ngModel)]="updateMediaModel.caption">
+            <textarea type="text" rows="5" placeholder="Write a caption..." [(ngModel)]="updateMediaModel.caption"></textarea>
         </div>
         <div class="media-details-edit-attachments" fxFlex>
             <div *ngFor="let attachment of media.attachments; let index = index;">

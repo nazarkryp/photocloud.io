@@ -46,7 +46,6 @@ export class EditMediaService {
         media.caption = updateMediaModel.caption;
         this.mediaService.update(updateMediaModel)
             .subscribe((updatedMedia) => {
-                console.log(`updatedMedia.caption: ${updatedMedia.caption}`);
                 media.caption = updatedMedia.caption;
             }, (error) => {
                 media.caption = captionBakup;

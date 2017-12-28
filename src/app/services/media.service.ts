@@ -68,12 +68,27 @@ export class MediaService {
             });
     }
 
+    public getLikedMedia(pagination: PaginationViewModel) {
+        let requestUri = 'media/liked';
+
+        if (pagination != null && pagination.next != null) {
+            requestUri = `${requestUri}?next=${pagination.next}`;
+        }
+
+        return this.webApiClient.get<PageResponse<MediaResponse>>(requestUri)
+            .map(page => {
+                const pageViewModel = this.pageMapper.mapFromResponse(page);
+                return pageViewModel;
+            });
+    }
+
     public getMediaById(mediaId: number): Observable<MediaViewModel> {
         return this.webApiClient.get<MediaViewModel>(`media/${mediaId}`);
     }
 
     public update(media: UpdateMediaModel): Observable<MediaViewModel> {
-        return this.webApiClient.patch(`media/${media.id}`, media);
+        const request = this.mediaMapper.mapUpdateToRequest(media);
+        return this.webApiClient.patch(`media/${media.id}`, request);
     }
 
     public removeMedia(mediaId: number) {

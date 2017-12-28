@@ -25,7 +25,7 @@ import { CurrentUserService } from 'app/infrastructure/services/current-user.ser
     ]
 })
 export class SignInComponent {
-    @ViewChild('usernameInput') usernameInput: ElementRef;
+    @ViewChild('passwordInput') passwordInput: ElementRef;
     public errorStateMatcher = new DefaultErrorStateMatcher();
     public formGroup: FormGroup;
     public isLoading: boolean;
@@ -72,7 +72,7 @@ export class SignInComponent {
                     this.formGroup.enable();
                     this.signInError = 'Sorry, your username or password was incorrect. Please check your username and password';
                     this.progress.done();
-                    this.usernameInput.nativeElement.focus();
+                    this.passwordInput.nativeElement.focus();
                 });
         }
     }

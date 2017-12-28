@@ -1,3 +1,4 @@
 export { UserListResolver } from './user-list.resolver';
-export { UserResolver } from './user.resolver';
-export { MediaResolver } from './posts.resolver';
+export { UserMediaResolver } from './user-media.resolver';
+export { RecentMediaResolver } from './recent-media.resolver';
+export { LikedMediaResolver } from './liked-media.resolver';

@@ -3,7 +3,7 @@ import { trigger, style, animate, transition, query, stagger } from '@angular/an
 
 import { Subscription } from 'rxjs/Subscription';
 
-import { UserService } from '../../../services';
+import { UserService } from 'app/services';
 
 import { UserViewModel } from 'app/models/view';
 import { RelationshipAction } from 'app/models/shared';

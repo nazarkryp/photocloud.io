@@ -1,11 +1,11 @@
 .notifications-box {
     width: 420px;
     height: 100vh;
-    padding: 0 24px;
+    padding: 0 .7rem;
 }
 
 .notifications-header {
-    padding: 24px 0 24px 0;
+    padding: .7rem 0;
     /* border-bottom: 1px solid #d8d8d8; */
 }
 
@@ -16,16 +16,17 @@
 }
 
 .notifications-content {
-    padding: 0 15px 0 15px;
+    padding: 0 .7rem;
+    line-height: 2;
 }
 
 .incomming-request {
-    margin-top: 15px;
+    margin-top: .7rem;
     width: 100%;
 }
 
 .incomming-request-username {
-    margin-left: 15px;
+    margin-left: .7rem;
     outline: none;
 }
 

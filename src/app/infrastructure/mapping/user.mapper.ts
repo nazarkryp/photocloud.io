@@ -25,6 +25,10 @@ export class UserMapper implements IMapper<UserResponse, UserViewModel> {
     }
 
     public mapFromResponseArray(responseArray: UserResponse[]): UserViewModel[] {
+        if (!responseArray) {
+            return null;
+        }
+
         return responseArray.map(e => this.mapFromResponse(e));
     }
 }

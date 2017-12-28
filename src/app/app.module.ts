@@ -30,7 +30,7 @@ import { FileUploadModule } from 'ng2-file-upload';
 import { RelationshipActionPipe } from './pipes/relationship-action.pipe';
 import { RawPipe } from './pipes/raw.pipe';
 
-import { ErrorBoxComponent } from './components/shared/error-box/error-box.component';
+import { ErrorBoxComponent } from './components/shared/user-media-error/user-media-error.component';
 import { CaptionComponent } from './components/shared/caption/caption.component';
 import { TagsComponent } from './components/explore/tags/tags.component';
 import { ConfirmComponent } from './components/shared/confirm/confirm.component';
@@ -56,6 +56,7 @@ import { WebApiClient } from 'app/infrastructure/communication';
 import { LocalStorageService } from 'app/infrastructure/services/storage';
 import { SplashScreenComponent } from './components/shared/splash-screen/splash-screen.component';
 import { CovalentModule } from 'app/core/covalent.module';
+import { LikedMediaComponent } from './components/liked-media/liked-media.component';
 
 @NgModule({
     declarations: [
@@ -81,7 +82,8 @@ import { CovalentModule } from 'app/core/covalent.module';
         ConnectionErrorComponent,
         UserDetailsComponent,
         FooterComponent,
-        SplashScreenComponent
+        SplashScreenComponent,
+        LikedMediaComponent
     ],
     entryComponents: [
         MediaDetailsComponent,

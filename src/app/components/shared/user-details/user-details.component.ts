@@ -7,10 +7,11 @@ import { Observable } from 'rxjs/Observable';
 
 import { CurrentUserService } from 'app/infrastructure/services';
 import { CurrentUserViewModel, AttachmentViewModel, UserViewModel } from 'app/models/view';
-import { Error, RelationshipStatus } from 'app/models/shared';
+import { RelationshipStatus } from 'app/models/shared';
 import { UserService, UploaderService, } from 'app/services';
-import { FileUploader } from 'ng2-file-upload';
 import { UsersComponent } from 'app/components/shared/users/users.component';
+
+import { FileUploader } from 'ng2-file-upload';
 
 @Component({
     selector: 'app-user-details',

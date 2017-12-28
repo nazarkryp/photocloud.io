@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Resolve, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 
-import { UserService } from '../../services';
+import { UserService } from 'app/services';
 import { PageViewModel, UserViewModel } from 'app/models/view';
 
 import { NgProgress } from 'ngx-progressbar';

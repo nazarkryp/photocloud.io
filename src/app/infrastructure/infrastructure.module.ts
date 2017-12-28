@@ -10,7 +10,7 @@ import { CurrentUserService } from 'app/infrastructure/services';
 import { LocalStorageService } from 'app/infrastructure/services/storage';
 import { ClipboardService } from 'app/infrastructure/services';
 import { TokenMapper, UserMapper } from 'app/infrastructure/mapping';
-import { MediaResolver, UserListResolver, UserResolver } from 'app/infrastructure/resolvers';
+import { RecentMediaResolver, LikedMediaResolver, UserListResolver, UserMediaResolver } from 'app/infrastructure/resolvers';
 
 import {
     AccountNotActiveFilter,
@@ -35,9 +35,10 @@ import { AttachmentMapper, CommentMapper, MediaMapper, PaginationMapper } from '
         TokenMapper,
         UserMapper,
         MemoryCache,
-        MediaResolver,
+        LikedMediaResolver,
+        RecentMediaResolver,
         UserListResolver,
-        UserResolver,
+        UserMediaResolver,
         {
             provide: HTTP_INTERCEPTORS,
             useClass: AuthenticationInterceptor,

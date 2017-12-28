@@ -1,9 +1,12 @@
 import { Component, ViewChild, OnInit, OnDestroy } from '@angular/core';
-import { Router, NavigationEnd } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
+import { Router, NavigationEnd, NavigationStart, NavigationCancel, ResolveStart, ResolveEnd } from '@angular/router';
 import { MatSidenav } from '@angular/material';
 import { trigger, transition, style, animate } from '@angular/animations';
+
 import { CurrentUserService } from 'app/infrastructure/services';
+
+import { NgProgress } from 'ngx-progressbar';
 
 @Component({
     selector: 'app-root',
@@ -26,7 +29,8 @@ export class AppComponent implements OnInit {
 
     constructor(
         private router: Router,
-        private currentUserService: CurrentUserService) {
+        private currentUserService: CurrentUserService,
+        private progress: NgProgress) {
         this.currentUserService.getCurrentUser(true)
             .take(1)
             .subscribe(currentUser => {
@@ -51,7 +55,13 @@ export class AppComponent implements OnInit {
     }
 
     public ngOnInit(): void {
-        this.router.events.subscribe((event: any): void => {
+        this.router.events.subscribe(event => {
+            if (event instanceof ResolveStart) {
+                this.progress.start();
+            } else if (event instanceof ResolveEnd) {
+                this.progress.done();
+            }
+
             this.navigationInterceptor(event);
         });
     }

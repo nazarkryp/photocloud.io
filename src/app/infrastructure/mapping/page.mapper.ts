@@ -11,6 +11,7 @@ export class PageMapper<S, T> {
 
     public mapFromResponse(response: PageResponse<S>): PageViewModel<T> {
         const page = new PageViewModel<T>();
+        console.log(response);
         page.hasMoreItems = response.hasMoreItems;
         page.pagination = response.pagination;
         page.data = this.mapper.mapFromResponseArray(response.data);

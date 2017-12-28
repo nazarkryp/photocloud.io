@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 
 import { MediaResponse } from 'app/models/response';
-import { MediaViewModel } from 'app/models/view';
+import { MediaViewModel, UpdateMediaModel } from 'app/models/view';
 import { UserMapper } from 'app/infrastructure/mapping/user.mapper';
 import { CommentMapper } from 'app/infrastructure/mapping/comment.mapper';
 import { AttachmentMapper } from 'app/infrastructure/mapping/attachment.mapper';
 import { IMapper } from 'app/infrastructure/mapping/mapper';
+import { UpdateMediaRequest } from 'app/models/request';
 
 @Injectable()
 export class MediaMapper implements IMapper<MediaResponse, MediaViewModel> {
@@ -33,6 +34,20 @@ export class MediaMapper implements IMapper<MediaResponse, MediaViewModel> {
     }
 
     public mapFromResponseArray(responseArray: MediaResponse[]): MediaViewModel[] {
+        if (!responseArray) {
+            return null;
+        }
+
         return responseArray.map(response => this.mapFromResponse(response));
+    }
+
+    public mapUpdateToRequest(updateMediaModel: UpdateMediaModel): UpdateMediaRequest {
+        const request = new UpdateMediaRequest();
+
+        request.allowComments = updateMediaModel.allowComments;
+        request.caption = updateMediaModel.caption;
+        request.attachmentsToRemove = updateMediaModel.attachmentsToRemove;
+
+        return request;
     }
 }

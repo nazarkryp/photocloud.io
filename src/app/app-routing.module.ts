@@ -11,14 +11,15 @@ import { MediaDetailsComponent } from './components/shared/media-details/media-d
 import { TagsComponent } from './components/explore/tags/tags.component';
 import { ConnectionErrorComponent } from './components/shared/connection-error/connection-error.component';
 import { AuthenticationGuardService } from './infrastructure/guards/authentication-guard.service';
-import { MediaResolver, UserResolver, UserListResolver } from './infrastructure/resolvers';
+import { RecentMediaResolver, UserMediaResolver, UserListResolver, LikedMediaResolver } from './infrastructure/resolvers';
+import { LikedMediaComponent } from 'app/components/liked-media/liked-media.component';
 
 const routes: Routes = [
     {
         path: '',
         component: MediaComponent,
         canActivate: [AuthenticationGuardService],
-        resolve: { page: MediaResolver },
+        resolve: { page: RecentMediaResolver },
         data: {
             title: 'PhotoCloud'
         }
@@ -50,9 +51,11 @@ const routes: Routes = [
     {
         path: ':username',
         component: UserMediaComponent,
-        resolve: { user: UserResolver },
+        resolve: {
+            userMedia: UserMediaResolver
+        },
         data: {
-            title: 'PhotoCloud - UserViewModel\' Posts'
+            title: 'PhotoCloud - User Posts'
         }
     },
     {
@@ -67,6 +70,16 @@ const routes: Routes = [
         component: TagsComponent,
         data: {
             title: 'PhotoCloud - Explore Tags'
+        }
+    },
+    {
+        path: ':username/liked',
+        component: LikedMediaComponent,
+        resolve: {
+            page: LikedMediaResolver
+        },
+        data: {
+            title: 'PhotoCloud - Liked'
         }
     },
     {

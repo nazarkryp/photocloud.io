@@ -4,8 +4,7 @@ import { MatDialogRef, MatSnackBarConfig, MatSnackBar, MAT_DIALOG_DATA } from '@
 @Component({
     selector: 'app-confirm',
     templateUrl: './confirm.component.html',
-    styleUrls: ['./confirm.component.css'],
-    encapsulation: ViewEncapsulation.None
+    styleUrls: ['./confirm.component.css']
 })
 export class ConfirmComponent {
     public message: string;

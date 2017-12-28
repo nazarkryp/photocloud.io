@@ -8,7 +8,7 @@ import { PageViewModel, MediaViewModel } from 'app/models/view';
 import { NgProgress } from 'ngx-progressbar';
 
 @Injectable()
-export class MediaResolver implements Resolve<PageViewModel<MediaViewModel>> {
+export class RecentMediaResolver implements Resolve<PageViewModel<MediaViewModel>> {
     constructor(
         private mediaService: MediaService,
         private progress: NgProgress) { }

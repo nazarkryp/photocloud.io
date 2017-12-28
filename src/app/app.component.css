@@ -11,7 +11,7 @@ h1 {
 }
 
 .root-container {
-    height: 100vh;
+    min-height: 100vh;
     overflow-y: hidden;
 }
 
@@ -20,6 +20,13 @@ h1 {
     width: 100%;
     min-height: 100vh;
     overflow-y: hidden;
+}
+
+.router-container {
+    min-height: calc(100vh - 128px);
+    overflow-y: hidden;
+    padding: 3rem 0;
+    box-sizing: border-box;
 }
 
 .mat-fab-bottom-left {

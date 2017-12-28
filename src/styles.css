@@ -3,7 +3,7 @@ body {
     background-color: #FAFAFA;
     color: #444444;
     font-family: Roboto, sans-serif;
-    overflow-y: auto;
+    overflow-y: scroll;
 }
 
 a {
@@ -108,4 +108,9 @@ a {
     font-size: 0.8em;
     letter-spacing: 1px;
     font-weight: bold;
+}
+
+.mat-button.btn-default:disabled {
+    background: lightgray;
+    color: black;
 }

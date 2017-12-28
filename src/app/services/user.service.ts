@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { WebApiClient } from '../infrastructure/communication';
+import { WebApiClient } from 'app/infrastructure/communication';
+import { UserMapper } from 'app/infrastructure/mapping';
 
 import { PageViewModel, PaginationViewModel, UserViewModel } from 'app/models/view';
-import { UserMapper } from '../infrastructure/mapping/user.mapper';
 import { ValidationResult } from 'app/models/common';
 
 @Injectable()

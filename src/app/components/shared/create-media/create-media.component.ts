@@ -16,8 +16,7 @@ import { environment } from 'app/../environments/environment';
 @Component({
     selector: 'app-create-media',
     templateUrl: './create-media.component.html',
-    styleUrls: ['./create-media.component.css'],
-    encapsulation: ViewEncapsulation.None
+    styleUrls: ['./create-media.component.css']
 })
 export class CreateMediaComponent implements OnInit, OnDestroy {
     public currentUser: CurrentUserViewModel;
