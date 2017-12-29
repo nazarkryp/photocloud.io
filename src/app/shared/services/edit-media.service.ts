@@ -35,7 +35,33 @@ export class EditMediaService {
     }
 
     public removeAttachment(updateMediaModel: UpdateMediaModel, attachmentToRemove: UpdateAttachmentViewModel) {
-        if (updateMediaModel.attachments.length === 1) {
+        this.remove(attachmentToRemove);
+
+        // if (updateMediaModel.attachments) {
+        //     const dialogRef = this.dialog.open(ConfirmComponent, {
+        //         data: {
+        //             title: 'DELETE POST',
+        //             message: 'Post without attachments will be removed. Are you sure you want you want to delete this post?'
+        //         }
+        //     });
+
+        //     dialogRef.afterClosed()
+        //         .subscribe(remove => {
+        //             if (remove) {
+        //                 this.remove(updateMediaModel, attachmentToRemove);
+        //             }
+        //         });
+        // } else {
+
+        // }
+    }
+
+    public restoreAttachment(updateMediaModel: UpdateMediaModel, attachmentToRestore: UpdateAttachmentViewModel) {
+        attachmentToRestore.removed = false;
+    }
+
+    public updateMedia(media: MediaViewModel, updateMediaModel: UpdateMediaModel) {
+        if (updateMediaModel.remove) {
             const dialogRef = this.dialog.open(ConfirmComponent, {
                 data: {
                     title: 'DELETE POST',
@@ -46,15 +72,15 @@ export class EditMediaService {
             dialogRef.afterClosed()
                 .subscribe(remove => {
                     if (remove) {
-                        this.remove(updateMediaModel, attachmentToRemove);
+                        this.update(media, updateMediaModel);
                     }
                 });
         } else {
-            this.remove(updateMediaModel, attachmentToRemove);
+            this.update(media, updateMediaModel);
         }
     }
 
-    public update(media: MediaViewModel, updateMediaModel: UpdateMediaModel) {
+    private update(media: MediaViewModel, updateMediaModel: UpdateMediaModel) {
         const captionBakup = media.caption;
         const attachmentsBackup = media.attachments;
 
@@ -68,16 +94,7 @@ export class EditMediaService {
             });
     }
 
-    private remove(updateMediaModel: UpdateMediaModel, attachmentToRemove: UpdateAttachmentViewModel) {
-        // const indexToRemove = updateMediaModel.attachments.findIndex(e => e.id === attachmentToRemove.id);
-        // updateMediaModel.attachments.splice(indexToRemove, 1);
-
+    private remove(attachmentToRemove: UpdateAttachmentViewModel) {
         attachmentToRemove.removed = true;
-
-        if (!updateMediaModel.attachmentsToRemove) {
-            updateMediaModel.attachmentsToRemove = new Array<number>();
-        }
-
-        updateMediaModel.attachmentsToRemove.push(attachmentToRemove.id);
     }
 }

@@ -134,7 +134,7 @@ export class MediaItemComponent implements OnInit, OnDestroy {
     }
 
     public update() {
-        this.editMediaService.update(this.media, this.updateMediaModel);
+        this.editMediaService.updateMedia(this.media, this.updateMediaModel);
     }
 
     public cancel() {

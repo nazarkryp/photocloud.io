@@ -23,8 +23,7 @@
         <div class="media-details-info-container" fxLayout="column" *ngIf="!media.editing; else editingTemplate">
             <div>
                 <div class="media-details-header" fxLayout="row" fxLayoutAlign="start center" style="padding-bottom: .7rem; border-bottom: 1px solid #d8d8d8;">
-                    <img class="media-avatar" [routerLink]="['/', media.user.username]" src="{{media.user.pictureUri}}" default="assets/images/user-default-image.png"
-                        alt="profile">
+                    <img class="media-avatar" [routerLink]="['/', media.user.username]" src="{{media.user.pictureUri}}" default="assets/images/user-default-image.png" alt="profile">
                     <div fxLayout="row" fxLayoutAlign="space-between center" fxFlex>
                         <div class="media-details-info" fxLayout="column">
                             <a class="media-details-username" [routerLink]="['/', media.user.username]">{{media.user.username}}</a>
@@ -80,27 +79,33 @@
         <div style="padding-top: .5rem;">
             <mat-slide-toggle [(ngModel)]="updateMediaModel.allowComments" labelPosition="before">Allow comments</mat-slide-toggle>
         </div>
-        <div class="media-details-edit-attachments" fxFlex>
-            <div *ngFor="let attachment of updateMediaModel.attachments; let index = index;">
-                <div class="media-details-edit-item" [ngClass]="{ 'removed' : attachment.removed }">
-                    <div class="media-details-edit-after">
-                        <mat-icon class="btn-icon-light" (click)="removeAttachment(attachment)">clear</mat-icon>
+        <div fxFlex>
+            <div class="media-details-edit-attachments">
+                <div *ngFor="let attachment of updateMediaModel.attachments; let index = index;">
+                    <div class="media-details-edit-item" [ngClass]="{ 'removed' : attachment.removed }">
+                        <div class="media-details-edit-overlay" fxLayout="row" fxLayoutAlign="end start">
+                            <mat-icon class="btn-icon-light" (click)="removeAttachment(attachment)">clear</mat-icon>
+                        </div>
+                        <div class="media-details-edit-overlay-removed" fxLayout="column" fxLayoutAlign="center center">
+                            <span style="letter-spacing: 1px; font-weight: bold;">REMOVED</span>
+                            <button mat-icon-button color="primary" (click)="restoreRemovedAttachment(attachment)">
+                                <mat-icon>restore</mat-icon>
+                            </button>
+                        </div>
+                        <img class="media-details-edit-thumbnail" src="{{attachment.uri}}" alt="attachment">
                     </div>
-                    <div class="media-details-edit-removed" fxLayout="column" fxLayoutAlign="center center">
-                        <span>Removed</span>
-                        <a>Undo</a>
-                    </div>
-                    <img class="media-details-edit-thumbnail" src="{{attachment.uri}}" alt="attachment">
                 </div>
             </div>
-            <!-- updateMediaModel.attachmentsToRemove.find(id => id === attachment.id) -->
         </div>
         <div style="border-top: 1px solid #d8d8d8; padding-top: .7rem;">
             <div fxLayout="row" fxLayoutAlign="space-between center">
                 <div fxLayout="row" fxLayoutAlign="start center">
-                    <button mat-raised-button color="primary" (click)="update()">SAVE</button>
+                    <button mat-raised-button color="primary" (click)="update()">{{updateMediaModel.remove ? 'REMOVE' : 'SAVE' }}</button>
                     <button mat-button (click)="cancel()">CANCEL</button>
                 </div>
+                <button mat-icon-button color="primary">
+                    <mat-icon>delete</mat-icon>
+                </button>
                 <!-- <mat-slide-toggle [(ngModel)]="updateMediaModel.allowComments" labelPosition="before">Allow comments</mat-slide-toggle> -->
             </div>
         </div>

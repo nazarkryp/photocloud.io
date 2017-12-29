@@ -15,6 +15,7 @@
 .user-media-item {
     position: relative;
     overflow: hidden;
+    box-shadow: 0 3px 8px -3px rgba(0, 0, 0, 0.26);
 }
 
 .user-media-item:after {

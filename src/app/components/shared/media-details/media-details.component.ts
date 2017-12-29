@@ -25,7 +25,6 @@ import { EditMediaService } from 'app/shared/services';
     selector: 'app-media-details',
     templateUrl: './media-details.component.html',
     styleUrls: ['./media-details.component.css'],
-    encapsulation: ViewEncapsulation.None,
     animations: [
         TdBounceAnimation(),                    // using implicit anchor name 'tdBounce' in template
         TdFlashAnimation(),                     // using implicit anchor name 'tdFlash' in template
@@ -187,8 +186,12 @@ export class MediaDetailsComponent implements OnInit, OnDestroy {
         this.editMediaService.removeAttachment(this.updateMediaModel, attachmentToRemove);
     }
 
+    public restoreRemovedAttachment(attachmentToRestore: UpdateAttachmentViewModel) {
+        this.editMediaService.restoreAttachment(this.updateMediaModel, attachmentToRestore);
+    }
+
     public update() {
-        this.editMediaService.update(this.media, this.updateMediaModel);
+        this.editMediaService.updateMedia(this.media, this.updateMediaModel);
     }
 
     public cancel() {
