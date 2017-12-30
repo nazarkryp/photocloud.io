@@ -6,7 +6,7 @@ import 'rxjs/add/operator/mergeMap';
 import { ConfirmComponent } from 'app/components/shared/confirm/confirm.component';
 
 import { MediaService } from 'app/services';
-import { UpdateMediaModel, MediaViewModel, UpdateAttachmentViewModel } from 'app/models/view';
+import { UpdateMediaViewModel, MediaViewModel, UpdateAttachmentViewModel } from 'app/models/view';
 
 @Injectable()
 export class EditMediaService {
@@ -14,12 +14,13 @@ export class EditMediaService {
         private dialog: MatDialog,
         private mediaService: MediaService) { }
 
-    public createUpdateModel(media: MediaViewModel): UpdateMediaModel {
-        const updateMediaModel = new UpdateMediaModel();
+    public createUpdateModel(media: MediaViewModel): UpdateMediaViewModel {
+        const updateMediaModel = new UpdateMediaViewModel();
 
         updateMediaModel.id = media.id;
         updateMediaModel.caption = media.caption;
         updateMediaModel.allowComments = media.allowComments;
+        updateMediaModel.coverId = media.coverId;
 
         updateMediaModel.attachments = media.attachments.map(attachment => {
             const updateAttachment = new UpdateAttachmentViewModel();
@@ -31,10 +32,20 @@ export class EditMediaService {
             return updateAttachment;
         });
 
+        updateMediaModel.attachments.find(a => a.id === updateMediaModel.coverId).isSelected = true;
+
         return updateMediaModel;
     }
 
-    public removeAttachment(updateMediaModel: UpdateMediaModel, attachmentToRemove: UpdateAttachmentViewModel) {
+    public setAsCover() {
+    }
+
+    public select(updateMediaModel: UpdateMediaViewModel, attachmentToSelect: UpdateAttachmentViewModel) {
+        updateMediaModel.attachments.forEach(attachment => attachment.isSelected = false);
+        attachmentToSelect.isSelected = true;
+    }
+
+    public removeAttachment(updateMediaModel: UpdateMediaViewModel, attachmentToRemove: UpdateAttachmentViewModel) {
         this.remove(attachmentToRemove);
 
         // if (updateMediaModel.attachments) {
@@ -56,11 +67,11 @@ export class EditMediaService {
         // }
     }
 
-    public restoreAttachment(updateMediaModel: UpdateMediaModel, attachmentToRestore: UpdateAttachmentViewModel) {
+    public restoreAttachment(updateMediaModel: UpdateMediaViewModel, attachmentToRestore: UpdateAttachmentViewModel) {
         attachmentToRestore.removed = false;
     }
 
-    public updateMedia(media: MediaViewModel, updateMediaModel: UpdateMediaModel) {
+    public updateMedia(media: MediaViewModel, updateMediaModel: UpdateMediaViewModel) {
         if (updateMediaModel.remove) {
             const dialogRef = this.dialog.open(ConfirmComponent, {
                 data: {
@@ -80,7 +91,7 @@ export class EditMediaService {
         }
     }
 
-    private update(media: MediaViewModel, updateMediaModel: UpdateMediaModel) {
+    private update(media: MediaViewModel, updateMediaModel: UpdateMediaViewModel) {
         const captionBakup = media.caption;
         const attachmentsBackup = media.attachments;
 
@@ -89,6 +100,10 @@ export class EditMediaService {
         this.mediaService.update(updateMediaModel)
             .subscribe((updatedMedia) => {
                 media.caption = updatedMedia.caption;
+
+                if (media.attachments.length !== updatedMedia.attachments.length) {
+                    media.attachments = updatedMedia.attachments;
+                }
             }, (error) => {
                 media.caption = captionBakup;
             });

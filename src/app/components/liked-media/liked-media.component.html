@@ -27,7 +27,7 @@
             </div>
         </div>
         <div fxLayout="row" fxLayoutAlign="center center" *ngIf="page.hasMoreItems">
-            <button mat-raised-button (click)="getMedia()" [disabled]="isLoading">Load More</button>
+            <button mat-raised-button (click)="getLikedMedia()" [disabled]="isLoading">Load More</button>
         </div>
     </div>
 </div>

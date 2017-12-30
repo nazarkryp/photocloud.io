@@ -11,6 +11,7 @@ export class MediaResponse {
     public created: Date;
     public commentsCount: number;
     public attachments: AttachmentResponse[];
+    public coverId: number;
     public comments: CommentResponse[];
     public user: UserResponse;
     public likes: UserResponse[];

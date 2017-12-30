@@ -4,7 +4,7 @@ import { Observable } from 'rxjs/Observable';
 
 import { WebApiClient } from 'app/infrastructure/communication';
 import { UserMapper } from 'app/infrastructure/mapping';
-import { PageViewModel, PaginationViewModel, MediaViewModel, UserViewModel, CreateMediaModel, UpdateMediaModel } from 'app/models/view';
+import { PageViewModel, PaginationViewModel, MediaViewModel, UserViewModel, CreateMediaModel, UpdateMediaViewModel } from 'app/models/view';
 import { PageResponse, MediaResponse } from 'app/models/response';
 import { MediaMapper } from 'app/infrastructure/mapping';
 import { PageMapper } from 'app/infrastructure/mapping';
@@ -86,9 +86,12 @@ export class MediaService {
         return this.webApiClient.get<MediaViewModel>(`media/${mediaId}`);
     }
 
-    public update(media: UpdateMediaModel): Observable<MediaViewModel> {
+    public update(media: UpdateMediaViewModel): Observable<MediaViewModel> {
         const request = this.mediaMapper.mapUpdateToRequest(media);
-        return this.webApiClient.patch(`media/${media.id}`, request);
+        return this.webApiClient.patch<MediaResponse>(`media/${media.id}`, request)
+            .map(updatedMedia => {
+                return this.mediaMapper.mapFromResponse(updatedMedia);
+            });
     }
 
     public removeMedia(mediaId: number) {

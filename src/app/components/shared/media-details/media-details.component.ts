@@ -16,7 +16,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { ConfirmComponent } from 'app/components/shared/confirm/confirm.component';
 
 import { CurrentUserService } from 'app/infrastructure/services';
-import { MediaViewModel, UserViewModel, CommentViewModel, CurrentUserViewModel, UpdateMediaModel, UpdateAttachmentViewModel } from 'app/models/view';
+import { MediaViewModel, UserViewModel, CommentViewModel, CurrentUserViewModel, UpdateMediaViewModel, UpdateAttachmentViewModel } from 'app/models/view';
 import { MediaService, CommentService } from 'app/services';
 import { NgProgress } from 'ngx-progressbar';
 import { EditMediaService } from 'app/shared/services';
@@ -39,7 +39,7 @@ export class MediaDetailsComponent implements OnInit, OnDestroy {
     @Output() public onRemoved = new EventEmitter<MediaViewModel>();
     @ViewChild('player') public player: any;
 
-    public updateMediaModel: UpdateMediaModel;
+    public updateMediaModel: UpdateMediaViewModel;
     public text: string;
     public shareLink: string;
     public currentUser: CurrentUserViewModel;
@@ -180,6 +180,10 @@ export class MediaDetailsComponent implements OnInit, OnDestroy {
     public edit() {
         this.updateMediaModel = this.editMediaService.createUpdateModel(this.media);
         this.media.editing = true;
+    }
+
+    public select(attachment: UpdateAttachmentViewModel) {
+        this.editMediaService.select(this.updateMediaModel, attachment);
     }
 
     public removeAttachment(attachmentToRemove: UpdateAttachmentViewModel) {

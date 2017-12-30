@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { MediaResponse } from 'app/models/response';
-import { MediaViewModel, UpdateMediaModel } from 'app/models/view';
+import { MediaViewModel, UpdateMediaViewModel, AttachmentViewModel } from 'app/models/view';
 import { UserMapper } from 'app/infrastructure/mapping/user.mapper';
 import { CommentMapper } from 'app/infrastructure/mapping/comment.mapper';
 import { AttachmentMapper } from 'app/infrastructure/mapping/attachment.mapper';
@@ -20,7 +20,11 @@ export class MediaMapper implements IMapper<MediaResponse, MediaViewModel> {
 
         media.id = response.id;
         media.allowComments = response.allowComments;
+
+        media.coverId = response.coverId;
         media.attachments = this.attachmentMapper.mapFromResponseArray(response.attachments);
+        media.attachments = this.moveCoverToFront(media);
+
         media.caption = response.caption;
         media.created = new Date(response.created);
         media.comments = this.commentMapper.mapFromResponseArray(response.comments);
@@ -41,7 +45,7 @@ export class MediaMapper implements IMapper<MediaResponse, MediaViewModel> {
         return responseArray.map(response => this.mapFromResponse(response));
     }
 
-    public mapUpdateToRequest(updateMediaModel: UpdateMediaModel): UpdateMediaRequest {
+    public mapUpdateToRequest(updateMediaModel: UpdateMediaViewModel): UpdateMediaRequest {
         const request = new UpdateMediaRequest();
 
         request.allowComments = updateMediaModel.allowComments;
@@ -49,5 +53,27 @@ export class MediaMapper implements IMapper<MediaResponse, MediaViewModel> {
         request.attachmentsToRemove = updateMediaModel.attachments.filter(a => a.removed).map(e => e.id);
 
         return request;
+    }
+
+    private moveCoverToFront(media: MediaViewModel) {
+        let newIndex = 0;
+
+        const index = media.attachments.findIndex(e => e.id === media.coverId);
+        const attachment = media.attachments.find(e => e.id === media.coverId);
+
+        if (index > -1 && index !== newIndex) {
+            if (newIndex >= media.attachments.length) {
+                newIndex = media.attachments.length
+            }
+
+            const array = media.attachments.slice();
+
+            array.splice(index, 1);
+            array.splice(newIndex, 0, attachment);
+
+            return array;
+        }
+
+        return media.attachments;
     }
 }

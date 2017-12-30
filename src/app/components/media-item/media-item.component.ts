@@ -4,7 +4,7 @@ import { MatSnackBar, MatDialog, MatSnackBarConfig } from '@angular/material';
 import { Subscription } from 'rxjs/Subscription';
 
 import { CurrentUserService } from 'app/infrastructure/services';
-import { MediaViewModel, UserViewModel, CommentViewModel, CurrentUserViewModel, UpdateMediaModel, UpdateAttachmentViewModel } from 'app/models/view';
+import { MediaViewModel, UserViewModel, CommentViewModel, CurrentUserViewModel, UpdateMediaViewModel, UpdateAttachmentViewModel } from 'app/models/view';
 import { CommentService, MediaService } from 'app/services';
 import { UsersComponent } from 'app/components/shared/users/users.component';
 import { trigger, style, animate, transition } from '@angular/animations';
@@ -30,7 +30,7 @@ export class MediaItemComponent implements OnInit, OnDestroy {
 
     public text: string;
     public shareLink: string;
-    public updateMediaModel: UpdateMediaModel;
+    public updateMediaModel: UpdateMediaViewModel;
 
     public currentUser: CurrentUserViewModel;
     public currentUserSubscription: Subscription;

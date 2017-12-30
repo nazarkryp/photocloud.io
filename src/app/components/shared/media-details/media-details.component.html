@@ -23,18 +23,23 @@
         <div class="media-details-info-container" fxLayout="column" *ngIf="!media.editing; else editingTemplate">
             <div>
                 <div class="media-details-header" fxLayout="row" fxLayoutAlign="start center" style="padding-bottom: .7rem; border-bottom: 1px solid #d8d8d8;">
-                    <img class="media-avatar" [routerLink]="['/', media.user.username]" src="{{media.user.pictureUri}}" default="assets/images/user-default-image.png" alt="profile">
-                    <div fxLayout="row" fxLayoutAlign="space-between center" fxFlex>
-                        <div class="media-details-info" fxLayout="column">
-                            <a class="media-details-username" [routerLink]="['/', media.user.username]">{{media.user.username}}</a>
-                            <div class="media-date">
-                                <span class="media-details-created">{{media.created | timeAgo}}</span>
+                    <img class="media-avatar" [routerLink]="['/', media.user.username]" src="{{media.user.pictureUri}}" default="assets/images/user-default-image.png"
+                        alt="profile">
+                    <div fxLayout="row" fxLayoutAlign="start center" fxFlex>
+                        <div fxLayout="row" fxLayoutAlign="space-between start" style="width: 100%;">
+                            <div class="media-details-info" fxLayout="column">
+                                <a class="media-details-username" [routerLink]="['/', media.user.username]">{{media.user.username}}</a>
+                                <div class="media-date">
+                                    <span class="media-details-created">{{media.created | timeAgo}}</span>
+                                </div>
                             </div>
+                            <button mat-raised-button color="primary" *ngIf="currentUser && currentUser.id !== media.user.id">
+                                <strong>FOLLOW</strong>
+                            </button>
+                            <button mat-icon-button *ngIf="currentUser && currentUser.id === media.user.id" (click)="edit()">
+                                <mat-icon class="btn-icon mat-24">edit</mat-icon>
+                            </button>
                         </div>
-                        <button class="btn-relationships" mat-button *ngIf="currentUser && currentUser.id !== media.user.id">FOLLOW</button>
-                        <button mat-icon-button *ngIf="currentUser && currentUser.id === media.user.id" (click)="edit()">
-                            <mat-icon class="btn-icon mat-24">edit</mat-icon>
-                        </button>
                     </div>
                 </div>
             </div>
@@ -82,7 +87,11 @@
         <div fxFlex>
             <div class="media-details-edit-attachments">
                 <div *ngFor="let attachment of updateMediaModel.attachments; let index = index;">
-                    <div class="media-details-edit-item" [ngClass]="{ 'removed' : attachment.removed }">
+                    <div mat-ripple class="media-details-edit-item" [ngClass]="{ 'removed' : attachment.removed, 'selected' : attachment.isSelected }"
+                        (click)="select(attachment)">
+                        <div class="media-details-edit-overlay" fxLayout="row" fxLayoutAlign="end start">
+                            <mat-icon class="btn-icon-light" (click)="removeAttachment(attachment)">clear</mat-icon>
+                        </div>
                         <div class="media-details-edit-overlay" fxLayout="row" fxLayoutAlign="end start">
                             <mat-icon class="btn-icon-light" (click)="removeAttachment(attachment)">clear</mat-icon>
                         </div>
