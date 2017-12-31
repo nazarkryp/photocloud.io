@@ -67,8 +67,14 @@ export class CreateMediaComponent implements OnInit, OnDestroy {
     }
 
     public createPost() {
-        this.media.attachmentIds = this.attachments.map((attachment) => {
-            return attachment.id;
+        this.media.attachments = this.attachments.map((attachment) => {
+            const createAttachment = new AttachmentViewModel();
+
+            createAttachment.id = attachment.id;
+            createAttachment.uri = attachment.uri;
+            createAttachment.type = attachment.type;
+
+            return attachment;
         });
 
         this.mediaService.createMedia(this.media)

@@ -3,12 +3,9 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
 import { WebApiClient } from 'app/infrastructure/communication';
-import { UserMapper } from 'app/infrastructure/mapping';
 import { PageViewModel, PaginationViewModel, MediaViewModel, UserViewModel, CreateMediaModel, UpdateMediaViewModel } from 'app/models/view';
 import { PageResponse, MediaResponse } from 'app/models/response';
-import { MediaMapper } from 'app/infrastructure/mapping';
-import { PageMapper } from 'app/infrastructure/mapping';
-import { PaginationMapper } from 'app/infrastructure/mapping';
+import { MediaMapper, PageMapper, PaginationMapper, UserMapper } from 'app/infrastructure/mapping';
 
 @Injectable()
 export class MediaService {
@@ -23,7 +20,10 @@ export class MediaService {
     }
 
     public createMedia(createMediaModel: CreateMediaModel) {
-        return this.webApiClient.post<MediaViewModel>('media', createMediaModel);
+        const request = this.mediaMapper.mapCreateToRequest(createMediaModel);
+
+        return this.webApiClient.post<MediaResponse>('media', request)
+            .map(response => this.mediaMapper.mapFromResponse(response));
     }
 
     public getRecentMedia(pagination: PaginationViewModel): Observable<PageViewModel<MediaViewModel>> {

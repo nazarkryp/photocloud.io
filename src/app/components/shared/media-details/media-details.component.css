@@ -218,8 +218,19 @@
     opacity: 1;
 }
 
-.media-details-edit-item.selected {
-    opacity: .5;
+.media-details-edit-item .media-details-edit-overlay-selected {
+    background: rgba(255, 255, 255, .9);
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    border-radius: 2px;
+    opacity: 0;
+}
+
+.media-details-edit-item.selected .media-details-edit-overlay-selected {
+    z-index: 1;
+    opacity: 1;
 }
 
 .media-details-edit-item .media-details-edit-overlay-removed {

@@ -33,9 +33,6 @@
                                     <span class="media-details-created">{{media.created | timeAgo}}</span>
                                 </div>
                             </div>
-                            <button mat-raised-button color="primary" *ngIf="currentUser && currentUser.id !== media.user.id">
-                                <strong>FOLLOW</strong>
-                            </button>
                             <button mat-icon-button *ngIf="currentUser && currentUser.id === media.user.id" (click)="edit()">
                                 <mat-icon class="btn-icon mat-24">edit</mat-icon>
                             </button>
@@ -79,7 +76,7 @@
     <div class="media-details-info-container" [ngClass]="{ 'dialog' : isDialog }" fxLayout="column">
         <div class="media-details-caption-edit" fxLayout="column">
             <span style="padding-bottom: .5rem; font-weight: bold;">Edit caption</span>
-            <textarea type="text" rows="5" placeholder="Write a caption..." [(ngModel)]="updateMediaModel.caption"></textarea>
+            <textarea type="text" rows="3" placeholder="Write a caption..." [(ngModel)]="updateMediaModel.caption"></textarea>
         </div>
         <div style="padding-top: .5rem;">
             <mat-slide-toggle [(ngModel)]="updateMediaModel.allowComments" labelPosition="before">Allow comments</mat-slide-toggle>
@@ -92,8 +89,8 @@
                         <div class="media-details-edit-overlay" fxLayout="row" fxLayoutAlign="end start">
                             <mat-icon class="btn-icon-light" (click)="removeAttachment(attachment)">clear</mat-icon>
                         </div>
-                        <div class="media-details-edit-overlay" fxLayout="row" fxLayoutAlign="end start">
-                            <mat-icon class="btn-icon-light" (click)="removeAttachment(attachment)">clear</mat-icon>
+                        <div class="media-details-edit-overlay-selected">
+                            OKAY
                         </div>
                         <div class="media-details-edit-overlay-removed" fxLayout="column" fxLayoutAlign="center center">
                             <span style="letter-spacing: 1px; font-weight: bold;">REMOVED</span>
