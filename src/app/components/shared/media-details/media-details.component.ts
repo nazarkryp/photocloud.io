@@ -1,13 +1,16 @@
-import { Component, Inject, ViewEncapsulation, Optional, OnInit, OnDestroy, Input, Output, EventEmitter, ViewChild } from '@angular/core';
+import { Component, Inject, ViewEncapsulation, Optional, OnInit, OnDestroy, Input, Output, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DOCUMENT } from '@angular/common';
+import { trigger, animate, style, transition, animateChild, group, query, stagger } from '@angular/animations';
 import { MatDialogRef, MatSnackBarConfig, MatSnackBar, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
+
 import {
     TdBounceAnimation,
     TdFlashAnimation,
     TdHeadshakeAnimation,
     TdJelloAnimation,
-    TdPulseAnimation
+    TdPulseAnimation,
+    TdFadeInOutAnimation
 } from '@covalent/core';
 
 import { Observable } from 'rxjs/Observable';
@@ -26,21 +29,32 @@ import { EditMediaService } from 'app/shared/services';
     templateUrl: './media-details.component.html',
     styleUrls: ['./media-details.component.css'],
     animations: [
+        TdFadeInOutAnimation(),
         TdBounceAnimation(),                    // using implicit anchor name 'tdBounce' in template
         TdFlashAnimation(),                     // using implicit anchor name 'tdFlash' in template
         TdHeadshakeAnimation(),                 // using implicit anchor name 'tdHeadshake' in template
         TdJelloAnimation(),                     // using implicit anchor name 'tdJello' in template
-        TdPulseAnimation({ duration: 200 })     // using implicit anchor name 'tdPulse' in template
+        TdPulseAnimation({ duration: 200 }),     // using implicit anchor name 'tdPulse' in template,
+        trigger('content', [
+            transition(':enter', [
+                query('.transition-content', [
+                    style({ transform: 'translateX(50px)', opacity: 0 }),
+                    stagger(0, [
+                        animate('500ms cubic-bezier(0.35, 0, 0.25, 1)', style('*'))
+                    ])
+                ])
+            ])
+        ])
     ]
 })
 export class MediaDetailsComponent implements OnInit, OnDestroy {
     public bounceState = false;
     public isDialog: boolean;
-    @Output() public onRemoved = new EventEmitter<MediaViewModel>();
     @ViewChild('player') public player: any;
 
     public updateMediaModel: UpdateMediaViewModel;
     public text: string;
+    public showCommentBox: boolean;
     public shareLink: string;
     public currentUser: CurrentUserViewModel;
     public currentUserSubscription: Subscription;
@@ -93,7 +107,16 @@ export class MediaDetailsComponent implements OnInit, OnDestroy {
     }
 
     public remove(): void {
-        this.onRemoved.emit(this.media);
+        this.dialog.open(ConfirmComponent, {
+            data: {
+                title: 'DELETE POST',
+                message: 'Are you sure you want you want to delete this media?'
+            }
+        }).afterClosed().subscribe(confirmed => {
+            if (confirmed) {
+                this.dialogRef.close(true);
+            }
+        });
     }
 
     public share(): string {
@@ -130,12 +153,15 @@ export class MediaDetailsComponent implements OnInit, OnDestroy {
         comment.user.username = this.currentUser.username;
 
         this.media.comments.push(comment);
+        this.showCommentBox = false;
+        this.media.commentsCount++;
 
         this.commentService.createComment(this.media.id, { text: text })
             .subscribe(createdComment => {
                 comment.id = createdComment.id;
                 comment.date = createdComment.date;
             }, () => {
+                this.media.commentsCount--;
                 const failedCommentIndex = this.media.comments.findIndex(c => !c.id);
                 this.media.comments.splice(failedCommentIndex, 1);
             });
@@ -199,8 +225,7 @@ export class MediaDetailsComponent implements OnInit, OnDestroy {
     }
 
     public cancel() {
-        this.media.editing = false;
-        this.updateMediaModel = null;
+        this.editMediaService.cancel(this.media, this.updateMediaModel);
     }
 
     public getMedia(mediaId: number) {

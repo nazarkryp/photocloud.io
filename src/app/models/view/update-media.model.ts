@@ -7,6 +7,10 @@ export class UpdateMediaViewModel {
     public coverId: number;
     public attachments: UpdateAttachmentViewModel[];
 
+    public get preview(): UpdateAttachmentViewModel {
+        return this.attachments.find(a => a.id === this.coverId);
+    }
+
     public get remove(): boolean {
         return this.attachments.filter(a => a.removed).length === this.attachments.length;
     }

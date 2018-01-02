@@ -23,6 +23,7 @@ export class TagsComponent implements OnInit, OnDestroy {
     public page: PageViewModel<MediaViewModel> = new PageViewModel<MediaViewModel>();
     public currentUser: CurrentUserViewModel;
     public tag: string;
+    public isLoading: boolean;
 
     constructor(
         public dialog: MatDialog,
@@ -39,8 +40,10 @@ export class TagsComponent implements OnInit, OnDestroy {
 
     public getMedia() {
         this.progress.start();
+        this.isLoading = true;
         this.mediaService.getMediaByTag(this.tag, this.page.pagination)
             .finally(() => {
+                this.isLoading = false;
                 this.progress.done();
             })
             .subscribe(page => {

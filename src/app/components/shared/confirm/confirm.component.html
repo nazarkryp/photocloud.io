@@ -1,19 +1,19 @@
 <div class="confirm-modal" fxLayout="column" fxLayoutAlign="center" fxFlex>
     <div class="confirm-modal-header" fxLayout="row" fxLayoutAlign="space-between center">
-        <span class="confirm-modal-title">{{title}}</span>
+        <span class="confirm-modal-title">{{data.title}}</span>
         <button mat-icon-button (click)="cancel()" tabindex="-1">
             <mat-icon>clear</mat-icon>
         </button>
     </div>
     <div class="confirm-content">
-        <span class="confirm-modal-message">{{message}}</span>
+        <span class="confirm-modal-message">{{data.message}}</span>
     </div>
     <div class="confirm-actions" fxLayout="row" fxLayoutAlign="end center">
         <button mat-button (click)="cancel()" tabindex="-1">
-            <strong>CANCEL</strong>
+            <strong>{{data.cancelButton ? data.cancelButton: 'CANCEL'}}</strong>
         </button>
         <button class="confirm-button" mat-raised-button color="primary" (click)="confirm()" tabindex="0">
-            <strong>REMOVE</strong>
+            <strong>{{data.confirmButton ? data.confirmButton: 'CONFIRM'}}</strong>
         </button>
     </div>
 </div>

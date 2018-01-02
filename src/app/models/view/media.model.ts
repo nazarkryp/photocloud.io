@@ -4,6 +4,7 @@ import { UserViewModel } from './user.model';
 
 export class MediaViewModel {
     private _created: Date;
+    private _attachments: AttachmentViewModel[];
 
     public id: number;
     public caption: string;
@@ -11,7 +12,6 @@ export class MediaViewModel {
     public allowComments: boolean;
     public likesCount: number;
     public commentsCount: number;
-    public attachments: AttachmentViewModel[];
     public activeAttachment: number;
     public comments: CommentViewModel[];
     public user: UserViewModel;
@@ -29,5 +29,37 @@ export class MediaViewModel {
         const hours = created.getHours();
         newDate.setHours(hours - offset);
         this._created = newDate;
+    }
+
+    public get attachments(): AttachmentViewModel[] {
+        return this._attachments;
+    }
+
+    public set attachments(attachments: AttachmentViewModel[]) {
+        this._attachments = attachments;
+        this.moveCoverToFront(this);
+    }
+
+    private moveCoverToFront(media: MediaViewModel) {
+        if (!this.coverId || this.coverId === 0) {
+            return;
+        }
+
+        let newIndex = 0;
+        const index = media.attachments.findIndex(e => e.id === media.coverId);
+        const attachment = media.attachments.find(e => e.id === media.coverId);
+
+        if (index > -1 && index !== newIndex) {
+            if (newIndex >= media.attachments.length) {
+                newIndex = media.attachments.length
+            }
+
+            const array = media.attachments.slice();
+
+            array.splice(index, 1);
+            array.splice(newIndex, 0, attachment);
+
+            media.attachments = array;
+        }
     }
 }

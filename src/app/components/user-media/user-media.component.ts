@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewContainerRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material';
 
@@ -13,6 +13,7 @@ import { RelationshipStatus, ValidationResult, } from 'app/models/shared'
 import { MediaDetailsComponent } from 'app/components/shared/media-details/media-details.component';
 import { UsersComponent } from '../shared/users/users.component';
 import { NgProgress } from 'ngx-progressbar';
+import { ConfirmComponent } from 'app/components/shared/confirm/confirm.component';
 
 @Component({
     selector: 'app-user-media',
@@ -33,6 +34,7 @@ export class UserMediaComponent implements OnInit, OnDestroy {
     public isLoadingPosts: boolean;
 
     constructor(
+        private viewContainerRef: ViewContainerRef,
         private accountService: AccountService,
         private mediaService: MediaService,
         private userService: UserService,
@@ -74,11 +76,18 @@ export class UserMediaComponent implements OnInit, OnDestroy {
 
     public openPostDialog(media: MediaViewModel) {
         const dialog = this.dialog.open(MediaDetailsComponent, {
+            viewContainerRef: this.viewContainerRef,
             data: media
         });
 
-        dialog.afterClosed().subscribe(() => {
+        dialog.afterClosed().subscribe(remove => {
             media.editing = false;
+
+            if (remove) {
+                const indexToRemove = this.userMedia.page.data.findIndex(e => e.id === media.id);
+                this.userMedia.page.data.splice(indexToRemove, 1);
+                this.mediaService.removeMedia(media.id).subscribe();
+            }
         });
     }
 

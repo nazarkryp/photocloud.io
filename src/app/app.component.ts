@@ -11,15 +11,7 @@ import { NgProgress } from 'ngx-progressbar';
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
-    styleUrls: ['./app.component.css'],
-    animations: [
-        trigger('enterTransition', [
-            transition(':enter', [
-                style({ transform: 'translateX(50px)', opacity: 0 }),
-                animate('1200ms cubic-bezier(0.35, 0, 0.25, 1)', style('*'))
-            ])
-        ])
-    ]
+    styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
     @ViewChild('notificationsSidenav')

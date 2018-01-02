@@ -3,7 +3,8 @@ import {
     CovalentNotificationsModule,
     CovalentStepsModule,
     CovalentLayoutModule,
-    CovalentCommonModule
+    CovalentCommonModule,
+    CovalentDialogsModule
 } from '@covalent/core';
 
 @NgModule({
@@ -11,13 +12,15 @@ import {
         CovalentCommonModule,
         CovalentLayoutModule,
         CovalentStepsModule,
-        CovalentNotificationsModule
+        CovalentNotificationsModule,
+        CovalentDialogsModule
     ],
     exports: [
         CovalentCommonModule,
         CovalentLayoutModule,
         CovalentStepsModule,
-        CovalentNotificationsModule
+        CovalentNotificationsModule,
+        CovalentDialogsModule
     ]
 })
 export class CovalentModule { }

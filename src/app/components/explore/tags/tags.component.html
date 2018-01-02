@@ -3,7 +3,7 @@
         <div class="tags-header" fxLayout="column" fxLayoutAlign="center center">
             <span class="tags-title">#{{tag}}</span>
             <span class="tags-subtitle" *ngIf="page.data">
-                <strong>{{page?.data.length}}</strong> media
+                <strong>{{page?.data.length}}</strong> posts
             </span>
         </div>
         <div class="tag-media" fxFlex>
@@ -27,7 +27,7 @@
             </div>
         </div>
         <div fxLayout="row" fxLayoutAlign="center center" *ngIf="page.hasMoreItems">
-            <button mat-raised-button (click)="getMedia()" [disabled]="isLoading">Load More</button>
+            <button class="btn-default" mat-button (click)="getMedia()" [disabled]="isLoading">Load More</button>
         </div>
     </div>
 </div>

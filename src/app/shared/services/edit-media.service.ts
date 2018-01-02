@@ -3,10 +3,10 @@ import { MatDialog } from '@angular/material';
 
 import 'rxjs/add/operator/mergeMap';
 
-import { ConfirmComponent } from 'app/components/shared/confirm/confirm.component';
 
 import { MediaService } from 'app/services';
 import { UpdateMediaViewModel, MediaViewModel, UpdateAttachmentViewModel } from 'app/models/view';
+import { ConfirmComponent } from 'app/components/shared/confirm/confirm.component';
 
 @Injectable()
 export class EditMediaService {
@@ -32,8 +32,6 @@ export class EditMediaService {
             return updateAttachment;
         });
 
-        updateMediaModel.attachments.find(a => a.id === updateMediaModel.coverId).isSelected = true;
-
         return updateMediaModel;
     }
 
@@ -41,30 +39,13 @@ export class EditMediaService {
     }
 
     public select(updateMediaModel: UpdateMediaViewModel, attachmentToSelect: UpdateAttachmentViewModel) {
-        updateMediaModel.attachments.forEach(attachment => attachment.isSelected = false);
-        attachmentToSelect.isSelected = true;
+        if (!attachmentToSelect.removed) {
+            updateMediaModel.coverId = attachmentToSelect.id;
+        }
     }
 
     public removeAttachment(updateMediaModel: UpdateMediaViewModel, attachmentToRemove: UpdateAttachmentViewModel) {
         this.remove(attachmentToRemove);
-
-        // if (updateMediaModel.attachments) {
-        //     const dialogRef = this.dialog.open(ConfirmComponent, {
-        //         data: {
-        //             title: 'DELETE POST',
-        //             message: 'Post without attachments will be removed. Are you sure you want you want to delete this post?'
-        //         }
-        //     });
-
-        //     dialogRef.afterClosed()
-        //         .subscribe(remove => {
-        //             if (remove) {
-        //                 this.remove(updateMediaModel, attachmentToRemove);
-        //             }
-        //         });
-        // } else {
-
-        // }
     }
 
     public restoreAttachment(updateMediaModel: UpdateMediaViewModel, attachmentToRestore: UpdateAttachmentViewModel) {
@@ -72,44 +53,76 @@ export class EditMediaService {
     }
 
     public updateMedia(media: MediaViewModel, updateMediaModel: UpdateMediaViewModel) {
-        if (updateMediaModel.remove) {
+        this.update(media, updateMediaModel);
+    }
+
+    public cancel(media: MediaViewModel, updateMediaModel: UpdateMediaViewModel): any {
+        let pendingChanges: boolean;
+        if (media.caption !== updateMediaModel.caption
+            || media.coverId !== updateMediaModel.coverId
+            || media.allowComments !== updateMediaModel.allowComments
+            || media.attachments.length !== updateMediaModel.attachments.length) {
+            pendingChanges = true;
+
             const dialogRef = this.dialog.open(ConfirmComponent, {
                 data: {
-                    title: 'DELETE POST',
-                    message: 'Post without attachments will be removed. Are you sure you want you want to delete this post?'
+                    title: 'Unsaved Changed',
+                    message: 'There are unsaved changes. Are you sure you want to continue?',
+                    cancelButton: 'No',
+                    confirmButton: 'Yes'
                 }
             });
 
             dialogRef.afterClosed()
                 .subscribe(remove => {
                     if (remove) {
-                        this.update(media, updateMediaModel);
+                        media.editing = false;
+                        updateMediaModel = null;
                     }
                 });
         } else {
-            this.update(media, updateMediaModel);
+            media.editing = false;
+            updateMediaModel = null;
         }
     }
 
     private update(media: MediaViewModel, updateMediaModel: UpdateMediaViewModel) {
-        const captionBakup = media.caption;
-        const attachmentsBackup = media.attachments;
+        const backup = this.createBackup(media);
 
         media.editing = false;
         media.caption = updateMediaModel.caption;
+        media.coverId = updateMediaModel.coverId;
+        media.attachments = updateMediaModel.attachments;
+
         this.mediaService.update(updateMediaModel)
             .subscribe((updatedMedia) => {
                 media.caption = updatedMedia.caption;
-
-                if (media.attachments.length !== updatedMedia.attachments.length) {
-                    media.attachments = updatedMedia.attachments;
-                }
+                media.coverId = updatedMedia.coverId;
+                media.attachments = updatedMedia.attachments;
             }, (error) => {
-                media.caption = captionBakup;
+                this.restoreFromBackup(backup, media);
             });
     }
 
     private remove(attachmentToRemove: UpdateAttachmentViewModel) {
         attachmentToRemove.removed = true;
+    }
+
+    private createBackup(media: MediaViewModel) {
+        const backup = new MediaViewModel();
+
+        backup.caption = media.caption;
+        backup.coverId = media.coverId;
+        backup.allowComments = media.allowComments;
+        backup.attachments = media.attachments.slice();
+
+        return backup;
+    }
+
+    private restoreFromBackup(backup: MediaViewModel, media: MediaViewModel) {
+        media.caption = backup.caption;
+        media.coverId = backup.coverId;
+        media.allowComments = backup.allowComments;
+        media.attachments = backup.attachments.slice();
     }
 }

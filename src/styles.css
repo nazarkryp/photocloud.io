@@ -11,6 +11,14 @@ a {
     color: inherit;
 }
 
+a.link-button {
+    color: #e91e63;
+}
+
+.cdk-global-scrollblock {
+    overflow-y: hidden !important;
+}
+
 .container {
     width: 75%;
 }

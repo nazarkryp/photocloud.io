@@ -23,7 +23,6 @@ export class MediaMapper implements IMapper<MediaResponse, MediaViewModel> {
 
         media.coverId = response.coverId;
         media.attachments = this.attachmentMapper.mapFromResponseArray(response.attachments);
-        media.attachments = this.moveCoverToFront(media);
 
         media.caption = response.caption;
         media.created = new Date(response.created);
@@ -51,6 +50,7 @@ export class MediaMapper implements IMapper<MediaResponse, MediaViewModel> {
         request.allowComments = updateMediaModel.allowComments;
         request.caption = updateMediaModel.caption;
         request.attachmentsToRemove = updateMediaModel.attachments.filter(a => a.removed).map(e => e.id);
+        request.coverId = updateMediaModel.coverId;
 
         return request;
     }
@@ -64,27 +64,5 @@ export class MediaMapper implements IMapper<MediaResponse, MediaViewModel> {
         request.allowComments = createMediaModel.allowComments;
 
         return request;
-    }
-
-    private moveCoverToFront(media: MediaViewModel) {
-        let newIndex = 0;
-
-        const index = media.attachments.findIndex(e => e.id === media.coverId);
-        const attachment = media.attachments.find(e => e.id === media.coverId);
-
-        if (index > -1 && index !== newIndex) {
-            if (newIndex >= media.attachments.length) {
-                newIndex = media.attachments.length
-            }
-
-            const array = media.attachments.slice();
-
-            array.splice(index, 1);
-            array.splice(newIndex, 0, attachment);
-
-            return array;
-        }
-
-        return media.attachments;
     }
 }
