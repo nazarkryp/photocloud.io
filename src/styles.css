@@ -13,6 +13,7 @@ a {
 
 a.link-button {
     color: #e91e63;
+    cursor: pointer;
 }
 
 .cdk-global-scrollblock {

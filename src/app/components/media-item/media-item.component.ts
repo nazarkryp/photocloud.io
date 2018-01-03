@@ -8,7 +8,7 @@ import { MediaViewModel, UserViewModel, CommentViewModel, CurrentUserViewModel, 
 import { CommentService, MediaService } from 'app/services';
 import { UsersComponent } from 'app/components/shared/users/users.component';
 import { trigger, style, animate, transition } from '@angular/animations';
-import { EditMediaService } from 'app/shared/services';
+import { EditMediaService, LikeService } from 'app/shared/services';
 
 @Component({
     selector: 'app-media-item',
@@ -42,6 +42,7 @@ export class MediaItemComponent implements OnInit, OnDestroy {
         private mediaService: MediaService,
         private currentUserService: CurrentUserService,
         private editMediaService: EditMediaService,
+        private likeService: LikeService,
         @Inject(DOCUMENT) private document: any
     ) {
         this.currentUserSubscription = this.currentUserService.getCurrentUser()
@@ -143,37 +144,7 @@ export class MediaItemComponent implements OnInit, OnDestroy {
     }
 
     public like() {
-        if (this.media.userHasLiked) {
-            this.media.likesCount--;
-            this.media.userHasLiked = !this.media.userHasLiked;
-            this.mediaService.removeMediaLike(this.media.id)
-                .subscribe(() => {
-                    this.media.userHasLiked = false;
-                }, (error) => {
-                    if (this.media.userHasLiked) {
-                        this.media.likesCount--;
-                    } else {
-                        this.media.likesCount++;
-                    }
-                    this.media.userHasLiked = !this.media.userHasLiked;
-                    return error;
-                });
-        } else {
-            this.media.likesCount++;
-            this.media.userHasLiked = !this.media.userHasLiked;
-            this.mediaService.addMediaLike(this.media.id)
-                .subscribe(() => {
-                    this.media.userHasLiked = true;
-                }, (error) => {
-                    if (this.media.userHasLiked) {
-                        this.media.likesCount--;
-                    } else {
-                        this.media.likesCount++;
-                    }
-                    this.media.userHasLiked = !this.media.userHasLiked;
-                    return error;
-                });
-        }
+        this.likeService.like(this.media);
     }
 
     public openLikesDialog(media: MediaViewModel) {

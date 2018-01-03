@@ -3,14 +3,15 @@ import { CommonModule } from '@angular/common';
 
 import { DefaultImageDirective } from './directives/default-image.directive';
 import { ImagePreviewDirective } from 'app/shared/directives/image-preview.directive';
-import { EditMediaService } from 'app/shared/services';
+import { EditMediaService, LikeService } from 'app/shared/services';
 
 @NgModule({
     imports: [
         CommonModule
     ],
     providers: [
-        EditMediaService
+        EditMediaService,
+        LikeService
     ],
     declarations: [
         DefaultImageDirective,

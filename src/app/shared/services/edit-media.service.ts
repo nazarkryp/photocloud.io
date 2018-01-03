@@ -35,9 +35,6 @@ export class EditMediaService {
         return updateMediaModel;
     }
 
-    public setAsCover() {
-    }
-
     public select(updateMediaModel: UpdateMediaViewModel, attachmentToSelect: UpdateAttachmentViewModel) {
         if (!attachmentToSelect.removed) {
             updateMediaModel.coverId = attachmentToSelect.id;
@@ -92,6 +89,7 @@ export class EditMediaService {
         media.editing = false;
         media.caption = updateMediaModel.caption;
         media.coverId = updateMediaModel.coverId;
+        media.allowComments = updateMediaModel.allowComments;
         media.attachments = updateMediaModel.attachments;
 
         this.mediaService.update(updateMediaModel)

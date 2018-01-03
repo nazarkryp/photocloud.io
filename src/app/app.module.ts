@@ -57,6 +57,7 @@ import { LocalStorageService } from 'app/infrastructure/services/storage';
 import { SplashScreenComponent } from './components/shared/splash-screen/splash-screen.component';
 import { CovalentModule } from 'app/core/covalent.module';
 import { LikedMediaComponent } from './components/liked-media/liked-media.component';
+import { LikesComponent } from './components/shared/likes/likes.component';
 
 @NgModule({
     declarations: [
@@ -83,7 +84,8 @@ import { LikedMediaComponent } from './components/liked-media/liked-media.compon
         UserDetailsComponent,
         FooterComponent,
         SplashScreenComponent,
-        LikedMediaComponent
+        LikedMediaComponent,
+        LikesComponent
     ],
     entryComponents: [
         MediaDetailsComponent,

@@ -79,6 +79,7 @@ export class EditComponent implements OnInit {
         }).finally(() => {
             this.isInvertingAccountStatus = false;
         }).subscribe(account => {
+            this.currentUser.pictureUri = account.pictureUri;
             this.currentUser.isActive = account.isActive;
             this.backup.isActive = account.isActive;
             this.refreshFormControls();

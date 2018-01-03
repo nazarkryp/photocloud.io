@@ -1,0 +1,6 @@
+<div *ngIf="media.likesCount > 0 && media.likesCount <= 3">
+    <span class="content-1" [innerHTML]="likes"></span>
+</div>
+<div *ngIf="media.likesCount === 0 || media.likesCount > 3">
+    <span class="content-2" [innerHTML]="likes"></span>
+</div>

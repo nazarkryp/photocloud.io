@@ -22,7 +22,7 @@ import { CurrentUserService } from 'app/infrastructure/services';
 import { MediaViewModel, UserViewModel, CommentViewModel, CurrentUserViewModel, UpdateMediaViewModel, UpdateAttachmentViewModel } from 'app/models/view';
 import { MediaService, CommentService } from 'app/services';
 import { NgProgress } from 'ngx-progressbar';
-import { EditMediaService } from 'app/shared/services';
+import { EditMediaService, LikeService } from 'app/shared/services';
 
 @Component({
     selector: 'app-media-details',
@@ -65,6 +65,7 @@ export class MediaDetailsComponent implements OnInit, OnDestroy {
         private currentUserService: CurrentUserService,
         private commentService: CommentService,
         private editMediaService: EditMediaService,
+        private likeService: LikeService,
         private progress: NgProgress,
         private snackBar: MatSnackBar,
         private dialog: MatDialog,
@@ -170,37 +171,7 @@ export class MediaDetailsComponent implements OnInit, OnDestroy {
 
     public like() {
         this.bounceState = !this.bounceState;
-        if (this.media.userHasLiked) {
-            this.media.likesCount--;
-            this.media.userHasLiked = !this.media.userHasLiked;
-            this.mediaService.removeMediaLike(this.media.id)
-                .subscribe(() => {
-                    this.media.userHasLiked = false;
-                }, (error) => {
-                    if (this.media.userHasLiked) {
-                        this.media.likesCount--;
-                    } else {
-                        this.media.likesCount++;
-                    }
-                    this.media.userHasLiked = !this.media.userHasLiked;
-                    return error;
-                });
-        } else {
-            this.media.likesCount++;
-            this.media.userHasLiked = !this.media.userHasLiked;
-            this.mediaService.addMediaLike(this.media.id)
-                .subscribe(() => {
-                    this.media.userHasLiked = true;
-                }, (error) => {
-                    if (this.media.userHasLiked) {
-                        this.media.likesCount--;
-                    } else {
-                        this.media.likesCount++;
-                    }
-                    this.media.userHasLiked = !this.media.userHasLiked;
-                    return error;
-                });
-        }
+        this.likeService.like(this.media);
     }
 
     public edit() {

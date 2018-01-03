@@ -1,8 +1,11 @@
 .footer {
     color: gray;
-    padding: 0 85px;
     height: 64px;
     font-size: 0.8em;
+}
+
+.footer-container {
+    width: 960px;
 }
 
 .footer-links>a {

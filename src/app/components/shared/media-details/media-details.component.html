@@ -42,8 +42,9 @@
             </div>
             <div fxLayout="row" fxLayoutAlign="space-between center" style="margin-top: 1.3rem;">
                 <div fxLayout="row" fxLayoutAlign="start center">
-                    <mat-icon class="mat-18" style="color: #444444;">favorite</mat-icon>
-                    <span style="font-weight: bold; font-size: .9em; color: #444444; margin-left: .5rem;">{{media.likesCount}} likes</span>
+                    <!-- <mat-icon class="mat-18" style="color: #444444;">favorite</mat-icon> -->
+                    <app-likes [media]="media"></app-likes>
+                    <!-- <span style="font-weight: bold; font-size: .9em; color: #444444; margin-left: .5rem;">{{media.likesCount}} likes</span> -->
                 </div>
             </div>
             <div class="media-details-caption" *ngIf="media.caption">
@@ -60,15 +61,17 @@
                 <app-comments style="font-size: 0.95em;" [media]="media" *ngIf="media.commentsCount > 0"></app-comments>
             </div>
             <div style="box-sizing: border-box;" @content>
-                <div class="transition-content" fxLayout="row" fxLayoutAlign="space-between center" style="border-top: 1px solid #d8d8d8; padding-top: .7rem;" *ngIf="!showCommentBox">
+                <div class="transition-content" fxLayout="row" fxLayoutAlign="space-between center" style="border-top: 1px solid #d8d8d8; padding-top: .7rem;"
+                    *ngIf="!showCommentBox">
                     <div fxLayout="row" fxLayoutAlign="start center" *ngIf="currentUser">
                         <mat-icon [@tdJello]="bounceState" class="btn-icon mat-24" [ngClass]="{ 'liked' : media.userHasLiked }" (click)="like()">favorite</mat-icon>
-                        <mat-icon class="btn-icon mat-24" svgIcon="comment" style="margin-left: .7rem;" (click)="showCommentBox = !showCommentBox"></mat-icon>
+                        <mat-icon class="btn-icon mat-24" svgIcon="comment" style="margin-left: .7rem;" *ngIf="media.allowComments" (click)="showCommentBox = !showCommentBox"></mat-icon>
                     </div>
-                    <mat-icon class="btn-icon mat-24" style="margin-left: .7rem;">share</mat-icon>
+                    <mat-icon class="btn-icon mat-24" matTooltip="Share" matTooltipPosition="left" ngxClipboard [cbContent]="share()" (cbOnSuccess)="showToast('Copied to clipboard')">share</mat-icon>
                 </div>
                 <div fxLayout="row" *ngIf="showCommentBox" @content>
-                    <input class="media-details-comment-box transition-content" placeholder="Type your comment..." type="text" [(ngModel)]="text" (keydown.enter)="createComment()">
+                    <input class="media-details-comment-box transition-content" placeholder="Type your comment..." type="text" [(ngModel)]="text"
+                        (keydown.enter)="createComment()">
                     <button mat-icon-button (click)="showCommentBox = !showCommentBox">
                         <mat-icon>clear</mat-icon>
                     </button>
