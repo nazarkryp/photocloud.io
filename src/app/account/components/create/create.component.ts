@@ -43,8 +43,8 @@ export class CreateComponent {
         return this.formGroup.get('fullName');
     }
 
-    get email(): AbstractControl {
-        return this.formGroup.get('email');
+    get email(): ReactiveFormControl {
+        return this.formGroup.get('email') as ReactiveFormControl;
     }
 
     get password(): AbstractControl {
@@ -73,7 +73,8 @@ export class CreateComponent {
                     Validators.required,
                     Validators.maxLength(50),
                     Validators.minLength(3),
-                    Validators.pattern(/^\S*$/)])),
+                    Validators.pattern(/^\S*$/)]),
+                [this.validateUsername.bind(this)]),
             fullName: new FormControl('',
                 Validators.compose([
                     Validators.maxLength(50)])),
@@ -81,7 +82,8 @@ export class CreateComponent {
                 Validators.compose([
                     Validators.required,
                     Validators.maxLength(50),
-                    Validators.pattern(EMAIL_REGEX)])),
+                    Validators.pattern(EMAIL_REGEX)]),
+                [this.validateUsername.bind(this)]),
             password: new FormControl('',
                 Validators.compose([
                     Validators.required,
@@ -105,13 +107,9 @@ export class CreateComponent {
             .switchMap(e => {
                 return this.userService.checkIfUserExists(reactiveFormControl.value)
                     .map(result => {
-                        const error = { 'unique': true };
-
-                        if (!result) {
-                            reactiveFormControl.setErrors(error);
-                        }
-
-                        return !result ? error : null;
+                        const error = result ? { 'unique': true } : null;
+                        reactiveFormControl.setErrors(error);
+                        return Observable.of(error);
                     });
             })
             ._do(() => {

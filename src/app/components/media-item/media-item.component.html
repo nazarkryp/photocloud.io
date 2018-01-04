@@ -43,7 +43,7 @@
     </div>
     <div class="media-footer" *ngIf="!media.editing">
         <div class="likes" fxLayout="row" fxLayoutAlign="space-between center">
-            <app-likes [media]="media"></app-likes>
+            <app-likes (onClicked)="openUsersDialog($event)" [media]="media"></app-likes>
         </div>
         <div class="media-caption" *ngIf="media.caption">
             <a [routerLink]="['/', media.user.username]">

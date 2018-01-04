@@ -1,5 +1,5 @@
 <ng-progress [thick]="true" [showSpinner]="false" [trickleSpeed]="200" [speed]="300" color="#e91e63"></ng-progress>
-<mat-sidenav-container class="sidenav-container" *ngIf="!initialLoad">
+<mat-sidenav-container class="sidenav-container">
     <mat-sidenav #notificationsSidenav align="end">
         <app-notifications (onClosing)="closeNotifications($event)" *ngIf="notificationsSidenav.opened"></app-notifications>
     </mat-sidenav>

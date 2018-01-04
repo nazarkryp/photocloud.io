@@ -51,6 +51,7 @@ export class MediaDetailsComponent implements OnInit, OnDestroy {
     public bounceState = false;
     public isDialog: boolean;
     @ViewChild('player') public player: any;
+    public usersConfig: any;
 
     public updateMediaModel: UpdateMediaViewModel;
     public text: string;
@@ -210,6 +211,20 @@ export class MediaDetailsComponent implements OnInit, OnDestroy {
                 this.media = media;
                 this.media.activeAttachment = 0;
             });
+    }
+
+    public inspectLikes(event) {
+        this.usersConfig = {
+            usersObservable: this.mediaService.getLikes(this.media.id),
+            title: 'Likes'
+        };
+
+        this.media.inspectingLikes = true;
+    }
+
+    public likesClose() {
+        console.log('OK');
+        this.media.inspectingLikes = false;
     }
 
     public ngOnInit(): void {

@@ -49,22 +49,12 @@ export class UserDetailsComponent implements OnDestroy {
 
     public getFollowers() {
         const usersObservable = this.userService.getFollowers(this.user.id);
-        this.dialog.open(UsersComponent, {
-            data: {
-                usersObservable: usersObservable,
-                title: 'Followers'
-            }
-        });
+        this.openDialog(usersObservable, 'Followers');
     }
 
     public getFollowings() {
         const usersObservable = this.userService.getFollowings(this.user.id);
-        this.dialog.open(UsersComponent, {
-            data: {
-                usersObservable: usersObservable,
-                title: 'Following'
-            }
-        });
+        this.openDialog(usersObservable, 'Following');
     }
 
     public modifyRelationship() {
@@ -102,5 +92,16 @@ export class UserDetailsComponent implements OnDestroy {
         }
 
         this.uploader.destroy();
+    }
+
+    private openDialog(usersObservable: Observable<UserViewModel[]>, title: string) {
+        this.dialog.open(UsersComponent, {
+            width: '500px',
+            height: '600px',
+            data: {
+                usersObservable: usersObservable,
+                title: title
+            }
+        });
     }
 }

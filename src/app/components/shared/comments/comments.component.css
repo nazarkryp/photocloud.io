@@ -1,6 +1,33 @@
 .comments {
     margin-top: 5px;
     line-height: 1.9em;
+    position: relative;
+    box-sizing: border-box;
+}
+
+.comment {
+    box-sizing: border-box;
+    position: relative;
+}
+
+.comment .actions {
+    position: absolute;
+    right: 0;
+    top: 5px;
+    height: 100%;
+    cursor: default;
+    z-index: -1;
+    opacity: 0;
+    -webkit-transition: opacity .25s ease-in-out;
+    -moz-transition: opacity .25s ease-in-out;
+    -ms-transition: opacity .25s ease-in-out;
+    -o-transition: opacity .25s ease-in-out;
+    transition: opacity .25s ease-in-out;
+}
+
+.comment.current:hover .actions {
+    z-index: 1;
+    opacity: 1;
 }
 
 .text-button {

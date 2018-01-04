@@ -1,5 +1,5 @@
 import { Component, Inject, ViewEncapsulation, Optional, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
-import { MatDialogRef, MatSnackBarConfig, MatSnackBar, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialogRef, MatSnackBarConfig, MatSnackBar, MAT_DIALOG_DATA, MatSlideToggleChange } from '@angular/material';
 
 import { Subscription } from 'rxjs/Subscription';
 import { Observable } from 'rxjs/Observable';
@@ -23,7 +23,6 @@ export class CreateMediaComponent implements OnInit, OnDestroy {
     private currentUserSubscription: Subscription;
     public maxItemsCount = 4;
 
-    public attachments: Array<AttachmentViewModel>;
     public media: CreateMediaModel;
     public uploader: FileUploader;
 
@@ -36,8 +35,8 @@ export class CreateMediaComponent implements OnInit, OnDestroy {
         this.uploader = new FileUploader({
             url: environment.apiUri + 'attachments'
         });
+
         this.media = new CreateMediaModel();
-        this.attachments = new Array<AttachmentViewModel>();
 
         this.currentUserSubscription = this.currentUserService.getCurrentUser()
             .subscribe(currentUser => {
@@ -46,10 +45,8 @@ export class CreateMediaComponent implements OnInit, OnDestroy {
     }
 
     public ngOnInit() {
-        this.getAuthenticationOptions()
-            .subscribe(options => {
-                this.uploader.setOptions(options);
-            });
+        const options = this.getAuthenticationOptions();
+        this.uploader.setOptions(options);
 
         this.uploader.onAfterAddingFile = (file) => {
             file.upload();
@@ -58,7 +55,11 @@ export class CreateMediaComponent implements OnInit, OnDestroy {
         this.uploader.onCompleteItem = (item: any, json: any, status: any, headers: any) => {
             const response = JSON.parse(json);
             const attachment = response as AttachmentViewModel;
-            this.attachments.push(attachment);
+            this.media.attachments.push(attachment);
+
+            if (this.media.attachments.length === 1) {
+                this.media.coverId = this.media.attachments[0].id;
+            }
         };
     }
 
@@ -67,35 +68,37 @@ export class CreateMediaComponent implements OnInit, OnDestroy {
     }
 
     public createPost() {
-        this.media.attachments = this.attachments.map((attachment) => {
-            const createAttachment = new AttachmentViewModel();
-
-            createAttachment.id = attachment.id;
-            createAttachment.uri = attachment.uri;
-            createAttachment.type = attachment.type;
-
-            return attachment;
-        });
-
+        this.progress.start();
         this.mediaService.createMedia(this.media)
+            .finally(() => {
+                this.progress.done()
+            })
             .subscribe(createdPost => {
                 createdPost.user.pictureUri = this.currentUser.pictureUri;
                 this.dialogRef.close(createdPost);
             });
     }
 
-    public getAuthenticationOptions(): Observable<FileUploaderOptions> {
-        return this.tokenProvider.getAccessToken()
-            .map(accessToken => {
-                const bearerToken = `Bearer ${accessToken.accessToken}`;
-                const headers: Array<{ name: string; value: string; }> = [];
-                headers.push({ name: 'Authorization', value: bearerToken });
-                const options = <FileUploaderOptions>{ headers: headers };
+    private getAuthenticationOptions(): FileUploaderOptions {
+        const accessToken = this.tokenProvider.retrieveAccessToken();
 
-                return options;
-            });
+        const headers: Array<{ name: string; value: string; }> = [];
+        headers.push({ name: 'Authorization', value: `Bearer ${accessToken.accessToken}` });
+
+        const options = <FileUploaderOptions>{ headers: headers };
+
+        return options;
     }
 
-    public setAsDefault(item) {
+    public select(index) {
+        this.media.selectedAttachmentIndex = index;
+    }
+
+    public change(toggleChange: MatSlideToggleChange) {
+        if (toggleChange.checked) {
+            this.media.coverId = this.media.attachments[this.media.selectedAttachmentIndex].id;
+        } else {
+            this.media.coverId = this.media.attachments[0].id;
+        }
     }
 }

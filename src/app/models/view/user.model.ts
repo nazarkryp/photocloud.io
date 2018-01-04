@@ -1,6 +1,8 @@
 import { RelationshipStatus } from '../shared/relationship-status';
 
 export class UserViewModel {
+    private _lastActive: Date;
+
     public id: number;
     public username: string;
     public fullName: string;
@@ -10,9 +12,22 @@ export class UserViewModel {
     public isActive: boolean;
     public pictureUri: string;
     public posts: number;
-    public lastActive: Date;
     public followers: number;
     public following: number;
     public outgoingStatus: number;
     public incommingStatus: number;
+    public isModifyingRelationship = false;
+
+    public get lastActive(): Date {
+        return this._lastActive;
+    }
+
+    public set lastActive(lastActive: Date) {
+        this._lastActive = lastActive;
+        // const newDate = new Date(lastActive.getTime() + lastActive.getTimezoneOffset() * 60 * 1000);
+        // const offset = lastActive.getTimezoneOffset() / 60;
+        // const hours = lastActive.getHours();
+        // newDate.setHours(hours - offset);
+        // this._lastActive = newDate;
+    }
 }

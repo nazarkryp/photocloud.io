@@ -1,16 +1,21 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { WebApiClient } from 'app/infrastructure/communication';
-import { UserMapper } from 'app/infrastructure/mapping';
+import { UserMapper, PageMapper } from 'app/infrastructure/mapping';
 
 import { PageViewModel, PaginationViewModel, UserViewModel } from 'app/models/view';
 import { ValidationResult } from 'app/models/common';
+import { UserResponse } from 'app/models/response';
 
 @Injectable()
 export class UserService {
+    private pageMapper: PageMapper<UserResponse, UserViewModel>;
+
     constructor(
         private webApiClient: WebApiClient,
-        private userMapper: UserMapper) { }
+        private userMapper: UserMapper) {
+        this.pageMapper = new PageMapper<UserResponse, UserViewModel>(this.userMapper);
+    }
 
     public getUser(username: string): Observable<UserViewModel> {
         return this.webApiClient.get<UserViewModel>(`users/${username}`);
@@ -30,7 +35,11 @@ export class UserService {
             requestUri = requestUri + '?next=' + pagination.next;
         }
 
-        return this.webApiClient.get<PageViewModel<UserViewModel>>(requestUri);
+        return this.webApiClient.get<PageViewModel<UserResponse>>(requestUri)
+            .map(page => {
+                const pageViewModel = this.pageMapper.mapFromResponse(page);
+                return pageViewModel;
+            });
     }
 
     public searchUsers(query: string): Observable<PageViewModel<UserViewModel>> {

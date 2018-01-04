@@ -15,10 +15,11 @@
         </div>
         <mat-form-field class="form-field">
             <input formControlName="username" #usernameInput matInput placeholder="Username" type="text" autocomplete="off" [errorStateMatcher]="errorStateMatcher">
-            <!-- <mat-icon class="success" matSuffix *ngIf="username.hasError('unique')">check</mat-icon> -->
-            <mat-icon class="primary" matSuffix *ngIf="username.dirty && !username?.isValidating &&username.hasError('unique') != true">clear</mat-icon>
-            <!-- <span matSuffix>Has Error: {{username.hasError('unique')}}</span> -->
-            <mat-spinner matSuffix [diameter]="20" [strokeWidth]="2" color="primary" *ngIf="username?.isValidating"></mat-spinner>
+            <div matSuffix>
+                <mat-icon class="primary" matSuffix *ngIf="username.getError('unique')">clear</mat-icon>
+                <mat-icon class="success" matSuffix *ngIf="username.valid">check</mat-icon>
+                <mat-spinner [diameter]="20" [strokeWidth]="2" color="primary" *ngIf="username?.isValidating"></mat-spinner>
+            </div>
             <mat-error *ngIf="username.getError('required')">
                 Username is required
             </mat-error>
@@ -27,6 +28,9 @@
             </mat-error>
             <mat-error *ngIf="username.getError('pattern')">
                 Whitespaces are not allowed
+            </mat-error>
+            <mat-error *ngIf="username.getError('unique')">
+                User with such name already exists
             </mat-error>
         </mat-form-field>
         <mat-form-field class="form-field">
@@ -38,14 +42,22 @@
         </mat-form-field>
         <mat-form-field class="form-field">
             <input formControlName="email" #emailInput matInput placeholder="E-mail address" type="email" autocomplete="off" [errorStateMatcher]="errorStateMatcher">
+            <div matSuffix>
+                <mat-icon class="primary" matSuffix *ngIf="email.getError('unique')">clear</mat-icon>
+                <mat-icon class="success" matSuffix *ngIf="email.valid">check</mat-icon>
+                <mat-spinner [diameter]="20" [strokeWidth]="2" color="primary" *ngIf="email?.isValidating"></mat-spinner>
+            </div>
             <mat-error *ngIf="email.getError('required')">
                 E-mail address is required
             </mat-error>
-            <mat-error *ngIf="email.getError('minlength')">
-                E-mail address must contain at least {{email.errors.minlength.requiredLength}} symbols
+            <mat-error *ngIf="email?.getError('maxlength')">
+                Email cannot be more than {{username.errors.maxlength.requiredLength}}
             </mat-error>
             <mat-error *ngIf="email.getError('pattern')">
                 Email address is not valid
+            </mat-error>
+            <mat-error *ngIf="email.getError('unique')">
+                User with such e-mail address already exists
             </mat-error>
         </mat-form-field>
         <mat-form-field class="form-field">

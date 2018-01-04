@@ -93,6 +93,16 @@ export class MediaItemComponent implements OnInit, OnDestroy {
         const result = this.snackBar.open(message, null, config);
     }
 
+    public openUsersDialog(event) {
+        const usersObservable = this.mediaService.getLikes(this.media.id);
+        const dialogRef = this.dialog.open(UsersComponent, {
+            data: {
+                usersObservable: usersObservable,
+                title: 'Likes'
+            }
+        });
+    }
+
     public createComment() {
         if (!this.text) {
             return;
@@ -145,16 +155,6 @@ export class MediaItemComponent implements OnInit, OnDestroy {
 
     public like() {
         this.likeService.like(this.media);
-    }
-
-    public openLikesDialog(media: MediaViewModel) {
-        const usersObservable = this.mediaService.getLikes(media.id);
-        const dialogRef = this.dialog.open(UsersComponent, {
-            data: {
-                usersObservable: usersObservable,
-                title: 'Likes'
-            }
-        });
     }
 
     public ngOnInit() {

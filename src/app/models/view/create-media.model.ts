@@ -5,5 +5,16 @@ export class CreateMediaModel {
     public coverId: number;
     public attachments: AttachmentViewModel[];
     public allowComments: boolean;
-    public currentAttachmentIndex: number;
+    public selectedAttachmentIndex: number;
+
+    constructor() {
+        this.attachments = new Array<AttachmentViewModel>();
+        this.selectedAttachmentIndex = 0;
+    }
+
+    public get coverAttachmentIndex() {
+        const coverIndex = this.attachments.findIndex(e => e.id === this.coverId);
+
+        return coverIndex;
+    }
 }

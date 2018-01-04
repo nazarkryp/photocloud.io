@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, AfterViewChecked, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatSlideToggleChange } from '@angular/material';
@@ -7,6 +7,9 @@ import { CurrentUserViewModel } from 'app/models/view';
 import { CurrentUserService } from 'app/infrastructure/services';
 
 import { NgProgress } from 'ngx-progressbar';
+import { ReactiveFormControl } from 'app/account/models/controls';
+import { Observable } from 'rxjs/Observable';
+import { UserService } from 'app/services';
 
 const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
@@ -15,16 +18,26 @@ const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA
     templateUrl: './edit.component.html',
     styleUrls: ['./edit.component.css']
 })
-export class EditComponent implements OnInit {
+export class EditComponent implements OnInit, AfterViewInit, AfterViewChecked {
     public backup: CurrentUserViewModel = new CurrentUserViewModel();
     public currentUser: CurrentUserViewModel;
     public isInvertingAccountStatus: boolean;
     public isInvertingAccountPrivateStatus: boolean;
     public formGroup: FormGroup;
 
+    get username(): ReactiveFormControl {
+        return this.formGroup.get('username') as ReactiveFormControl;
+    }
+
+    get email(): ReactiveFormControl {
+        return this.formGroup.get('email') as ReactiveFormControl;
+    }
+
     constructor(
+        private cd: ChangeDetectorRef,
         private activatedRoute: ActivatedRoute,
         private builder: FormBuilder,
+        private userService: UserService,
         private currentUserService: CurrentUserService,
         private progress: NgProgress) {
         this.configureFormControls();
@@ -96,7 +109,7 @@ export class EditComponent implements OnInit {
 
     public ngOnInit() {
         this.currentUser = this.activatedRoute.snapshot.data['account'];
-        this.setup(this.currentUser);
+
         this.progress.done();
     }
 
@@ -128,23 +141,25 @@ export class EditComponent implements OnInit {
 
     private configureFormControls() {
         this.formGroup = this.builder.group({
-            username: new FormControl('', Validators.compose([
-                Validators.required,
-                Validators.maxLength(50),
-                Validators.minLength(3),
-                Validators.pattern(/^\S*$/)
-            ])),
+            username: new ReactiveFormControl('',
+                Validators.compose([
+                    Validators.required,
+                    Validators.maxLength(50),
+                    Validators.minLength(3),
+                    Validators.pattern(/^\S*$/)]),
+                [this.validateUsername.bind(this)]),
             fullName: new FormControl('', Validators.compose([
                 Validators.maxLength(50)
             ])),
             bio: new FormControl('', Validators.compose([
                 Validators.maxLength(50)
             ])),
-            email: new FormControl('', Validators.compose([
-                Validators.required,
-                Validators.maxLength(50),
-                Validators.pattern(EMAIL_REGEX)
-            ])),
+            email: new FormControl('',
+                Validators.compose([
+                    Validators.required,
+                    Validators.maxLength(50),
+                    Validators.pattern(EMAIL_REGEX)]),
+                [this.validateEmail.bind(this)])
         });
     }
 
@@ -154,5 +169,49 @@ export class EditComponent implements OnInit {
         } else {
             this.formGroup.disable();
         }
+    }
+
+    public validateUsername(reactiveFormControl: ReactiveFormControl): Promise<{ [key: string]: any; }> | Observable<{ [key: string]: any; }> {
+        return reactiveFormControl.valueChanges.debounceTime(500)
+            ._do(() => {
+                reactiveFormControl.isValidating = true;
+            })
+            .switchMap(e => {
+                return this.userService.checkIfUserExists(reactiveFormControl.value)
+                    .map(result => {
+                        const error = (result && this.currentUser.username !== reactiveFormControl.value) ? { 'unique': true } : null;
+                        reactiveFormControl.setErrors(error);
+                        return Observable.of(error);
+                    });
+            })
+            ._do(() => {
+                reactiveFormControl.isValidating = false;
+            });
+    }
+
+    public validateEmail(reactiveFormControl: ReactiveFormControl): Promise<{ [key: string]: any; }> | Observable<{ [key: string]: any; }> {
+        return reactiveFormControl.valueChanges.debounceTime(500)
+            ._do(() => {
+                reactiveFormControl.isValidating = true;
+            })
+            .switchMap(e => {
+                return this.userService.checkIfUserExists(reactiveFormControl.value)
+                    .map(result => {
+                        const error = (result && this.currentUser.email !== reactiveFormControl.value) ? { 'unique': true } : null;
+                        reactiveFormControl.setErrors(error);
+                        return Observable.of(error);
+                    });
+            })
+            ._do(() => {
+                reactiveFormControl.isValidating = false;
+            });
+    }
+
+    public ngAfterViewInit(): void {
+        this.setup(this.currentUser);
+    }
+
+    public ngAfterViewChecked(): void {
+        this.cd.detectChanges();
     }
 }

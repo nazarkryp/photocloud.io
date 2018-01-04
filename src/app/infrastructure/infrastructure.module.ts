@@ -53,16 +53,16 @@ import { AttachmentMapper, CommentMapper, MediaMapper, PaginationMapper } from '
 })
 export class InfrastructureModule {
     constructor(
-        router: Router,
+        private router: Router,
         private currentUserService: CurrentUserService,
         private httpConfiguration: HttpErrorHandler) {
-        this.configureErrorFilters(router);
+        this.configureErrorFilters();
     }
 
-    private configureErrorFilters(router: Router) {
-        this.httpConfiguration.filters.push(new AuthenticationErrorFilter(router));
-        this.httpConfiguration.filters.push(new InternetConnectionFilter(router));
-        this.httpConfiguration.filters.push(new HttpNotFoundFilter(router));
-        this.httpConfiguration.filters.push(new AccountNotActiveFilter(this.currentUserService, router));
+    private configureErrorFilters() {
+        this.httpConfiguration.filters.push(new AuthenticationErrorFilter(this.router, this.currentUserService));
+        this.httpConfiguration.filters.push(new InternetConnectionFilter(this.router));
+        this.httpConfiguration.filters.push(new HttpNotFoundFilter(this.router));
+        this.httpConfiguration.filters.push(new AccountNotActiveFilter(this.currentUserService, this.router));
     }
 }

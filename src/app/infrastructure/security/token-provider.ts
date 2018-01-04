@@ -56,7 +56,7 @@ export class TokenProvider {
             .map(tokenResponse => this.tokenMapper.mapResponseToAccessToken(tokenResponse));
     }
 
-    private retrieveAccessToken(): AccessToken {
+    public retrieveAccessToken(): AccessToken {
         const accessToken = this.storageService.get<AccessToken>(this.tokenStorageKey, AccessToken);
 
         if (accessToken) {

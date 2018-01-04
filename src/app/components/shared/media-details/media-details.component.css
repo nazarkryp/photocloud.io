@@ -87,10 +87,14 @@
     font-weight: normal;
 }
 
+.media-details-attachment.dialog {
+    max-height: calc(100vh - 50px);
+}
+
 .media-details-attachment {
     width: auto;
     height: auto;
-    max-height: calc(100vh - 75px);
+    max-height: calc(100vh - 228px);
     max-width: calc(100vw - 800px);
     min-height: 300px;
     min-width: auto;

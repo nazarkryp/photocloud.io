@@ -14,13 +14,13 @@
                 </div>
             </div>
             <div (click)='play()' *ngFor="let attachment of media.attachments; let index = index;" [hidden]="index !== media.activeAttachment">
-                <img class="media-details-attachment" src="{{attachment.uri}}" alt="media-image" *ngIf="attachment.type !== 1">
-                <video class="media-details-attachment" *ngIf="attachment.type === 1" loop #player>
+                <img class="media-details-attachment" [ngClass]="{ 'dialog' : isDialog}" src="{{attachment.uri}}" alt="media-image" *ngIf="attachment.type !== 1">
+                <video class="media-details-attachment" [ngClass]="{ 'dialog' : isDialog}" *ngIf="attachment.type === 1" loop #player>
                     <source src="{{attachment.uri}}">
                 </video>
             </div>
         </div>
-        <div class="media-details-info-container" fxLayout="column">
+        <div class="media-details-info-container" fxLayout="column" *ngIf="!media.inspectingLikes; else inspectingLikesTemplate">
             <div>
                 <div class="media-details-header" fxLayout="row" fxLayoutAlign="start center" style="padding-bottom: .7rem; border-bottom: 1px solid #d8d8d8;">
                     <img class="media-avatar" [routerLink]="['/', media.user.username]" src="{{media.user.pictureUri}}" default="assets/images/user-default-image.png"
@@ -42,9 +42,8 @@
             </div>
             <div fxLayout="row" fxLayoutAlign="space-between center" style="margin-top: 1.3rem;">
                 <div fxLayout="row" fxLayoutAlign="start center">
-                    <!-- <mat-icon class="mat-18" style="color: #444444;">favorite</mat-icon> -->
-                    <app-likes [media]="media"></app-likes>
-                    <!-- <span style="font-weight: bold; font-size: .9em; color: #444444; margin-left: .5rem;">{{media.likesCount}} likes</span> -->
+                    <mat-icon class="mat-18" style="color: #444444; margin-right: .25rem;" *ngIf="media.likesCount === 0 || media.likesCount > 3">favorite</mat-icon>
+                    <app-likes [media]="media" (onClicked)="inspectLikes($event)"></app-likes>
                 </div>
             </div>
             <div class="media-details-caption" *ngIf="media.caption">
@@ -60,9 +59,8 @@
                 </div>
                 <app-comments style="font-size: 0.95em;" [media]="media" *ngIf="media.commentsCount > 0"></app-comments>
             </div>
-            <div style="box-sizing: border-box;" @content>
-                <div class="transition-content" fxLayout="row" fxLayoutAlign="space-between center" style="border-top: 1px solid #d8d8d8; padding-top: .7rem;"
-                    *ngIf="!showCommentBox">
+            <div style="box-sizing: border-box;">
+                <div fxLayout="row" fxLayoutAlign="space-between center" style="border-top: 1px solid #d8d8d8; padding-top: .7rem;" *ngIf="!showCommentBox">
                     <div fxLayout="row" fxLayoutAlign="start center" *ngIf="currentUser">
                         <mat-icon [@tdJello]="bounceState" class="btn-icon mat-24" [ngClass]="{ 'liked' : media.userHasLiked }" (click)="like()">favorite</mat-icon>
                         <mat-icon class="btn-icon mat-24" svgIcon="comment" style="margin-left: .7rem;" *ngIf="media.allowComments" (click)="showCommentBox = !showCommentBox"></mat-icon>
@@ -85,8 +83,10 @@
     <div class="single-media" fxLayout="row" fxLayoutAlign="start stretch">
         <div mat-ripple class="media-attachment-container">
             <div>
-                <img class="media-details-attachment" src="{{updateMediaModel.preview.uri}}" alt="media-image" *ngIf="updateMediaModel.preview.type !== 1">
-                <video class="media-details-attachment" *ngIf="updateMediaModel.preview.type === 1" loop #player>
+                <img class="media-details-attachment" [ngClass]="{ 'dialog' : isDialog}" src="{{updateMediaModel.preview.uri}}" alt="media-image"
+                    *ngIf="updateMediaModel.preview.type !== 1">
+                <video class="media-details-attachment" [ngClass]="{ 'dialog' : isDialog}" *ngIf="updateMediaModel.preview.type === 1" loop
+                    #player>
                     <source src="{{updateMediaModel.preview.uri}}">
                 </video>
             </div>
@@ -98,9 +98,12 @@
                 </div>
                 <textarea type="text" rows="3" placeholder="Write a caption..." [(ngModel)]="updateMediaModel.caption"></textarea>
             </div>
-            <div style="padding-top: .5rem;" fxLayout="row" fxLayoutAlign="space-between center">
+            <div style="padding-top: 1rem;" fxLayout="column">
+                <span style="font-weight: bold; padding-bottom: .5rem;">Comments settings</span>
                 <mat-slide-toggle [(ngModel)]="updateMediaModel.allowComments" labelPosition="before">Allow comments</mat-slide-toggle>
-                <a class="link-button">Tap to change cover</a>
+            </div>
+            <div style="padding-top: 1rem;" fxLayout="row" fxLayoutAlign="space-between center">
+                <span style="font-weight: bold;">Manage attachments</span>
             </div>
             <div fxFlex>
                 <div class="media-details-edit-attachments">
@@ -136,5 +139,11 @@
                 </div>
             </div>
         </div>
+    </div>
+</ng-template>
+
+<ng-template #inspectingLikesTemplate>
+    <div class="media-details-info-container" fxLayout="column">
+        <app-users [config]="usersConfig" (onClose)="likesClose()"></app-users>
     </div>
 </ng-template>

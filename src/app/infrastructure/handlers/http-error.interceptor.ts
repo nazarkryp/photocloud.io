@@ -20,16 +20,18 @@ export class HttpErrorInterceptor implements HttpInterceptor {
     constructor(
         private errorHandler: HttpErrorHandler) { }
 
-    intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        return next.handle(req)
+    public intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+        const result = next.handle(req)
             .catch((errorResponse: HttpErrorResponse) => {
                 const error = this.errorHandler.handle(errorResponse);
 
                 if (error) {
-                    return Observable.throw(error);
+                    return error;
                 }
 
                 return Observable.throw(errorResponse);
             });
+
+        return result;
     }
 }

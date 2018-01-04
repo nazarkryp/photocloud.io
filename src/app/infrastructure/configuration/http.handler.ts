@@ -16,7 +16,7 @@ export class HttpErrorHandler {
         }
     }
 
-    public handle(httpErrorResponse: HttpErrorResponse): ErrorObservable {
+    public handle(httpErrorResponse: HttpErrorResponse): ErrorObservable | Observable<HttpErrorResponse> {
         for (const filter of this.filters) {
             const error = filter.handle(httpErrorResponse);
 

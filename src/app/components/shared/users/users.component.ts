@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Optional, Inject, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, OnDestroy, Optional, Inject, ViewEncapsulation, Input, Output, EventEmitter } from '@angular/core';
 import { MatDialogRef, MatSnackBarConfig, MatSnackBar, MAT_DIALOG_DATA } from '@angular/material';
 
 import { Observable } from 'rxjs/Observable';
@@ -16,41 +16,40 @@ import { CurrentUserService } from 'app/infrastructure/services';
 })
 export class UsersComponent implements OnInit, OnDestroy {
     public users: UserViewModel[];
+    @Output() public onClose = new EventEmitter<any>();
+
+    @Input() public config: {
+        usersObservable: Observable<UserViewModel[]>,
+        title: string
+    };
+
     public currentUser: CurrentUserViewModel;
     public usersObservableSubscription: Subscription;
-    public currentUserSubscription: Subscription;
-    public modifying: { [id: number]: boolean } = {};
     public title: string;
 
     constructor(
-        public dialogRef: MatDialogRef<UsersComponent>,
-        @Inject(MAT_DIALOG_DATA) data: any,
+        @Optional() public dialogRef: MatDialogRef<UsersComponent>,
+        @Optional() @Inject(MAT_DIALOG_DATA) public data: any,
         private userService: UserService,
         private currentUserService: CurrentUserService) {
-        this.title = data.title;
-        this.usersObservableSubscription = data.usersObservable.subscribe(users => {
-            this.users = users;
-            users.map((user: UserViewModel) => {
-                this.modifying[user.id] = false;
-            });
-        });
-
-        this.currentUserSubscription = this.currentUserService.getCurrentUser()
-            .subscribe(currentUser => {
-                this.currentUser = currentUser;
-            });
+        this.currentUser = this.currentUserService.retrieveCurrentUser();
     }
 
     public modifyRelationship(user: UserViewModel) {
-        this.modifying[user.id] = true;
+        if (user.isModifyingRelationship) {
+            return;
+        }
+
+        user.isModifyingRelationship = true;
+
         const action = this.getRelationshipAction(user.incommingStatus);
         this.userService.modifyRelationship(user.id, { action: action })
             .finally(() => {
-                this.modifying[user.id] = false;
+                user.isModifyingRelationship = false;
             })
             .subscribe((userResponse: UserViewModel) => {
                 user.incommingStatus = userResponse.incommingStatus;
-            }, error => { });
+            });
     }
 
     public getRelationshipAction(incommingStatus: RelationshipStatus): number {
@@ -65,11 +64,31 @@ export class UsersComponent implements OnInit, OnDestroy {
         return 0;
     }
 
-    public ngOnInit() {
+    public close() {
+        if (this.config) {
+            this.onClose.next(null);
+        } else if (this.dialogRef) {
+            this.dialogRef.close();
+        }
     }
 
     public ngOnDestroy(): void {
-        this.usersObservableSubscription.unsubscribe();
-        this.currentUserSubscription.unsubscribe();
+        if (this.usersObservableSubscription && !this.usersObservableSubscription.closed) {
+            this.usersObservableSubscription.unsubscribe();
+        }
+    }
+
+    public ngOnInit(): void {
+        if (this.data.usersObservable) {
+            this.title = this.data.title;
+            this.usersObservableSubscription = this.data.usersObservable.subscribe(users => {
+                this.users = users;
+            });
+        } else if (this.config) {
+            this.title = this.config.title;
+            this.usersObservableSubscription = this.config.usersObservable.subscribe(users => {
+                this.users = users;
+            });
+        }
     }
 }

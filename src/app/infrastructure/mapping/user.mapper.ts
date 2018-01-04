@@ -20,6 +20,9 @@ export class UserMapper implements IMapper<UserResponse, UserViewModel> {
         user.posts = response.posts;
         user.followers = response.followers;
         user.following = response.following;
+        user.lastActive = new Date(response.lastActive);
+        user.incommingStatus = response.incommingStatus;
+        user.outgoingStatus = response.outgoingStatus;
 
         return user;
     }

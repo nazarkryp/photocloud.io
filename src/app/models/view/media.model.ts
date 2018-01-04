@@ -17,6 +17,7 @@ export class MediaViewModel {
     public user: UserViewModel;
     public likes: UserViewModel[];
     public editing = false;
+    public inspectingLikes = false;
     public coverId: number;
 
     public get created(): Date {

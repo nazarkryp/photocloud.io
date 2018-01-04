@@ -6,6 +6,23 @@
         <form class="item" [formGroup]="formGroup" (ngSubmit)="save()">
             <mat-form-field style="width: 100%;">
                 <input formControlName="username" matInput placeholder="Username" type="text" autocomplete="off">
+                <div matSuffix>
+                    <mat-icon class="primary" matSuffix *ngIf="username?.getError('unique')">clear</mat-icon>
+                    <mat-icon class="success" matSuffix *ngIf="username?.valid">check</mat-icon>
+                    <mat-spinner [diameter]="20" [strokeWidth]="2" color="primary" *ngIf="username?.isValidating"></mat-spinner>
+                </div>
+                <mat-error *ngIf="username?.getError('required')">
+                    Username is required
+                </mat-error>
+                <mat-error *ngIf="username?.getError('minlength')">
+                    Username must be at least {{username.errors.minlength.requiredLength}}
+                </mat-error>
+                <mat-error *ngIf="username?.getError('pattern')">
+                    Whitespaces are not allowed
+                </mat-error>
+                <mat-error *ngIf="username?.getError('unique')">
+                    User with such name already exists
+                </mat-error>
             </mat-form-field>
             <mat-form-field style="width: 100%;">
                 <input formControlName="fullName" matInput placeholder="Full Name" type="text" autocomplete="off">
@@ -15,6 +32,23 @@
             </mat-form-field>
             <mat-form-field style="width: 100%;">
                 <input formControlName="email" matInput placeholder="Email Address" type="email" autocomplete="off">
+                <div matSuffix>
+                    <mat-icon class="primary" matSuffix *ngIf="email?.getError('unique')">clear</mat-icon>
+                    <mat-icon class="success" matSuffix *ngIf="email?.valid">check</mat-icon>
+                    <mat-spinner [diameter]="20" [strokeWidth]="2" color="primary" *ngIf="email?.isValidating"></mat-spinner>
+                </div>
+                <mat-error *ngIf="email?.getError('required')">
+                    Email is required
+                </mat-error>
+                <mat-error *ngIf="email?.getError('maxlength')">
+                    Email cannot be more than {{username.errors.maxlength.requiredLength}}
+                </mat-error>
+                <mat-error *ngIf="email?.getError('pattern')">
+                    Whitespaces are not allowed
+                </mat-error>
+                <mat-error *ngIf="email?.getError('unique')">
+                    Email with such name already exists
+                </mat-error>
             </mat-form-field>
             <div fxLayout="row" fxLayoutAlign="start center">
                 <button mat-button color=primary *ngIf="formGroup.dirty" (click)="cancel()">CANCEL</button>
@@ -22,14 +56,19 @@
             </div>
         </form>
 
-        <div class="item" fxLayout="row" fxLayoutAlign="space-between center">
-            <span [ngClass]="{ 'disabled' : !currentUser.isActive }">Private account</span>
-            <mat-slide-toggle [(ngModel)]="currentUser.isPrivate" [checked]="currentUser.isPrivate" (change)='invertAccountPrivateStatus($event)' [disabled]="!currentUser.isActive"></mat-slide-toggle>
+        <div class="item" fxLayout="row" fxLayoutAlign="space-between start">
+            <div>
+                <span [ngClass]="{ 'disabled' : !currentUser.isActive }">Private account</span>
+                <p style="color: gray; font-weight: lighter; font-size: .8em; line-height: 1.5;">When your account is private, only people you approve can see your photos and videos on PhotoCloud. Your
+                    existing followers won't be affected</p>
+            </div>
+            <mat-slide-toggle [(ngModel)]="currentUser.isPrivate" [checked]="currentUser.isPrivate" (change)='invertAccountPrivateStatus($event)'
+                [disabled]="!currentUser.isActive"></mat-slide-toggle>
         </div>
 
         <div class="item" fxLayout="row" fxLayoutAlign="space-between center">
-            <span>Change account status</span>
-            <button mat-raised-button color="primary" (click)="invertAccountStatus()">{{currentUser.isActive ? 'DISABLE' : 'ACTIVATE'}}</button>
+            <span>Temporarily disable my account</span>
+            <button mat-raised-button color="primary" (click)="invertAccountStatus()">{{currentUser.isActive ? 'DISABLE' : 'ENABLE'}}</button>
         </div>
     </div>
 </div>

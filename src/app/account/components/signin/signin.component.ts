@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AbstractControl, FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { trigger, animate, style, transition, animateChild, group, query, stagger } from '@angular/animations';
@@ -24,7 +24,8 @@ import { CurrentUserService } from 'app/infrastructure/services/current-user.ser
         ])
     ]
 })
-export class SignInComponent {
+export class SignInComponent implements OnInit {
+    @ViewChild('usernameInput') usernameInput: ElementRef;
     @ViewChild('passwordInput') passwordInput: ElementRef;
     public errorStateMatcher = new DefaultErrorStateMatcher();
     public formGroup: FormGroup;
@@ -75,6 +76,10 @@ export class SignInComponent {
                     this.passwordInput.nativeElement.focus();
                 });
         }
+    }
+
+    public ngOnInit(): void {
+        this.usernameInput.nativeElement.focus();
     }
 }
 

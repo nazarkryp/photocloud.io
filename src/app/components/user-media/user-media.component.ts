@@ -82,6 +82,7 @@ export class UserMediaComponent implements OnInit, OnDestroy {
 
         dialog.afterClosed().subscribe(remove => {
             media.editing = false;
+            media.inspectingLikes = false;
 
             if (remove) {
                 const indexToRemove = this.userMedia.page.data.findIndex(e => e.id === media.id);
