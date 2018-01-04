@@ -133,3 +133,7 @@ a.link-button {
 .success {
     color: green;
 }
+
+.form-field {
+    width: 100%;
+}

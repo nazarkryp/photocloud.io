@@ -38,14 +38,6 @@ export class AppComponent implements OnInit {
         this.notificationsSidenav.close();
     }
 
-    public navigationInterceptor(event): void {
-        if (event instanceof NavigationEnd) {
-            this.renderToolbar = this.router.url !== '/account/signin'
-                && this.router.url !== '/account/create'
-                && this.router.url !== '/account/recover';
-        }
-    }
-
     public ngOnInit(): void {
         this.router.events.subscribe(event => {
             if (event instanceof ResolveStart) {
@@ -56,5 +48,13 @@ export class AppComponent implements OnInit {
 
             this.navigationInterceptor(event);
         });
+    }
+
+    private navigationInterceptor(event): void {
+        if (event instanceof NavigationEnd) {
+            this.renderToolbar = this.router.url !== '/account/signin'
+                && this.router.url !== '/account/create'
+                && this.router.url !== '/account/recover';
+        }
     }
 }

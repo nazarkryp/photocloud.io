@@ -7,6 +7,7 @@ export class CurrentUserViewModel {
     public isPrivate: boolean;
     public isActive: boolean;
     public pictureUri: string;
+    public incommingRequests: number;
 
     constructor(
         id?: number,

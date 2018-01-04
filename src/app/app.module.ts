@@ -58,6 +58,7 @@ import { SplashScreenComponent } from './components/shared/splash-screen/splash-
 import { CovalentModule } from 'app/core/covalent.module';
 import { LikedMediaComponent } from './components/liked-media/liked-media.component';
 import { LikesComponent } from './components/shared/likes/likes.component';
+import { ChangePasswordComponent } from './components/shared/change-password/change-password.component';
 
 @NgModule({
     declarations: [
@@ -85,13 +86,15 @@ import { LikesComponent } from './components/shared/likes/likes.component';
         FooterComponent,
         SplashScreenComponent,
         LikedMediaComponent,
-        LikesComponent
+        LikesComponent,
+        ChangePasswordComponent
     ],
     entryComponents: [
         MediaDetailsComponent,
         CreateMediaComponent,
         ConfirmComponent,
-        UsersComponent
+        UsersComponent,
+        ChangePasswordComponent
     ],
     imports: [
         BrowserModule,

@@ -4,8 +4,9 @@
     color: #444444;
     background: white;
     border-radius: 2px;
-    padding: 24px;
+    padding: .7rem .7rem 1.7rem .7rem;
     box-sizing: border-box;
+    position: relative;
 }
 
 .edit-container img {
@@ -16,9 +17,14 @@
 }
 
 .edit-container .item {
+    position: relative;
     margin-top: 2rem;
 }
 
 .edit-container .disabled {
     color: rgba(0, 0, 0, 0.38);
+}
+
+.form {
+    font-size: .9em;
 }

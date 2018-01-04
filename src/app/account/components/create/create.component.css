@@ -75,10 +75,6 @@
     position: relative;
 }
 
-.form-field {
-    width: 100%;
-}
-
 .input {
     padding: 12px;
     border: 2px solid #efefef;

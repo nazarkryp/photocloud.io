@@ -83,10 +83,6 @@
     position: relative;
 }
 
-.form-field {
-    width: 100%;
-}
-
 .disabled {
     color: #9d9d9d;
 }
