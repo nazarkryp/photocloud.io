@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { CurrentUserService } from 'app/infrastructure/services';
 import { AccountService } from 'app/account/services';
 import { CurrentUserViewModel } from 'app/models/view';
+import { IncommingRequestsService } from 'app/services';
 
 @Component({
     selector: 'app-toolbar',
@@ -14,11 +15,13 @@ import { CurrentUserViewModel } from 'app/models/view';
 export class ToolbarComponent implements OnInit, OnDestroy {
     private currentUserSubscription: Subscription;
     public currentUser: CurrentUserViewModel;
+    public incommingRequestsCount: number;
     public renderToolbar: boolean;
     @Output() openNotificationsEvent = new EventEmitter<boolean>();
 
     constructor(
         private currentUserService: CurrentUserService,
+        private incommingRequestsService: IncommingRequestsService,
         private accountService: AccountService,
         private router: Router) {
     }
@@ -32,6 +35,10 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             .subscribe(currentUser => {
                 this.currentUser = currentUser;
             });
+
+        this.incommingRequestsService.incommingRequests.subscribe(count => {
+            this.incommingRequestsCount = count;
+        });
     }
 
     public ngOnDestroy(): void {

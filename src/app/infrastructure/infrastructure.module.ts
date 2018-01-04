@@ -20,6 +20,7 @@ import {
     InternetConnectionFilter
 } from 'app/infrastructure/filters/http';
 import { AttachmentMapper, CommentMapper, MediaMapper, PaginationMapper } from 'app/infrastructure/mapping';
+import { IncommingRequestsInterceptor } from 'app/account/services/interceptors/incomming-requests.interceptor';
 
 @NgModule({
     providers: [
@@ -47,6 +48,11 @@ import { AttachmentMapper, CommentMapper, MediaMapper, PaginationMapper } from '
         {
             provide: HTTP_INTERCEPTORS,
             useClass: HttpErrorInterceptor,
+            multi: true
+        },
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: IncommingRequestsInterceptor,
             multi: true
         }
     ]

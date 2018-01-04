@@ -13,7 +13,7 @@ export class AuthenticationInterceptor implements HttpInterceptor {
         private router: Router,
         private injector: Injector) { }
 
-    intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    public intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         if (req.url.includes('/authorize')) {
             return next.handle(req);
         }

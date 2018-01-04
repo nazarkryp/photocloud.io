@@ -3,9 +3,9 @@ import { trigger, style, animate, transition, query, stagger } from '@angular/an
 
 import { Subscription } from 'rxjs/Subscription';
 
-import { UserService } from 'app/services';
+import { UserService, IncommingRequestsService } from 'app/services';
 
-import { UserViewModel } from 'app/models/view';
+import { UserViewModel, IncommingRequestViewModel } from 'app/models/view';
 import { RelationshipAction } from 'app/models/shared';
 
 @Component({
@@ -16,47 +16,57 @@ import { RelationshipAction } from 'app/models/shared';
         trigger('enterTransition', [
             transition(':enter', [
                 style({ transform: 'translateX(50px)', opacity: 0 }),
-                animate('1200ms cubic-bezier(0.35, 0, 0.25, 1)', style('*'))
+                animate('1000ms cubic-bezier(0.35, 0, 0.25, 1)', style('*'))
             ])
         ])
     ]
 })
-export class NotificationsComponent implements OnInit, OnDestroy {
-    private incommingRequestsSubscription$: Subscription;
+export class NotificationsComponent implements OnInit {
     @Output() onClosing: EventEmitter<any> = new EventEmitter<any>();
 
-    public incommingRequests: UserViewModel[];
+    public incommingRequests: IncommingRequestViewModel[];
     public isLoading: boolean;
 
     constructor(
+        private incommingRequestService: IncommingRequestsService,
         private userService: UserService) { }
 
     public getIncommingRequests() {
         this.isLoading = true;
-        this.incommingRequestsSubscription$ = this.userService.getIncommingRequests()
+        this.incommingRequestService.getIncommingRequests()
             .finally(() => {
                 this.isLoading = false;
             })
             .subscribe(incommingRequests => {
-                this.incommingRequests = incommingRequests;
+                this.incommingRequests = incommingRequests as IncommingRequestViewModel[];
             });
     }
 
-    public confirmIncommingRequest(user: UserViewModel) {
-        this.userService.modifyRelationship(user.id, {
+    public confirmIncommingRequest(incommingRequest: IncommingRequestViewModel) {
+        incommingRequest.isConfirmingIncommingRequest = true;
+        this.userService.modifyRelationship(incommingRequest.id, {
             action: RelationshipAction.Approve
+        }).finally(() => {
+            incommingRequest.isConfirmingIncommingRequest = true;
         }).subscribe(userResult => {
-            const indexToRemove = this.incommingRequests.findIndex(e => e.id === user.id);
+            const indexToRemove = this.incommingRequests.findIndex(e => e.id === incommingRequest.id);
             this.incommingRequests.splice(indexToRemove, 1);
+            this.incommingRequestService.updateIncommingRequestsCount(this.incommingRequests.length);
+            incommingRequest.isConfirmed = true;
         });
     }
 
-    public removeIncommingRequest(user: UserViewModel) {
-        this.userService.modifyRelationship(user.id, {
+    public removeIncommingRequest(incommingRequest: IncommingRequestViewModel) {
+        incommingRequest.isRemovingIncommingRequest = true;
+        this.userService.modifyRelationship(incommingRequest.id, {
             action: RelationshipAction.Reject
+        }).finally(() => {
+            incommingRequest.isRemovingIncommingRequest = false;
         }).subscribe(userResult => {
-            const indexToRemove = this.incommingRequests.findIndex(e => e.id === user.id);
+            const indexToRemove = this.incommingRequests.findIndex(e => e.id === incommingRequest.id);
             this.incommingRequests.splice(indexToRemove, 1);
+            this.incommingRequestService.updateIncommingRequestsCount(this.incommingRequests.length);
+            incommingRequest.isRemoved = true;
         });
     }
 
@@ -66,9 +76,5 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 
     public ngOnInit() {
         this.getIncommingRequests();
-    }
-
-    public ngOnDestroy(): void {
-        this.incommingRequestsSubscription$.unsubscribe();
     }
 }

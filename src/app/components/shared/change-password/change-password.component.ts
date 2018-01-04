@@ -2,12 +2,16 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, AbstractControl, Validators, FormBuilder, FormControl } from '@angular/forms';
 import { MatDialogRef } from '@angular/material';
 
+import { DefaultErrorStateMatcher } from 'app/account/matchers';
+
 @Component({
     selector: 'app-change-password',
     templateUrl: './change-password.component.html',
     styleUrls: ['./change-password.component.css']
 })
 export class ChangePasswordComponent implements OnInit {
+    public errorStateMatcher = new DefaultErrorStateMatcher();
+
     public get oldPassword(): AbstractControl {
         return this.passwordFormGroup.get('oldPassword');
     }

@@ -10,9 +10,15 @@
             <img class="incomming-request-avatar" [routerLink]="['/', user.username]" src="{{user.pictureUri}}" alt="user-image" default="assets/images/user-default-image.png">
             <div fxLayout="row" fxLayoutAlign="space-between center" fxFlex>
                 <a class="incomming-request-username" [routerLink]="['/', user.username]">{{user.username}}</a>
-                <div>
-                    <button class="confirm-button" mat-raised-button color="primary" (click)="confirmIncommingRequest(user)">CONFIRM</button>
-                    <button mat-button (click)="removeIncommingRequest(user)" color="primary">REMOVE</button>
+                <div *ngIf="!user.isConfirmed && !user.isRemoved">
+                    <button mat-button (click)="removeIncommingRequest(user)" [disabled]="user.isRemovingIncommingRequest">REMOVE</button>
+                    <button mat-raised-button color="primary" (click)="confirmIncommingRequest(user)" [disabled]="user.isConfirmingIncommingRequest">CONFIRM</button>
+                </div>
+                <div *ngIf="user.isConfirmed">
+                    <mat-icon class="mat-36 primary">check</mat-icon>
+                </div>
+                <div *ngIf="user.isRemoved">
+                    <mat-icon class="mat-36 primary">clear</mat-icon>
                 </div>
             </div>
         </div>

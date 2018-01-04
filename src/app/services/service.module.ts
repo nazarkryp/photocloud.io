@@ -4,7 +4,8 @@ import {
     CommentService,
     MediaService,
     UploaderService,
-    UserService
+    UserService,
+    IncommingRequestsService
 } from 'app/services';
 
 @NgModule({
@@ -12,7 +13,8 @@ import {
         CommentService,
         MediaService,
         UploaderService,
-        UserService
+        UserService,
+        IncommingRequestsService
     ]
 })
 export class ServiceModule { }

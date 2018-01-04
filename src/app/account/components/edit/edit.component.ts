@@ -63,7 +63,6 @@ export class EditComponent implements OnInit, AfterViewInit, AfterViewChecked {
     public save() {
         const propertiesToUpdate = this.getPropertiesToUpdate();
         this.progress.start();
-        console.log('save');
         this.currentUserService.updateCurrentUser(propertiesToUpdate)
             .finally(() => {
                 this.progress.done();
@@ -83,7 +82,6 @@ export class EditComponent implements OnInit, AfterViewInit, AfterViewChecked {
     }
 
     public invertAccountPrivateStatus(event: MatSlideToggleChange) {
-        console.log('invertAccountPrivateStatus');
         if (this.isInvertingAccountPrivateStatus) {
             return;
         }
@@ -101,7 +99,6 @@ export class EditComponent implements OnInit, AfterViewInit, AfterViewChecked {
     }
 
     public invertAccountStatus() {
-        console.log('invertAccountStatus');
         if (this.isInvertingAccountStatus) {
             return;
         }

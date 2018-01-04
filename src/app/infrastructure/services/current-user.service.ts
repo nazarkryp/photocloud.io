@@ -15,6 +15,8 @@ import { AccessToken } from 'app/infrastructure/security/access-token.model';
 export class CurrentUserService {
     private currentUserStorageKey = 'photocloud-current-user';
     private state: ReplaySubject<CurrentUserViewModel> = new ReplaySubject<CurrentUserViewModel>(1);
+    private intervalNumber: number;
+    private gettingIncommingRequests: boolean;
 
     constructor(
         private tokenProvider: TokenProvider,
@@ -73,5 +75,30 @@ export class CurrentUserService {
     private saveCurrentUser(currentUser: CurrentUserViewModel) {
         this.state.next(currentUser);
         this.storageService.set<CurrentUserViewModel>(this.currentUserStorageKey, currentUser);
+        // this.run(currentUser);
     }
+
+    // private run(currentUser: CurrentUserViewModel) {
+    //     if (!currentUser.isPrivate && this.intervalNumber) {
+    //         window.clearInterval(this.intervalNumber);
+    //     } else if (currentUser.isPrivate && !this.intervalNumber) {
+    //         this.intervalNumber = window.setInterval(() => {
+    //             this.getIncommingRequests();
+    //         }, 5000);
+    //     }
+    // }
+
+    // public getIncommingRequests() {
+    //     if (!this.gettingIncommingRequests) {
+    //         // console.log('getting incomming requests');
+    //         this.gettingIncommingRequests = true;
+    //         this.userService.getIncommingRequests()
+    //             .finally(() => {
+    //                 this.gettingIncommingRequests = false;
+    //             })
+    //             .subscribe(incommingRequests => {
+    //                 // console.log(`incomming requests count: ${incommingRequests.length}`);
+    //             });
+    //     }
+    // }
 }

@@ -47,7 +47,10 @@ export class UserService {
     }
 
     public getIncommingRequests(): Observable<UserViewModel[]> {
-        return this.webApiClient.get<UserViewModel[]>('users/requests/incomming');
+        return this.webApiClient.get<UserResponse[]>('users/requests/incomming')
+            .map(response => {
+                return this.userMapper.mapFromResponseArray(response);
+            });
     }
 
     public getOutgoingRequests(): Observable<UserViewModel[]> {

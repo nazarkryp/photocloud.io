@@ -9,12 +9,15 @@ import { CreateAccountRequestModel } from 'app/account/models/request';
 import { TokenMapper } from 'app/infrastructure/mapping/token.mapper';
 
 import { environment } from 'app/../environments/environment';
+import { UserMapper } from 'app/infrastructure/mapping';
+import { CurrentUserResponse } from 'app/models/response';
 
 @Injectable()
 export class AccountService {
     private currentUser: CurrentUserViewModel;
 
     constructor(
+        private userMapper: UserMapper,
         private webApiClient: WebApiClient,
         private tokenMapper: TokenMapper,
         private httpClient: HttpClient) { }
@@ -37,10 +40,16 @@ export class AccountService {
     }
 
     public updateAccount(propertiesToUpdate: any): Observable<CurrentUserViewModel> {
-        return this.webApiClient.patch<UserViewModel>('account', propertiesToUpdate);
+        return this.webApiClient.patch<CurrentUserResponse>('account', propertiesToUpdate)
+            .map(response => {
+                return this.userMapper.mapFromCurrentUserResponse(response);
+            });
     }
 
     public getAccount(): Observable<CurrentUserViewModel> {
-        return this.webApiClient.get<CurrentUserViewModel>('account');
+        return this.webApiClient.get<CurrentUserResponse>('account')
+            .map(response => {
+                return this.userMapper.mapFromCurrentUserResponse(response);
+            });
     }
 }

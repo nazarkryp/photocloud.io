@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { UserResponse } from 'app/models/response';
+import { UserResponse, CurrentUserResponse } from 'app/models/response';
 import { UserViewModel, CurrentUserViewModel } from 'app/models/view';
 import { RelationshipStatus } from 'app/models/shared';
 import { IMapper } from 'app/infrastructure/mapping/mapper';
@@ -45,6 +45,21 @@ export class UserMapper implements IMapper<UserResponse, UserViewModel> {
         user.email = currentUser.email;
         user.isActive = currentUser.isActive;
         user.isPrivate = currentUser.isPrivate;
+
+        return user;
+    }
+
+    public mapFromCurrentUserResponse(response: CurrentUserResponse): CurrentUserViewModel {
+        const user = new CurrentUserViewModel();
+
+        user.id = response.id;
+        user.username = response.username;
+        user.fullName = response.fullName;
+        user.bio = response.bio;
+        user.email = response.email;
+        user.pictureUri = response.pictureUri;
+        user.isPrivate = response.isPrivate;
+        user.isActive = response.isActive;
 
         return user;
     }

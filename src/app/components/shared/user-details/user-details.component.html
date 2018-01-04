@@ -1,5 +1,5 @@
-<div class="user-info" fxLayout="row" fxLayoutAlign="center center">
-    <div fxLayout="column" fxLayoutAlign="center center">
+<div class="user-info" fxLayout="row" fxLayoutAlign="center start">
+    <!-- <div fxLayout="column" fxLayoutAlign="center center">
         <img class="thumbnail-big" src="{{user.pictureUri}}" default="assets/images/user-default-image.png" alt="{{user.username}}"
             *ngIf="!currentUser || (currentUser && !currentUser.isActive) || user.id !== currentUser.id" />
         <img class="thumbnail-big pointer" src="{{user.pictureUri}}" appImagePreview [image]="uploader.queue[0]?._file" default="assets/images/user-default-image.png"
@@ -9,40 +9,41 @@
         <div style="margin-top: 34px;" *ngIf="user.lastActive">
             <span style="font-weight: bold; text-transform: uppercase; color: #C8C8C8;">{{user.lastActive | timeAgo}}</span>
         </div>
-    </div>
+    </div> -->
     <div class="user-info-data" fxLayout="column" fxFlex>
         <div fxLayout="row" fxLayoutAlign="space-between center">
             <div>
-                <span class="mat-display-1">{{user.username}} </span>
+                <span class="mat-display-1">@{{user.username}} </span>
             </div>
             <button mat-icon-button routerLink="/account/edit" matTooltip="Settings" matTooltipPosition="above" *ngIf="currentUser && user.id === currentUser.id">
-                <mat-icon>settings</mat-icon>
+                <mat-icon class="btn-icon">settings</mat-icon>
             </button>
             <button mat-icon-button matTooltip="Logout" matTooltipPosition="above" (click)="logout()" *ngIf="currentUser && user.id === currentUser.id">
-                <mat-icon>exit_to_app</mat-icon>
+                <mat-icon class="btn-icon">exit_to_app</mat-icon>
             </button>
-            <button mat-raised-button color="accent" *ngIf="currentUser && currentUser.isActive && user.id !== currentUser.id && (user.isActive || (!user.isActive && user.incommingStatus !== 0))"
+            <button mat-button class="btn-relationships" *ngIf="currentUser && currentUser.isActive && user.id !== currentUser.id && (user.isActive || (!user.isActive && user.incommingStatus !== 0))"
                 (click)="modifyRelationship()" [disabled]="isModifyingRelationship">{{user.incommingStatus | relationshipAction | uppercase }}</button>
         </div>
-        <div fxLayout="row" fxLayoutAlign="start center" *ngIf="user.isActive">
-            <div fxFlex>
+        <div fxLayout="row" fxLayoutAlign="space-between center" *ngIf="user.isActive">
+            <div>
                 <span class="mat-title">{{user.posts}} </span>
                 <span class="mat-subhead">posts </span>
             </div>
-            <a mat-button (click)="getFollowers()" *ngIf="currentUser" fxFlex>
+            
+            <a mat-button (click)="getFollowers()" *ngIf="currentUser">
                 <span class="mat-title">{{user.followers}} </span>
                 <span class="mat-subhead">followers </span>
             </a>
-            <div *ngIf="!currentUser" fxFlex>
+            <div *ngIf="!currentUser">
                 <span class="mat-title">{{user.followers}} </span>
                 <span class="mat-subhead">followers </span>
             </div>
 
-            <a mat-button (click)="getFollowings()" *ngIf="currentUser" fxFlex>
+            <a mat-button (click)="getFollowings()" *ngIf="currentUser">
                 <span class="mat-title">{{user.following}} </span>
                 <span class="mat-subhead">following</span>
             </a>
-            <div *ngIf="!currentUser" fxFlex>
+            <div *ngIf="!currentUser">
                 <span class="mat-title">{{user.following}} </span>
                 <span class="mat-subhead">following</span>
             </div>
