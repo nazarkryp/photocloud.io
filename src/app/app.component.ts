@@ -7,6 +7,8 @@ import { trigger, transition, style, animate } from '@angular/animations';
 import { CurrentUserService } from 'app/infrastructure/services';
 
 import { NgProgress } from 'ngx-progressbar';
+import { IncommingRequestsService } from 'app/services';
+import { CurrentUserViewModel } from 'app/models/view';
 
 @Component({
     selector: 'app-root',
@@ -18,14 +20,17 @@ export class AppComponent implements OnInit {
     public notificationsSidenav: MatSidenav;
     public renderToolbar = false;
     public initialLoad = true;
+    private currentUser: CurrentUserViewModel;
 
     constructor(
         private router: Router,
         private currentUserService: CurrentUserService,
-        private progress: NgProgress) {
+        private progress: NgProgress,
+        private incommingRequestsService: IncommingRequestsService) {
         this.currentUserService.getCurrentUser(true)
             .take(1)
             .subscribe(currentUser => {
+                this.currentUser = currentUser;
                 this.initialLoad = false;
             });
     }
@@ -44,6 +49,10 @@ export class AppComponent implements OnInit {
                 this.progress.start();
             } else if (event instanceof ResolveEnd) {
                 this.progress.done();
+
+                // if (this.currentUser && this.currentUser.isPrivate && this.currentUser.isActive) {
+                //     this.incommingRequestsService.getIncommingRequests().subscribe();
+                // }
             }
 
             this.navigationInterceptor(event);

@@ -1,8 +1,7 @@
 <div class="user-media-container" fxLayout="column" fxLayoutAlign="start center">
     <app-user-details [user]="userMedia.user"></app-user-details>
-
     <div style="width: 100%;" *ngIf="!userMedia.error; else errorBox" fxLayout="column" fxLayoutAlign="center center">
-        <div class="user-media">
+        <div class="user-media" *ngIf="userMedia.page?.data; else emptyFeed;">
             <div *ngFor="let media of userMedia.page?.data;">
                 <div class="user-media-item" (click)="openPostDialog(media)">
                     <img class="user-media-thumbnail" src="{{media?.attachments[0].uri}}" alt="media-image" *ngIf="media?.attachments[0].type !== 1">
@@ -40,7 +39,8 @@
 
 <ng-template #emptyFeed>
     <div class="info-container" fxLayout="row" fxLayoutAlign="center center">
-        <h1 class="info-message">
-            <strong>{{userMedia.user.username}}</strong> hasn't posted anything yet</h1>
+        <span class="info-message">
+            <strong>{{userMedia.user.username}}</strong> hasn't posted anything yet
+        </span>
     </div>
 </ng-template>

@@ -14,16 +14,46 @@ import { IncommingRequestsService } from 'app/services';
 })
 export class ToolbarComponent implements OnInit, OnDestroy {
     private currentUserSubscription: Subscription;
+    private isResolvingExplorePeople: boolean;
+    private isResolvingUserMedia: boolean;
+
     public currentUser: CurrentUserViewModel;
     public incommingRequestsCount: number;
     public renderToolbar: boolean;
-    @Output() openNotificationsEvent = new EventEmitter<boolean>();
+    @Output() public openNotificationsEvent = new EventEmitter<boolean>();
 
     constructor(
         private currentUserService: CurrentUserService,
         private incommingRequestsService: IncommingRequestsService,
         private accountService: AccountService,
         private router: Router) {
+    }
+
+    public explorePeople() {
+        if (!this.isResolvingExplorePeople) {
+            this.isResolvingExplorePeople = true;
+
+            this.router.navigateByUrl('/explore/people')
+                .then(() => {
+                    this.isResolvingExplorePeople = false;
+                })
+                .catch(() => {
+                    this.isResolvingExplorePeople = false;
+                });
+        }
+    }
+
+    public profile() {
+        if (!this.isResolvingUserMedia) {
+            this.isResolvingUserMedia = true;
+
+            this.router.navigateByUrl(this.currentUser.username)
+                .then(() => {
+                    this.isResolvingUserMedia = false;
+                }).catch(() => {
+                    this.isResolvingUserMedia = false;
+                });
+        }
     }
 
     public openNotifications() {

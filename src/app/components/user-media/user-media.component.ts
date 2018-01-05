@@ -14,6 +14,7 @@ import { MediaDetailsComponent } from 'app/components/shared/media-details/media
 import { UsersComponent } from '../shared/users/users.component';
 import { NgProgress } from 'ngx-progressbar';
 import { ConfirmComponent } from 'app/components/shared/confirm/confirm.component';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
     selector: 'app-user-media',
@@ -21,7 +22,6 @@ import { ConfirmComponent } from 'app/components/shared/confirm/confirm.componen
     styleUrls: ['./user-media.component.css']
 })
 export class UserMediaComponent implements OnInit, OnDestroy {
-    private postSubscription: Subscription;
     private routeSubscription: Subscription;
     private currentUserSubscription: Subscription;
 
@@ -56,7 +56,7 @@ export class UserMediaComponent implements OnInit, OnDestroy {
             this.progress.start();
         }
 
-        this.postSubscription = this.mediaService.getUserMedia(this.userMedia.user.username, this.userMedia.page.pagination)
+        this.mediaService.getUserMedia(this.userMedia.user.username, this.userMedia.page.pagination)
             .finally(() => {
                 if (this.progress.isStarted()) {
                     this.progress.done();
@@ -71,7 +71,36 @@ export class UserMediaComponent implements OnInit, OnDestroy {
                 if (page.data) {
                     this.userMedia.page.data = this.userMedia.page.data.concat(page.data);
                 }
+            }, (error: HttpErrorResponse) => {
+                if (error.status) {
+                    this.userService.getUser(this.userMedia.user.username)
+                        .subscribe(user => {
+                            const validationResult = this.validateUser(user);
+                            this.userMedia.user = user;
+                            this.userMedia.error = validationResult.error;
+                        });
+                }
             });
+    }
+
+    private validateUser(user: UserViewModel): ValidationResult {
+        const validationResult: ValidationResult = new ValidationResult();
+        const currentUser = this.currentUserService.retrieveCurrentUser();
+
+        if (!user.isActive) {
+            validationResult.hasErrors = true;
+            validationResult.error = new ErrorViewModel('Account is not active');
+        } else if (user.isPrivate
+            && (!currentUser || user.id !== currentUser.id)
+            && user.incommingStatus !== RelationshipStatus.Following) {
+            validationResult.hasErrors = true;
+            validationResult.error = new ErrorViewModel('Account is private');
+            validationResult.error.description = currentUser
+                ? `Follow ${user.username} to see all their photos` :
+                `Already know ${user.username}? Sign in to see all their photos`;
+        }
+
+        return validationResult;
     }
 
     public openPostDialog(media: MediaViewModel) {
@@ -100,10 +129,6 @@ export class UserMediaComponent implements OnInit, OnDestroy {
     }
 
     public ngOnDestroy(): void {
-        if (this.postSubscription && !this.postSubscription.closed) {
-            this.postSubscription.unsubscribe();
-        }
-
         if (this.currentUserSubscription && !this.currentUserSubscription.closed) {
             this.currentUserSubscription.unsubscribe();
         }

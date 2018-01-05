@@ -1,60 +1,67 @@
-<div class="user-info" fxLayout="row" fxLayoutAlign="center start">
-    <!-- <div fxLayout="column" fxLayoutAlign="center center">
-        <img class="thumbnail-big" src="{{user.pictureUri}}" default="assets/images/user-default-image.png" alt="{{user.username}}"
-            *ngIf="!currentUser || (currentUser && !currentUser.isActive) || user.id !== currentUser.id" />
-        <img class="thumbnail-big pointer" src="{{user.pictureUri}}" appImagePreview [image]="uploader.queue[0]?._file" default="assets/images/user-default-image.png"
-            alt="{{user.username}}" (click)="fileInput.click()" *ngIf="currentUser && currentUser.isActive && user.id === currentUser.id"
-        />
-        <input #fileInput type="file" accept="image/*" ng2FileSelect [uploader]="uploader" hidden/>
-        <div style="margin-top: 34px;" *ngIf="user.lastActive">
-            <span style="font-weight: bold; text-transform: uppercase; color: #C8C8C8;">{{user.lastActive | timeAgo}}</span>
+<div fxLayout="column" fxLayoutAlign="center start">
+    <div class="user-info" fxLayout="row" fxLayoutAlign="center center">
+        <div fxLayout="column" fxLayoutAlign="center center">
+            <img class="thumbnail-big" src="{{user.pictureUri}}" default="assets/images/user-default-image.png" alt="{{user.username}}"
+                *ngIf="!currentUser || (currentUser && !currentUser.isActive) || user.id !== currentUser.id" />
+            <img class="thumbnail-big pointer" src="{{user.pictureUri}}" appImagePreview [image]="uploader.queue[0]?._file" default="assets/images/user-default-image.png"
+                alt="{{user.username}}" (click)="fileInput.click()" *ngIf="currentUser && currentUser.isActive && user.id === currentUser.id"
+            />
+            <input #fileInput type="file" accept="image/*" ng2FileSelect [uploader]="uploader" hidden/>
         </div>
-    </div> -->
-    <div class="user-info-data" fxLayout="column" fxFlex>
-        <div fxLayout="row" fxLayoutAlign="space-between center">
-            <div>
-                <span class="mat-display-1">@{{user.username}} </span>
+        <div class="user-info-data" fxLayout="column" fxFlex>
+            <div fxLayout="row" fxLayoutAlign="space-between center">
+                <span class="user-info-username">{{user.username}}</span>
+                <button mat-icon-button routerLink="/account/edit" matTooltip="Settings" matTooltipPosition="above" *ngIf="currentUser && user.id === currentUser.id">
+                    <mat-icon class="btn-icon">settings</mat-icon>
+                </button>
+                <button mat-icon-button matTooltip="Logout" matTooltipPosition="above" (click)="logout()" *ngIf="currentUser && user.id === currentUser.id">
+                    <mat-icon class="btn-icon">exit_to_app</mat-icon>
+                </button>
+                <button mat-button class="btn-relationships" *ngIf="currentUser && currentUser.isActive && user.id !== currentUser.id && (user.isActive || (!user.isActive && user.incommingStatus !== 0))"
+                    (click)="modifyRelationship()" [disabled]="isModifyingRelationship">{{user.incommingStatus | relationshipAction | uppercase }}</button>
             </div>
-            <button mat-icon-button routerLink="/account/edit" matTooltip="Settings" matTooltipPosition="above" *ngIf="currentUser && user.id === currentUser.id">
-                <mat-icon class="btn-icon">settings</mat-icon>
-            </button>
-            <button mat-icon-button matTooltip="Logout" matTooltipPosition="above" (click)="logout()" *ngIf="currentUser && user.id === currentUser.id">
-                <mat-icon class="btn-icon">exit_to_app</mat-icon>
-            </button>
-            <button mat-button class="btn-relationships" *ngIf="currentUser && currentUser.isActive && user.id !== currentUser.id && (user.isActive || (!user.isActive && user.incommingStatus !== 0))"
-                (click)="modifyRelationship()" [disabled]="isModifyingRelationship">{{user.incommingStatus | relationshipAction | uppercase }}</button>
-        </div>
-        <div fxLayout="row" fxLayoutAlign="space-between center" *ngIf="user.isActive">
-            <div>
-                <span class="mat-title">{{user.posts}} </span>
-                <span class="mat-subhead">posts </span>
-            </div>
-            
-            <a mat-button (click)="getFollowers()" *ngIf="currentUser">
-                <span class="mat-title">{{user.followers}} </span>
-                <span class="mat-subhead">followers </span>
-            </a>
-            <div *ngIf="!currentUser">
-                <span class="mat-title">{{user.followers}} </span>
-                <span class="mat-subhead">followers </span>
-            </div>
+            <div fxLayout="row" fxLayoutAlign="space-between center" *ngIf="user.isActive" style="font-size: 1.1em;">
+                <a>
+                    <span>
+                        <strong>{{user.posts}}</strong>
+                    </span>
+                    <span>posts</span>
+                </a>
 
-            <a mat-button (click)="getFollowings()" *ngIf="currentUser">
-                <span class="mat-title">{{user.following}} </span>
-                <span class="mat-subhead">following</span>
-            </a>
-            <div *ngIf="!currentUser">
-                <span class="mat-title">{{user.following}} </span>
-                <span class="mat-subhead">following</span>
+                <a class="user-info-link-button" (click)="getFollowers()" *ngIf="currentUser">
+                    <span>
+                        <strong>{{user.followers}}</strong>
+                    </span>
+                    <span>followers</span>
+                </a>
+                <div *ngIf="!currentUser">
+                    <span>
+                        <strong>{{user.followers}}</strong>
+                    </span>
+                    <span>followers</span>
+                </div>
+
+                <a class="user-info-link-button" (click)="getFollowings()" *ngIf="currentUser">
+                    <span>
+                        <strong>{{user.following}}</strong>
+                    </span>
+                    <span>following</span>
+                </a>
+                <div *ngIf="!currentUser">
+                    <span>
+                        <strong>{{user.following}}</strong>
+                    </span>
+                    <span>following</span>
+                </div>
+            </div>
+            <div fxLayout="row" fxLayoutAlign="start start" *ngIf="user.isActive">
+                <span class="user-info-fullname">{{user.fullName}}</span>
+                <span class="user-info-bio">{{user.bio}}
+                </span>
             </div>
         </div>
-        <div fxLayout="row" fxLayoutAlign="start center" *ngIf="user.isActive">
-            <div>
-                <span class="mat-subhead full-name">{{user.fullName}}</span>
-            </div>
-            <div class="bio-container">
-                <span class="mat-subhead bio">{{user.bio}}</span>
-            </div>
-        </div>
+    </div>
+    <div style="margin-top: 34px; width: 152px;" fxLayout="row" fxLayoutAlign="center center" *ngIf="user.isActive && user.lastActive">
+        <span style="font-weight: bold; text-transform: uppercase; color: #C8C8C8;">{{user.lastActive | timeAgo}}</span>
     </div>
 </div>

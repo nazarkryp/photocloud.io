@@ -111,7 +111,8 @@
 }
 
 .info-message {
-    font-weight: 300;
+    font-weight: lighter;
+    font-size: 1.3em;
 }
 
 .multiple-attachments-icon-container {

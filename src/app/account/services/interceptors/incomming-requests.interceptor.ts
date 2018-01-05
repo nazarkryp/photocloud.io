@@ -39,8 +39,10 @@ export class IncommingRequestsInterceptor implements HttpInterceptor {
 
         if (currentUser && currentUser.isPrivate && !req.url.includes('users/requests/incomming')) {
             this.isLoadingIncommingRequests = true;
-            this.incommingRequestsService.getIncommingRequests().subscribe(() => {
-                this.isLoadingIncommingRequests = false;
+            return next.handle(req).finally(() => {
+                this.incommingRequestsService.getIncommingRequests().subscribe(() => {
+                    this.isLoadingIncommingRequests = false;
+                });
             });
         }
 
