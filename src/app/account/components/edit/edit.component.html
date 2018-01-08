@@ -35,7 +35,7 @@
                     <input formControlName="bio" matInput placeholder="Bio" type="text" autocomplete="off">
                 </mat-form-field>
                 <div fxLayout="row" fxLayoutAlign="end center">
-                    <button mat-button [disabled]="!formGroup.dirty" (click)="cancel()">CANCEL</button>
+                    <button mat-button *ngIf="formGroup.dirty" (click)="cancel()">CANCEL</button>
                     <button mat-raised-button color="primary" type="sumit" [disabled]="!formGroup.valid || !formGroup.dirty">SAVE CHANGES</button>
                 </div>
             </form>
@@ -67,7 +67,7 @@
                     </mat-error>
                 </mat-form-field>
                 <div fxLayout="row" fxLayoutAlign="end center">
-                    <button type="submit" mat-raised-button color="primary" [disabled]="!privateFormGroup.valid || !privateFormGroup.dirty">UPDATE E-MAIL ADDRESS</button>
+                    <button type="submit" mat-raised-button color="primary" [disabled]="!privateFormGroup.valid || !privateFormGroup.dirty">SAVE CHANGES</button>
                 </div>
             </form>
             <div class="item" fxLayout="row" fxLayoutAlign="space-between start">

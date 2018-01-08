@@ -8,6 +8,10 @@
     width: 960px;
 }
 
+.footer-links>a:first-child {
+    margin-left: 0;
+}
+
 .footer-links>a {
     color: #ea1f62;
     margin-left: .75rem;
@@ -16,7 +20,6 @@
 
 .footer-links>a:hover {
     color: #a01745;
-    margin-left: .75rem;
 }
 
 .copyright {

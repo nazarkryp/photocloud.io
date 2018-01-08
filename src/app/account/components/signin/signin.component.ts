@@ -50,14 +50,12 @@ export class SignInComponent implements OnInit {
                 Validators.compose([
                     Validators.required,
                     Validators.maxLength(50),
-                    Validators.minLength(3),
-                    Validators.pattern(/^\S*$/)])),
+                    Validators.minLength(3)])),
             password: new FormControl('',
                 Validators.compose([
                     Validators.required,
                     Validators.maxLength(50),
-                    Validators.minLength(6),
-                    Validators.pattern(/^\S*$/)]))
+                    Validators.minLength(6)]))
         });
     }
 

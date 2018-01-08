@@ -107,9 +107,7 @@ export class UserMediaComponent implements OnInit, OnDestroy {
         const dialog = this.dialog.open(MediaDetailsComponent, {
             viewContainerRef: this.viewContainerRef,
             data: media
-        });
-
-        dialog.afterClosed().subscribe(remove => {
+        }).afterClosed().subscribe(remove => {
             media.editing = false;
             media.inspectingLikes = false;
 
