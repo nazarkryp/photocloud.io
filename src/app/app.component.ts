@@ -48,11 +48,8 @@ export class AppComponent implements OnInit {
             if (event instanceof ResolveStart) {
                 this.progress.start();
             } else if (event instanceof ResolveEnd) {
+                window.scrollTo(0, 0)
                 this.progress.done();
-
-                // if (this.currentUser && this.currentUser.isPrivate && this.currentUser.isActive) {
-                //     this.incommingRequestsService.getIncommingRequests().subscribe();
-                // }
             }
 
             this.navigationInterceptor(event);

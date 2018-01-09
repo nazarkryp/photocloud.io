@@ -16,7 +16,7 @@ import { RelationshipAction } from 'app/models/shared';
         trigger('enterTransition', [
             transition(':enter', [
                 style({ transform: 'translateX(50px)', opacity: 0 }),
-                animate('1000ms cubic-bezier(0.35, 0, 0.25, 1)', style('*'))
+                animate('500ms cubic-bezier(0.35, 0, 0.25, 1)', style('*'))
             ])
         ])
     ]

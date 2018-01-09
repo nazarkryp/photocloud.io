@@ -84,20 +84,32 @@ export class MediaDetailsComponent implements OnInit, OnDestroy {
             });
     }
 
-    public next(): void {
+    public next() {
+        if (this.player && !this.player.nativeElement.paused) {
+            this.player.nativeElement.pause()
+        }
+
         if (this.media.activeAttachment < this.media.attachments.length - 1) {
             this.media.activeAttachment++;
         }
     }
 
-    public previous(): void {
+    public previous() {
+        if (this.player && !this.player.nativeElement.paused) {
+            this.player.nativeElement.pause()
+        }
+
         if (this.media.activeAttachment > 0) {
             this.media.activeAttachment--;
         }
     }
 
-    public play(event: any) {
+    public play() {
         if (!this.player) {
+            return;
+        }
+
+        if (this.media.attachments[this.media.activeAttachment].type !== 1) {
             return;
         }
 
@@ -223,7 +235,6 @@ export class MediaDetailsComponent implements OnInit, OnDestroy {
     }
 
     public likesClose() {
-        console.log('OK');
         this.media.inspectingLikes = false;
     }
 

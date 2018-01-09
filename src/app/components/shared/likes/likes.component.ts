@@ -36,7 +36,6 @@ export class LikesComponent {
     }
 
     public openLikesDialog() {
-        console.log('likes');
         const likes = this.mediaService.getLikes(this.media.id);
         this.onClicked.next(likes);
         if (this.media.likesCount > 0) {

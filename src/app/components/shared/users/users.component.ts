@@ -9,6 +9,8 @@ import { RelationshipStatus } from 'app/models/shared';
 import { UserService } from 'app/services';
 import { CurrentUserService } from 'app/infrastructure/services';
 
+import { NgProgress } from 'ngx-progressbar';
+
 @Component({
     selector: 'app-users',
     templateUrl: './users.component.html',
@@ -30,6 +32,7 @@ export class UsersComponent implements OnInit, OnDestroy {
     constructor(
         @Optional() public dialogRef: MatDialogRef<UsersComponent>,
         @Optional() @Inject(MAT_DIALOG_DATA) public data: any,
+        private progress: NgProgress,
         private userService: UserService,
         private currentUserService: CurrentUserService) {
         this.currentUser = this.currentUserService.retrieveCurrentUser();
@@ -79,15 +82,18 @@ export class UsersComponent implements OnInit, OnDestroy {
     }
 
     public ngOnInit(): void {
+        this.progress.start();
         if (this.data.usersObservable) {
             this.title = this.data.title;
             this.usersObservableSubscription = this.data.usersObservable.subscribe(users => {
                 this.users = users;
+                this.progress.done();
             });
         } else if (this.config) {
             this.title = this.config.title;
             this.usersObservableSubscription = this.config.usersObservable.subscribe(users => {
                 this.users = users;
+                this.progress.done();
             });
         }
     }

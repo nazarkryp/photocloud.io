@@ -52,12 +52,20 @@ export class MediaItemComponent implements OnInit, OnDestroy {
     }
 
     public next() {
+        if (this.player && !this.player.nativeElement.paused) {
+            this.player.nativeElement.pause()
+        }
+
         if (this.media.activeAttachment < this.media.attachments.length - 1) {
             this.media.activeAttachment++;
         }
     }
 
     public previous() {
+        if (this.player && !this.player.nativeElement.paused) {
+            this.player.nativeElement.pause()
+        }
+
         if (this.media.activeAttachment > 0) {
             this.media.activeAttachment--;
         }
@@ -67,8 +75,12 @@ export class MediaItemComponent implements OnInit, OnDestroy {
         this.onRemoved.emit(this.media);
     }
 
-    public play(event: any) {
+    public play() {
         if (!this.player) {
+            return;
+        }
+
+        if (this.media.attachments[this.media.activeAttachment].type !== 1) {
             return;
         }
 
