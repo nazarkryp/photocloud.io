@@ -21,7 +21,7 @@
             </div>
         </div>
     </div>
-    <div mat-ripple class="media-content">
+    <div mat-ripple class="media-content" (click)='play($event)'>
         <div class="media-content-buttons" fxLayout="row" fxLayoutAlign="space-between center" *ngIf="media.attachments.length > 1">
             <div>
                 <button mat-raised-button mat-icon-button *ngIf="media.activeAttachment > 0" (click)="previous()">
@@ -34,7 +34,7 @@
                 </button>
             </div>
         </div>
-        <div (click)='play()' *ngFor="let attachment of media.attachments; let index = index;" [hidden]="index !== media.activeAttachment">
+        <div *ngFor="let attachment of media.attachments; let index = index;" [hidden]="index !== media.activeAttachment">
             <img class="media-attachment" src="{{attachment.uri}}" alt="media-image" *ngIf="attachment.type !== 1">
             <video class="media-attachment" *ngIf="attachment.type === 1" loop #player>
                 <source src="{{attachment.uri}}">
