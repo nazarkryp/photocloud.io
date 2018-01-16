@@ -34,24 +34,25 @@ const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA
 export class CreateComponent {
     public errorStateMatcher = new DefaultErrorStateMatcher();
     public formGroup: FormGroup;
+    public signUpError: string;
 
-    get username(): ReactiveFormControl {
+    public get username(): ReactiveFormControl {
         return this.formGroup.get('username') as ReactiveFormControl;
     }
 
-    get fullName(): AbstractControl {
+    public get fullName(): AbstractControl {
         return this.formGroup.get('fullName');
     }
 
-    get email(): ReactiveFormControl {
+    public get email(): ReactiveFormControl {
         return this.formGroup.get('email') as ReactiveFormControl;
     }
 
-    get password(): AbstractControl {
+    public get password(): AbstractControl {
         return this.formGroup.get('password');
     }
 
-    get confirmPassword(): AbstractControl {
+    public get confirmPassword(): AbstractControl {
         return this.formGroup.get('confirmPassword');
     }
 
@@ -135,6 +136,8 @@ export class CreateComponent {
 
     public createAccount() {
         if (this.formGroup.valid) {
+            this.signUpError = null;
+
             const createAccountRequestModel = new CreateAccountRequestModel(
                 this.formGroup.get('username').value,
                 this.formGroup.get('email').value,
@@ -151,9 +154,7 @@ export class CreateComponent {
                 }, errorResponse => {
                     this.progress.done();
                     this.formGroup.enable();
-                    this.formGroup.setErrors({
-                        'signUpErrors': errorResponse.error.error.modelState
-                    });
+                    this.signUpError = errorResponse.error.error.modelState;
                     this.progress.done();
                 });
         }
