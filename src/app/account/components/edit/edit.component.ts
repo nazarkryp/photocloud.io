@@ -183,7 +183,7 @@ export class EditComponent implements OnInit, AfterViewInit, AfterViewChecked {
                 Validators.maxLength(50)
             ])),
             bio: new FormControl('', Validators.compose([
-                Validators.maxLength(50)
+                Validators.maxLength(255)
             ]))
         });
 
