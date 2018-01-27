@@ -28,3 +28,7 @@
 .form {
     font-size: .9em;
 }
+
+.item>a {
+    font-size: .9em;
+}

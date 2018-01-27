@@ -1,33 +1,26 @@
-<div class="media-tags-content" fxLayout="row" fxLayoutAlign="center start">
-    <div class="tags-container" fxLayout="column" fxLayoutAlign="start center">
-        <div class="tags-header" fxLayout="column" fxLayoutAlign="center center">
-            <span class="tags-title">#{{tag}}</span>
-            <span class="tags-subtitle" *ngIf="page.data">
-                <strong>{{page?.data.length}}</strong> posts
-            </span>
-        </div>
-        <div class="tag-media" fxFlex>
-            <div class="tag-media-item" *ngFor="let media of page?.data;" fxLayout="column">
-                <div mat-ripple class="thumbnail-container" style="height: 300px; width: 100%; position: relative;" (click)="openPostDialog(media)">
-                    <img class="thumbnail" src="{{media.attachments[0].uri}}" alt="media" *ngIf="media.attachments[0].type !== 1">
-                    <video class="thumbnail" *ngIf="media.attachments[0].type === 1" loop #player>
-                        <source src="{{media.attachments[0].uri}}">
-                    </video>
+<div class="tags-media-container" fxLayout="column" fxLayoutAlign="start center">
+    <div class="tags-media-header" fxLayout="column" fxLayoutAlign="center start">
+        <span style="font-weight: bold; font-size: 2.2em; padding-bottom: .7rem; text-transform: uppercase; letter-spacing: 2px;">#{{tag}}</span>
+        <span style="font-weight: lighter; font-size: 1.2em; color: gray;">Items found: {{page?.data.length}}</span>
+    </div>
+    <div class="tags-media">
+        <div *ngFor="let media of page?.data;">
+            <div class="tags-media-item" (click)="openPostDialog(media)">
+                <img class="tags-media-thumbnail" src="{{media?.attachments[0].uri}}" alt="media-image" *ngIf="media?.attachments[0].type !== 1">
+                <video class="tags-media-thumbnail" *ngIf="media?.attachments[0].type === 1">
+                    <source src="{{media?.attachments[0].uri}}">
+                </video>
+                <div class="multiple-attachments-icon-container" fxLayout="row" fxLayoutAlign="start center" *ngIf="media.attachments.length > 1 || media?.attachments[0].type === 1">
+                    <mat-icon class="multiple-attachments-icon" *ngIf="media.attachments[0].type === 1">videocam</mat-icon>
                     <mat-icon class="multiple-attachments-icon" *ngIf="media.attachments.length > 1">layers</mat-icon>
                 </div>
-                <div class="media-description" fxLayout="row" fxLayoutAlign="space-between start">
-                    <div class="tag-user-info" fxLayout="column" fxLayoutAlign="center start">
-                        <a class="tag-media-username" [routerLink]="['/', media.user.username]">
-                            {{media.user.username}}
-                        </a>
-                        <span class="tag-media-date">{{media.created | timeAgo}}</span>
-                    </div>
-                    <mat-icon class="btn-icon mat-24 thin" [ngClass]="{ 'liked' : media.userHasLiked }" (click)="like(media)" *ngIf="currentUser">favorite</mat-icon>
-                </div>
+            </div>
+            <div style="padding-top: .7rem;">
+                <span style="font-size: 1.2em; letter-spacing: 2px; font-weight: normal; text-transform: uppercase;">{{media.user.username}}</span>
             </div>
         </div>
-        <div fxLayout="row" fxLayoutAlign="center center" *ngIf="page.hasMoreItems">
-            <button class="btn-default" mat-button (click)="getMedia()" [disabled]="isLoading">Load More</button>
-        </div>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="center center" *ngIf="page?.hasMoreItems">
+        <button class="btn-default" mat-button (click)="getMedia()" [disabled]="isLoadingPosts">Load More</button>
     </div>
 </div>

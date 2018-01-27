@@ -25,9 +25,9 @@
 }
 
 .logo {
-    font-weight: 300;
-    font-size: 21px;
+    font-weight: lighter;
     cursor: pointer;
+    letter-spacing: 1px;
     outline: none;
 }
 
