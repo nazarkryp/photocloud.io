@@ -36,6 +36,10 @@ export class UserMapper implements IMapper<UserResponse, UserViewModel> {
     }
 
     public mapCurrentToUser(currentUser: CurrentUserViewModel) {
+        if (!currentUser) {
+            return null;
+        }
+
         const user = new UserViewModel();
 
         user.id = currentUser.id;
