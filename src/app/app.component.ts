@@ -21,6 +21,7 @@ export class AppComponent implements OnInit {
     public renderToolbar = false;
     public initialLoad = true;
     public currentUser: CurrentUserViewModel;
+    public showAuthenticationBar = true;
 
     constructor(
         private router: Router,
@@ -41,6 +42,10 @@ export class AppComponent implements OnInit {
 
     public closeNotifications($event: any) {
         this.notificationsSidenav.close();
+    }
+
+    public hideAuthenticationBar() {
+        this.showAuthenticationBar = false;
     }
 
     public ngOnInit(): void {
