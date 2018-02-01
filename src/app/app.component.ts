@@ -20,7 +20,7 @@ export class AppComponent implements OnInit {
     public notificationsSidenav: MatSidenav;
     public renderToolbar = false;
     public initialLoad = true;
-    private currentUser: CurrentUserViewModel;
+    public currentUser: CurrentUserViewModel;
 
     constructor(
         private router: Router,

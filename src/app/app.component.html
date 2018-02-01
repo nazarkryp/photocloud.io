@@ -11,3 +11,23 @@
         <app-footer *ngIf="renderToolbar"></app-footer>
     </div>
 </mat-sidenav-container>
+
+<div style="z-index: 999; top: auto; right: 0; bottom: 0; left: auto; position: fixed; height: 100px; width: 100%; background-color: rgba(0,0,0,.8);"
+    fxLayout="row" fxLayoutAlign="center center" *ngIf="!currentUser && !initialLoad">
+    <mat-icon class="btn-icon" style="position:absolute; right: .5rem; top: .5rem;">clear</mat-icon>
+    <div style="width: 960px;" fxLayout="row" fxLayoutAlign="space-between center">
+        <div fxLayout="row" fxLayoutAlign="start center">
+            <mat-icon class="mat-48" style="color: white;">account_circle</mat-icon>
+            <div style="line-height: 1.5; margin-left: 1.4rem;" fxLayout="column">
+                <span style="color: white;">Sign Up for PhotoCloud</span>
+                <div style="max-width: 400px; padding-top: .25rem;">
+                    <span style="color: #999; line-height: 1.25; font-weight: lighter;">Sign up to see photos and videos from friends and discover other accounts you'll love.</span>
+                </div>
+            </div>
+        </div>
+        <div>
+            <button mat-raised-button color="accent" routerLink="account/signin">Sign Up</button>
+            <button mat-button color="accent" routerLink="account/create">Sign In</button>
+        </div>
+    </div>
+</div>
