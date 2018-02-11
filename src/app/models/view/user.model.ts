@@ -1,4 +1,5 @@
 import { RelationshipStatus } from '../shared/relationship-status';
+import { UserRelationship } from './user-relationship.model';
 
 export class UserViewModel {
     private _lastActive: Date;
@@ -14,8 +15,7 @@ export class UserViewModel {
     public posts: number;
     public followers: number;
     public following: number;
-    public outgoingStatus: number;
-    public incommingStatus: number;
+    public relationship: UserRelationship;
     public isModifyingRelationship = false;
 
     public get lastActive(): Date {

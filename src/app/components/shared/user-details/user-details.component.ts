@@ -40,7 +40,7 @@ export class UserDetailsComponent implements OnDestroy {
     }
 
     private onSuccessUpload(attachment: AttachmentViewModel) {
-        this.currentUserService.updateCurrentUser({
+        this.currentUserService.changeAccountAttachment({
             pictureId: attachment.id
         }).subscribe(user => {
             this.user.pictureUri = user.pictureUri

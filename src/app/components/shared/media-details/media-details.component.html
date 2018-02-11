@@ -61,7 +61,7 @@
             <div style="box-sizing: border-box;">
                 <div fxLayout="row" fxLayoutAlign="space-between center" style="border-top: 1px solid #d8d8d8; padding-top: .7rem;" *ngIf="!showCommentBox">
                     <div fxLayout="row" fxLayoutAlign="start center" *ngIf="currentUser">
-                        <mat-icon [@tdJello]="bounceState" class="btn-icon mat-24" [ngClass]="{ 'liked' : media.userHasLiked }" (click)="like()">favorite</mat-icon>
+                        <mat-icon class="btn-icon mat-24" [ngClass]="{ 'liked' : media.userHasLiked }" (click)="like()">favorite</mat-icon>
                         <mat-icon class="btn-icon mat-24" svgIcon="comment" style="margin-left: .7rem;" *ngIf="media.allowComments" (click)="showCommentBox = !showCommentBox"></mat-icon>
                     </div>
                     <mat-icon class="btn-icon mat-24" matTooltip="Share" matTooltipPosition="left" ngxClipboard [cbContent]="share()" (cbOnSuccess)="showToast('Copied to clipboard')">share</mat-icon>

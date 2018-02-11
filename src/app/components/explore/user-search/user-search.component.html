@@ -16,7 +16,7 @@
                     </div>
                     <div fxLayout="row" fxLayoutAlign="center end">
                         <button class="btn-relationships" mat-button (click)="modifyRelationship(user)" [disabled]="modifying[user.id]" *ngIf="currentUser && currentUser.isActive && currentUser.id !== user.id">
-                            {{user.incommingStatus | relationshipAction | uppercase}}
+                            {{user.relationship.incommingStatus | relationshipAction | uppercase}}
                         </button>
                     </div>
                 </div>

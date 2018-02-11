@@ -46,6 +46,13 @@ export class AccountService {
             });
     }
 
+    public changeAccountAttachment(propertiesToUpdate: any): Observable<CurrentUserViewModel> {
+        return this.webApiClient.patch<CurrentUserResponse>('account/attachment', propertiesToUpdate)
+            .map(response => {
+                return this.userMapper.mapFromCurrentUserResponse(response);
+            });
+    }
+
     public getAccount(): Observable<CurrentUserViewModel> {
         return this.webApiClient.get<CurrentUserResponse>('account')
             .map(response => {

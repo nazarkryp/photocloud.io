@@ -4,15 +4,6 @@ import { DOCUMENT } from '@angular/common';
 import { trigger, animate, style, transition, animateChild, group, query, stagger } from '@angular/animations';
 import { MatDialogRef, MatSnackBarConfig, MatSnackBar, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
 
-import {
-    TdBounceAnimation,
-    TdFlashAnimation,
-    TdHeadshakeAnimation,
-    TdJelloAnimation,
-    TdPulseAnimation,
-    TdFadeInOutAnimation
-} from '@covalent/core';
-
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 
@@ -29,12 +20,6 @@ import { EditMediaService, LikeService } from 'app/shared/services';
     templateUrl: './media-details.component.html',
     styleUrls: ['./media-details.component.css'],
     animations: [
-        TdFadeInOutAnimation(),
-        TdBounceAnimation(),                    // using implicit anchor name 'tdBounce' in template
-        TdFlashAnimation(),                     // using implicit anchor name 'tdFlash' in template
-        TdHeadshakeAnimation(),                 // using implicit anchor name 'tdHeadshake' in template
-        TdJelloAnimation(),                     // using implicit anchor name 'tdJello' in template
-        TdPulseAnimation({ duration: 200 }),     // using implicit anchor name 'tdPulse' in template,
         trigger('content', [
             transition(':enter', [
                 query('.transition-content', [
@@ -48,7 +33,6 @@ import { EditMediaService, LikeService } from 'app/shared/services';
     ]
 })
 export class MediaDetailsComponent implements OnInit, OnDestroy {
-    public bounceState = false;
     public isDialog: boolean;
     @ViewChild('player') public player: any;
     public usersConfig: any;
@@ -183,7 +167,6 @@ export class MediaDetailsComponent implements OnInit, OnDestroy {
     }
 
     public like() {
-        this.bounceState = !this.bounceState;
         this.likeService.like(this.media);
     }
 

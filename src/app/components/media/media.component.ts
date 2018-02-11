@@ -90,6 +90,7 @@ export class MediaComponent implements OnInit, OnDestroy {
 
     public ngOnInit() {
         this.page = this.activatedRoute.snapshot.data['page'];
+        console.log(this.page);
     }
 
     public ngOnDestroy() {

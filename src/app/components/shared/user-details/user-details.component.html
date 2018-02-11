@@ -17,8 +17,8 @@
                 <button mat-icon-button matTooltip="Logout" matTooltipPosition="above" (click)="logout()" *ngIf="currentUser && user.id === currentUser.id">
                     <mat-icon class="btn-icon">exit_to_app</mat-icon>
                 </button>
-                <button mat-button class="btn-relationships" *ngIf="currentUser && currentUser.isActive && user.id !== currentUser.id && (user.isActive || (!user.isActive && user.incommingStatus !== 0))"
-                    (click)="modifyRelationship()" [disabled]="isModifyingRelationship">{{user.incommingStatus | relationshipAction | uppercase }}</button>
+                <button mat-button class="btn-relationships" *ngIf="currentUser && currentUser.isActive && user.id !== currentUser.id && (user.isActive || (!user.isActive && user.relationship.incommingStatus !== 0))"
+                    (click)="modifyRelationship()" [disabled]="isModifyingRelationship">{{user.relationship.incommingStatus | relationshipAction | uppercase }}</button>
             </div>
             <div fxLayout="row" fxLayoutAlign="space-between center" *ngIf="user.isActive" style="font-size: 1.1em;">
                 <a>

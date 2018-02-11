@@ -68,6 +68,13 @@ export class CurrentUserService {
             });
     }
 
+    public changeAccountAttachment(propertiesToUpdate: any): Observable<CurrentUserViewModel> {
+        return this.accountService.changeAccountAttachment(propertiesToUpdate)
+            .do(currentUser => {
+                this.saveCurrentUser(currentUser);
+            });
+    }
+
     public retrieveCurrentUser(): CurrentUserViewModel {
         return this.storageService.get<CurrentUserViewModel>(this.currentUserStorageKey, CurrentUserViewModel);
     }

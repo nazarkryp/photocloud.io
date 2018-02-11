@@ -49,8 +49,7 @@ export class MediaService {
 
         return this.webApiClient.get<PageResponse<MediaResponse>>(requestUri)
             .map(page => {
-                const pageViewModel = this.pageMapper.mapFromResponse(page);
-                return pageViewModel;
+                return this.pageMapper.mapFromResponse(page);
             });
     }
 

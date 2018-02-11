@@ -53,7 +53,7 @@ export class AppComponent implements OnInit {
             if (event instanceof ResolveStart) {
                 this.progress.start();
             } else if (event instanceof ResolveEnd) {
-                window.scrollTo(0, 0)
+                window.scrollTo(0, 0);
                 this.progress.done();
             }
 
@@ -63,6 +63,10 @@ export class AppComponent implements OnInit {
 
     private navigationInterceptor(event): void {
         if (event instanceof NavigationEnd) {
+            // if (this.currentUser) {
+            //     this.hideAuthenticationBar()
+            // }
+
             this.renderToolbar = this.router.url !== '/account/signin'
                 && this.router.url !== '/account/create'
                 && this.router.url !== '/account/recover';

@@ -18,7 +18,10 @@ export class UserService {
     }
 
     public getUser(username: string): Observable<UserViewModel> {
-        return this.webApiClient.get<UserViewModel>(`users/${username}`);
+        return this.webApiClient.get<UserResponse>(`users/${username}`)
+            .map(response => {
+                return this.userMapper.mapFromResponse(response);
+            });
     }
 
     public checkIfUserExists(username: string): Observable<boolean> {
