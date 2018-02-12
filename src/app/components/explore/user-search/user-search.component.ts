@@ -60,13 +60,13 @@ export class UserSearchComponent implements OnInit, OnDestroy {
 
     public modifyRelationship(user: UserViewModel) {
         this.modifying[user.id] = true;
-        const action = this.getRelationshipAction(user.incommingStatus);
+        const action = this.getRelationshipAction(user.relationship.incommingStatus);
         this.userService.modifyRelationship(user.id, { action: action })
             .finally(() => {
                 this.modifying[user.id] = false;
             })
             .subscribe((userResponse: UserViewModel) => {
-                user.incommingStatus = userResponse.incommingStatus;
+                user.relationship.incommingStatus = userResponse.relationship.incommingStatus;
             }, error => { });
     }
 

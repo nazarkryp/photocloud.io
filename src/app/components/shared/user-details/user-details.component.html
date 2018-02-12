@@ -18,38 +18,38 @@
                     <mat-icon class="btn-icon">exit_to_app</mat-icon>
                 </button>
                 <button mat-button class="btn-relationships" *ngIf="currentUser && currentUser.isActive && user.id !== currentUser.id && (user.isActive || (!user.isActive && user.relationship.incommingStatus !== 0))"
-                    (click)="modifyRelationship()" [disabled]="isModifyingRelationship">{{user.relationship.incommingStatus | relationshipAction | uppercase }}</button>
+                    (click)="modifyRelationship()" [disabled]="isModifyingRelationship">user.relationship.incommingStatus : {{user.relationship.incommingStatus}} {{user.relationship.incommingStatus | relationshipAction | uppercase }}</button>
             </div>
             <div fxLayout="row" fxLayoutAlign="space-between center" *ngIf="user.isActive" style="font-size: 1.1em;">
                 <a>
                     <span>
-                        <strong>{{user.posts}}</strong>
+                        <strong>{{user.counters.posts}}</strong>
                     </span>
                     <span>posts</span>
                 </a>
 
                 <a class="user-info-link-button" (click)="getFollowers()" *ngIf="currentUser">
                     <span>
-                        <strong>{{user.followers}}</strong>
+                        <strong>{{user.counters.followers}}</strong>
                     </span>
                     <span>followers</span>
                 </a>
                 <div *ngIf="!currentUser">
                     <span>
-                        <strong>{{user.followers}}</strong>
+                        <strong>{{user.counters.followers}}</strong>
                     </span>
                     <span>followers</span>
                 </div>
 
                 <a class="user-info-link-button" (click)="getFollowings()" *ngIf="currentUser">
                     <span>
-                        <strong>{{user.following}}</strong>
+                        <strong>{{user.counters.following}}</strong>
                     </span>
                     <span>following</span>
                 </a>
                 <div *ngIf="!currentUser">
                     <span>
-                        <strong>{{user.following}}</strong>
+                        <strong>{{user.counters.following}}</strong>
                     </span>
                     <span>following</span>
                 </div>

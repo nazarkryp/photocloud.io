@@ -1,4 +1,5 @@
 import { UserRelationshipResponse } from './user-relationship-response.model';
+import { CountersResponse } from './counters-response.model';
 
 export class UserResponse {
     public id: number;
@@ -14,4 +15,5 @@ export class UserResponse {
     public followers: number;
     public following: number;
     public relationship: UserRelationshipResponse;
+    public counters: CountersResponse;
 }

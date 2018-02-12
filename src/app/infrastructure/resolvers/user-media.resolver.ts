@@ -55,7 +55,7 @@ export class UserMediaResolver implements Resolve<UserViewModel> {
             validationResult.error = new ErrorViewModel('Account is not active');
         } else if (user.isPrivate
             && (!currentUser || user.id !== currentUser.id)
-            && user.incommingStatus !== RelationshipStatus.Following) {
+            && user.relationship.incommingStatus !== RelationshipStatus.Following) {
             validationResult.hasErrors = true;
             validationResult.error = new ErrorViewModel('Account is private');
             validationResult.error.description = currentUser

@@ -6,3 +6,4 @@ export { CurrentUserResponse } from './current-user.response.model';
 export { PageResponse } from './page-response.model';
 export { PaginationResponse } from './pagination-respone.model';
 export { UserRelationshipResponse } from './user-relationship-response.model';
+export { CountersResponse } from './counters-response.model';

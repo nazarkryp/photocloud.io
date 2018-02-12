@@ -45,13 +45,13 @@ export class UsersComponent implements OnInit, OnDestroy {
 
         user.isModifyingRelationship = true;
 
-        const action = this.getRelationshipAction(user.incommingStatus);
+        const action = this.getRelationshipAction(user.relationship.incommingStatus);
         this.userService.modifyRelationship(user.id, { action: action })
             .finally(() => {
                 user.isModifyingRelationship = false;
             })
             .subscribe((userResponse: UserViewModel) => {
-                user.incommingStatus = userResponse.incommingStatus;
+                user.relationship.incommingStatus = userResponse.relationship.incommingStatus;
             });
     }
 

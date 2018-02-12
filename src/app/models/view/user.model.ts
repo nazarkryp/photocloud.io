@@ -1,5 +1,6 @@
 import { RelationshipStatus } from '../shared/relationship-status';
 import { UserRelationship } from './user-relationship.model';
+import { CountersViewModel } from './counters.model';
 
 export class UserViewModel {
     private _lastActive: Date;
@@ -16,6 +17,7 @@ export class UserViewModel {
     public followers: number;
     public following: number;
     public relationship: UserRelationship;
+    public counters: CountersViewModel;
     public isModifyingRelationship = false;
 
     public get lastActive(): Date {
@@ -23,11 +25,10 @@ export class UserViewModel {
     }
 
     public set lastActive(lastActive: Date) {
-        this._lastActive = lastActive;
-        // const newDate = new Date(lastActive.getTime() + lastActive.getTimezoneOffset() * 60 * 1000);
-        // const offset = lastActive.getTimezoneOffset() / 60;
-        // const hours = lastActive.getHours();
-        // newDate.setHours(hours - offset);
-        // this._lastActive = newDate;
+        const newDate = new Date(lastActive.getTime() + lastActive.getTimezoneOffset() * 60 * 1000);
+        const offset = lastActive.getTimezoneOffset() / 60;
+        const hours = lastActive.getHours();
+        newDate.setHours(hours - offset);
+        this._lastActive = newDate;
     }
 }
