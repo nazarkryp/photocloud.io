@@ -86,13 +86,17 @@ export class UsersComponent implements OnInit, OnDestroy {
         if (this.data.usersObservable) {
             this.title = this.data.title;
             this.usersObservableSubscription = this.data.usersObservable.subscribe(users => {
-                this.users = users;
+                console.log('users1');
+                console.log(users);
+                // this.users = users;
                 this.progress.done();
             });
         } else if (this.config) {
             this.title = this.config.title;
             this.usersObservableSubscription = this.config.usersObservable.subscribe(users => {
-                this.users = users;
+                console.log('users');
+                console.log(users);
+                // this.users = users;
                 this.progress.done();
             });
         }
