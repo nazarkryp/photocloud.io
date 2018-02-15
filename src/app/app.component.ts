@@ -29,7 +29,6 @@ export class AppComponent implements OnInit {
         private progress: NgProgress,
         private incommingRequestsService: IncommingRequestsService) {
         this.currentUserService.getCurrentUser(true)
-            .take(1)
             .subscribe(currentUser => {
                 this.currentUser = currentUser;
                 this.initialLoad = false;
@@ -63,9 +62,9 @@ export class AppComponent implements OnInit {
 
     private navigationInterceptor(event): void {
         if (event instanceof NavigationEnd) {
-            // if (this.currentUser) {
-            //     this.hideAuthenticationBar()
-            // }
+            if (this.currentUser) {
+                this.hideAuthenticationBar()
+            }
 
             this.renderToolbar = this.router.url !== '/account/signin'
                 && this.router.url !== '/account/create'

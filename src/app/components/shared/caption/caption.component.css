@@ -1,13 +1,9 @@
 .hashtag {
     color: #053569;
     text-decoration: none;
-    font-weight: normal;
+    font-weight: bold !important;
 }
 
 .hashtag:hover {
     color: #e91e63;
-}
-
-.caption-text {
-    /* letter-spacing: 0.5px; */
 }

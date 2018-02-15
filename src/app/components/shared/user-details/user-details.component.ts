@@ -21,7 +21,7 @@ import { FileUploader } from 'ng2-file-upload';
 export class UserDetailsComponent implements OnDestroy {
     private currentUserSubscription: Subscription;
 
-    @Input() public user;
+    @Input() public user: UserViewModel;
     public currentUser: CurrentUserViewModel;
     public uploader: FileUploader;
     public isModifyingRelationship: boolean;
@@ -58,23 +58,23 @@ export class UserDetailsComponent implements OnDestroy {
     }
 
     public modifyRelationship() {
-        const action = this.getRelationshipAction(this.user.incommingStatus);
+        const action = this.getRelationshipAction(this.user.relationship.outgoingStatus);
         this.isModifyingRelationship = true;
         this.userService.modifyRelationship(this.user.id, {
             action: action
         }).finally(() => {
             this.isModifyingRelationship = false;
         }).subscribe((user: UserViewModel) => {
-            this.user = user;
+            this.user.relationship = user.relationship;
         });
     }
 
-    public getRelationshipAction(incommingStatus: RelationshipStatus): number {
-        if (incommingStatus === RelationshipStatus.Following) {
+    public getRelationshipAction(outgoingStatus: RelationshipStatus): number {
+        if (outgoingStatus === RelationshipStatus.Following) {
             return 1;
-        } else if (incommingStatus === RelationshipStatus.Requested) {
+        } else if (outgoingStatus === RelationshipStatus.Requested) {
             return 1;
-        } else if (incommingStatus === RelationshipStatus.Blocked) {
+        } else if (outgoingStatus === RelationshipStatus.Blocked) {
             return 4;
         }
 
