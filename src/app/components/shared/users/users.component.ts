@@ -4,7 +4,7 @@ import { MatDialogRef, MatSnackBarConfig, MatSnackBar, MAT_DIALOG_DATA } from '@
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 
-import { CurrentUserViewModel, UserViewModel } from 'app/models/view';
+import { CurrentUserViewModel, UserViewModel, PageViewModel } from 'app/models/view';
 import { RelationshipStatus } from 'app/models/shared';
 import { UserService } from 'app/services';
 import { CurrentUserService } from 'app/infrastructure/services';
@@ -17,11 +17,11 @@ import { NgProgress } from 'ngx-progressbar';
     styleUrls: ['./users.component.css']
 })
 export class UsersComponent implements OnInit, OnDestroy {
-    public users: UserViewModel[];
+    public page: PageViewModel<UserViewModel> = new PageViewModel<UserViewModel>();
     @Output() public onClose = new EventEmitter<any>();
 
     @Input() public config: {
-        usersObservable: Observable<UserViewModel[]>,
+        usersObservable: Observable<PageViewModel<UserViewModel>>,
         title: string
     };
 
@@ -85,18 +85,26 @@ export class UsersComponent implements OnInit, OnDestroy {
         this.progress.start();
         if (this.data.usersObservable) {
             this.title = this.data.title;
-            this.usersObservableSubscription = this.data.usersObservable.subscribe(users => {
-                console.log('users1');
-                console.log(users);
-                // this.users = users;
+            this.usersObservableSubscription = this.data.usersObservable.subscribe((page: PageViewModel<UserViewModel>) => {
+                this.page.hasMoreItems = page.hasMoreItems;
+                this.page.pagination = page.pagination;
+
+                if (page.data) {
+                    this.page.data = this.page.data.concat(page.data);
+                }
+
                 this.progress.done();
             });
         } else if (this.config) {
             this.title = this.config.title;
-            this.usersObservableSubscription = this.config.usersObservable.subscribe(users => {
-                console.log('users');
-                console.log(users);
-                // this.users = users;
+            this.usersObservableSubscription = this.config.usersObservable.subscribe((page: PageViewModel<UserViewModel>) => {
+                this.page.hasMoreItems = page.hasMoreItems;
+                this.page.pagination = page.pagination;
+
+                if (page.data) {
+                    this.page.data = this.page.data.concat(page.data);
+                }
+
                 this.progress.done();
             });
         }
