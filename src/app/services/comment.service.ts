@@ -3,14 +3,14 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
 import { WebApiClient } from 'app/infrastructure/communication';
-import { CommentViewModel, } from 'app/models/view';
+import { CommentViewModel, PageViewModel, } from 'app/models/view';
 
 @Injectable()
 export class CommentService {
     constructor(
         private webApiClient: WebApiClient) { }
 
-    public getComments(mediaId: number): Observable<CommentViewModel[]> {
+    public getComments(mediaId: number): Observable<PageViewModel<CommentViewModel>> {
         return this.webApiClient.get(`media/${mediaId}/comments`);
     }
 

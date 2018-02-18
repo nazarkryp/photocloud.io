@@ -13,7 +13,7 @@ import {
 
 import { CommentService } from 'app/services';
 import { CurrentUserService } from 'app/infrastructure/services';
-import { MediaViewModel, CurrentUserViewModel, CommentViewModel } from 'app/models/view';
+import { MediaViewModel, CurrentUserViewModel, CommentViewModel, PageViewModel } from 'app/models/view';
 
 @Component({
     selector: 'app-comments',
@@ -40,6 +40,7 @@ export class CommentsComponent {
     public pulseState = false;
 
     private currentUser: CurrentUserViewModel;
+    private page: PageViewModel<CommentViewModel>;
 
     constructor(
         private currentUserService: CurrentUserService,

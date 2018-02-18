@@ -47,7 +47,7 @@ export class AccountService {
     }
 
     public changeAccountAttachment(propertiesToUpdate: any): Observable<CurrentUserViewModel> {
-        return this.webApiClient.patch<CurrentUserResponse>('account/attachment', propertiesToUpdate)
+        return this.webApiClient.put<CurrentUserResponse>('account/attachment', propertiesToUpdate)
             .map(response => {
                 return this.userMapper.mapFromCurrentUserResponse(response);
             });
