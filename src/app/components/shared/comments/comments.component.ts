@@ -13,7 +13,7 @@ import {
 
 import { CommentService } from 'app/services';
 import { CurrentUserService } from 'app/infrastructure/services';
-import { MediaViewModel, CurrentUserViewModel, CommentViewModel, PageViewModel } from 'app/models/view';
+import { MediaViewModel, CurrentUserViewModel, CommentViewModel, PageViewModel, PaginationViewModel } from 'app/models/view';
 
 @Component({
     selector: 'app-comments',
@@ -34,7 +34,7 @@ import { MediaViewModel, CurrentUserViewModel, CommentViewModel, PageViewModel }
         ])
     ]
 })
-export class CommentsComponent {
+export class CommentsComponent implements OnInit {
     @Input() public media: MediaViewModel;
     public isLoading: boolean;
     public pulseState = false;
@@ -53,12 +53,16 @@ export class CommentsComponent {
         this.pulseState = !this.pulseState;
         this.isLoading = true;
 
-        this.commentService.getComments(this.media.id)
+        this.commentService.getComments(this.media.id, this.page.pagination)
             .finally(() => {
                 this.isLoading = false;
             })
-            .subscribe(comments => {
-                this.media.comments = comments;
+            .subscribe(page => {
+                this.page.hasMoreItems = page.hasMoreItems;
+                this.page.pagination = page.pagination;
+                if (page.data) {
+                    this.page.data = this.page.data.concat(page.data);
+                }
             });
     }
 
@@ -70,5 +74,22 @@ export class CommentsComponent {
             .subscribe(() => { }, () => {
                 this.media.commentsCount++;
             });
+    }
+
+    public ngOnInit(): void {
+        this.page = new PageViewModel<CommentViewModel>();
+
+        if (this.page.data) {
+            this.page.hasMoreItems = this.media.comments.length < this.media.commentsCount;
+        }
+
+        if (this.page.hasMoreItems) {
+            this.page.pagination = new PaginationViewModel();
+            this.page.pagination.next = this.media.comments[this.media.comments.length - 1].id;
+
+            this.media.comments.splice(this.media.comments.length - 1, 1);
+        }
+
+        this.page.data = this.media.comments;
     }
 }

@@ -103,11 +103,13 @@ export class EditComponent implements OnInit, AfterViewInit, AfterViewChecked {
             return;
         }
 
+        this.progress.start();
         this.isInvertingAccountStatus = true;
         this.currentUserService.updateCurrentUser({
             isActive: !this.currentUser.isActive
         }).finally(() => {
             this.isInvertingAccountStatus = false;
+            this.progress.done();
         }).subscribe(account => {
             this.currentUser.pictureUri = account.pictureUri;
             this.currentUser.isActive = account.isActive;

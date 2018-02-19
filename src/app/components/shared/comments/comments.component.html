@@ -1,9 +1,9 @@
 <div class="comments">
-    <a class="text-button" [ngClass]="{'disabled' : isLoading}" (click)="getComments()" *ngIf="media.comments.length < media.commentsCount">
-        view all {{media.commentsCount}} comments
+    <a class="text-button" [ngClass]="{'disabled' : isLoading}" (click)="getComments()" *ngIf="page.hasMoreItems">
+        view more comments
     </a>
     <div class="comment" [ngClass]="{ 'current' : comment.user.id === currentUser?.id || media.user.id === currentUser?.id }"
-        *ngFor="let comment of media.comments;">
+        *ngFor="let comment of page.data;">
         <div [@enterTransition]>
             <a class="comment-username" [routerLink]="['/', comment.user.username]">
                 {{comment.user.username}}

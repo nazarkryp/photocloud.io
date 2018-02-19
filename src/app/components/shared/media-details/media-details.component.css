@@ -3,7 +3,7 @@
 }
 
 .media-details-container .single-media {
-    border: 1px solid #efefef;
+    border: 1px solid #d8d8d8;
     border-radius: 2px;
     background: white;
 }
@@ -137,8 +137,8 @@
 }
 
 .media-details-created {
-    font-size: 0.8em;
-    color: #444444;
+    font-size: .9em;
+    color: #9A9A9A;
     font-weight: lighter;
     /* text-transform: uppercase; */
     /* letter-spacing: 1px; */
