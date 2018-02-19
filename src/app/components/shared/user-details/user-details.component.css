@@ -28,6 +28,10 @@
     border: 1px solid #efefef;
 }
 
+.thumbnail-big.pointer {
+    cursor: pointer;
+}
+
 .user-details {
     margin-top: 16px;
 }
