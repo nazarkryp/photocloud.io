@@ -67,8 +67,8 @@ export class CommentsComponent implements OnInit {
     }
 
     public removeComment(comment: CommentViewModel) {
-        const indexToRemove = this.media.comments.findIndex(e => e.id === comment.id);
-        this.media.comments.splice(indexToRemove, 1);
+        const indexToRemove = this.page.data.findIndex(e => e.id === comment.id);
+        this.page.data.splice(indexToRemove, 1);
         this.media.commentsCount--;
         this.commentService.removeComment(this.media.id, comment.id)
             .subscribe(() => { }, () => {
