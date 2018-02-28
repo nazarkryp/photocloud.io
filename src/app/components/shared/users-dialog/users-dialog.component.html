@@ -1,0 +1,30 @@
+<div class="users-container" fxLayout="column">
+    <div class="users-title" fxLayout="row" fxLayoutAlign="space-between center">
+        <h1>{{title}}</h1>
+        <mat-icon class="btn-icon mat-24" (click)="close()" tabindex="-1">clear</mat-icon>
+    </div>
+    <div class="user-items">
+        <div class="user-items-empty-container" fxLayout="row" fxLayoutAlign="center center" *ngIf="page.data?.length === 0">
+            <mat-spinner [diameter]="50" [strokeWidth]="3" *ngIf="isLoading"></mat-spinner>
+            <p *ngIf="!isLoading">Users not found</p>
+        </div>
+        <div class="user-item" *ngFor="let user of page.data; let index = index;" fxLayout="row">
+            <img class="user-avatar" [routerLink]="['/', user.username]" src="{{user.pictureUri}}" default="assets/images/user-default-image.png" alt="profile">
+            <div class="users-details-container" fxLayout="row" fxLayoutAlign="space-between center" fxFlex>
+                <div class="user-name" fxLayout="column">
+                    <a class="user-username" [routerLink]="['/', user.username]">{{user.username}}</a>
+                    <a class="user-fullname" [routerLink]="['/', user.username]">{{user.fullName}}</a>
+                </div>
+                <div fxLayout="row" fxLayoutAlign="center end">
+                    <button mat-button class="btn-relationships" (click)="modifyRelationship(user)" [disabled]="user.isModifyingRelationship" *ngIf="currentUser && currentUser.id !== user.id">
+                        {{user.relationship?.outgoingStatus | relationshipAction | uppercase }}
+                    </button>
+                </div>
+            </div>
+            <!-- <mat-divider *ngIf="index !== page.data.length - 1"></mat-divider> -->
+        </div>
+        <div fxLayout="row" fxLayoutAlign="center center" *ngIf="page.hasMoreItems">
+            <button class="btn-default" mat-button (click)="getUsers()" [disabled]="isLoading">LOAD MORE</button>
+        </div>
+    </div>
+</div>

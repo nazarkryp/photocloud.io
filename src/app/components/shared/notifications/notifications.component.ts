@@ -3,10 +3,11 @@ import { trigger, style, animate, transition, query, stagger } from '@angular/an
 
 import { Subscription } from 'rxjs/Subscription';
 
-import { UserService, IncommingRequestsService } from 'app/services';
+import { UserService, RequestsService } from 'app/services';
 
-import { UserViewModel, IncommingRequestViewModel } from 'app/models/view';
+import { UserViewModel, RequestViewModel, PageViewModel } from 'app/models/view';
 import { RelationshipAction } from 'app/models/shared';
+import { MatTabChangeEvent } from '@angular/material';
 
 @Component({
     selector: 'app-notifications',
@@ -24,49 +25,109 @@ import { RelationshipAction } from 'app/models/shared';
 export class NotificationsComponent implements OnInit {
     @Output() onClosing: EventEmitter<any> = new EventEmitter<any>();
 
-    public incommingRequests: IncommingRequestViewModel[];
+    public incommingRequestsPage: PageViewModel<RequestViewModel> = new PageViewModel<RequestViewModel>();
+    public outgoingRequestsPage: PageViewModel<RequestViewModel> = new PageViewModel<RequestViewModel>();
+    public incommingRequestsSubscription: Subscription;
+    public outgoingRequestsSubscription: Subscription;
     public isLoading: boolean;
 
     constructor(
-        private incommingRequestService: IncommingRequestsService,
+        private requestService: RequestsService,
         private userService: UserService) { }
+
+    public selectedTabChange(event: MatTabChangeEvent) {
+        if (this.incommingRequestsSubscription != null && !this.incommingRequestsSubscription.closed) {
+            this.incommingRequestsSubscription.unsubscribe();
+            this.isLoading = false;
+        }
+
+        if (this.outgoingRequestsSubscription != null && !this.outgoingRequestsSubscription.closed) {
+            this.outgoingRequestsSubscription.unsubscribe();
+            this.isLoading = false;
+        }
+
+        if (event.index === 0) {
+            this.incommingRequestsPage = new PageViewModel<RequestViewModel>();
+            this.getIncommingRequests();
+        } else {
+            this.outgoingRequestsPage = new PageViewModel<RequestViewModel>();
+            this.getOutgoingRequests();
+        }
+    }
 
     public getIncommingRequests() {
         this.isLoading = true;
-        this.incommingRequestService.getIncommingRequests()
+        this.incommingRequestsSubscription = this.requestService.getIncommingRequests(this.incommingRequestsPage.pagination)
             .finally(() => {
                 this.isLoading = false;
             })
-            .subscribe(incommingRequests => {
-                this.incommingRequests = incommingRequests as IncommingRequestViewModel[];
+            .subscribe(page => {
+                this.incommingRequestsPage.hasMoreItems = page.hasMoreItems;
+                this.incommingRequestsPage.pagination = page.pagination;
+
+                if (page.data) {
+                    const items = page.data as RequestViewModel[];
+                    this.incommingRequestsPage.data = this.incommingRequestsPage.data.concat(items);
+                }
             });
     }
 
-    public confirmIncommingRequest(incommingRequest: IncommingRequestViewModel) {
+    public getOutgoingRequests() {
+        this.isLoading = true;
+        this.outgoingRequestsSubscription = this.requestService.getOutgoingRequests(this.outgoingRequestsPage.pagination)
+            .finally(() => {
+                this.isLoading = false;
+            })
+            .subscribe(page => {
+                this.outgoingRequestsPage.hasMoreItems = page.hasMoreItems;
+                this.outgoingRequestsPage.pagination = page.pagination;
+
+                if (page.data) {
+                    const items = page.data as RequestViewModel[];
+                    this.outgoingRequestsPage.data = this.outgoingRequestsPage.data.concat(items);
+                }
+            });
+    }
+
+    public confirmIncommingRequest(incommingRequest: RequestViewModel) {
         incommingRequest.isConfirmingIncommingRequest = true;
         this.userService.modifyRelationship(incommingRequest.id, {
             action: RelationshipAction.Approve
         }).finally(() => {
             incommingRequest.isConfirmingIncommingRequest = true;
         }).subscribe(userResult => {
-            const indexToRemove = this.incommingRequests.findIndex(e => e.id === incommingRequest.id);
-            this.incommingRequests.splice(indexToRemove, 1);
-            this.incommingRequestService.updateIncommingRequestsCount(this.incommingRequests.length);
+            const indexToRemove = this.incommingRequestsPage.data.findIndex(e => e.id === incommingRequest.id);
+            this.incommingRequestsPage.data.splice(indexToRemove, 1);
+            this.requestService.updateIncommingRequestsCount(this.incommingRequestsPage.data.length);
             incommingRequest.isConfirmed = true;
         });
     }
 
-    public removeIncommingRequest(incommingRequest: IncommingRequestViewModel) {
+    public removeIncommingRequest(incommingRequest: RequestViewModel) {
         incommingRequest.isRemovingIncommingRequest = true;
         this.userService.modifyRelationship(incommingRequest.id, {
             action: RelationshipAction.Reject
         }).finally(() => {
             incommingRequest.isRemovingIncommingRequest = false;
         }).subscribe(userResult => {
-            const indexToRemove = this.incommingRequests.findIndex(e => e.id === incommingRequest.id);
-            this.incommingRequests.splice(indexToRemove, 1);
-            this.incommingRequestService.updateIncommingRequestsCount(this.incommingRequests.length);
+            const indexToRemove = this.incommingRequestsPage.data.findIndex(e => e.id === incommingRequest.id);
+            this.incommingRequestsPage.data.splice(indexToRemove, 1);
+            this.requestService.updateIncommingRequestsCount(this.incommingRequestsPage.data.length);
             incommingRequest.isRemoved = true;
+        });
+    }
+
+    public removeOutgoingRequest(outgoingRequest: RequestViewModel) {
+        outgoingRequest.isRemovingIncommingRequest = true;
+        this.userService.modifyRelationship(outgoingRequest.id, {
+            action: RelationshipAction.Unfollow
+        }).finally(() => {
+            outgoingRequest.isRemovingIncommingRequest = false;
+        }).subscribe(userResult => {
+            const indexToRemove = this.outgoingRequestsPage.data.findIndex(e => e.id === outgoingRequest.id);
+            this.outgoingRequestsPage.data.splice(indexToRemove, 1);
+            this.requestService.updateIncommingRequestsCount(this.outgoingRequestsPage.data.length);
+            outgoingRequest.isRemoved = true;
         });
     }
 

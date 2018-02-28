@@ -35,8 +35,8 @@ import { CaptionComponent } from './components/shared/caption/caption.component'
 import { TagsComponent } from './components/explore/tags/tags.component';
 import { ConfirmComponent } from './components/shared/confirm/confirm.component';
 import { NotificationsComponent } from './components/shared/notifications/notifications.component';
-import { UsersComponent } from './components/shared/users/users.component';
-import { UserSearchComponent } from './components/explore/user-search/user-search.component';
+import { UsersDialogComponent } from './components/shared/users-dialog/users-dialog.component';
+import { UsersComponent } from './components/explore/users/users.component';
 import { SearchBoxComponent } from './components/shared/search-box/search-box.component';
 import { ConnectionErrorComponent } from './components/shared/connection-error/connection-error.component';
 
@@ -78,8 +78,8 @@ import { ChangePasswordComponent } from './components/shared/change-password/cha
         TagsComponent,
         ConfirmComponent,
         NotificationsComponent,
+        UsersDialogComponent,
         UsersComponent,
-        UserSearchComponent,
         SearchBoxComponent,
         ConnectionErrorComponent,
         UserDetailsComponent,
@@ -93,7 +93,7 @@ import { ChangePasswordComponent } from './components/shared/change-password/cha
         MediaDetailsComponent,
         CreateMediaComponent,
         ConfirmComponent,
-        UsersComponent,
+        UsersDialogComponent,
         ChangePasswordComponent
     ],
     imports: [

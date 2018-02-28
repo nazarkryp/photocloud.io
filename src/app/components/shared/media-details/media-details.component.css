@@ -8,6 +8,10 @@
     background: white;
 }
 
+.single-media {
+    font-family: 'Open Sans', sans-serif;
+}
+
 .media-details-info-container {
     width: 400px;
     padding: .7rem;
@@ -83,7 +87,7 @@
 
 .media-details-username {
     font-size: 1.2em;
-    font-weight: normal;
+    font-weight: 700;
 }
 
 .media-details-attachment.dialog {
@@ -139,8 +143,6 @@
     font-size: .9em;
     color: #9A9A9A;
     font-weight: lighter;
-    /* text-transform: uppercase; */
-    /* letter-spacing: 1px; */
 }
 
 .likes-counter {
@@ -152,7 +154,6 @@
 .liked {
     color: #e91e63;
 }
-
 
 /* editing */
 

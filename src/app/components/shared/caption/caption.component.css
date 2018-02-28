@@ -1,7 +1,7 @@
 .hashtag {
     color: #053569;
     text-decoration: none;
-    font-weight: bold !important;
+    font-weight: 600 !important;
 }
 
 .hashtag:hover {

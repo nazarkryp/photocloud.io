@@ -47,6 +47,7 @@ export class MediaMapper implements IMapper<MediaResponse, MediaViewModel> {
     public mapUpdateToRequest(updateMediaModel: UpdateMediaViewModel): UpdateMediaRequest {
         const request = new UpdateMediaRequest();
 
+        request.id = updateMediaModel.id;
         request.allowComments = updateMediaModel.allowComments;
         request.caption = updateMediaModel.caption;
         request.attachmentsToRemove = updateMediaModel.attachments.filter(a => a.removed).map(e => e.id);

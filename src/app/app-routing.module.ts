@@ -5,7 +5,7 @@ import { Routes, RouterModule, Router, ActivatedRoute, NavigationEnd } from '@an
 
 import { MediaComponent } from './components/media/media.component';
 import { UserMediaComponent } from './components/user-media/user-media.component';
-import { UserSearchComponent } from './components/explore/user-search/user-search.component';
+import { UsersComponent } from './components/explore/users/users.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { MediaDetailsComponent } from './components/shared/media-details/media-details.component';
 import { TagsComponent } from './components/explore/tags/tags.component';
@@ -84,7 +84,7 @@ const routes: Routes = [
     },
     {
         path: 'explore/people',
-        component: UserSearchComponent,
+        component: UsersComponent,
         resolve: { page: UserListResolver },
         data: {
             title: 'PhotoCloud - Discover People'

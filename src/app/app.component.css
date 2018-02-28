@@ -1,9 +1,9 @@
-* {
-    color: #444444;
-}
-
 ::ng-deep .mat-form-field-underline {
     background: #d8d8d8;
+}
+
+* {
+    font-family: 'Open Sans', sans-serif;
 }
 
 .sidenav-container {

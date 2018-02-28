@@ -1,14 +1,17 @@
-<mat-toolbar class="toolbar" fxLayout="column" fxLayoutAlign="center center">
+<div class="toolbar" fxLayout="column" fxLayoutAlign="center center">
     <div class="mat-toolbar-layout">
         <div fxLayout="row" fxLayoutAlign="space-between center">
             <div class="logo-container" fxLayout="row" fxLayoutAlign="center center" fxFlex>
-                <h1 class="logo" routerLink="/">thephotocloud</h1>
+                <a style="color:#444444;" routerLink="/" fxLayout="row" fxLayoutAlign="center center">
+                    <span style="font-size: 1.4em; font-weight: lighter;">Photo</span>
+                    <span style="font-size: 1.7em; font-weight: 800;">Cloud</span>
+                </a>
             </div>
             <div class="search-box-container">
                 <app-search-box *ngIf="currentUser"></app-search-box>
             </div>
             <div fxFlex fxLayout="row" fxLayoutAlign="center center" *ngIf="!currentUser">
-                <button mat-button color="primary" style="font-size: 14px; font-weight: bold;" routerLink="/account/signin">
+                <button mat-button color="primary" style="font-size: 14px; font-weight: 600;" routerLink="/account/signin">
                     SIGN IN
                 </button>
             </div>
@@ -27,4 +30,4 @@
             </div>
         </div>
     </div>
-</mat-toolbar>
+</div>

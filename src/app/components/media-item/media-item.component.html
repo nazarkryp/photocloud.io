@@ -1,7 +1,6 @@
 <div class="media" *ngIf="media">
     <div class="media-header" fxLayout="row" *ngIf="!media.editing">
-        <img class="media-avatar" [routerLink]="['/', media.user.username]" src="{{media.user.pictureUri}}" default="assets/images/user-default-image.png"
-            alt="profile">
+        <img class="media-avatar" [routerLink]="['/', media.user.username]" src="{{media.user.pictureUri}}" default="assets/images/user-default-image.png" alt="profile">
         <div class="media-author" fxLayout="row" fxLayoutAlign="space-between center" fxFlex>
             <a class="media-author-username" [routerLink]="['/', media.user.username]">{{media.user.username}}</a>
             <div fxLayout="row" fxLayout="center end" *ngIf="currentUser && media.user.id === currentUser.id">
@@ -34,11 +33,13 @@
                 </button>
             </div>
         </div>
-        <div *ngFor="let attachment of media.attachments; let index = index;" [hidden]="index !== media.activeAttachment">
-            <img class="media-attachment" src="{{attachment.uri}}" alt="media-image" *ngIf="attachment.type !== 1">
-            <video class="media-attachment" *ngIf="attachment.type === 1" loop #player>
-                <source src="{{attachment.uri}}">
-            </video>
+        <div *ngFor="let attachment of media.attachments; let index = index;">
+            <div [hidden]="index !== media.activeAttachment" *ngIf="(media.activeAttachment === index && attachment.type === 1) || (attachment.type !== 1)">
+                <img class="media-attachment" src="{{attachment.uri}}" alt="media-image" *ngIf="attachment.type !== 1">
+                <video class="media-attachment" *ngIf="attachment.type === 1" loop #player>
+                    <source src="{{attachment.uri}}">
+                </video>
+            </div>
         </div>
     </div>
     <div class="media-footer" *ngIf="!media.editing">
@@ -67,10 +68,8 @@
         <div fxLayout="row" fxLayoutAlign="center center">
             <mat-icon class="btn-icon mat-24" [ngClass]="{ 'warn' : media.userHasLiked }" (click)="like()">favorite</mat-icon>
         </div>
-        <input class="comment-input" *ngIf="media.allowComments" type="text" placeholder="Type your comment" [(ngModel)]="text"
-            (keydown.enter)="createComment()" />
-        <button class="icon-button" mat-icon-button matTooltip="Share" matTooltipPosition="left" ngxClipboard [cbContent]="share()"
-            (cbOnSuccess)="showToast('Copied to clipboard')">
+        <input class="comment-input" *ngIf="media.allowComments" type="text" placeholder="Type your comment" [(ngModel)]="text" (keydown.enter)="createComment()" />
+        <button class="icon-button" mat-icon-button matTooltip="Share" matTooltipPosition="left" ngxClipboard [cbContent]="share()" (cbOnSuccess)="showToast('Copied to clipboard')">
             <mat-icon>share</mat-icon>
         </button>
     </div>

@@ -14,6 +14,7 @@ import { MediaViewModel, UserViewModel, CommentViewModel, CurrentUserViewModel, 
 import { MediaService, CommentService } from 'app/services';
 import { NgProgress } from 'ngx-progressbar';
 import { EditMediaService, LikeService } from 'app/shared/services';
+import { UserDialogDetails } from 'app/components/shared/users-dialog/models';
 
 @Component({
     selector: 'app-media-details',
@@ -89,11 +90,7 @@ export class MediaDetailsComponent implements OnInit, OnDestroy {
     }
 
     public play() {
-        if (!this.player) {
-            return;
-        }
-
-        if (this.media.attachments[this.media.activeAttachment].type !== 1) {
+        if (!this.player || this.media.attachments[this.media.activeAttachment].type !== 1) {
             return;
         }
 
@@ -209,12 +206,12 @@ export class MediaDetailsComponent implements OnInit, OnDestroy {
     }
 
     public inspectLikes(event) {
-        this.usersConfig = {
-            usersObservable: this.mediaService.getLikes(this.media.id),
-            title: 'Likes'
-        };
+        // this.usersConfig = {
+        //     usersObservable: this.mediaService.getLikes(this.media.id),
+        //     title: 'Likes'
+        // };
 
-        this.media.inspectingLikes = true;
+        // this.media.inspectingLikes = true;
     }
 
     public likesClose() {

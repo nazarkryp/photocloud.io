@@ -11,7 +11,7 @@ import { MediaService, UserService } from 'app/services';
 import { CurrentUserViewModel, MediaViewModel, AttachmentViewModel, UserViewModel, PageViewModel, ErrorViewModel, UserMediaViewModel } from 'app/models/view';
 import { RelationshipStatus, ValidationResult, } from 'app/models/shared'
 import { MediaDetailsComponent } from 'app/components/shared/media-details/media-details.component';
-import { UsersComponent } from '../shared/users/users.component';
+import { UsersDialogComponent } from '../shared/users-dialog/users-dialog.component';
 import { NgProgress } from 'ngx-progressbar';
 import { ConfirmComponent } from 'app/components/shared/confirm/confirm.component';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -92,7 +92,7 @@ export class UserMediaComponent implements OnInit, OnDestroy {
             validationResult.error = new ErrorViewModel('Account is not active');
         } else if (user.isPrivate
             && (!currentUser || user.id !== currentUser.id)
-            && user.relationship.incommingStatus !== RelationshipStatus.Following) {
+            && user.relationship.outgoingStatus !== RelationshipStatus.Following) {
             validationResult.hasErrors = true;
             validationResult.error = new ErrorViewModel('Account is private');
             validationResult.error.description = currentUser

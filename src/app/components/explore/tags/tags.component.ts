@@ -10,6 +10,7 @@ import { MediaService } from 'app/services';
 import { AccountService } from 'app/account/services';
 
 import { NgProgress } from 'ngx-progressbar';
+import { LikeService } from 'app/shared/services';
 
 @Component({
     selector: 'app-tags',
@@ -31,6 +32,7 @@ export class TagsComponent implements OnInit, OnDestroy {
         private mediaService: MediaService,
         private currentUserService: CurrentUserService,
         private accountService: AccountService,
+        private likeService: LikeService,
         private progress: NgProgress) {
         this.currentUserSubscription = this.currentUserService.getCurrentUser()
             .subscribe(currentUser => {
@@ -56,37 +58,7 @@ export class TagsComponent implements OnInit, OnDestroy {
     }
 
     public like(media) {
-        if (media.userHasLiked) {
-            media.likesCount--;
-            media.userHasLiked = !media.userHasLiked;
-            this.mediaService.removeMediaLike(media.id)
-                .subscribe(() => {
-                    media.userHasLiked = false;
-                }, (error) => {
-                    if (media.userHasLiked) {
-                        media.likesCount--;
-                    } else {
-                        media.likesCount++;
-                    }
-                    media.userHasLiked = !media.userHasLiked;
-                    return error;
-                });
-        } else {
-            media.likesCount++;
-            media.userHasLiked = !media.userHasLiked;
-            this.mediaService.addMediaLike(media.id)
-                .subscribe(() => {
-                    media.userHasLiked = true;
-                }, (error) => {
-                    if (media.userHasLiked) {
-                        media.likesCount--;
-                    } else {
-                        media.likesCount++;
-                    }
-                    media.userHasLiked = !media.userHasLiked;
-                    return error;
-                });
-        }
+        this.likeService.like(media);
     }
 
     public openPostDialog(media: MediaViewModel) {

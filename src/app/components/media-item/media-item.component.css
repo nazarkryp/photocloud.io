@@ -49,11 +49,11 @@ textarea {
 }
 
 .media-author {
-    padding-left: 10px;
+    padding-left: .5rem;
 }
 
 .media-author-username {
-    font-size: 1.0em;
+    font-weight: 600;
 }
 
 .media-attachment {
@@ -69,6 +69,7 @@ textarea {
 }
 
 .comment-input {
+    font-family: 'Open Sans', sans-serif;
     outline: none;
     border: none;
     width: 100%;
@@ -80,7 +81,7 @@ textarea {
     outline: none;
     background: #efefef;
     border: 0px solid #d8d8d8;
-    padding: 12px 12px 12px 12px;
+    padding: .5rem;
     border-radius: 2px;
     font-weight: lighter;
 }
@@ -113,7 +114,7 @@ textarea {
     left: 50%;
     transform: translate(-50%, -50%);
     width: 100%;
-    padding: 0 10px 0 10px;
+    padding: 0 .5rem 0 .5rem;
     z-index: 100;
 }
 

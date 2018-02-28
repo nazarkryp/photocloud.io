@@ -1,6 +1,7 @@
 .toolbar {
     background-color: white;
     box-shadow: 0 3px 8px -3px rgba(0, 0, 0, 0.26);
+    padding: .7rem;
 }
 
 .mat-toolbar-layout {
@@ -22,13 +23,6 @@
 
 .container {
     width: 100%;
-}
-
-.logo {
-    font-weight: lighter;
-    cursor: pointer;
-    letter-spacing: 1px;
-    outline: none;
 }
 
 .avatar {

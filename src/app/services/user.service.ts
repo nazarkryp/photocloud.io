@@ -49,26 +49,62 @@ export class UserService {
         return this.webApiClient.get(`users/search?query=${query}`);
     }
 
-    public getIncommingRequests(): Observable<UserViewModel[]> {
-        return this.webApiClient.get<UserResponse[]>('users/requests/incomming')
+    public getIncommingRequests(pagination: PaginationViewModel): Observable<PageViewModel<UserViewModel>> {
+        let requestUri = 'users/requests/incomming';
+
+        if (pagination && pagination.next) {
+            requestUri = `${requestUri}?next=${pagination.next}`;
+        }
+
+        return this.webApiClient.get<PageViewModel<UserResponse>>(requestUri)
             .map(response => {
-                return this.userMapper.mapFromResponseArray(response);
+                return this.pageMapper.mapFromResponse(response);
             });
     }
 
-    public getOutgoingRequests(): Observable<UserViewModel[]> {
-        return this.webApiClient.get<UserViewModel[]>('users/requests/outgoing');
+    public getOutgoingRequests(pagination: PaginationViewModel): Observable<PageViewModel<UserViewModel>> {
+        let requestUri = 'users/requests/outgoing';
+
+        if (pagination && pagination.next) {
+            requestUri = `${requestUri}?next=${pagination.next}`;
+        }
+
+        return this.webApiClient.get<PageViewModel<UserResponse>>(requestUri)
+            .map(response => {
+                return this.pageMapper.mapFromResponse(response);
+            });
     }
 
     public modifyRelationship(userId: number, relationshipModel: any): Observable<UserViewModel> {
         return this.webApiClient.put<UserViewModel>(`users/${userId}/relationship`, relationshipModel);
     }
 
-    public getFollowers(userId: number): Observable<UserViewModel[]> {
-        return this.webApiClient.get<UserViewModel[]>(`users/${userId}/followers`);
+    public getFollowers(userId: number, pagination: PaginationViewModel): Observable<PageViewModel<UserViewModel>> {
+        let requestUri = `users/${userId}/followers`;
+
+        if (pagination != null && pagination.next != null) {
+            requestUri = requestUri + '?next=' + pagination.next;
+        }
+
+        return this.webApiClient.get<PageViewModel<UserResponse>>(requestUri)
+            .map(response => {
+                const page = this.pageMapper.mapFromResponse(response);
+
+                return page;
+            });
     }
 
-    public getFollowings(userId: number): Observable<UserViewModel[]> {
-        return this.webApiClient.get<UserViewModel[]>(`users/${userId}/following`);
+    public getFollowings(userId: number, pagination: PaginationViewModel): Observable<PageViewModel<UserViewModel>> {
+        let requestUri = `users/${userId}/following`;
+        if (pagination != null && pagination.next != null) {
+            requestUri = requestUri + '?next=' + pagination.next;
+        }
+
+        return this.webApiClient.get<PageViewModel<UserResponse>>(requestUri)
+            .map(response => {
+                const page = this.pageMapper.mapFromResponse(response);
+
+                return page;
+            });
     }
 }

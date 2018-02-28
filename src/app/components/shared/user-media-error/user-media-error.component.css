@@ -8,7 +8,7 @@
 
 .user-media-error .title {
     text-transform: uppercase;
-    font-weight: bold;
+    font-weight: 600;
     font-size: 1.4em;
     color: #e91e63;
 }

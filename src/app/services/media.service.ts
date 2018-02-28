@@ -23,7 +23,9 @@ export class MediaService {
         const request = this.mediaMapper.mapCreateToRequest(createMediaModel);
 
         return this.webApiClient.post<MediaResponse>('media', request)
-            .map(response => this.mediaMapper.mapFromResponse(response));
+            .map(response => {
+                return this.mediaMapper.mapFromResponse(response);
+            });
     }
 
     public getRecentMedia(pagination: PaginationViewModel): Observable<PageViewModel<MediaViewModel>> {

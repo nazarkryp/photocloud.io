@@ -7,7 +7,6 @@ import { UserMapper } from 'app/infrastructure/mapping';
 
 @Injectable()
 export class LikeService {
-    private lockObject = false;
     private currentUser: UserViewModel;
 
     constructor(
@@ -19,13 +18,10 @@ export class LikeService {
     }
 
     public like(media: MediaViewModel) {
-        if (!this.lockObject) {
-            this.lockObject = true;
-            if (media.userHasLiked) {
-                this.removeLike(media);
-            } else {
-                this.addLike(media);
-            }
+        if (media.userHasLiked) {
+            this.removeLike(media);
+        } else {
+            this.addLike(media);
         }
     }
 
@@ -37,9 +33,6 @@ export class LikeService {
         media.likes.splice(indexToRemove, 1);
 
         this.mediaService.removeMediaLike(media.id)
-            .finally(() => {
-                this.lockObject = false;
-            })
             .subscribe(() => { }, (error) => {
                 media.likes.push(this.currentUser);
                 media.likesCount++;
@@ -54,9 +47,6 @@ export class LikeService {
         media.likes.push(this.currentUser);
 
         this.mediaService.addMediaLike(media.id)
-            .finally(() => {
-                this.lockObject = false;
-            })
             .subscribe(() => { }, (error) => {
                 media.likesCount--;
                 media.userHasLiked = false;

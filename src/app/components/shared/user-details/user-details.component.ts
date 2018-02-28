@@ -1,17 +1,18 @@
 import { Component, Input, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatDialogRef } from '@angular/material';
 
 import { Subscription } from 'rxjs/Subscription';
 import { Observable } from 'rxjs/Observable';
 
 import { CurrentUserService } from 'app/infrastructure/services';
-import { CurrentUserViewModel, AttachmentViewModel, UserViewModel } from 'app/models/view';
+import { CurrentUserViewModel, AttachmentViewModel, UserViewModel, PageViewModel } from 'app/models/view';
 import { RelationshipStatus } from 'app/models/shared';
 import { UserService, UploaderService, } from 'app/services';
-import { UsersComponent } from 'app/components/shared/users/users.component';
+import { UsersDialogComponent } from 'app/components/shared/users-dialog/users-dialog.component';
 
 import { FileUploader } from 'ng2-file-upload';
+import { UserDialogDetails } from 'app/components/shared/users-dialog/models';
 
 @Component({
     selector: 'app-user-details',
@@ -25,6 +26,7 @@ export class UserDetailsComponent implements OnDestroy {
     public currentUser: CurrentUserViewModel;
     public uploader: FileUploader;
     public isModifyingRelationship: boolean;
+    public truncateWidth: number;
 
     constructor(
         private router: Router,
@@ -32,11 +34,20 @@ export class UserDetailsComponent implements OnDestroy {
         private uploaderService: UploaderService,
         private currentUserService: CurrentUserService,
         private userService: UserService) {
+        this.truncateWidth = this.defaultTruncateWidth;
         this.uploader = uploaderService.createUploader((attachment) => this.onSuccessUpload(attachment));
         this.currentUserSubscription = this.currentUserService.getCurrentUser()
             .subscribe(currentUser => {
                 this.currentUser = currentUser;
             });
+    }
+
+    public get defaultTruncateWidth(): number {
+        return 60;
+    }
+
+    public increaseTruncateSize() {
+        this.truncateWidth = 10000;
     }
 
     private onSuccessUpload(attachment: AttachmentViewModel) {
@@ -48,13 +59,21 @@ export class UserDetailsComponent implements OnDestroy {
     }
 
     public getFollowers() {
-        const usersObservable = this.userService.getFollowers(this.user.id);
-        this.openDialog(usersObservable, 'Followers');
+        this.openDialog(this.userService.getFollowers.bind(this.userService), this.user.id, 'Followers')
+            .afterClosed().subscribe((page: PageViewModel<UserViewModel>) => {
+                if (page && !page.hasMoreItems) {
+                    this.user.counters.followers = page.data.length;
+                }
+            });
     }
 
     public getFollowings() {
-        const usersObservable = this.userService.getFollowings(this.user.id);
-        this.openDialog(usersObservable, 'Following');
+        this.openDialog(this.userService.getFollowings.bind(this.userService), this.user.id, 'Following')
+            .afterClosed().subscribe((page: PageViewModel<UserViewModel>) => {
+                if (page && !page.hasMoreItems) {
+                    this.user.counters.following = page.data.filter(e => e.relationship.outgoingStatus === RelationshipStatus.Following).length;
+                }
+            });
     }
 
     public modifyRelationship() {
@@ -65,6 +84,12 @@ export class UserDetailsComponent implements OnDestroy {
         }).finally(() => {
             this.isModifyingRelationship = false;
         }).subscribe((user: UserViewModel) => {
+            if (user.relationship.outgoingStatus === RelationshipStatus.Following) {
+                this.user.counters.followers++;
+            } else if (user.relationship.outgoingStatus === RelationshipStatus.None && this.user.relationship.outgoingStatus !== RelationshipStatus.Requested) {
+                this.user.counters.followers--;
+            }
+
             this.user.relationship = user.relationship;
         });
     }
@@ -94,14 +119,13 @@ export class UserDetailsComponent implements OnDestroy {
         this.uploader.destroy();
     }
 
-    private openDialog(usersObservable: Observable<UserViewModel[]>, title: string) {
-        this.dialog.open(UsersComponent, {
+    private openDialog(handler: (userId: number) => Observable<PageViewModel<UserViewModel>>, userId: number, title: string, counterToUpdate: number = null)
+        : MatDialogRef<UsersDialogComponent, PageViewModel<UserViewModel>> {
+        const details = new UserDialogDetails(title, handler, userId);
+        return this.dialog.open(UsersDialogComponent, {
             width: '500px',
             height: '600px',
-            data: {
-                usersObservable: usersObservable,
-                title: title
-            }
+            data: details
         });
     }
 }

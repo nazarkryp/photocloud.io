@@ -7,10 +7,11 @@
 }
 
 .user-search-title {
-    font-size: 1.3em;
-    font-weight: bold;
+    font-size: 1.4em;
+    font-weight: 800;
     letter-spacing: 2px;
     text-transform: uppercase;
+    color: #444444;
 }
 
 .search-results-container>.search-result {
@@ -34,7 +35,7 @@
 .search-result-username {
     color: #444444;
     padding-bottom: .5rem;
-    font-weight: bold;
+    font-weight: 600;
 }
 
 .search-result-last-active {

@@ -12,5 +12,5 @@ export { UpdateMediaViewModel } from './update-media.model';
 export { ErrorViewModel } from './error.model';
 export { UserMediaViewModel } from './user-media.model';
 export { UpdateAttachmentViewModel } from './update-attachment.model';
-export { IncommingRequestViewModel } from './incomming-request.model';
+export { RequestViewModel } from './incomming-request.model';
 export { CountersViewModel } from './counters.model';

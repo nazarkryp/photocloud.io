@@ -10,11 +10,11 @@ import { NgProgress } from 'ngx-progressbar';
 import { CurrentUserService } from 'app/infrastructure/services';
 
 @Component({
-    selector: 'app-user-search',
-    templateUrl: './user-search.component.html',
-    styleUrls: ['./user-search.component.css']
+    selector: 'app-users',
+    templateUrl: './users.component.html',
+    styleUrls: ['./users.component.css']
 })
-export class UserSearchComponent implements OnInit, OnDestroy {
+export class UsersComponent implements OnInit, OnDestroy {
     private currentUserSubscription: Subscription;
     public title = 'Explore People';
     public isLoading: boolean;
@@ -60,22 +60,22 @@ export class UserSearchComponent implements OnInit, OnDestroy {
 
     public modifyRelationship(user: UserViewModel) {
         this.modifying[user.id] = true;
-        const action = this.getRelationshipAction(user.relationship.incommingStatus);
+        const action = this.getRelationshipAction(user.relationship.outgoingStatus);
         this.userService.modifyRelationship(user.id, { action: action })
             .finally(() => {
                 this.modifying[user.id] = false;
             })
             .subscribe((userResponse: UserViewModel) => {
-                user.relationship.incommingStatus = userResponse.relationship.incommingStatus;
+                user.relationship.outgoingStatus = userResponse.relationship.outgoingStatus;
             }, error => { });
     }
 
-    public getRelationshipAction(incommingStatus: RelationshipStatus): number {
-        if (incommingStatus === RelationshipStatus.Following) {
+    public getRelationshipAction(outgoing: RelationshipStatus): number {
+        if (outgoing === RelationshipStatus.Following) {
             return 1;
-        } else if (incommingStatus === RelationshipStatus.Requested) {
+        } else if (outgoing === RelationshipStatus.Requested) {
             return 1;
-        } else if (incommingStatus === RelationshipStatus.Blocked) {
+        } else if (outgoing === RelationshipStatus.Blocked) {
             return 4;
         }
 

@@ -1,11 +1,15 @@
 <div fxLayout="column" fxLayoutAlign="center start">
-    <div class="user-info" fxLayout="row" fxLayoutAlign="center center">
+    <div class="user-info" fxLayout="row" fxLayoutAlign="center start">
         <div fxLayout="column" fxLayoutAlign="center center">
-            <img class="thumbnail-big" src="{{user.pictureUri}}" default="assets/images/user-default-image.png" alt="{{user.username}}"
-                *ngIf="!currentUser || (currentUser && !currentUser.isActive) || user.id !== currentUser.id" />
-            <img class="thumbnail-big pointer" src="{{user.pictureUri}}" appImagePreview [image]="uploader.queue[0]?._file" default="assets/images/user-default-image.png"
-                alt="{{user.username}}" (click)="fileInput.click()" *ngIf="currentUser && currentUser.isActive && user.id === currentUser.id"
+            <img class="thumbnail-big" src="{{user.pictureUri}}" default="assets/images/user-default-image.png" alt="{{user.username}}" *ngIf="!currentUser || (currentUser && !currentUser.isActive) || user.id !== currentUser.id"
             />
+            <div class="edit-image" *ngIf="currentUser && currentUser.isActive && user.id === currentUser.id">
+                <div class="change-overlay" fxLayout="row" fxLayoutAlign="center center" (click)="fileInput.click()">
+                    <span>Change</span>
+                </div>
+                <img class="thumbnail-big" src="{{user.pictureUri}}" appImagePreview [image]="uploader.queue[0]?._file" default="assets/images/user-default-image.png" alt="{{user.username}}"
+                />
+            </div>
             <input #fileInput type="file" accept="image/*" ng2FileSelect [uploader]="uploader" hidden/>
         </div>
         <div class="user-info-data" fxLayout="column" fxFlex>
@@ -17,8 +21,8 @@
                 <button mat-icon-button matTooltip="Logout" matTooltipPosition="above" (click)="logout()" *ngIf="currentUser && user.id === currentUser.id">
                     <mat-icon class="btn-icon">exit_to_app</mat-icon>
                 </button>
-                <button mat-button class="btn-relationships" *ngIf="currentUser && currentUser.isActive && user.id !== currentUser.id && (user.isActive || (!user.isActive && user.relationship.incommingStatus !== 0))"
-                    (click)="modifyRelationship()" [disabled]="isModifyingRelationship">{{user.relationship.incommingStatus | relationshipAction | uppercase }}</button>
+                <button mat-button class="btn-relationships" *ngIf="currentUser && currentUser.isActive && user.id !== currentUser.id && (user.isActive || (!user.isActive && user.relationship.outgoingStatus !== 0))"
+                    (click)="modifyRelationship()" [disabled]="isModifyingRelationship">{{user.relationship.outgoingStatus | relationshipAction | uppercase }}</button>
             </div>
             <div fxLayout="row" fxLayoutAlign="space-between center" *ngIf="user.isActive" style="font-size: 1.1em;">
                 <a>
@@ -56,12 +60,14 @@
             </div>
             <div fxLayout="row" fxLayoutAlign="start start" *ngIf="user.isActive">
                 <span class="user-info-fullname">{{user.fullName}}</span>
-                <span class="user-info-bio">{{user.bio}}
+                <span class="user-info-bio">
+                    {{user.bio | truncate:truncateWidth}}
+                    <a class="link-button" (click)="increaseTruncateSize()" *ngIf="user.bio && user.bio.length > defaultTruncateWidth && truncateWidth === defaultTruncateWidth">show more</a>
                 </span>
             </div>
         </div>
     </div>
     <div style="margin-top: 34px; width: 152px;" fxLayout="row" fxLayoutAlign="center center" *ngIf="user.isActive && user.lastActive">
-        <span style="font-weight: bold; text-transform: uppercase; color: #C8C8C8;">{{user.lastActive | timeAgo}}</span>
+        <span style="font-weight: 600; text-transform: uppercase; color: #C8C8C8;">{{user.lastActive | timeAgo}}</span>
     </div>
 </div>

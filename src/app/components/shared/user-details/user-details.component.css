@@ -1,6 +1,6 @@
 .user-info {
-    /* height: 195px; */
     width: 650px;
+    color: #444444;
 }
 
 .user-info-data {
@@ -10,12 +10,17 @@
 
 .user-info-username {
     font-size: 2em;
-    font-weight: lighter;
+    font-weight: 800;
     line-height: 1.5;
+    padding-right: 1.4rem;
+    max-width: 450px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .user-info-fullname {
-    font-weight: bold;
+    font-weight: 600;
     white-space: nowrap;
 }
 
@@ -24,8 +29,39 @@
     height: 150px;
     object-fit: cover;
     overflow: hidden;
-    border-radius: 90px;
+    border-radius: 50%;
     border: 1px solid #efefef;
+}
+
+div.edit-image {
+    box-sizing: border-box;
+    position: relative;
+}
+
+div.edit-image .thumbnail-big {
+    cursor: pointer;
+    vertical-align: bottom;
+}
+
+div.edit-image .change-overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    color: #ffffff;
+    opacity: 0;
+    z-index: 100;
+    border-radius: 50%;
+    -webkit-transition: opacity .25s ease-in-out;
+    -moz-transition: opacity .25s ease-in-out;
+    -ms-transition: opacity .25s ease-in-out;
+    -o-transition: opacity .25s ease-in-out;
+    transition: opacity .25s ease-in-out;
+}
+
+div.edit-image:not([disabled]):hover .change-overlay {
+    cursor: pointer;
+    background: rgba(0, 0, 0, .5);
+    opacity: 1;
 }
 
 .thumbnail-big.pointer {
@@ -42,7 +78,7 @@
 
 .mat-subhead.full-name {
     font-size: 17px;
-    font-weight: bold;
+    font-weight: 600;
     padding-right: 10px;
     width: 100%;
     white-space: pre;

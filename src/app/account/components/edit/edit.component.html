@@ -5,7 +5,7 @@
         </div>
         <div class="item">
             <div style="padding-bottom: .7rem;">
-                <span style="font-weight: bold;">Personal Information</span>
+                <span style="font-weight: 600;">Personal Information</span>
             </div>
             <form class="form" [formGroup]="formGroup" (ngSubmit)="save()">
                 <mat-form-field style="width: 100%;">
@@ -32,7 +32,7 @@
                     <input formControlName="fullName" matInput placeholder="Full Name" type="text" autocomplete="off">
                 </mat-form-field>
                 <mat-form-field style="width: 100%;">
-                    <input formControlName="bio" matInput placeholder="Bio" type="text" autocomplete="off">
+                    <textarea class="bio" formControlName="bio" rows="5" matInput placeholder="Bio" type="text" autocomplete="off" spellcheck="false"></textarea>
                 </mat-form-field>
                 <div fxLayout="row" fxLayoutAlign="end center">
                     <button mat-button *ngIf="formGroup.dirty" (click)="cancel()">CANCEL</button>
@@ -43,7 +43,7 @@
 
         <div class="item">
             <div style="padding-bottom: .7rem;">
-                <span style="font-weight: bold;">Private Information</span>
+                <span style="font-weight: 600;">Private Information</span>
             </div>
             <form class="form" [formGroup]="privateFormGroup">
                 <mat-form-field style="width: 100%;">
@@ -78,15 +78,15 @@
                     <span class="mat-body-1" [ngClass]="{ 'disabled' : !currentUser.isActive }">Private Account</span>
                     <p style="color: gray; font-weight: lighter; font-size: .8em; line-height: 1.5;">When your account is private, only people you approve can see your photos and videos on PhotoCloud. Your existing followers won't be affected</p>
                 </div>
-                <mat-slide-toggle [(ngModel)]="currentUser.isPrivate" [checked]="currentUser.isPrivate" (change)='invertAccountPrivateStatus($event)' [disabled]="!currentUser.isActive"></mat-slide-toggle>
+                <mat-slide-toggle color="primary" [(ngModel)]="currentUser.isPrivate" [checked]="currentUser.isPrivate" (change)='invertAccountPrivateStatus($event)' [disabled]="!currentUser.isActive"></mat-slide-toggle>
             </div>
-            <div style="padding-bottom: .7rem; font-size: .9em;">
+            <!-- <div style="padding-bottom: .7rem; font-size: .9em;">
                 <a class="link-button" *ngIf="currentUser.isActive" (click)="changePassword()">Change Password</a>
                 <span class="disabled" *ngIf="!currentUser.isActive">Change Password</span>
-            </div>
+            </div> -->
         </div>
 
-        <div class="item" fxLayout="row" fxLayoutAlign="end center">
+        <div class="item" fxLayout="row" fxLayoutAlign="start center">
             <a class="link-button" (click)="invertAccountStatus()">{{currentUser.isActive ? 'Temporarily disable my account' : 'Enable account'}}</a>
         </div>
     </div>

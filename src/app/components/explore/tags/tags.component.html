@@ -1,7 +1,7 @@
 <div class="tags-media-container" fxLayout="column" fxLayoutAlign="start center">
     <div class="tags-media-header" fxLayout="column" fxLayoutAlign="center start">
-        <span style="font-weight: bold; font-size: 2.2em; padding-bottom: .7rem; text-transform: uppercase; letter-spacing: 2px;">#{{tag}}</span>
-        <span style="font-weight: lighter; font-size: 1.2em; color: gray;">Items found: {{page?.data.length}}</span>
+        <span style="color: gray; font-weight: bold; font-size: 1.2em;">Search by hashtags</span>
+        <h1>#{{tag}}</h1>
     </div>
     <div class="tags-media">
         <div *ngFor="let media of page?.data;">
@@ -15,8 +15,9 @@
                     <mat-icon class="multiple-attachments-icon" *ngIf="media.attachments.length > 1">layers</mat-icon>
                 </div>
             </div>
-            <div style="padding-top: .7rem;">
-                <span style="font-size: 1.2em; letter-spacing: 2px; font-weight: normal; text-transform: uppercase;">{{media.user.username}}</span>
+            <div style="padding-top: .7rem;" fxLayout="row" fxLayoutAlign="space-between center">
+                <span class="username" [routerLink]="['/', media.user.username]">{{media.user.username}}</span>
+                <mat-icon class="btn-icon mat-24" [ngClass]="{ 'warn' : media.userHasLiked }" (click)="like(media)">favorite_bordered</mat-icon>
             </div>
         </div>
     </div>

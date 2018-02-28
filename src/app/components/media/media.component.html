@@ -6,11 +6,11 @@
             </div>
         </div>
         <div fxLayout="row" fxLayoutAlign="center center" *ngIf="page.hasMoreItems" style="border-top: 1px solid #efefef; padding-top: 1rem;">
-            <button class="btn-default" mat-button (click)="getMedia()" [disabled]="isLoading">Load More</button>
+            <button class="btn-primary" mat-button (click)="getMedia()" [disabled]="isLoading">Load More</button>
         </div>
     </div>
 </div>
-<button class="mat-fab-bottom-right" color="primary" (click)="createPost()" mat-fab>
+<button class="mat-fab-bottom-right" color="primary" (click)="createMedia()" mat-fab>
     <mat-icon>add</mat-icon>
 </button>
 

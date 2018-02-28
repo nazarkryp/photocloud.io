@@ -18,7 +18,8 @@ import {
     MatSidenavModule,
     MatSlideToggleModule,
     MatAutocompleteModule,
-    MatGridListModule
+    MatDividerModule,
+    MatTabsModule
 } from '@angular/material';
 
 @NgModule({
@@ -39,7 +40,8 @@ import {
         MatSidenavModule,
         MatSlideToggleModule,
         MatAutocompleteModule,
-        MatGridListModule
+        MatDividerModule,
+        MatTabsModule
     ],
     exports: [
         BrowserAnimationsModule,
@@ -58,7 +60,8 @@ import {
         MatSidenavModule,
         MatSlideToggleModule,
         MatAutocompleteModule,
-        MatGridListModule
+        MatDividerModule,
+        MatTabsModule
     ]
 })
 export class AppMaterialModule { }

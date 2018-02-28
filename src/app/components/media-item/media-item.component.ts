@@ -4,11 +4,12 @@ import { MatSnackBar, MatDialog, MatSnackBarConfig } from '@angular/material';
 import { Subscription } from 'rxjs/Subscription';
 
 import { CurrentUserService } from 'app/infrastructure/services';
-import { MediaViewModel, UserViewModel, CommentViewModel, CurrentUserViewModel, UpdateMediaViewModel, UpdateAttachmentViewModel } from 'app/models/view';
+import { MediaViewModel, UserViewModel, CommentViewModel, CurrentUserViewModel, UpdateMediaViewModel, UpdateAttachmentViewModel, PageViewModel } from 'app/models/view';
 import { CommentService, MediaService } from 'app/services';
-import { UsersComponent } from 'app/components/shared/users/users.component';
+import { UsersDialogComponent } from 'app/components/shared/users-dialog/users-dialog.component';
 import { trigger, style, animate, transition } from '@angular/animations';
 import { EditMediaService, LikeService } from 'app/shared/services';
+import { UserDialogDetails } from 'app/components/shared/users-dialog/models';
 
 @Component({
     selector: 'app-media-item',
@@ -106,11 +107,15 @@ export class MediaItemComponent implements OnInit, OnDestroy {
     }
 
     public openUsersDialog(event) {
-        const usersObservable = this.mediaService.getLikes(this.media.id);
-        const dialogRef = this.dialog.open(UsersComponent, {
-            data: {
-                usersObservable: usersObservable,
-                title: 'Likes'
+        const details = new UserDialogDetails('Likes', this.mediaService.getLikes.bind(this.mediaService), this.media.id);
+        this.dialog.open(UsersDialogComponent, {
+            width: '500px',
+            height: '600px',
+            data: details
+        }).afterClosed().subscribe((page: PageViewModel<UserViewModel>) => {
+            if (page && !page.hasMoreItems) {
+                this.media.likes = page.data;
+                this.media.likesCount = page.data.length;
             }
         });
     }

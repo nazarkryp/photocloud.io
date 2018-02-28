@@ -5,7 +5,7 @@ import {
     MediaService,
     UploaderService,
     UserService,
-    IncommingRequestsService
+    RequestsService
 } from 'app/services';
 
 @NgModule({
@@ -14,7 +14,7 @@ import {
         MediaService,
         UploaderService,
         UserService,
-        IncommingRequestsService
+        RequestsService
     ]
 })
 export class ServiceModule { }

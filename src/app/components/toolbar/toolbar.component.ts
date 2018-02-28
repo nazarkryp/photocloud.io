@@ -5,7 +5,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { CurrentUserService } from 'app/infrastructure/services';
 import { AccountService } from 'app/account/services';
 import { CurrentUserViewModel } from 'app/models/view';
-import { IncommingRequestsService } from 'app/services';
+import { RequestsService } from 'app/services';
 
 @Component({
     selector: 'app-toolbar',
@@ -24,7 +24,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
     constructor(
         private currentUserService: CurrentUserService,
-        private incommingRequestsService: IncommingRequestsService,
+        private incommingRequestsService: RequestsService,
         private accountService: AccountService,
         private router: Router) {
     }

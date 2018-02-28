@@ -13,16 +13,18 @@
                     </button>
                 </div>
             </div>
-            <div *ngFor="let attachment of media.attachments; let index = index;" [hidden]="index !== media.activeAttachment">
-                <img class="media-details-attachment" [ngClass]="{ 'dialog' : isDialog}" src="{{attachment.uri}}" alt="media-image" *ngIf="attachment.type !== 1">
-                <video class="media-details-attachment" [ngClass]="{ 'dialog' : isDialog}" *ngIf="attachment.type === 1" loop #player>
-                    <source src="{{attachment.uri}}">
-                </video>
+            <div *ngFor="let attachment of media.attachments; let index = index;">
+                <div [hidden]="index !== media.activeAttachment" *ngIf="(media.activeAttachment === index && attachment.type === 1) || (attachment.type !== 1)">
+                    <img class="media-details-attachment" [ngClass]="{ 'dialog' : isDialog}" src="{{attachment.uri}}" alt="media-image" *ngIf="attachment.type !== 1">
+                    <video class="media-details-attachment" [ngClass]="{ 'dialog' : isDialog}" *ngIf="attachment.type === 1" loop #player>
+                        <source src="{{attachment.uri}}">
+                    </video>
+                </div>
             </div>
         </div>
         <div class="media-details-info-container" fxLayout="column" *ngIf="!media.inspectingLikes; else inspectingLikesTemplate">
             <div>
-                <div class="media-details-header" fxLayout="row" fxLayoutAlign="start center" style="padding-bottom: .7rem; border-bottom: 1px solid #d8d8d8;">
+                <div class="media-details-header" fxLayout="row" fxLayoutAlign="start center">
                     <img class="media-avatar" [routerLink]="['/', media.user.username]" src="{{media.user.pictureUri}}" default="assets/images/user-default-image.png" alt="profile">
                     <div fxLayout="row" fxLayoutAlign="start center" fxFlex>
                         <div fxLayout="row" fxLayoutAlign="space-between start" style="width: 100%;">
@@ -32,9 +34,7 @@
                                     <span class="media-details-created">{{media.created | timeAgo}}</span>
                                 </div>
                             </div>
-                            <button mat-icon-button *ngIf="currentUser && currentUser.id === media.user.id" (click)="edit()">
-                                <mat-icon class="btn-icon mat-24">edit</mat-icon>
-                            </button>
+                            <mat-icon class="btn-icon mat-24" *ngIf="currentUser && currentUser.id === media.user.id" (click)="edit()">edit</mat-icon>
                         </div>
                     </div>
                 </div>
@@ -89,17 +89,17 @@
         </div>
         <div class="media-details-info-container" [ngClass]="{ 'dialog' : isDialog }" fxLayout="column">
             <div class="media-details-caption-edit" fxLayout="column">
-                <div fxLayout="row" fxLayoutAlign="space-between center" style="padding-bottom: .5rem; font-weight: bold;">
+                <div fxLayout="row" fxLayoutAlign="space-between center" style="padding-bottom: .5rem; font-weight: 600;">
                     <span>Edit caption</span>
                 </div>
                 <textarea type="text" rows="3" placeholder="Write a caption..." [(ngModel)]="updateMediaModel.caption"></textarea>
             </div>
             <div style="padding-top: 1rem;" fxLayout="column">
-                <span style="font-weight: bold; padding-bottom: .5rem;">Comments settings</span>
+                <span style="font-weight: 600; padding-bottom: .5rem;">Comments settings</span>
                 <mat-slide-toggle [(ngModel)]="updateMediaModel.allowComments" labelPosition="before">Allow comments</mat-slide-toggle>
             </div>
             <div style="padding-top: 1rem;" fxLayout="row" fxLayoutAlign="space-between center">
-                <span style="font-weight: bold;">Manage attachments</span>
+                <span style="font-weight: 600;">Manage attachments</span>
             </div>
             <div fxFlex>
                 <div class="media-details-edit-attachments">
@@ -112,7 +112,7 @@
                                 <mat-icon class="mat-36">check</mat-icon>
                             </div>
                             <div class="media-details-edit-overlay-removed" fxLayout="column" fxLayoutAlign="center center">
-                                <span style="letter-spacing: 1px; font-weight: bold;">REMOVED</span>
+                                <span style="letter-spacing: 1px; font-weight: 600;">REMOVED</span>
                                 <button mat-icon-button color="primary" (click)="restoreRemovedAttachment(attachment)">
                                     <mat-icon>restore</mat-icon>
                                 </button>
@@ -139,6 +139,6 @@
 
 <ng-template #inspectingLikesTemplate>
     <div class="media-details-info-container" fxLayout="column">
-        <app-users [config]="usersConfig" (onClose)="likesClose()"></app-users>
+        Likes
     </div>
 </ng-template>

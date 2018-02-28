@@ -1,35 +1,87 @@
 <div class="notifications-box" fxLayout="column">
-    <div class="notifications-header" fxlayout="row" fxLayoutAlign="space-between center">
-        <span class="notification-box-title">Your notifications</span>
+    <mat-tab-group (selectedTabChange)="selectedTabChange($event)" disableRipple="true">
+        <mat-tab label="Incomming Requests" style="background: red;">
+            <div class="notifications-content" fxLayout="column" fxLayoutAlign="start start" *ngIf="incommingRequestsPage.data && incommingRequestsPage.data.length !== 0;">
+                <div class="incomming-request" *ngFor="let user of incommingRequestsPage.data">
+                    <div fxLayout="row">
+                        <div fxLayout="row" fxLayoutAlign="center center">
+                            <img class="incomming-request-avatar" [routerLink]="['/', user.username]" src="{{user.pictureUri}}" alt="user-image" default="assets/images/user-default-image.png">
+                        </div>
+                        <div fxLayout="row" fxLayoutAlign="space-between center" fxFlex>
+                            <div class="incomming-request-name" fxLayout="column">
+                                <a class="incomming-request-username" [routerLink]="['/', user.username]" title="{{user.username}}">{{user.username}}</a>
+                                <a class="incomming-request-fullname" [routerLink]="['/', user.username]" title="{{user.fullName}}">{{user.fullName}}</a>
+                            </div>
+                            <div *ngIf="!user.isConfirmed && !user.isRemoved" fxLayout="row" fxLayoutAlign="end start">
+                                <button mat-button (click)="removeIncommingRequest(user)" [disabled]="user.isRemovingIncommingRequest">REMOVE</button>
+                                <button mat-raised-button color="primary" (click)="confirmIncommingRequest(user)" [disabled]="user.isConfirmingIncommingRequest">CONFIRM</button>
+                            </div>
+                            <div *ngIf="user.isConfirmed">
+                                <mat-icon class="mat-36 primary">check</mat-icon>
+                            </div>
+                            <div *ngIf="user.isRemoved">
+                                <mat-icon class="mat-36 primary">clear</mat-icon>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div fxLayout="row" fxLayoutAlign="center center" *ngIf="incommingRequestsPage.hasMoreItems" style="padding-top: 2.4rem;">
+                    <button class="btn-default" mat-button (click)="getIncommingRequests()" [disabled]="isLoading">LOAD MORE</button>
+                </div>
+            </div>
+            <div class="notifications-content" fxLayout="column" fxLayoutAlign="center center" *ngIf="!incommingRequestsPage.data || incommingRequestsPage.data.length === 0;">
+                <div fxLayout="column" fxLayoutAlign="center center">
+                    <mat-spinner [strokeWidth]="3" [diameter]="50" *ngIf="isLoading"></mat-spinner>
+                    <span [@enterTransition] *ngIf="!isLoading">No Incomming Requests</span>
+                    <button mat-icon-button (click)="getIncommingRequests()" *ngIf="!isLoading" [@enterTransition] tabindex="-1">
+                        <mat-icon class="mat-36" svgIcon="refresh">refresh</mat-icon>
+                    </button>
+                </div>
+            </div>
+        </mat-tab>
+        <mat-tab label="Outgoing Requests">
+            <div class="notifications-content" fxLayout="column" fxLayoutAlign="start start" *ngIf="outgoingRequestsPage.data && outgoingRequestsPage.data.length !== 0;">
+                <div class="incomming-request" *ngFor="let user of outgoingRequestsPage.data">
+                    <div fxLayout="row">
+                        <div fxLayout="row" fxLayoutAlign="center center">
+                            <img class="incomming-request-avatar" [routerLink]="['/', user.username]" src="{{user.pictureUri}}" alt="user-image" default="assets/images/user-default-image.png">
+                        </div>
+                        <div fxLayout="row" fxLayoutAlign="space-between center" fxFlex>
+                            <div class="incomming-request-name" fxLayout="column">
+                                <a class="incomming-request-username" [routerLink]="['/', user.username]" title="{{user.username}}">{{user.username}}</a>
+                                <a class="incomming-request-fullname" [routerLink]="['/', user.username]" title="{{user.fullName}}">{{user.fullName}}</a>
+                            </div>
+                            <div *ngIf="!user.isConfirmed && !user.isRemoved" fxLayout="row" fxLayoutAlign="end start">
+                                <button mat-button class="btn-relationships" (click)="removeOutgoingRequest(user)" [disabled]="user.isRemovingIncommingRequest">CANCEL</button>
+                            </div>
+                            <div *ngIf="user.isConfirmed">
+                                <mat-icon class="mat-36 primary">check</mat-icon>
+                            </div>
+                            <div *ngIf="user.isRemoved">
+                                <mat-icon class="mat-36 primary">clear</mat-icon>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div fxLayout="row" fxLayoutAlign="center center" *ngIf="outgoingRequestsPage.hasMoreItems" style="padding-top: 2.4rem;">
+                    <button class="btn-default" mat-button (click)="getIncommingRequests()" [disabled]="isLoading">LOAD MORE</button>
+                </div>
+            </div>
+            <div class="notifications-content" fxLayout="column" fxLayoutAlign="center center" *ngIf="!outgoingRequestsPage.data || outgoingRequestsPage.data.length === 0;">
+                <div fxLayout="column" fxLayoutAlign="center center">
+                    <mat-spinner [strokeWidth]="3" [diameter]="50" *ngIf="isLoading"></mat-spinner>
+                    <span [@enterTransition] *ngIf="!isLoading">No Outgoing Requests</span>
+                    <button mat-icon-button (click)="getOutgoingRequests()" *ngIf="!isLoading" [@enterTransition] tabindex="-1">
+                        <mat-icon class="mat-36" svgIcon="refresh">refresh</mat-icon>
+                    </button>
+                </div>
+            </div>
+        </mat-tab>
+    </mat-tab-group>
+    <!-- <div class="notifications-header" fxlayout="row" fxLayoutAlign="space-between center">
+        <span class="notification-box-title">Incomming Requests</span>
         <button mat-icon-button (click)="close()" tabindex="-1">
             <mat-icon>clear</mat-icon>
         </button>
-    </div>
-    <div class="notifications-content" fxLayout="column" fxLayoutAlign="start start" fxFlex *ngIf="incommingRequests && incommingRequests.length !== 0; else noRequests">
-        <div class="incomming-request" *ngFor="let user of incommingRequests" fxLayout="row">
-            <img class="incomming-request-avatar" [routerLink]="['/', user.username]" src="{{user.pictureUri}}" alt="user-image" default="assets/images/user-default-image.png">
-            <div fxLayout="row" fxLayoutAlign="space-between center" fxFlex>
-                <a class="incomming-request-username" [routerLink]="['/', user.username]">{{user.username}}</a>
-                <div *ngIf="!user.isConfirmed && !user.isRemoved">
-                    <button mat-button (click)="removeIncommingRequest(user)" [disabled]="user.isRemovingIncommingRequest">REMOVE</button>
-                    <button mat-raised-button color="primary" (click)="confirmIncommingRequest(user)" [disabled]="user.isConfirmingIncommingRequest">CONFIRM</button>
-                </div>
-                <div *ngIf="user.isConfirmed">
-                    <mat-icon class="mat-36 primary">check</mat-icon>
-                </div>
-                <div *ngIf="user.isRemoved">
-                    <mat-icon class="mat-36 primary">clear</mat-icon>
-                </div>
-            </div>
-        </div>
-    </div>
-    <ng-template #noRequests>
-        <div class="notifications-content" fxLayout="column" fxLayoutAlign="center center" fxFlex>
-            <mat-spinner [strokeWidth]="5" [diameter]="50" *ngIf="isLoading"></mat-spinner>
-            <span [@enterTransition] *ngIf="!isLoading">No Incomming Requests</span>
-            <button mat-icon-button (click)="getIncommingRequests()" *ngIf="!isLoading" [@enterTransition] tabindex="-1">
-                <mat-icon class="mat-36" svgIcon="refresh">refresh</mat-icon>
-            </button>
-        </div>
-    </ng-template>
+    </div> -->
 </div>

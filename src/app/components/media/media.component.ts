@@ -35,8 +35,8 @@ export class MediaComponent implements OnInit, OnDestroy {
             });
     }
 
-    public createPost() {
-        const dialogRef = this.dialog.open(CreateMediaComponent);
+    public createMedia() {
+        const dialogRef = this.dialog.open(CreateMediaComponent, { disableClose: true });
 
         dialogRef.afterClosed()
             .subscribe(createdPost => {

@@ -1,0 +1,87 @@
+.users-container {
+    height: 100%;
+    box-sizing: border-box;
+    overflow-y: hidden;
+    color: #444444;
+}
+
+.users-container .users-title {
+    padding: 1rem .75rem .75rem .75rem;
+    border-bottom: 1px solid #dddddd;
+    background: white;
+}
+
+.users-container .users-title h1 {
+    font-weight: 800;
+    font-size: 1.2em;
+}
+
+.user-items-empty-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    margin: -.7rem;
+    padding: 0;
+}
+
+.user-items-empty-container {
+    font-weight: 600;
+}
+
+.user-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 90px;
+    object-fit: cover;
+    outline: none;
+    cursor: pointer;
+}
+
+.users-details-container {
+    padding-left: 10px;
+}
+
+.users-details-container .user-name {
+    line-height: 1.5;
+}
+
+.user-username {
+    font-weight: 600;
+}
+
+.user-fullname {
+    color: #9A9A9A;
+    font-size: .9em;
+    font-weight: lighter;
+    letter-spacing: 1px;
+}
+
+.user-items {
+    height: 100%;
+    overflow-y: scroll;
+    padding: .7rem;
+    background: #FAFAFA;
+    position: relative;
+}
+
+.user-items>:first-child.user-item {
+    margin-top: 0;
+}
+
+.user-items>.user-item {
+    margin-top: .7rem;
+}
+
+.user-item {
+    padding-bottom: .7rem;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.user-item .mat-divider {
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    border-top-color: #d8d8d8;
+}
