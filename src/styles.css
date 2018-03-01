@@ -5,7 +5,7 @@
 }
 
 body {
-    color: #444444;
+    color: #212121;
     background-color: #FAFAFA;
     overflow-y: scroll;
 }
@@ -82,7 +82,7 @@ a.link-button {
 
 .mat-icon.btn-icon {
     cursor: pointer;
-    color: #444444;
+    color: #212121;
     outline: none;
 }
 
@@ -110,7 +110,7 @@ a.link-button {
     background-color: #efefef;
     color: gray;
     border-radius: 2px;
-    font-weight: 600;
+    font-weight: 900;
     line-height: 27px;
     min-width: 110px;
     padding: 3px 0;
@@ -123,7 +123,7 @@ a.link-button {
     text-transform: uppercase;
     font-size: 0.8em;
     letter-spacing: 1px;
-    font-weight: 600;
+    font-weight: 900;
 }
 
 .mat-button.btn-primary {
@@ -133,13 +133,13 @@ a.link-button {
     text-transform: uppercase;
     font-size: 0.8em;
     letter-spacing: 1px;
-    font-weight: 600;
+    font-weight: 900;
 }
 
 .mat-button.btn-primary:disabled,
 .mat-button.btn-default:disabled {
     background-color: rgba(0, 0, 0, .12);
-    color: rgba(0, 0, 0, .26);
+    color: #212121;
 }
 
 .primary {

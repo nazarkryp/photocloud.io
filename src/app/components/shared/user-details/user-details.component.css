@@ -1,6 +1,6 @@
 .user-info {
     width: 650px;
-    color: #444444;
+    color: #212121;
 }
 
 .user-info-data {
@@ -20,7 +20,7 @@
 }
 
 .user-info-fullname {
-    font-weight: 600;
+    font-weight: 900;
     white-space: nowrap;
 }
 
@@ -78,8 +78,8 @@ div.edit-image:not([disabled]):hover .change-overlay {
 
 .mat-subhead.full-name {
     font-size: 17px;
-    font-weight: 600;
-    padding-right: 10px;
+    font-weight: 900;
+    padding-right: .5rem;
     width: 100%;
     white-space: pre;
 }

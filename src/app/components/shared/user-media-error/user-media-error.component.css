@@ -1,19 +1,16 @@
 .user-media-error {
-    /* background-color: white;
-    border: 1px solid #efefef;
-    border-radius: 2px; */
     padding: 1.5rem 3rem;
     line-height: 2;
 }
 
 .user-media-error .title {
     text-transform: uppercase;
-    font-weight: 600;
-    font-size: 1.4em;
+    font-weight: 900;
+    font-size: 1.2em;
     color: #e91e63;
 }
 
 .user-media-error .description {
-    font-size: 1.1em;
+    font-size: 1em;
     font-weight: normal;
 }

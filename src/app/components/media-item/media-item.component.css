@@ -53,7 +53,7 @@ textarea {
 }
 
 .media-author-username {
-    font-weight: 600;
+    font-weight: 900;
 }
 
 .media-attachment {
@@ -128,7 +128,7 @@ textarea {
 
 .media-created {
     font-size: 0.8em;
-    color: #757575;
+    color: gray;
     font-weight: lighter;
     text-transform: uppercase;
 }
@@ -151,7 +151,7 @@ textarea {
 }
 
 .big-like-icon {
-    color: #444444;
+    color: #212121;
     cursor: pointer;
     outline: none;
     width: 27px;
@@ -163,5 +163,5 @@ textarea {
 }
 
 .icon-button {
-    color: #444444;
+    color: #212121;
 }

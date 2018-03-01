@@ -20,8 +20,8 @@
 
 .notification-box-title {
     font-size: 1.2em;
-    font-weight: 600;
-    color: #444444;
+    font-weight: 900;
+    color: #212121;
 }
 
 .notifications-content {
@@ -45,7 +45,7 @@
 }
 
 .incomming-request-username {
-    font-weight: 600;
+    font-weight: 900;
     outline: none;
     width: 110px;
     white-space: nowrap;

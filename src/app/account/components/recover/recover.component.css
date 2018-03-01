@@ -1,7 +1,7 @@
 .recover-content {
     overflow-y: hidden;
     height: calc(100vh);
-    color: #444444;
+    color: #212121;
     margin: 0;
     padding: 0;
     background: #2980b9 url('/assets/images/tumblr_static_bg3.png') repeat 0 0;

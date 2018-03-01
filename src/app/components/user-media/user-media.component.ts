@@ -121,7 +121,7 @@ export class UserMediaComponent implements OnInit, OnDestroy {
 
     public ngOnInit() {
         this.routeSubscription = this.route.paramMap.subscribe(params => {
-            this.initializePage();
+            this.reset();
             this.userMedia = this.route.snapshot.data['userMedia'];
         });
     }
@@ -136,7 +136,7 @@ export class UserMediaComponent implements OnInit, OnDestroy {
         }
     }
 
-    private initializePage(): void {
+    private reset(): void {
         this.userMedia = new UserMediaViewModel();
         this.userMedia.page = new PageViewModel<MediaViewModel>();
         this.userMedia.page.hasMoreItems = false;

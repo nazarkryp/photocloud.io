@@ -2,7 +2,7 @@
     <div class="mat-toolbar-layout">
         <div fxLayout="row" fxLayoutAlign="space-between center">
             <div class="logo-container" fxLayout="row" fxLayoutAlign="center center" fxFlex>
-                <a style="color:#444444;" routerLink="/" fxLayout="row" fxLayoutAlign="center center">
+                <a style="color:#212121;" routerLink="/" fxLayout="row" fxLayoutAlign="center center">
                     <span style="font-size: 1.4em; font-weight: lighter;">Photo</span>
                     <span style="font-size: 1.7em; font-weight: 800;">Cloud</span>
                 </a>
@@ -11,7 +11,7 @@
                 <app-search-box *ngIf="currentUser"></app-search-box>
             </div>
             <div fxFlex fxLayout="row" fxLayoutAlign="center center" *ngIf="!currentUser">
-                <button mat-button color="primary" style="font-size: 14px; font-weight: 600;" routerLink="/account/signin">
+                <button mat-button color="primary" style="font-size: 14px; font-weight: 900;" routerLink="/account/signin">
                     SIGN IN
                 </button>
             </div>

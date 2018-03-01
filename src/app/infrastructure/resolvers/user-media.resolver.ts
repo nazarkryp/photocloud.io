@@ -59,7 +59,7 @@ export class UserMediaResolver implements Resolve<UserViewModel> {
             validationResult.hasErrors = true;
             validationResult.error = new ErrorViewModel('Account is private');
             validationResult.error.description = currentUser
-                ? `Follow ${user.username} to see all their photos` :
+                ? `Follow <strong>${user.username}</strong> to see all their photos` :
                 `Already know ${user.username}? Sign in to see all their photos`;
         }
 

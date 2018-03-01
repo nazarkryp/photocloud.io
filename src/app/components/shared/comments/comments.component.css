@@ -32,7 +32,7 @@
 
 .text-button {
     font-size: .9em;
-    font-weight: 600;
+    font-weight: 900;
     color: #757575;
     cursor: pointer;
 }
@@ -43,12 +43,12 @@
 
 .text-button.disabled,
 .text-button.disabled:hover {
-    color: #C8C8C8;
+    color: gray;
 }
 
 .comment-username {
-    color: #444444;
-    font-weight: 600;
+    /* color: #212121; */
+    font-weight: 900;
 }
 
 .comment-text {

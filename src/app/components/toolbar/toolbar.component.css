@@ -46,7 +46,7 @@ mat-icon>svg {
 .custom-big-icon {
     cursor: pointer;
     outline: none;
-    color: #444444;
+    color: #212121;
     width: 35px;
     height: 35px;
 }
@@ -65,7 +65,7 @@ td-notification-count .mat-icon {
 }
 
 td-notification-count .btn-icon {
-    color: #333333;
+    color: #212121;
 }
 
 td-notification-count .btn-icon:hover {
