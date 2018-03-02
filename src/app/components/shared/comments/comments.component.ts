@@ -2,15 +2,6 @@ import { Component, OnInit, Input } from '@angular/core';
 import { trigger, animate, style, transition, animateChild, group, query, stagger } from '@angular/animations';
 import { Router } from '@angular/router';
 
-import {
-    TdBounceAnimation,
-    TdFlashAnimation,
-    TdHeadshakeAnimation,
-    TdJelloAnimation,
-    TdPulseAnimation,
-    TdFadeInOutAnimation
-} from '@covalent/core';
-
 import { CommentService } from 'app/services';
 import { CurrentUserService } from 'app/infrastructure/services';
 import { MediaViewModel, CurrentUserViewModel, CommentViewModel, PageViewModel, PaginationViewModel } from 'app/models/view';
@@ -20,12 +11,6 @@ import { MediaViewModel, CurrentUserViewModel, CommentViewModel, PageViewModel, 
     templateUrl: './comments.component.html',
     styleUrls: ['./comments.component.css'],
     animations: [
-        TdFadeInOutAnimation(),
-        TdBounceAnimation(),                    // using implicit anchor name 'tdBounce' in template
-        TdFlashAnimation(),                     // using implicit anchor name 'tdFlash' in template
-        TdHeadshakeAnimation(),                 // using implicit anchor name 'tdHeadshake' in template
-        TdJelloAnimation(),                     // using implicit anchor name 'tdJello' in template
-        TdPulseAnimation({ duration: 200 }),    // using implicit anchor name 'tdPulse' in template,
         trigger('enterTransition', [
             transition(':enter', [
                 style({ transform: 'translateX(25px)', opacity: 0 }),
@@ -40,7 +25,7 @@ export class CommentsComponent implements OnInit {
     public pulseState = false;
 
     private currentUser: CurrentUserViewModel;
-    private page: PageViewModel<CommentViewModel>;
+    public page: PageViewModel<CommentViewModel>;
 
     constructor(
         private currentUserService: CurrentUserService,

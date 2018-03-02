@@ -181,12 +181,8 @@ export class EditComponent implements OnInit, AfterViewInit, AfterViewChecked {
                     Validators.minLength(3),
                     Validators.pattern(/^\S*$/)]),
                 [this.validateUsername.bind(this)]),
-            fullName: new FormControl('', Validators.compose([
-                Validators.maxLength(50)
-            ])),
-            bio: new FormControl('', Validators.compose([
-                Validators.maxLength(255)
-            ]))
+            fullName: new FormControl('', Validators.compose([Validators.maxLength(50)])),
+            bio: new FormControl('', Validators.compose([Validators.maxLength(250)]))
         });
 
         this.privateFormGroup = this.builder.group({
