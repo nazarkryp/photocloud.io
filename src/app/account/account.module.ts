@@ -12,6 +12,7 @@ import { SignInComponent } from './components/signin/signin.component';
 import { CreateComponent } from './components/create/create.component';
 import { EditComponent } from './components/edit/edit.component';
 import { RecoverComponent } from './components/recover/recover.component';
+import { AutoLoginComponent } from './components/auto-login/auto-login.component';
 
 import { routes } from './account-routes';
 import { AccountService } from 'app/account/services';
@@ -32,7 +33,8 @@ import { EditResolver } from 'app/account/services/resolvers';
         SignInComponent,
         CreateComponent,
         EditComponent,
-        RecoverComponent
+        RecoverComponent,
+        AutoLoginComponent
     ],
     providers: [
         AuthenticationGuardService,

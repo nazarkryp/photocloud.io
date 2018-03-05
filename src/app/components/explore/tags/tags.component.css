@@ -13,18 +13,10 @@
 
 .tags-media-header h1 {
     font-weight: 900;
-    font-family: 'Roboto script=all rev=1', sans-serif;
     font-size: 2.5em;
     text-transform: uppercase;
     letter-spacing: 2px;
     color: #212121;
-}
-
-.tags-media-header input {
-    border: none;
-    outline: none;
-    background: transparent;
-    padding: 0;
 }
 
 .tags-media {

@@ -2,6 +2,9 @@
     <div class="tags-media-header" fxLayout="column" fxLayoutAlign="center start">
         <span style="color: gray; font-weight: bold; font-size: 1.2em;">Search by hashtags</span>
         <h1>#{{tag}}</h1>
+        <div style="margin-top: 0rem; color: #444444; font-size: 1.5em;" *ngIf="!isLoading && page?.data;">
+            <h3>No posts matching '{{tag}}' were found</h3>
+        </div>
     </div>
     <div class="tags-media">
         <div *ngFor="let media of page?.data;">
@@ -22,6 +25,6 @@
         </div>
     </div>
     <div fxLayout="row" fxLayoutAlign="center center" *ngIf="page?.hasMoreItems">
-        <button class="btn-default" mat-button (click)="getMedia()" [disabled]="isLoadingPosts">Load More</button>
+        <button class="btn-default" mat-button (click)="getMedia()" [disabled]="isLoading">Load More</button>
     </div>
 </div>

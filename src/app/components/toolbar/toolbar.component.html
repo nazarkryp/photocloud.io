@@ -16,14 +16,13 @@
                 </button>
             </div>
             <div class="toolbar-actions" *ngIf="currentUser" fxLayout="row" fxLayoutAlign="end center" fxFlex>
-                <mat-icon class="btn-icon mat-36 thin" svgIcon="compass" (click)="explorePeople()"></mat-icon>
-                <mat-icon class="btn-icon mat-36 thin" svgIcon="bell" (click)="openNotifications()" *ngIf="currentUser.isPrivate && currentUser.isActive"></mat-icon>
-                <!-- <td-notification-count [notifications]="none" (click)="explorePeople()">
+                <td-notification-count [notifications]="none" (click)="explorePeople()">
                     <mat-icon class="btn-icon mat-36 thin" svgIcon="compass"></mat-icon>
-                </td-notification-count> -->
-                <!-- <td-notification-count color="warn" positionX="before" [notifications]="incommingRequestsCount" (click)="openNotifications()" *ngIf="currentUser.isPrivate && currentUser.isActive">
+                </td-notification-count>
+                <td-notification-count color="warn" positionX="before" [notifications]="incommingRequestsCount" (click)="openNotifications()"
+                    *ngIf="currentUser.isPrivate && currentUser.isActive">
                     <mat-icon class="btn-icon mat-36 thin" svgIcon="bell"></mat-icon>
-                </td-notification-count> -->
+                </td-notification-count>
                 <div fxLayout="row" fxLayoutAlign="center center">
                     <a (click)="profile()" fxLayout="row" fxLayoutAlign="center center">
                         <img class="avatar" src="{{currentUser.pictureUri}}" default="assets/images/user-default-image.png" alt="{{currentUser.username}}">

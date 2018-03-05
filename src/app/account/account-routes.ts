@@ -4,6 +4,7 @@ import { CreateComponent } from './components/create/create.component';
 import { SignInComponent } from './components/signin/signin.component';
 import { EditComponent } from './components/edit/edit.component';
 import { RecoverComponent } from './components/recover/recover.component';
+import { AutoLoginComponent } from './components/auto-login/auto-login.component';
 
 import { EditResolver } from 'app/account/services/resolvers';
 
@@ -20,8 +21,12 @@ export const routes: Routes = [
         path: 'signin',
         component: SignInComponent,
         data: {
-            title: 'PhotoCloud - Explore Tags'
+            title: 'PhotoCloud - Sign In'
         }
+    },
+    {
+        path: 'recover',
+        component: RecoverComponent
     },
     {
         path: 'edit',
@@ -31,7 +36,7 @@ export const routes: Routes = [
         }
     },
     {
-        path: 'recover',
-        component: RecoverComponent
+        path: 'autologin',
+        component: AutoLoginComponent
     }
 ];

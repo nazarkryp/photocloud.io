@@ -68,7 +68,8 @@ export class AppComponent implements OnInit {
 
             this.renderToolbar = this.router.url !== '/account/signin'
                 && this.router.url !== '/account/create'
-                && this.router.url !== '/account/recover';
+                && this.router.url !== '/account/recover'
+                && this.router.url !== '/account/autologin';
         }
     }
 }
