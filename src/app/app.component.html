@@ -8,16 +8,16 @@
         <div class="router-container">
             <router-outlet></router-outlet>
         </div>
-        <app-footer *ngIf="renderToolbar"></app-footer>
+        <app-footer></app-footer>
     </div>
 </mat-sidenav-container>
 
-<div style="z-index: 999; top: auto; right: 0; bottom: 0; left: auto; position: fixed; height: 100px; width: 100%; background-color: rgba(0,0,0,.8);"
-    fxLayout="row" fxLayoutAlign="center center" *ngIf="!currentUser && !initialLoad && renderToolbar && showAuthenticationBar">
+<div style="z-index: 999; top: auto; right: 0; bottom: 0; left: auto; position: fixed; height: 100px; width: 100%; background-color: rgba(0,0,0,.8);" fxLayout="row" fxLayoutAlign="center center"
+    *ngIf="!currentUser && !initialLoad && renderToolbar && showAuthenticationBar">
     <mat-icon class="btn-icon" style="position:absolute; right: .5rem; top: .5rem;" (click)="hideAuthenticationBar()">clear</mat-icon>
     <div style="width: 960px;" fxLayout="row" fxLayoutAlign="space-between center">
         <div fxLayout="row" fxLayoutAlign="start center">
-            <mat-icon class="mat-48" style="color: white;">account_circle</mat-icon>
+            <!-- <mat-icon style="color: white;">account_circle</mat-icon> -->
             <div style="line-height: 1.5; margin-left: 1.4rem;" fxLayout="column">
                 <span style="color: white;">Sign Up for PhotoCloud</span>
                 <div style="max-width: 400px; padding-top: .25rem;">

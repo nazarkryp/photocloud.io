@@ -51,7 +51,7 @@ export class SearchBoxComponent implements OnInit {
     public ngOnInit() {
         this.searchControl = new FormControl();
         this.users = this.searchControl.valueChanges
-            .debounceTime(800)
+            .debounceTime(300)
             .do(_ => {
                 if (this.searchQuery) {
                     this.progress.start();

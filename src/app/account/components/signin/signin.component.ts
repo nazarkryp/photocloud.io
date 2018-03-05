@@ -29,7 +29,6 @@ export class SignInComponent implements OnInit {
     @ViewChild('passwordInput') passwordInput: ElementRef;
     public errorStateMatcher = new DefaultErrorStateMatcher();
     public formGroup: FormGroup;
-    public isLoading: boolean;
     public signInError: string;
 
     get username(): AbstractControl {
@@ -49,13 +48,11 @@ export class SignInComponent implements OnInit {
             username: new FormControl('',
                 Validators.compose([
                     Validators.required,
-                    Validators.maxLength(50),
-                    Validators.minLength(3)])),
+                    Validators.maxLength(50)])),
             password: new FormControl('',
                 Validators.compose([
                     Validators.required,
-                    Validators.maxLength(50),
-                    Validators.minLength(6)]))
+                    Validators.maxLength(50)]))
         });
     }
 
