@@ -19,7 +19,7 @@ export class AppComponent implements OnInit {
     @ViewChild('notificationsSidenav')
     public notificationsSidenav: MatSidenav;
     public renderToolbar = false;
-    public renderFooter = true;
+    public renderFooter = false;
     public initialLoad = true;
     public currentUser: CurrentUserViewModel;
     public showAuthenticationBar = true;
@@ -33,6 +33,7 @@ export class AppComponent implements OnInit {
             .subscribe(currentUser => {
                 this.currentUser = currentUser;
                 this.initialLoad = false;
+                this.renderFooter = true;
             });
     }
 
@@ -67,15 +68,18 @@ export class AppComponent implements OnInit {
                 this.hideAuthenticationBar()
             }
 
+            this.renderFooter = this.router.url !== null;
+
             // this.renderFooter = this.router.url !== '/account/signin'
             //     && this.router.url !== '/account/create'
             //     && this.router.url !== '/account/recover'
             //     && this.router.url !== '/account/autologin';
 
-            this.renderToolbar = this.router.url !== '/account/signin'
-                && this.router.url !== '/account/create'
-                && this.router.url !== '/account/recover'
-                && this.router.url !== '/account/autologin';
+            this.renderToolbar =
+                this.router.url !== '/account/signin' &&
+                this.router.url !== '/account/create' &&
+                this.router.url !== '/account/recover' &&
+                this.router.url !== '/account/autologin';
         }
     }
 }

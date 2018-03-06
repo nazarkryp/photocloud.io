@@ -5,7 +5,7 @@
     </mat-sidenav>
     <div class="my-content" fxLayout="column">
         <app-toolbar *ngIf="renderToolbar" (openNotificationsEvent)="openNotifications($event)"></app-toolbar>
-        <div class="router-container">
+        <div class="router-container" [ngClass]="{ 'toolbar' : renderToolbar, 'footer' : renderFooter }">
             <router-outlet></router-outlet>
         </div>
         <app-footer *ngIf="renderFooter"></app-footer>

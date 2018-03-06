@@ -17,17 +17,24 @@
     margin: 0;
     width: 100%;
     min-height: 100vh;
-    height: 100%;
-    /* overflow-y: scroll; */
     position: relative;
 }
 
 .router-container {
     position: relative;
-    min-height: calc(100vh - 228px);
+    min-height: calc(100vh);
     overflow-y: hidden;
     padding: 3rem 0;
     box-sizing: content-box;
+}
+
+.router-container.toolbar,
+.router-container.footer {
+    min-height: calc(100vh - 164px);
+}
+
+.router-container.toolbar.footer {
+    min-height: calc(100vh - 228px);
 }
 
 .mat-fab-bottom-left {

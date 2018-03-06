@@ -5,7 +5,7 @@
             <span style="font-size: 2.4em; font-weight: 900; color: #e91e63;">Cloud</span>
         </div>
         <form class="signin-form" fxLayout="column" [formGroup]="formGroup" (ngSubmit)="signIn(usernameInput.value, passwordInput.value)">
-            <div style="padding: .7rem 0 2.4rem 0;" fxLayout="column">
+            <div style="padding: .7rem 0 1.4rem 0;" fxLayout="column">
                 <span style="color: gray; font-size: 1em; font-weight: 400;">Login to continue or
                     <a class="primary" routerLink="/account/create" *ngIf="!formGroup.disabled">Create Account</a>
                     <span class="disabled" *ngIf="formGroup.disabled">Create Account</span>
@@ -30,11 +30,11 @@
                 <a class="primary" routerLink="/account/recover" *ngIf="!formGroup.disabled">Forgot Password?</a>
                 <span class="disabled" *ngIf="formGroup.disabled">Forgot Password?</span>
             </div>
-            <div style="margin-top: 24px;" fxLayout="row" fxLayoutAlign="center" *ngIf="signInError">
-                <span class="error-message">{{signInError}}</span>
-            </div>
             <div style="margin: 2rem 0;" fxLayout="row" fxLayoutAlign="end center">
                 <button type="submit" style="font-size: 1.2em; font-weight: lighter;" mat-raised-button color="primary" [disabled]="formGroup.disabled">SIGN IN</button>
+            </div>
+            <div fxLayout="row" fxLayoutAlign="center" *ngIf="signInError">
+                <span class="error-message">{{signInError}}</span>
             </div>
         </form>
     </div>
