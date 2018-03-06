@@ -23,12 +23,28 @@ export class AccountService {
         private httpClient: HttpClient) { }
 
     public signIn(username: string, password: string): Observable<AccessToken> {
-        const body = 'grant_type=password&username=' + username + '&password=' + password;
-
-        return this.httpClient.post(environment.loginUri, body)
+        return this.httpClient.post(environment.loginUri, `grant_type=password&username=${username}&password=${password}`)
             .map(response => {
                 return this.tokenMapper.mapResponseToAccessToken(response);
             });
+    }
+
+    public signInWithCode(code: string): Observable<AccessToken> {
+        return this.httpClient.post(`${environment.loginUri}?code=${code}`, 'grant_type=password')
+            .map(response => {
+                return this.tokenMapper.mapResponseToAccessToken(response);
+            });
+    }
+
+    public enableSignInWithCode(): Observable<any> {
+        return this.httpClient.get<any>(environment.apiUri + 'account/code')
+            .map(response => {
+                return response.code;
+            });
+    }
+
+    public disableSignInWithCode(): Observable<any> {
+        return this.httpClient.delete<any>(environment.apiUri + 'account/code');
     }
 
     public create(accountRequestModel: CreateAccountRequestModel) {

@@ -54,7 +54,8 @@
             <div class="media-details-comments-container" fxLayout="column" fxFlex>
                 <span class="media-details-comments-header">Comments</span>
                 <div *ngIf="media.commentsCount === 0" fxLayout="column" fxLayoutAlign="center center" style="height: 100%;">
-                    <span style="font-weight: normal; font-size: .9em; color: gray; letter-spacing: 1px; text-transform: uppercase;">No comments yet</span>
+                    <span style="font-weight: normal; font-size: .9em; color: gray; letter-spacing: 1px; text-transform: uppercase;" *ngIf="media.allowComments">No comments yet</span>
+                    <span style="font-weight: normal; font-size: .9em; color: gray; letter-spacing: 1px;" *ngIf="!media.allowComments">Commenting on this photo is restricted</span>
                 </div>
                 <app-comments style="font-size: 0.95em;" [media]="media" *ngIf="media.commentsCount > 0"></app-comments>
             </div>

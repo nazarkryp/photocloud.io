@@ -8,12 +8,18 @@ body {
     color: #212121;
     background-color: #FAFAFA;
     overflow-y: scroll;
+    font-size: 100%;
 }
 
 a {
     text-decoration: none;
     color: inherit;
 }
+
+/* a:link {
+    color: #e91e63;
+    font-weight: bold;
+} */
 
 a.link-button {
     color: #e91e63;

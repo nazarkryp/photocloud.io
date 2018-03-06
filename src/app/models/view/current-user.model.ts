@@ -8,6 +8,7 @@ export class CurrentUserViewModel {
     public isActive: boolean;
     public pictureUri: string;
     public incommingRequestsCount: number;
+    public canAutoLogin: boolean;
 
     constructor(
         id?: number,

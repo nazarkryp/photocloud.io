@@ -19,7 +19,10 @@ export class AutoLoginComponent implements OnInit {
     }
 
     public continue() {
-        this.router.navigateByUrl('/');
+        this.currentUserService.signInWithCode()
+            .subscribe(() => {
+                this.router.navigateByUrl('/');
+            });
     }
 
     public logout() {

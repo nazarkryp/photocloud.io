@@ -98,6 +98,22 @@ export class EditComponent implements OnInit, AfterViewInit, AfterViewChecked {
         });
     }
 
+    public invertAccountAutoLoginStatus(event: MatSlideToggleChange) {
+        let observable: Observable<any>;
+
+        if (this.currentUserService.canSignInWithCode) {
+            observable = this.currentUserService.disableSignInWithCode();
+        } else {
+            observable = this.currentUserService.enableSignInWithCode();
+        }
+
+        observable.subscribe(() => {
+            this.currentUser.canAutoLogin = this.currentUserService.canSignInWithCode;
+        }, error => {
+            this.currentUser.canAutoLogin = this.currentUserService.canSignInWithCode;
+        });
+    }
+
     public invertAccountStatus() {
         if (this.isInvertingAccountStatus) {
             return;
@@ -128,6 +144,7 @@ export class EditComponent implements OnInit, AfterViewInit, AfterViewChecked {
 
     public ngOnInit() {
         this.currentUser = this.activatedRoute.snapshot.data['account'];
+        this.currentUser.canAutoLogin = this.currentUserService.canSignInWithCode;
 
         this.progress.done();
     }

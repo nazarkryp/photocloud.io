@@ -1,6 +1,49 @@
-<div class="recover-content" fxLayout="column" fxLayoutAlign="center center">
-    <div style="padding: 24px; border-radius: 3px; background: white;" fxLayout="column" fxLayoutAlign="center center">
-        <span>This page is under construction</span>
-        <button mat-raised-button color="primary" style="margin-top: 24px;" routerLink="/account/signin">GO BACK</button>
+<div class="signup-content" fxLayout="column" fxLayoutAlign="center center" @content>
+    <div>
+        <div style="padding-bottom: 2.4rem;" fxLayout="row" fxLayoutAlign="center center">
+            <span style="font-size: 1.6em; font-weight: lighter;">Photo</span>
+            <span style="font-size: 2.4em; font-weight: 900; color: #e91e63;">Cloud</span>
+        </div>
+        <form class="signup-form" fxLayout="column" [formGroup]="formGroup" (ngSubmit)="recover()">
+            <div style="padding: 0 0 2.4rem 0;" fxLayout="column" *ngIf="!success">
+                <span style="color: gray; line-height: 2;">Enter username or email address to reset your password or go to
+                    <a class="primary" routerLink="/account/signin" *ngIf="!formGroup.disabled">Sign In</a>
+                    <span class="disabled" *ngIf="formGroup.disabled">Sign In</span> page you remember one
+                </span>
+            </div>
+            <div *ngIf="success" style="line-height: 2;">
+                <p>If such account exists you will receive password reset instructions on your email</p>
+                <div fxLayout="row" fxLayoutAlign="space-between center">
+                    <a routerLink="/account/signin">Sign In</a>
+                    <a routerLink="/account/create">Create Account</a>
+                </div>
+            </div>
+            <mat-form-field class="form-field" *ngIf="!success">
+                <input formControlName="username" #usernameInput matInput placeholder="Username or E-mail Address" type="text" autocomplete="off" [errorStateMatcher]="errorStateMatcher">
+                <div matSuffix>
+                    <mat-icon class="primary" matSuffix *ngIf="username.getError('unique')">clear</mat-icon>
+                    <mat-icon class="success" matSuffix *ngIf="username.valid">check</mat-icon>
+                    <mat-spinner [diameter]="20" [strokeWidth]="2" color="primary" *ngIf="username?.isValidating"></mat-spinner>
+                </div>
+                <mat-error *ngIf="username.getError('required')">
+                    Username is required
+                </mat-error>
+                <mat-error *ngIf="username.getError('minlength')">
+                    Username must be at least {{username.errors.minlength.requiredLength}}
+                </mat-error>
+                <mat-error *ngIf="username.getError('pattern')">
+                    Whitespaces are not allowed
+                </mat-error>
+                <mat-error *ngIf="username.getError('unique')">
+                    User with such name already exists
+                </mat-error>
+            </mat-form-field>
+            <div style="margin-top: 24px;" fxLayout="column" fxLayoutAlign="center center" *ngIf="recoverError">
+                <span class="signup-error-message" *ngFor="let error of formGroup.errors.recoverError">{{error}}</span>
+            </div>
+            <div style="margin-top: 34px;" *ngIf="!success">
+                <button type="submit" style="width: 100%;" mat-raised-button color="primary" [disabled]="formGroup.disabled">CONTINUE</button>
+            </div>
+        </form>
     </div>
 </div>

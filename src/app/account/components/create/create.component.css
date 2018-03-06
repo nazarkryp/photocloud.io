@@ -1,8 +1,9 @@
 .signup-content {
     position: relative;
-    height: 100vh;
+    min-height: calc(100vh - 64px);
     width: 100%;
     margin: -3rem 0;
+    padding: 3rem 0;
 }
 
 @media screen and (max-width: 500px) {
@@ -17,61 +18,18 @@
     .signup-form {
         width: 448px;
         border-radius: 2px;
+        box-shadow: 0 3px 8px -3px rgba(0, 0, 0, 0.26);
     }
     .signup-content {
-        background: #2980b9 url('/assets/images/tumblr_static_bg3.png') repeat 0 0;
-        -webkit-animation: 10s linear 0s normal none infinite animate;
-        -moz-animation: 10s linear 0s normal none infinite animate;
-        -ms-animation: 10s linear 0s normal none infinite animate;
-        -o-animation: 10s linear 0s normal none infinite animate;
-        animation: 10s linear 0s normal none infinite animate;
-    }
-    @-webkit-keyframes animate {
-        from {
-            background-position: 0 0;
-        }
-        to {
-            background-position: 500px 0;
-        }
-    }
-    @-moz-keyframes animate {
-        from {
-            background-position: 0 0;
-        }
-        to {
-            background-position: 500px 0;
-        }
-    }
-    @-ms-keyframes animate {
-        from {
-            background-position: 0 0;
-        }
-        to {
-            background-position: 500px 0;
-        }
-    }
-    @-o-keyframes animate {
-        from {
-            background-position: 0 0;
-        }
-        to {
-            background-position: 500px 0;
-        }
-    }
-    @keyframes animate {
-        from {
-            background-position: 0 0;
-        }
-        to {
-            background-position: 500px 0;
-        }
+        background: #fafafa;
+        /* background: #2980b9 url('/assets/images/tumblr_static_bg3.png') repeat 0 0; */
     }
 }
 
 .signup-form {
     font-size: .9em;
     background: white;
-    padding: .7rem;
+    padding: 2.1rem 1.4rem 1.4rem 1.4rem;
     position: relative;
 }
 

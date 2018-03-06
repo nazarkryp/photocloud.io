@@ -19,6 +19,7 @@ export class AppComponent implements OnInit {
     @ViewChild('notificationsSidenav')
     public notificationsSidenav: MatSidenav;
     public renderToolbar = false;
+    public renderFooter = true;
     public initialLoad = true;
     public currentUser: CurrentUserViewModel;
     public showAuthenticationBar = true;
@@ -65,6 +66,11 @@ export class AppComponent implements OnInit {
             if (this.currentUser) {
                 this.hideAuthenticationBar()
             }
+
+            // this.renderFooter = this.router.url !== '/account/signin'
+            //     && this.router.url !== '/account/create'
+            //     && this.router.url !== '/account/recover'
+            //     && this.router.url !== '/account/autologin';
 
             this.renderToolbar = this.router.url !== '/account/signin'
                 && this.router.url !== '/account/create'
