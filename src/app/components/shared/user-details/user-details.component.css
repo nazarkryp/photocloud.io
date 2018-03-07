@@ -30,7 +30,6 @@
     object-fit: cover;
     overflow: hidden;
     border-radius: 50%;
-    border: 1px solid #efefef;
 }
 
 div.edit-image {

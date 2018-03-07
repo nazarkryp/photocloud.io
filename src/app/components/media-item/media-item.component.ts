@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation, OnInit, OnDestroy, Input, Output, EventEmitter, Inject, ViewChild } from '@angular/core';
+import { Component, ViewEncapsulation, OnInit, Input, Output, EventEmitter, Inject, ViewChild } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { MatSnackBar, MatDialog, MatSnackBarConfig } from '@angular/material';
 import { Subscription } from 'rxjs/Subscription';
@@ -24,7 +24,7 @@ import { UserDialogDetails } from 'app/components/shared/users-dialog/models';
         ])
     ]
 })
-export class MediaItemComponent implements OnInit, OnDestroy {
+export class MediaItemComponent implements OnInit {
     @Input() public media: MediaViewModel;
     @Output() public onRemoved = new EventEmitter<MediaViewModel>();
     @ViewChild('player') public player: any;
@@ -34,7 +34,6 @@ export class MediaItemComponent implements OnInit, OnDestroy {
     public updateMediaModel: UpdateMediaViewModel;
 
     public currentUser: CurrentUserViewModel;
-    public currentUserSubscription: Subscription;
 
     constructor(
         public dialog: MatDialog,
@@ -46,10 +45,7 @@ export class MediaItemComponent implements OnInit, OnDestroy {
         private likeService: LikeService,
         @Inject(DOCUMENT) private document: any
     ) {
-        this.currentUserSubscription = this.currentUserService.getCurrentUser()
-            .subscribe(currentUser => {
-                this.currentUser = currentUser;
-            });
+        this.currentUser = this.currentUserService.retrieveCurrentUser();
     }
 
     public next() {
@@ -178,9 +174,5 @@ export class MediaItemComponent implements OnInit, OnDestroy {
         if (this.media) {
             this.media.activeAttachment = 0;
         }
-    }
-
-    public ngOnDestroy() {
-        this.currentUserSubscription.unsubscribe();
     }
 }

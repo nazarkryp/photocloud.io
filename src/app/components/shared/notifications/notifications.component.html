@@ -1,6 +1,6 @@
 <div class="notifications-box" fxLayout="column">
-    <mat-tab-group (selectedTabChange)="selectedTabChange($event)" disableRipple="true">
-        <mat-tab label="Incomming Requests" style="background: red;">
+    <mat-tab-group [selectedIndex]="selectedTabIndex" (selectedTabChange)="selectedTabChange($event)" disableRipple="true">
+        <mat-tab label="Incomming Requests" [disabled]="!currentUser.isPrivate">
             <div class="notifications-content" fxLayout="column" fxLayoutAlign="start start" *ngIf="incommingRequestsPage.data && incommingRequestsPage.data.length !== 0;">
                 <div class="incomming-request" *ngFor="let user of incommingRequestsPage.data">
                     <div fxLayout="row">
@@ -29,7 +29,7 @@
                     <button class="btn-default" mat-button (click)="getIncommingRequests()" [disabled]="isLoading">LOAD MORE</button>
                 </div>
             </div>
-            <div class="notifications-content" fxLayout="column" fxLayoutAlign="center center" *ngIf="!incommingRequestsPage.data || incommingRequestsPage.data.length === 0;">
+            <div class="notifications-content" fxLayout="column" fxLayoutAlign="center center" *ngIf="(!incommingRequestsPage.data || incommingRequestsPage.data.length === 0) && selectedTabIndex === 0">
                 <div fxLayout="column" fxLayoutAlign="center center">
                     <mat-spinner [strokeWidth]="3" [diameter]="50" *ngIf="isLoading"></mat-spinner>
                     <span [@enterTransition] *ngIf="!isLoading">No Incomming Requests</span>
@@ -67,7 +67,7 @@
                     <button class="btn-default" mat-button (click)="getIncommingRequests()" [disabled]="isLoading">LOAD MORE</button>
                 </div>
             </div>
-            <div class="notifications-content" fxLayout="column" fxLayoutAlign="center center" *ngIf="!outgoingRequestsPage.data || outgoingRequestsPage.data.length === 0;">
+            <div class="notifications-content" fxLayout="column" fxLayoutAlign="center center" *ngIf="(!outgoingRequestsPage.data || outgoingRequestsPage.data.length === 0) && selectedTabIndex === 1">
                 <div fxLayout="column" fxLayoutAlign="center center">
                     <mat-spinner [strokeWidth]="3" [diameter]="50" *ngIf="isLoading"></mat-spinner>
                     <span [@enterTransition] *ngIf="!isLoading">No Outgoing Requests</span>

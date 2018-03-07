@@ -3,14 +3,16 @@ import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, FormControl, Validators, AbstractControl } from '@angular/forms';
 import { MatSlideToggleChange, MatDialog } from '@angular/material';
 
-import { CurrentUserViewModel } from 'app/models/view';
+import { CurrentUserViewModel, AttachmentViewModel } from 'app/models/view';
 import { CurrentUserService } from 'app/infrastructure/services';
 
 import { NgProgress } from 'ngx-progressbar';
 import { ReactiveFormControl } from 'app/account/models/controls';
 import { Observable } from 'rxjs/Observable';
-import { UserService } from 'app/services';
+import { UserService, UploaderService } from 'app/services';
 import { ChangePasswordComponent } from 'app/components/shared/change-password/change-password.component';
+
+import { FileUploader } from 'ng2-file-upload';
 
 const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
@@ -28,6 +30,8 @@ export class EditComponent implements OnInit, AfterViewInit, AfterViewChecked {
     public formGroup: FormGroup;
     public privateFormGroup: FormGroup;
     public passwordFormGroup: FormGroup;
+
+    public uploader: FileUploader;
 
     public get username(): ReactiveFormControl {
         return this.formGroup.get('username') as ReactiveFormControl;
@@ -56,7 +60,9 @@ export class EditComponent implements OnInit, AfterViewInit, AfterViewChecked {
         private builder: FormBuilder,
         private userService: UserService,
         private currentUserService: CurrentUserService,
+        private uploaderService: UploaderService,
         private progress: NgProgress) {
+        this.uploader = uploaderService.createUploader((attachment) => this.onSuccessUpload(attachment));
         this.configureFormControls();
     }
 
@@ -298,5 +304,13 @@ export class EditComponent implements OnInit, AfterViewInit, AfterViewChecked {
                 confirmPassword.setErrors(null);
             }
         }
+    }
+
+    private onSuccessUpload(attachment: AttachmentViewModel) {
+        this.currentUserService.changeAccountAttachment({
+            pictureId: attachment.id
+        }).subscribe(user => {
+            this.currentUser.pictureUri = user.pictureUri
+        });
     }
 }

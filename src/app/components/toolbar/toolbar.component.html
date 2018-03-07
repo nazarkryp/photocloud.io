@@ -20,7 +20,7 @@
                     <mat-icon class="btn-icon mat-36 thin" svgIcon="compass"></mat-icon>
                 </td-notification-count>
                 <td-notification-count color="warn" positionX="before" [notifications]="incommingRequestsCount" (click)="openNotifications()"
-                    *ngIf="currentUser.isPrivate && currentUser.isActive">
+                    *ngIf="currentUser.isActive">
                     <mat-icon class="btn-icon mat-36 thin" svgIcon="bell"></mat-icon>
                 </td-notification-count>
                 <div fxLayout="row" fxLayoutAlign="center center">

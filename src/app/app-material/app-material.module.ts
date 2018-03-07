@@ -22,6 +22,8 @@ import {
     MatTabsModule
 } from '@angular/material';
 
+import { MatBadgeModule } from 'app/core/badge/badge.module';
+
 @NgModule({
     imports: [
         BrowserAnimationsModule,
@@ -41,7 +43,8 @@ import {
         MatSlideToggleModule,
         MatAutocompleteModule,
         MatDividerModule,
-        MatTabsModule
+        MatTabsModule,
+        MatBadgeModule
     ],
     exports: [
         BrowserAnimationsModule,
@@ -61,7 +64,8 @@ import {
         MatSlideToggleModule,
         MatAutocompleteModule,
         MatDividerModule,
-        MatTabsModule
+        MatTabsModule,
+        MatBadgeModule
     ]
 })
 export class AppMaterialModule { }

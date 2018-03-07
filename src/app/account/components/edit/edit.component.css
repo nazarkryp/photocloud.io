@@ -47,3 +47,34 @@ textarea.bio {
 .item>a {
     font-size: .9em;
 }
+
+div.edit-image {
+    box-sizing: border-box;
+    position: relative;
+}
+
+div.edit-image .thumbnail-big {
+    cursor: pointer;
+    vertical-align: bottom;
+}
+
+div.edit-image .change-overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    color: #ffffff;
+    opacity: 0;
+    z-index: 100;
+    border-radius: 50%;
+    -webkit-transition: opacity .25s ease-in-out;
+    -moz-transition: opacity .25s ease-in-out;
+    -ms-transition: opacity .25s ease-in-out;
+    -o-transition: opacity .25s ease-in-out;
+    transition: opacity .25s ease-in-out;
+}
+
+div.edit-image:not([disabled]):hover .change-overlay {
+    cursor: pointer;
+    background: rgba(0, 0, 0, .5);
+    opacity: 1;
+}

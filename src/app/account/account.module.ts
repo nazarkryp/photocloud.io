@@ -16,8 +16,11 @@ import { AutoLoginComponent } from './components/auto-login/auto-login.component
 
 import { routes } from './account-routes';
 import { AccountService } from 'app/account/services';
+import { UploaderService } from 'app/services';
 import { AuthenticationGuardService } from 'app/infrastructure/guards';
 import { EditResolver } from 'app/account/services/resolvers';
+
+import { FileUploadModule } from 'ng2-file-upload';
 
 @NgModule({
     imports: [
@@ -27,7 +30,8 @@ import { EditResolver } from 'app/account/services/resolvers';
         FormsModule,
         ReactiveFormsModule,
         SharedModule,
-        RouterModule.forChild(routes)
+        RouterModule.forChild(routes),
+        FileUploadModule
     ],
     declarations: [
         SignInComponent,
@@ -39,7 +43,8 @@ import { EditResolver } from 'app/account/services/resolvers';
     providers: [
         AuthenticationGuardService,
         AccountService,
-        EditResolver
+        EditResolver,
+        UploaderService
     ]
 })
 export class AccountModule { }

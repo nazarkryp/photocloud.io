@@ -5,9 +5,10 @@ import { Subscription } from 'rxjs/Subscription';
 
 import { UserService, RequestsService } from 'app/services';
 
-import { UserViewModel, RequestViewModel, PageViewModel } from 'app/models/view';
+import { UserViewModel, RequestViewModel, PageViewModel, CurrentUserViewModel } from 'app/models/view';
 import { RelationshipAction } from 'app/models/shared';
 import { MatTabChangeEvent } from '@angular/material';
+import { CurrentUserService } from 'app/infrastructure/services';
 
 @Component({
     selector: 'app-notifications',
@@ -25,15 +26,21 @@ import { MatTabChangeEvent } from '@angular/material';
 export class NotificationsComponent implements OnInit {
     @Output() onClosing: EventEmitter<any> = new EventEmitter<any>();
 
+    public currentUser: CurrentUserViewModel;
     public incommingRequestsPage: PageViewModel<RequestViewModel> = new PageViewModel<RequestViewModel>();
     public outgoingRequestsPage: PageViewModel<RequestViewModel> = new PageViewModel<RequestViewModel>();
     public incommingRequestsSubscription: Subscription;
     public outgoingRequestsSubscription: Subscription;
     public isLoading: boolean;
+    public selectedTabIndex = 0;
 
     constructor(
+        private currentUserService: CurrentUserService,
         private requestService: RequestsService,
-        private userService: UserService) { }
+        private userService: UserService) {
+        this.currentUser = this.currentUserService.retrieveCurrentUser();
+        this.selectedTabIndex = this.currentUser.isPrivate ? 0 : 1;
+    }
 
     public selectedTabChange(event: MatTabChangeEvent) {
         if (this.incommingRequestsSubscription != null && !this.incommingRequestsSubscription.closed) {
@@ -53,6 +60,8 @@ export class NotificationsComponent implements OnInit {
             this.outgoingRequestsPage = new PageViewModel<RequestViewModel>();
             this.getOutgoingRequests();
         }
+
+        this.selectedTabIndex = event.index;
     }
 
     public getIncommingRequests() {
