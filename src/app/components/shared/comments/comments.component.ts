@@ -25,7 +25,6 @@ import { MediaViewModel, CurrentUserViewModel, CommentViewModel, PageViewModel, 
 export class CommentsComponent implements OnInit {
     @Input() public media: MediaViewModel;
     public isLoading: boolean;
-    public pulseState = false;
 
     private currentUser: CurrentUserViewModel;
     public page: PageViewModel<CommentViewModel>;
@@ -38,7 +37,10 @@ export class CommentsComponent implements OnInit {
     }
 
     public getComments() {
-        this.pulseState = !this.pulseState;
+        if (this.isLoading) {
+            return;
+        }
+
         this.isLoading = true;
 
         this.commentService.getComments(this.media.id, this.page.pagination)

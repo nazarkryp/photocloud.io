@@ -3,6 +3,7 @@ export class CreateAccountRequestModel {
     public fullName: string;
     public email: string;
     public password: string;
+    public signInOnCreated = true;
 
     constructor(username: string, email: string, password: string, fullName?: string) {
         this.username = username;

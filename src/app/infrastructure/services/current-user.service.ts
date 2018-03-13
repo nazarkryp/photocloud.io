@@ -10,6 +10,7 @@ import { AccountService } from 'app/account/services';
 import { LocalStorageService } from 'app/infrastructure/services/storage';
 import { TokenProvider } from 'app/infrastructure/security';
 import { AccessToken } from 'app/infrastructure/security/access-token.model';
+import { CreateAccountRequestModel } from 'app/account/models/request';
 
 @Injectable()
 export class CurrentUserService {
@@ -47,6 +48,22 @@ export class CurrentUserService {
                         return currentUser;
                     });
             })
+    }
+
+    public create(request: CreateAccountRequestModel): Observable<any> {
+        if (request.signInOnCreated) {
+            return this.accountService.create(request)
+                .mergeMap<AccessToken, CurrentUserViewModel>(accessToken => {
+                    this.tokenProvider.setAccessToken(accessToken);
+                    return this.accountService.getAccount()
+                        .map(currentUser => {
+                            this.saveCurrentUser(currentUser);
+                            return currentUser;
+                        });
+                });
+        }
+
+        return this.accountService.create(request);
     }
 
     public signInWithCode(): Observable<any> {

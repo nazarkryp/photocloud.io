@@ -11,6 +11,7 @@ import { ReactiveFormControl } from 'app/account/models/controls';
 import { NgProgress } from 'ngx-progressbar';
 import { Observable } from 'rxjs/Observable';
 import { UserService } from 'app/services';
+import { CurrentUserService } from 'app/infrastructure/services';
 
 const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
@@ -59,7 +60,7 @@ export class CreateComponent {
     constructor(
         private router: Router,
         private builder: FormBuilder,
-        private accountService: AccountService,
+        private currentUserService: CurrentUserService,
         private userService: UserService,
         private progress: NgProgress) {
         const validator = {
@@ -147,10 +148,15 @@ export class CreateComponent {
 
             this.progress.start();
             this.formGroup.disable();
-            this.accountService.create(createAccountRequestModel)
+            this.currentUserService.create(createAccountRequestModel)
                 .subscribe(() => {
                     this.progress.done();
-                    this.router.navigateByUrl('/account/signin');
+
+                    if (createAccountRequestModel.signInOnCreated) {
+                        this.router.navigateByUrl('/');
+                    } else {
+                        this.router.navigateByUrl('/account/signin');
+                    }
                 }, errorResponse => {
                     this.progress.done();
                     this.formGroup.enable();

@@ -47,7 +47,7 @@ export class AccountService {
         return this.httpClient.delete<any>(environment.apiUri + 'account/code');
     }
 
-    public create(accountRequestModel: CreateAccountRequestModel) {
+    public create(accountRequestModel: CreateAccountRequestModel): Observable<any> {
         return this.httpClient.post(environment.apiUri + 'account', accountRequestModel);
     }
 
