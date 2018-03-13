@@ -15,6 +15,7 @@ import { MediaService, CommentService } from 'app/services';
 import { NgProgress } from 'ngx-progressbar';
 import { EditMediaService, LikeService } from 'app/shared/services';
 import { UserDialogDetails } from 'app/components/shared/users-dialog/models';
+import { CommentsComponent } from 'app/components/shared/comments/comments.component';
 
 @Component({
     selector: 'app-media-details',
@@ -36,6 +37,7 @@ import { UserDialogDetails } from 'app/components/shared/users-dialog/models';
 export class MediaDetailsComponent implements OnInit, OnDestroy {
     public isDialog: boolean;
     @ViewChild('player') public player: any;
+    @ViewChild(CommentsComponent) public commentsComponent: CommentsComponent;
     public usersConfig: any;
 
     public updateMediaModel: UpdateMediaViewModel;
@@ -147,9 +149,10 @@ export class MediaDetailsComponent implements OnInit, OnDestroy {
         comment.user.id = this.currentUser.id;
         comment.user.username = this.currentUser.username;
 
-        this.media.comments.push(comment);
         this.showCommentBox = false;
         this.media.commentsCount++;
+
+        this.commentsComponent.createComment(comment);
 
         this.commentService.createComment(this.media.id, { text: text })
             .subscribe(createdComment => {
@@ -157,8 +160,7 @@ export class MediaDetailsComponent implements OnInit, OnDestroy {
                 comment.date = createdComment.date;
             }, () => {
                 this.media.commentsCount--;
-                const failedCommentIndex = this.media.comments.findIndex(c => !c.id);
-                this.media.comments.splice(failedCommentIndex, 1);
+                this.commentsComponent.removeComment(comment);
             });
 
     }

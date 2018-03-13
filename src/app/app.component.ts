@@ -33,7 +33,6 @@ export class AppComponent implements OnInit {
             .subscribe(currentUser => {
                 this.currentUser = currentUser;
                 this.initialLoad = false;
-                this.renderFooter = true;
             });
     }
 
@@ -69,11 +68,6 @@ export class AppComponent implements OnInit {
             }
 
             this.renderFooter = this.router.url !== null;
-
-            // this.renderFooter = this.router.url !== '/account/signin'
-            //     && this.router.url !== '/account/create'
-            //     && this.router.url !== '/account/recover'
-            //     && this.router.url !== '/account/autologin';
 
             this.renderToolbar =
                 this.router.url !== '/account/signin' &&

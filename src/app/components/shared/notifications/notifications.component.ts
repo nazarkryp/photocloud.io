@@ -145,6 +145,10 @@ export class NotificationsComponent implements OnInit {
     }
 
     public ngOnInit() {
-        this.getIncommingRequests();
+        if (this.selectedTabIndex) {
+            this.getOutgoingRequests();
+        } else {
+            this.getIncommingRequests();
+        }
     }
 }

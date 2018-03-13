@@ -14,7 +14,7 @@
         </div>
         <div class="item">
             <div style="padding-bottom: .7rem;">
-                <span style="font-weight: 900; text-transform: uppercase;">Personal information</span>
+                <span style="font-weight: 900; text-transform: uppercase;">Personal information {{username.status}}</span>
             </div>
             <form class="form" [formGroup]="formGroup" (ngSubmit)="save()">
                 <mat-form-field style="width: 100%;">

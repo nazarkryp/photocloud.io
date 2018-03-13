@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { trigger, animate, style, transition, animateChild, group, query, stagger } from '@angular/animations';
 import { Router } from '@angular/router';
 
@@ -11,10 +11,13 @@ import { MediaViewModel, CurrentUserViewModel, CommentViewModel, PageViewModel, 
     templateUrl: './comments.component.html',
     styleUrls: ['./comments.component.css'],
     animations: [
-        trigger('enterTransition', [
-            transition(':enter', [
-                style({ transform: 'translateX(25px)', opacity: 0 }),
-                animate('200ms cubic-bezier(0.35, 0, 0.25, 1)', style('*'))
+        trigger('commentsAnimation', [
+            transition('* => *', [
+                query('.comment', style({ transform: 'translateX(-50%)' })),
+                query('.comment',
+                    stagger('100ms', [
+                        animate('250ms', style({ transform: 'translateX(0)' }))
+                    ]))
             ])
         ])
     ]
@@ -51,14 +54,24 @@ export class CommentsComponent implements OnInit {
             });
     }
 
+    public createComment(comment: CommentViewModel) {
+        this.page.data.unshift(comment);
+    }
+
     public removeComment(comment: CommentViewModel) {
-        const indexToRemove = this.page.data.findIndex(e => e.id === comment.id);
-        this.page.data.splice(indexToRemove, 1);
-        this.media.commentsCount--;
-        this.commentService.removeComment(this.media.id, comment.id)
-            .subscribe(() => { }, () => {
-                this.media.commentsCount++;
-            });
+        if (comment.id) {
+            const indexToRemove = this.page.data.findIndex(e => e.id === comment.id);
+            this.page.data.splice(indexToRemove, 1);
+            this.media.commentsCount--;
+            this.commentService.removeComment(this.media.id, comment.id)
+                .subscribe(() => { }, () => {
+                    this.media.commentsCount++;
+                });
+        } else {
+            const indexToRemove = this.page.data.findIndex(e => !e.id);
+            this.page.data.splice(indexToRemove, 1);
+            this.media.commentsCount--;
+        }
     }
 
     public ngOnInit(): void {

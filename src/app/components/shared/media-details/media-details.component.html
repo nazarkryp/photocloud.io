@@ -25,7 +25,8 @@
         <div class="media-details-info-container" fxLayout="column" *ngIf="!media.inspectingLikes; else inspectingLikesTemplate">
             <div>
                 <div class="media-details-header" fxLayout="row" fxLayoutAlign="start center">
-                    <img class="media-avatar" [routerLink]="['/', media.user.username]" src="{{media.user.pictureUri}}" default="assets/images/user-default-image.png" alt="profile">
+                    <img class="media-avatar" [routerLink]="['/', media.user.username]" src="{{media.user.pictureUri}}" default="assets/images/user-default-image.png"
+                        alt="profile">
                     <div fxLayout="row" fxLayoutAlign="start center" fxFlex>
                         <div fxLayout="row" fxLayoutAlign="space-between start" style="width: 100%;">
                             <div class="media-details-info" fxLayout="column">
@@ -57,7 +58,7 @@
                     <span style="font-weight: normal; font-size: .9em; color: gray; letter-spacing: 1px; text-transform: uppercase;" *ngIf="media.allowComments">No comments yet</span>
                     <span style="font-weight: normal; font-size: .9em; color: gray; letter-spacing: 1px;" *ngIf="!media.allowComments">Commenting on this photo is restricted</span>
                 </div>
-                <app-comments style="font-size: 0.95em;" [media]="media" *ngIf="media.commentsCount > 0"></app-comments>
+                <app-comments [media]="media" *ngIf="media.commentsCount > 0"></app-comments>
             </div>
             <div style="box-sizing: border-box;">
                 <div fxLayout="row" fxLayoutAlign="space-between center" style="border-top: 1px solid #d8d8d8; padding-top: .7rem;" *ngIf="!showCommentBox">
@@ -68,7 +69,8 @@
                     <mat-icon class="btn-icon mat-24" matTooltip="Share" matTooltipPosition="left" ngxClipboard [cbContent]="share()" (cbOnSuccess)="showToast('Copied to clipboard')">share</mat-icon>
                 </div>
                 <div fxLayout="row" *ngIf="showCommentBox" @content>
-                    <input class="media-details-comment-box transition-content" placeholder="Type your comment..." type="text" [(ngModel)]="text" (keydown.enter)="createComment()">
+                    <input class="media-details-comment-box transition-content" placeholder="Type your comment..." type="text" [(ngModel)]="text"
+                        (keydown.enter)="createComment()">
                     <button mat-icon-button (click)="showCommentBox = !showCommentBox">
                         <mat-icon>clear</mat-icon>
                     </button>
@@ -82,8 +84,10 @@
     <div class="single-media" fxLayout="row" fxLayoutAlign="start stretch">
         <div mat-ripple class="media-attachment-container">
             <div>
-                <img class="media-details-attachment" [ngClass]="{ 'dialog' : isDialog}" src="{{updateMediaModel.preview.uri}}" alt="media-image" *ngIf="updateMediaModel.preview.type !== 1">
-                <video class="media-details-attachment" [ngClass]="{ 'dialog' : isDialog}" *ngIf="updateMediaModel.preview.type === 1" loop #player>
+                <img class="media-details-attachment" [ngClass]="{ 'dialog' : isDialog}" src="{{updateMediaModel.preview.uri}}" alt="media-image"
+                    *ngIf="updateMediaModel.preview.type !== 1">
+                <video class="media-details-attachment" [ngClass]="{ 'dialog' : isDialog}" *ngIf="updateMediaModel.preview.type === 1" loop
+                    #player>
                     <source src="{{updateMediaModel.preview.uri}}">
                 </video>
             </div>
@@ -105,7 +109,8 @@
             <div fxFlex>
                 <div class="media-details-edit-attachments">
                     <div *ngFor="let attachment of updateMediaModel.attachments; let index = index;">
-                        <div mat-ripple class="media-details-edit-item" [ngClass]="{ 'removed' : attachment.removed, 'selected' : attachment.id === updateMediaModel.coverId }" (click)="select(attachment)">
+                        <div mat-ripple class="media-details-edit-item" [ngClass]="{ 'removed' : attachment.removed, 'selected' : attachment.id === updateMediaModel.coverId }"
+                            (click)="select(attachment)">
                             <div class="media-details-edit-overlay" fxLayout="row" fxLayoutAlign="end start">
                                 <mat-icon class="btn-icon-light" (click)="removeAttachment(attachment)">clear</mat-icon>
                             </div>
