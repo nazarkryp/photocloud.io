@@ -43,6 +43,10 @@ a.link-button {
     padding: 0px !important;
 }
 
+.mat-icon {
+    font-family: 'Material Icons' !important;
+}
+
 .mat-icon.mat-18 {
     font-size: 18px !important;
     height: 18px !important;

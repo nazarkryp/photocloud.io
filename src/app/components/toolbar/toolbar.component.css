@@ -71,3 +71,8 @@ td-notification-count .btn-icon {
 td-notification-count .btn-icon:hover {
     color: #e91e63;
 }
+
+.btn-signin {
+    font-weight: bold;
+    color: #e91e63;
+}

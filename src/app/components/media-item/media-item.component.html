@@ -74,7 +74,7 @@
         </button>
     </div>
     <div class="media-edit-actions" fxLayout="row" fxLayoutAlign="end center" *ngIf="media.editing">
-        <button mat-button (click)="cancel()">CANCEL</button>
-        <button mat-raised-button color="primary" (click)="update()">SAVE</button>
+        <button mat-button (click)="cancel()" style="font-weight: bold;" disableRipple="true">CANCEL</button>
+        <button mat-raised-button color="primary" (click)="update()" style="font-weight: bold;">SAVE</button>
     </div>
 </div>

@@ -1,14 +1,13 @@
 <div fxLayout="column" fxLayoutAlign="center start">
     <div class="user-info" fxLayout="row" fxLayoutAlign="center start">
         <div fxLayout="column" fxLayoutAlign="center center" *ngIf="user">
-            <img class="thumbnail-big" src="{{user.pictureUri}}" default="assets/images/user-default-image.png" alt="{{user.username}}"
-                *ngIf="!currentUser || (currentUser && !currentUser.isActive) || user.id !== currentUser.id" />
+            <img class="thumbnail-big" src="{{user.pictureUri}}" default="assets/images/user-default-image.png" alt="{{user.username}}" *ngIf="!currentUser || (currentUser && !currentUser.isActive) || user.id !== currentUser.id"
+            />
             <div class="edit-image" *ngIf="currentUser && currentUser.isActive && user.id === currentUser.id">
                 <div class="change-overlay" fxLayout="row" fxLayoutAlign="center center" (click)="fileInput.click()">
                     <span>Change</span>
                 </div>
-                <img class="thumbnail-big" src="{{user.pictureUri}}" appImagePreview [image]="uploader.queue[0]?._file" default="assets/images/user-default-image.png"
-                    alt="{{user.username}}" />
+                <img class="thumbnail-big" src="{{user.pictureUri}}" appImagePreview [image]="uploader.queue[0]?._file" default="assets/images/user-default-image.png" alt="{{user.username}}" />
             </div>
             <input #fileInput type="file" accept="image/*" ng2FileSelect [uploader]="uploader" hidden/>
         </div>
@@ -64,16 +63,10 @@
                     {{user.bio | truncate:truncateWidth}}
                     <a class="link-button" (click)="increaseTruncateSize()" *ngIf="user.bio && user.bio.length > defaultTruncateWidth && truncateWidth === defaultTruncateWidth">show more</a>
                 </p>
-                <!-- <span class="user-info-fullname">{{user.fullName}}</span> -->
-                <!-- {{user.fullName}} -->
-                <!-- <span class="user-info-bio">
-                    {{user.bio | truncate:truncateWidth}}
-                    <a class="link-button" (click)="increaseTruncateSize()" *ngIf="user.bio && user.bio.length > defaultTruncateWidth && truncateWidth === defaultTruncateWidth">show more</a>
-                </span> -->
             </div>
         </div>
     </div>
     <div style="width: 100%;" fxLayout="row" fxLayoutAlign="end center" *ngIf="user.isActive && user.lastActive">
-        <span style="font-size: .9em; font-weight: 900; text-transform: uppercase; color: #C8C8C8;">{{user.lastActive | timeAgo}}</span>
+        <span matTooltip="Last Active" matTooltipPosition="after" style="font-size: .9em; font-weight: 900; text-transform: uppercase; color: #C8C8C8;">{{user.lastActive | timeAgo}}</span>
     </div>
 </div>

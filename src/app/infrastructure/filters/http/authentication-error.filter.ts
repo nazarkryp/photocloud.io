@@ -16,7 +16,6 @@ export class AuthenticationErrorFilter implements HttpErrorFilter {
 
     public handle(response: HttpErrorResponse): ErrorObservable | Observable<HttpErrorResponse> {
         if (response.status === HttpStatusCode.Unauthorized) {
-            debugger;
             if (this.currentUserService.canSignInWithCode) {
                 this.router.navigateByUrl('/account/autologin');
             } else {

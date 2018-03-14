@@ -16,6 +16,7 @@
     color: #ea1f62;
     margin-left: .75rem;
     cursor: pointer;
+    font-weight: bold;
 }
 
 .footer-links>a:hover {

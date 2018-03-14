@@ -48,7 +48,14 @@ export class AccountService {
     }
 
     public create(accountRequestModel: CreateAccountRequestModel): Observable<any> {
-        return this.httpClient.post(environment.apiUri + 'account', accountRequestModel);
+        return this.httpClient.post(environment.apiUri + 'account', accountRequestModel)
+            .map(response => {
+                if (accountRequestModel.signInOnCreated) {
+                    return this.tokenMapper.mapResponseToAccessToken(response);
+                }
+
+                return response;
+            });
     }
 
     public signOut() {
