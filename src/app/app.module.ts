@@ -6,7 +6,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatIconRegistry } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
-import { AppRoutingModule } from './app-routing.module';
+import { AppRoutingModule } from './app.routing.module';
 import { AppMaterialModule } from './app-material/app-material.module';
 import { SharedModule } from 'app/shared/shared.module';
 
@@ -59,6 +59,9 @@ import { CovalentModule } from 'app/core/covalent.module';
 import { LikedMediaComponent } from './components/liked-media/liked-media.component';
 import { LikesComponent } from './components/shared/likes/likes.component';
 import { ChangePasswordComponent } from './components/shared/change-password/change-password.component';
+import { TermsComponent } from './components/terms/terms.component';
+import { PrivacyComponent } from './components/privacy/privacy.component';
+import { AboutComponent } from './components/about/about.component';
 
 @NgModule({
     declarations: [
@@ -87,7 +90,10 @@ import { ChangePasswordComponent } from './components/shared/change-password/cha
         SplashScreenComponent,
         LikedMediaComponent,
         LikesComponent,
-        ChangePasswordComponent
+        ChangePasswordComponent,
+        TermsComponent,
+        PrivacyComponent,
+        AboutComponent
     ],
     entryComponents: [
         MediaDetailsComponent,

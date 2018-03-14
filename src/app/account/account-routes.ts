@@ -11,11 +11,17 @@ import { EditResolver } from 'app/account/services/resolvers';
 export const routes: Routes = [
     {
         path: '',
-        redirectTo: 'edit'
+        redirectTo: 'edit',
+        data: {
+            title: 'PhotoCloud - Edit Account'
+        }
     },
     {
         path: 'create',
-        component: CreateComponent
+        component: CreateComponent,
+        data: {
+            title: 'PhotoCloud - Create Account'
+        }
     },
     {
         path: 'signin',
@@ -26,17 +32,33 @@ export const routes: Routes = [
     },
     {
         path: 'recover',
-        component: RecoverComponent
+        component: RecoverComponent,
+        data: {
+            title: 'PhotoCloud - Reset Password'
+        }
     },
     {
         path: 'edit',
         component: EditComponent,
         resolve: {
             account: EditResolver
+        },
+        data: {
+            title: 'PhotoCloud - Edit Account'
         }
     },
     {
         path: 'autologin',
-        component: AutoLoginComponent
+        component: AutoLoginComponent,
+        data: {
+            title: 'PhotoCloud - Login'
+        }
+    },
+    {
+        path: 'signin/:code',
+        component: AutoLoginComponent,
+        data: {
+            title: 'PhotoCloud - Authenticating'
+        }
     }
 ];

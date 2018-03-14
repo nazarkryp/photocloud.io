@@ -13,6 +13,9 @@ import { ConnectionErrorComponent } from './components/shared/connection-error/c
 import { AuthenticationGuardService } from './infrastructure/guards/authentication-guard.service';
 import { RecentMediaResolver, UserMediaResolver, UserListResolver, LikedMediaResolver } from './infrastructure/resolvers';
 import { LikedMediaComponent } from 'app/components/liked-media/liked-media.component';
+import { TermsComponent } from 'app/components/terms/terms.component';
+import { PrivacyComponent } from './components/privacy/privacy.component';
+import { AboutComponent } from './components/about/about.component';
 
 const routes: Routes = [
     {
@@ -42,10 +45,31 @@ const routes: Routes = [
         }
     },
     {
-        path: 'nointernetconnection',
+        path: 'offline',
         component: ConnectionErrorComponent,
         data: {
             title: 'Connect to the internet'
+        }
+    },
+    {
+        path: 'terms',
+        component: TermsComponent,
+        data: {
+            title: 'PhotoCloud - Terms of Services'
+        }
+    },
+    {
+        path: 'privacy',
+        component: PrivacyComponent,
+        data: {
+            title: 'PhotoCloud - Privacy Policy'
+        }
+    },
+    {
+        path: 'about',
+        component: AboutComponent,
+        data: {
+            title: 'PhotoCloud - About Us'
         }
     },
     {

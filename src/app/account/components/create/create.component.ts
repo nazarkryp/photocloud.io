@@ -75,7 +75,7 @@ export class CreateComponent {
                     Validators.required,
                     Validators.maxLength(50),
                     Validators.minLength(3),
-                    Validators.pattern(/^\S*$/)]),
+                    Validators.pattern(/^[a-z0-9]+$/i)]),
                 [this.validateUsername.bind(this)]),
             fullName: new FormControl('',
                 Validators.compose([

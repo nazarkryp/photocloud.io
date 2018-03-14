@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 import { CurrentUserService } from 'app/infrastructure/services';
 import { CurrentUserViewModel } from '../../../models/view';
@@ -14,12 +14,13 @@ export class AutoLoginComponent implements OnInit {
 
     constructor(
         private router: Router,
+        public route: ActivatedRoute,
         private currentUserService: CurrentUserService) {
         this.currentUser = this.currentUserService.retrieveCurrentUser();
     }
 
-    public continue() {
-        this.currentUserService.signInWithCode()
+    public continue(code: string = null) {
+        this.currentUserService.signInWithCode(code)
             .subscribe(() => {
                 this.router.navigateByUrl('/');
             });
@@ -30,6 +31,14 @@ export class AutoLoginComponent implements OnInit {
         this.router.navigateByUrl('/account/signin');
     }
 
-    ngOnInit() {
+    public ngOnInit() {
+        this.route.paramMap.subscribe(param => {
+            const code = param.get('code');
+
+            if (code) {
+                this.currentUser = null;
+                this.continue(code);
+            }
+        });
     }
 }

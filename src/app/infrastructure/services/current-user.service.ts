@@ -67,10 +67,13 @@ export class CurrentUserService {
         return this.accountService.create(request);
     }
 
-    public signInWithCode(): Observable<any> {
-        const token = this.tokenProvider.retrieveAccessToken();
+    public signInWithCode(code: string = null): Observable<any> {
+        if (!code) {
+            const token = this.tokenProvider.retrieveAccessToken();
+            code = token.code;
+        }
 
-        return this.accountService.signInWithCode(token.code)
+        return this.accountService.signInWithCode(code)
             .mergeMap<AccessToken, CurrentUserViewModel>(accessToken => {
                 this.tokenProvider.setAccessToken(accessToken);
                 return this.accountService.getAccount()
@@ -105,6 +108,7 @@ export class CurrentUserService {
 
     public signOut() {
         this.storageService.clear();
+        this.state.next(null);
     }
 
     public getCurrentUser(refresh: boolean = false): Observable<CurrentUserViewModel> {

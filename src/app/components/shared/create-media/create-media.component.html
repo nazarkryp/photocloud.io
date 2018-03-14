@@ -12,7 +12,8 @@
                 <div class="upload-attachment-button" fxLayout="row" fxLayoutAlign="center center" mat-ripple (click)="fileInput.click()">
                     <mat-icon>add</mat-icon>
                 </div>
-                <div *ngFor="let item of uploader.queue; let index = index;" class="uploaded-attachment-mini" fxLayout="row" fxLayoutAlign="center center" mat-ripple (click)="select(index)">
+                <div *ngFor="let item of uploader.queue; let index = index;" class="uploaded-attachment-mini" fxLayout="row" fxLayoutAlign="center center"
+                    mat-ripple (click)="select(index)">
                     <img appImagePreview [image]="item?._file" alt="photo">
                     <div class="attachment-progress-container" fxLayout="row" fxLayoutAlign="center center" *ngIf="!item.isUploaded">
                         <mat-progress-spinner color="primary" [strokeWidth]="3" [diameter]="60" mode="determinate" value="{{item.progress}}"></mat-progress-spinner>
@@ -30,7 +31,7 @@
     </div>
     <div style="margin-top: .75rem; padding: .5rem;" *ngIf="media.attachments.length > 0" fxLayout="row" fxLayoutAlign="space-between center">
         <mat-slide-toggle (change)="change($event)" [checked]="media.coverAttachmentIndex === media.selectedAttachmentIndex" [disabled]="media.attachments.length === 1">Set as cover</mat-slide-toggle>
-        <a *ngIf="uploader.queue.length > 0 && !uploader.isUploading" style="font-weight: 800; font-size: 1.2em; color: #e91e63; cursor: pointer;" (click)="createMedia()">SUBMIT</a>
-        <span *ngIf="uploader.queue.length === 0 || uploader.isUploading" style="font-weight: 800; font-size: 1.2em; color: gray; cursor: default;">SUBMIT</span>
+        <button mat-button *ngIf="uploader.queue.length > 0 && !uploader.isUploading" color="primary" (click)="createMedia()">SUBMIT</button>
+        <button mat-button disabled *ngIf="uploader.queue.length === 0 || uploader.isUploading">SUBMIT</button>
     </div>
 </div>

@@ -16,12 +16,12 @@ export class AuthenticationGuardService implements CanActivate {
     public canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
         const currentUser = this.currentUserService.retrieveCurrentUser()
 
-        if (currentUser != null && (state.url === '/account/signin' || state.url === '/account/create')) {
+        if (currentUser != null && (state.url === '/account/signin' || state.url === '/account/create' || state.url === '/account/recover')) {
             this.router.navigateByUrl('/');
             return false;
         }
 
-        if (currentUser == null && (state.url === '/account/signin' || state.url === '/account/create')) {
+        if (currentUser == null && (state.url === '/account/signin' || state.url === '/account/create' || state.url === '/account/recover' || state.url.includes('/account/signin/'))) {
             return true;
         }
 

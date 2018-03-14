@@ -1,8 +1,7 @@
-<div style="height: 100vh; background: #fafafa; margin: -3rem 0;" fxLayout="row" fxLayoutAlign="center center">
+<div style="height: 100vh; background: #fafafa; margin: -3rem 0;" fxLayout="row" fxLayoutAlign="center center" *ngIf="currentUser">
     <div fxLayout="column" fxLayoutAlign="center center" style="background: white; box-shadow: 0 3px 8px -3px rgba(0, 0, 0, 0.26); border-radius: 2px; padding: 2rem 1.4rem;">
         <h1 style="padding-bottom: 2rem; font-weight: lighter; font-family: 'Roboto', sans-serif;">Welcome back, {{currentUser.username}}</h1>
-        <img src="{{currentUser.pictureUri}}"
-            alt="username" style="width: 100px; height: 100px; object-fit: cover; border-radius: 90px;">
+        <img src="{{currentUser.pictureUri}}" alt="username" style="width: 100px; height: 100px; object-fit: cover; border-radius: 90px;">
         <div style="margin-top: 2rem;">
             <button mat-raised-button color="primary" (click)="continue()">Continue</button>
         </div>

@@ -4,7 +4,7 @@
         </div>
         <div fxLayout="row" fxLayoutAlign="center center">
             <div class="edit-image">
-                <div class="change-overlay" fxLayout="row" fxLayoutAlign="center center" (click)="fileInput.click()">
+                <div class="change-overlay" fxLayout="row" fxLayoutAlign="center center" (click)="fileInput.click()" *ngIf="currentUser.isActive">
                     <span>Change</span>
                 </div>
                 <img class="thumbnail-big" src="{{currentUser.pictureUri}}" default="assets/images/user-default-image.png" appImagePreview

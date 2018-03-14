@@ -18,25 +18,25 @@
                     <mat-icon class="success" matSuffix *ngIf="username.valid">check</mat-icon>
                     <mat-spinner [diameter]="20" [strokeWidth]="2" color="primary" *ngIf="username?.isValidating"></mat-spinner>
                 </div>
-                <mat-error *ngIf="username.getError('required')">
+                <mat-error *ngIf="username.getError('required')  && !username.getError('pattern')">
                     Username is required
                 </mat-error>
-                <mat-error *ngIf="username.getError('minlength')">
+                <mat-error *ngIf="username.getError('minlength') && !username.getError('pattern')">
                     Username must be at least {{username.errors.minlength.requiredLength}}
                 </mat-error>
                 <mat-error *ngIf="username.getError('pattern')">
-                    Whitespaces are not allowed
+                    Username can contain only letters and numbers
                 </mat-error>
                 <mat-error *ngIf="username.getError('unique')">
                     User with such name already exists
                 </mat-error>
             </mat-form-field>
-            <mat-form-field class="form-field">
+            <!-- <mat-form-field class="form-field">
                 <input formControlName="fullName" #fullNameInput matInput placeholder="Full Name (optional)" type="text" autocomplete="off" [errorStateMatcher]="errorStateMatcher">
                 <mat-error *ngIf="fullName.getError('maxlength')">
                     Full name cannot contain more than {{fullName.errors.maxlength.requiredLength}} symbols
                 </mat-error>
-            </mat-form-field>
+            </mat-form-field> -->
             <mat-form-field class="form-field">
                 <input formControlName="email" #emailInput matInput placeholder="E-mail address" type="email" autocomplete="off" [errorStateMatcher]="errorStateMatcher">
                 <div matSuffix>
