@@ -1,12 +1,12 @@
 <div class="signup-content" fxLayout="column" fxLayoutAlign="center center" @content>
     <div>
-        <div style="padding-bottom: 2.4rem;" fxLayout="row" fxLayoutAlign="center center">
-            <span style="font-size: 1.6em; font-weight: lighter;">Photo</span>
-            <span style="font-size: 2.4em; font-weight: 900; color: #e91e63;">Cloud</span>
+        <div style="padding-bottom: 3.4rem;" fxLayout="row" fxLayoutAlign="center center">
+            <span style="font-size: 2.4em; font-weight: 900;">Photo</span>
+            <span style="font-size: 3.6em; font-weight: 900; color: #e91e63;">Cloud</span>
         </div>
         <form class="signup-form" fxLayout="column" [formGroup]="formGroup" (ngSubmit)="createAccount()">
-            <div style="padding: 0 0 1.4rem 0;" fxLayout="column">
-                <span style="color: gray;">Create account to continue or
+            <div style="padding: 0 0 .7rem 0;" fxLayout="column">
+                <span style="color: rgb(0,0,0,60);">Create account to continue or
                     <a class="primary" routerLink="/account/signin" *ngIf="!formGroup.disabled">Sign In</a>
                     <span class="disabled" *ngIf="formGroup.disabled">Sign In</span> if already have one
                 </span>
@@ -78,17 +78,17 @@
                     Passwords do not match
                 </mat-error>
             </mat-form-field>
-            <div style="text-align: center; font-size: .9em; color: gray;">
+            <div class="agreements-container">
                 <p>
                     By continuing you agree to our
-                    <a href="#">Terms of Service</a> and
-                    <a href="#">Privacy Policy</a>.
+                    <a routerLink="/terms">Terms of Service</a> and
+                    <a routerLink="/privacy">Privacy Policy</a>.
                 </p>
             </div>
-            <div style="margin-top: 24px;" fxLayout="column" fxLayoutAlign="center center" *ngIf="signUpError">
+            <div style="margin-top: .7rem;" fxLayout="column" fxLayoutAlign="center center" *ngIf="signUpError">
                 <span class="signup-error-message" *ngFor="let error of formGroup.errors.signUpErrors">{{error}}</span>
             </div>
-            <div style="margin-top: 34px;">
+            <div style="margin-top: .7rem;">
                 <button type="submit" style="width: 100%;" mat-raised-button color="primary" [disabled]="formGroup.disabled">CREATE ACCOUNT</button>
             </div>
         </form>

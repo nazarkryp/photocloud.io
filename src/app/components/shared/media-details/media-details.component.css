@@ -27,7 +27,7 @@
 }
 
 .media-details-comments-header {
-    /* color: #212121; */
+    /* color: rgb(0,0,0,85); */
     font-weight: 900;
     text-transform: uppercase;
     letter-spacing: 1px;
@@ -47,11 +47,11 @@
 }
 
 .comment-box:hover .send-button {
-    /* color: #212121; */
+    /* color: rgb(0,0,0,85); */
 }
 
 .comment-box:hover .send-button:disabled {
-    color: gray;
+    color: rgb(0,0,0,60);
 }
 
 .media-details-caption {
@@ -165,7 +165,7 @@
     border-radius: 2px;
     padding: .5rem;
     box-sizing: border-box;
-    /* color: #212121; */
+    /* color: rgb(0,0,0,85); */
     outline: none;
 }
 

@@ -69,7 +69,7 @@ export class AppComponent implements OnInit {
 
             this.renderFooter = this.router.url !== null;
 
-            if (this.router.url.includes('/account/')) {
+            if (['terms', 'privacy', 'account', '/account/'].some(ex => this.router.url.includes(ex))) {
                 this.hideAuthenticationBar();
             }
 

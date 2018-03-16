@@ -85,7 +85,7 @@
             <div class="item" fxLayout="row" fxLayoutAlign="space-between start">
                 <div>
                     <span class="mat-body-1" [ngClass]="{ 'disabled' : !currentUser.isActive }">Private Account</span>
-                    <p style="color: gray; font-weight: lighter; font-size: .8em; line-height: 1.5;">When your account is private, only people you approve can see your photos and videos on PhotoCloud. Your
+                    <p style="color: rgb(0,0,0,60); font-weight: lighter; font-size: .8em; line-height: 1.5;">When your account is private, only people you approve can see your photos and videos on PhotoCloud. Your
                         existing followers won't be affected</p>
                 </div>
                 <mat-slide-toggle color="primary" [(ngModel)]="currentUser.isPrivate" [checked]="currentUser.isPrivate" (change)='invertAccountPrivateStatus($event)'
@@ -94,7 +94,7 @@
             <div class="item">
                 <div>
                     <span class="mat-body-1" [ngClass]="{ 'disabled' : !currentUser.isActive }">Remember me</span>
-                    <p style="color: gray; font-weight: lighter; font-size: .8em; line-height: 1.5;">When this option is enabled system will allow you to autologin</p>
+                    <p style="color: rgb(0,0,0,60); font-weight: lighter; font-size: .8em; line-height: 1.5;">When this option is enabled system will allow you to autologin</p>
                 </div>
                 <mat-slide-toggle color="primary" [(ngModel)]="currentUser.canAutoLogin" [checked]="currentUser.canAutoLogin" (change)='invertAccountAutoLoginStatus($event)'
                     [disabled]="!currentUser.isActive"></mat-slide-toggle>

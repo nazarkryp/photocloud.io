@@ -6,7 +6,7 @@ textarea.bio {
 .edit-container {
     width: 600px;
     box-shadow: 0 3px 8px -3px rgba(0, 0, 0, 0.26);
-    color: #212121;
+    color: rgb(0,0,0,85);
     background: white;
     border-radius: 2px;
     padding: 1.4rem;

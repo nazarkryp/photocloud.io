@@ -11,7 +11,7 @@
     font-weight: 800;
     letter-spacing: 2px;
     text-transform: uppercase;
-    color: #212121;
+    color: rgb(0,0,0,85);
 }
 
 .search-results-container>.search-result {
@@ -33,7 +33,7 @@
 }
 
 .search-result-username {
-    color: #212121;
+    color: rgb(0,0,0,85);
     padding-bottom: .5rem;
     font-weight: 900;
 }

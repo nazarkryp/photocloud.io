@@ -1,12 +1,12 @@
 <div class="signup-content" fxLayout="column" fxLayoutAlign="center center" @content>
     <div>
-        <div style="padding-bottom: 2.4rem;" fxLayout="row" fxLayoutAlign="center center">
-            <span style="font-size: 1.6em; font-weight: lighter;">Photo</span>
-            <span style="font-size: 2.4em; font-weight: 900; color: #e91e63;">Cloud</span>
+        <div style="padding-bottom: 3.4rem;" fxLayout="row" fxLayoutAlign="center center">
+            <span style="font-size: 2.4em; font-weight: 900;">Photo</span>
+            <span style="font-size: 3.6em; font-weight: 900; color: #e91e63;">Cloud</span>
         </div>
         <form class="signup-form" fxLayout="column" [formGroup]="formGroup" (ngSubmit)="recover()">
-            <div style="padding: 0 0 2.4rem 0;" fxLayout="column" *ngIf="!success">
-                <span style="color: gray; line-height: 2;">Enter username or email address to reset your password or go to
+            <div style="padding: 0 0 .7rem 0;" fxLayout="column" *ngIf="!success">
+                <span style="color: rgb(0,0,0,60); line-height: 2;">Enter username or email address to reset your password or go to
                     <a class="primary" routerLink="/account/signin" *ngIf="!formGroup.disabled">Sign In</a>
                     <span class="disabled" *ngIf="formGroup.disabled">Sign In</span> page you remember one
                 </span>

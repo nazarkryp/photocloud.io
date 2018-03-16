@@ -43,11 +43,11 @@
 
 .text-button.disabled,
 .text-button.disabled:hover {
-    color: gray;
+    color: rgb(0,0,0,60);
 }
 
 .comment-username {
-    /* color: #212121; */
+    /* color: rgb(0,0,0,85); */
     font-weight: 900;
 }
 

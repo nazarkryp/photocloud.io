@@ -42,7 +42,7 @@
             </div>
             <div fxLayout="row" fxLayoutAlign="space-between center" style="margin-top: 1.3rem;">
                 <div fxLayout="row" fxLayoutAlign="start center">
-                    <mat-icon class="mat-18" style="color: #212121; margin-right: .25rem;" *ngIf="media.likesCount === 0 || media.likesCount > 3">favorite</mat-icon>
+                    <mat-icon class="mat-18" style="color: rgb(0,0,0,85); margin-right: .25rem;" *ngIf="media.likesCount === 0 || media.likesCount > 3">favorite</mat-icon>
                     <app-likes [media]="media" (onClicked)="inspectLikes($event)"></app-likes>
                 </div>
             </div>
@@ -55,8 +55,8 @@
             <div class="media-details-comments-container" fxLayout="column" fxFlex>
                 <span class="media-details-comments-header">Comments</span>
                 <div *ngIf="media.commentsCount === 0" fxLayout="column" fxLayoutAlign="center center" style="height: 100%;">
-                    <span style="font-weight: normal; font-size: .9em; color: gray; letter-spacing: 1px; text-transform: uppercase;" *ngIf="media.allowComments">No comments yet</span>
-                    <span style="font-weight: normal; font-size: .9em; color: gray; letter-spacing: 1px;" *ngIf="!media.allowComments">Commenting on this photo is restricted</span>
+                    <span style="font-weight: normal; font-size: .9em; color: rgb(0,0,0,60); letter-spacing: 1px; text-transform: uppercase;" *ngIf="media.allowComments">No comments yet</span>
+                    <span style="font-weight: normal; font-size: .9em; color: rgb(0,0,0,60); letter-spacing: 1px;" *ngIf="!media.allowComments">Commenting on this photo is restricted</span>
                 </div>
                 <app-comments [media]="media" *ngIf="media.commentsCount > 0"></app-comments>
             </div>

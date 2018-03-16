@@ -128,7 +128,7 @@ textarea {
 
 .media-created {
     font-size: 0.8em;
-    color: gray;
+    color: rgb(0,0,0,60);
     font-weight: lighter;
     text-transform: uppercase;
 }
@@ -151,7 +151,7 @@ textarea {
 }
 
 .big-like-icon {
-    color: #212121;
+    color: rgb(0,0,0,85);
     cursor: pointer;
     outline: none;
     width: 27px;
@@ -163,5 +163,5 @@ textarea {
 }
 
 .icon-button {
-    color: #212121;
+    color: rgb(0,0,0,85);
 }

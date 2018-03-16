@@ -15,7 +15,7 @@
 .search-box-container {
     width: 600px;
     position: relative;
-    color: #212121;
+    color: rgb(0,0,0,85);
     z-index: 777;
 }
 

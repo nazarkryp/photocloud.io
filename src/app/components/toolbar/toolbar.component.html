@@ -1,8 +1,8 @@
-<div class="toolbar" fxLayout="column" fxLayoutAlign="center center">
+<header class="toolbar" fxLayout="column" fxLayoutAlign="center center">
     <div class="mat-toolbar-layout">
         <div fxLayout="row" fxLayoutAlign="space-between center">
             <div class="logo-container" fxLayout="row" fxLayoutAlign="center center" fxFlex>
-                <a style="color:#212121;" routerLink="/" fxLayout="row" fxLayoutAlign="center center">
+                <a style="color:rgb(0,0,0,85);" routerLink="/" fxLayout="row" fxLayoutAlign="center center">
                     <span style="font-size: 1.4em; font-weight: lighter;">Photo</span>
                     <span style="font-size: 1.7em; font-weight: 800;">Cloud</span>
                 </a>
@@ -11,17 +11,16 @@
                 <app-search-box *ngIf="currentUser"></app-search-box>
             </div>
             <div fxFlex fxLayout="row" fxLayoutAlign="center center" *ngIf="!currentUser">
-                <a class="btn-signin" routerLink="/account/signin">SIGN IN</a>
-                <!-- <button mat-button color="primary" style="font-size: 14px; font-weight: 900;" routerLink="/account/signin">
+                <!-- <a class="btn-signin" routerLink="/account/signin">SIGN IN</a> -->
+                <a mat-button color="primary" style="font-size: 14px; font-weight: 900;" routerLink="/account/signin">
                     SIGN IN
-                </button> -->
+                </a>
             </div>
             <div class="toolbar-actions" *ngIf="currentUser" fxLayout="row" fxLayoutAlign="end center" fxFlex>
                 <td-notification-count [notifications]="none" (click)="explorePeople()">
                     <mat-icon class="btn-icon mat-36 thin" svgIcon="compass"></mat-icon>
                 </td-notification-count>
-                <td-notification-count color="warn" positionX="before" [notifications]="incommingRequestsCount" (click)="openNotifications()"
-                    *ngIf="currentUser.isActive">
+                <td-notification-count color="warn" positionX="before" [notifications]="incommingRequestsCount" (click)="openNotifications()" *ngIf="currentUser.isActive">
                     <mat-icon class="btn-icon mat-36 thin" svgIcon="bell"></mat-icon>
                 </td-notification-count>
                 <div fxLayout="row" fxLayoutAlign="center center">
@@ -32,4 +31,4 @@
             </div>
         </div>
     </div>
-</div>
+</header>

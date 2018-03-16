@@ -77,14 +77,14 @@
 }
 
 .tag-media-username {
-    color: #212121;
+    color: rgb(0,0,0,85);
     font-size: 1.3em;
     font-weight: normal;
 }
 
 .tag-media-date {
     font-size: 0.8em;
-    color: gray;
+    color: rgb(0,0,0,60);
     font-weight: lighter;
 }
 
@@ -101,7 +101,7 @@
 }
 
 .likes-count {
-    color: #212121;
+    color: rgb(0,0,0,85);
     margin-right: .5rem;
     font-weight: lighter;
     font-size: 1.3em;

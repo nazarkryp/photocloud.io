@@ -24,7 +24,7 @@
 }
 
 .message {
-    color: #212121;
+    color: rgb(0,0,0,85);
     font-weight: lighter;
     font-size: 1.7em;
 }
