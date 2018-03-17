@@ -6,7 +6,7 @@
         </div>
         <form class="signin-form" fxLayout="column" [formGroup]="formGroup" (ngSubmit)="signIn(usernameInput.value, passwordInput.value)">
             <div style="padding: 0 0 .7rem 0;" fxLayout="column">
-                <span style="color: rgb(0,0,0,60); font-size: 1em; font-weight: 400;">Login to continue or
+                <span style="color: rgb(0,0,0,.85); font-size: 1em; font-weight: 400;">Login to continue or
                     <a class="primary" routerLink="/account/create" *ngIf="!formGroup.disabled">Create Account</a>
                     <span class="disabled" *ngIf="formGroup.disabled">Create Account</span>
                 </span>

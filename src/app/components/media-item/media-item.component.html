@@ -5,15 +5,15 @@
             <a class="media-author-username" [routerLink]="['/', media.user.username]">{{media.user.username}}</a>
             <div fxLayout="row" fxLayout="center end" *ngIf="currentUser && media.user.id === currentUser.id">
                 <button mat-icon-button type="button" [matMenuTriggerFor]="menu">
-                    <mat-icon>expand_more</mat-icon>
+                    <mat-icon class="mat-24">expand_more</mat-icon>
                 </button>
                 <mat-menu #menu="matMenu" xPosition="before">
                     <button mat-menu-item (click)="edit()">
-                        <mat-icon>edit</mat-icon>
+                        <mat-icon class="mat-18">edit</mat-icon>
                         <span>Edit</span>
                     </button>
                     <button mat-menu-item (click)="remove()">
-                        <mat-icon>delete</mat-icon>
+                        <mat-icon class="mat-18">delete</mat-icon>
                         <span>Remove</span>
                     </button>
                 </mat-menu>

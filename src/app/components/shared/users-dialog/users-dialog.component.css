@@ -2,18 +2,19 @@
     height: 100%;
     box-sizing: border-box;
     overflow-y: hidden;
-    color: rgb(0,0,0,85);
+    color: rgb(0, 0, 0, .85);
 }
 
 .users-container .users-title {
     padding: 1rem .75rem .75rem .75rem;
-    border-bottom: 1px solid #dddddd;
-    background: white;
+    /* border-bottom: 1px solid #dddddd; */
+    /* background: white; */
+    background: #fafafa;
 }
 
 .users-container .users-title h1 {
-    font-weight: 800;
-    font-size: 1.2em;
+    font-weight: 900;
+    font-size: 1.1em;
 }
 
 .user-items-empty-container {
@@ -28,7 +29,7 @@
 .user-items-empty-container {
     text-transform: uppercase;
     font-weight: 900;
-    color: rgb(0,0,0,60);
+    color: rgb(0, 0, 0, .6);
 }
 
 .user-avatar {
@@ -53,7 +54,7 @@
 }
 
 .user-fullname {
-    color: rgb(0,0,0,60);
+    color: rgb(0, 0, 0, .6);
     font-size: .9em;
     font-weight: lighter;
     letter-spacing: 1px;
@@ -62,28 +63,25 @@
 .user-items {
     height: 100%;
     overflow-y: scroll;
-    padding: .7rem;
-    background: #FAFAFA;
+    background: #fafafa;
     position: relative;
-}
-
-.user-items>:first-child.user-item {
-    margin-top: 0;
-}
-
-.user-items>.user-item {
-    margin-top: .7rem;
 }
 
 .user-item {
-    padding-bottom: .7rem;
+    padding: .7rem .7rem;
     box-sizing: border-box;
     position: relative;
+    border-bottom: 1px solid #efefef;
 }
 
-.user-item .mat-divider {
-    width: 100%;
-    position: absolute;
-    bottom: 0;
-    border-top-color: #d8d8d8;
+.user-item:hover{
+    background: #fefefe;
 }
+
+/* .user-item:nth-child(even) {
+    background: white;
+}
+
+.user-item:nth-child(odd) {
+    background: #f8fbff;
+} */

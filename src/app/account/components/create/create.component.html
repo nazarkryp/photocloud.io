@@ -6,7 +6,7 @@
         </div>
         <form class="signup-form" fxLayout="column" [formGroup]="formGroup" (ngSubmit)="createAccount()">
             <div style="padding: 0 0 .7rem 0;" fxLayout="column">
-                <span style="color: rgb(0,0,0,60);">Create account to continue or
+                <span style="color: rgb(0,0,0,.85);">Create account to continue or
                     <a class="primary" routerLink="/account/signin" *ngIf="!formGroup.disabled">Sign In</a>
                     <span class="disabled" *ngIf="formGroup.disabled">Sign In</span> if already have one
                 </span>

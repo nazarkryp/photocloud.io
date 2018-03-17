@@ -5,7 +5,7 @@
 }
 
 body {
-    color: rgb(0,0,0,85);
+    color: rgb(0, 0, 0, .85);
     background-color: #FAFAFA;
     overflow-y: scroll;
     font-size: 100%;
@@ -14,17 +14,6 @@ body {
 a {
     text-decoration: none;
     color: inherit;
-}
-
-/* a:link {
-    color: #e91e63;
-    font-weight: bold;
-} */
-
-a.link-button {
-    color: #e91e63;
-    cursor: pointer;
-    font-weight: 800;
 }
 
 .cdk-global-scrollblock {
@@ -92,7 +81,7 @@ a.link-button {
 
 .mat-icon.btn-icon {
     cursor: pointer;
-    color: rgb(0,0,0,85);
+    color: rgb(0, 0, 0, .85);
     outline: none;
 }
 
@@ -113,12 +102,12 @@ a.link-button {
 
 .mat-icon.btn-icon.disabled,
 .mat-icon.btn-icon-light:disabled {
-    color: rgb(0,0,0,60);
+    color: rgb(0, 0, 0, .6);
 }
 
 .mat-button.btn-relationships {
-    background-color: #efefef;
-    color: rgb(0,0,0,60);
+    background: #efefef;
+    color: rgb(0, 0, 0, .6);
     border-radius: 2px;
     font-weight: 900;
     line-height: 27px;
@@ -129,7 +118,7 @@ a.link-button {
 .mat-button.btn-default {
     width: 100%;
     background: #efefef;
-    color: rgb(0,0,0,60);
+    color: rgb(0, 0, 0, .6);
     text-transform: uppercase;
     font-size: 0.8em;
     letter-spacing: 1px;
@@ -149,7 +138,7 @@ a.link-button {
 .mat-button.btn-primary:disabled,
 .mat-button.btn-default:disabled {
     background-color: rgba(0, 0, 0, .12);
-    color: rgb(0,0,0,85);
+    color: rgb(0, 0, 0, .85);
 }
 
 .primary {

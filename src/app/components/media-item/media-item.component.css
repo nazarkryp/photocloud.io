@@ -79,10 +79,11 @@ textarea {
 
 .caption-input {
     outline: none;
-    background: #efefef;
+    background: #fafafa;
     border: none;
     padding: .75rem;
     border-radius: 2px;
+    font-size: .9em;
     font-weight: lighter;
 }
 
@@ -123,13 +124,13 @@ textarea {
 }
 
 .media-date {
-    padding: .5rem 0;
+    padding: .75rem 0 .5rem;
 }
 
 .media-created {
-    font-size: 0.8em;
-    color: rgb(0,0,0,60);
-    font-weight: lighter;
+    font-size: 0.7em;
+    color: rgb(0, 0, 0, .6);
+    font-weight: 600;
     text-transform: uppercase;
 }
 
@@ -151,7 +152,7 @@ textarea {
 }
 
 .big-like-icon {
-    color: rgb(0,0,0,85);
+    color: rgb(0, 0, 0, .85);
     cursor: pointer;
     outline: none;
     width: 27px;
@@ -163,5 +164,5 @@ textarea {
 }
 
 .icon-button {
-    color: rgb(0,0,0,85);
+    color: rgb(0, 0, 0, .85);
 }

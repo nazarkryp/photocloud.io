@@ -6,7 +6,7 @@
         </div>
         <form class="signup-form" fxLayout="column" [formGroup]="formGroup" (ngSubmit)="recover()">
             <div style="padding: 0 0 .7rem 0;" fxLayout="column" *ngIf="!success">
-                <span style="color: rgb(0,0,0,60); line-height: 2;">Enter username or email address to reset your password or go to
+                <span style="color: rgb(0,0,0,.6); line-height: 2;">Enter username or email address to reset your password or go to
                     <a class="primary" routerLink="/account/signin" *ngIf="!formGroup.disabled">Sign In</a>
                     <span class="disabled" *ngIf="formGroup.disabled">Sign In</span> page you remember one
                 </span>

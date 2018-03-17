@@ -1,8 +1,13 @@
 <div class="users-container" fxLayout="column">
     <div class="users-title" fxLayout="row" fxLayoutAlign="space-between center">
         <h1>{{title}}</h1>
-        <mat-icon class="btn-icon mat-24" (click)="close()" tabindex="-1">clear</mat-icon>
+        <mat-icon class="btn-icon mat-18" (click)="close()" tabindex="-1">clear</mat-icon>
     </div>
+    <!-- <div style="background: #fafafa; padding: 0 .7rem;">
+        <mat-form-field style="width: 100%;">
+            <input matInput placeholder="Search">
+        </mat-form-field>
+    </div> -->
     <div class="user-items">
         <div class="user-items-empty-container" fxLayout="row" fxLayoutAlign="center center" *ngIf="page.data?.length === 0">
             <mat-spinner [diameter]="50" [strokeWidth]="3" *ngIf="isLoading"></mat-spinner>
