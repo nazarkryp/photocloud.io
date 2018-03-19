@@ -6,6 +6,10 @@
     padding: 3rem 0;
 }
 
+::ng-deep .signup-content * {
+    font-family: 'Roboto', sans-serif;
+}
+
 @media screen and (max-width: 500px) {
     .signup-form {
         width: 100%;

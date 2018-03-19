@@ -6,6 +6,10 @@
     padding: 3rem 0;
 }
 
+::ng-deep .signup-content * {
+    font-family: 'Roboto', sans-serif;
+}
+
 @media screen and (max-width: 500px) {
     .signup-form {
         width: 100%;
@@ -58,7 +62,7 @@
 
 .agreements-container {
     text-align: center;
-    color: rgb(0,0,0,.6);
+    color: rgb(0, 0, 0, .6);
 }
 
 .agreements-container a {
@@ -67,4 +71,13 @@
 
 .agreements-container a:hover {
     text-decoration: underline;
+}
+
+.form-field .btn-icon {
+    color: #9d9d9d;
+}
+
+.form-field:focus-within .btn-icon,
+.form-field .mat-icon.btn-icon:hover {
+    color: #e91e63;
 }

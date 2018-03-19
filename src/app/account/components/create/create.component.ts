@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { AbstractControl, FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { trigger, animate, style, transition, animateChild, group, query, stagger } from '@angular/animations';
@@ -33,6 +33,10 @@ const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA
     ]
 })
 export class CreateComponent {
+    @ViewChild('usernameInput') public usernameInput: ElementRef;
+    @ViewChild('passwordInput') public passwordInput: ElementRef;
+    public showPassword = false;
+
     public errorStateMatcher = new DefaultErrorStateMatcher();
     public formGroup: FormGroup;
     public signUpError: string;
@@ -91,12 +95,6 @@ export class CreateComponent {
                     Validators.required,
                     Validators.maxLength(50),
                     Validators.minLength(6),
-                    Validators.pattern(/^\S*$/)])),
-            confirmPassword: new FormControl('',
-                Validators.compose([
-                    Validators.required,
-                    Validators.maxLength(50),
-                    Validators.minLength(6),
                     Validators.pattern(/^\S*$/)]))
         }, validator);
     }
@@ -120,19 +118,19 @@ export class CreateComponent {
     }
 
     private validate(formGroup: FormGroup) {
-        const confirmPasswordErrors = formGroup.get('password').value !== formGroup.get('confirmPassword').value
-            ? { 'mismatch': true }
-            : null;
+        // const confirmPasswordErrors = formGroup.get('password').value !== formGroup.get('confirmPassword').value
+        //     ? { 'mismatch': true }
+        //     : null;
 
-        const confirmPassword = formGroup.get('confirmPassword');
-        if (confirmPasswordErrors && confirmPasswordErrors.mismatch) {
-            confirmPassword.setErrors(confirmPasswordErrors);
-        } else if (confirmPassword.errors) {
-            delete confirmPassword.errors['mismatch'];
-            if (!Object.keys(confirmPassword.errors).length) {
-                confirmPassword.setErrors(null);
-            }
-        }
+        // const confirmPassword = formGroup.get('confirmPassword');
+        // if (confirmPasswordErrors && confirmPasswordErrors.mismatch) {
+        //     confirmPassword.setErrors(confirmPasswordErrors);
+        // } else if (confirmPassword.errors) {
+        //     delete confirmPassword.errors['mismatch'];
+        //     if (!Object.keys(confirmPassword.errors).length) {
+        //         confirmPassword.setErrors(null);
+        //     }
+        // }
     }
 
     public createAccount() {

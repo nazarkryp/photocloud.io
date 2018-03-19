@@ -7,7 +7,7 @@
 }
 
 ::ng-deep .signin-content * {
-    font-family: 'Roboto', sans-serif !important;
+    font-family: 'Roboto', sans-serif;
 }
 
 @media screen and (max-width: 500px) {
@@ -44,4 +44,13 @@
 .error-message {
     color: #e91f63;
     text-align: center;
+}
+
+.form-field .btn-icon {
+    color: #9d9d9d;
+}
+
+.form-field:focus-within .btn-icon,
+.form-field .mat-icon.btn-icon:hover {
+    color: #e91e63;
 }

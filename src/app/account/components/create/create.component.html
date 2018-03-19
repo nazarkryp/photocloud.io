@@ -1,10 +1,10 @@
 <div class="signup-content" fxLayout="column" fxLayoutAlign="center center" @content>
     <div>
         <div style="padding-bottom: 3.4rem;" fxLayout="row" fxLayoutAlign="center center">
-            <span style="font-size: 2.4em; font-weight: 900;">Photo</span>
-            <span style="font-size: 3.6em; font-weight: 900; color: #e91e63;">Cloud</span>
+            <span style="font-size: 2em; font-weight: 900;">Photo</span>
+            <span style="font-size: 3em; font-weight: 900; color: #e91e63;">Cloud</span>
         </div>
-        <form class="signup-form" fxLayout="column" [formGroup]="formGroup" (ngSubmit)="createAccount()">
+        <form class="signup-form" fxLayout="column" [formGroup]="formGroup" (ngSubmit)="createAccount()" novalidate>
             <div style="padding: 0 0 .7rem 0;" fxLayout="column">
                 <span style="color: rgb(0,0,0,.85);">Create account to continue or
                     <a class="primary" routerLink="/account/signin" *ngIf="!formGroup.disabled">Sign In</a>
@@ -31,12 +31,6 @@
                     User with such name already exists
                 </mat-error>
             </mat-form-field>
-            <!-- <mat-form-field class="form-field">
-                <input formControlName="fullName" #fullNameInput matInput placeholder="Full Name (optional)" type="text" autocomplete="off" [errorStateMatcher]="errorStateMatcher">
-                <mat-error *ngIf="fullName.getError('maxlength')">
-                    Full name cannot contain more than {{fullName.errors.maxlength.requiredLength}} symbols
-                </mat-error>
-            </mat-form-field> -->
             <mat-form-field class="form-field">
                 <input formControlName="email" #emailInput matInput placeholder="E-mail address" type="email" autocomplete="off" [errorStateMatcher]="errorStateMatcher">
                 <div matSuffix>
@@ -59,6 +53,11 @@
             </mat-form-field>
             <mat-form-field class="form-field">
                 <input formControlName="password" #passwordInput matInput placeholder="Password" type="password" autocomplete="off" [errorStateMatcher]="errorStateMatcher">
+                <div matSuffix [ngSwitch]="passwordInput.type === 'password'">
+                    <mat-icon class="mat-24 btn-icon" tabindex="-1" [appPassword]="passwordInput" appPasswordType="text" matTooltip="Show Password" matTooltipPosition="right"
+                        *ngSwitchCase="true">visibility</mat-icon>
+                    <mat-icon class="mat-24 btn-icon" tabindex="-1" [appPassword]="passwordInput" appPasswordType="password" matTooltip="Hide Password" matTooltipPosition="right" *ngSwitchCase="false">visibility_off</mat-icon>
+                </div>
                 <mat-error *ngIf="password.getError('required')">
                     Password is required
                 </mat-error>
@@ -66,23 +65,11 @@
                     Password must contain at least {{password.errors.minlength.requiredLength}} symbols
                 </mat-error>
             </mat-form-field>
-            <mat-form-field class="form-field">
-                <input formControlName="confirmPassword" #confirmPasswordInput matInput placeholder="Confirm Password" type="password" autocomplete="off" [errorStateMatcher]="errorStateMatcher">
-                <mat-error *ngIf="confirmPassword.getError('required')">
-                    Confirm password is required
-                </mat-error>
-                <mat-error *ngIf="confirmPassword.getError('minlength')">
-                    Confirm password must contain at least {{confirmPassword.errors.minlength.requiredLength}} symbols
-                </mat-error>
-                <mat-error *ngIf="confirmPassword.getError('mismatch')">
-                    Passwords do not match
-                </mat-error>
-            </mat-form-field>
             <div class="agreements-container">
                 <p>
                     By continuing you agree to our
-                    <a routerLink="/terms">Terms of Service</a> and
-                    <a routerLink="/privacy">Privacy Policy</a>.
+                    <a routerLink="/terms" target="_blank">Terms of Service</a> and
+                    <a routerLink="/privacy" target="_blank">Privacy Policy</a>.
                 </p>
             </div>
             <div style="margin-top: .7rem;" fxLayout="column" fxLayoutAlign="center center" *ngIf="signUpError">

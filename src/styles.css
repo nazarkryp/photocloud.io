@@ -85,6 +85,12 @@ a {
     outline: none;
 }
 
+.mat-icon.btn-icon-secondary {
+    cursor: pointer;
+    color: #9c9c9c;
+    outline: none;
+}
+
 .mat-icon.btn-icon-light {
     cursor: pointer;
     color: white;

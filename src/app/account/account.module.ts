@@ -21,6 +21,7 @@ import { AuthenticationGuardService } from 'app/infrastructure/guards';
 import { EditResolver } from 'app/account/services/resolvers';
 
 import { FileUploadModule } from 'ng2-file-upload';
+import { PasswordDirective } from './directives/password.directive';
 
 @NgModule({
     imports: [
@@ -38,7 +39,8 @@ import { FileUploadModule } from 'ng2-file-upload';
         CreateComponent,
         EditComponent,
         RecoverComponent,
-        AutoLoginComponent
+        AutoLoginComponent,
+        PasswordDirective
     ],
     providers: [
         AuthenticationGuardService,
