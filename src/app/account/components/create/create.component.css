@@ -1,3 +1,7 @@
+::ng-deep .signup-content * {
+    font-family: 'Roboto', sans-serif !important;
+}
+
 .signup-content {
     position: relative;
     min-height: calc(100vh - 64px);
@@ -25,7 +29,8 @@
         box-shadow: 0 3px 8px -3px rgba(0, 0, 0, 0.26);
     }
     .signup-content {
-        background: #fafafa;
+        /* background: #fafafa; */
+        /* background: linear-gradient(110deg, #fdcd3b 60%, #ffed4b 60%); */
         /* background: #2980b9 url('/assets/images/tumblr_static_bg3.png') repeat 0 0; */
     }
 }
