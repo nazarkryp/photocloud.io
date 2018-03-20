@@ -3,8 +3,9 @@
         <div class="overlay" *ngIf="isInvertingAccountStatus">
         </div>
         <div fxLayout="row" fxLayoutAlign="center center">
+            <mat-progress-spinner [value]="progress" [mode]="progressSpinnerMode" [diameter]="120" [strokeWidth]="3" style="position: absolute; z-index: 0;"></mat-progress-spinner>
             <div class="edit-image">
-                <div class="change-overlay" fxLayout="row" fxLayoutAlign="center center" (click)="fileInput.click()" *ngIf="currentUser.isActive">
+                <div class="change-overlay" fxLayout="row" fxLayoutAlign="center center" (click)="fileInput.click()" *ngIf="currentUser.isActive && !isUploading">
                     <span>Change</span>
                 </div>
                 <img class="thumbnail-big" src="{{currentUser.pictureUri}}" default="assets/images/user-default-image.png" appImagePreview

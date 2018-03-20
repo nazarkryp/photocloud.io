@@ -47,13 +47,11 @@ export class UserDetailsComponent implements OnDestroy {
     }
 
     public get progress(): number {
-        return this.uploader.queue.length ? this.uploader.queue[this.uploader.queue.length].progress : 0;
+        return this.uploader.progress;
     }
 
     public get progressSpinnerMode(): string {
-        if (this.uploader.queue.length && this.uploader.queue[this.uploader.queue.length - 1].progress < 1) {
-            return 'indeterminate'
-        } else if (this.uploader.queue.length && this.uploader.queue[this.uploader.queue.length - 1].progress === 100) {
+        if (this.uploader.queue.length && (this.uploader.progress < 1 || this.uploader.progress === 100)) {
             return 'indeterminate'
         }
 
@@ -69,14 +67,13 @@ export class UserDetailsComponent implements OnDestroy {
     }
 
     private onSuccessUpload(attachment: AttachmentViewModel) {
-        Observable.of(null).delay(3000).subscribe(() => {
-            this.uploader.queue.splice(0, 1);
+        this.currentUserService.changeAccountAttachment({
+            pictureId: attachment.id
+        }).finally(() => {
+            this.uploader.clearQueue();
+        }).subscribe(user => {
+            this.user.pictureUri = user.pictureUri
         });
-        // this.currentUserService.changeAccountAttachment({
-        //     pictureId: attachment.id
-        // }).subscribe(user => {
-        //     this.user.pictureUri = user.pictureUri
-        // });
     }
 
     public getFollowers() {
