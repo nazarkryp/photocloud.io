@@ -5,7 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 
 import { UserService, MediaService } from 'app/services';
-import { PageViewModel, UserViewModel, ErrorViewModel } from 'app/models/view';
+import { Page, UserViewModel, ErrorViewModel } from 'app/models/view';
 
 
 import { NgProgress } from 'ngx-progressbar';

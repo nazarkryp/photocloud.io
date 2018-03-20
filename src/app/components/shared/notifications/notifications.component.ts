@@ -5,7 +5,7 @@ import { Subscription } from 'rxjs/Subscription';
 
 import { UserService, RequestsService } from 'app/services';
 
-import { UserViewModel, RequestViewModel, PageViewModel, CurrentUserViewModel } from 'app/models/view';
+import { UserViewModel, RequestViewModel, Page, CurrentUserViewModel } from 'app/models/view';
 import { RelationshipAction } from 'app/models/shared';
 import { MatTabChangeEvent } from '@angular/material';
 import { CurrentUserService } from 'app/infrastructure/services';
@@ -27,8 +27,8 @@ export class NotificationsComponent implements OnInit {
     @Output() onClosing: EventEmitter<any> = new EventEmitter<any>();
 
     public currentUser: CurrentUserViewModel;
-    public incommingRequestsPage: PageViewModel<RequestViewModel> = new PageViewModel<RequestViewModel>();
-    public outgoingRequestsPage: PageViewModel<RequestViewModel> = new PageViewModel<RequestViewModel>();
+    public incommingRequestsPage: Page<RequestViewModel> = new Page<RequestViewModel>();
+    public outgoingRequestsPage: Page<RequestViewModel> = new Page<RequestViewModel>();
     public incommingRequestsSubscription: Subscription;
     public outgoingRequestsSubscription: Subscription;
     public isLoading: boolean;
@@ -54,10 +54,10 @@ export class NotificationsComponent implements OnInit {
         }
 
         if (event.index === 0) {
-            this.incommingRequestsPage = new PageViewModel<RequestViewModel>();
+            this.incommingRequestsPage = new Page<RequestViewModel>();
             this.getIncommingRequests();
         } else {
-            this.outgoingRequestsPage = new PageViewModel<RequestViewModel>();
+            this.outgoingRequestsPage = new Page<RequestViewModel>();
             this.getOutgoingRequests();
         }
 

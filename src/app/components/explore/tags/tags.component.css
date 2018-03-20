@@ -12,11 +12,9 @@
 }
 
 .tags-media-header h1 {
-    font-weight: 900;
-    font-size: 2.5em;
+    font-size: 3em;
     text-transform: uppercase;
-    letter-spacing: 2px;
-    color: rgb(0,0,0,.85);
+    color: rgb(0, 0, 0, .85);
 }
 
 .tags-media {
@@ -31,7 +29,7 @@
 .tags-media .username {
     cursor: pointer;
     outline: none;
-    color: rgb(0,0,0,.85);
+    color: rgb(0, 0, 0, .85);
     font-size: 1.2em;
     letter-spacing: 2px;
     font-weight: 800;

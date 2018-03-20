@@ -1,5 +1,5 @@
 ::ng-deep .signup-content * {
-    font-family: 'Roboto', sans-serif !important;
+    font-family: 'Roboto', sans-serif;
 }
 
 .signup-content {
@@ -52,10 +52,6 @@
     margin-top: 24px;
 }
 
-.disabled {
-    color: #9d9d9d;
-}
-
 .error-message {
     color: #e91f63;
     text-align: center;
@@ -78,6 +74,8 @@
     text-decoration: underline;
 }
 
+.disabled,
+.form-field .btn-icon.disabled,
 .form-field .btn-icon {
     color: #9d9d9d;
 }

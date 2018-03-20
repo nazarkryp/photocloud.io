@@ -54,9 +54,9 @@
             <mat-form-field class="form-field">
                 <input formControlName="password" #passwordInput matInput placeholder="Password" type="password" autocomplete="off" [errorStateMatcher]="errorStateMatcher">
                 <div matSuffix [ngSwitch]="passwordInput.type === 'password'">
-                    <mat-icon class="mat-24 btn-icon" tabindex="-1" [appPassword]="passwordInput" appPasswordType="text" matTooltip="Show Password"
+                    <mat-icon class="mat-24 btn-icon" [ngClass]="{'disabled' : formGroup.disabled }" tabindex="-1" [appPassword]="passwordInput" appPasswordType="text" matTooltip="Show Password"
                         matTooltipPosition="right" *ngSwitchCase="true">visibility</mat-icon>
-                    <mat-icon class="mat-24 btn-icon" tabindex="-1" [appPassword]="passwordInput" appPasswordType="password" matTooltip="Hide Password"
+                    <mat-icon class="mat-24 btn-icon" [ngClass]="{'disabled' : formGroup.disabled }" tabindex="-1" [appPassword]="passwordInput" appPasswordType="password" matTooltip="Hide Password"
                         matTooltipPosition="right" *ngSwitchCase="false">visibility_off</mat-icon>
                 </div>
                 <mat-error *ngIf="password.getError('required')">

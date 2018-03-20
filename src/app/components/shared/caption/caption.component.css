@@ -9,5 +9,6 @@
 }
 
 a.primary {
+    cursor: pointer;
     color: #e91e63;
 }

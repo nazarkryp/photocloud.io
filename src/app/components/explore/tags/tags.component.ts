@@ -5,7 +5,7 @@ import { Subscription } from 'rxjs/Subscription';
 
 import { CurrentUserService } from 'app/infrastructure/services';
 import { MediaDetailsComponent } from 'app/components/shared/media-details/media-details.component';
-import { PageViewModel, MediaViewModel, CurrentUserViewModel } from 'app/models/view';
+import { Page, MediaViewModel, CurrentUserViewModel } from 'app/models/view';
 import { MediaService } from 'app/services';
 import { AccountService } from 'app/account/services';
 
@@ -21,7 +21,7 @@ export class TagsComponent implements OnInit, OnDestroy {
     private routeSubscription$: Subscription;
     private currentUserSubscription: Subscription;
 
-    public page: PageViewModel<MediaViewModel> = new PageViewModel<MediaViewModel>();
+    public page: Page<MediaViewModel> = new Page<MediaViewModel>();
     public currentUser: CurrentUserViewModel;
     public tag: string;
     public isLoading: boolean;

@@ -7,7 +7,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/debounceTime';
 
 import { UserService } from 'app/services';
-import { PageViewModel, UserViewModel } from 'app/models/view';
+import { Page, UserViewModel } from 'app/models/view';
 
 import { NgProgress } from 'ngx-progressbar';
 

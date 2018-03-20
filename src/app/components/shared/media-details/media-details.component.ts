@@ -37,7 +37,7 @@ import { CommentsComponent } from 'app/components/shared/comments/comments.compo
 export class MediaDetailsComponent implements OnInit, OnDestroy {
     public isDialog: boolean;
     @ViewChild('player') public player: any;
-    @ViewChild(CommentsComponent) public commentsComponent: CommentsComponent;
+    @ViewChild('commentsComponent') public commentsComponent: CommentsComponent;
     public usersConfig: any;
 
     public updateMediaModel: UpdateMediaViewModel;
@@ -162,11 +162,11 @@ export class MediaDetailsComponent implements OnInit, OnDestroy {
                 this.media.commentsCount--;
                 this.commentsComponent.removeComment(comment);
             });
-
     }
 
     public like() {
-        this.likeService.like(this.media);
+        this.likeService.like(this.media).subscribe(() => {
+        }, () => { });
     }
 
     public edit() {

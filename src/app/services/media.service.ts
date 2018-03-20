@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
 import { WebApiClient } from 'app/infrastructure/communication';
-import { PageViewModel, PaginationViewModel, MediaViewModel, UserViewModel, CreateMediaModel, UpdateMediaViewModel } from 'app/models/view';
+import { Page, PaginationViewModel, MediaViewModel, UserViewModel, CreateMediaModel, UpdateMediaViewModel } from 'app/models/view';
 import { PageResponse, MediaResponse } from 'app/models/response';
 import { MediaMapper, PageMapper, PaginationMapper, UserMapper } from 'app/infrastructure/mapping';
 
@@ -28,7 +28,7 @@ export class MediaService {
             });
     }
 
-    public getRecentMedia(pagination: PaginationViewModel): Observable<PageViewModel<MediaViewModel>> {
+    public getRecentMedia(pagination: PaginationViewModel): Observable<Page<MediaViewModel>> {
         let requestUri = 'media/recent';
 
         if (pagination && pagination.next != null) {
@@ -42,7 +42,7 @@ export class MediaService {
             });
     }
 
-    public getUserMedia(username: string, pagination: PaginationViewModel): Observable<PageViewModel<MediaViewModel>> {
+    public getUserMedia(username: string, pagination: PaginationViewModel): Observable<Page<MediaViewModel>> {
         let requestUri = 'media/' + username;
 
         if (pagination != null && pagination.next != null) {

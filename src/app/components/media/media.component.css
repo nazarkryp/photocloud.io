@@ -35,41 +35,45 @@
     bottom: 35px;
     left: auto;
     position: fixed;
-    box-shadow: 0 0 0 0 black;
-    -webkit-animation: pulse 1s 5 cubic-bezier(0.4, 0, 0, 1);
-    -moz-animation: pulse 1s 5 cubic-bezier(0.4, 0, 0, 1);
-    -ms-animation: pulse 1s 5 cubic-bezier(0.4, 0, 0, 1);
-    animation: pulse 1s 5 cubic-bezier(0.4, 0, 0, 1);
 }
 
+.pulse {
+    animation-name: pulse_animation;
+    animation-duration: 1000ms;
+    animation-iteration-count: 3;
+    animation-timing-function: linear;
+}
 
-.mat-fab-bottom-right:hover {
+.pulse:hover {
     -webkit-animation: none;
     -moz-animation: none;
     -ms-animation: none;
     animation: none;
 }
 
-@-webkit-keyframes pulse {
-    to {
-        box-shadow: 0 0 0 25px rgba(232, 76, 61, 0);
+@keyframes pulse_animation {
+    0% {
+        transform: scale(1);
     }
-}
-
-@-moz-keyframes pulse {
-    to {
-        box-shadow: 0 0 0 25px rgba(232, 76, 61, 0);
+    30% {
+        transform: scale(1);
     }
-}
-
-@-ms-keyframes pulse {
-    to {
-        box-shadow: 0 0 0 25px rgba(232, 76, 61, 0);
+    40% {
+        transform: scale(1.15);
     }
-}
-
-@keyframes pulse {
-    to {
-        box-shadow: 0 0 0 25px rgba(232, 76, 61, 0);
+    50% {
+        transform: scale(1);
+    }
+    60% {
+        transform: scale(1);
+    }
+    70% {
+        transform: scale(1.2);
+    }
+    80% {
+        transform: scale(1);
+    }
+    100% {
+        transform: scale(1);
     }
 }

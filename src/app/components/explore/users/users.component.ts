@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 
 import { UserService } from 'app/services';
-import { PageViewModel, UserViewModel, CurrentUserViewModel } from 'app/models/view';
+import { Page, UserViewModel, CurrentUserViewModel } from 'app/models/view';
 import { RelationshipAction, RelationshipStatus } from 'app/models/shared';
 
 import { NgProgress } from 'ngx-progressbar';
@@ -18,7 +18,7 @@ export class UsersComponent implements OnInit, OnDestroy {
     private currentUserSubscription: Subscription;
     public title = 'Explore People';
     public isLoading: boolean;
-    public page: PageViewModel<UserViewModel>;
+    public page: Page<UserViewModel>;
     public modifying: { [id: number]: boolean } = {};
     public currentUser: CurrentUserViewModel;
 
@@ -42,9 +42,9 @@ export class UsersComponent implements OnInit, OnDestroy {
                 this.progress.done();
                 this.isLoading = false;
             })
-            .subscribe((page: PageViewModel<UserViewModel>) => {
+            .subscribe((page: Page<UserViewModel>) => {
                 if (!this.page.pagination) {
-                    this.page = new PageViewModel<UserViewModel>();
+                    this.page = new Page<UserViewModel>();
                 }
 
                 this.page.hasMoreItems = page.hasMoreItems;

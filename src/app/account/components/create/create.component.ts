@@ -144,8 +144,6 @@ export class CreateComponent {
                 this.formGroup.get('fullName').value
             );
 
-            console.log(createAccountRequestModel);
-
             this.progress.start();
             this.formGroup.disable();
             this.currentUserService.create(createAccountRequestModel)

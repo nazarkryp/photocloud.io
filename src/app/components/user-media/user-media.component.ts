@@ -8,7 +8,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { AccountService } from 'app/account/services';
 import { CurrentUserService } from 'app/infrastructure/services';
 import { MediaService, UserService } from 'app/services';
-import { CurrentUserViewModel, MediaViewModel, AttachmentViewModel, UserViewModel, PageViewModel, ErrorViewModel, UserMediaViewModel } from 'app/models/view';
+import { CurrentUserViewModel, MediaViewModel, AttachmentViewModel, UserViewModel, Page, ErrorViewModel, UserMediaViewModel } from 'app/models/view';
 import { RelationshipStatus, ValidationResult, } from 'app/models/shared'
 import { MediaDetailsComponent } from 'app/components/shared/media-details/media-details.component';
 import { UsersDialogComponent } from '../shared/users-dialog/users-dialog.component';
@@ -64,7 +64,7 @@ export class UserMediaComponent implements OnInit, OnDestroy {
 
                 this.isLoadingPosts = false;
             })
-            .subscribe((page: PageViewModel<MediaViewModel>) => {
+            .subscribe((page: Page<MediaViewModel>) => {
                 this.userMedia.page.hasMoreItems = page.hasMoreItems;
                 this.userMedia.page.pagination = page.pagination;
 
@@ -138,7 +138,7 @@ export class UserMediaComponent implements OnInit, OnDestroy {
 
     private reset(): void {
         this.userMedia = new UserMediaViewModel();
-        this.userMedia.page = new PageViewModel<MediaViewModel>();
+        this.userMedia.page = new Page<MediaViewModel>();
         this.userMedia.page.hasMoreItems = false;
         this.userMedia.page.pagination = null;
         this.userMedia.page.data = [];

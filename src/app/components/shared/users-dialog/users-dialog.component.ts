@@ -4,7 +4,7 @@ import { MatDialogRef, MatSnackBarConfig, MatSnackBar, MAT_DIALOG_DATA } from '@
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 
-import { CurrentUserViewModel, UserViewModel, PageViewModel } from 'app/models/view';
+import { CurrentUserViewModel, UserViewModel, Page } from 'app/models/view';
 import { RelationshipStatus } from 'app/models/shared';
 import { UserService } from 'app/services';
 import { CurrentUserService } from 'app/infrastructure/services';
@@ -17,7 +17,7 @@ import { UserDialogDetails } from './models';
     styleUrls: ['./users-dialog.component.css']
 })
 export class UsersDialogComponent implements OnInit, OnDestroy {
-    public page: PageViewModel<UserViewModel> = new PageViewModel<UserViewModel>();
+    public page: Page<UserViewModel> = new Page<UserViewModel>();
 
     public currentUser: CurrentUserViewModel;
     public usersObservableSubscription: Subscription;
@@ -34,11 +34,12 @@ export class UsersDialogComponent implements OnInit, OnDestroy {
 
     public getUsers() {
         this.isLoading = true;
+
         this.usersObservableSubscription = this.details.handler(this.details.identifier, this.page.pagination)
             .finally(() => {
                 this.isLoading = false;
             })
-            .subscribe((page: PageViewModel<UserViewModel>) => {
+            .subscribe((page: Page<UserViewModel>) => {
                 this.page.hasMoreItems = page.hasMoreItems;
                 this.page.pagination = page.pagination;
 
@@ -78,7 +79,11 @@ export class UsersDialogComponent implements OnInit, OnDestroy {
     }
 
     public close() {
-        this.dialogRef.close(this.page);
+        if (!this.isLoading) {
+            this.dialogRef.close(this.page);
+        } else {
+            this.dialogRef.close(null);
+        }
     }
 
     public ngOnDestroy(): void {
@@ -98,7 +103,7 @@ export class UsersDialogComponent implements OnInit, OnDestroy {
             this.usersObservableSubscription.unsubscribe();
 
             if (!page) {
-                this.dialogRef.close(this.page);
+                this.dialogRef.close(null);
             }
         });
     }

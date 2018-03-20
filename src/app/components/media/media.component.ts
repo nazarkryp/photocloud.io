@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material';
 import { Subscription } from 'rxjs/Subscription';
 
-import { MediaViewModel, UserViewModel, PageViewModel, CommentViewModel, AttachmentViewModel, CurrentUserViewModel } from 'app/models/view';
+import { MediaViewModel, UserViewModel, Page, CommentViewModel, AttachmentViewModel, CurrentUserViewModel } from 'app/models/view';
 import { CurrentUserService } from 'app/infrastructure/services';
 import { MediaService } from 'app/services';
 import { CreateMediaComponent } from 'app/components/shared/create-media/create-media.component';
@@ -17,7 +17,7 @@ import { NgProgress } from 'ngx-progressbar';
 })
 export class MediaComponent implements OnInit, OnDestroy {
     private currentUserSubscription: Subscription;
-    public page: PageViewModel<MediaViewModel> = new PageViewModel<MediaViewModel>();
+    public page: Page<MediaViewModel> = new Page<MediaViewModel>();
     public isLoading = false;
     public currentUser: CurrentUserViewModel;
 

@@ -43,6 +43,10 @@
     margin-top: .7rem;
 }
 
+.incomming-request button {
+    font-weight: bold;
+}
+
 .incomming-request-name {
     line-height: 1.5;
     margin-left: .7rem;

@@ -37,6 +37,7 @@ textarea.bio {
 }
 
 .edit-container .disabled {
+    font-size: .9em;
     color: rgba(0, 0, 0, 0.38);
 }
 

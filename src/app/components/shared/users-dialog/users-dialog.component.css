@@ -3,12 +3,13 @@
     box-sizing: border-box;
     overflow-y: hidden;
     color: rgb(0, 0, 0, .85);
+    background: #fafafa;
 }
 
 .users-container .users-title {
     padding: 1rem .75rem .75rem .75rem;
-    /* border-bottom: 1px solid #dddddd; */
-    /* background: white; */
+    border-bottom: 1px solid #dddddd;
+    background: white;
     background: #fafafa;
 }
 
@@ -63,7 +64,6 @@
 .user-items {
     height: 100%;
     overflow-y: scroll;
-    background: #fafafa;
     position: relative;
 }
 
@@ -74,7 +74,7 @@
     border-bottom: 1px solid #efefef;
 }
 
-.user-item:hover{
+.user-item:hover {
     background: #fefefe;
 }
 

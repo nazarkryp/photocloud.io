@@ -4,7 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
 
 import { UserService } from 'app/services/user.service';
-import { UserViewModel, PageViewModel, RequestViewModel, PaginationViewModel } from 'app/models/view';
+import { UserViewModel, Page, RequestViewModel, PaginationViewModel } from 'app/models/view';
 import { PageMapper, UserMapper } from 'app/infrastructure/mapping';
 import { UserResponse } from 'app/models/response';
 
@@ -24,7 +24,7 @@ export class RequestsService {
         return this.state.asObservable();
     }
 
-    public getIncommingRequests(pagination: PaginationViewModel): Observable<PageViewModel<UserViewModel>> {
+    public getIncommingRequests(pagination: PaginationViewModel): Observable<Page<UserViewModel>> {
         return this.userService.getIncommingRequests(pagination)
             .do(page => {
                 if (!this.incommingRequestsCount || this.incommingRequestsCount !== page.data.length) {
@@ -37,7 +37,7 @@ export class RequestsService {
             });
     }
 
-    public getOutgoingRequests(pagination: PaginationViewModel): Observable<PageViewModel<UserViewModel>> {
+    public getOutgoingRequests(pagination: PaginationViewModel): Observable<Page<UserViewModel>> {
         return this.userService.getOutgoingRequests(pagination)
             .map(response => {
                 return this.pageMapper.mapFromResponse(response);

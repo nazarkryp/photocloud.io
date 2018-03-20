@@ -6,7 +6,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { Observable } from 'rxjs/Observable';
 
 import { CurrentUserService } from 'app/infrastructure/services';
-import { CurrentUserViewModel, AttachmentViewModel, UserViewModel, PageViewModel } from 'app/models/view';
+import { CurrentUserViewModel, AttachmentViewModel, UserViewModel, Page } from 'app/models/view';
 import { RelationshipStatus } from 'app/models/shared';
 import { UserService, UploaderService, } from 'app/services';
 import { UsersDialogComponent } from 'app/components/shared/users-dialog/users-dialog.component';
@@ -61,7 +61,7 @@ export class UserDetailsComponent implements OnDestroy {
     public getFollowers() {
         const userId = this.user.id;
         this.openDialog(this.userService.getFollowers.bind(this.userService), this.user.id, 'Followers')
-            .afterClosed().subscribe((page: PageViewModel<UserViewModel>) => {
+            .afterClosed().subscribe((page: Page<UserViewModel>) => {
                 if (page && !page.hasMoreItems && this.user.id === userId && this.currentUser.id === this.user.id) {
                     this.user.counters.followers = page.data.length;
                 }
@@ -71,7 +71,7 @@ export class UserDetailsComponent implements OnDestroy {
     public getFollowings() {
         const userId = this.user.id;
         this.openDialog(this.userService.getFollowings.bind(this.userService), this.user.id, 'Following')
-            .afterClosed().subscribe((page: PageViewModel<UserViewModel>) => {
+            .afterClosed().subscribe((page: Page<UserViewModel>) => {
                 if (page && !page.hasMoreItems && this.user.id === userId && this.currentUser.id === this.user.id) {
                     this.user.counters.following = page.data.filter(e => e.relationship.outgoingStatus === RelationshipStatus.Following).length;
                 }
@@ -86,9 +86,9 @@ export class UserDetailsComponent implements OnDestroy {
         }).finally(() => {
             this.isModifyingRelationship = false;
         }).subscribe((user: UserViewModel) => {
-            if (user.relationship.outgoingStatus === RelationshipStatus.Following) {
+            if (this.currentUser.id === user.id && user.relationship.outgoingStatus === RelationshipStatus.Following) {
                 this.user.counters.followers++;
-            } else if (user.relationship.outgoingStatus === RelationshipStatus.None && this.user.relationship.outgoingStatus !== RelationshipStatus.Requested) {
+            } else if (this.currentUser.id === user.id && user.relationship.outgoingStatus === RelationshipStatus.None && this.user.relationship.outgoingStatus !== RelationshipStatus.Requested) {
                 this.user.counters.followers--;
             }
 
@@ -121,8 +121,8 @@ export class UserDetailsComponent implements OnDestroy {
         this.uploader.destroy();
     }
 
-    private openDialog(handler: (userId: number) => Observable<PageViewModel<UserViewModel>>, userId: number, title: string, counterToUpdate: number = null)
-        : MatDialogRef<UsersDialogComponent, PageViewModel<UserViewModel>> {
+    private openDialog(handler: (userId: number) => Observable<Page<UserViewModel>>, userId: number, title: string, counterToUpdate: number = null)
+        : MatDialogRef<UsersDialogComponent, Page<UserViewModel>> {
         const details = new UserDialogDetails(title, handler, userId);
         return this.dialog.open(UsersDialogComponent, {
             width: '500px',

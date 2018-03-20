@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 
 import { CommentService } from 'app/services';
 import { CurrentUserService } from 'app/infrastructure/services';
-import { MediaViewModel, CurrentUserViewModel, CommentViewModel, PageViewModel, PaginationViewModel } from 'app/models/view';
+import { MediaViewModel, CurrentUserViewModel, CommentViewModel, Page, PaginationViewModel } from 'app/models/view';
 
 @Component({
     selector: 'app-comments',
@@ -27,7 +27,7 @@ export class CommentsComponent implements OnInit {
     public isLoading: boolean;
 
     private currentUser: CurrentUserViewModel;
-    public page: PageViewModel<CommentViewModel>;
+    public page: Page<CommentViewModel>;
 
     constructor(
         private currentUserService: CurrentUserService,
@@ -77,7 +77,7 @@ export class CommentsComponent implements OnInit {
     }
 
     public ngOnInit(): void {
-        this.page = new PageViewModel<CommentViewModel>();
+        this.page = new Page<CommentViewModel>();
 
         if (this.page.data) {
             this.page.hasMoreItems = this.media.comments.length < this.media.commentsCount;
