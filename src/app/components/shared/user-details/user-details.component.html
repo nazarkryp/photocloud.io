@@ -1,10 +1,12 @@
 <div fxLayout="column" fxLayoutAlign="center start">
     <div class="user-info" fxLayout="row" fxLayoutAlign="center start">
         <div fxLayout="column" fxLayoutAlign="center center" *ngIf="user">
+            <mat-progress-spinner matTooltip="Last Active" matTooltipPosition="after" [value]="progress" [mode]="progressSpinnerMode"
+                [diameter]="160" [strokeWidth]="3" style="position: absolute; z-index: 0;"></mat-progress-spinner>
             <img class="thumbnail-big" src="{{user.pictureUri}}" default="assets/images/user-default-image.png" alt="{{user.username}}"
                 *ngIf="!currentUser || (currentUser && !currentUser.isActive) || user.id !== currentUser.id" />
             <div class="edit-image" *ngIf="currentUser && currentUser.isActive && user.id === currentUser.id">
-                <div class="change-overlay" fxLayout="row" fxLayoutAlign="center center" (click)="fileInput.click()">
+                <div *ngIf="!isUploading" class="change-overlay" fxLayout="row" fxLayoutAlign="center center" (click)="fileInput.click()">
                     <span>Change</span>
                 </div>
                 <img class="thumbnail-big" src="{{user.pictureUri}}" appImagePreview [image]="uploader.queue[0]?._file" default="assets/images/user-default-image.png"
@@ -16,7 +18,8 @@
             <div fxLayout="row" fxLayoutAlign="space-between center">
                 <span class="user-info-username">{{user.username}}</span>
                 <div>
-                    <button mat-icon-button routerLink="/account/edit" matTooltip="Settings" matTooltipPosition="above" *ngIf="currentUser && user.id === currentUser.id" style="margin-right: 40px;">
+                    <button mat-icon-button routerLink="/account/edit" matTooltip="Settings" matTooltipPosition="above" *ngIf="currentUser && user.id === currentUser.id"
+                        style="margin-right: 40px;">
                         <mat-icon class="btn-icon">settings</mat-icon>
                     </button>
                     <button mat-icon-button matTooltip="Logout" matTooltipPosition="above" (click)="logout()" *ngIf="currentUser && user.id === currentUser.id">

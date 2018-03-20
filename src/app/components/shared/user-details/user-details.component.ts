@@ -1,6 +1,6 @@
 import { Component, Input, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-import { MatDialog, MatDialogRef } from '@angular/material';
+import { MatDialog, MatDialogRef, ProgressSpinnerMode } from '@angular/material';
 
 import { Subscription } from 'rxjs/Subscription';
 import { Observable } from 'rxjs/Observable';
@@ -42,6 +42,24 @@ export class UserDetailsComponent implements OnDestroy {
             });
     }
 
+    public get isUploading(): boolean {
+        return this.uploader.isUploading;
+    }
+
+    public get progress(): number {
+        return this.uploader.queue.length ? this.uploader.queue[this.uploader.queue.length].progress : 0;
+    }
+
+    public get progressSpinnerMode(): string {
+        if (this.uploader.queue.length && this.uploader.queue[this.uploader.queue.length - 1].progress < 1) {
+            return 'indeterminate'
+        } else if (this.uploader.queue.length && this.uploader.queue[this.uploader.queue.length - 1].progress === 100) {
+            return 'indeterminate'
+        }
+
+        return 'determinate';
+    }
+
     public get defaultTruncateWidth(): number {
         return 60;
     }
@@ -51,11 +69,14 @@ export class UserDetailsComponent implements OnDestroy {
     }
 
     private onSuccessUpload(attachment: AttachmentViewModel) {
-        this.currentUserService.changeAccountAttachment({
-            pictureId: attachment.id
-        }).subscribe(user => {
-            this.user.pictureUri = user.pictureUri
+        Observable.of(null).delay(3000).subscribe(() => {
+            this.uploader.queue.splice(0, 1);
         });
+        // this.currentUserService.changeAccountAttachment({
+        //     pictureId: attachment.id
+        // }).subscribe(user => {
+        //     this.user.pictureUri = user.pictureUri
+        // });
     }
 
     public getFollowers() {
