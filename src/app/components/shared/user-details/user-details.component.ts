@@ -43,7 +43,7 @@ export class UserDetailsComponent implements OnDestroy {
     }
 
     public get isUploading(): boolean {
-        return this.uploader.isUploading;
+        return this.uploader.isUploading && this.uploader.queue && this.uploader.queue.length > 0;
     }
 
     public get progress(): number {

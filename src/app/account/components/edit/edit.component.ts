@@ -170,7 +170,7 @@ export class EditComponent implements OnInit, AfterViewInit, AfterViewChecked {
     }
 
     public get isUploading(): boolean {
-        return this.uploader.isUploading;
+        return this.uploader.isUploading && this.uploader.queue && this.uploader.queue.length > 0;
     }
 
     public get progress(): number {
