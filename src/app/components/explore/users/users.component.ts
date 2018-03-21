@@ -1,5 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { trigger, transition, style, animate, query, stagger } from '@angular/animations';
+
 import { Subscription } from 'rxjs/Subscription';
 
 import { UserService } from 'app/services';
@@ -12,7 +14,24 @@ import { CurrentUserService } from 'app/infrastructure/services';
 @Component({
     selector: 'app-users',
     templateUrl: './users.component.html',
-    styleUrls: ['./users.component.css']
+    styleUrls: ['./users.component.css'],
+    animations: [
+        trigger('listAnimation', [
+            transition('* => *', [ // each time the binding value changes
+                query(':leave', [
+                    stagger(50, [
+                        animate('0.5s', style({ opacity: 0 }))
+                    ])
+                ], { optional: true }),
+                query(':enter', [
+                    style({ opacity: 0 }),
+                    stagger(50, [
+                        animate('0.5s', style({ opacity: 1 }))
+                    ])
+                ], { optional: true })
+            ])
+        ])
+    ]
 })
 export class UsersComponent implements OnInit, OnDestroy {
     private currentUserSubscription: Subscription;

@@ -1,6 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { trigger, transition, style, animate, query, stagger } from '@angular/animations';
 import { MatDialog } from '@angular/material';
+
 import { Subscription } from 'rxjs/Subscription';
 
 import { MediaViewModel, UserViewModel, Page, CommentViewModel, AttachmentViewModel, CurrentUserViewModel } from 'app/models/view';
@@ -13,7 +15,24 @@ import { NgProgress } from 'ngx-progressbar';
 @Component({
     selector: 'app-posts',
     templateUrl: './media.component.html',
-    styleUrls: ['./media.component.css']
+    styleUrls: ['./media.component.css'],
+    animations: [
+        trigger('listAnimation', [
+            transition('* => *', [ // each time the binding value changes
+                query(':leave', [
+                    stagger(50, [
+                        animate('0.5s', style({ opacity: 0 }))
+                    ])
+                ], { optional: true }),
+                query(':enter', [
+                    style({ opacity: 0 }),
+                    stagger(50, [
+                        animate('0.5s', style({ opacity: 1 }))
+                    ])
+                ], { optional: true })
+            ])
+        ])
+    ]
 })
 export class MediaComponent implements OnInit, OnDestroy {
     private currentUserSubscription: Subscription;

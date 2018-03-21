@@ -6,7 +6,7 @@
                 <mat-icon class="btn-icon mat-24" [ngClass]="{ 'disabled' : isLoading }" svgIcon="refresh"></mat-icon>
             </button>
         </div>
-        <div class="search-results-container">
+        <div class="search-results-container" [@listAnimation]="page.data.length">
             <div class="search-result" *ngFor="let user of page.data" fxLayout="row" fxLayoutAlign="start center" style="margin-top:20px;">
                 <img [routerLink]="['/', user.username]" src="{{user.pictureUri}}" default="assets/images/user-default-image.png" alt="profile">
                 <div class="search-result-user-details" fxLayout="row" fxLayoutAlign="space-between start" fxFlex>

@@ -101,8 +101,8 @@
                     [disabled]="!currentUser.isActive"></mat-slide-toggle>
             </div>
             <div class="item">
-                <a *ngIf="currentUser.isActive" (click)="changePassword()">Change Password</a>
-                <span class="disabled" *ngIf="!currentUser.isActive">Change Password</span>
+                <a class="mat-body-1" *ngIf="currentUser.isActive" (click)="changePassword()">Change Password</a>
+                <span class="mat-body-1 disabled" *ngIf="!currentUser.isActive">Change Password</span>
             </div>
         </div>
 

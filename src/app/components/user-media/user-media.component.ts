@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy, ViewContainerRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material';
+import { trigger, transition, style, animate, query, stagger } from '@angular/animations';
 
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
@@ -19,7 +20,24 @@ import { HttpErrorResponse } from '@angular/common/http';
 @Component({
     selector: 'app-user-media',
     templateUrl: './user-media.component.html',
-    styleUrls: ['./user-media.component.css']
+    styleUrls: ['./user-media.component.css'],
+    animations: [
+        trigger('listAnimation', [
+            transition('* => *', [ // each time the binding value changes
+                query(':leave', [
+                    stagger(50, [
+                        animate('0.5s', style({ opacity: 0 }))
+                    ])
+                ], { optional: true }),
+                query(':enter', [
+                    style({ opacity: 0 }),
+                    stagger(50, [
+                        animate('0.5s', style({ opacity: 1 }))
+                    ])
+                ], { optional: true })
+            ])
+        ])
+    ]
 })
 export class UserMediaComponent implements OnInit, OnDestroy {
     private routeSubscription: Subscription;

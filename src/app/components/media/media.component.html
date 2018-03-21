@@ -1,6 +1,6 @@
 <div fxLayout="column" fxLayoutAlign="start center">
     <div class="media-container" *ngIf="isLoading || (page && page.data && page.data.length > 0); else emptyFeed;">
-        <div>
+        <div [@listAnimation]="page.data.length">
             <div class="media-item-container" *ngFor="let media of page.data; trackBy: index;">
                 <app-media-item [media]="media" (onRemoved)="onRemoved($event)"></app-media-item>
             </div>

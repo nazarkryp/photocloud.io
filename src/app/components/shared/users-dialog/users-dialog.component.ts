@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy, Optional, Inject, ViewEncapsulation, Input, Output, EventEmitter } from '@angular/core';
 import { MatDialogRef, MatSnackBarConfig, MatSnackBar, MAT_DIALOG_DATA } from '@angular/material';
+import { trigger, transition, style, animate, query, stagger } from '@angular/animations';
 
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
@@ -14,7 +15,24 @@ import { UserDialogDetails } from './models';
 @Component({
     selector: 'app-users-dialog',
     templateUrl: './users-dialog.component.html',
-    styleUrls: ['./users-dialog.component.css']
+    styleUrls: ['./users-dialog.component.css'],
+    animations: [
+        trigger('listAnimation', [
+            transition('* => *', [ // each time the binding value changes
+                query(':leave', [
+                    stagger(50, [
+                        animate('0.5s', style({ opacity: 0 }))
+                    ])
+                ], { optional: true }),
+                query(':enter', [
+                    style({ opacity: 0 }),
+                    stagger(50, [
+                        animate('0.5s', style({ opacity: 1 }))
+                    ])
+                ], { optional: true })
+            ])
+        ])
+    ]
 })
 export class UsersDialogComponent implements OnInit, OnDestroy {
     public page: Page<UserViewModel> = new Page<UserViewModel>();
