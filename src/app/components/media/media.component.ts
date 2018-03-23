@@ -1,6 +1,5 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener, ElementRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { trigger, transition, style, animate, query, stagger } from '@angular/animations';
 import { MatDialog } from '@angular/material';
 
 import { Subscription } from 'rxjs/Subscription';
@@ -10,29 +9,13 @@ import { CurrentUserService } from 'app/infrastructure/services';
 import { MediaService } from 'app/services';
 import { CreateMediaComponent } from 'app/components/shared/create-media/create-media.component';
 import { ConfirmComponent } from 'app/components/shared/confirm/confirm.component';
+
 import { NgProgress } from 'ngx-progressbar';
 
 @Component({
     selector: 'app-posts',
     templateUrl: './media.component.html',
-    styleUrls: ['./media.component.css'],
-    animations: [
-        trigger('listAnimation', [
-            transition('* => *', [ // each time the binding value changes
-                query(':leave', [
-                    stagger(50, [
-                        animate('0.5s', style({ opacity: 0 }))
-                    ])
-                ], { optional: true }),
-                query(':enter', [
-                    style({ opacity: 0 }),
-                    stagger(50, [
-                        animate('0.5s', style({ opacity: 1 }))
-                    ])
-                ], { optional: true })
-            ])
-        ])
-    ]
+    styleUrls: ['./media.component.css']
 })
 export class MediaComponent implements OnInit, OnDestroy {
     private currentUserSubscription: Subscription;
@@ -40,7 +23,10 @@ export class MediaComponent implements OnInit, OnDestroy {
     public isLoading = false;
     public currentUser: CurrentUserViewModel;
 
+    public state = 'hide';
+
     constructor(
+        public el: ElementRef,
         private activatedRoute: ActivatedRoute,
         private mediaService: MediaService,
         private currentUserService: CurrentUserService,
@@ -52,6 +38,19 @@ export class MediaComponent implements OnInit, OnDestroy {
             .subscribe(currentUser => {
                 this.currentUser = currentUser;
             });
+    }
+
+    @HostListener('window:scroll', ['$event'])
+    checkScroll() {
+        const componentPosition = this.el.nativeElement.offsetTop
+        const scrollPosition = window.pageYOffset
+
+        if (scrollPosition >= componentPosition) {
+            this.state = 'show'
+        } else {
+            this.state = 'hide'
+        }
+
     }
 
     public createMedia() {

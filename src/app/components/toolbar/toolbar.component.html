@@ -6,6 +6,8 @@
                     <span style="font-size: 1.4em; font-weight: lighter;">Photo</span>
                     <span style="font-size: 1.7em; font-weight: 800;">Cloud</span>
                 </a>
+                <input #fileInput type="file" accept="image/*" (change)="upload($event)" hidden>
+                <button mat-button style="font-weight: bold;" color="primary" (click)="fileInput.click()">UPLOAD: {{uploader.progress}}</button>
             </div>
             <div class="search-box-container">
                 <app-search-box *ngIf="currentUser"></app-search-box>

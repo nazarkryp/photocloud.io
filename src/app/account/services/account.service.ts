@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 
-import { WebApiClient } from 'app/infrastructure/communication';
+import { WebApiService } from 'app/core/services/communication';
 import { CurrentUserViewModel, UserViewModel } from 'app/models/view';
 import { AccessToken } from 'app/infrastructure/security';
 import { CreateAccountRequestModel } from 'app/account/models/request';
@@ -18,7 +18,7 @@ export class AccountService {
 
     constructor(
         private userMapper: UserMapper,
-        private webApiClient: WebApiClient,
+        private apiService: WebApiService,
         private tokenMapper: TokenMapper,
         private httpClient: HttpClient) { }
 
@@ -63,21 +63,21 @@ export class AccountService {
     }
 
     public updateAccount(propertiesToUpdate: any): Observable<CurrentUserViewModel> {
-        return this.webApiClient.patch<CurrentUserResponse>('account', propertiesToUpdate)
+        return this.apiService.patch<CurrentUserResponse>('account', propertiesToUpdate)
             .map(response => {
                 return this.userMapper.mapFromCurrentUserResponse(response);
             });
     }
 
     public changeAccountAttachment(propertiesToUpdate: any): Observable<CurrentUserViewModel> {
-        return this.webApiClient.put<CurrentUserResponse>('account/attachment', propertiesToUpdate)
+        return this.apiService.put<CurrentUserResponse>('account/attachment', propertiesToUpdate)
             .map(response => {
                 return this.userMapper.mapFromCurrentUserResponse(response);
             });
     }
 
     public getAccount(): Observable<CurrentUserViewModel> {
-        return this.webApiClient.get<CurrentUserResponse>('account')
+        return this.apiService.get<CurrentUserResponse>('account')
             .map(response => {
                 return this.userMapper.mapFromCurrentUserResponse(response);
             });

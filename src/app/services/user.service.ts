@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { WebApiClient } from 'app/infrastructure/communication';
+import { WebApiService } from 'app/core/services/communication';
 import { UserMapper, PageMapper } from 'app/infrastructure/mapping';
 
 import { Page, PaginationViewModel, UserViewModel } from 'app/models/view';
@@ -12,20 +12,20 @@ export class UserService {
     private pageMapper: PageMapper<UserResponse, UserViewModel>;
 
     constructor(
-        private webApiClient: WebApiClient,
+        private apiService: WebApiService,
         private userMapper: UserMapper) {
         this.pageMapper = new PageMapper<UserResponse, UserViewModel>(this.userMapper);
     }
 
     public getUser(username: string): Observable<UserViewModel> {
-        return this.webApiClient.get<UserResponse>(`users/${username}`)
+        return this.apiService.get<UserResponse>(`users/${username}`)
             .map(response => {
                 return this.userMapper.mapFromResponse(response);
             });
     }
 
     public checkIfUserExists(username: string): Observable<boolean> {
-        return this.webApiClient.get<ValidationResult>(`users/${username}/validate`)
+        return this.apiService.get<ValidationResult>(`users/${username}/validate`)
             .map(data => {
                 return data.success;
             });
@@ -38,7 +38,7 @@ export class UserService {
             requestUri = requestUri + '?next=' + pagination.next;
         }
 
-        return this.webApiClient.get<Page<UserResponse>>(requestUri)
+        return this.apiService.get<Page<UserResponse>>(requestUri)
             .map(page => {
                 const pageViewModel = this.pageMapper.mapFromResponse(page);
                 return pageViewModel;
@@ -46,7 +46,7 @@ export class UserService {
     }
 
     public searchUsers(query: string): Observable<Page<UserViewModel>> {
-        return this.webApiClient.get(`users/search?query=${query}`);
+        return this.apiService.get(`users/search?query=${query}`);
     }
 
     public getIncommingRequests(pagination: PaginationViewModel): Observable<Page<UserViewModel>> {
@@ -56,7 +56,7 @@ export class UserService {
             requestUri = `${requestUri}?next=${pagination.next}`;
         }
 
-        return this.webApiClient.get<Page<UserResponse>>(requestUri)
+        return this.apiService.get<Page<UserResponse>>(requestUri)
             .map(response => {
                 return this.pageMapper.mapFromResponse(response);
             });
@@ -69,14 +69,14 @@ export class UserService {
             requestUri = `${requestUri}?next=${pagination.next}`;
         }
 
-        return this.webApiClient.get<Page<UserResponse>>(requestUri)
+        return this.apiService.get<Page<UserResponse>>(requestUri)
             .map(response => {
                 return this.pageMapper.mapFromResponse(response);
             });
     }
 
     public modifyRelationship(userId: number, relationshipModel: any): Observable<UserViewModel> {
-        return this.webApiClient.put<UserViewModel>(`users/${userId}/relationship`, relationshipModel);
+        return this.apiService.put<UserViewModel>(`users/${userId}/relationship`, relationshipModel);
     }
 
     public getFollowers(userId: number, pagination: PaginationViewModel): Observable<Page<UserViewModel>> {
@@ -86,7 +86,7 @@ export class UserService {
             requestUri = requestUri + '?next=' + pagination.next;
         }
 
-        return this.webApiClient.get<Page<UserResponse>>(requestUri)
+        return this.apiService.get<Page<UserResponse>>(requestUri)
             .map(response => {
                 const page = this.pageMapper.mapFromResponse(response);
 
@@ -100,7 +100,7 @@ export class UserService {
             requestUri = requestUri + '?next=' + pagination.next;
         }
 
-        return this.webApiClient.get<Page<UserResponse>>(requestUri)
+        return this.apiService.get<Page<UserResponse>>(requestUri)
             .map(response => {
                 const page = this.pageMapper.mapFromResponse(response);
 

@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule, DomSanitizer } from '@angular/platform-browser';
 import { HttpModule } from '@angular/http';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatIconRegistry } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -52,16 +51,16 @@ import {
 } from './infrastructure/filters/http';
 import { UserDetailsComponent } from './components/shared/user-details/user-details.component';
 import { FooterComponent } from './components/footer/footer.component';
-import { WebApiClient } from 'app/infrastructure/communication';
+import { WebApiService } from 'app/core/services/communication';
 import { LocalStorageService } from 'app/infrastructure/services/storage';
 import { SplashScreenComponent } from './components/shared/splash-screen/splash-screen.component';
-import { CovalentModule } from 'app/core/covalent.module';
 import { LikedMediaComponent } from './components/liked-media/liked-media.component';
 import { LikesComponent } from './components/shared/likes/likes.component';
 import { ChangePasswordComponent } from './components/shared/change-password/change-password.component';
 import { TermsComponent } from './components/terms/terms.component';
 import { PrivacyComponent } from './components/privacy/privacy.component';
 import { AboutComponent } from './components/about/about.component';
+import { CoreModule, CovalentModule } from 'app/core';
 
 @NgModule({
     declarations: [
@@ -107,7 +106,6 @@ import { AboutComponent } from './components/about/about.component';
         AppRoutingModule,
         AppMaterialModule,
         FlexLayoutModule,
-        HttpClientModule,
         FormsModule,
         ReactiveFormsModule,
         NgProgressModule,
@@ -117,12 +115,12 @@ import { AboutComponent } from './components/about/about.component';
         ServiceModule,
         InfrastructureModule,
         CovalentModule,
-        SharedModule
+        SharedModule,
+        CoreModule
     ],
     providers: [
         AccountService,
         AuthenticationGuardService,
-        WebApiClient,
         LocalStorageService
     ],
     bootstrap: [AppComponent]

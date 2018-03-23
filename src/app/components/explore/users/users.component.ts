@@ -17,16 +17,22 @@ import { CurrentUserService } from 'app/infrastructure/services';
     styleUrls: ['./users.component.css'],
     animations: [
         trigger('listAnimation', [
-            transition('* => *', [ // each time the binding value changes
+            transition('* => *', [
                 query(':leave', [
                     stagger(50, [
                         animate('0.5s', style({ opacity: 0 }))
                     ])
                 ], { optional: true }),
                 query(':enter', [
-                    style({ opacity: 0 }),
+                    style({
+                        opacity: 0,
+                        transform: 'translateY(20%)'
+                    }),
                     stagger(50, [
-                        animate('0.5s', style({ opacity: 1 }))
+                        animate('0.5s', style({
+                            opacity: 1,
+                            transform: 'translateY(0)'
+                        }))
                     ])
                 ], { optional: true })
             ])
