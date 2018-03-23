@@ -20,20 +20,25 @@
     position: relative;
 }
 
+.my-content app-footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
 .router-container {
     position: relative;
     min-height: calc(100vh);
     overflow-y: hidden;
-    padding: 3rem 0;
-    box-sizing: content-box;
+    padding: 3rem 0 calc(3rem + 64px) 0;
+    box-sizing: border-box;
 }
 
-.router-container.toolbar,
-.router-container.footer {
-    min-height: calc(100vh - 164px);
+.router-container.toolbar {
+    min-height: calc(100vh - 100px);
 }
 
-.router-container.toolbar.footer {
+.router-container.toolbar {
     min-height: calc(100vh - 228px);
 }
 
