@@ -80,10 +80,13 @@ export class EditComponent implements OnInit, AfterViewInit, AfterViewChecked {
 
     public cancel() {
         this.formGroup.markAsPristine();
-
         this.formGroup.get('username').setValue(this.backup.username);
         this.formGroup.get('fullName').setValue(this.backup.fullName);
         this.formGroup.get('bio').setValue(this.backup.bio);
+    }
+
+    public cancelEmailChange() {
+        this.privateFormGroup.markAsPristine();
         this.privateFormGroup.get('email').setValue(this.backup.email);
     }
 

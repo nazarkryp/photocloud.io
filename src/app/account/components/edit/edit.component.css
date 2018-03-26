@@ -1,6 +1,7 @@
 textarea.bio {
     line-height: 2;
     resize: none;
+    text-align: justify;
 }
 
 .edit-container {
@@ -12,6 +13,10 @@ textarea.bio {
     padding: 1.4rem;
     box-sizing: border-box;
     position: relative;
+}
+
+.edit-container button {
+    font-weight: bold;
 }
 
 .edit-container .overlay {

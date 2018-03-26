@@ -14,9 +14,9 @@
             </div>
         </div>
         <div class="item">
-            <div style="padding-bottom: .7rem;">
-                <span style="font-weight: 900; text-transform: uppercase;">Personal information</span>
-            </div>
+            <h4>
+                Personal information
+            </h4>
             <form class="form" [formGroup]="formGroup" (ngSubmit)="save()">
                 <mat-form-field style="width: 100%;">
                     <input formControlName="username" matInput placeholder="Username" type="text" autocomplete="off">
@@ -44,17 +44,17 @@
                 <mat-form-field style="width: 100%;">
                     <textarea class="bio" formControlName="bio" rows="3" matInput placeholder="Bio" type="text" autocomplete="off" spellcheck="false"></textarea>
                 </mat-form-field>
-                <div fxLayout="row" fxLayoutAlign="end center">
+                <div fxLayout="row" fxLayoutAlign="end center" style="height: 40px;">
                     <button mat-button *ngIf="formGroup.dirty" (click)="cancel()">CANCEL</button>
-                    <button mat-button color="primary" type="sumit" [disabled]="!formGroup.valid || !formGroup.dirty">SAVE CHANGES</button>
+                    <button mat-raised-button color="primary" type="sumit" *ngIf="formGroup.valid && formGroup.dirty">SAVE CHANGES</button>
                 </div>
             </form>
         </div>
 
         <div class="item">
-            <div style="padding-bottom: .7rem;">
-                <span style="font-weight: 900; text-transform: uppercase;">Private information</span>
-            </div>
+            <h4>
+                Private information
+            </h4>
             <form class="form" [formGroup]="privateFormGroup">
                 <mat-form-field style="width: 100%;">
                     <input formControlName="email" matInput placeholder="Email Address" type="email" autocomplete="off">
@@ -79,8 +79,9 @@
                         Email with such name already exists
                     </mat-error>
                 </mat-form-field>
-                <div fxLayout="row" fxLayoutAlign="end center">
-                    <button type="submit" mat-button color="primary" [disabled]="!privateFormGroup.valid || !privateFormGroup.dirty">SAVE CHANGES</button>
+                <div fxLayout="row" fxLayoutAlign="end center" style="height: 40px;">
+                    <button mat-button *ngIf="privateFormGroup.valid && privateFormGroup.dirty" (click)="cancelEmailChange()">CANCEL</button>
+                    <button type="submit" mat-raised-button color="primary" *ngIf="privateFormGroup.valid && privateFormGroup.dirty">SAVE CHANGES</button>
                 </div>
             </form>
             <div class="item" fxLayout="row" fxLayoutAlign="space-between start">

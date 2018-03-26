@@ -6,7 +6,7 @@
             <h3>No posts matching '{{tag}}' were found</h3>
         </div>
     </div>
-    <div class="tags-media">
+    <div class="tags-media" appScroll [appScrollTriggerOnce]="true" [scrollOffset]="6000" (scrollPosition)="onPositionChange()">
         <div *ngFor="let media of page?.data;">
             <div class="tags-media-item" (click)="openPostDialog(media)">
                 <img class="tags-media-thumbnail" src="{{media?.attachments[0].uri}}" alt="media-image" *ngIf="media?.attachments[0].type !== 1">

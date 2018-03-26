@@ -63,7 +63,7 @@
                 </div>
             </div>
             <div fxLayout="row" fxLayoutAlign="start start" *ngIf="user.isActive">
-                <p style="line-height: 2;">
+                <p style="line-height: 2; text-align: justify;">
                     <strong>{{user.fullName}}</strong>
                     {{user.bio | truncate:truncateWidth}}
                     <a class="primary" (click)="increaseTruncateSize()" *ngIf="user.bio && user.bio.length > defaultTruncateWidth && truncateWidth === defaultTruncateWidth">show more</a>

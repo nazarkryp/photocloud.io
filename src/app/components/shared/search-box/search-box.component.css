@@ -13,7 +13,7 @@
 }
 
 .search-box-container {
-    width: 600px;
+    max-width: 600px;
     position: relative;
     color: rgb(0,0,0,.85);
     z-index: 777;

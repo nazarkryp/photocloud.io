@@ -7,9 +7,10 @@ header.toolbar {
 
 .mat-toolbar-layout {
     width: 100%;
+    max-width: 960px;
 }
 
-@media screen and (max-width: 870px) {
+@media screen and (max-width: 600px) {
     .search-box-container {
         display: none;
     }
@@ -19,7 +20,9 @@ header.toolbar {
 }
 
 .search-box-container {
-    width: 600px;
+    width: 620px;
+    padding: 0 10px;
+    box-sizing: border-box;
 }
 
 .container {
@@ -47,7 +50,7 @@ mat-icon>svg {
 .custom-big-icon {
     cursor: pointer;
     outline: none;
-    color: rgb(0,0,0,.85);
+    color: rgb(0, 0, 0, .85);
     width: 35px;
     height: 35px;
 }
@@ -66,7 +69,7 @@ td-notification-count .mat-icon {
 }
 
 td-notification-count .btn-icon {
-    color: rgb(0,0,0,.85);
+    color: rgb(0, 0, 0, .85);
 }
 
 td-notification-count .btn-icon:hover {
@@ -78,4 +81,3 @@ td-notification-count .btn-icon:hover {
     color: #e91e63;
     font-family: 'Roboto', sans-serif;
 }
-

@@ -40,19 +40,6 @@ export class MediaComponent implements OnInit, OnDestroy {
             });
     }
 
-    @HostListener('window:scroll', ['$event'])
-    checkScroll() {
-        const componentPosition = this.el.nativeElement.offsetTop
-        const scrollPosition = window.pageYOffset
-
-        if (scrollPosition >= componentPosition) {
-            this.state = 'show'
-        } else {
-            this.state = 'hide'
-        }
-
-    }
-
     public createMedia() {
         const dialogRef = this.dialog.open(CreateMediaComponent, { disableClose: true });
 
@@ -69,12 +56,16 @@ export class MediaComponent implements OnInit, OnDestroy {
             });
     }
 
-    public getMedia() {
+    public getMedia(showProgress: boolean = true) {
         this.isLoading = true;
-        this.progress.start();
+
+        if (showProgress) {
+            this.progress.start();
+        }
 
         this.mediaService.getRecentMedia(this.page.pagination)
             .finally(() => {
+                this.isLoading = false;
                 this.progress.done();
             })
             .subscribe(page => {
@@ -104,6 +95,12 @@ export class MediaComponent implements OnInit, OnDestroy {
                     .subscribe();
             }
         });
+    }
+
+    public onPositionChange() {
+        if (!this.isLoading && this.page && this.page.hasMoreItems) {
+            this.getMedia(false);
+        }
     }
 
     public ngOnInit() {

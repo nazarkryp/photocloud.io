@@ -31,7 +31,7 @@ export class UserMediaComponent implements OnInit, OnDestroy {
     public canEditRelationship: boolean;
     public isModifyingRelationship = false;
 
-    public isLoadingPosts: boolean;
+    public isLoading: boolean;
 
     constructor(
         private viewContainerRef: ViewContainerRef,
@@ -49,10 +49,10 @@ export class UserMediaComponent implements OnInit, OnDestroy {
             });
     }
 
-    public getMedia() {
-        this.isLoadingPosts = true;
+    public getMedia(showProgress: boolean = true) {
+        this.isLoading = true;
 
-        if (!this.progress.isStarted()) {
+        if (showProgress && !this.progress.isStarted()) {
             this.progress.start();
         }
 
@@ -62,7 +62,7 @@ export class UserMediaComponent implements OnInit, OnDestroy {
                     this.progress.done();
                 }
 
-                this.isLoadingPosts = false;
+                this.isLoading = false;
             })
             .subscribe((page: Page<MediaViewModel>) => {
                 this.userMedia.page.hasMoreItems = page.hasMoreItems;
@@ -117,6 +117,12 @@ export class UserMediaComponent implements OnInit, OnDestroy {
                 this.mediaService.removeMedia(media.id).subscribe();
             }
         });
+    }
+
+    public onPositionChange() {
+        if (!this.isLoading && this.userMedia && this.userMedia.page && this.userMedia.page.hasMoreItems) {
+            this.getMedia(false);
+        }
     }
 
     public ngOnInit() {

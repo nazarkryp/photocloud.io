@@ -40,8 +40,11 @@ export class TagsComponent implements OnInit, OnDestroy {
             });
     }
 
-    public getMedia() {
-        this.progress.start();
+    public getMedia(showProgress: boolean = true) {
+        if (showProgress) {
+            this.progress.start();
+        }
+
         this.isLoading = true;
         this.mediaService.getMediaByTag(this.tag, this.page.pagination)
             .finally(() => {
@@ -65,6 +68,12 @@ export class TagsComponent implements OnInit, OnDestroy {
         const dialogRef = this.dialog.open(MediaDetailsComponent, {
             data: media
         });
+    }
+
+    public onPositionChange() {
+        if (!this.isLoading && this.page && this.page.hasMoreItems) {
+            this.getMedia(false);
+        }
     }
 
     public ngOnInit() {
