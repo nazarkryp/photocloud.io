@@ -9,6 +9,7 @@ export class TokenMapper {
 
         accessToken.accessToken = response['access_token'];
         accessToken.refreshToken = response['refresh_token'];
+        accessToken.code = response['code'];
         accessToken.tokenType = response['token_type'];
         accessToken.expiresIn = response['expires_in'];
         accessToken.issued = new Date(response['.issued']);

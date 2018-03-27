@@ -6,7 +6,7 @@ import { RelationshipStatus } from 'app/models/shared';
     name: 'relationshipAction'
 })
 export class RelationshipActionPipe implements PipeTransform {
-    transform(relationshipStatus: number): string {
+    public transform(relationshipStatus: number): string {
         if (relationshipStatus === RelationshipStatus.None) {
             return 'follow';
         }

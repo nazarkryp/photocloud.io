@@ -1,12 +1,22 @@
-<div fxLayout="column" fxLayoutAlign="start center">
+<div style="position: relative;" fxLayout="column" fxLayoutAlign="start center">
     <div class="edit-container">
+        <div class="overlay" *ngIf="isInvertingAccountStatus">
+        </div>
         <div fxLayout="row" fxLayoutAlign="center center">
-            <img src="{{currentUser.pictureUri}}" default="assets/images/user-default-image.png">
+            <mat-progress-spinner [value]="progress" [mode]="progressSpinnerMode" [diameter]="120" [strokeWidth]="3" style="position: absolute; z-index: 0;"></mat-progress-spinner>
+            <div class="edit-image">
+                <div class="change-overlay" fxLayout="row" fxLayoutAlign="center center" (click)="fileInput.click()" *ngIf="currentUser.isActive && !isUploading">
+                    <span>Change</span>
+                </div>
+                <img class="thumbnail-big" src="{{currentUser.pictureUri}}" default="assets/images/user-default-image.png" appImagePreview
+                    [image]="uploader.queue[0]?._file" alt="{{currentUser.username}}" />
+                <input #fileInput type="file" accept="image/*" ng2FileSelect [uploader]="uploader" hidden/>
+            </div>
         </div>
         <div class="item">
-            <div style="padding-bottom: .7rem;">
-                <span style="font-weight: bold;">Personal Information</span>
-            </div>
+            <h4>
+                Personal information
+            </h4>
             <form class="form" [formGroup]="formGroup" (ngSubmit)="save()">
                 <mat-form-field style="width: 100%;">
                     <input formControlName="username" matInput placeholder="Username" type="text" autocomplete="off">
@@ -32,19 +42,19 @@
                     <input formControlName="fullName" matInput placeholder="Full Name" type="text" autocomplete="off">
                 </mat-form-field>
                 <mat-form-field style="width: 100%;">
-                    <input formControlName="bio" matInput placeholder="Bio" type="text" autocomplete="off">
+                    <textarea class="bio" formControlName="bio" rows="3" matInput placeholder="Bio" type="text" autocomplete="off" spellcheck="false"></textarea>
                 </mat-form-field>
-                <div fxLayout="row" fxLayoutAlign="end center">
+                <div fxLayout="row" fxLayoutAlign="end center" style="height: 40px;">
                     <button mat-button *ngIf="formGroup.dirty" (click)="cancel()">CANCEL</button>
-                    <button mat-raised-button color="primary" type="sumit" [disabled]="!formGroup.valid || !formGroup.dirty">SAVE CHANGES</button>
+                    <button mat-raised-button color="primary" type="sumit" *ngIf="formGroup.valid && formGroup.dirty">SAVE CHANGES</button>
                 </div>
             </form>
         </div>
 
         <div class="item">
-            <div style="padding-bottom: .7rem;">
-                <span style="font-weight: bold;">Private Information</span>
-            </div>
+            <h4>
+                Private information
+            </h4>
             <form class="form" [formGroup]="privateFormGroup">
                 <mat-form-field style="width: 100%;">
                     <input formControlName="email" matInput placeholder="Email Address" type="email" autocomplete="off">
@@ -69,25 +79,36 @@
                         Email with such name already exists
                     </mat-error>
                 </mat-form-field>
-                <div fxLayout="row" fxLayoutAlign="end center">
-                    <button type="submit" mat-raised-button color="primary" [disabled]="!privateFormGroup.valid || !privateFormGroup.dirty">SAVE CHANGES</button>
+                <div fxLayout="row" fxLayoutAlign="end center" style="height: 40px;">
+                    <button mat-button *ngIf="privateFormGroup.valid && privateFormGroup.dirty" (click)="cancelEmailChange()">CANCEL</button>
+                    <button type="submit" mat-raised-button color="primary" *ngIf="privateFormGroup.valid && privateFormGroup.dirty">SAVE CHANGES</button>
                 </div>
             </form>
             <div class="item" fxLayout="row" fxLayoutAlign="space-between start">
                 <div>
                     <span class="mat-body-1" [ngClass]="{ 'disabled' : !currentUser.isActive }">Private Account</span>
-                    <p style="color: gray; font-weight: lighter; font-size: .8em; line-height: 1.5;">When your account is private, only people you approve can see your photos and videos on PhotoCloud. Your existing followers won't be affected</p>
+                    <p style="color: rgb(0,0,0,.6); font-weight: lighter; font-size: .8em; line-height: 1.5;">When your account is private, only people you approve can see your photos and videos on PhotoCloud. Your
+                        existing followers won't be affected</p>
                 </div>
-                <mat-slide-toggle [(ngModel)]="currentUser.isPrivate" [checked]="currentUser.isPrivate" (change)='invertAccountPrivateStatus($event)' [disabled]="!currentUser.isActive"></mat-slide-toggle>
+                <mat-slide-toggle color="primary" [(ngModel)]="currentUser.isPrivate" [checked]="currentUser.isPrivate" (change)='invertAccountPrivateStatus($event)'
+                    [disabled]="!currentUser.isActive"></mat-slide-toggle>
             </div>
-            <div style="padding-bottom: .7rem; font-size: .9em;">
-                <a class="link-button" *ngIf="currentUser.isActive" (click)="changePassword()">Change Password</a>
-                <span class="disabled" *ngIf="!currentUser.isActive">Change Password</span>
+            <div class="item" fxLayout="row" fxLayoutAlign="space-between start">
+                <div>
+                    <span class="mat-body-1" [ngClass]="{ 'disabled' : !currentUser.isActive }">Remember me</span>
+                    <p style="color: rgb(0,0,0,.6); font-weight: lighter; font-size: .8em; line-height: 1.5;">When this option is enabled system will allow you to autologin</p>
+                </div>
+                <mat-slide-toggle color="primary" [(ngModel)]="currentUser.canAutoLogin" [checked]="currentUser.canAutoLogin" (change)='invertAccountAutoLoginStatus($event)'
+                    [disabled]="!currentUser.isActive"></mat-slide-toggle>
+            </div>
+            <div class="item">
+                <a class="mat-body-1" *ngIf="currentUser.isActive" (click)="changePassword()">Change Password</a>
+                <span class="mat-body-1 disabled" *ngIf="!currentUser.isActive">Change Password</span>
             </div>
         </div>
 
-        <div class="item" fxLayout="row" fxLayoutAlign="end center">
-            <a class="link-button" (click)="invertAccountStatus()">{{currentUser.isActive ? 'Temporarily disable my account' : 'Enable account'}}</a>
+        <div class="item" fxLayout="row" fxLayoutAlign="start center">
+            <button class="btn-deactivate" mat-button color="warn" (click)="invertAccountStatus()">{{currentUser.isActive ? 'Temporarily disable my account' : 'Enable account'}}</button>
         </div>
     </div>
 </div>

@@ -1,5 +1,6 @@
 @import '~@angular/material/theming';
 @import '~@covalent/core/theming/all-theme';
+@import 'src/app/core/badge/_badge-theme.scss';
 @include mat-core();
 $primary: mat-palette($mat-pink);
 $accent: mat-palette($mat-blue, 500, 900, A100);

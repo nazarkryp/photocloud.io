@@ -14,7 +14,7 @@ export class InternetConnectionFilter implements HttpErrorFilter {
 
     public handle(response: HttpErrorResponse): ErrorObservable {
         if (response.status === HttpStatusCode.None) {
-            this.router.navigateByUrl('/nointernetconnection', { skipLocationChange: true });
+            this.router.navigateByUrl('/offline', { skipLocationChange: true });
 
             return Observable.throw(response);
         }

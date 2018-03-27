@@ -13,16 +13,18 @@
                     </button>
                 </div>
             </div>
-            <div *ngFor="let attachment of media.attachments; let index = index;" [hidden]="index !== media.activeAttachment">
-                <img class="media-details-attachment" [ngClass]="{ 'dialog' : isDialog}" src="{{attachment.uri}}" alt="media-image" *ngIf="attachment.type !== 1">
-                <video class="media-details-attachment" [ngClass]="{ 'dialog' : isDialog}" *ngIf="attachment.type === 1" loop #player>
-                    <source src="{{attachment.uri}}">
-                </video>
+            <div *ngFor="let attachment of media.attachments; let index = index;">
+                <div [hidden]="index !== media.activeAttachment" *ngIf="(media.activeAttachment === index && attachment.type === 1) || (attachment.type !== 1)">
+                    <img class="media-details-attachment" [ngClass]="{ 'dialog' : isDialog}" src="{{attachment.uri}}" alt="media-image" *ngIf="attachment.type !== 1">
+                    <video class="media-details-attachment" [ngClass]="{ 'dialog' : isDialog}" *ngIf="attachment.type === 1" loop #player>
+                        <source src="{{attachment.uri}}">
+                    </video>
+                </div>
             </div>
         </div>
         <div class="media-details-info-container" fxLayout="column" *ngIf="!media.inspectingLikes; else inspectingLikesTemplate">
             <div>
-                <div class="media-details-header" fxLayout="row" fxLayoutAlign="start center" style="padding-bottom: .7rem; border-bottom: 1px solid #d8d8d8;">
+                <div class="media-details-header" fxLayout="row" fxLayoutAlign="start center">
                     <img class="media-avatar" [routerLink]="['/', media.user.username]" src="{{media.user.pictureUri}}" default="assets/images/user-default-image.png" alt="profile">
                     <div fxLayout="row" fxLayoutAlign="start center" fxFlex>
                         <div fxLayout="row" fxLayoutAlign="space-between start" style="width: 100%;">
@@ -32,16 +34,14 @@
                                     <span class="media-details-created">{{media.created | timeAgo}}</span>
                                 </div>
                             </div>
-                            <button mat-icon-button *ngIf="currentUser && currentUser.id === media.user.id" (click)="edit()">
-                                <mat-icon class="btn-icon mat-24">edit</mat-icon>
-                            </button>
+                            <mat-icon class="btn-icon mat-18" *ngIf="currentUser && currentUser.id === media.user.id" (click)="edit()">edit</mat-icon>
                         </div>
                     </div>
                 </div>
             </div>
             <div fxLayout="row" fxLayoutAlign="space-between center" style="margin-top: 1.3rem;">
                 <div fxLayout="row" fxLayoutAlign="start center">
-                    <mat-icon class="mat-18" style="color: #444444; margin-right: .25rem;" *ngIf="media.likesCount === 0 || media.likesCount > 3">favorite</mat-icon>
+                    <mat-icon class="mat-18" style="color: rgb(0,0,0,.85); margin-right: .25rem;" *ngIf="media.likesCount === 0 || media.likesCount > 3">favorite</mat-icon>
                     <app-likes [media]="media" (onClicked)="inspectLikes($event)"></app-likes>
                 </div>
             </div>
@@ -54,14 +54,15 @@
             <div class="media-details-comments-container" fxLayout="column" fxFlex>
                 <span class="media-details-comments-header">Comments</span>
                 <div *ngIf="media.commentsCount === 0" fxLayout="column" fxLayoutAlign="center center" style="height: 100%;">
-                    <span style="font-weight: normal; font-size: .9em; color: gray; letter-spacing: 1px; text-transform: uppercase;">No comments yet</span>
+                    <span style="font-weight: normal; font-size: .9em; color: rgb(0,0,0,.6); letter-spacing: 1px; text-transform: uppercase;" *ngIf="media.allowComments">No comments yet</span>
+                    <span style="font-weight: normal; font-size: .9em; color: rgb(0,0,0,.6); letter-spacing: 1px;" *ngIf="!media.allowComments">Commenting on this photo is restricted</span>
                 </div>
-                <app-comments style="font-size: 0.95em;" [media]="media" *ngIf="media.commentsCount > 0"></app-comments>
+                <app-comments #commentsComponent [media]="media"></app-comments>
             </div>
             <div style="box-sizing: border-box;">
                 <div fxLayout="row" fxLayoutAlign="space-between center" style="border-top: 1px solid #d8d8d8; padding-top: .7rem;" *ngIf="!showCommentBox">
                     <div fxLayout="row" fxLayoutAlign="start center" *ngIf="currentUser">
-                        <mat-icon [@tdJello]="bounceState" class="btn-icon mat-24" [ngClass]="{ 'liked' : media.userHasLiked }" (click)="like()">favorite</mat-icon>
+                        <mat-icon class="btn-icon mat-24" [ngClass]="{ 'liked' : media.userHasLiked }" (click)="like()">favorite</mat-icon>
                         <mat-icon class="btn-icon mat-24" svgIcon="comment" style="margin-left: .7rem;" *ngIf="media.allowComments" (click)="showCommentBox = !showCommentBox"></mat-icon>
                     </div>
                     <mat-icon class="btn-icon mat-24" matTooltip="Share" matTooltipPosition="left" ngxClipboard [cbContent]="share()" (cbOnSuccess)="showToast('Copied to clipboard')">share</mat-icon>
@@ -89,17 +90,17 @@
         </div>
         <div class="media-details-info-container" [ngClass]="{ 'dialog' : isDialog }" fxLayout="column">
             <div class="media-details-caption-edit" fxLayout="column">
-                <div fxLayout="row" fxLayoutAlign="space-between center" style="padding-bottom: .5rem; font-weight: bold;">
-                    <span>Edit caption</span>
+                <div fxLayout="row" fxLayoutAlign="space-between center" style="padding-bottom: .5rem;">
+                    <span style="font-weight: 800;">Edit caption</span>
                 </div>
                 <textarea type="text" rows="3" placeholder="Write a caption..." [(ngModel)]="updateMediaModel.caption"></textarea>
             </div>
             <div style="padding-top: 1rem;" fxLayout="column">
-                <span style="font-weight: bold; padding-bottom: .5rem;">Comments settings</span>
+                <span style="font-weight: 900; padding-bottom: .5rem;">Comments settings</span>
                 <mat-slide-toggle [(ngModel)]="updateMediaModel.allowComments" labelPosition="before">Allow comments</mat-slide-toggle>
             </div>
             <div style="padding-top: 1rem;" fxLayout="row" fxLayoutAlign="space-between center">
-                <span style="font-weight: bold;">Manage attachments</span>
+                <span style="font-weight: 900;">Manage attachments</span>
             </div>
             <div fxFlex>
                 <div class="media-details-edit-attachments">
@@ -112,7 +113,7 @@
                                 <mat-icon class="mat-36">check</mat-icon>
                             </div>
                             <div class="media-details-edit-overlay-removed" fxLayout="column" fxLayoutAlign="center center">
-                                <span style="letter-spacing: 1px; font-weight: bold;">REMOVED</span>
+                                <span style="letter-spacing: 1px; font-weight: 900;">REMOVED</span>
                                 <button mat-icon-button color="primary" (click)="restoreRemovedAttachment(attachment)">
                                     <mat-icon>restore</mat-icon>
                                 </button>
@@ -139,6 +140,6 @@
 
 <ng-template #inspectingLikesTemplate>
     <div class="media-details-info-container" fxLayout="column">
-        <app-users [config]="usersConfig" (onClose)="likesClose()"></app-users>
+        Likes
     </div>
 </ng-template>

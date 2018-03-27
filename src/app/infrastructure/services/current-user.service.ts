@@ -10,6 +10,7 @@ import { AccountService } from 'app/account/services';
 import { LocalStorageService } from 'app/infrastructure/services/storage';
 import { TokenProvider } from 'app/infrastructure/security';
 import { AccessToken } from 'app/infrastructure/security/access-token.model';
+import { CreateAccountRequestModel } from 'app/account/models/request';
 
 @Injectable()
 export class CurrentUserService {
@@ -27,6 +28,16 @@ export class CurrentUserService {
         this.state.next(currentUser);
     }
 
+    public get canSignInWithCode(): boolean {
+        const token = this.tokenProvider.retrieveAccessToken();
+
+        if (token && token.code) {
+            return true;
+        }
+
+        return false;
+    }
+
     public signIn(username: string, password: string): Observable<any> {
         return this.accountService.signIn(username, password)
             .mergeMap<AccessToken, CurrentUserViewModel>(accessToken => {
@@ -39,8 +50,65 @@ export class CurrentUserService {
             })
     }
 
+    public create(request: CreateAccountRequestModel): Observable<any> {
+        debugger;
+        if (request.signInOnCreated) {
+            return this.accountService.create(request)
+                .mergeMap<AccessToken, CurrentUserViewModel>(accessToken => {
+                    this.tokenProvider.setAccessToken(accessToken);
+                    return this.accountService.getAccount()
+                        .map(currentUser => {
+                            this.saveCurrentUser(currentUser);
+                            return currentUser;
+                        });
+                });
+        }
+
+        return this.accountService.create(request);
+    }
+
+    public signInWithCode(code: string = null): Observable<any> {
+        if (!code) {
+            const token = this.tokenProvider.retrieveAccessToken();
+            code = token.code;
+        }
+
+        return this.accountService.signInWithCode(code)
+            .mergeMap<AccessToken, CurrentUserViewModel>(accessToken => {
+                this.tokenProvider.setAccessToken(accessToken);
+                return this.accountService.getAccount()
+                    .map(currentUser => {
+                        this.saveCurrentUser(currentUser);
+                        return currentUser;
+                    });
+            })
+    }
+
+    public enableSignInWithCode(): Observable<any> {
+        return this.accountService.enableSignInWithCode()
+            .do((code) => {
+                const token = this.tokenProvider.retrieveAccessToken();
+                token.code = code;
+                this.tokenProvider.setAccessToken(token);
+            });
+    }
+
+    public disableSignInWithCode(): Observable<any> {
+        return this.accountService.disableSignInWithCode()
+            .do(() => {
+                const token = this.tokenProvider.retrieveAccessToken();
+                token.code = null;
+                this.tokenProvider.setAccessToken(token);
+            });
+    }
+
+    public recover(username): Observable<any> {
+        return Observable.of(true);
+    }
+
     public signOut() {
         this.storageService.clear();
+        this.state.next(null);
     }
 
     public getCurrentUser(refresh: boolean = false): Observable<CurrentUserViewModel> {
@@ -63,6 +131,13 @@ export class CurrentUserService {
 
     public updateCurrentUser(propertiesToUpdate: any): Observable<CurrentUserViewModel> {
         return this.accountService.updateAccount(propertiesToUpdate)
+            .do(currentUser => {
+                this.saveCurrentUser(currentUser);
+            });
+    }
+
+    public changeAccountAttachment(propertiesToUpdate: any): Observable<CurrentUserViewModel> {
+        return this.accountService.changeAccountAttachment(propertiesToUpdate)
             .do(currentUser => {
                 this.saveCurrentUser(currentUser);
             });

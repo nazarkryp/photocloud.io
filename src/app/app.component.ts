@@ -7,7 +7,7 @@ import { trigger, transition, style, animate } from '@angular/animations';
 import { CurrentUserService } from 'app/infrastructure/services';
 
 import { NgProgress } from 'ngx-progressbar';
-import { IncommingRequestsService } from 'app/services';
+import { RequestsService } from 'app/services';
 import { CurrentUserViewModel } from 'app/models/view';
 
 @Component({
@@ -19,6 +19,7 @@ export class AppComponent implements OnInit {
     @ViewChild('notificationsSidenav')
     public notificationsSidenav: MatSidenav;
     public renderToolbar = false;
+    public renderFooter = false;
     public initialLoad = true;
     public currentUser: CurrentUserViewModel;
     public showAuthenticationBar = true;
@@ -27,9 +28,8 @@ export class AppComponent implements OnInit {
         private router: Router,
         private currentUserService: CurrentUserService,
         private progress: NgProgress,
-        private incommingRequestsService: IncommingRequestsService) {
+        private incommingRequestsService: RequestsService) {
         this.currentUserService.getCurrentUser(true)
-            .take(1)
             .subscribe(currentUser => {
                 this.currentUser = currentUser;
                 this.initialLoad = false;
@@ -53,7 +53,7 @@ export class AppComponent implements OnInit {
             if (event instanceof ResolveStart) {
                 this.progress.start();
             } else if (event instanceof ResolveEnd) {
-                window.scrollTo(0, 0)
+                window.scrollTo(0, 0);
                 this.progress.done();
             }
 
@@ -63,9 +63,21 @@ export class AppComponent implements OnInit {
 
     private navigationInterceptor(event): void {
         if (event instanceof NavigationEnd) {
-            this.renderToolbar = this.router.url !== '/account/signin'
-                && this.router.url !== '/account/create'
-                && this.router.url !== '/account/recover';
+            if (this.currentUser) {
+                this.hideAuthenticationBar()
+            }
+
+            this.renderFooter = this.router.url !== null;
+
+            if (['terms', 'privacy', 'account', '/account/'].some(ex => this.router.url.includes(ex))) {
+                this.hideAuthenticationBar();
+            }
+
+            this.renderToolbar =
+                this.router.url !== '/account/signin' &&
+                this.router.url !== '/account/create' &&
+                this.router.url !== '/account/recover' &&
+                this.router.url !== '/account/autologin';
         }
     }
 }

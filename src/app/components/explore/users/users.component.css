@@ -1,9 +1,17 @@
 .user-search-container {
     width: 600px;
-    padding: 1rem;
+    padding: 1.4rem;
     background: white;
     box-sizing: border-box;
     box-shadow: 0 3px 8px -3px rgba(0, 0, 0, 0.26);
+}
+
+.user-search-title {
+    font-size: 1.4em;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgb(0,0,0,.85);
 }
 
 .search-results-container>.search-result {
@@ -25,13 +33,13 @@
 }
 
 .search-result-username {
-    font-size: 1em;
-    color: #444444;
+    color: rgb(0,0,0,.85);
     padding-bottom: .5rem;
+    font-weight: 900;
 }
 
 .search-result-last-active {
-    color: gray;
+    color: #9A9A9A;
     font-weight: normal;
     font-size: .9em;
 }

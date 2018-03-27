@@ -1,12 +1,12 @@
 <div fxLayout="column" fxLayoutAlign="start center">
     <div class="user-search-container" fxLayout="column">
-        <div style="padding: .7rem 0 1.4rem 0; border-bottom: 1px solid #efefef;" fxLayout="row" fxLayoutAlign="space-between center">
-            <span style="font-size: 1.3em; font-weight: lighter;">Discover People</span>
+        <div fxLayout="row" fxLayoutAlign="space-between center">
+            <span class="user-search-title">Discover People</span>
             <button mat-icon-button [disabled]="isLoading" (click)="refresh()">
                 <mat-icon class="btn-icon mat-24" [ngClass]="{ 'disabled' : isLoading }" svgIcon="refresh"></mat-icon>
             </button>
         </div>
-        <div class="search-results-container">
+        <div class="search-results-container" [@listAnimation]="page.data.length">
             <div class="search-result" *ngFor="let user of page.data" fxLayout="row" fxLayoutAlign="start center" style="margin-top:20px;">
                 <img [routerLink]="['/', user.username]" src="{{user.pictureUri}}" default="assets/images/user-default-image.png" alt="profile">
                 <div class="search-result-user-details" fxLayout="row" fxLayoutAlign="space-between start" fxFlex>
@@ -16,14 +16,14 @@
                     </div>
                     <div fxLayout="row" fxLayoutAlign="center end">
                         <button class="btn-relationships" mat-button (click)="modifyRelationship(user)" [disabled]="modifying[user.id]" *ngIf="currentUser && currentUser.isActive && currentUser.id !== user.id">
-                            {{user.incommingStatus | relationshipAction | uppercase}}
+                            {{user.relationship.outgoingStatus | relationshipAction | uppercase}}
                         </button>
                     </div>
                 </div>
             </div>
         </div>
-        <div fxLayout="row" fxLayoutAlign="center center" *ngIf="page.hasMoreItems" style="border-top: 1px solid #efefef; padding-top: 1rem;">
-            <button class="btn-default" mat-button (click)="getUsers()" [disabled]="isLoading">Load More</button>
+        <div fxLayout="row" fxLayoutAlign="center center" *ngIf="page.hasMoreItems" style="border-top: 1px solid #efefef; padding-top: 1.4rem;">
+            <button class="btn-primary" mat-button (click)="getUsers()" [disabled]="isLoading">Load More</button>
         </div>
     </div>
 </div>

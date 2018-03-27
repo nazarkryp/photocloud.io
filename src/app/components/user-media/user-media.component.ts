@@ -8,10 +8,10 @@ import { Subscription } from 'rxjs/Subscription';
 import { AccountService } from 'app/account/services';
 import { CurrentUserService } from 'app/infrastructure/services';
 import { MediaService, UserService } from 'app/services';
-import { CurrentUserViewModel, MediaViewModel, AttachmentViewModel, UserViewModel, PageViewModel, ErrorViewModel, UserMediaViewModel } from 'app/models/view';
+import { CurrentUserViewModel, MediaViewModel, AttachmentViewModel, UserViewModel, Page, ErrorViewModel, UserMediaViewModel } from 'app/models/view';
 import { RelationshipStatus, ValidationResult, } from 'app/models/shared'
 import { MediaDetailsComponent } from 'app/components/shared/media-details/media-details.component';
-import { UsersComponent } from '../shared/users/users.component';
+import { UsersDialogComponent } from '../shared/users-dialog/users-dialog.component';
 import { NgProgress } from 'ngx-progressbar';
 import { ConfirmComponent } from 'app/components/shared/confirm/confirm.component';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -31,7 +31,7 @@ export class UserMediaComponent implements OnInit, OnDestroy {
     public canEditRelationship: boolean;
     public isModifyingRelationship = false;
 
-    public isLoadingPosts: boolean;
+    public isLoading: boolean;
 
     constructor(
         private viewContainerRef: ViewContainerRef,
@@ -49,10 +49,10 @@ export class UserMediaComponent implements OnInit, OnDestroy {
             });
     }
 
-    public getMedia() {
-        this.isLoadingPosts = true;
+    public getMedia(showProgress: boolean = true) {
+        this.isLoading = true;
 
-        if (!this.progress.isStarted()) {
+        if (showProgress && !this.progress.isStarted()) {
             this.progress.start();
         }
 
@@ -62,9 +62,9 @@ export class UserMediaComponent implements OnInit, OnDestroy {
                     this.progress.done();
                 }
 
-                this.isLoadingPosts = false;
+                this.isLoading = false;
             })
-            .subscribe((page: PageViewModel<MediaViewModel>) => {
+            .subscribe((page: Page<MediaViewModel>) => {
                 this.userMedia.page.hasMoreItems = page.hasMoreItems;
                 this.userMedia.page.pagination = page.pagination;
 
@@ -92,7 +92,7 @@ export class UserMediaComponent implements OnInit, OnDestroy {
             validationResult.error = new ErrorViewModel('Account is not active');
         } else if (user.isPrivate
             && (!currentUser || user.id !== currentUser.id)
-            && user.incommingStatus !== RelationshipStatus.Following) {
+            && user.relationship.outgoingStatus !== RelationshipStatus.Following) {
             validationResult.hasErrors = true;
             validationResult.error = new ErrorViewModel('Account is private');
             validationResult.error.description = currentUser
@@ -119,9 +119,15 @@ export class UserMediaComponent implements OnInit, OnDestroy {
         });
     }
 
+    public onPositionChange() {
+        if (!this.isLoading && this.userMedia && this.userMedia.page && this.userMedia.page.hasMoreItems) {
+            this.getMedia(false);
+        }
+    }
+
     public ngOnInit() {
         this.routeSubscription = this.route.paramMap.subscribe(params => {
-            this.initializePage();
+            this.reset();
             this.userMedia = this.route.snapshot.data['userMedia'];
         });
     }
@@ -136,9 +142,9 @@ export class UserMediaComponent implements OnInit, OnDestroy {
         }
     }
 
-    private initializePage(): void {
+    private reset(): void {
         this.userMedia = new UserMediaViewModel();
-        this.userMedia.page = new PageViewModel<MediaViewModel>();
+        this.userMedia.page = new Page<MediaViewModel>();
         this.userMedia.page.hasMoreItems = false;
         this.userMedia.page.pagination = null;
         this.userMedia.page.data = [];

@@ -1,13 +1,15 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener, ElementRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material';
+
 import { Subscription } from 'rxjs/Subscription';
 
-import { MediaViewModel, UserViewModel, PageViewModel, CommentViewModel, AttachmentViewModel, CurrentUserViewModel } from 'app/models/view';
+import { MediaViewModel, UserViewModel, Page, CommentViewModel, AttachmentViewModel, CurrentUserViewModel } from 'app/models/view';
 import { CurrentUserService } from 'app/infrastructure/services';
 import { MediaService } from 'app/services';
 import { CreateMediaComponent } from 'app/components/shared/create-media/create-media.component';
 import { ConfirmComponent } from 'app/components/shared/confirm/confirm.component';
+
 import { NgProgress } from 'ngx-progressbar';
 
 @Component({
@@ -17,11 +19,14 @@ import { NgProgress } from 'ngx-progressbar';
 })
 export class MediaComponent implements OnInit, OnDestroy {
     private currentUserSubscription: Subscription;
-    public page: PageViewModel<MediaViewModel> = new PageViewModel<MediaViewModel>();
+    public page: Page<MediaViewModel> = new Page<MediaViewModel>();
     public isLoading = false;
     public currentUser: CurrentUserViewModel;
 
+    public state = 'hide';
+
     constructor(
+        public el: ElementRef,
         private activatedRoute: ActivatedRoute,
         private mediaService: MediaService,
         private currentUserService: CurrentUserService,
@@ -35,8 +40,8 @@ export class MediaComponent implements OnInit, OnDestroy {
             });
     }
 
-    public createPost() {
-        const dialogRef = this.dialog.open(CreateMediaComponent);
+    public createMedia() {
+        const dialogRef = this.dialog.open(CreateMediaComponent, { disableClose: true });
 
         dialogRef.afterClosed()
             .subscribe(createdPost => {
@@ -51,12 +56,16 @@ export class MediaComponent implements OnInit, OnDestroy {
             });
     }
 
-    public getMedia() {
+    public getMedia(showProgress: boolean = true) {
         this.isLoading = true;
-        this.progress.start();
+
+        if (showProgress) {
+            this.progress.start();
+        }
 
         this.mediaService.getRecentMedia(this.page.pagination)
             .finally(() => {
+                this.isLoading = false;
                 this.progress.done();
             })
             .subscribe(page => {
@@ -86,6 +95,12 @@ export class MediaComponent implements OnInit, OnDestroy {
                     .subscribe();
             }
         });
+    }
+
+    public onPositionChange() {
+        if (!this.isLoading && this.page && this.page.hasMoreItems) {
+            this.getMedia(false);
+        }
     }
 
     public ngOnInit() {

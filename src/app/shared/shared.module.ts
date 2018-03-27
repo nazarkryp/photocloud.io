@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { DefaultImageDirective } from './directives/default-image.directive';
 import { ImagePreviewDirective } from 'app/shared/directives/image-preview.directive';
 import { EditMediaService, LikeService } from 'app/shared/services';
+import { ScrollDirective } from './directives/scroll.directive';
 
 @NgModule({
     imports: [
@@ -15,11 +16,13 @@ import { EditMediaService, LikeService } from 'app/shared/services';
     ],
     declarations: [
         DefaultImageDirective,
-        ImagePreviewDirective
+        ImagePreviewDirective,
+        ScrollDirective
     ],
     exports: [
         DefaultImageDirective,
         ImagePreviewDirective,
+        ScrollDirective,
         CommonModule
     ]
 })

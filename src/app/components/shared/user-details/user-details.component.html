@@ -1,67 +1,77 @@
 <div fxLayout="column" fxLayoutAlign="center start">
-    <div class="user-info" fxLayout="row" fxLayoutAlign="center center">
-        <div fxLayout="column" fxLayoutAlign="center center">
+    <div class="user-info" fxLayout="row" fxLayoutAlign="center start">
+        <div fxLayout="column" fxLayoutAlign="center center" *ngIf="user">
+            <mat-progress-spinner [value]="progress" [mode]="progressSpinnerMode" [diameter]="160" [strokeWidth]="3" style="position: absolute; z-index: 0;"></mat-progress-spinner>
             <img class="thumbnail-big" src="{{user.pictureUri}}" default="assets/images/user-default-image.png" alt="{{user.username}}"
                 *ngIf="!currentUser || (currentUser && !currentUser.isActive) || user.id !== currentUser.id" />
-            <img class="thumbnail-big pointer" src="{{user.pictureUri}}" appImagePreview [image]="uploader.queue[0]?._file" default="assets/images/user-default-image.png"
-                alt="{{user.username}}" (click)="fileInput.click()" *ngIf="currentUser && currentUser.isActive && user.id === currentUser.id"
-            />
+            <div class="edit-image" *ngIf="currentUser && currentUser.isActive && user.id === currentUser.id">
+                <div *ngIf="!isUploading" class="change-overlay" fxLayout="row" fxLayoutAlign="center center" (click)="fileInput.click()">
+                    <span>Change</span>
+                </div>
+                <img class="thumbnail-big" src="{{user.pictureUri}}" appImagePreview [image]="uploader.queue[0]?._file" default="assets/images/user-default-image.png"
+                    alt="{{user.username}}" />
+            </div>
             <input #fileInput type="file" accept="image/*" ng2FileSelect [uploader]="uploader" hidden/>
         </div>
         <div class="user-info-data" fxLayout="column" fxFlex>
             <div fxLayout="row" fxLayoutAlign="space-between center">
                 <span class="user-info-username">{{user.username}}</span>
-                <button mat-icon-button routerLink="/account/edit" matTooltip="Settings" matTooltipPosition="above" *ngIf="currentUser && user.id === currentUser.id">
-                    <mat-icon class="btn-icon">settings</mat-icon>
-                </button>
-                <button mat-icon-button matTooltip="Logout" matTooltipPosition="above" (click)="logout()" *ngIf="currentUser && user.id === currentUser.id">
-                    <mat-icon class="btn-icon">exit_to_app</mat-icon>
-                </button>
-                <button mat-button class="btn-relationships" *ngIf="currentUser && currentUser.isActive && user.id !== currentUser.id && (user.isActive || (!user.isActive && user.incommingStatus !== 0))"
-                    (click)="modifyRelationship()" [disabled]="isModifyingRelationship">{{user.incommingStatus | relationshipAction | uppercase }}</button>
+                <div>
+                    <button mat-icon-button routerLink="/account/edit" matTooltip="Settings" matTooltipPosition="above" *ngIf="currentUser && user.id === currentUser.id"
+                        style="margin-right: 40px;">
+                        <mat-icon class="btn-icon">settings</mat-icon>
+                    </button>
+                    <button mat-icon-button matTooltip="Logout" matTooltipPosition="above" (click)="logout()" *ngIf="currentUser && user.id === currentUser.id">
+                        <mat-icon class="btn-icon">exit_to_app</mat-icon>
+                    </button>
+                </div>
+                <button mat-button class="btn-relationships" *ngIf="currentUser && currentUser.isActive && user.id !== currentUser.id && (user.isActive || (!user.isActive && user.relationship.outgoingStatus !== 0))"
+                    (click)="modifyRelationship()" [disabled]="isModifyingRelationship">{{user.relationship.outgoingStatus | relationshipAction | uppercase }}</button>
             </div>
             <div fxLayout="row" fxLayoutAlign="space-between center" *ngIf="user.isActive" style="font-size: 1.1em;">
                 <a>
                     <span>
-                        <strong>{{user.posts}}</strong>
+                        <strong>{{user.counters.posts}}</strong>
                     </span>
                     <span>posts</span>
                 </a>
 
                 <a class="user-info-link-button" (click)="getFollowers()" *ngIf="currentUser">
                     <span>
-                        <strong>{{user.followers}}</strong>
+                        <strong>{{user.counters.followers}}</strong>
                     </span>
                     <span>followers</span>
                 </a>
                 <div *ngIf="!currentUser">
                     <span>
-                        <strong>{{user.followers}}</strong>
+                        <strong>{{user.counters.followers}}</strong>
                     </span>
                     <span>followers</span>
                 </div>
 
                 <a class="user-info-link-button" (click)="getFollowings()" *ngIf="currentUser">
                     <span>
-                        <strong>{{user.following}}</strong>
+                        <strong>{{user.counters.following}}</strong>
                     </span>
                     <span>following</span>
                 </a>
                 <div *ngIf="!currentUser">
                     <span>
-                        <strong>{{user.following}}</strong>
+                        <strong>{{user.counters.following}}</strong>
                     </span>
                     <span>following</span>
                 </div>
             </div>
             <div fxLayout="row" fxLayoutAlign="start start" *ngIf="user.isActive">
-                <span class="user-info-fullname">{{user.fullName}}</span>
-                <span class="user-info-bio">{{user.bio}}
-                </span>
+                <p style="line-height: 2; text-align: justify;">
+                    <strong>{{user.fullName}}</strong>
+                    {{user.bio | truncate:truncateWidth}}
+                    <a class="primary" (click)="increaseTruncateSize()" *ngIf="user.bio && user.bio.length > defaultTruncateWidth && truncateWidth === defaultTruncateWidth">show more</a>
+                </p>
             </div>
         </div>
     </div>
-    <div style="margin-top: 34px; width: 152px;" fxLayout="row" fxLayoutAlign="center center" *ngIf="user.isActive && user.lastActive">
-        <span style="font-weight: bold; text-transform: uppercase; color: #C8C8C8;">{{user.lastActive | timeAgo}}</span>
+    <div style="width: 100%;" fxLayout="row" fxLayoutAlign="end center" *ngIf="user.isActive && user.lastActive">
+        <span matTooltip="Last Active" matTooltipPosition="after" style="font-size: .9em; font-weight: 900; text-transform: uppercase; color: #C8C8C8;">{{user.lastActive | timeAgo}}</span>
     </div>
 </div>

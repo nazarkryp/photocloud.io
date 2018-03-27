@@ -5,7 +5,7 @@ import { Routes, RouterModule, Router, ActivatedRoute, NavigationEnd } from '@an
 
 import { MediaComponent } from './components/media/media.component';
 import { UserMediaComponent } from './components/user-media/user-media.component';
-import { UserSearchComponent } from './components/explore/user-search/user-search.component';
+import { UsersComponent } from './components/explore/users/users.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { MediaDetailsComponent } from './components/shared/media-details/media-details.component';
 import { TagsComponent } from './components/explore/tags/tags.component';
@@ -13,6 +13,9 @@ import { ConnectionErrorComponent } from './components/shared/connection-error/c
 import { AuthenticationGuardService } from './infrastructure/guards/authentication-guard.service';
 import { RecentMediaResolver, UserMediaResolver, UserListResolver, LikedMediaResolver } from './infrastructure/resolvers';
 import { LikedMediaComponent } from 'app/components/liked-media/liked-media.component';
+import { TermsComponent } from 'app/components/terms/terms.component';
+import { PrivacyComponent } from './components/privacy/privacy.component';
+import { AboutComponent } from './components/about/about.component';
 
 const routes: Routes = [
     {
@@ -42,10 +45,31 @@ const routes: Routes = [
         }
     },
     {
-        path: 'nointernetconnection',
+        path: 'offline',
         component: ConnectionErrorComponent,
         data: {
             title: 'Connect to the internet'
+        }
+    },
+    {
+        path: 'terms',
+        component: TermsComponent,
+        data: {
+            title: 'PhotoCloud - Terms of Services'
+        }
+    },
+    {
+        path: 'privacy',
+        component: PrivacyComponent,
+        data: {
+            title: 'PhotoCloud - Privacy Policy'
+        }
+    },
+    {
+        path: 'about',
+        component: AboutComponent,
+        data: {
+            title: 'PhotoCloud - About Us'
         }
     },
     {
@@ -84,7 +108,7 @@ const routes: Routes = [
     },
     {
         path: 'explore/people',
-        component: UserSearchComponent,
+        component: UsersComponent,
         resolve: { page: UserListResolver },
         data: {
             title: 'PhotoCloud - Discover People'

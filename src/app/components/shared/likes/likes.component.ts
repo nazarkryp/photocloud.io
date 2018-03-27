@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material';
 
 import { Observable } from 'rxjs/Observable';
 
-import { UsersComponent } from 'app/components/shared/users/users.component';
+import { UsersDialogComponent } from 'app/components/shared/users-dialog/users-dialog.component';
 
 import { UserViewModel, MediaViewModel } from 'app/models/view';
 import { MediaService } from 'app/services';
@@ -39,13 +39,6 @@ export class LikesComponent {
         const likes = this.mediaService.getLikes(this.media.id);
         this.onClicked.next(likes);
         if (this.media.likesCount > 0) {
-            // const usersObservable = this.mediaService.getLikes(this.media.id);
-            // const dialogRef = this.dialog.open(UsersComponent, {
-            //     data: {
-            //         usersObservable: usersObservable,
-            //         title: 'Likes'
-            //     }
-            // });
         }
     }
 

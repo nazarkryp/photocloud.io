@@ -1,20 +1,19 @@
 <div class="media" *ngIf="media">
     <div class="media-header" fxLayout="row" *ngIf="!media.editing">
-        <img class="media-avatar" [routerLink]="['/', media.user.username]" src="{{media.user.pictureUri}}" default="assets/images/user-default-image.png"
-            alt="profile">
+        <img class="media-avatar" [routerLink]="['/', media.user.username]" src="{{media.user.pictureUri}}" default="assets/images/user-default-image.png" alt="profile">
         <div class="media-author" fxLayout="row" fxLayoutAlign="space-between center" fxFlex>
             <a class="media-author-username" [routerLink]="['/', media.user.username]">{{media.user.username}}</a>
             <div fxLayout="row" fxLayout="center end" *ngIf="currentUser && media.user.id === currentUser.id">
                 <button mat-icon-button type="button" [matMenuTriggerFor]="menu">
-                    <mat-icon>expand_more</mat-icon>
+                    <mat-icon class="mat-24">expand_more</mat-icon>
                 </button>
                 <mat-menu #menu="matMenu" xPosition="before">
                     <button mat-menu-item (click)="edit()">
-                        <mat-icon>edit</mat-icon>
+                        <mat-icon class="mat-18">edit</mat-icon>
                         <span>Edit</span>
                     </button>
                     <button mat-menu-item (click)="remove()">
-                        <mat-icon>delete</mat-icon>
+                        <mat-icon class="mat-18">delete</mat-icon>
                         <span>Remove</span>
                     </button>
                 </mat-menu>
@@ -34,11 +33,13 @@
                 </button>
             </div>
         </div>
-        <div *ngFor="let attachment of media.attachments; let index = index;" [hidden]="index !== media.activeAttachment">
-            <img class="media-attachment" src="{{attachment.uri}}" alt="media-image" *ngIf="attachment.type !== 1">
-            <video class="media-attachment" *ngIf="attachment.type === 1" loop #player>
-                <source src="{{attachment.uri}}">
-            </video>
+        <div *ngFor="let attachment of media.attachments; let index = index;">
+            <div [hidden]="index !== media.activeAttachment" *ngIf="(media.activeAttachment === index && attachment.type === 1) || (attachment.type !== 1)">
+                <img class="media-attachment" src="{{attachment.uri}}" alt="media-image" *ngIf="attachment.type !== 1">
+                <video class="media-attachment" *ngIf="attachment.type === 1" loop #player>
+                    <source src="{{attachment.uri}}">
+                </video>
+            </div>
         </div>
     </div>
     <div class="media-footer" *ngIf="!media.editing">
@@ -52,7 +53,7 @@
             <app-caption caption="{{media.caption}}"></app-caption>
         </div>
         <div>
-            <app-comments [media]="media"></app-comments>
+            <app-comments #commentsComponent [media]="media"></app-comments>
         </div>
         <div class="media-date">
             <span class="media-created">{{media.created | timeAgo}}</span>
@@ -65,17 +66,15 @@
     </div>
     <div class="media-actions" fxLayout="row" *ngIf="!media.editing">
         <div fxLayout="row" fxLayoutAlign="center center">
-            <mat-icon class="btn-icon mat-24" [ngClass]="{ 'warn' : media.userHasLiked }" (click)="like()">favorite</mat-icon>
+            <mat-icon class="btn-icon mat-24" [ngClass]="{ 'warn' : media.userHasLiked, 'pulse' : isLiking }" (click)="like()">favorite</mat-icon>
         </div>
-        <input class="comment-input" *ngIf="media.allowComments" type="text" placeholder="Type your comment" [(ngModel)]="text"
-            (keydown.enter)="createComment()" />
-        <button class="icon-button" mat-icon-button matTooltip="Share" matTooltipPosition="left" ngxClipboard [cbContent]="share()"
-            (cbOnSuccess)="showToast('Copied to clipboard')">
+        <input class="comment-input" *ngIf="media.allowComments" type="text" placeholder="Type your comment" [(ngModel)]="text" (keydown.enter)="createComment()" />
+        <button class="icon-button" mat-icon-button matTooltip="Share" matTooltipPosition="left" ngxClipboard [cbContent]="share()" (cbOnSuccess)="showToast('Copied to clipboard')">
             <mat-icon>share</mat-icon>
         </button>
     </div>
     <div class="media-edit-actions" fxLayout="row" fxLayoutAlign="end center" *ngIf="media.editing">
-        <button mat-button (click)="cancel()">CANCEL</button>
-        <button mat-raised-button color="primary" (click)="update()">SAVE</button>
+        <button mat-button (click)="cancel()" style="font-weight: bold;" disableRipple="true">CANCEL</button>
+        <button mat-raised-button color="primary" (click)="update()" style="font-weight: bold;">SAVE</button>
     </div>
 </div>

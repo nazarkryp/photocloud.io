@@ -1,3 +1,6 @@
+import { UserRelationshipResponse } from './user-relationship-response.model';
+import { CountersResponse } from './counters-response.model';
+
 export class UserResponse {
     public id: number;
     public username: string;
@@ -11,6 +14,6 @@ export class UserResponse {
     public lastActive: Date;
     public followers: number;
     public following: number;
-    public outgoingStatus: number;
-    public incommingStatus: number;
+    public relationship: UserRelationshipResponse;
+    public counters: CountersResponse;
 }

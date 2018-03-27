@@ -6,7 +6,7 @@ import { MatDialog } from '@angular/material';
 import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/add/operator/delay';
 
-import { MediaViewModel, PageViewModel, CurrentUserViewModel } from 'app/models/view';
+import { MediaViewModel, Page, CurrentUserViewModel } from 'app/models/view';
 import { MediaDetailsComponent } from 'app/components/shared/media-details';
 import { MediaService } from 'app/services';
 import { CurrentUserService } from 'app/infrastructure/services';
@@ -21,7 +21,7 @@ import { NgProgress } from 'ngx-progressbar';
 export class LikedMediaComponent implements OnInit, OnDestroy {
     private currentUserSubscription: Subscription;
 
-    public page: PageViewModel<MediaViewModel> = new PageViewModel<MediaViewModel>();
+    public page: Page<MediaViewModel> = new Page<MediaViewModel>();
     public currentUser: CurrentUserViewModel;
 
     constructor(

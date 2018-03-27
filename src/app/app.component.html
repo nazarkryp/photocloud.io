@@ -1,20 +1,20 @@
 <ng-progress [thick]="true" [showSpinner]="false" [trickleSpeed]="200" [speed]="300" color="#e91e63"></ng-progress>
 <mat-sidenav-container class="sidenav-container">
-    <mat-sidenav #notificationsSidenav align="end">
+    <mat-sidenav style="overflow-y: hidden;" #notificationsSidenav align="end">
         <app-notifications (onClosing)="closeNotifications($event)" *ngIf="notificationsSidenav.opened"></app-notifications>
     </mat-sidenav>
     <div class="my-content" fxLayout="column">
         <app-toolbar *ngIf="renderToolbar" (openNotificationsEvent)="openNotifications($event)"></app-toolbar>
-        <div class="router-container">
+        <div class="router-container" [ngClass]="{ 'toolbar' : renderToolbar }">
             <router-outlet></router-outlet>
         </div>
-        <app-footer *ngIf="renderToolbar"></app-footer>
+        <app-footer *ngIf="renderFooter"></app-footer>
     </div>
 </mat-sidenav-container>
 
-<div style="z-index: 999; top: auto; right: 0; bottom: 0; left: auto; position: fixed; height: 100px; width: 100%; background-color: rgba(0,0,0,.8);"
-    fxLayout="row" fxLayoutAlign="center center" *ngIf="!currentUser && !initialLoad && renderToolbar && showAuthenticationBar">
-    <mat-icon class="btn-icon" style="position:absolute; right: .5rem; top: .5rem;" (click)="hideAuthenticationBar()">clear</mat-icon>
+<div style="z-index: 999; top: auto; right: 0; bottom: 0; left: auto; position: fixed; height: 100px; width: 100%; background-color: rgba(0,0,0,.8);" fxLayout="row" fxLayoutAlign="center center"
+    *ngIf="!currentUser && !initialLoad && renderToolbar && showAuthenticationBar">
+    <mat-icon class="btn-icon" style="position:absolute; right: .5rem; top: .5rem; color: white;" (click)="hideAuthenticationBar()">clear</mat-icon>
     <div style="width: 960px;" fxLayout="row" fxLayoutAlign="space-between center">
         <div fxLayout="row" fxLayoutAlign="start center">
             <mat-icon class="mat-48" style="color: white;">account_circle</mat-icon>
@@ -26,8 +26,8 @@
             </div>
         </div>
         <div>
-            <button mat-raised-button color="accent" routerLink="account/signin">Sign Up</button>
-            <button mat-button color="accent" routerLink="account/create">Sign In</button>
+            <button mat-raised-button color="accent" routerLink="account/create">Sign Up</button>
+            <button mat-button color="accent" routerLink="account/signin">Sign In</button>
         </div>
     </div>
 </div>

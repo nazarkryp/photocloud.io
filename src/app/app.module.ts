@@ -1,12 +1,11 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule, DomSanitizer } from '@angular/platform-browser';
 import { HttpModule } from '@angular/http';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatIconRegistry } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
-import { AppRoutingModule } from './app-routing.module';
+import { AppRoutingModule } from './app.routing.module';
 import { AppMaterialModule } from './app-material/app-material.module';
 import { SharedModule } from 'app/shared/shared.module';
 
@@ -35,8 +34,8 @@ import { CaptionComponent } from './components/shared/caption/caption.component'
 import { TagsComponent } from './components/explore/tags/tags.component';
 import { ConfirmComponent } from './components/shared/confirm/confirm.component';
 import { NotificationsComponent } from './components/shared/notifications/notifications.component';
-import { UsersComponent } from './components/shared/users/users.component';
-import { UserSearchComponent } from './components/explore/user-search/user-search.component';
+import { UsersDialogComponent } from './components/shared/users-dialog/users-dialog.component';
+import { UsersComponent } from './components/explore/users/users.component';
 import { SearchBoxComponent } from './components/shared/search-box/search-box.component';
 import { ConnectionErrorComponent } from './components/shared/connection-error/connection-error.component';
 
@@ -52,13 +51,16 @@ import {
 } from './infrastructure/filters/http';
 import { UserDetailsComponent } from './components/shared/user-details/user-details.component';
 import { FooterComponent } from './components/footer/footer.component';
-import { WebApiClient } from 'app/infrastructure/communication';
+import { WebApiService } from 'app/core/services/communication';
 import { LocalStorageService } from 'app/infrastructure/services/storage';
 import { SplashScreenComponent } from './components/shared/splash-screen/splash-screen.component';
-import { CovalentModule } from 'app/core/covalent.module';
 import { LikedMediaComponent } from './components/liked-media/liked-media.component';
 import { LikesComponent } from './components/shared/likes/likes.component';
 import { ChangePasswordComponent } from './components/shared/change-password/change-password.component';
+import { TermsComponent } from './components/terms/terms.component';
+import { PrivacyComponent } from './components/privacy/privacy.component';
+import { AboutComponent } from './components/about/about.component';
+import { CoreModule, CovalentModule } from 'app/core';
 
 @NgModule({
     declarations: [
@@ -78,8 +80,8 @@ import { ChangePasswordComponent } from './components/shared/change-password/cha
         TagsComponent,
         ConfirmComponent,
         NotificationsComponent,
+        UsersDialogComponent,
         UsersComponent,
-        UserSearchComponent,
         SearchBoxComponent,
         ConnectionErrorComponent,
         UserDetailsComponent,
@@ -87,13 +89,16 @@ import { ChangePasswordComponent } from './components/shared/change-password/cha
         SplashScreenComponent,
         LikedMediaComponent,
         LikesComponent,
-        ChangePasswordComponent
+        ChangePasswordComponent,
+        TermsComponent,
+        PrivacyComponent,
+        AboutComponent
     ],
     entryComponents: [
         MediaDetailsComponent,
         CreateMediaComponent,
         ConfirmComponent,
-        UsersComponent,
+        UsersDialogComponent,
         ChangePasswordComponent
     ],
     imports: [
@@ -101,7 +106,6 @@ import { ChangePasswordComponent } from './components/shared/change-password/cha
         AppRoutingModule,
         AppMaterialModule,
         FlexLayoutModule,
-        HttpClientModule,
         FormsModule,
         ReactiveFormsModule,
         NgProgressModule,
@@ -111,12 +115,12 @@ import { ChangePasswordComponent } from './components/shared/change-password/cha
         ServiceModule,
         InfrastructureModule,
         CovalentModule,
-        SharedModule
+        SharedModule,
+        CoreModule
     ],
     providers: [
         AccountService,
         AuthenticationGuardService,
-        WebApiClient,
         LocalStorageService
     ],
     bootstrap: [AppComponent]

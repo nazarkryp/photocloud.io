@@ -1,33 +1,75 @@
 .notifications-box {
     width: 420px;
     height: 100vh;
-    padding: 0 .7rem;
+}
+
+.mat-tab-body,
+.notifications-box .mat-tab-group,
+.notifications-box .mat-tab-group .mat-tab-body-wrapper {
+    min-height: calc(100vh - 48px);
+}
+
+::ng-deep .mat-tab-body,
+::ng-deep .mat-tab-body-wrapper {
+    min-height: calc(100vh - 48px);
+}
+
+::ng-deep .mat-tab-label {
+    width: 100%;
 }
 
 .notifications-header {
-    padding: .7rem 0;
-    /* border-bottom: 1px solid #d8d8d8; */
+    padding: .7rem 0 .7rem .7rem;
 }
 
 .notification-box-title {
     font-size: 1.2em;
-    font-weight: bold;
-    color: #444444;
+    font-weight: 900;
+    color: rgb(0,0,0,.85);
 }
 
 .notifications-content {
     padding: 0 .7rem;
     line-height: 2;
+    width: 100%;
+    height: 100%;
+}
+
+.notifications-content>* {
+    width: 100%;
 }
 
 .incomming-request {
     margin-top: .7rem;
-    width: 100%;
+}
+
+.incomming-request button {
+    font-weight: bold;
+}
+
+.incomming-request-name {
+    line-height: 1.5;
+    margin-left: .7rem;
 }
 
 .incomming-request-username {
-    margin-left: .7rem;
+    font-weight: 900;
     outline: none;
+    width: 110px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.incomming-request-fullname {
+    color: #9A9A9A;
+    font-size: .9em;
+    font-weight: lighter;
+    letter-spacing: 1px;
+    width: 110px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .incomming-request-avatar {

@@ -1,13 +1,16 @@
-.toolbar {
+header.toolbar {
     background-color: white;
     box-shadow: 0 3px 8px -3px rgba(0, 0, 0, 0.26);
+    padding: .7rem;
+    min-height: 64px;
 }
 
 .mat-toolbar-layout {
     width: 100%;
+    max-width: 960px;
 }
 
-@media screen and (max-width: 870px) {
+@media screen and (max-width: 600px) {
     .search-box-container {
         display: none;
     }
@@ -17,18 +20,13 @@
 }
 
 .search-box-container {
-    width: 600px;
+    width: 620px;
+    padding: 0 10px;
+    box-sizing: border-box;
 }
 
 .container {
     width: 100%;
-}
-
-.logo {
-    font-weight: lighter;
-    cursor: pointer;
-    letter-spacing: 1px;
-    outline: none;
 }
 
 .avatar {
@@ -52,7 +50,7 @@ mat-icon>svg {
 .custom-big-icon {
     cursor: pointer;
     outline: none;
-    color: #444444;
+    color: rgb(0, 0, 0, .85);
     width: 35px;
     height: 35px;
 }
@@ -71,9 +69,15 @@ td-notification-count .mat-icon {
 }
 
 td-notification-count .btn-icon {
-    color: #333333;
+    color: rgb(0, 0, 0, .85);
 }
 
 td-notification-count .btn-icon:hover {
     color: #e91e63;
+}
+
+.btn-signin {
+    font-weight: bold;
+    color: #e91e63;
+    font-family: 'Roboto', sans-serif;
 }

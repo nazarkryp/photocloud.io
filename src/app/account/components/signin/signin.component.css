@@ -1,11 +1,15 @@
 .signin-content {
-    position: relative;
-    height: 100vh;
-    width: 100%;
+    height: calc(100vh);
+    box-sizing: border-box;
     margin: -3rem 0;
+    padding: 3rem 0;
 }
 
-@media screen and (max-width: 700px) {
+::ng-deep .signin-content * {
+    font-family: 'Roboto', sans-serif;
+}
+
+@media screen and (max-width: 500px) {
     .signin-form {
         width: 100%;
         border-radius: 0;
@@ -14,72 +18,21 @@
 }
 
 @media screen and (min-width: 701px) {
-    /* .background-video {
-        object-fit: cover;
-        width: 100vw;
-        height: 100vh;
-        position: fixed;
-        top: 0;
-        left: 0;
-    } */
     .signin-form {
         width: 448px;
         border-radius: 2px;
+        box-shadow: 0 3px 8px -3px rgba(0, 0, 0, 0.26);
     }
     .signin-content {
-        background: #2980b9 url('/assets/images/tumblr_static_bg3.png') repeat 0 0;
-        -webkit-animation: 10s linear 0s normal none infinite animate;
-        -moz-animation: 10s linear 0s normal none infinite animate;
-        -ms-animation: 10s linear 0s normal none infinite animate;
-        -o-animation: 10s linear 0s normal none infinite animate;
-        animation: 10s linear 0s normal none infinite animate;
-    }
-    @-webkit-keyframes animate {
-        from {
-            background-position: 0 0;
-        }
-        to {
-            background-position: 500px 0;
-        }
-    }
-    @-moz-keyframes animate {
-        from {
-            background-position: 0 0;
-        }
-        to {
-            background-position: 500px 0;
-        }
-    }
-    @-ms-keyframes animate {
-        from {
-            background-position: 0 0;
-        }
-        to {
-            background-position: 500px 0;
-        }
-    }
-    @-o-keyframes animate {
-        from {
-            background-position: 0 0;
-        }
-        to {
-            background-position: 500px 0;
-        }
-    }
-    @keyframes animate {
-        from {
-            background-position: 0 0;
-        }
-        to {
-            background-position: 500px 0;
-        }
+        background: linear-gradient(110deg, #ffffff 60%, #fafafa 60%);
+        /* background: #2980b9 url('/assets/images/tumblr_static_bg3.png') repeat 0 0; */
     }
 }
 
 .signin-form {
     font-size: .9em;
     background: white;
-    padding: .7rem;
+    padding: 1.4rem;
     position: relative;
 }
 
@@ -90,4 +43,13 @@
 .error-message {
     color: #e91f63;
     text-align: center;
+}
+
+.form-field .btn-icon {
+    color: #9d9d9d;
+}
+
+.form-field:focus-within .btn-icon,
+.form-field .mat-icon.btn-icon:hover {
+    color: #e91e63;
 }

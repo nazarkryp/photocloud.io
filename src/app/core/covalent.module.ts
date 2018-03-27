@@ -1,26 +1,23 @@
 import { NgModule } from '@angular/core';
 import {
-    CovalentNotificationsModule,
-    CovalentStepsModule,
-    CovalentLayoutModule,
     CovalentCommonModule,
-    CovalentDialogsModule
+    CovalentNotificationsModule,
 } from '@covalent/core';
+import { CovalentLayoutModule } from '@covalent/core/layout';
+import { CovalentStepsModule } from '@covalent/core/steps';
 
 @NgModule({
     imports: [
-        CovalentCommonModule,
         CovalentLayoutModule,
         CovalentStepsModule,
+        CovalentCommonModule,
         CovalentNotificationsModule,
-        CovalentDialogsModule
     ],
     exports: [
-        CovalentCommonModule,
         CovalentLayoutModule,
         CovalentStepsModule,
+        CovalentCommonModule,
         CovalentNotificationsModule,
-        CovalentDialogsModule
     ]
 })
 export class CovalentModule { }

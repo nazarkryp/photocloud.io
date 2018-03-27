@@ -1,24 +1,49 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { trigger, transition, style, animate, query, stagger } from '@angular/animations';
+
 import { Subscription } from 'rxjs/Subscription';
 
 import { UserService } from 'app/services';
-import { PageViewModel, UserViewModel, CurrentUserViewModel } from 'app/models/view';
+import { Page, UserViewModel, CurrentUserViewModel } from 'app/models/view';
 import { RelationshipAction, RelationshipStatus } from 'app/models/shared';
 
 import { NgProgress } from 'ngx-progressbar';
 import { CurrentUserService } from 'app/infrastructure/services';
 
 @Component({
-    selector: 'app-user-search',
-    templateUrl: './user-search.component.html',
-    styleUrls: ['./user-search.component.css']
+    selector: 'app-users',
+    templateUrl: './users.component.html',
+    styleUrls: ['./users.component.css'],
+    animations: [
+        trigger('listAnimation', [
+            transition('* => *', [
+                query(':leave', [
+                    stagger(50, [
+                        animate('0.5s', style({ opacity: 0 }))
+                    ])
+                ], { optional: true }),
+                query(':enter', [
+                    style({
+                        opacity: 0,
+                        transform: 'translateY(20%)'
+                    }),
+                    stagger(50, [
+                        animate('0.5s', style({
+                            opacity: 1,
+                            transform: 'translateY(0)'
+                        }))
+                    ])
+                ], { optional: true })
+            ])
+        ])
+    ]
 })
-export class UserSearchComponent implements OnInit, OnDestroy {
+export class UsersComponent implements OnInit, OnDestroy {
     private currentUserSubscription: Subscription;
     public title = 'Explore People';
     public isLoading: boolean;
-    public page: PageViewModel<UserViewModel>;
+    public page: Page<UserViewModel>;
     public modifying: { [id: number]: boolean } = {};
     public currentUser: CurrentUserViewModel;
 
@@ -42,9 +67,9 @@ export class UserSearchComponent implements OnInit, OnDestroy {
                 this.progress.done();
                 this.isLoading = false;
             })
-            .subscribe((page: PageViewModel<UserViewModel>) => {
+            .subscribe((page: Page<UserViewModel>) => {
                 if (!this.page.pagination) {
-                    this.page = new PageViewModel<UserViewModel>();
+                    this.page = new Page<UserViewModel>();
                 }
 
                 this.page.hasMoreItems = page.hasMoreItems;
@@ -60,22 +85,22 @@ export class UserSearchComponent implements OnInit, OnDestroy {
 
     public modifyRelationship(user: UserViewModel) {
         this.modifying[user.id] = true;
-        const action = this.getRelationshipAction(user.incommingStatus);
+        const action = this.getRelationshipAction(user.relationship.outgoingStatus);
         this.userService.modifyRelationship(user.id, { action: action })
             .finally(() => {
                 this.modifying[user.id] = false;
             })
             .subscribe((userResponse: UserViewModel) => {
-                user.incommingStatus = userResponse.incommingStatus;
+                user.relationship.outgoingStatus = userResponse.relationship.outgoingStatus;
             }, error => { });
     }
 
-    public getRelationshipAction(incommingStatus: RelationshipStatus): number {
-        if (incommingStatus === RelationshipStatus.Following) {
+    public getRelationshipAction(outgoing: RelationshipStatus): number {
+        if (outgoing === RelationshipStatus.Following) {
             return 1;
-        } else if (incommingStatus === RelationshipStatus.Requested) {
+        } else if (outgoing === RelationshipStatus.Requested) {
             return 1;
-        } else if (incommingStatus === RelationshipStatus.Blocked) {
+        } else if (outgoing === RelationshipStatus.Blocked) {
             return 4;
         }
 

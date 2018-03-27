@@ -5,11 +5,12 @@ import { Subscription } from 'rxjs/Subscription';
 
 import { CurrentUserService } from 'app/infrastructure/services';
 import { MediaDetailsComponent } from 'app/components/shared/media-details/media-details.component';
-import { PageViewModel, MediaViewModel, CurrentUserViewModel } from 'app/models/view';
+import { Page, MediaViewModel, CurrentUserViewModel } from 'app/models/view';
 import { MediaService } from 'app/services';
 import { AccountService } from 'app/account/services';
 
 import { NgProgress } from 'ngx-progressbar';
+import { LikeService } from 'app/shared/services';
 
 @Component({
     selector: 'app-tags',
@@ -20,7 +21,7 @@ export class TagsComponent implements OnInit, OnDestroy {
     private routeSubscription$: Subscription;
     private currentUserSubscription: Subscription;
 
-    public page: PageViewModel<MediaViewModel> = new PageViewModel<MediaViewModel>();
+    public page: Page<MediaViewModel> = new Page<MediaViewModel>();
     public currentUser: CurrentUserViewModel;
     public tag: string;
     public isLoading: boolean;
@@ -31,6 +32,7 @@ export class TagsComponent implements OnInit, OnDestroy {
         private mediaService: MediaService,
         private currentUserService: CurrentUserService,
         private accountService: AccountService,
+        private likeService: LikeService,
         private progress: NgProgress) {
         this.currentUserSubscription = this.currentUserService.getCurrentUser()
             .subscribe(currentUser => {
@@ -38,8 +40,11 @@ export class TagsComponent implements OnInit, OnDestroy {
             });
     }
 
-    public getMedia() {
-        this.progress.start();
+    public getMedia(showProgress: boolean = true) {
+        if (showProgress) {
+            this.progress.start();
+        }
+
         this.isLoading = true;
         this.mediaService.getMediaByTag(this.tag, this.page.pagination)
             .finally(() => {
@@ -56,43 +61,19 @@ export class TagsComponent implements OnInit, OnDestroy {
     }
 
     public like(media) {
-        if (media.userHasLiked) {
-            media.likesCount--;
-            media.userHasLiked = !media.userHasLiked;
-            this.mediaService.removeMediaLike(media.id)
-                .subscribe(() => {
-                    media.userHasLiked = false;
-                }, (error) => {
-                    if (media.userHasLiked) {
-                        media.likesCount--;
-                    } else {
-                        media.likesCount++;
-                    }
-                    media.userHasLiked = !media.userHasLiked;
-                    return error;
-                });
-        } else {
-            media.likesCount++;
-            media.userHasLiked = !media.userHasLiked;
-            this.mediaService.addMediaLike(media.id)
-                .subscribe(() => {
-                    media.userHasLiked = true;
-                }, (error) => {
-                    if (media.userHasLiked) {
-                        media.likesCount--;
-                    } else {
-                        media.likesCount++;
-                    }
-                    media.userHasLiked = !media.userHasLiked;
-                    return error;
-                });
-        }
+        this.likeService.like(media);
     }
 
     public openPostDialog(media: MediaViewModel) {
         const dialogRef = this.dialog.open(MediaDetailsComponent, {
             data: media
         });
+    }
+
+    public onPositionChange() {
+        if (!this.isLoading && this.page && this.page.hasMoreItems) {
+            this.getMedia(false);
+        }
     }
 
     public ngOnInit() {

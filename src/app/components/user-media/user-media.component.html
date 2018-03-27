@@ -1,7 +1,7 @@
 <div class="user-media-container" fxLayout="column" fxLayoutAlign="start center">
     <app-user-details [user]="userMedia.user"></app-user-details>
     <div style="width: 100%;" *ngIf="!userMedia.error; else errorBox" fxLayout="column" fxLayoutAlign="center center">
-        <div class="user-media" *ngIf="userMedia.page?.data; else emptyFeed;">
+        <div class="user-media" *ngIf="userMedia.page?.data?.length; else emptyFeed;" appScroll [appScrollTriggerOnce]="true" [scrollOffset]="2000" (scrollPosition)="onPositionChange()">
             <div *ngFor="let media of userMedia.page?.data;">
                 <div class="user-media-item" (click)="openPostDialog(media)">
                     <img class="user-media-thumbnail" src="{{media?.attachments[0].uri}}" alt="media-image" *ngIf="media?.attachments[0].type !== 1">
@@ -25,8 +25,9 @@
                 </div>
             </div>
         </div>
-        <div fxLayout="row" fxLayoutAlign="center center" *ngIf="userMedia.page.hasMoreItems">
-            <button class="btn-default" mat-button (click)="getMedia()" [disabled]="isLoadingPosts">Load More</button>
+        <div fxLayout="row" fxLayoutAlign="center center" *ngIf="userMedia.page.hasMoreItems" style="height: 40px;">
+            <button class="btn-primary" mat-button (click)="getMedia()" [disabled]="isLoading" *ngIf="!isLoading">Load More</button>
+            <mat-spinner [diameter]="30" [strokeWidth]="3" color="primary" *ngIf="isLoading"></mat-spinner>
         </div>
     </div>
 </div>

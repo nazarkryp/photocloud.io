@@ -1,42 +1,45 @@
-<!-- <video class="background-video" src="http://res.cloudinary.com/dpfmyl1mn/video/upload/v1512734461/photocloud/628513837.mp4"
-    autoplay loop playsinline muted></video> -->
 <div class="signin-content" fxLayout="column" fxLayoutAlign="center center" @content>
-    <form class="mat-elevation-z3 signin-form" fxLayout="column" [formGroup]="formGroup" (ngSubmit)="signIn(usernameInput.value, passwordInput.value)">
-        <mat-progress-bar mode="indeterminate" style="position: absolute; top: 0; margin: 0 -17px" *ngIf="isLoading"></mat-progress-bar>
-        <div style="margin-bottom: 24px;" fxLayout="column">
-            <div style="margin: 12px 0 34px 0;" fxLayout="row" fxLayoutAlign="center center">
-                <span style="font-size: 1.6em; font-weight: lighter;">Photo</span>
-                <span style="font-size: 2.4em; font-weight: bold;">Cloud</span>
+    <div>
+        <div style="padding-bottom: 3.4rem;" fxLayout="row" fxLayoutAlign="center center">
+            <span style="font-size: 2em; font-weight: 900;">Photo</span>
+            <span style="font-size: 3em; font-weight: 900; color: #e91e63;">Cloud</span>
+        </div>
+        <form class="signin-form" fxLayout="column" [formGroup]="formGroup" (ngSubmit)="signIn(usernameInput.value, passwordInput.value)">
+            <div style="padding: 0 0 .7rem 0;" fxLayout="column">
+                <span style="color: rgb(0,0,0,.85); font-size: 1em; font-weight: 400;">Login to continue or
+                    <a class="primary" routerLink="/account/create" *ngIf="!formGroup.disabled">Create Account</a>
+                    <span class="disabled" *ngIf="formGroup.disabled">Create Account</span>
+                </span>
             </div>
-            <span style="color: gray;">Login to continue or
-                <a class="primary" routerLink="/account/create" *ngIf="!formGroup.disabled">Create Account</a>
-                <span class="disabled" *ngIf="formGroup.disabled">Create Account</span>
-            </span>
-        </div>
-        <mat-form-field class="form-field">
-            <input formControlName="username" #usernameInput matInput placeholder="Username or E-mail address" type="text" autocomplete="off" [errorStateMatcher]="errorStateMatcher">
-            <mat-error *ngIf="username.getError('required')">
-                Username is required
-            </mat-error>
-            <mat-error *ngIf="username.getError('pattern')">
-                Whitespaces are not allowed
-            </mat-error>
-        </mat-form-field>
-        <mat-form-field class="form-field">
-            <input formControlName="password" #passwordInput matInput placeholder="Password" type="password" autocomplete="off" [errorStateMatcher]="errorStateMatcher">
-            <mat-error *ngIf="password.getError('required')">
-                Password is required
-            </mat-error>
-        </mat-form-field>
-        <div style="margin-top: 17px;" fxLayout="row" fxLayoutAlign="end">
-            <a class="primary" routerLink="/account/recover" *ngIf="!formGroup.disabled">Forgot Password?</a>
-            <span class="disabled" *ngIf="formGroup.disabled">Forgot Password?</span>
-        </div>
-        <div style="margin-top: 24px;" fxLayout="row" fxLayoutAlign="center" *ngIf="signInError">
-            <span class="error-message">{{signInError}}</span>
-        </div>
-        <div style="margin-top: 34px;">
-            <button type="submit" style="width: 100%;" mat-raised-button color="primary" [disabled]="formGroup.disabled">SIGN IN</button>
-        </div>
-    </form>
+            <mat-form-field class="form-field">
+                <input formControlName="username" #usernameInput matInput placeholder="Username or E-mail address" type="text" autocomplete="off" [errorStateMatcher]="errorStateMatcher">
+                <mat-error *ngIf="username.getError('required')">
+                    Username is required
+                </mat-error>
+                <mat-error *ngIf="username.getError('pattern')">
+                    Whitespaces are not allowed
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="form-field">
+                <input formControlName="password" #passwordInput matInput placeholder="Password" type="password" autocomplete="off" [errorStateMatcher]="errorStateMatcher">
+                <div matSuffix [ngSwitch]="passwordInput.type === 'password'" *ngIf="!formGroup.disabled">
+                    <mat-icon class="mat-24 btn-icon" tabindex="-1" [appPassword]="passwordInput" appPasswordType="text" matTooltip="Show Password" matTooltipPosition="right" *ngSwitchCase="true">visibility</mat-icon>
+                    <mat-icon class="mat-24 btn-icon" tabindex="-1" [appPassword]="passwordInput" appPasswordType="password" matTooltip="Hide Password" matTooltipPosition="right" *ngSwitchCase="false">visibility_off</mat-icon>
+                </div>
+                <mat-error *ngIf="password.getError('required')">
+                    Password is required
+                </mat-error>
+            </mat-form-field>
+            <div [ngSwitch]="formGroup.disabled">
+                <a class="primary" routerLink="/account/recover" *ngSwitchCase="false">Forgot Password?</a>
+                <span class="disabled" *ngSwitchCase="true">Forgot Password?</span>
+            </div>
+            <div style="margin: .7rem 0 0 0;" fxLayout="row" fxLayoutAlign="end center">
+                <button type="submit" style="font-size: 1.2em; font-weight: lighter;" mat-raised-button color="primary" [disabled]="formGroup.disabled">SIGN IN</button>
+            </div>
+            <div fxLayout="row" fxLayoutAlign="center center" style="height: 100px;">
+                <span class="error-message" *ngIf="signInError">{{signInError}}</span>
+            </div>
+        </form>
+    </div>
 </div>

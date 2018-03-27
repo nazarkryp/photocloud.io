@@ -3,14 +3,16 @@ import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, FormControl, Validators, AbstractControl } from '@angular/forms';
 import { MatSlideToggleChange, MatDialog } from '@angular/material';
 
-import { CurrentUserViewModel } from 'app/models/view';
+import { CurrentUserViewModel, AttachmentViewModel } from 'app/models/view';
 import { CurrentUserService } from 'app/infrastructure/services';
 
 import { NgProgress } from 'ngx-progressbar';
 import { ReactiveFormControl } from 'app/account/models/controls';
 import { Observable } from 'rxjs/Observable';
-import { UserService } from 'app/services';
+import { UserService, UploaderService } from 'app/services';
 import { ChangePasswordComponent } from 'app/components/shared/change-password/change-password.component';
+
+import { FileUploader } from 'ng2-file-upload';
 
 const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
@@ -28,6 +30,8 @@ export class EditComponent implements OnInit, AfterViewInit, AfterViewChecked {
     public formGroup: FormGroup;
     public privateFormGroup: FormGroup;
     public passwordFormGroup: FormGroup;
+
+    public uploader: FileUploader;
 
     public get username(): ReactiveFormControl {
         return this.formGroup.get('username') as ReactiveFormControl;
@@ -56,16 +60,18 @@ export class EditComponent implements OnInit, AfterViewInit, AfterViewChecked {
         private builder: FormBuilder,
         private userService: UserService,
         private currentUserService: CurrentUserService,
-        private progress: NgProgress) {
+        private uploaderService: UploaderService,
+        private progressService: NgProgress) {
+        this.uploader = uploaderService.createUploader((attachment) => this.onSuccessUpload(attachment));
         this.configureFormControls();
     }
 
     public save() {
         const propertiesToUpdate = this.getPropertiesToUpdate();
-        this.progress.start();
+        this.progressService.start();
         this.currentUserService.updateCurrentUser(propertiesToUpdate)
             .finally(() => {
-                this.progress.done();
+                this.progressService.done();
             })
             .subscribe(currentUser => {
                 this.setup(currentUser);
@@ -74,10 +80,13 @@ export class EditComponent implements OnInit, AfterViewInit, AfterViewChecked {
 
     public cancel() {
         this.formGroup.markAsPristine();
-
         this.formGroup.get('username').setValue(this.backup.username);
         this.formGroup.get('fullName').setValue(this.backup.fullName);
         this.formGroup.get('bio').setValue(this.backup.bio);
+    }
+
+    public cancelEmailChange() {
+        this.privateFormGroup.markAsPristine();
         this.privateFormGroup.get('email').setValue(this.backup.email);
     }
 
@@ -98,16 +107,34 @@ export class EditComponent implements OnInit, AfterViewInit, AfterViewChecked {
         });
     }
 
+    public invertAccountAutoLoginStatus(event: MatSlideToggleChange) {
+        let observable: Observable<any>;
+
+        if (this.currentUserService.canSignInWithCode) {
+            observable = this.currentUserService.disableSignInWithCode();
+        } else {
+            observable = this.currentUserService.enableSignInWithCode();
+        }
+
+        observable.subscribe(() => {
+            this.currentUser.canAutoLogin = this.currentUserService.canSignInWithCode;
+        }, error => {
+            this.currentUser.canAutoLogin = this.currentUserService.canSignInWithCode;
+        });
+    }
+
     public invertAccountStatus() {
         if (this.isInvertingAccountStatus) {
             return;
         }
 
+        this.progressService.start();
         this.isInvertingAccountStatus = true;
         this.currentUserService.updateCurrentUser({
             isActive: !this.currentUser.isActive
         }).finally(() => {
             this.isInvertingAccountStatus = false;
+            this.progressService.done();
         }).subscribe(account => {
             this.currentUser.pictureUri = account.pictureUri;
             this.currentUser.isActive = account.isActive;
@@ -126,8 +153,9 @@ export class EditComponent implements OnInit, AfterViewInit, AfterViewChecked {
 
     public ngOnInit() {
         this.currentUser = this.activatedRoute.snapshot.data['account'];
+        this.currentUser.canAutoLogin = this.currentUserService.canSignInWithCode;
 
-        this.progress.done();
+        this.progressService.done();
     }
 
     public ngAfterViewInit(): void {
@@ -142,6 +170,22 @@ export class EditComponent implements OnInit, AfterViewInit, AfterViewChecked {
         this.dialog.open(ChangePasswordComponent, {
             width: '500px'
         });
+    }
+
+    public get isUploading(): boolean {
+        return this.uploader.isUploading && this.uploader.queue && this.uploader.queue.length > 0;
+    }
+
+    public get progress(): number {
+        return this.uploader.progress;
+    }
+
+    public get progressSpinnerMode(): string {
+        if (this.uploader.queue.length && (this.uploader.progress < 1 || this.uploader.progress === 100)) {
+            return 'indeterminate'
+        }
+
+        return 'determinate';
     }
 
     private setup(currentUser: CurrentUserViewModel) {
@@ -179,12 +223,8 @@ export class EditComponent implements OnInit, AfterViewInit, AfterViewChecked {
                     Validators.minLength(3),
                     Validators.pattern(/^\S*$/)]),
                 [this.validateUsername.bind(this)]),
-            fullName: new FormControl('', Validators.compose([
-                Validators.maxLength(50)
-            ])),
-            bio: new FormControl('', Validators.compose([
-                Validators.maxLength(255)
-            ]))
+            fullName: new FormControl('', Validators.compose([Validators.maxLength(50)])),
+            bio: new FormControl('', Validators.compose([Validators.maxLength(250)]))
         });
 
         this.privateFormGroup = this.builder.group({
@@ -283,5 +323,15 @@ export class EditComponent implements OnInit, AfterViewInit, AfterViewChecked {
                 confirmPassword.setErrors(null);
             }
         }
+    }
+
+    private onSuccessUpload(attachment: AttachmentViewModel) {
+        this.currentUserService.changeAccountAttachment({
+            pictureId: attachment.id
+        }).finally(() => {
+            this.uploader.clearQueue();
+        }).subscribe(user => {
+            this.currentUser.pictureUri = user.pictureUri
+        });
     }
 }

@@ -49,11 +49,11 @@ textarea {
 }
 
 .media-author {
-    padding-left: 10px;
+    padding-left: .5rem;
 }
 
 .media-author-username {
-    font-size: 1.0em;
+    font-weight: 900;
 }
 
 .media-attachment {
@@ -69,19 +69,21 @@ textarea {
 }
 
 .comment-input {
+    font-family: 'Open Sans', sans-serif;
     outline: none;
     border: none;
     width: 100%;
     padding-left: .7rem;
-    font-weight: 300;
+    font-size: .9em;
 }
 
 .caption-input {
     outline: none;
-    background: #efefef;
-    border: 0px solid #d8d8d8;
-    padding: 12px 12px 12px 12px;
+    background: #fafafa;
+    border: none;
+    padding: .75rem;
     border-radius: 2px;
+    font-size: .9em;
     font-weight: lighter;
 }
 
@@ -113,7 +115,7 @@ textarea {
     left: 50%;
     transform: translate(-50%, -50%);
     width: 100%;
-    padding: 0 10px 0 10px;
+    padding: 0 .5rem 0 .5rem;
     z-index: 100;
 }
 
@@ -122,13 +124,13 @@ textarea {
 }
 
 .media-date {
-    padding: .5rem 0;
+    padding: .75rem 0 .5rem;
 }
 
 .media-created {
-    font-size: 0.8em;
-    color: #757575;
-    font-weight: lighter;
+    font-size: 0.7em;
+    color: rgb(0, 0, 0, .6);
+    font-weight: 600;
     text-transform: uppercase;
 }
 
@@ -150,7 +152,7 @@ textarea {
 }
 
 .big-like-icon {
-    color: #444444;
+    color: rgb(0, 0, 0, .85);
     cursor: pointer;
     outline: none;
     width: 27px;
@@ -162,5 +164,46 @@ textarea {
 }
 
 .icon-button {
-    color: #444444;
+    color: rgb(0, 0, 0, .85);
+}
+
+.pulse {
+    animation-name: pulse_animation;
+    animation-duration: 1000ms;
+    animation-iteration-count: 2;
+    animation-timing-function: linear;
+}
+
+/* .pulse:hover {
+    -webkit-animation: none;
+    -moz-animation: none;
+    -ms-animation: none;
+    animation: none;
+} */
+
+@keyframes pulse_animation {
+    0% {
+        transform: scale(1);
+    }
+    30% {
+        transform: scale(1);
+    }
+    40% {
+        transform: scale(1.15);
+    }
+    50% {
+        transform: scale(1);
+    }
+    60% {
+        transform: scale(1);
+    }
+    70% {
+        transform: scale(1.2);
+    }
+    80% {
+        transform: scale(1);
+    }
+    100% {
+        transform: scale(1);
+    }
 }

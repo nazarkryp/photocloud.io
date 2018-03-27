@@ -1,9 +1,9 @@
-* {
-    color: #444444;
-}
-
 ::ng-deep .mat-form-field-underline {
     background: #d8d8d8;
+}
+
+* {
+    font-family: 'Open Sans', sans-serif;
 }
 
 .sidenav-container {
@@ -17,17 +17,29 @@
     margin: 0;
     width: 100%;
     min-height: 100vh;
-    height: 100%;
-    /* overflow-y: scroll; */
     position: relative;
+}
+
+.my-content app-footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
 }
 
 .router-container {
     position: relative;
-    min-height: calc(100vh - 228px);
+    min-height: calc(100vh);
     overflow-y: hidden;
-    padding: 3rem 0;
-    box-sizing: content-box;
+    padding: 3rem 0 calc(3rem + 64px) 0;
+    box-sizing: border-box;
+}
+
+.router-container.toolbar {
+    min-height: calc(100vh - 100px);
+}
+
+.router-container.toolbar {
+    min-height: calc(100vh - 228px);
 }
 
 .mat-fab-bottom-left {

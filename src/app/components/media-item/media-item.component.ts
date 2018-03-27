@@ -1,14 +1,16 @@
-import { Component, ViewEncapsulation, OnInit, OnDestroy, Input, Output, EventEmitter, Inject, ViewChild } from '@angular/core';
+import { Component, ViewEncapsulation, OnInit, Input, Output, EventEmitter, Inject, ViewChild } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { MatSnackBar, MatDialog, MatSnackBarConfig } from '@angular/material';
 import { Subscription } from 'rxjs/Subscription';
 
 import { CurrentUserService } from 'app/infrastructure/services';
-import { MediaViewModel, UserViewModel, CommentViewModel, CurrentUserViewModel, UpdateMediaViewModel, UpdateAttachmentViewModel } from 'app/models/view';
+import { MediaViewModel, UserViewModel, CommentViewModel, CurrentUserViewModel, UpdateMediaViewModel, UpdateAttachmentViewModel, Page } from 'app/models/view';
 import { CommentService, MediaService } from 'app/services';
-import { UsersComponent } from 'app/components/shared/users/users.component';
+import { UsersDialogComponent } from 'app/components/shared/users-dialog/users-dialog.component';
 import { trigger, style, animate, transition } from '@angular/animations';
 import { EditMediaService, LikeService } from 'app/shared/services';
+import { UserDialogDetails } from 'app/components/shared/users-dialog/models';
+import { CommentsComponent } from 'app/components/shared/comments/comments.component';
 
 @Component({
     selector: 'app-media-item',
@@ -23,17 +25,18 @@ import { EditMediaService, LikeService } from 'app/shared/services';
         ])
     ]
 })
-export class MediaItemComponent implements OnInit, OnDestroy {
+export class MediaItemComponent implements OnInit {
     @Input() public media: MediaViewModel;
     @Output() public onRemoved = new EventEmitter<MediaViewModel>();
     @ViewChild('player') public player: any;
+    @ViewChild('commentsComponent') public commentsComponent: CommentsComponent;
 
     public text: string;
     public shareLink: string;
+    public isLiking = false;
     public updateMediaModel: UpdateMediaViewModel;
 
     public currentUser: CurrentUserViewModel;
-    public currentUserSubscription: Subscription;
 
     constructor(
         public dialog: MatDialog,
@@ -45,10 +48,7 @@ export class MediaItemComponent implements OnInit, OnDestroy {
         private likeService: LikeService,
         @Inject(DOCUMENT) private document: any
     ) {
-        this.currentUserSubscription = this.currentUserService.getCurrentUser()
-            .subscribe(currentUser => {
-                this.currentUser = currentUser;
-            });
+        this.currentUser = this.currentUserService.retrieveCurrentUser();
     }
 
     public next() {
@@ -106,11 +106,15 @@ export class MediaItemComponent implements OnInit, OnDestroy {
     }
 
     public openUsersDialog(event) {
-        const usersObservable = this.mediaService.getLikes(this.media.id);
-        const dialogRef = this.dialog.open(UsersComponent, {
-            data: {
-                usersObservable: usersObservable,
-                title: 'Likes'
+        const details = new UserDialogDetails('Likes', this.mediaService.getLikes.bind(this.mediaService), this.media.id);
+        this.dialog.open(UsersDialogComponent, {
+            width: '500px',
+            height: '600px',
+            data: details
+        }).afterClosed().subscribe((page: Page<UserViewModel>) => {
+            if (page && !page.hasMoreItems) {
+                this.media.likes = page.data;
+                this.media.likesCount = page.data.length;
             }
         });
     }
@@ -134,17 +138,18 @@ export class MediaItemComponent implements OnInit, OnDestroy {
         comment.user.id = this.currentUser.id;
         comment.user.username = this.currentUser.username;
 
-        this.media.comments.push(comment);
+        this.media.commentsCount++;
+
+        this.commentsComponent.createComment(comment);
 
         this.commentService.createComment(this.media.id, { text: text })
             .subscribe(createdComment => {
                 comment.id = createdComment.id;
                 comment.date = createdComment.date;
             }, () => {
-                const failedCommentIndex = this.media.comments.findIndex(c => !c.id);
-                this.media.comments.splice(failedCommentIndex, 1);
+                this.media.commentsCount--;
+                this.commentsComponent.removeComment(comment);
             });
-
     }
 
     public edit() {
@@ -166,16 +171,17 @@ export class MediaItemComponent implements OnInit, OnDestroy {
     }
 
     public like() {
-        this.likeService.like(this.media);
+        this.isLiking = true;
+        this.likeService.like(this.media).subscribe(() => {
+            this.isLiking = false;
+        }, () => {
+            this.isLiking = false;
+        });
     }
 
     public ngOnInit() {
         if (this.media) {
             this.media.activeAttachment = 0;
         }
-    }
-
-    public ngOnDestroy() {
-        this.currentUserSubscription.unsubscribe();
     }
 }

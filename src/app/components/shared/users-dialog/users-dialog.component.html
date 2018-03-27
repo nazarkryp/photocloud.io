@@ -1,0 +1,39 @@
+<div class="users-container" fxLayout="column">
+    <div class="users-title" fxLayout="row" fxLayoutAlign="space-between center">
+        <h1>{{title}}</h1>
+        <mat-icon class="btn-icon mat-18" (click)="close()" tabindex="-1">clear</mat-icon>
+    </div>
+    <!-- <div style="background: #fafafa; padding: 0 .7rem;">
+        <mat-form-field style="width: 100%;">
+            <input matInput placeholder="Search">
+        </mat-form-field>
+    </div> -->
+    <div class="user-items">
+        <div class="user-items-empty-container" fxLayout="row" fxLayoutAlign="center center" *ngIf="page.data?.length === 0">
+            <mat-spinner [diameter]="50" [strokeWidth]="3" *ngIf="isLoading"></mat-spinner>
+            <p *ngIf="!isLoading">Users not found</p>
+        </div>
+        <div [@listAnimation]="page.data.length">
+            <div class="user-item" *ngFor="let user of page.data; let index = index;" fxLayout="row">
+                <img class="user-avatar" [routerLink]="['/', user.username]" (click)="close()" src="{{user.pictureUri}}" default="assets/images/user-default-image.png"
+                    alt="profile">
+                <div class="users-details-container" fxLayout="row" fxLayoutAlign="space-between center" fxFlex>
+                    <div class="user-name" fxLayout="column">
+                        <a class="user-username" [routerLink]="['/', user.username]" (click)="close()">{{user.username}}</a>
+                        <a class="user-fullname" [routerLink]="['/', user.username]" (click)="close()">{{user.fullName}}</a>
+                    </div>
+                    <div fxLayout="row" fxLayoutAlign="center end">
+                        <button mat-button class="btn-relationships" (click)="modifyRelationship(user)" [disabled]="user.isModifyingRelationship"
+                            *ngIf="currentUser && currentUser.id !== user.id && (user.isActive || user.relationship?.outgoingStatus === 1 || user.relationship?.outgoingStatus === 2)">
+                            {{user.relationship?.outgoingStatus | relationshipAction | uppercase }}
+                        </button>
+                    </div>
+                </div>
+                <!-- <mat-divider *ngIf="index !== page.data.length - 1"></mat-divider> -->
+            </div>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="center center" *ngIf="page.hasMoreItems" style="padding: .7rem; background: white;">
+            <button class="btn-default" mat-button (click)="getUsers()" [disabled]="isLoading">LOAD MORE</button>
+        </div>
+    </div>
+</div>

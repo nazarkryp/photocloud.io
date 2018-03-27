@@ -5,7 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 
 import { UserService, MediaService } from 'app/services';
-import { PageViewModel, UserViewModel, ErrorViewModel } from 'app/models/view';
+import { Page, UserViewModel, ErrorViewModel } from 'app/models/view';
 
 
 import { NgProgress } from 'ngx-progressbar';
@@ -55,11 +55,11 @@ export class UserMediaResolver implements Resolve<UserViewModel> {
             validationResult.error = new ErrorViewModel('Account is not active');
         } else if (user.isPrivate
             && (!currentUser || user.id !== currentUser.id)
-            && user.incommingStatus !== RelationshipStatus.Following) {
+            && user.relationship.outgoingStatus !== RelationshipStatus.Following) {
             validationResult.hasErrors = true;
             validationResult.error = new ErrorViewModel('Account is private');
             validationResult.error.description = currentUser
-                ? `Follow ${user.username} to see all their photos` :
+                ? `Follow <strong>${user.username}</strong> to see all their photos` :
                 `Already know ${user.username}? Sign in to see all their photos`;
         }
 

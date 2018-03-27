@@ -5,7 +5,8 @@ import { Subscription } from 'rxjs/Subscription';
 import { CurrentUserService } from 'app/infrastructure/services';
 import { AccountService } from 'app/account/services';
 import { CurrentUserViewModel } from 'app/models/view';
-import { IncommingRequestsService } from 'app/services';
+import { RequestsService } from 'app/services';
+import { Uploader } from 'app/core/services';
 
 @Component({
     selector: 'app-toolbar',
@@ -23,10 +24,19 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     @Output() public openNotificationsEvent = new EventEmitter<boolean>();
 
     constructor(
+        public uploader: Uploader,
         private currentUserService: CurrentUserService,
-        private incommingRequestsService: IncommingRequestsService,
+        private incommingRequestsService: RequestsService,
         private accountService: AccountService,
         private router: Router) {
+    }
+
+    public upload(event: any) {
+        const file = event.target.files[0] as File;
+        this.uploader.upload(file).subscribe(response => {
+            console.log('response');
+            console.log(response);
+        });
     }
 
     public explorePeople() {

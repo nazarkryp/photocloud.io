@@ -3,9 +3,13 @@
 }
 
 .media-details-container .single-media {
-    border: 1px solid #efefef;
+    border: 1px solid #d8d8d8;
     border-radius: 2px;
     background: white;
+}
+
+.single-media {
+    font-family: 'Open Sans', sans-serif;
 }
 
 .media-details-info-container {
@@ -23,8 +27,8 @@
 }
 
 .media-details-comments-header {
-    font-size: 1em;
-    color: #444444;
+    /* color: rgb(0,0,0,.85); */
+    font-weight: 900;
     text-transform: uppercase;
     letter-spacing: 1px;
 }
@@ -43,11 +47,11 @@
 }
 
 .comment-box:hover .send-button {
-    color: #444444;
+    /* color: rgb(0,0,0,.85); */
 }
 
 .comment-box:hover .send-button:disabled {
-    color: grey;
+    color: rgb(0,0,0,.6);
 }
 
 .media-details-caption {
@@ -84,7 +88,7 @@
 
 .media-details-username {
     font-size: 1.2em;
-    font-weight: normal;
+    font-weight: 700;
 }
 
 .media-details-attachment.dialog {
@@ -137,11 +141,9 @@
 }
 
 .media-details-created {
-    font-size: 0.8em;
-    color: #444444;
+    font-size: .9em;
+    color: #9A9A9A;
     font-weight: lighter;
-    /* text-transform: uppercase; */
-    /* letter-spacing: 1px; */
 }
 
 .likes-counter {
@@ -154,7 +156,6 @@
     color: #e91e63;
 }
 
-
 /* editing */
 
 .media-details-caption-edit textarea {
@@ -164,7 +165,7 @@
     border-radius: 2px;
     padding: .5rem;
     box-sizing: border-box;
-    color: #444444;
+    /* color: rgb(0,0,0,.85); */
     outline: none;
 }
 

@@ -12,11 +12,11 @@ import {
 
 import { Observable } from 'rxjs/Observable';
 import { CurrentUserService } from 'app/infrastructure/services';
-import { IncommingRequestsService } from 'app/services';
+import { RequestsService } from 'app/services';
 
 @Injectable()
 export class IncommingRequestsInterceptor implements HttpInterceptor {
-    private incommingRequestsService: IncommingRequestsService;
+    private incommingRequestsService: RequestsService;
     private currentUserService: CurrentUserService;
     private isLoadingIncommingRequests = false;
 
@@ -27,7 +27,7 @@ export class IncommingRequestsInterceptor implements HttpInterceptor {
     public intercept(req: HttpRequest<any>, next: HttpHandler)
         : Observable<HttpSentEvent | HttpHeaderResponse | HttpProgressEvent | HttpResponse<any> | HttpUserEvent<any>> {
         if (!this.incommingRequestsService) {
-            this.incommingRequestsService = this.injector.get(IncommingRequestsService);
+            this.incommingRequestsService = this.injector.get(RequestsService);
             this.currentUserService = this.injector.get(CurrentUserService);
         }
 
@@ -40,7 +40,7 @@ export class IncommingRequestsInterceptor implements HttpInterceptor {
         if (currentUser && currentUser.isPrivate && !req.url.includes('users/requests/incomming')) {
             this.isLoadingIncommingRequests = true;
             return next.handle(req).finally(() => {
-                this.incommingRequestsService.getIncommingRequests().subscribe(() => {
+                this.incommingRequestsService.getIncommingRequests(null).subscribe(() => {
                     this.isLoadingIncommingRequests = false;
                 });
             });

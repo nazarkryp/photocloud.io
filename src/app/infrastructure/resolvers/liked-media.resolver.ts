@@ -4,20 +4,20 @@ import { Resolve, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/r
 import { Observable } from 'rxjs/Observable';
 
 import { MediaService } from 'app/services';
-import { PageViewModel, MediaViewModel } from 'app/models/view';
+import { Page, MediaViewModel } from 'app/models/view';
 
 import { NgProgress } from 'ngx-progressbar';
 import { CurrentUserService } from 'app/infrastructure/services';
 
 @Injectable()
-export class LikedMediaResolver implements Resolve<PageViewModel<MediaViewModel>> {
+export class LikedMediaResolver implements Resolve<Page<MediaViewModel>> {
     constructor(
         private location: Location,
         private currentUserService: CurrentUserService,
         private mediaService: MediaService,
         private progress: NgProgress) { }
 
-    public resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<PageViewModel<MediaViewModel>> {
+    public resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Page<MediaViewModel>> {
         this.progress.start();
 
         const currentUser = this.currentUserService.retrieveCurrentUser();

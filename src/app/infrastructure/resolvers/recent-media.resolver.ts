@@ -3,18 +3,18 @@ import { Resolve, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/r
 import { Observable } from 'rxjs/Observable';
 
 import { MediaService } from 'app/services';
-import { PageViewModel, MediaViewModel } from 'app/models/view';
+import { Page, MediaViewModel } from 'app/models/view';
 
 import { NgProgress } from 'ngx-progressbar';
 
 @Injectable()
-export class RecentMediaResolver implements Resolve<PageViewModel<MediaViewModel>> {
+export class RecentMediaResolver implements Resolve<Page<MediaViewModel>> {
     constructor(
         private mediaService: MediaService,
         private progress: NgProgress) { }
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot)
-        : PageViewModel<MediaViewModel> | Observable<PageViewModel<MediaViewModel>> | Promise<PageViewModel<MediaViewModel>> {
+        : Page<MediaViewModel> | Observable<Page<MediaViewModel>> | Promise<Page<MediaViewModel>> {
         this.progress.start();
         return this.mediaService.getRecentMedia(null)
             .catch(error => {

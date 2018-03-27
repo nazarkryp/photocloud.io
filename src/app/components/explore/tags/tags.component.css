@@ -11,6 +11,12 @@
     width: 960px;
 }
 
+.tags-media-header h1 {
+    font-size: 3em;
+    text-transform: uppercase;
+    color: rgb(0, 0, 0, .85);
+}
+
 .tags-media {
     width: 100%;
     max-width: 960px;
@@ -20,9 +26,20 @@
     padding: 3rem 0;
 }
 
+.tags-media .username {
+    cursor: pointer;
+    outline: none;
+    color: rgb(0, 0, 0, .85);
+    font-size: 1.2em;
+    letter-spacing: 2px;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
 .tags-media-item {
     position: relative;
     overflow: hidden;
+    cursor: pointer;
 }
 
 .tags-media-item:after {
@@ -51,23 +68,6 @@
     overflow: hidden;
 }
 
-.tags-media-item .tags-media-details {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    color: #ffffff;
-    opacity: 0;
-    z-index: 100;
-    border-radius: 2px;
-}
-
-.tags-media-item:not([disabled]):hover .tags-media-details {
-    cursor: pointer;
-    background: rgba(0, 0, 0, .4);
-    opacity: 1;
-    padding: 0 2.75rem;
-}
-
 .tags-media-item img,
 .tags-media-item video {
     opacity: 0.9;
@@ -86,49 +86,6 @@
     -moz-transform: scale(1.0);
     -webkit-transform: scale(1.0);
     transform: scale(1.0);
-}
-
-.pointer {
-    cursor: pointer;
-}
-
-.media-icon {
-    color: white;
-}
-
-.media-number {
-    margin-left: 10px;
-    color: white;
-}
-
-.mat-padding {
-    padding: 0 16px 16px 16px;
-}
-
-.user-info-data {
-    margin: 7px 0 0 16px;
-    line-height: 3;
-}
-
-.user-details {
-    margin-top: 16px;
-}
-
-.counters {
-    margin-top: 16px;
-}
-
-.button-bordered {
-    border: 1px solid #e91e63;
-}
-
-.info-container {
-    height: 300px;
-}
-
-.info-message {
-    font-weight: lighter;
-    font-size: 1.3em;
 }
 
 .multiple-attachments-icon-container {

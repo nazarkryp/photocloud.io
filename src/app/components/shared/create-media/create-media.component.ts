@@ -67,7 +67,7 @@ export class CreateMediaComponent implements OnInit, OnDestroy {
         this.currentUserSubscription.unsubscribe();
     }
 
-    public createPost() {
+    public createMedia() {
         this.progress.start();
         this.mediaService.createMedia(this.media)
             .finally(() => {
@@ -77,6 +77,10 @@ export class CreateMediaComponent implements OnInit, OnDestroy {
                 createdPost.user.pictureUri = this.currentUser.pictureUri;
                 this.dialogRef.close(createdPost);
             });
+    }
+
+    public close() {
+        this.dialogRef.close();
     }
 
     private getAuthenticationOptions(): FileUploaderOptions {

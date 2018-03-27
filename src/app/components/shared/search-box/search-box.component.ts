@@ -7,7 +7,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/debounceTime';
 
 import { UserService } from 'app/services';
-import { PageViewModel, UserViewModel } from 'app/models/view';
+import { Page, UserViewModel } from 'app/models/view';
 
 import { NgProgress } from 'ngx-progressbar';
 
@@ -51,7 +51,7 @@ export class SearchBoxComponent implements OnInit {
     public ngOnInit() {
         this.searchControl = new FormControl();
         this.users = this.searchControl.valueChanges
-            .debounceTime(800)
+            .debounceTime(300)
             .do(_ => {
                 if (this.searchQuery) {
                     this.progress.start();

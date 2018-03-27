@@ -1,20 +1,19 @@
-@import url('https://fonts.googleapis.com/css?family=Roboto:300,400');
-@import url('http://fonts.googleapis.com/css?family=Raleway:300,400,800');
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,900');
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600,800');
+* {
+    font-family: 'Open Sans', sans-serif;
+}
+
 body {
+    color: rgb(0, 0, 0, .85);
     background-color: #FAFAFA;
-    color: #444444;
-    font-family: Roboto, sans-serif;
     overflow-y: scroll;
+    font-size: 100%;
 }
 
 a {
     text-decoration: none;
     color: inherit;
-}
-
-a.link-button {
-    color: #e91e63;
-    cursor: pointer;
 }
 
 .cdk-global-scrollblock {
@@ -31,6 +30,10 @@ a.link-button {
 
 .mat-dialog-container {
     padding: 0px !important;
+}
+
+.mat-icon {
+    font-family: 'Material Icons' !important;
 }
 
 .mat-icon.mat-18 {
@@ -78,7 +81,13 @@ a.link-button {
 
 .mat-icon.btn-icon {
     cursor: pointer;
-    color: #444444;
+    color: rgb(0, 0, 0, .85);
+    outline: none;
+}
+
+.mat-icon.btn-icon-secondary {
+    cursor: pointer;
+    color: #9c9c9c;
     outline: none;
 }
 
@@ -99,14 +108,14 @@ a.link-button {
 
 .mat-icon.btn-icon.disabled,
 .mat-icon.btn-icon-light:disabled {
-    color: gray;
+    color: rgb(0, 0, 0, .6);
 }
 
 .mat-button.btn-relationships {
-    background-color: #efefef;
-    color: gray;
+    background: #efefef;
+    color: rgb(0, 0, 0, .6);
     border-radius: 2px;
-    font-weight: bold;
+    font-weight: 900;
     line-height: 27px;
     min-width: 110px;
     padding: 3px 0;
@@ -115,16 +124,27 @@ a.link-button {
 .mat-button.btn-default {
     width: 100%;
     background: #efefef;
-    color: gray;
+    color: rgb(0, 0, 0, .6);
     text-transform: uppercase;
     font-size: 0.8em;
     letter-spacing: 1px;
-    font-weight: bold;
+    font-weight: 600;
 }
 
+.mat-button.btn-primary {
+    width: 100%;
+    background: #e91e63;
+    color: white;
+    text-transform: uppercase;
+    font-size: 0.8em;
+    letter-spacing: 1px;
+    font-weight: 600;
+}
+
+.mat-button.btn-primary:disabled,
 .mat-button.btn-default:disabled {
     background-color: rgba(0, 0, 0, .12);
-    color: rgba(0, 0, 0, .26);
+    color: rgb(0, 0, 0, .85);
 }
 
 .primary {

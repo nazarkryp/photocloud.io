@@ -4,16 +4,16 @@ import { Resolve, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/r
 import { Observable } from 'rxjs/Observable';
 
 import { UserService } from 'app/services';
-import { PageViewModel, UserViewModel } from 'app/models/view';
+import { Page, UserViewModel } from 'app/models/view';
 
 @Injectable()
-export class UserListResolver implements Resolve<PageViewModel<UserViewModel>> {
+export class UserListResolver implements Resolve<Page<UserViewModel>> {
     constructor(
         private userService: UserService) {
     }
 
     public resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot)
-        : PageViewModel<UserViewModel> | Observable<PageViewModel<UserViewModel>> | Promise<PageViewModel<UserViewModel>> {
+        : Page<UserViewModel> | Observable<Page<UserViewModel>> | Promise<Page<UserViewModel>> {
         return this.userService.getUsers(null);
     }
 }

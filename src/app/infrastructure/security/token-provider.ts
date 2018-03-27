@@ -37,7 +37,9 @@ export class TokenProvider {
         }
 
         if (expiresIn <= 0) {
-            this.storageService.clear();
+            if (!accessToken.code) {
+                this.storageService.clear();
+            }
 
             return Observable.of(null);
         }

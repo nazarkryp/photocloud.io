@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 
 import { UserResponse, CurrentUserResponse } from 'app/models/response';
-import { UserViewModel, CurrentUserViewModel } from 'app/models/view';
+import { UserViewModel, CurrentUserViewModel, CountersViewModel } from 'app/models/view';
 import { RelationshipStatus } from 'app/models/shared';
 import { IMapper } from 'app/infrastructure/mapping/mapper';
+import { UserRelationship } from 'app/models/view/user-relationship.model';
 
 @Injectable()
 export class UserMapper implements IMapper<UserResponse, UserViewModel> {
@@ -21,8 +22,16 @@ export class UserMapper implements IMapper<UserResponse, UserViewModel> {
         user.followers = response.followers;
         user.following = response.following;
         user.lastActive = new Date(response.lastActive);
-        user.incommingStatus = response.incommingStatus;
-        user.outgoingStatus = response.outgoingStatus;
+        user.relationship = new UserRelationship();
+
+        if (response.relationship) {
+            user.relationship.incommingStatus = response.relationship.incommingStatus;
+            user.relationship.outgoingStatus = response.relationship.outgoingStatus;
+        }
+
+        if (response.counters) {
+            user.counters = new CountersViewModel(response.counters.posts, response.counters.followers, response.counters.following);
+        }
 
         return user;
     }

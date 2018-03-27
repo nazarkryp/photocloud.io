@@ -4,15 +4,6 @@ import { DOCUMENT } from '@angular/common';
 import { trigger, animate, style, transition, animateChild, group, query, stagger } from '@angular/animations';
 import { MatDialogRef, MatSnackBarConfig, MatSnackBar, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
 
-import {
-    TdBounceAnimation,
-    TdFlashAnimation,
-    TdHeadshakeAnimation,
-    TdJelloAnimation,
-    TdPulseAnimation,
-    TdFadeInOutAnimation
-} from '@covalent/core';
-
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 
@@ -23,18 +14,14 @@ import { MediaViewModel, UserViewModel, CommentViewModel, CurrentUserViewModel, 
 import { MediaService, CommentService } from 'app/services';
 import { NgProgress } from 'ngx-progressbar';
 import { EditMediaService, LikeService } from 'app/shared/services';
+import { UserDialogDetails } from 'app/components/shared/users-dialog/models';
+import { CommentsComponent } from 'app/components/shared/comments/comments.component';
 
 @Component({
     selector: 'app-media-details',
     templateUrl: './media-details.component.html',
     styleUrls: ['./media-details.component.css'],
     animations: [
-        TdFadeInOutAnimation(),
-        TdBounceAnimation(),                    // using implicit anchor name 'tdBounce' in template
-        TdFlashAnimation(),                     // using implicit anchor name 'tdFlash' in template
-        TdHeadshakeAnimation(),                 // using implicit anchor name 'tdHeadshake' in template
-        TdJelloAnimation(),                     // using implicit anchor name 'tdJello' in template
-        TdPulseAnimation({ duration: 200 }),     // using implicit anchor name 'tdPulse' in template,
         trigger('content', [
             transition(':enter', [
                 query('.transition-content', [
@@ -48,9 +35,9 @@ import { EditMediaService, LikeService } from 'app/shared/services';
     ]
 })
 export class MediaDetailsComponent implements OnInit, OnDestroy {
-    public bounceState = false;
     public isDialog: boolean;
     @ViewChild('player') public player: any;
+    @ViewChild('commentsComponent') public commentsComponent: CommentsComponent;
     public usersConfig: any;
 
     public updateMediaModel: UpdateMediaViewModel;
@@ -105,11 +92,7 @@ export class MediaDetailsComponent implements OnInit, OnDestroy {
     }
 
     public play() {
-        if (!this.player) {
-            return;
-        }
-
-        if (this.media.attachments[this.media.activeAttachment].type !== 1) {
+        if (!this.player || this.media.attachments[this.media.activeAttachment].type !== 1) {
             return;
         }
 
@@ -166,9 +149,10 @@ export class MediaDetailsComponent implements OnInit, OnDestroy {
         comment.user.id = this.currentUser.id;
         comment.user.username = this.currentUser.username;
 
-        this.media.comments.push(comment);
         this.showCommentBox = false;
         this.media.commentsCount++;
+
+        this.commentsComponent.createComment(comment);
 
         this.commentService.createComment(this.media.id, { text: text })
             .subscribe(createdComment => {
@@ -176,15 +160,13 @@ export class MediaDetailsComponent implements OnInit, OnDestroy {
                 comment.date = createdComment.date;
             }, () => {
                 this.media.commentsCount--;
-                const failedCommentIndex = this.media.comments.findIndex(c => !c.id);
-                this.media.comments.splice(failedCommentIndex, 1);
+                this.commentsComponent.removeComment(comment);
             });
-
     }
 
     public like() {
-        this.bounceState = !this.bounceState;
-        this.likeService.like(this.media);
+        this.likeService.like(this.media).subscribe(() => {
+        }, () => { });
     }
 
     public edit() {
@@ -226,12 +208,12 @@ export class MediaDetailsComponent implements OnInit, OnDestroy {
     }
 
     public inspectLikes(event) {
-        this.usersConfig = {
-            usersObservable: this.mediaService.getLikes(this.media.id),
-            title: 'Likes'
-        };
+        // this.usersConfig = {
+        //     usersObservable: this.mediaService.getLikes(this.media.id),
+        //     title: 'Likes'
+        // };
 
-        this.media.inspectingLikes = true;
+        // this.media.inspectingLikes = true;
     }
 
     public likesClose() {

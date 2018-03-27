@@ -31,8 +31,8 @@
 }
 
 .text-button {
-    font-size: 0.9em;
-    font-weight: bold;
+    font-size: .9em;
+    font-weight: 900;
     color: #757575;
     cursor: pointer;
 }
@@ -43,12 +43,12 @@
 
 .text-button.disabled,
 .text-button.disabled:hover {
-    color: #C8C8C8;
+    color: rgb(0,0,0,.6);
 }
 
 .comment-username {
-    color: #444444;
-    font-weight: bold;
+    /* color: rgb(0,0,0,.85); */
+    font-weight: 900;
 }
 
 .comment-text {

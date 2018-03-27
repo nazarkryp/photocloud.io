@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { AbstractControl, FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { trigger, animate, style, transition, animateChild, group, query, stagger } from '@angular/animations';
@@ -11,6 +11,7 @@ import { ReactiveFormControl } from 'app/account/models/controls';
 import { NgProgress } from 'ngx-progressbar';
 import { Observable } from 'rxjs/Observable';
 import { UserService } from 'app/services';
+import { CurrentUserService } from 'app/infrastructure/services';
 
 const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
@@ -32,6 +33,10 @@ const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA
     ]
 })
 export class CreateComponent {
+    @ViewChild('usernameInput') public usernameInput: ElementRef;
+    @ViewChild('passwordInput') public passwordInput: ElementRef;
+    public showPassword = false;
+
     public errorStateMatcher = new DefaultErrorStateMatcher();
     public formGroup: FormGroup;
     public signUpError: string;
@@ -59,7 +64,7 @@ export class CreateComponent {
     constructor(
         private router: Router,
         private builder: FormBuilder,
-        private accountService: AccountService,
+        private currentUserService: CurrentUserService,
         private userService: UserService,
         private progress: NgProgress) {
         const validator = {
@@ -74,7 +79,7 @@ export class CreateComponent {
                     Validators.required,
                     Validators.maxLength(50),
                     Validators.minLength(3),
-                    Validators.pattern(/^\S*$/)]),
+                    Validators.pattern(/^[a-z0-9]+$/i)]),
                 [this.validateUsername.bind(this)]),
             fullName: new FormControl('',
                 Validators.compose([
@@ -86,12 +91,6 @@ export class CreateComponent {
                     Validators.pattern(EMAIL_REGEX)]),
                 [this.validateUsername.bind(this)]),
             password: new FormControl('',
-                Validators.compose([
-                    Validators.required,
-                    Validators.maxLength(50),
-                    Validators.minLength(6),
-                    Validators.pattern(/^\S*$/)])),
-            confirmPassword: new FormControl('',
                 Validators.compose([
                     Validators.required,
                     Validators.maxLength(50),
@@ -119,19 +118,19 @@ export class CreateComponent {
     }
 
     private validate(formGroup: FormGroup) {
-        const confirmPasswordErrors = formGroup.get('password').value !== formGroup.get('confirmPassword').value
-            ? { 'mismatch': true }
-            : null;
+        // const confirmPasswordErrors = formGroup.get('password').value !== formGroup.get('confirmPassword').value
+        //     ? { 'mismatch': true }
+        //     : null;
 
-        const confirmPassword = formGroup.get('confirmPassword');
-        if (confirmPasswordErrors && confirmPasswordErrors.mismatch) {
-            confirmPassword.setErrors(confirmPasswordErrors);
-        } else if (confirmPassword.errors) {
-            delete confirmPassword.errors['mismatch'];
-            if (!Object.keys(confirmPassword.errors).length) {
-                confirmPassword.setErrors(null);
-            }
-        }
+        // const confirmPassword = formGroup.get('confirmPassword');
+        // if (confirmPasswordErrors && confirmPasswordErrors.mismatch) {
+        //     confirmPassword.setErrors(confirmPasswordErrors);
+        // } else if (confirmPassword.errors) {
+        //     delete confirmPassword.errors['mismatch'];
+        //     if (!Object.keys(confirmPassword.errors).length) {
+        //         confirmPassword.setErrors(null);
+        //     }
+        // }
     }
 
     public createAccount() {
@@ -147,10 +146,15 @@ export class CreateComponent {
 
             this.progress.start();
             this.formGroup.disable();
-            this.accountService.create(createAccountRequestModel)
+            this.currentUserService.create(createAccountRequestModel)
                 .subscribe(() => {
                     this.progress.done();
-                    this.router.navigateByUrl('/account/signin');
+
+                    if (createAccountRequestModel.signInOnCreated) {
+                        this.router.navigateByUrl('/');
+                    } else {
+                        this.router.navigateByUrl('/account/signin');
+                    }
                 }, errorResponse => {
                     this.progress.done();
                     this.formGroup.enable();

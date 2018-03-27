@@ -1,58 +1,61 @@
-.recover-content {
-    overflow-y: hidden;
-    height: calc(100vh);
-    color: #444444;
-    margin: 0;
-    padding: 0;
-    background: #2980b9 url('/assets/images/tumblr_static_bg3.png') repeat 0 0;
-    -webkit-animation: 10s linear 0s normal none infinite animate;
-    -moz-animation: 10s linear 0s normal none infinite animate;
-    -ms-animation: 10s linear 0s normal none infinite animate;
-    -o-animation: 10s linear 0s normal none infinite animate;
-    animation: 10s linear 0s normal none infinite animate;
+.signup-content {
+    position: relative;
+    min-height: calc(100vh);
+    width: 100%;
+    margin: -3rem 0;
+    padding: 3rem 0;
 }
 
-@-webkit-keyframes animate {
-    from {
-        background-position: 0 0;
-    }
-    to {
-        background-position: 500px 0;
+::ng-deep .signup-content * {
+    font-family: 'Roboto', sans-serif;
+}
+
+@media screen and (max-width: 500px) {
+    .signup-form {
+        width: 100%;
+        border-radius: 0;
+        height: 100%;
     }
 }
 
-@-moz-keyframes animate {
-    from {
-        background-position: 0 0;
+@media screen and (min-width: 701px) {
+    .signup-form {
+        width: 448px;
+        border-radius: 2px;
+        box-shadow: 0 3px 8px -3px rgba(0, 0, 0, 0.26);
     }
-    to {
-        background-position: 500px 0;
-    }
-}
-
-@-ms-keyframes animate {
-    from {
-        background-position: 0 0;
-    }
-    to {
-        background-position: 500px 0;
+    .signup-content {
+        background: linear-gradient(110deg, #ffffff 60%, #fafafa 60%);
+        /* background: #2980b9 url('/assets/images/tumblr_static_bg3.png') repeat 0 0; */
     }
 }
 
-@-o-keyframes animate {
-    from {
-        background-position: 0 0;
-    }
-    to {
-        background-position: 500px 0;
-    }
+.signup-form {
+    font-size: .9em;
+    background: white;
+    padding: 2.1rem 1.4rem 1.4rem 1.4rem;
+    position: relative;
 }
 
-@keyframes animate {
-    from {
-        background-position: 0 0;
-    }
-    to {
-        background-position: 500px 0;
-    }
+.input {
+    padding: 12px;
+    border: 2px solid #efefef;
+    border-radius: 5px;
+    width: 100%;
+    box-sizing: border-box;
+    outline: none;
+    margin-top: 24px;
+}
+
+.disabled {
+    color: #9d9d9d;
+}
+
+.error-message {
+    color: #e91f63;
+    text-align: center;
+}
+
+.mat-spinner>* {
+    stroke: white !important;
 }
