@@ -15,20 +15,19 @@
 .search-box-container {
     max-width: 600px;
     position: relative;
-    color: rgb(0,0,0,.85);
+    color: rgb(0, 0, 0, .85);
     z-index: 777;
 }
 
 .search-box {
     font-family: 'Open Sans', sans-serif;
-    font-size: 16px;
     font-weight: 300;
     width: 100%;
     border: none;
-    border-radius: 2px;
+    border-radius: 25px;
     outline: none;
-    background: #F5F5F5;
-    padding: 12px 50px 12px 50px;
+    background: #f5f5f5;
+    padding: .7rem 2.4rem;
     -webkit-transition: box-shadow 0.3s;
     transition: box-shadow 0.3s;
 }
@@ -38,10 +37,12 @@
     box-shadow: 0 3px 8px -3px rgba(0, 0, 0, 0.26);
 }
 
-.search-box-icon {
+.search-box-container>mat-icon {
     position: absolute;
     left: 12px;
     pointer-events: none;
+    color: #747474;
+    margin-top: 1px;
 }
 
 .search-box-spinner {
