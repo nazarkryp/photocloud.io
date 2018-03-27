@@ -93,3 +93,7 @@ div.edit-image:not([disabled]):hover .change-overlay {
     width: 100%;
     text-transform: uppercase;
 }
+
+::ng-deep .btn-deactivate .mat-button-focus-overlay {
+    background-color: transparent !important;
+}

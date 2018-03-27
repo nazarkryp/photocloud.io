@@ -170,7 +170,7 @@ textarea {
 .pulse {
     animation-name: pulse_animation;
     animation-duration: 1000ms;
-    animation-iteration-count: 2;
+    animation-iteration-count: 1;
     animation-timing-function: linear;
 }
 
@@ -189,7 +189,7 @@ textarea {
         transform: scale(1);
     }
     40% {
-        transform: scale(1.15);
+        transform: scale(1.25);
     }
     50% {
         transform: scale(1);
@@ -198,7 +198,7 @@ textarea {
         transform: scale(1);
     }
     70% {
-        transform: scale(1.2);
+        transform: scale(1.5);
     }
     80% {
         transform: scale(1);

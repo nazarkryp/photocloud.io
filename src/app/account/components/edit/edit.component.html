@@ -108,7 +108,7 @@
         </div>
 
         <div class="item" fxLayout="row" fxLayoutAlign="start center">
-            <button class="btn-deactivate" mat-button color="warn" (click)="invertAccountStatus()">{{currentUser.isActive ? 'Temporarily disable my account' : 'Enable account'}}</button>
+            <a class="btn-deactivate" mat-button color="warn" (click)="invertAccountStatus()">{{currentUser.isActive ? 'Temporarily disable my account' : 'Enable account'}}</a>
         </div>
     </div>
 </div>

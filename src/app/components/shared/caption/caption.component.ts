@@ -21,4 +21,8 @@ export class CaptionComponent {
     public increaseTruncateSize() {
         this.truncateWidth = 10000;
     }
+
+    public fuck() {
+        console.log('fuck');
+    }
 }
