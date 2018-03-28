@@ -33,12 +33,8 @@ const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA
     ]
 })
 export class CreateComponent {
-    @ViewChild('usernameInput') public usernameInput: ElementRef;
-    @ViewChild('passwordInput') public passwordInput: ElementRef;
-    public showPassword = false;
-
-    public errorStateMatcher = new DefaultErrorStateMatcher();
     public formGroup: FormGroup;
+    public errorStateMatcher = new DefaultErrorStateMatcher();
     public signUpError: string;
 
     public get username(): ReactiveFormControl {
@@ -67,12 +63,6 @@ export class CreateComponent {
         private currentUserService: CurrentUserService,
         private userService: UserService,
         private progress: NgProgress) {
-        const validator = {
-            validator: (e) => {
-                return this.validate(e);
-            }
-        };
-
         this.formGroup = this.builder.group({
             username: new ReactiveFormControl('',
                 Validators.compose([
@@ -96,7 +86,7 @@ export class CreateComponent {
                     Validators.maxLength(50),
                     Validators.minLength(6),
                     Validators.pattern(/^\S*$/)]))
-        }, validator);
+        });
     }
 
     public validateUsername(reactiveFormControl: ReactiveFormControl): Promise<{ [key: string]: any; }> | Observable<{ [key: string]: any; }> {
@@ -117,49 +107,32 @@ export class CreateComponent {
             });
     }
 
-    private validate(formGroup: FormGroup) {
-        // const confirmPasswordErrors = formGroup.get('password').value !== formGroup.get('confirmPassword').value
-        //     ? { 'mismatch': true }
-        //     : null;
-
-        // const confirmPassword = formGroup.get('confirmPassword');
-        // if (confirmPasswordErrors && confirmPasswordErrors.mismatch) {
-        //     confirmPassword.setErrors(confirmPasswordErrors);
-        // } else if (confirmPassword.errors) {
-        //     delete confirmPassword.errors['mismatch'];
-        //     if (!Object.keys(confirmPassword.errors).length) {
-        //         confirmPassword.setErrors(null);
-        //     }
-        // }
-    }
-
     public createAccount() {
         if (this.formGroup.valid) {
             this.signUpError = null;
 
             const createAccountRequestModel = new CreateAccountRequestModel(
-                this.formGroup.get('username').value,
-                this.formGroup.get('email').value,
-                this.formGroup.get('password').value,
-                this.formGroup.get('fullName').value
+                this.username.value,
+                this.email.value,
+                this.password.value
             );
 
             this.progress.start();
             this.formGroup.disable();
             this.currentUserService.create(createAccountRequestModel)
-                .subscribe(() => {
+                .finally(() => {
                     this.progress.done();
-
+                    this.progress.done();
+                    this.formGroup.enable();
+                })
+                .subscribe(() => {
                     if (createAccountRequestModel.signInOnCreated) {
                         this.router.navigateByUrl('/');
                     } else {
                         this.router.navigateByUrl('/account/signin');
                     }
-                }, errorResponse => {
-                    this.progress.done();
-                    this.formGroup.enable();
+                }, (errorResponse) => {
                     this.signUpError = errorResponse.error.error.modelState;
-                    this.progress.done();
                 });
         }
     }

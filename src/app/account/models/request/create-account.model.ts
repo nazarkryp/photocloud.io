@@ -1,6 +1,5 @@
 export class CreateAccountRequestModel {
     public username: string;
-    public fullName: string;
     public email: string;
     public password: string;
     public signInOnCreated = true;
@@ -9,6 +8,5 @@ export class CreateAccountRequestModel {
         this.username = username;
         this.email = email;
         this.password = password;
-        this.fullName = fullName;
     }
 }

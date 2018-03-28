@@ -4,15 +4,15 @@
             <span style="font-size: 2em; font-weight: 900;">Photo</span>
             <span style="font-size: 3em; font-weight: 900; color: #e91e63;">Cloud</span>
         </div>
-        <form class="signin-form" fxLayout="column" [formGroup]="formGroup" (ngSubmit)="signIn(usernameInput.value, passwordInput.value)">
-            <div style="padding: 0 0 .7rem 0;" fxLayout="column">
-                <span style="color: rgb(0,0,0,.85); font-size: 1em; font-weight: 400;">Login to continue or
-                    <a class="primary" routerLink="/account/create" *ngIf="!formGroup.disabled">Create Account</a>
-                    <span class="disabled" *ngIf="formGroup.disabled">Create Account</span>
+        <form class="signin-form" fxLayout="column" [formGroup]="formGroup" (ngSubmit)="signIn()">
+            <div class="signin-form-overlay" [ngClass]="{ 'visible' : formGroup.disabled }"></div>
+            <div class="form-header" fxLayout="column">
+                <span class="form-title">Login to continue or
+                    <a class="primary" routerLink="/account/create">Create Account</a>
                 </span>
             </div>
             <mat-form-field class="form-field">
-                <input formControlName="username" #usernameInput matInput placeholder="Username or E-mail address" type="text" autocomplete="off" [errorStateMatcher]="errorStateMatcher">
+                <input formControlName="username" appAutoFocus matInput placeholder="Username or E-mail address" type="text" autocomplete="off" [errorStateMatcher]="errorStateMatcher">
                 <mat-error *ngIf="username.getError('required')">
                     Username is required
                 </mat-error>
@@ -30,12 +30,11 @@
                     Password is required
                 </mat-error>
             </mat-form-field>
-            <div [ngSwitch]="formGroup.disabled">
-                <a class="primary" routerLink="/account/recover" *ngSwitchCase="false">Forgot Password?</a>
-                <span class="disabled" *ngSwitchCase="true">Forgot Password?</span>
+            <div class="forgot-password">
+                <a class="primary" routerLink="/account/recover">Forgot Password?</a>
             </div>
             <div style="margin: .7rem 0 0 0;" fxLayout="row" fxLayoutAlign="end center">
-                <button type="submit" style="font-size: 1.2em; font-weight: lighter;" mat-raised-button color="primary" [disabled]="formGroup.disabled">SIGN IN</button>
+                <button type="submit" style="font-size: 1.2em; font-weight: lighter;" mat-raised-button color="primary">SIGN IN</button>
             </div>
             <div fxLayout="row" fxLayoutAlign="center center" style="height: 100px;">
                 <span class="error-message" *ngIf="signInError">{{signInError}}</span>

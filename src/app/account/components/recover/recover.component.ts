@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation, ElementRef, ViewChild } from '@angular/core';
+import { Component, ViewEncapsulation, ElementRef, ViewChild, OnInit } from '@angular/core';
 import { FormGroup, AbstractControl, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { transition, trigger, query, style, stagger, animate } from '@angular/animations';
@@ -25,10 +25,9 @@ import { NgProgress } from 'ngx-progressbar';
         ])
     ]
 })
-export class RecoverComponent implements OnInit {
-    @ViewChild('usernameInput') usernameInput: ElementRef;
-    @ViewChild('passwordInput') passwordInput: ElementRef;
+export class RecoverComponent {
     public errorStateMatcher = new DefaultErrorStateMatcher();
+
     public formGroup: FormGroup;
     public recoverError: string;
     public success: boolean;
@@ -52,27 +51,22 @@ export class RecoverComponent implements OnInit {
 
     public recover() {
         if (this.formGroup.valid) {
-            const username = this.formGroup.get('username').value;
-
-            this.recoverError = null;
             this.progress.start();
             this.formGroup.disable();
+            this.recoverError = null;
+
+            const username = this.formGroup.get('username').value;
+
             this.currentUserService.recover(username)
                 .delay(3000)
                 .subscribe(response => {
                     this.success = true;
-                    // this.router.navigateByUrl('/');
                     this.progress.done();
                 }, error => {
                     this.formGroup.enable();
                     this.recoverError = 'Sorry, user with such username was not found';
                     this.progress.done();
-                    this.passwordInput.nativeElement.focus();
                 });
         }
-    }
-
-    public ngOnInit(): void {
-        this.usernameInput.nativeElement.focus();
     }
 }

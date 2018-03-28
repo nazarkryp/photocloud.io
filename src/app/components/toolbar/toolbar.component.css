@@ -81,3 +81,8 @@ td-notification-count .btn-icon:hover {
     color: #e91e63;
     font-family: 'Roboto', sans-serif;
 }
+
+::ng-deep .btn-signin .mat-button-focus-overlay {
+    background-color: transparent !important;
+    border-radius: 50% !important;
+}

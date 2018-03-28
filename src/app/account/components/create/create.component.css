@@ -1,11 +1,6 @@
-::ng-deep .signup-content * {
-    font-family: 'Roboto', sans-serif;
-}
-
 .signup-content {
-    position: relative;
-    min-height: calc(100vh);
-    width: 100%;
+    height: calc(100vh);
+    box-sizing: border-box;
     margin: -3rem 0;
     padding: 3rem 0;
 }
@@ -14,15 +9,16 @@
     font-family: 'Roboto', sans-serif;
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 448px) {
+    .signup-content {
+        background: white;
+    }
     .signup-form {
-        width: 100%;
-        border-radius: 0;
-        height: 100%;
+        width: 100vw;
     }
 }
 
-@media screen and (min-width: 701px) {
+@media screen and (min-width: 449px) {
     .signup-form {
         width: 448px;
         border-radius: 2px;
@@ -30,9 +26,6 @@
     }
     .signup-content {
         background: linear-gradient(110deg, #ffffff 60%, #fafafa 60%);
-        /* background: #fafafa; */
-        /* background: linear-gradient(110deg, #fdcd3b 60%, #ffed4b 60%); */
-        /* background: #2980b9 url('/assets/images/tumblr_static_bg3.png') repeat 0 0; */
     }
 }
 
@@ -41,6 +34,16 @@
     background: white;
     padding: 2.1rem 1.4rem 1.4rem 1.4rem;
     position: relative;
+}
+
+.form-title {
+    color: rgb(0, 0, 0, .85);
+    font-size: 1em;
+    font-weight: 400;
+}
+
+.form-header {
+    padding: 0 0 .7rem 0;
 }
 
 .input {

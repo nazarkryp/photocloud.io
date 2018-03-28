@@ -5,14 +5,14 @@
             <span style="font-size: 3em; font-weight: 900; color: #e91e63;">Cloud</span>
         </div>
         <form class="signup-form" fxLayout="column" [formGroup]="formGroup" (ngSubmit)="createAccount()" novalidate>
-            <div style="padding: 0 0 .7rem 0;" fxLayout="column">
-                <span style="color: rgb(0,0,0,.85);">Create account to continue or
+            <div class="form-header" fxLayout="column">
+                <span class="form-title">Create account to continue or
                     <a class="primary" routerLink="/account/signin" *ngIf="!formGroup.disabled">Sign In</a>
                     <span class="disabled" *ngIf="formGroup.disabled">Sign In</span> if already have one
                 </span>
             </div>
             <mat-form-field class="form-field">
-                <input formControlName="username" #usernameInput matInput placeholder="Username" type="text" autocomplete="off" [errorStateMatcher]="errorStateMatcher">
+                <input formControlName="username" appAutoFocus matInput placeholder="Username" type="text" autocomplete="off" [errorStateMatcher]="errorStateMatcher">
                 <div matSuffix>
                     <mat-icon class="primary" matSuffix *ngIf="username.getError('unique')">clear</mat-icon>
                     <mat-icon class="success" matSuffix *ngIf="username.valid">check</mat-icon>
@@ -54,8 +54,8 @@
             <mat-form-field class="form-field">
                 <input formControlName="password" #passwordInput matInput placeholder="Password" type="password" autocomplete="off" [errorStateMatcher]="errorStateMatcher">
                 <div matSuffix [ngSwitch]="passwordInput.type === 'password'" *ngIf="!formGroup.disabled">
-                    <mat-icon class="mat-24 btn-icon" [ngClass]="{'disabled' : formGroup.disabled }" tabindex="-1" [appPassword]="passwordInput" appPasswordType="text" matTooltip="Show Password"
-                        matTooltipPosition="right" *ngSwitchCase="true">visibility</mat-icon>
+                    <mat-icon class="mat-24 btn-icon" [ngClass]="{'disabled' : formGroup.disabled }" tabindex="-1" [appPassword]="passwordInput" appPasswordType="text" matTooltip="Show Password" matTooltipPosition="right"
+                        *ngSwitchCase="true">visibility</mat-icon>
                     <mat-icon class="mat-24 btn-icon" [ngClass]="{'disabled' : formGroup.disabled }" tabindex="-1" [appPassword]="passwordInput" appPasswordType="password" matTooltip="Hide Password"
                         matTooltipPosition="right" *ngSwitchCase="false">visibility_off</mat-icon>
                 </div>

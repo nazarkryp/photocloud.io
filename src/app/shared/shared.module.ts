@@ -5,6 +5,7 @@ import { DefaultImageDirective } from './directives/default-image.directive';
 import { ImagePreviewDirective } from 'app/shared/directives/image-preview.directive';
 import { EditMediaService, LikeService } from 'app/shared/services';
 import { ScrollDirective } from './directives/scroll.directive';
+import { AutoFocusDirective } from './directives/autofocus.directive';
 
 @NgModule({
     imports: [
@@ -17,12 +18,14 @@ import { ScrollDirective } from './directives/scroll.directive';
     declarations: [
         DefaultImageDirective,
         ImagePreviewDirective,
-        ScrollDirective
+        ScrollDirective,
+        AutoFocusDirective
     ],
     exports: [
         DefaultImageDirective,
         ImagePreviewDirective,
         ScrollDirective,
+        AutoFocusDirective,
         CommonModule
     ]
 })

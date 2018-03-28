@@ -24,8 +24,7 @@ import { CurrentUserService } from 'app/infrastructure/services/current-user.ser
         ])
     ]
 })
-export class SignInComponent implements OnInit {
-    @ViewChild('usernameInput') usernameInput: ElementRef;
+export class SignInComponent {
     @ViewChild('passwordInput') passwordInput: ElementRef;
     public errorStateMatcher = new DefaultErrorStateMatcher();
     public formGroup: FormGroup;
@@ -56,12 +55,12 @@ export class SignInComponent implements OnInit {
         });
     }
 
-    public signIn(username: string, password: string) {
+    public signIn() {
         if (this.formGroup.valid) {
             this.signInError = null;
             this.progress.start();
             this.formGroup.disable();
-            this.currentUserService.signIn(username, password)
+            this.currentUserService.signIn(this.username.value, this.password.value)
                 .subscribe(response => {
                     this.router.navigateByUrl('/');
                 }, error => {
@@ -71,10 +70,6 @@ export class SignInComponent implements OnInit {
                     this.passwordInput.nativeElement.focus();
                 });
         }
-    }
-
-    public ngOnInit(): void {
-        this.usernameInput.nativeElement.focus();
     }
 }
 

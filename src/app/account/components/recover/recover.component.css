@@ -1,7 +1,6 @@
 .signup-content {
-    position: relative;
-    min-height: calc(100vh);
-    width: 100%;
+    height: calc(100vh);
+    box-sizing: border-box;
     margin: -3rem 0;
     padding: 3rem 0;
 }
@@ -10,15 +9,16 @@
     font-family: 'Roboto', sans-serif;
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 448px) {
+    .signup-content {
+        background: white;
+    }
     .signup-form {
-        width: 100%;
-        border-radius: 0;
-        height: 100%;
+        width: 100vw;
     }
 }
 
-@media screen and (min-width: 701px) {
+@media screen and (min-width: 449px) {
     .signup-form {
         width: 448px;
         border-radius: 2px;
@@ -26,7 +26,6 @@
     }
     .signup-content {
         background: linear-gradient(110deg, #ffffff 60%, #fafafa 60%);
-        /* background: #2980b9 url('/assets/images/tumblr_static_bg3.png') repeat 0 0; */
     }
 }
 
@@ -47,10 +46,6 @@
     margin-top: 24px;
 }
 
-.disabled {
-    color: #9d9d9d;
-}
-
 .error-message {
     color: #e91f63;
     text-align: center;
@@ -58,4 +53,28 @@
 
 .mat-spinner>* {
     stroke: white !important;
+}
+
+.agreements-container {
+    text-align: center;
+    color: rgb(0, 0, 0, .6);
+}
+
+.agreements-container a {
+    color: #e91e63;
+}
+
+.agreements-container a:hover {
+    text-decoration: underline;
+}
+
+.disabled,
+.form-field .btn-icon.disabled,
+.form-field .btn-icon {
+    color: #9d9d9d;
+}
+
+.form-field:focus-within .btn-icon,
+.form-field .mat-icon.btn-icon:hover {
+    color: #e91e63;
 }
