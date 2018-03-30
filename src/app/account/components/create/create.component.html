@@ -1,8 +1,8 @@
 <div class="signup-content" fxLayout="column" fxLayoutAlign="center center" @content>
     <div>
         <div style="padding-bottom: 3.4rem;" fxLayout="row" fxLayoutAlign="center center">
-            <span style="font-size: 2em; font-weight: 900;">Photo</span>
-            <span style="font-size: 3em; font-weight: 900; color: #e91e63;">Cloud</span>
+            <span style="font-size: 2em; font-weight: bold;">Photo</span>
+            <span style="font-size: 3em; font-weight: bold; color: #e91e63;">Cloud</span>
         </div>
         <form class="signup-form" fxLayout="column" [formGroup]="formGroup" (ngSubmit)="createAccount()" novalidate>
             <div class="form-header" fxLayout="column">
@@ -12,7 +12,7 @@
                 </span>
             </div>
             <mat-form-field class="form-field">
-                <input formControlName="username" appAutoFocus matInput placeholder="Username" type="text" autocomplete="off" [errorStateMatcher]="errorStateMatcher">
+                <input formControlName="username" appAutoFocus matInput placeholder="Username" type="text" autocomplete="off" spellcheck="false" [errorStateMatcher]="errorStateMatcher">
                 <div matSuffix>
                     <mat-icon class="primary" matSuffix *ngIf="username.getError('unique')">clear</mat-icon>
                     <mat-icon class="success" matSuffix *ngIf="username.valid">check</mat-icon>
@@ -32,7 +32,7 @@
                 </mat-error>
             </mat-form-field>
             <mat-form-field class="form-field">
-                <input formControlName="email" #emailInput matInput placeholder="E-mail address" type="email" autocomplete="off" [errorStateMatcher]="errorStateMatcher">
+                <input formControlName="email" #emailInput matInput placeholder="E-mail address" type="email" autocomplete="off" spellcheck="false" [errorStateMatcher]="errorStateMatcher">
                 <div matSuffix>
                     <mat-icon class="primary" matSuffix *ngIf="email.getError('unique')">clear</mat-icon>
                     <mat-icon class="success" matSuffix *ngIf="email.valid">check</mat-icon>

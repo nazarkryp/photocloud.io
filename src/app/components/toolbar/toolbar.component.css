@@ -14,9 +14,6 @@ header.toolbar {
     .search-box-container {
         display: none;
     }
-    .logo-container {
-        justify-content: flex-start !important;
-    }
 }
 
 .search-box-container {

@@ -281,6 +281,7 @@ export class EditComponent implements OnInit, AfterViewInit, AfterViewChecked {
             .switchMap(e => {
                 return this.userService.checkIfUserExists(reactiveFormControl.value)
                     .map(result => {
+                        this.currentUser = this.currentUserService.retrieveCurrentUser();
                         const error = (result && this.currentUser.username !== reactiveFormControl.value) ? { 'unique': true } : null;
                         reactiveFormControl.setErrors(error);
                         return Observable.of(error);
@@ -299,6 +300,7 @@ export class EditComponent implements OnInit, AfterViewInit, AfterViewChecked {
             .switchMap(e => {
                 return this.userService.checkIfUserExists(reactiveFormControl.value)
                     .map(result => {
+                        this.currentUser = this.currentUserService.retrieveCurrentUser();
                         const error = (result && this.currentUser.email !== reactiveFormControl.value) ? { 'unique': true } : null;
                         reactiveFormControl.setErrors(error);
                         return Observable.of(error);

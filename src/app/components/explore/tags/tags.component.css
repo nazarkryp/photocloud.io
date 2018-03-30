@@ -1,6 +1,7 @@
 .tags-media-container {
     min-height: calc(100vh - 228px);
     box-sizing: border-box;
+    padding: 0 1.4rem;
 }
 
 .tags-media-container>div {

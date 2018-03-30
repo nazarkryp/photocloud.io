@@ -1,7 +1,7 @@
 <div fxLayout="column" fxLayoutAlign="start center">
     <div class="user-search-container" fxLayout="column">
-        <div fxLayout="row" fxLayoutAlign="space-between center">
-            <span class="user-search-title">Discover People</span>
+        <div class="user-search-header" fxLayout="row" fxLayoutAlign="space-between center">
+            <h1 class="user-search-title">Discover People</h1>
             <button mat-icon-button [disabled]="isLoading" (click)="refresh()">
                 <mat-icon class="btn-icon mat-24" [ngClass]="{ 'disabled' : isLoading }" svgIcon="refresh"></mat-icon>
             </button>

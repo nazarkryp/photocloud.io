@@ -19,7 +19,7 @@
             </h4>
             <form class="form" [formGroup]="formGroup" (ngSubmit)="save()">
                 <mat-form-field style="width: 100%;">
-                    <input formControlName="username" matInput placeholder="Username" type="text" autocomplete="off">
+                    <input formControlName="username" matInput placeholder="Username" type="text" autocomplete="off" spellcheck="false">
                     <div matSuffix>
                         <mat-icon class="primary" matSuffix *ngIf="username?.getError('unique')">clear</mat-icon>
                         <mat-icon class="success" matSuffix *ngIf="username?.valid">check</mat-icon>
@@ -39,7 +39,7 @@
                     </mat-error>
                 </mat-form-field>
                 <mat-form-field style="width: 100%;">
-                    <input formControlName="fullName" matInput placeholder="Full Name" type="text" autocomplete="off">
+                    <input formControlName="fullName" matInput placeholder="Full Name" type="text" autocomplete="off" spellcheck="false">
                 </mat-form-field>
                 <mat-form-field style="width: 100%;">
                     <textarea class="bio" formControlName="bio" rows="3" matInput placeholder="Bio" type="text" autocomplete="off" spellcheck="false"></textarea>
@@ -57,7 +57,7 @@
             </h4>
             <form class="form" [formGroup]="privateFormGroup">
                 <mat-form-field style="width: 100%;">
-                    <input formControlName="email" matInput placeholder="Email Address" type="email" autocomplete="off">
+                    <input formControlName="email" matInput placeholder="Email Address" type="email" autocomplete="off" spellcheck="false">
                     <mat-hint>
                         A valid email address please. Don't worry we won't send you any spam
                     </mat-hint>

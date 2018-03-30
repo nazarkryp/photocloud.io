@@ -19,6 +19,10 @@
     text-overflow: ellipsis;
 }
 
+.user-info-username.center-username {
+    margin-top: 45px;
+}
+
 .user-info-fullname {
     font-weight: 900;
     white-space: nowrap;

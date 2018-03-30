@@ -158,3 +158,37 @@ a {
 .form-field {
     width: 100%;
 }
+
+.btn-icon-pulse {
+    animation-name: pulseanimation;
+    animation-duration: 1000ms;
+    animation-iteration-count: 1;
+    animation-timing-function: linear;
+}
+
+@keyframes pulseanimation {
+    0% {
+        transform: scale(1);
+    }
+    30% {
+        transform: scale(1);
+    }
+    40% {
+        transform: scale(1.25);
+    }
+    50% {
+        transform: scale(1);
+    }
+    60% {
+        transform: scale(1);
+    }
+    70% {
+        transform: scale(1.5);
+    }
+    80% {
+        transform: scale(1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}

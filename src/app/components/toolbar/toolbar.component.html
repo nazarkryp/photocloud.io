@@ -1,15 +1,15 @@
 <header class="toolbar" fxLayout="column" fxLayoutAlign="center center">
     <div class="mat-toolbar-layout">
         <div fxLayout="row" fxLayoutAlign="space-between center">
-            <div class="logo-container" fxLayout="row" fxLayoutAlign="start center" fxFlex>
-                <a style="color:rgb(0,0,0,.85);" routerLink="/" fxLayout="row" fxLayoutAlign="center center">
+            <div fxLayout="row" fxLayoutAlign="start center" fxFlex>
+                <a routerLink="/" fxLayout="row" fxLayoutAlign="center center">
                     <span style="font-size: 1.4em; font-weight: lighter;">Photo</span>
                     <span style="font-size: 1.7em; font-weight: 800;">Cloud</span>
                 </a>
-                <input #fileInput type="file" accept="image/*" (change)="upload($event)" hidden>
+                <!-- <input #fileInput type="file" accept="image/*" (change)="upload($event)" hidden> -->
                 <!-- <button mat-button style="font-weight: bold;" color="primary" (click)="fileInput.click()">UPLOAD: {{uploader.progress}}</button> -->
             </div>
-            <div class="search-box-container" *ngIf="currentUser">
+            <div class="search-box-container" *ngIf="currentUser && currentUser.isActive">
                 <app-search-box></app-search-box>
             </div>
             <div fxFlex fxLayout="row" fxLayoutAlign="end center" *ngIf="!currentUser">
@@ -18,7 +18,7 @@
                 </a>
             </div>
             <div class="toolbar-actions" fxLayout="row" fxLayoutAlign="end center" fxFlex *ngIf="currentUser">
-                <td-notification-count [notifications]="none" (click)="explorePeople()">
+                <td-notification-count [notifications]="none" (click)="explorePeople()" *ngIf="currentUser.isActive">
                     <mat-icon class="btn-icon mat-36 thin" svgIcon="compass"></mat-icon>
                 </td-notification-count>
                 <td-notification-count color="warn" positionX="before" [notifications]="incommingRequestsCount" (click)="openNotifications()" *ngIf="currentUser.isActive">

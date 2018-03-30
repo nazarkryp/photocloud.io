@@ -27,7 +27,6 @@
 }
 
 .media-details-comments-header {
-    /* color: rgb(0,0,0,.85); */
     font-weight: 900;
     text-transform: uppercase;
     letter-spacing: 1px;
@@ -46,16 +45,11 @@
     color: grey;
 }
 
-.comment-box:hover .send-button {
-    /* color: rgb(0,0,0,.85); */
-}
-
 .comment-box:hover .send-button:disabled {
-    color: rgb(0,0,0,.6);
+    color: rgb(0, 0, 0, .6);
 }
 
 .media-details-caption {
-    font-size: 0.95em;
     line-height: 1.6em;
     margin-top: .7rem;
 }
@@ -165,7 +159,6 @@
     border-radius: 2px;
     padding: .5rem;
     box-sizing: border-box;
-    /* color: rgb(0,0,0,.85); */
     outline: none;
 }
 

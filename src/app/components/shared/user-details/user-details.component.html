@@ -15,7 +15,7 @@
         </div>
         <div class="user-info-data" fxLayout="column" fxFlex>
             <div fxLayout="row" fxLayoutAlign="space-between center">
-                <span class="user-info-username">{{user.username}}</span>
+                <span class="user-info-username" [ngClass]="{ 'center-username' : !user.isActive }">{{user.username}}</span>
                 <div>
                     <button mat-icon-button routerLink="/account/edit" matTooltip="Settings" matTooltipPosition="above" *ngIf="currentUser && user.id === currentUser.id"
                         style="margin-right: 40px;">

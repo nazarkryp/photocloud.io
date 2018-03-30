@@ -35,17 +35,16 @@ export class IncommingRequestsInterceptor implements HttpInterceptor {
             return next.handle(req);
         }
 
-        const currentUser = this.currentUserService.retrieveCurrentUser();
+        this.isLoadingIncommingRequests = true;
 
-        if (currentUser && currentUser.isPrivate && !req.url.includes('users/requests/incomming')) {
-            this.isLoadingIncommingRequests = true;
-            return next.handle(req).finally(() => {
+        return next.handle(req).finally(() => {
+            const currentUser = this.currentUserService.retrieveCurrentUser();
+
+            if (currentUser && currentUser.isActive && currentUser.isPrivate && !req.url.includes('users/requests/incomming')) {
                 this.incommingRequestsService.getIncommingRequests(null).subscribe(() => {
                     this.isLoadingIncommingRequests = false;
                 });
-            });
-        }
-
-        return next.handle(req);
+            }
+        });
     }
 }

@@ -5,7 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 
 import { UserService, MediaService } from 'app/services';
-import { Page, UserViewModel, ErrorViewModel } from 'app/models/view';
+import { Page, UserViewModel, ErrorViewModel, CurrentUserViewModel } from 'app/models/view';
 
 
 import { NgProgress } from 'ngx-progressbar';
@@ -18,7 +18,8 @@ export class UserMediaResolver implements Resolve<UserViewModel> {
     constructor(
         private currentUserService: CurrentUserService,
         private mediaService: MediaService,
-        private userService: UserService) { }
+        private userService: UserService) {
+    }
 
     public resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot)
         : UserViewModel | Observable<UserViewModel> | Promise<UserViewModel> {
@@ -27,8 +28,11 @@ export class UserMediaResolver implements Resolve<UserViewModel> {
 
         return this.userService.getUser(username)
             .mergeMap<UserViewModel, UserMediaViewModel>(user => {
+                const currentUser = this.currentUserService.retrieveCurrentUser();
                 userMedia.user = user;
-                const validationResult = this.validateUser(user);
+                this.updateCurrentUser(currentUser, user);
+
+                const validationResult = this.validateUser(currentUser, user);
                 if (validationResult.hasErrors) {
                     userMedia.error = validationResult.error;
 
@@ -46,9 +50,8 @@ export class UserMediaResolver implements Resolve<UserViewModel> {
             });
     }
 
-    private validateUser(user: UserViewModel): ValidationResult {
+    private validateUser(currentUser: CurrentUserViewModel, user: UserViewModel): ValidationResult {
         const validationResult: ValidationResult = new ValidationResult();
-        const currentUser = this.currentUserService.retrieveCurrentUser();
 
         if (!user.isActive) {
             validationResult.hasErrors = true;
@@ -60,9 +63,20 @@ export class UserMediaResolver implements Resolve<UserViewModel> {
             validationResult.error = new ErrorViewModel('Account is private');
             validationResult.error.description = currentUser
                 ? `Follow <strong>${user.username}</strong> to see all their photos` :
-                `Already know ${user.username}? Sign in to see all their photos`;
+                `Already know <strong>${user.username}?</strong> Sign in to see all their photos`;
         }
 
         return validationResult;
+    }
+
+    private updateCurrentUser(currentUser: CurrentUserViewModel, user: UserViewModel) {
+        if (currentUser && user.id === currentUser.id
+            && (user.isActive !== currentUser.isActive || user.isPrivate !== currentUser.isPrivate || user.pictureUri !== currentUser.pictureUri)) {
+            this.currentUserService.updateUser({
+                isActive: user.isActive,
+                isPrivate: user.isPrivate,
+                pictureUri: user.pictureUri
+            });
+        }
     }
 }

@@ -23,7 +23,6 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class UserMediaComponent implements OnInit, OnDestroy {
     private routeSubscription: Subscription;
-    private currentUserSubscription: Subscription;
 
     public userMedia: UserMediaViewModel;
     public currentUser: CurrentUserViewModel;
@@ -43,10 +42,7 @@ export class UserMediaComponent implements OnInit, OnDestroy {
         private route: ActivatedRoute,
         public dialog: MatDialog,
         private progress: NgProgress) {
-        this.currentUserSubscription = this.currentUserService.getCurrentUser()
-            .subscribe(currentUser => {
-                this.currentUser = currentUser;
-            });
+        this.currentUser = this.currentUserService.retrieveCurrentUser();
     }
 
     public getMedia(showProgress: boolean = true) {
@@ -133,10 +129,6 @@ export class UserMediaComponent implements OnInit, OnDestroy {
     }
 
     public ngOnDestroy(): void {
-        if (this.currentUserSubscription && !this.currentUserSubscription.closed) {
-            this.currentUserSubscription.unsubscribe();
-        }
-
         if (this.routeSubscription && !this.routeSubscription.closed) {
             this.routeSubscription.unsubscribe();
         }

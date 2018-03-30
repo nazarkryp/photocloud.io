@@ -19,12 +19,13 @@
                 </div>
             </div>
             <div style="padding-top: .7rem;" fxLayout="row" fxLayoutAlign="space-between center">
-                <span class="username" [routerLink]="['/', media.user.username]">{{media.user.username}}</span>
-                <mat-icon class="btn-icon mat-24" [ngClass]="{ 'warn' : media.userHasLiked }" (click)="like(media)">favorite_bordered</mat-icon>
+                <a class="username" [routerLink]="['/', media.user.username]">{{media.user.username}}</a>
+                <mat-icon class="btn-icon mat-24" [ngClass]="{ 'warn' : media.userHasLiked, 'btn-icon-pulse' : media.userHasLiked }" (click)="like(media)">favorite</mat-icon>
             </div>
         </div>
     </div>
-    <div fxLayout="row" fxLayoutAlign="center center" *ngIf="page?.hasMoreItems">
-        <button class="btn-default" mat-button (click)="getMedia()" [disabled]="isLoading">Load More</button>
+    <div fxLayout="row" fxLayoutAlign="center center" *ngIf="page.hasMoreItems" style="height: 40px;">
+        <button class="btn-primary" mat-button (click)="getMedia()" [disabled]="isLoading" *ngIf="!isLoading">Load More</button>
+        <mat-spinner [diameter]="30" [strokeWidth]="3" color="primary" *ngIf="isLoading"></mat-spinner>
     </div>
 </div>

@@ -1,2 +1,2 @@
-<span [innerHTML]="caption | raw"></span>
+<span [innerHTML]="caption | truncate:truncateWidth | raw"></span>
 <a class="primary" (click)="increaseTruncateSize()" *ngIf="caption.length > defaultTruncateWidth && truncateWidth === defaultTruncateWidth">show more</a>

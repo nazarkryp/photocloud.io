@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, OnInit, OnDestroy } from '@angular/core';
+import { AfterViewInit, AfterViewChecked, Component, Input, Output, EventEmitter, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 
@@ -13,30 +13,30 @@ import { Uploader } from 'app/core/services';
     templateUrl: './toolbar.component.html',
     styleUrls: ['./toolbar.component.css']
 })
-export class ToolbarComponent implements OnInit, OnDestroy {
+export class ToolbarComponent implements OnInit, OnDestroy, AfterViewChecked, AfterViewInit {
+    private _currentUser: CurrentUserViewModel;
     private currentUserSubscription: Subscription;
     private isResolvingExplorePeople: boolean;
     private isResolvingUserMedia: boolean;
 
-    public currentUser: CurrentUserViewModel;
     public incommingRequestsCount: number;
     public renderToolbar: boolean;
     @Output() public openNotificationsEvent = new EventEmitter<boolean>();
 
     constructor(
-        public uploader: Uploader,
+        private cd: ChangeDetectorRef,
         private currentUserService: CurrentUserService,
         private incommingRequestsService: RequestsService,
         private accountService: AccountService,
         private router: Router) {
     }
 
-    public upload(event: any) {
-        const file = event.target.files[0] as File;
-        this.uploader.upload(file).subscribe(response => {
-            console.log('response');
-            console.log(response);
-        });
+    public get currentUser(): CurrentUserViewModel {
+        return this._currentUser;
+    }
+
+    public set currentUser(value: CurrentUserViewModel) {
+        this._currentUser = value;
     }
 
     public explorePeople() {
@@ -57,7 +57,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         if (!this.isResolvingUserMedia) {
             this.isResolvingUserMedia = true;
 
-            this.router.navigateByUrl(this.currentUser.username)
+            this.router.navigateByUrl(this._currentUser.username)
                 .then(() => {
                     this.isResolvingUserMedia = false;
                 }).catch(() => {
@@ -73,7 +73,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     public ngOnInit(): void {
         this.currentUserSubscription = this.currentUserService.getCurrentUser()
             .subscribe(currentUser => {
-                this.currentUser = currentUser;
+                this.updateCurrentUser(currentUser);
             });
 
         this.incommingRequestsService.incommingRequests.subscribe(count => {
@@ -83,5 +83,25 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
     public ngOnDestroy(): void {
         this.currentUserSubscription.unsubscribe();
+    }
+
+    public ngAfterViewInit(): void {
+        this.cd.detectChanges();
+    }
+
+    public ngAfterViewChecked(): void {
+        this.cd.detectChanges();
+    }
+
+    private updateCurrentUser(currentUser: CurrentUserViewModel) {
+        if (this._currentUser && currentUser) {
+            const properties = Object.getOwnPropertyNames(currentUser);
+
+            properties.forEach(propertyName => {
+                this._currentUser[propertyName] = currentUser[propertyName];
+            });
+        } else {
+            this.currentUser = currentUser;
+        }
     }
 }

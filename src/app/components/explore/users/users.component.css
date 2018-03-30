@@ -1,17 +1,15 @@
 .user-search-container {
-    width: 600px;
+    max-width: 600px;
+    width: 100%;
     padding: 1.4rem;
     background: white;
     box-sizing: border-box;
     box-shadow: 0 3px 8px -3px rgba(0, 0, 0, 0.26);
+    color: rgb(0, 0, 0, .85);
 }
 
-.user-search-title {
-    font-size: 1.4em;
-    font-weight: 800;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: rgb(0,0,0,.85);
+.user-search-header {
+    padding-bottom: 1.4rem;
 }
 
 .search-results-container>.search-result {
@@ -33,13 +31,13 @@
 }
 
 .search-result-username {
-    color: rgb(0,0,0,.85);
+    width: 110px;
     padding-bottom: .5rem;
     font-weight: 900;
 }
 
 .search-result-last-active {
-    color: #9A9A9A;
+    color: rgba(0, 0, 0, .65);
     font-weight: normal;
     font-size: .9em;
 }

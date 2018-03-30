@@ -20,7 +20,7 @@
                         <a class="tag-media-username" [routerLink]="['/', media.user.username]">
                             {{media.user.username}}
                         </a>
-                        <span class="tag-media-date">{{media.created | timeAgo}}</span>
+                        <span class="tag-media-date" matTooltip="{{media.created | date:'fullDate'}}" matTooltipPosition="right">{{media.created | timeAgo}}</span>
                     </div>
                     <mat-icon class="btn-icon mat-24 thin" [ngClass]="{ 'liked' : media.userHasLiked }" (click)="like(media)" *ngIf="currentUser">favorite</mat-icon>
                 </div>

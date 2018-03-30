@@ -12,7 +12,7 @@
                 </span>
             </div>
             <mat-form-field class="form-field">
-                <input formControlName="username" appAutoFocus matInput placeholder="Username or E-mail address" type="text" autocomplete="off" [errorStateMatcher]="errorStateMatcher">
+                <input formControlName="username" appAutoFocus matInput placeholder="Username or E-mail address" type="text" autocomplete="off" spellcheck="false" [errorStateMatcher]="errorStateMatcher">
                 <mat-error *ngIf="username.getError('required')">
                     Username is required
                 </mat-error>

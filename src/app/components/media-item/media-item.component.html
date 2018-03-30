@@ -56,7 +56,7 @@
             <app-comments #commentsComponent [media]="media"></app-comments>
         </div>
         <div class="media-date">
-            <span class="media-created">{{media.created | timeAgo}}</span>
+            <span class="media-created" matTooltip="{{media.created | date:'fullDate'}}" matTooltipPosition="right">{{media.created | timeAgo}}</span>
         </div>
     </div>
     <div class="media-edit-footer" *ngIf="media.editing">
@@ -66,7 +66,7 @@
     </div>
     <div class="media-actions" fxLayout="row" *ngIf="!media.editing">
         <div fxLayout="row" fxLayoutAlign="center center">
-            <mat-icon class="btn-icon mat-24" [ngClass]="{ 'warn' : media.userHasLiked, 'pulse' : isLiking && media.userHasLiked }" (click)="like()">favorite</mat-icon>
+            <mat-icon class="btn-icon mat-24" [ngClass]="{ 'warn' : media.userHasLiked, 'btn-icon-pulse' : media.userHasLiked }" (click)="like()">favorite</mat-icon>
         </div>
         <input class="comment-input" *ngIf="media.allowComments" type="text" placeholder="Type your comment" [(ngModel)]="text" (keydown.enter)="createComment()" />
         <button class="icon-button" mat-icon-button matTooltip="Share" matTooltipPosition="left" ngxClipboard [cbContent]="share()" (cbOnSuccess)="showToast('Copied to clipboard')">

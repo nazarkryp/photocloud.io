@@ -74,12 +74,12 @@
     border-bottom: 1px solid #efefef;
 }
 
-.user-item:hover {
+/* .user-item:hover {
     background: #fefefe;
-}
+} */
 
 /* .user-item:nth-child(even) {
-    background: white;
+    background: #fefefe;
 }
 
 .user-item:nth-child(odd) {

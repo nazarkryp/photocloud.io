@@ -136,6 +136,18 @@ export class CurrentUserService {
             });
     }
 
+    public updateUser(propertiesToUpdate: any) {
+        const currentUser = this.retrieveCurrentUser();
+
+        const properties = Object.getOwnPropertyNames(propertiesToUpdate);
+
+        properties.forEach(propertyName => {
+            currentUser[propertyName] = propertiesToUpdate[propertyName];
+        });
+
+        this.saveCurrentUser(currentUser);
+    }
+
     public changeAccountAttachment(propertiesToUpdate: any): Observable<CurrentUserViewModel> {
         return this.accountService.changeAccountAttachment(propertiesToUpdate)
             .do(currentUser => {
