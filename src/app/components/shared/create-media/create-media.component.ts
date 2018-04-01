@@ -14,7 +14,6 @@ import { FileUploader, FileUploaderOptions } from 'ng2-file-upload';
 import { environment } from 'app/../environments/environment';
 
 @Component({
-    selector: 'app-create-media',
     templateUrl: './create-media.component.html',
     styleUrls: ['./create-media.component.css']
 })

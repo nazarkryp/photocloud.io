@@ -5,7 +5,6 @@ import { CurrentUserService } from 'app/infrastructure/services';
 import { CurrentUserViewModel } from '../../../models/view';
 
 @Component({
-    selector: 'app-auto-login',
     templateUrl: './auto-login.component.html',
     styleUrls: ['./auto-login.component.css']
 })

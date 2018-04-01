@@ -8,7 +8,6 @@ import { NgProgress } from 'ngx-progressbar';
 import { CurrentUserService } from 'app/infrastructure/services/current-user.service';
 
 @Component({
-    selector: 'app-signin',
     templateUrl: './signin.component.html',
     styleUrls: ['./signin.component.css'],
     animations: [

@@ -9,7 +9,6 @@ import { CurrentUserService } from 'app/infrastructure/services';
 import { NgProgress } from 'ngx-progressbar';
 
 @Component({
-    selector: 'app-recover',
     templateUrl: './recover.component.html',
     styleUrls: ['./recover.component.css'],
     animations: [

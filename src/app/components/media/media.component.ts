@@ -13,7 +13,6 @@ import { ConfirmComponent } from 'app/components/shared/confirm/confirm.componen
 import { NgProgress } from 'ngx-progressbar';
 
 @Component({
-    selector: 'app-posts',
     templateUrl: './media.component.html',
     styleUrls: ['./media.component.css']
 })

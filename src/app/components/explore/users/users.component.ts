@@ -12,7 +12,6 @@ import { NgProgress } from 'ngx-progressbar';
 import { CurrentUserService } from 'app/infrastructure/services';
 
 @Component({
-    selector: 'app-users',
     templateUrl: './users.component.html',
     styleUrls: ['./users.component.css'],
     animations: [

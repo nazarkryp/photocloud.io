@@ -1,80 +1,79 @@
-<div class="media" *ngIf="media">
-    <div class="media-header" fxLayout="row" *ngIf="!media.editing">
-        <img class="media-avatar" [routerLink]="['/', media.user.username]" src="{{media.user.pictureUri}}" default="assets/images/user-default-image.png" alt="profile">
-        <div class="media-author" fxLayout="row" fxLayoutAlign="space-between center" fxFlex>
-            <a class="media-author-username" [routerLink]="['/', media.user.username]">{{media.user.username}}</a>
-            <div fxLayout="row" fxLayout="center end" *ngIf="currentUser && media.user.id === currentUser.id">
-                <button mat-icon-button type="button" [matMenuTriggerFor]="menu">
-                    <mat-icon class="mat-24">expand_more</mat-icon>
+<div class="media-item" *ngIf="media">
+    <div class="media-item-header" fxLayout="row" fxLayoutAlign="space-between center" *ngIf="!media.editing">
+        <div class="media-item-owner" fxLayout="row" fxLayoutAlign="start center">
+            <img [routerLink]="['/', media.user.username]" src="{{media.user.pictureUri}}" default="assets/images/user-default-image.png"
+                alt="profile">
+            <a [routerLink]="['/', media.user.username]">{{media.user.username}}</a>
+        </div>
+        <div *ngIf="currentUser && media.user.id === currentUser.id">
+            <button mat-icon-button type="button" [matMenuTriggerFor]="menu">
+                <mat-icon class="mat-24">expand_more</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu" xPosition="before">
+                <button mat-menu-item (click)="edit()">
+                    <mat-icon class="mat-18">edit</mat-icon>
+                    <span>Edit</span>
                 </button>
-                <mat-menu #menu="matMenu" xPosition="before">
-                    <button mat-menu-item (click)="edit()">
-                        <mat-icon class="mat-18">edit</mat-icon>
-                        <span>Edit</span>
-                    </button>
-                    <button mat-menu-item (click)="remove()">
-                        <mat-icon class="mat-18">delete</mat-icon>
-                        <span>Remove</span>
-                    </button>
-                </mat-menu>
-            </div>
+                <button mat-menu-item (click)="remove()">
+                    <mat-icon class="mat-18">delete</mat-icon>
+                    <span>Remove</span>
+                </button>
+            </mat-menu>
         </div>
     </div>
-    <div mat-ripple class="media-content" (click)='play($event)'>
-        <div class="media-content-buttons" fxLayout="row" fxLayoutAlign="space-between center" *ngIf="media.attachments.length > 1">
+    <div mat-ripple class="media-item-content" (click)='play($event)'>
+        <div class="navigation" fxLayout="row" fxLayoutAlign="space-between center" *ngIf="media.attachments.length > 1">
             <div>
-                <button mat-raised-button mat-icon-button *ngIf="media.activeAttachment > 0" (click)="previous()">
-                    <mat-icon class="media-icon">chevron_left</mat-icon>
-                </button>
+                <mat-icon class="mat-36" *ngIf="media.activeAttachment > 0" (click)="previous()">chevron_left</mat-icon>
             </div>
             <div>
-                <button mat-raised-button mat-icon-button *ngIf="media.activeAttachment != media.attachments.length - 1" (click)="next()">
-                    <mat-icon class="media-icon">chevron_right</mat-icon>
-                </button>
+                <mat-icon class="mat-36" *ngIf="media.activeAttachment != media.attachments.length - 1" (click)="next()">chevron_right</mat-icon>
             </div>
         </div>
         <div *ngFor="let attachment of media.attachments; let index = index;">
             <div [hidden]="index !== media.activeAttachment" *ngIf="(media.activeAttachment === index && attachment.type === 1) || (attachment.type !== 1)">
-                <img class="media-attachment" src="{{attachment.uri}}" alt="media-image" *ngIf="attachment.type !== 1">
-                <video class="media-attachment" *ngIf="attachment.type === 1" loop #player>
+                <img class="media-item-attachment" src="{{attachment.uri}}" alt="media-image" *ngIf="attachment.type !== 1">
+                <video class="media-item-attachment" *ngIf="attachment.type === 1" loop #player>
                     <source src="{{attachment.uri}}">
                 </video>
             </div>
         </div>
     </div>
-    <div class="media-footer" *ngIf="!media.editing">
-        <div class="likes" fxLayout="row" fxLayoutAlign="space-between center">
+    <div class="media-item-footer" *ngIf="!media.editing">
+        <div class="media-item-likes">
             <app-likes (onClicked)="openUsersDialog($event)" [media]="media"></app-likes>
         </div>
-        <div class="media-caption" *ngIf="media.caption">
+        <div class="media-item-caption" *ngIf="media.caption">
             <a [routerLink]="['/', media.user.username]">
                 <strong>{{media.user.username}}</strong>
             </a>
             <app-caption caption="{{media.caption}}"></app-caption>
         </div>
-        <div>
+        <div class="media-item-comments" *ngIf="media.commentsCount">
             <app-comments #commentsComponent [media]="media"></app-comments>
         </div>
-        <div class="media-date">
+        <div class="media-item-date">
             <span class="media-created" matTooltip="{{media.created | date:'fullDate'}}" matTooltipPosition="right">{{media.created | timeAgo}}</span>
         </div>
-    </div>
-    <div class="media-edit-footer" *ngIf="media.editing">
-        <div class="media-edit-caption">
-            <textarea rows="5" class="caption-input" placeholder="Edit Caption" type="text" [(ngModel)]="updateMediaModel.caption" fxFlex></textarea>
+        <div>
+            <div fxLayout="row">
+                <div fxLayout="row" fxLayoutAlign="center center">
+                    <mat-icon class="btn-icon mat-24" [ngClass]="{ 'warn' : media.userHasLiked, 'btn-icon-pulse' : media.userHasLiked }" (click)="like()">favorite</mat-icon>
+                </div>
+                <input class="comment-input" *ngIf="media.allowComments" type="text" placeholder="Type your comment" [(ngModel)]="text" (keydown.enter)="createComment()"
+                />
+                <button class="icon-button" mat-icon-button matTooltip="Share" matTooltipPosition="left" ngxClipboard [cbContent]="share()"
+                    (cbOnSuccess)="showToast('Copied to clipboard')">
+                    <mat-icon>share</mat-icon>
+                </button>
+            </div>
         </div>
     </div>
-    <div class="media-actions" fxLayout="row" *ngIf="!media.editing">
-        <div fxLayout="row" fxLayoutAlign="center center">
-            <mat-icon class="btn-icon mat-24" [ngClass]="{ 'warn' : media.userHasLiked, 'btn-icon-pulse' : media.userHasLiked }" (click)="like()">favorite</mat-icon>
+    <div class="media-item-footer" *ngIf="media.editing" fxLayout="column">
+        <textarea rows="5" class="caption-input" placeholder="Edit Caption" type="text" [(ngModel)]="updateMediaModel.caption"></textarea>
+        <div class="media-item-edit-actions" fxLayout="row" fxLayoutAlign="end center">
+            <button mat-button (click)="cancel()" disableRipple="true">CANCEL</button>
+            <button mat-raised-button color="primary" (click)="save()">SAVE</button>
         </div>
-        <input class="comment-input" *ngIf="media.allowComments" type="text" placeholder="Type your comment" [(ngModel)]="text" (keydown.enter)="createComment()" />
-        <button class="icon-button" mat-icon-button matTooltip="Share" matTooltipPosition="left" ngxClipboard [cbContent]="share()" (cbOnSuccess)="showToast('Copied to clipboard')">
-            <mat-icon>share</mat-icon>
-        </button>
-    </div>
-    <div class="media-edit-actions" fxLayout="row" fxLayoutAlign="end center" *ngIf="media.editing">
-        <button mat-button (click)="cancel()" style="font-weight: bold;" disableRipple="true">CANCEL</button>
-        <button mat-raised-button color="primary" (click)="update()" style="font-weight: bold;">SAVE</button>
     </div>
 </div>

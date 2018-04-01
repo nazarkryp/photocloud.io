@@ -5,7 +5,6 @@ import { MatDialogRef } from '@angular/material';
 import { DefaultErrorStateMatcher } from 'app/account/matchers';
 
 @Component({
-    selector: 'app-change-password',
     templateUrl: './change-password.component.html',
     styleUrls: ['./change-password.component.css']
 })

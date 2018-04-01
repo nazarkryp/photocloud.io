@@ -17,7 +17,6 @@ import { FileUploader } from 'ng2-file-upload';
 const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
 @Component({
-    selector: 'app-edit',
     templateUrl: './edit.component.html',
     styleUrls: ['./edit.component.css']
 })

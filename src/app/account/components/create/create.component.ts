@@ -16,7 +16,6 @@ import { CurrentUserService } from 'app/infrastructure/services';
 const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
 @Component({
-    selector: 'app-create',
     templateUrl: './create.component.html',
     styleUrls: ['./create.component.css'],
     animations: [

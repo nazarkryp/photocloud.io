@@ -161,7 +161,7 @@ export class MediaItemComponent implements OnInit {
         this.editMediaService.removeAttachment(this.updateMediaModel, attachmentToRemove);
     }
 
-    public update() {
+    public save() {
         this.editMediaService.updateMedia(this.media, this.updateMediaModel);
     }
 

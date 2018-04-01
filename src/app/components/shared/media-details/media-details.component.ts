@@ -18,7 +18,6 @@ import { UserDialogDetails } from 'app/components/shared/users-dialog/models';
 import { CommentsComponent } from 'app/components/shared/comments/comments.component';
 
 @Component({
-    selector: 'app-media-details',
     templateUrl: './media-details.component.html',
     styleUrls: ['./media-details.component.css'],
     animations: [

@@ -13,7 +13,6 @@ import { CurrentUserService } from 'app/infrastructure/services';
 import { UserDialogDetails } from './models';
 
 @Component({
-    selector: 'app-users-dialog',
     templateUrl: './users-dialog.component.html',
     styleUrls: ['./users-dialog.component.css'],
     animations: [

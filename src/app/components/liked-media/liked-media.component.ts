@@ -14,7 +14,6 @@ import { AccountService } from 'app/account/services';
 import { NgProgress } from 'ngx-progressbar';
 
 @Component({
-    selector: 'app-liked-media',
     templateUrl: './liked-media.component.html',
     styleUrls: ['./liked-media.component.css']
 })

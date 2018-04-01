@@ -17,7 +17,6 @@ import { ConfirmComponent } from 'app/components/shared/confirm/confirm.componen
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
-    selector: 'app-user-media',
     templateUrl: './user-media.component.html',
     styleUrls: ['./user-media.component.css']
 })

@@ -3,9 +3,9 @@
 }
 
 .media-details-container .single-media {
-    border: 1px solid #d8d8d8;
     border-radius: 2px;
     background: white;
+    box-shadow: 0 3px 8px -3px rgba(0, 0, 0, 0.26);
 }
 
 .single-media {
@@ -52,6 +52,7 @@
 .media-details-caption {
     line-height: 1.6em;
     margin-top: .7rem;
+    word-spacing: 2px;
 }
 
 .media-date {
@@ -115,12 +116,12 @@
     font-size: .9em;
 }
 
-.media-attachment-container {
+.media-details-attachment-container {
     position: relative;
     height: auto;
 }
 
-.media-attachment-container .media-attachment-buttons {
+.media-details-attachment-container .navigation {
     position: absolute;
     opacity: 0;
     top: 50%;
@@ -128,10 +129,17 @@
     transform: translate(-50%, -50%);
     width: 100%;
     padding: 0 10px 0 10px;
+    z-index: 1;
 }
 
-.media-attachment-container:not([disabled]):hover .media-attachment-buttons {
+.media-details-attachment-container:not([disabled]):hover .navigation {
     opacity: 1;
+}
+
+.media-details-attachment-container>.navigation mat-icon {
+    color: white;
+    text-shadow: 2px 2px 4px #000000;
+    cursor: pointer;
 }
 
 .media-details-created {

@@ -2,7 +2,6 @@ import { Component, Inject, ViewEncapsulation } from '@angular/core';
 import { MatDialogRef, MatSnackBarConfig, MatSnackBar, MAT_DIALOG_DATA } from '@angular/material';
 
 @Component({
-    selector: 'app-confirm',
     templateUrl: './confirm.component.html',
     styleUrls: ['./confirm.component.css']
 })

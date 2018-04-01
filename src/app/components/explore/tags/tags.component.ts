@@ -13,7 +13,6 @@ import { NgProgress } from 'ngx-progressbar';
 import { LikeService } from 'app/shared/services';
 
 @Component({
-    selector: 'app-tags',
     templateUrl: './tags.component.html',
     styleUrls: ['./tags.component.css']
 })

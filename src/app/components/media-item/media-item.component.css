@@ -1,45 +1,16 @@
-textarea {
-    resize: none;
-}
-
-.media {
+.media-item {
     background-color: white;
     position: relative;
     border-radius: 2px;
     box-shadow: 0 3px 8px -3px rgba(0, 0, 0, 0.26);
 }
 
-.media-header {
-    padding: 10px;
+.media-item-header {
+    padding: .5rem;
     width: 100%;
 }
 
-.media-footer {
-    padding: 15px 15px 0px 15px;
-}
-
-.media-edit-footer {
-    padding: 15px 15px 15px 15px;
-}
-
-.media-caption {
-    padding: 10px 0 0 0;
-    line-height: 1.6em;
-}
-
-.media-edit-caption {
-    line-height: 1.6em;
-}
-
-.media-edit-actions {
-    padding: 0 15px 15px 15px;
-}
-
-.media-actions {
-    padding: 0 10px 10px 10px;
-}
-
-.media-avatar {
+.media-item-owner>img {
     width: 50px;
     height: 50px;
     border-radius: 90px;
@@ -48,15 +19,71 @@ textarea {
     cursor: pointer;
 }
 
-.media-author {
-    padding-left: .75rem;
-}
-
-.media-author-username {
+.media-item-owner>a {
+    margin-left: .5rem;
     font-weight: 900;
 }
 
-.media-attachment {
+.media-item-footer {
+    padding: 1rem .7rem .7rem .7rem;
+}
+
+.media-item-footer .media-item-likes {
+    padding-bottom: .7rem;
+}
+
+.media-item-caption {
+    line-height: 1.6em;
+    padding-bottom: .7rem;
+}
+
+.media-item-footer .media-item-comments {
+    padding-bottom: .7rem;
+}
+
+.media-item-footer .media-item-date {
+    padding-bottom: .25rem;
+}
+
+.media-item-footer .comment-input {
+    font-family: 'Open Sans', sans-serif;
+    outline: none;
+    border: none;
+    width: 100%;
+    padding-left: .7rem;
+    font-size: .9em;
+}
+
+.media-item-footer textarea {
+    resize: none;
+    outline: none;
+    box-sizing: border-box;
+    width: 100%;
+    word-spacing: 2px;
+}
+
+.media-item-footer .caption-input {
+    background: #fafafa;
+    font-size: .9em;
+    border: none;
+    border-radius: 2px;
+    line-height: 1.6em;
+    padding: .75rem;
+}
+
+.media-item-footer .media-item-edit-actions {
+    padding-top: .7rem;
+}
+
+.media-item-footer button {
+    font-weight: bold;
+}
+
+.media-item-footer ::ng-deep .mat-button-focus-overlay {
+    background-color: transparent !important;
+}
+
+.media-item-attachment {
     width: 100%;
     height: auto;
     vertical-align: bottom;
@@ -68,47 +95,28 @@ textarea {
     -ms-user-select: none;
 }
 
-.comment-input {
-    font-family: 'Open Sans', sans-serif;
-    outline: none;
-    border: none;
-    width: 100%;
-    padding-left: .7rem;
-    font-size: .9em;
-}
-
-.caption-input {
-    outline: none;
-    background: #fafafa;
-    border: none;
-    padding: .75rem;
-    border-radius: 2px;
-    font-size: .9em;
-    font-weight: lighter;
-}
-
-.media-content {
+.media-item-content {
     width: 100%;
     position: relative;
     height: auto;
 }
 
-.media-content img,
-.media-content video {
+.media-item-content img,
+.media-item-content video {
     max-width: 100%;
     -moz-transition: all 0.3s;
     -webkit-transition: all 0.3s;
     transition: all 0.3s;
 }
 
-.media-content:hover img,
-.media-content:hover video {
+.media-item-content:hover img,
+.media-item-content:hover video {
     -moz-transform: scale(1.1);
     -webkit-transform: scale(1.1);
     transform: scale(1.1);
 }
 
-.media-content .media-content-buttons {
+.media-item-content>.navigation {
     position: absolute;
     opacity: 0;
     top: 50%;
@@ -119,12 +127,14 @@ textarea {
     z-index: 100;
 }
 
-.media-content:not([disabled]):hover .media-content-buttons {
+.media-item-content:not([disabled]):hover>.navigation {
     opacity: 1;
 }
 
-.media-date {
-    padding: .75rem 0 .5rem;
+.media-item-content>.navigation mat-icon {
+    color: white;
+    text-shadow: 2px 2px 4px #000000;
+    cursor: pointer;
 }
 
 .media-created {
@@ -138,14 +148,6 @@ textarea {
 .progress-bar {
     height: 3px;
     position: absolute;
-}
-
-.likes {
-    padding-top: 10px;
-}
-
-.likes-counter {
-    cursor: pointer;
 }
 
 .liked {

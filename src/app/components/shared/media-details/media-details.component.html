@@ -1,16 +1,12 @@
 <div [ngClass]="{ 'media-details-container' : !isDialog }" fxLayout="row" fxLayoutAlign="center center" *ngIf="media">
     <div class="single-media" fxLayout="row" fxLayoutAlign="start stretch" *ngIf="!media.editing; else editingTemplate">
-        <div mat-ripple class="media-attachment-container" (click)='play()'>
-            <div class="media-attachment-buttons" fxLayout="row" fxLayoutAlign="space-between center" *ngIf="media.attachments.length > 1">
+        <div mat-ripple class="media-details-attachment-container" (click)='play()'>
+            <div class="navigation" fxLayout="row" fxLayoutAlign="space-between center" *ngIf="media.attachments.length > 1">
                 <div>
-                    <button mat-raised-button mat-icon-button *ngIf="media.activeAttachment > 0" (click)="previous()">
-                        <mat-icon class="media-icon">chevron_left</mat-icon>
-                    </button>
+                    <mat-icon class="mat-36" *ngIf="media.activeAttachment > 0" (click)="previous()">chevron_left</mat-icon>
                 </div>
                 <div>
-                    <button mat-raised-button mat-icon-button *ngIf="media.activeAttachment != media.attachments.length - 1" (click)="next()">
-                        <mat-icon class="media-icon">chevron_right</mat-icon>
-                    </button>
+                    <mat-icon class="mat-36" *ngIf="media.activeAttachment != media.attachments.length - 1" (click)="next()"Ï>chevron_right</mat-icon>
                 </div>
             </div>
             <div *ngFor="let attachment of media.attachments; let index = index;">
@@ -80,7 +76,7 @@
 
 <ng-template #editingTemplate>
     <div class="single-media" fxLayout="row" fxLayoutAlign="start stretch">
-        <div mat-ripple class="media-attachment-container">
+        <div mat-ripple class="media-details-attachment-container">
             <div>
                 <img class="media-details-attachment" [ngClass]="{ 'dialog' : isDialog}" src="{{updateMediaModel.preview.uri}}" alt="media-image" *ngIf="updateMediaModel.preview.type !== 1">
                 <video class="media-details-attachment" [ngClass]="{ 'dialog' : isDialog}" *ngIf="updateMediaModel.preview.type === 1" loop #player>
