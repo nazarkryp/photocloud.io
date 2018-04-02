@@ -14,7 +14,7 @@ import { EditComponent } from './components/edit/edit.component';
 import { RecoverComponent } from './components/recover/recover.component';
 import { AutoLoginComponent } from './components/auto-login/auto-login.component';
 
-import { routes } from './account-routes';
+import { AccountRoutes } from './account.routes';
 import { AccountService } from 'app/account/services';
 import { UploaderService } from 'app/services';
 import { AuthenticationGuardService } from 'app/infrastructure/guards';
@@ -22,6 +22,7 @@ import { EditResolver } from 'app/account/services/resolvers';
 
 import { FileUploadModule } from 'ng2-file-upload';
 import { PasswordDirective } from './directives/password.directive';
+import { AccountComponent } from './components/account/account.component';
 
 @NgModule({
     imports: [
@@ -31,7 +32,7 @@ import { PasswordDirective } from './directives/password.directive';
         FormsModule,
         ReactiveFormsModule,
         SharedModule,
-        RouterModule.forChild(routes),
+        RouterModule.forChild(AccountRoutes),
         FileUploadModule
     ],
     declarations: [
@@ -40,7 +41,8 @@ import { PasswordDirective } from './directives/password.directive';
         EditComponent,
         RecoverComponent,
         AutoLoginComponent,
-        PasswordDirective
+        PasswordDirective,
+        AccountComponent
     ],
     providers: [
         AuthenticationGuardService,

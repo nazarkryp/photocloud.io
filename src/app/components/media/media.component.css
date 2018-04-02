@@ -36,3 +36,37 @@
     left: auto;
     position: fixed;
 }
+
+.btn-pulse:before,
+.btn-pulse:after {
+    content: '';
+    position: absolute;
+    display: block;
+    border: 1px solid #e91e63;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    border-radius: inherit;
+    animation: animate 1s linear 3;
+    opacity: 0;
+    backface-visibility: hidden;
+}
+
+.btn-pulse:after {
+    animation-delay: .5s;
+}
+
+@keyframes animate {
+    0% {
+        transform: scale(0.5);
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1.75);
+        opacity: 0;
+    }
+}

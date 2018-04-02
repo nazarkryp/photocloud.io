@@ -29,13 +29,9 @@
 .router-container {
     position: relative;
     min-height: calc(100vh);
-    overflow-y: hidden;
-    padding: 3rem 0 calc(3rem + 64px) 0;
+    padding: 3rem 0 calc(3rem) 0;
     box-sizing: border-box;
-}
-
-.router-container.toolbar {
-    min-height: calc(100vh - 100px);
+    overflow-y: hidden;
 }
 
 .router-container.toolbar {

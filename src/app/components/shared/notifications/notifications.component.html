@@ -52,7 +52,7 @@
                                 <a class="incomming-request-fullname" [routerLink]="['/', user.username]" title="{{user.fullName}}">{{user.fullName}}</a>
                             </div>
                             <div *ngIf="!user.isConfirmed && !user.isRemoved" fxLayout="row" fxLayoutAlign="end start">
-                                <button mat-button color="primary" (click)="removeOutgoingRequest(user)" [disabled]="user.isRemovingIncommingRequest">CANCEL</button>
+                                <button mat-button (click)="removeOutgoingRequest(user)" [disabled]="user.isRemovingIncommingRequest">CANCEL</button>
                             </div>
                             <div *ngIf="user.isConfirmed">
                                 <mat-icon class="mat-36 primary">check</mat-icon>

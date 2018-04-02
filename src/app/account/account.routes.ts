@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 
+import { AccountComponent } from './components/account/account.component';
 import { CreateComponent } from './components/create/create.component';
 import { SignInComponent } from './components/signin/signin.component';
 import { EditComponent } from './components/edit/edit.component';
@@ -8,7 +9,7 @@ import { AutoLoginComponent } from './components/auto-login/auto-login.component
 
 import { EditResolver } from 'app/account/services/resolvers';
 
-export const routes: Routes = [
+export const AccountRoutes: Routes = [
     {
         path: '',
         redirectTo: 'edit',
