@@ -4,41 +4,88 @@
             <span style="font-size: 2em; font-weight: 900;">Photo</span>
             <span style="font-size: 3em; font-weight: 900; color: #e91e63;">Cloud</span>
         </div>
-        <form class="signin-form" fxLayout="column" [formGroup]="formGroup" (ngSubmit)="signIn()">
-            <div class="signin-form-overlay" [ngClass]="{ 'visible' : formGroup.disabled }"></div>
-            <div class="form-header" fxLayout="column">
-                <span class="form-title">Login to continue or
-                    <a class="primary" routerLink="/account/create">Create Account</a>
-                </span>
-            </div>
-            <mat-form-field class="form-field">
-                <input formControlName="username" appAutoFocus matInput placeholder="Username or E-mail address" type="text" autocomplete="off" spellcheck="false" [errorStateMatcher]="errorStateMatcher">
-                <mat-error *ngIf="username.getError('required')">
-                    Username is required
-                </mat-error>
-                <mat-error *ngIf="username.getError('pattern')">
-                    Whitespaces are not allowed
-                </mat-error>
-            </mat-form-field>
-            <mat-form-field class="form-field">
-                <input formControlName="password" #passwordInput matInput placeholder="Password" type="password" autocomplete="off" [errorStateMatcher]="errorStateMatcher">
-                <div matSuffix [ngSwitch]="passwordInput.type === 'password'" *ngIf="!formGroup.disabled">
-                    <mat-icon class="mat-24 btn-icon" tabindex="-1" [appPassword]="passwordInput" appPasswordType="text" matTooltip="Show Password" matTooltipPosition="right" *ngSwitchCase="true">visibility</mat-icon>
-                    <mat-icon class="mat-24 btn-icon" tabindex="-1" [appPassword]="passwordInput" appPasswordType="password" matTooltip="Hide Password" matTooltipPosition="right" *ngSwitchCase="false">visibility_off</mat-icon>
+        <div *ngIf="!currentUser; else passwordTemplate;">
+            <form class="signin-form" fxLayout="column" [formGroup]="formGroup" (ngSubmit)="signIn()">
+                <div class="signin-form-overlay" [ngClass]="{ 'visible' : formGroup.disabled }"></div>
+                <div class="form-header" fxLayout="column">
+                    <span class="form-title">Login to continue or
+                        <a class="primary" routerLink="/account/create">Create Account</a>
+                    </span>
                 </div>
-                <mat-error *ngIf="password.getError('required')">
-                    Password is required
-                </mat-error>
-            </mat-form-field>
-            <div class="forgot-password">
-                <a class="primary" routerLink="/account/recover">Forgot Password?</a>
-            </div>
-            <div style="margin: .7rem 0 0 0;" fxLayout="row" fxLayoutAlign="end center">
-                <button type="submit" style="font-size: 1.2em; font-weight: lighter;" mat-raised-button color="primary">SIGN IN</button>
-            </div>
-            <div fxLayout="row" fxLayoutAlign="center center" style="height: 100px;">
-                <span class="error-message" *ngIf="signInError">{{signInError}}</span>
-            </div>
-        </form>
+                <mat-form-field class="form-field">
+                    <input formControlName="username" appAutoFocus matInput placeholder="Username or E-mail address" type="text" autocomplete="off" spellcheck="false" [errorStateMatcher]="errorStateMatcher">
+                    <mat-error *ngIf="username.getError('required')">
+                        Username is required
+                    </mat-error>
+                    <mat-error *ngIf="username.getError('pattern')">
+                        Whitespaces are not allowed
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field class="form-field">
+                    <input formControlName="password" #passwordInput matInput placeholder="Password" type="password" autocomplete="off" [errorStateMatcher]="errorStateMatcher">
+                    <div matSuffix [ngSwitch]="passwordInput.type === 'password'" *ngIf="!formGroup.disabled">
+                        <mat-icon class="mat-24 btn-icon" tabindex="-1" [appPassword]="passwordInput" appPasswordType="text" matTooltip="Show Password" matTooltipPosition="right" *ngSwitchCase="true">visibility</mat-icon>
+                        <mat-icon class="mat-24 btn-icon" tabindex="-1" [appPassword]="passwordInput" appPasswordType="password" matTooltip="Hide Password" matTooltipPosition="right" *ngSwitchCase="false">visibility_off</mat-icon>
+                    </div>
+                    <mat-error *ngIf="password.getError('required')">
+                        Password is required
+                    </mat-error>
+                </mat-form-field>
+                <mat-checkbox color="primary" formControlName="rememberMe">
+                    Remember me?
+                </mat-checkbox>
+                <div style="margin: 1.4rem 0 0 0;" fxLayout="row" fxLayoutAlign="space-between center">
+                        <a class="primary" routerLink="/account/recover">Forgot Password?</a>
+                    <button type="submit" style="font-size: 1.2em; font-weight: lighter;" mat-raised-button color="primary">SIGN IN</button>
+                </div>
+                <div fxLayout="row" fxLayoutAlign="center center" style="height: 100px;">
+                    <span class="error-message" *ngIf="signInError">{{signInError}}</span>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
+
+<ng-template #passwordTemplate>
+    <form class="signin-form" fxLayout="column" [formGroup]="formGroup" (ngSubmit)="signIn()">
+        <div class="signin-form-overlay" [ngClass]="{ 'visible' : formGroup.disabled }"></div>
+        <div class="form-header" fxLayout="column">
+            <span style="font-size: 1.5em; padding-bottom: .7rem;">Hi {{currentUser.username}}</span>
+            <div fxLayout="row" fxLayoutAlign="space-between center" style="padding-bottom: .7rem; position: relative; margin-right: -.4rem;">
+                <div fxLayout="row" fxLayoutAlign="start center">
+                    <img src="{{currentUser.pictureUri}}" alt="avatar" style="width: 35px; height: 35px; border-radius: 50%;">
+                    <span style="margin-left: .7rem;">
+                        <strong>{{currentUser.email}}</strong>
+                    </span>
+                </div>
+                <button mat-icon-button type="button" [matMenuTriggerFor]="menu" style="position: absolute; right: 0;">
+                    <mat-icon>keyboard_arrow_down</mat-icon>
+                </button>
+                <mat-menu #menu xPosition="after">
+                    <button mat-menu-item (click)="clearCurrentUser()">
+                        <mat-icon>account_circle</mat-icon>
+                        <span>Use another account</span>
+                    </button>
+                </mat-menu>
+            </div>
+            <span class="form-title">Session has expired. Please enter password to continue</span>
+        </div>
+        <mat-form-field class="form-field">
+            <input formControlName="password" #passwordInput matInput placeholder="Password" type="password" autocomplete="off" [errorStateMatcher]="errorStateMatcher">
+            <div matSuffix [ngSwitch]="passwordInput.type === 'password'" *ngIf="!formGroup.disabled">
+                <mat-icon class="mat-24 btn-icon" tabindex="-1" [appPassword]="passwordInput" appPasswordType="text" matTooltip="Show Password" matTooltipPosition="right" *ngSwitchCase="true">visibility</mat-icon>
+                <mat-icon class="mat-24 btn-icon" tabindex="-1" [appPassword]="passwordInput" appPasswordType="password" matTooltip="Hide Password" matTooltipPosition="right" *ngSwitchCase="false">visibility_off</mat-icon>
+            </div>
+            <mat-error *ngIf="password.getError('required')">
+                Password is required
+            </mat-error>
+        </mat-form-field>
+        <div style="margin: .7rem 0 0 0;" fxLayout="row" fxLayoutAlign="space-between center">
+            <a class="primary" routerLink="/account/recover">Forgot Password?</a>
+            <button type="submit" style="font-size: 1.2em; font-weight: lighter;" mat-raised-button color="primary">SIGN IN</button>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="center center" style="height: 100px;">
+            <span class="error-message" *ngIf="signInError">{{signInError}}</span>
+        </div>
+    </form>
+</ng-template>

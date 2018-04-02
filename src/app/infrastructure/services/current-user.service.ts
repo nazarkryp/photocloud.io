@@ -15,6 +15,7 @@ import { CreateAccountRequestModel } from 'app/account/models/request';
 @Injectable()
 export class CurrentUserService {
     private currentUserStorageKey = 'photocloud-current-user';
+    private currentUser: CurrentUserViewModel;
     private state: ReplaySubject<CurrentUserViewModel> = new ReplaySubject<CurrentUserViewModel>(1);
     private intervalNumber: number;
     private gettingIncommingRequests: boolean;
@@ -38,12 +39,13 @@ export class CurrentUserService {
         return false;
     }
 
-    public signIn(username: string, password: string): Observable<any> {
+    public signIn(username: string, password: string, rememberMe: boolean): Observable<any> {
         return this.accountService.signIn(username, password)
             .mergeMap<AccessToken, CurrentUserViewModel>(accessToken => {
                 this.tokenProvider.setAccessToken(accessToken);
                 return this.accountService.getAccount()
                     .map(currentUser => {
+                        currentUser.isRemembered = rememberMe;
                         this.saveCurrentUser(currentUser);
                         return currentUser;
                     });
@@ -106,8 +108,14 @@ export class CurrentUserService {
         return Observable.of(true);
     }
 
-    public signOut() {
-        this.storageService.clear();
+    public signOut(cleanCurrentUser: boolean = true) {
+        if (cleanCurrentUser) {
+            this.storageService.clear();
+        } else {
+            this.tokenProvider.removeAccessToken();
+        }
+
+        this.currentUser = null;
         this.state.next(null);
     }
 
@@ -115,7 +123,7 @@ export class CurrentUserService {
         if (refresh) {
             const currentUser = this.retrieveCurrentUser();
 
-            if (currentUser) {
+            if (currentUser && this.isAuthenticated) {
                 return this.accountService.getAccount()
                     .mergeMap<CurrentUserViewModel, CurrentUserViewModel>(serverCurrentUser => {
                         this.saveCurrentUser(serverCurrentUser);
@@ -156,11 +164,16 @@ export class CurrentUserService {
     }
 
     public retrieveCurrentUser(): CurrentUserViewModel {
-        return this.storageService.get<CurrentUserViewModel>(this.currentUserStorageKey, CurrentUserViewModel);
+        return (this.currentUser = (this.currentUser ? this.currentUser : this.storageService.get<CurrentUserViewModel>(this.currentUserStorageKey, CurrentUserViewModel)));
     }
 
     private saveCurrentUser(currentUser: CurrentUserViewModel) {
         this.state.next(currentUser);
         this.storageService.set<CurrentUserViewModel>(this.currentUserStorageKey, currentUser);
+        this.currentUser = currentUser;
+    }
+
+    public get isAuthenticated(): boolean {
+        return this.tokenProvider.isTokenValid;
     }
 }

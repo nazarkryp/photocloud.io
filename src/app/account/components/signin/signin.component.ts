@@ -4,8 +4,10 @@ import { AbstractControl, FormGroup, FormBuilder, FormControl, Validators } from
 import { trigger, animate, style, transition, animateChild, group, query, stagger } from '@angular/animations';
 
 import { DefaultErrorStateMatcher } from 'app/account/matchers';
-import { NgProgress } from 'ngx-progressbar';
 import { CurrentUserService } from 'app/infrastructure/services/current-user.service';
+import { CurrentUserViewModel } from 'app/models/view';
+
+import { NgProgress } from 'ngx-progressbar';
 
 @Component({
     templateUrl: './signin.component.html',
@@ -23,18 +25,23 @@ import { CurrentUserService } from 'app/infrastructure/services/current-user.ser
         ])
     ]
 })
-export class SignInComponent {
+export class SignInComponent implements OnInit {
     @ViewChild('passwordInput') passwordInput: ElementRef;
     public errorStateMatcher = new DefaultErrorStateMatcher();
     public formGroup: FormGroup;
     public signInError: string;
+    public currentUser: CurrentUserViewModel;
 
-    get username(): AbstractControl {
+    public get username(): AbstractControl {
         return this.formGroup.get('username');
     }
 
-    get password(): AbstractControl {
+    public get password(): AbstractControl {
         return this.formGroup.get('password');
+    }
+
+    public get rememberMe(): AbstractControl {
+        return this.formGroup.get('rememberMe');
     }
 
     constructor(
@@ -50,7 +57,8 @@ export class SignInComponent {
             password: new FormControl('',
                 Validators.compose([
                     Validators.required,
-                    Validators.maxLength(50)]))
+                    Validators.maxLength(50)])),
+            rememberMe: new FormControl(false)
         });
     }
 
@@ -59,7 +67,7 @@ export class SignInComponent {
             this.signInError = null;
             this.progress.start();
             this.formGroup.disable();
-            this.currentUserService.signIn(this.username.value, this.password.value)
+            this.currentUserService.signIn(this.username.value, this.password.value, this.rememberMe.value)
                 .subscribe(response => {
                     this.router.navigateByUrl('/');
                 }, error => {
@@ -68,6 +76,21 @@ export class SignInComponent {
                     this.progress.done();
                     this.passwordInput.nativeElement.focus();
                 });
+        }
+    }
+
+    public clearCurrentUser() {
+        // this.currentUserService.signOut();
+        this.currentUser = null;
+        this.username.setValue('');
+    }
+
+    public ngOnInit(): void {
+        this.currentUser = this.currentUserService.retrieveCurrentUser();
+
+        if (this.currentUser) {
+            this.username.setValue(this.currentUser.username);
+            this.rememberMe.setValue(true);
         }
     }
 }

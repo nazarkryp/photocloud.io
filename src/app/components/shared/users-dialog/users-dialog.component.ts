@@ -24,7 +24,7 @@ import { UserDialogDetails } from './models';
                         transform: 'translateY(20%)'
                     }),
                     stagger(50, [
-                        animate('0.5s', style({
+                        animate('0.25s', style({
                             opacity: 1,
                             transform: 'translateY(0)'
                         }))

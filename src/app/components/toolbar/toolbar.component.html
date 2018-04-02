@@ -6,18 +6,16 @@
                     <span style="font-size: 1.4em; font-weight: lighter;">Photo</span>
                     <span style="font-size: 1.7em; font-weight: 800;">Cloud</span>
                 </a>
-                <!-- <input #fileInput type="file" accept="image/*" (change)="upload($event)" hidden> -->
-                <!-- <button mat-button style="font-weight: bold;" color="primary" (click)="fileInput.click()">UPLOAD: {{uploader.progress}}</button> -->
             </div>
-            <div class="search-box-container" *ngIf="currentUser && currentUser.isActive">
+            <div class="search-box-container" *ngIf="currentUser && isAuthenticated && currentUser.isActive">
                 <app-search-box></app-search-box>
             </div>
-            <div fxFlex fxLayout="row" fxLayoutAlign="end center" *ngIf="!currentUser">
+            <div fxFlex fxLayout="row" fxLayoutAlign="end center" *ngIf="!currentUser || !isAuthenticated">
                 <a class="btn-signin" mat-button color="primary" routerLink="/account/signin">
                     SIGN IN
                 </a>
             </div>
-            <div class="toolbar-actions" fxLayout="row" fxLayoutAlign="end center" fxFlex *ngIf="currentUser">
+            <div class="toolbar-actions" fxLayout="row" fxLayoutAlign="end center" fxFlex *ngIf="currentUser && isAuthenticated">
                 <td-notification-count [notifications]="none" (click)="explorePeople()" *ngIf="currentUser.isActive">
                     <mat-icon class="btn-icon mat-36 thin" svgIcon="compass"></mat-icon>
                 </td-notification-count>

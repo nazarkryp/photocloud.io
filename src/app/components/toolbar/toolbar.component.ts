@@ -39,6 +39,10 @@ export class ToolbarComponent implements OnInit, OnDestroy, AfterViewChecked, Af
         this._currentUser = value;
     }
 
+    public get isAuthenticated(): boolean {
+        return this.currentUserService.isAuthenticated;
+    }
+
     public explorePeople() {
         if (!this.isResolvingExplorePeople) {
             this.isResolvingExplorePeople = true;

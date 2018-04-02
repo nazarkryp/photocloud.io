@@ -12,7 +12,11 @@ import { environment } from 'app/../environments/environment';
 @Injectable()
 export class TokenProvider {
     private refreshTimeout = 5;
-    private tokenStorageKey = 'photocloud-access-token';
+    private accessToken: AccessToken;
+
+    private get tokenStorageKey() {
+        return 'photocloud-access-token'
+    }
 
     constructor(
         private storageService: LocalStorageService,
@@ -33,7 +37,9 @@ export class TokenProvider {
 
         if (useRefreshToken && expiresIn > 0) {
             return this.refreshToken(accessToken.refreshToken)
-                .do(response => this.storageService.set<AccessToken>(this.tokenStorageKey, response));
+                .do(refreshedAccessToken => {
+                    this.setAccessToken(refreshedAccessToken);
+                });
         }
 
         if (expiresIn <= 0) {
@@ -49,6 +55,7 @@ export class TokenProvider {
 
     public setAccessToken(accessToken: AccessToken) {
         this.storageService.set<AccessToken>(this.tokenStorageKey, accessToken);
+        this.accessToken = accessToken;
     }
 
     private refreshToken(refreshToken: string): Observable<AccessToken> {
@@ -66,6 +73,23 @@ export class TokenProvider {
             accessToken.issued = new Date(accessToken.issued);
         }
 
+        this.accessToken = accessToken;
+
         return accessToken;
+    }
+
+    public get isTokenValid(): boolean {
+        const accessToken = this.retrieveAccessToken();
+
+        if (!accessToken || ((accessToken.expires.getTime() - new Date().getTime()) / 1000 / 60) <= 0) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public removeAccessToken() {
+        this.storageService.removeItem(this.tokenStorageKey);
+        this.accessToken = null;
     }
 }

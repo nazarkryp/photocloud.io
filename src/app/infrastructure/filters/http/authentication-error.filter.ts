@@ -19,7 +19,9 @@ export class AuthenticationErrorFilter implements HttpErrorFilter {
             if (this.currentUserService.canSignInWithCode) {
                 this.router.navigateByUrl('/account/autologin');
             } else {
-                this.currentUserService.signOut();
+                const currentUser = this.currentUserService.retrieveCurrentUser();
+                const clearUserData = !currentUser.isRemembered;
+                this.currentUserService.signOut(clearUserData);
                 this.router.navigateByUrl('/account/signin');
             }
 

@@ -9,6 +9,7 @@ export class CurrentUserViewModel {
     public pictureUri: string;
     public incommingRequestsCount: number;
     public canAutoLogin: boolean;
+    public isRemembered: boolean;
 
     constructor(
         id?: number,
