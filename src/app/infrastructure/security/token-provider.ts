@@ -31,8 +31,7 @@ export class TokenProvider {
             return Observable.of(null);
         }
 
-        const now = new Date();
-        const expiresIn = (accessToken.expires.getTime() - now.getTime()) / 1000 / 60;
+        const expiresIn = (accessToken.expires.getTime() - new Date().getTime()) / 1000 / 60;
         const useRefreshToken = accessToken.refreshToken && expiresIn < this.refreshTimeout;
 
         if (useRefreshToken && expiresIn > 0) {
@@ -44,7 +43,7 @@ export class TokenProvider {
 
         if (expiresIn <= 0) {
             if (!accessToken.code) {
-                this.storageService.clear();
+                this.removeAccessToken();
             }
 
             return Observable.of(null);

@@ -80,7 +80,6 @@ export class UserDetailsComponent implements OnDestroy {
         const userId = this.user.id;
         this.openDialog(this.userService.getFollowers.bind(this.userService), this.user.id, 'Followers')
             .afterClosed().subscribe((page: Page<UserViewModel>) => {
-                console.log(`UserDetails: ${page == null}`);
                 if (page && !page.hasMoreItems && this.user.id === userId) {
                     this.user.counters.followers = page.data.length;
                 }

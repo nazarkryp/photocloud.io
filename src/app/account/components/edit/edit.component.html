@@ -96,7 +96,7 @@
             <div class="item" fxLayout="row" fxLayoutAlign="space-between start">
                 <div>
                     <span class="mat-body-1" [ngClass]="{ 'disabled' : !currentUser.isActive }">Remember me</span>
-                    <p style="color: rgb(0,0,0,.6); font-weight: lighter; font-size: .8em; line-height: 1.5;">When this option is enabled system will allow you to autologin</p>
+                    <p style="color: rgb(0,0,0,.6); font-weight: lighter; font-size: .8em; line-height: 1.5;">When this option is enabled system will allow you to login without password after session has expired</p>
                 </div>
                 <mat-slide-toggle color="primary" [(ngModel)]="currentUser.canAutoLogin" [checked]="currentUser.canAutoLogin" (change)='invertAccountAutoLoginStatus($event)'
                     [disabled]="!currentUser.isActive"></mat-slide-toggle>

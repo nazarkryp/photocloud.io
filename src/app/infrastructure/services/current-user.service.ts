@@ -53,7 +53,6 @@ export class CurrentUserService {
     }
 
     public create(request: CreateAccountRequestModel): Observable<any> {
-        debugger;
         if (request.signInOnCreated) {
             return this.accountService.create(request)
                 .mergeMap<AccessToken, CurrentUserViewModel>(accessToken => {

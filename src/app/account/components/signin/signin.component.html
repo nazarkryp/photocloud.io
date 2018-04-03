@@ -35,7 +35,8 @@
                     Remember me?
                 </mat-checkbox>
                 <div style="margin: 1.4rem 0 0 0;" fxLayout="row" fxLayoutAlign="space-between center">
-                        <a class="primary" routerLink="/account/recover">Forgot Password?</a>
+                    <!-- <a class="primary" routerLink="/account/recover">Forgot Password?</a> -->
+                    <button mat-button color="primary" routerLink="/account/recover">FORGOT PASSWORD?</button>
                     <button type="submit" style="font-size: 1.2em; font-weight: lighter;" mat-raised-button color="primary">SIGN IN</button>
                 </div>
                 <div fxLayout="row" fxLayoutAlign="center center" style="height: 100px;">
@@ -50,7 +51,7 @@
     <form class="signin-form" fxLayout="column" [formGroup]="formGroup" (ngSubmit)="signIn()">
         <div class="signin-form-overlay" [ngClass]="{ 'visible' : formGroup.disabled }"></div>
         <div class="form-header" fxLayout="column">
-            <span style="font-size: 1.5em; padding-bottom: .7rem;">Hi {{currentUser.username}}</span>
+            <span style="font-size: 1.3em; padding-bottom: .7rem;">Hi {{currentUser.username}}</span>
             <div fxLayout="row" fxLayoutAlign="space-between center" style="padding-bottom: .7rem; position: relative; margin-right: -.4rem;">
                 <div fxLayout="row" fxLayoutAlign="start center">
                     <img src="{{currentUser.pictureUri}}" alt="avatar" style="width: 35px; height: 35px; border-radius: 50%;">
@@ -81,7 +82,8 @@
             </mat-error>
         </mat-form-field>
         <div style="margin: .7rem 0 0 0;" fxLayout="row" fxLayoutAlign="space-between center">
-            <a class="primary" routerLink="/account/recover">Forgot Password?</a>
+            <!-- <a class="primary" routerLink="/account/recover">Forgot Password?</a> -->
+            <button mat-button color="primary" routerLink="/account/recover">FORGOT PASSWORD?</button>
             <button type="submit" style="font-size: 1.2em; font-weight: lighter;" mat-raised-button color="primary">SIGN IN</button>
         </div>
         <div fxLayout="row" fxLayoutAlign="center center" style="height: 100px;">

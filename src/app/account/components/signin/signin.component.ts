@@ -80,9 +80,9 @@ export class SignInComponent implements OnInit {
     }
 
     public clearCurrentUser() {
-        // this.currentUserService.signOut();
         this.currentUser = null;
         this.username.setValue('');
+        this.rememberMe.setValue(false);
     }
 
     public ngOnInit(): void {
