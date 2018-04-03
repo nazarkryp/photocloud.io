@@ -17,10 +17,10 @@
             <div fxLayout="row" fxLayoutAlign="space-between center">
                 <span class="user-info-username" [ngClass]="{ 'center-username' : !user.isActive }">{{user.username}}</span>
                 <div>
-                    <button mat-icon-button routerLink="/account/edit" matTooltip="Settings" matTooltipPosition="above" *ngIf="currentUser && user.id === currentUser.id"
+                    <a mat-icon-button routerLink="/account/edit" matTooltip="Settings" matTooltipPosition="above" *ngIf="currentUser && user.id === currentUser.id"
                         style="margin-right: 40px;">
                         <mat-icon class="btn-icon">settings</mat-icon>
-                    </button>
+                    </a>
                     <button mat-icon-button matTooltip="Logout" matTooltipPosition="above" (click)="logout()" *ngIf="currentUser && user.id === currentUser.id">
                         <mat-icon class="btn-icon">exit_to_app</mat-icon>
                     </button>
@@ -29,13 +29,10 @@
                     (click)="modifyRelationship()" [disabled]="isModifyingRelationship">{{user.relationship.outgoingStatus | relationshipAction | uppercase }}</button>
             </div>
             <div fxLayout="row" fxLayoutAlign="space-between center" *ngIf="user.isActive" style="font-size: 1.1em;">
-                <a>
-                    <span>
-                        <strong>{{user.counters.posts}}</strong>
-                    </span>
-                    <span>posts</span>
-                </a>
-
+                <span>
+                    <strong>{{user.counters.posts}}</strong>
+                    posts
+                </span>
                 <a class="user-info-link-button" (click)="getFollowers()" *ngIf="currentUser">
                     <span>
                         <strong>{{user.counters.followers}}</strong>

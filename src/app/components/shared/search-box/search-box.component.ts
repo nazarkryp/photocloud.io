@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatAutocompleteSelectedEvent } from '@angular/material';
@@ -21,6 +21,7 @@ export class SearchBoxComponent implements OnInit {
     public users: Observable<UserViewModel[]>;
     public isSearching: boolean;
     public searchQuery: string;
+    @Input() public scrolled;
 
     constructor(
         private router: Router,

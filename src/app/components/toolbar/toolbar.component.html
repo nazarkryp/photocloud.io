@@ -1,4 +1,5 @@
-<header class="toolbar" fxLayout="column" fxLayoutAlign="center center">
+<header class="toolbar" [ngClass]="{ 'scrolled' : scrolled }" fxLayout="column" fxLayoutAlign="center center" appHeaderScroll
+    (scrollPosition)="onPositionChange($event)">
     <div class="mat-toolbar-layout">
         <div fxLayout="row" fxLayoutAlign="space-between center">
             <div fxLayout="row" fxLayoutAlign="start center" fxFlex>
@@ -8,7 +9,7 @@
                 </a>
             </div>
             <div class="search-box-container" *ngIf="currentUser && isAuthenticated && currentUser.isActive">
-                <app-search-box></app-search-box>
+                <app-search-box [scrolled]="scrolled"></app-search-box>
             </div>
             <div fxFlex fxLayout="row" fxLayoutAlign="end center" *ngIf="!currentUser || !isAuthenticated">
                 <a class="btn-signin" mat-button color="primary" routerLink="/account/signin">
@@ -19,7 +20,8 @@
                 <td-notification-count [notifications]="none" (click)="explorePeople()" *ngIf="currentUser.isActive">
                     <mat-icon class="btn-icon mat-36 thin" svgIcon="compass"></mat-icon>
                 </td-notification-count>
-                <td-notification-count color="warn" positionX="before" [notifications]="incommingRequestsCount" (click)="openNotifications()" *ngIf="currentUser.isActive">
+                <td-notification-count color="warn" positionX="before" [notifications]="incommingRequestsCount" (click)="openNotifications()"
+                    *ngIf="currentUser.isActive">
                     <mat-icon class="btn-icon mat-36 thin" svgIcon="bell"></mat-icon>
                 </td-notification-count>
                 <div fxLayout="row" fxLayoutAlign="center center">

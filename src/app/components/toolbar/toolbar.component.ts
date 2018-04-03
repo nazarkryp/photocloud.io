@@ -21,6 +21,7 @@ export class ToolbarComponent implements OnInit, OnDestroy, AfterViewChecked, Af
 
     public incommingRequestsCount: number;
     public renderToolbar: boolean;
+    public scrolled: boolean;
     @Output() public openNotificationsEvent = new EventEmitter<boolean>();
 
     constructor(
@@ -83,6 +84,10 @@ export class ToolbarComponent implements OnInit, OnDestroy, AfterViewChecked, Af
         this.incommingRequestsService.incommingRequests.subscribe(count => {
             this.incommingRequestsCount = count;
         });
+    }
+
+    public onPositionChange(event) {
+        this.scrolled = event;
     }
 
     public ngOnDestroy(): void {

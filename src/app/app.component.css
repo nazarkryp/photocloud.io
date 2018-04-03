@@ -29,13 +29,14 @@
 .router-container {
     position: relative;
     min-height: calc(100vh);
-    padding: 3rem 0 calc(3rem) 0;
+    padding: 3rem 0 3rem 0;
     box-sizing: border-box;
     overflow-y: hidden;
 }
 
 .router-container.toolbar {
     min-height: calc(100vh - 228px);
+    padding: calc(3rem + 64px) 0;
 }
 
 .mat-fab-bottom-left {

@@ -1,8 +1,20 @@
 header.toolbar {
-    background-color: white;
-    box-shadow: 0 3px 8px -3px rgba(0, 0, 0, 0.26);
-    padding: .7rem;
+    padding: 1.4rem;
     min-height: 64px;
+    position: fixed;
+    z-index: 999;
+    width: 100%;
+    -webkit-transition: padding .25s ease-in-out, box-shadow .15s ease-in-out;
+    -moz-transition: padding .25s ease-in-out, box-shadow .15s ease-in-out;
+    -ms-transition: padding .25s ease-in-out, box-shadow .15s ease-in-out;
+    -o-transition: padding .25s ease-in-out, box-shadow .15s ease-in-out;
+    transition: padding .25s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+header.toolbar.scrolled {
+    background-color: white;
+    padding: .7rem;
+    box-shadow: 0 3px 8px -3px rgba(0, 0, 0, 0.26);
 }
 
 .mat-toolbar-layout {
@@ -20,6 +32,10 @@ header.toolbar {
     width: 620px;
     padding: 0 10px;
     box-sizing: border-box;
+}
+
+.search-box-container>input {
+    background: red !important;
 }
 
 .container {

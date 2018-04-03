@@ -9,7 +9,7 @@
     font-family: 'Roboto', sans-serif;
 }
 
-@media screen and (max-width: 448px) {
+@media screen and (max-width: 400px) {
     .signup-content {
         background: white;
     }
@@ -20,7 +20,7 @@
 
 @media screen and (min-width: 449px) {
     .signup-form {
-        width: 448px;
+        width: 400px;
         border-radius: 2px;
         box-shadow: 0 3px 8px -3px rgba(0, 0, 0, 0.26);
     }
