@@ -1,32 +1,30 @@
 <div fxLayout="column" fxLayoutAlign="center start">
     <div class="user-info" fxLayout="row" fxLayoutAlign="center start">
-        <div fxLayout="column" fxLayoutAlign="center center" *ngIf="user">
+        <div fxLayout="column" fxLayoutAlign="center center">
             <mat-progress-spinner [value]="progress" [mode]="progressSpinnerMode" [diameter]="160" [strokeWidth]="3" style="position: absolute; z-index: 0;"></mat-progress-spinner>
-            <img class="thumbnail-big" src="{{user.pictureUri}}" default="assets/images/user-default-image.png" alt="{{user.username}}"
-                *ngIf="!currentUser || (currentUser && !currentUser.isActive) || user.id !== currentUser.id" />
+            <img class="thumbnail-big" src="{{user.pictureUri}}" default="assets/images/user-default-image.png" alt="{{user.username}}" *ngIf="!currentUser || (currentUser && !currentUser.isActive) || user.id !== currentUser.id"
+            />
             <div class="edit-image" *ngIf="currentUser && currentUser.isActive && user.id === currentUser.id">
                 <div *ngIf="!isUploading" class="change-overlay" fxLayout="row" fxLayoutAlign="center center" (click)="fileInput.click()">
                     <span>Change</span>
                 </div>
-                <img class="thumbnail-big" src="{{user.pictureUri}}" appImagePreview [image]="uploader.queue[0]?._file" default="assets/images/user-default-image.png"
-                    alt="{{user.username}}" />
+                <img class="thumbnail-big" src="{{user.pictureUri}}" appImagePreview [image]="uploader.queue[0]?._file" default="assets/images/user-default-image.png" alt="{{user.username}}" />
             </div>
             <input #fileInput type="file" accept="image/*" ng2FileSelect [uploader]="uploader" hidden/>
         </div>
         <div class="user-info-data" fxLayout="column" fxFlex>
             <div fxLayout="row" fxLayoutAlign="space-between center">
                 <span class="user-info-username" [ngClass]="{ 'center-username' : !user.isActive }">{{user.username}}</span>
-                <div>
-                    <a mat-icon-button routerLink="/account/edit" matTooltip="Settings" matTooltipPosition="above" *ngIf="currentUser && user.id === currentUser.id"
-                        style="margin-right: 40px;">
+                <div *ngIf="currentUser && user.id === currentUser.id">
+                    <a mat-icon-button routerLink="/account/edit" matTooltip="Settings" matTooltipPosition="above" style="margin-right: 40px;">
                         <mat-icon class="btn-icon">settings</mat-icon>
                     </a>
-                    <button mat-icon-button matTooltip="Logout" matTooltipPosition="above" (click)="logout()" *ngIf="currentUser && user.id === currentUser.id">
+                    <button mat-icon-button matTooltip="Logout" matTooltipPosition="above" (click)="logout()">
                         <mat-icon class="btn-icon">exit_to_app</mat-icon>
                     </button>
                 </div>
-                <button mat-button class="btn-relationships" *ngIf="currentUser && currentUser.isActive && user.id !== currentUser.id && (user.isActive || (!user.isActive && user.relationship.outgoingStatus !== 0))"
-                    (click)="modifyRelationship()" [disabled]="isModifyingRelationship">{{user.relationship.outgoingStatus | relationshipAction | uppercase }}</button>
+                <button mat-button class="btn-relationships" *ngIf="currentUser && currentUser.isActive && user.id !== currentUser.id && (user.isActive || (!user.isActive && user.relationship.outgoingStatus !== 0))" (click)="modifyRelationship()"
+                    [disabled]="isModifyingRelationship">{{user.relationship.outgoingStatus | relationshipAction | uppercase }}</button>
             </div>
             <div fxLayout="row" fxLayoutAlign="space-between center" *ngIf="user.isActive" style="font-size: 1.1em;">
                 <span>
@@ -66,6 +64,20 @@
                     <a class="primary" (click)="increaseTruncateSize()" *ngIf="user.bio && user.bio.length > defaultTruncateWidth && truncateWidth === defaultTruncateWidth">show more</a>
                 </p>
             </div>
+        </div>
+    </div>
+    <div class="user-info-small" fxLayout="column" fxLayoutAlign="center center">
+        <img class="thumbnail-big" src="{{user.pictureUri}}" default="assets/images/user-default-image.png" alt="{{user.username}}" />
+        <div *ngIf="currentUser && user.id === currentUser.id" fxLayout="row" fxLayoutAlign="space-between center" style="padding: .7rem 0; width: 100%;">
+            <a mat-icon-button routerLink="/account/edit" matTooltip="Settings" matTooltipPosition="above" style="margin-right: 40px;">
+                <mat-icon class="btn-icon">settings</mat-icon>
+            </a>
+            <button mat-icon-button matTooltip="Logout" matTooltipPosition="above" (click)="logout()">
+                <mat-icon class="btn-icon">exit_to_app</mat-icon>
+            </button>
+        </div>
+        <div style="margin-top: .7rem;">
+            <h1>{{user.username}}</h1>
         </div>
     </div>
     <div style="width: 100%;" fxLayout="row" fxLayoutAlign="end center" *ngIf="user.isActive && user.lastActive">

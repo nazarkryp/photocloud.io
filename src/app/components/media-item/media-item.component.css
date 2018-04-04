@@ -1,8 +1,20 @@
+@media screen and (max-width: 500px) {
+    .media-item {
+        border-radius: 5px;
+        box-shadow: 0 3px 20px -2px rgba(0, 0, 0, 0.26);
+    }
+}
+
+@media screen and (min-width: 501px) {
+    .media-item {
+        border-radius: 2px;
+        box-shadow: 0 3px 8px -3px rgba(0, 0, 0, 0.26);
+    }
+}
+
 .media-item {
     background-color: white;
     position: relative;
-    border-radius: 2px;
-    box-shadow: 0 3px 8px -3px rgba(0, 0, 0, 0.26);
 }
 
 .media-item-header {

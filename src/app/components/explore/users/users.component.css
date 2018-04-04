@@ -1,10 +1,21 @@
+@media screen and (max-width: 500px) {
+    .user-search-container {
+        padding: 0 .7rem;
+    }
+}
+
+@media screen and (min-width: 501px) {
+    .user-search-container {
+        padding: 1.4rem;
+        box-shadow: 0 3px 8px -3px rgba(0, 0, 0, 0.26);
+        border-radius: 2px;
+    }
+}
+
 .user-search-container {
     max-width: 600px;
     width: 100%;
-    padding: 1.4rem;
-    background: white;
     box-sizing: border-box;
-    box-shadow: 0 3px 8px -3px rgba(0, 0, 0, 0.26);
     color: rgb(0, 0, 0, .85);
 }
 

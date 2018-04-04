@@ -105,9 +105,9 @@ export class NotificationsComponent implements OnInit {
         }).finally(() => {
             incommingRequest.isConfirmingIncommingRequest = true;
         }).subscribe(userResult => {
-            const indexToRemove = this.incommingRequestsPage.data.findIndex(e => e.id === incommingRequest.id);
-            this.incommingRequestsPage.data.splice(indexToRemove, 1);
-            this.requestService.updateIncommingRequestsCount(this.incommingRequestsPage.data.length);
+            // const indexToRemove = this.incommingRequestsPage.data.findIndex(e => e.id === incommingRequest.id);
+            // this.incommingRequestsPage.data.splice(indexToRemove, 1);
+            // this.requestService.updateIncommingRequestsCount(this.incommingRequestsPage.data.length);
             incommingRequest.isConfirmed = true;
         });
     }
@@ -119,9 +119,9 @@ export class NotificationsComponent implements OnInit {
         }).finally(() => {
             incommingRequest.isRemovingIncommingRequest = false;
         }).subscribe(userResult => {
-            const indexToRemove = this.incommingRequestsPage.data.findIndex(e => e.id === incommingRequest.id);
-            this.incommingRequestsPage.data.splice(indexToRemove, 1);
-            this.requestService.updateIncommingRequestsCount(this.incommingRequestsPage.data.length);
+            // const indexToRemove = this.incommingRequestsPage.data.findIndex(e => e.id === incommingRequest.id);
+            // this.incommingRequestsPage.data.splice(indexToRemove, 1);
+            // this.requestService.updateIncommingRequestsCount(this.incommingRequestsPage.data.length);
             incommingRequest.isRemoved = true;
         });
     }
@@ -133,9 +133,7 @@ export class NotificationsComponent implements OnInit {
         }).finally(() => {
             outgoingRequest.isRemovingIncommingRequest = false;
         }).subscribe(userResult => {
-            const indexToRemove = this.outgoingRequestsPage.data.findIndex(e => e.id === outgoingRequest.id);
-            this.outgoingRequestsPage.data.splice(indexToRemove, 1);
-            this.requestService.updateIncommingRequestsCount(this.outgoingRequestsPage.data.length);
+            // const indexToRemove = this.outgoingRequestsPage.data.findIndex(e => e.id === outgoingRequest.id);
             outgoingRequest.isRemoved = true;
         });
     }

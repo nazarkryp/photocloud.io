@@ -42,6 +42,7 @@ a {
     height: 18px !important;
     width: auto;
     max-width: 18px !important;
+    line-height: 18px !important;
 }
 
 .mat-icon.mat-24 {
@@ -56,6 +57,7 @@ a {
     height: 36px !important;
     width: auto;
     max-width: 36px !important;
+    line-height: 36px !important;
 }
 
 .mat-icon.mat-48 {
@@ -63,6 +65,7 @@ a {
     height: 48px !important;
     width: auto;
     max-width: 48px !important;
+    line-height: 48px !important;
 }
 
 .mat-icon.mat-72 {
@@ -70,6 +73,7 @@ a {
     height: 72px !important;
     width: auto;
     max-width: 72px !important;
+    line-height: 72px !important;
 }
 
 .mat-icon.mat-18.thin svg,

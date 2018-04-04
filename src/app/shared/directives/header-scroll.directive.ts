@@ -13,8 +13,7 @@ export class HeaderScrollDirective {
     private direction: ScrollDirection = ScrollDirection.Up;
     private triggered = false;
 
-    @Input()
-    public scrollOffset = 3000;
+    private minTopScrollOffset = 25;
     @Output()
     public scrollPosition = new EventEmitter();
 
@@ -26,14 +25,14 @@ export class HeaderScrollDirective {
 
     @HostListener('window:scroll', ['$event'])
     public onScroll(event) {
-        if (_window().scrollY >= 50 && !this.triggered) {
+        if (_window().scrollY >= this.minTopScrollOffset && !this.triggered) {
             this.triggered = true;
-            this.scrollPosition.next(true);
+            this.scrollPosition.next(this.triggered);
         }
 
-        if (this.triggered && _window().scrollY < 50) {
+        if (_window().scrollY < this.minTopScrollOffset && this.triggered) {
             this.triggered = false;
-            this.scrollPosition.next(false);
+            this.scrollPosition.next(this.triggered);
         }
 
         if (_window().scrollY > this.previousValue) {

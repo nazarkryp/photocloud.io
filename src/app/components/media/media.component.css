@@ -1,4 +1,12 @@
-@media screen and (max-width: 500px) {}
+@media screen and (max-width: 500px) {
+    .media-container {
+        width: 100%;
+    }
+
+    .media-item-container {
+        padding: 0 .7rem;
+    }
+}
 
 @media screen and (min-width: 701px) {
     .media-container {

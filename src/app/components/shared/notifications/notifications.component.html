@@ -16,12 +16,6 @@
                                 <button mat-button (click)="removeIncommingRequest(user)" [disabled]="user.isRemovingIncommingRequest">REMOVE</button>
                                 <button mat-raised-button color="primary" (click)="confirmIncommingRequest(user)" [disabled]="user.isConfirmingIncommingRequest">CONFIRM</button>
                             </div>
-                            <div *ngIf="user.isConfirmed">
-                                <mat-icon class="mat-36 primary">check</mat-icon>
-                            </div>
-                            <div *ngIf="user.isRemoved">
-                                <mat-icon class="mat-36 primary">clear</mat-icon>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -51,14 +45,11 @@
                                 <a class="incomming-request-username" [routerLink]="['/', user.username]" title="{{user.username}}">{{user.username}}</a>
                                 <a class="incomming-request-fullname" [routerLink]="['/', user.username]" title="{{user.fullName}}">{{user.fullName}}</a>
                             </div>
-                            <div *ngIf="!user.isConfirmed && !user.isRemoved" fxLayout="row" fxLayoutAlign="end start">
-                                <button mat-button (click)="removeOutgoingRequest(user)" [disabled]="user.isRemovingIncommingRequest">CANCEL</button>
-                            </div>
-                            <div *ngIf="user.isConfirmed">
-                                <mat-icon class="mat-36 primary">check</mat-icon>
-                            </div>
-                            <div *ngIf="user.isRemoved">
-                                <mat-icon class="mat-36 primary">clear</mat-icon>
+                            <div fxLayout="row" fxLayoutAlign="end start">
+                                <button mat-icon-button fxLayout="row" fxLayoutAlign="center center" (click)="removeOutgoingRequest(user)" *ngIf="!user.isConfirmed && !user.isRemoved">
+                                    <mat-icon class="mat-18" *ngIf="!user.isRemovingIncommingRequest">clear</mat-icon>
+                                    <mat-spinner [strokeWidth]="2" [diameter]="20" *ngIf="user.isRemovingIncommingRequest"></mat-spinner>
+                                </button>
                             </div>
                         </div>
                     </div>

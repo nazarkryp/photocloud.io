@@ -1,3 +1,21 @@
+@media screen and (max-width: 500px) {
+    .user-info {
+        display: none !important;
+    }
+    .user-info-small {
+        display: flex !important;
+    }
+}
+
+@media screen and (min-width: 501px) {
+    .user-info {
+        display: flex !important;
+    }
+    .user-info-small {
+        display: none !important;
+    }
+}
+
 .user-info {
     width: 650px;
     color: rgb(0, 0, 0, .85);
