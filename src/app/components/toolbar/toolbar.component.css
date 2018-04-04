@@ -3,7 +3,8 @@ header.toolbar {
     min-height: 64px;
     position: fixed;
     z-index: 999;
-    width: 100%;
+    max-width: none !important;
+    width: 100vw;
     -webkit-transition: padding .25s ease-in-out, box-shadow .25s ease-in-out, transform .25s ease-in-out;
     -moz-transition: padding .25s ease-in-out, box-shadow .25s ease-in-out, transform .25s ease-in-out;
     -ms-transition: padding .25s ease-in-out, box-shadow .25s ease-in-out, transform .25s ease-in-out;
