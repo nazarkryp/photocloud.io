@@ -34,7 +34,7 @@
                     <mat-spinner [strokeWidth]="3" [diameter]="50" *ngIf="isLoading"></mat-spinner>
                     <span [@enterTransition] *ngIf="!isLoading">No Incomming Requests</span>
                     <button mat-icon-button (click)="getIncommingRequests()" *ngIf="!isLoading" [@enterTransition] tabindex="-1">
-                        <mat-icon class="mat-36" svgIcon="refresh">refresh</mat-icon>
+                        <mat-icon class="mat-24" svgIcon="refresh">refresh</mat-icon>
                     </button>
                 </div>
             </div>
@@ -72,7 +72,7 @@
                     <mat-spinner [strokeWidth]="3" [diameter]="50" *ngIf="isLoading"></mat-spinner>
                     <span [@enterTransition] *ngIf="!isLoading">No Outgoing Requests</span>
                     <button mat-icon-button (click)="getOutgoingRequests()" *ngIf="!isLoading" [@enterTransition] tabindex="-1">
-                        <mat-icon class="mat-36" svgIcon="refresh">refresh</mat-icon>
+                        <mat-icon class="mat-24" svgIcon="refresh">refresh</mat-icon>
                     </button>
                 </div>
             </div>

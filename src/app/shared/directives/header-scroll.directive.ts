@@ -26,12 +26,12 @@ export class HeaderScrollDirective {
 
     @HostListener('window:scroll', ['$event'])
     public onScroll(event) {
-        if (_window().scrollY >= 100 && !this.triggered) {
+        if (_window().scrollY >= 50 && !this.triggered) {
             this.triggered = true;
             this.scrollPosition.next(true);
         }
 
-        if (this.triggered && _window().scrollY < 100) {
+        if (this.triggered && _window().scrollY < 50) {
             this.triggered = false;
             this.scrollPosition.next(false);
         }

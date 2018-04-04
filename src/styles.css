@@ -17,6 +17,7 @@ a {
 }
 
 .cdk-global-scrollblock {
+    position: static !important;
     overflow-y: hidden !important;
     margin-left: calc(100vw - 100%);
 }

@@ -1,5 +1,5 @@
-<header class="toolbar" [ngClass]="{ 'scrolled' : scrolled, 'small' : scrolledDown }" fxLayout="column" fxLayoutAlign="center center" appHeaderScroll (scrollPosition)="onPositionChange($event)"
-    (scrollDirection)="onScrollDirectionChange($event)">
+<header class="toolbar" [ngClass]="{ 'scrolled' : scrolled, 'hidden' : scrolledDown }" fxLayout="column" fxLayoutAlign="center center"
+    appHeaderScroll (scrollPosition)="onPositionChange($event)" (scrollDirection)="onScrollDirectionChange($event)">
     <div class="mat-toolbar-layout">
         <div fxLayout="row" fxLayoutAlign="space-between center">
             <div fxLayout="row" fxLayoutAlign="start center" fxFlex>
@@ -20,7 +20,8 @@
                 <td-notification-count [notifications]="none" (click)="explorePeople()" *ngIf="currentUser.isActive">
                     <mat-icon class="btn-icon mat-36 thin" svgIcon="compass"></mat-icon>
                 </td-notification-count>
-                <td-notification-count color="warn" positionX="before" [notifications]="incommingRequestsCount" (click)="openNotifications()" *ngIf="currentUser.isActive">
+                <td-notification-count color="warn" positionX="before" [notifications]="incommingRequestsCount" (click)="openNotifications()"
+                    *ngIf="currentUser.isActive">
                     <mat-icon class="btn-icon mat-36 thin" svgIcon="bell"></mat-icon>
                 </td-notification-count>
                 <div fxLayout="row" fxLayoutAlign="center center">

@@ -19,8 +19,8 @@ header.toolbar.scrolled {
     box-shadow: 0 3px 8px -3px rgba(0, 0, 0, 0.26);
 }
 
-header.toolbar.small {
-    /* transform: translateY(-100px); */
+header.toolbar.hidden {
+    transform: translateY(-100px);
 }
 
 .mat-toolbar-layout {
