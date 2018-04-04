@@ -7,6 +7,7 @@ import { AccountService } from 'app/account/services';
 import { CurrentUserViewModel } from 'app/models/view';
 import { RequestsService } from 'app/services';
 import { Uploader } from 'app/core/services';
+import { ScrollDirection } from 'app/shared/directives/header-scroll.directive';
 
 @Component({
     selector: 'app-toolbar',
@@ -22,6 +23,7 @@ export class ToolbarComponent implements OnInit, OnDestroy, AfterViewChecked, Af
     public incommingRequestsCount: number;
     public renderToolbar: boolean;
     public scrolled: boolean;
+    public scrolledDown: boolean;
     @Output() public openNotificationsEvent = new EventEmitter<boolean>();
 
     constructor(
@@ -88,6 +90,10 @@ export class ToolbarComponent implements OnInit, OnDestroy, AfterViewChecked, Af
 
     public onPositionChange(event) {
         this.scrolled = event;
+    }
+
+    public onScrollDirectionChange(event) {
+        this.scrolledDown = event === ScrollDirection.Down;
     }
 
     public ngOnDestroy(): void {

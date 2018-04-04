@@ -10,8 +10,9 @@ function _window(): Window {
 })
 export class HeaderScrollDirective {
     private previousValue = 0;
-    private scrolledDown = false;
+    private direction: ScrollDirection = ScrollDirection.Up;
     private triggered = false;
+
     @Input()
     public scrollOffset = 3000;
     @Output()
@@ -25,51 +26,31 @@ export class HeaderScrollDirective {
 
     @HostListener('window:scroll', ['$event'])
     public onScroll(event) {
-        if (_window().scrollY >= 50 && !this.triggered) {
+        if (_window().scrollY >= 100 && !this.triggered) {
             this.triggered = true;
             this.scrollPosition.next(true);
         }
 
-        if (this.triggered && _window().scrollY < 50) {
+        if (this.triggered && _window().scrollY < 100) {
             this.triggered = false;
             this.scrollPosition.next(false);
         }
 
-        // if (!this.previousValue) {
-        //     this.previousValue = _window().scrollY;
-        // }
-
         if (_window().scrollY > this.previousValue) {
-            if (!this.scrolledDown) {
+            if (this.direction === ScrollDirection.Up) {
                 this.scrollDirection.next(ScrollDirection.Down);
             }
 
-            this.previousValue = _window().scrollY;
-            this.scrolledDown = true;
+            this.direction = ScrollDirection.Down;
         } else {
-            if (this.scrolledDown) {
+            if (this.direction === ScrollDirection.Down) {
                 this.scrollDirection.next(ScrollDirection.Up);
             }
 
-            this.previousValue = _window().scrollY;
-            this.scrolledDown = false;
+            this.direction = ScrollDirection.Up;
         }
 
-        // if (_window().scrollY - this.previousValue === 65) {
-        //     console.log('scrolled down');
-        //     this.previousValue = _window().scrollY;
-        // }
-
-        // if (_window().scrollY - this.previousValue === -65) {
-        //     console.log('scrolled up');
-        //     this.previousValue = _window().scrollY;
-        // }
-
-        // // console.log(Math.abs(_window().scrollY - this.previousValue));
-        // if (Math.abs(_window().scrollY - this.previousValue) > 65) {
-        //     this.previousValue = _window().scrollY;
-        //     console.log(this.previousValue);
-        // }
+        this.previousValue = _window().scrollY;
     }
 }
 
