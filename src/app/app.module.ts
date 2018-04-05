@@ -28,6 +28,7 @@ import { FileUploadModule } from 'ng2-file-upload';
 
 import { RelationshipActionPipe } from './pipes/relationship-action.pipe';
 import { RawPipe } from './pipes/raw.pipe';
+import { LinkifyPipe } from './pipes/linkify.pipe';
 
 import { ErrorBoxComponent } from './components/shared/user-media-error/user-media-error.component';
 import { CaptionComponent } from './components/shared/caption/caption.component';
@@ -92,7 +93,8 @@ import { CoreModule, CovalentModule } from 'app/core';
         ChangePasswordComponent,
         TermsComponent,
         PrivacyComponent,
-        AboutComponent
+        AboutComponent,
+        LinkifyPipe
     ],
     entryComponents: [
         MediaDetailsComponent,

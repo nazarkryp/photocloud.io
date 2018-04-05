@@ -1,4 +1,7 @@
 <ng-progress [thick]="true" [showSpinner]="false" [trickleSpeed]="200" [speed]="300" color="#e91e63"></ng-progress>
+<div class="la-anim-1">
+
+</div>
 <mat-sidenav-container class="sidenav-container">
     <mat-sidenav style="overflow-y: hidden;" #notificationsSidenav align="end">
         <app-notifications (onClosing)="closeNotifications($event)" *ngIf="notificationsSidenav.opened"></app-notifications>

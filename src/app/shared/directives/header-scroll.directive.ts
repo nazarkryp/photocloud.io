@@ -35,7 +35,7 @@ export class HeaderScrollDirective {
             this.scrollPosition.next(this.triggered);
         }
 
-        if (_window().scrollY > this.previousValue) {
+        if (_window().scrollY > this.previousValue && _window().scrollY > 100) {
             if (this.direction === ScrollDirection.Up) {
                 this.scrollDirection.next(ScrollDirection.Down);
             }

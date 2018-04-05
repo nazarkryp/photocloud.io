@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 
-import { Routes, RouterModule, Router, ActivatedRoute, NavigationEnd } from '@angular/router';
+import { Routes, RouterModule, Router, ActivatedRoute, NavigationEnd, PreloadAllModules } from '@angular/router';
 
 import { MediaComponent } from './components/media/media.component';
 import { UserMediaComponent } from './components/user-media/user-media.component';
@@ -119,7 +119,7 @@ const routes: Routes = [
 declare var ga;
 
 @NgModule({
-    imports: [RouterModule.forRoot(routes)],
+    imports: [RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })],
     exports: [RouterModule]
 })
 export class AppRoutingModule {
