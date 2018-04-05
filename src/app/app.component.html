@@ -4,7 +4,10 @@
         <app-notifications (onClosing)="closeNotifications($event)" *ngIf="notificationsSidenav.opened"></app-notifications>
     </mat-sidenav>
     <div class="my-content" fxLayout="column">
-        <app-toolbar *ngIf="renderToolbar" (openNotificationsEvent)="openNotifications($event)"></app-toolbar>
+        <div>
+            <!-- calc(100vw - (100vw - 100%)) -->
+            <app-toolbar *ngIf="renderToolbar" (openNotificationsEvent)="openNotifications($event)"></app-toolbar>
+        </div>
         <div class="router-container" [ngClass]="{ 'toolbar' : renderToolbar }">
             <router-outlet></router-outlet>
         </div>
@@ -12,8 +15,7 @@
     </div>
 </mat-sidenav-container>
 
-<div style="z-index: 999; top: auto; right: 0; bottom: 0; left: auto; position: fixed; height: 100px; width: 100%; background-color: rgba(0,0,0,.8);"
-    fxLayout="row" fxLayoutAlign="center center" *ngIf="!currentUser && !initialLoad && renderToolbar && showAuthenticationBar">
+<div style="z-index: 999; top: auto; right: 0; bottom: 0; left: auto; position: fixed; height: 100px; width: 100%; background-color: rgba(0,0,0,.8);" fxLayout="row" fxLayoutAlign="center center" *ngIf="!currentUser && !initialLoad && renderToolbar && showAuthenticationBar">
     <mat-icon class="btn-icon" style="position:absolute; right: .5rem; top: .5rem; color: white;" (click)="hideAuthenticationBar()">clear</mat-icon>
     <div style="width: 960px;" fxLayout="row" fxLayoutAlign="space-between center">
         <div fxLayout="row" fxLayoutAlign="start center">
