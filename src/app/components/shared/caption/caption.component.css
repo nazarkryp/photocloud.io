@@ -1,14 +1,7 @@
-.hashtag {
-    color: #053569;
-    text-decoration: none;
+.caption a.hashtag {
     font-weight: 800 !important;
 }
 
-.hashtag:hover {
-    color: #e91e63;
-}
-
-a.primary {
-    cursor: pointer;
-    color: #e91e63;
+.caption a.mention {
+    font-weight: 800 !important;
 }

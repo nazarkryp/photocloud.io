@@ -85,9 +85,11 @@ export class CommentsComponent implements OnInit {
 
         if (this.page.hasMoreItems) {
             this.page.pagination = new PaginationViewModel();
-            this.page.pagination.next = this.media.comments[this.media.comments.length - 1].id;
 
-            this.media.comments.splice(this.media.comments.length - 1, 1);
+            if (this.media.comments.length) {
+                this.page.pagination.next = this.media.comments[this.media.comments.length - 1].id;
+                this.media.comments.splice(this.media.comments.length - 1, 1);
+            }
         }
 
         this.page.data = this.media.comments;

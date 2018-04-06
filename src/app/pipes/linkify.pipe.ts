@@ -1,7 +1,8 @@
-import { Pipe, PipeTransform } from '@angular/core';
-// import * as linkify from 'linkifyjs';
-import * as linkifyStr from 'linkifyjs/string';
+import { Inject, Pipe, PipeTransform } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+
 import * as linkify from 'linkifyjs';
+import * as linkifyStr from 'linkifyjs/string';
 import * as hashtag from 'linkifyjs/plugins/hashtag';
 import * as mention from 'linkifyjs/plugins/mention';
 
@@ -9,46 +10,54 @@ import * as mention from 'linkifyjs/plugins/mention';
     name: 'linkify'
 })
 export class LinkifyPipe implements PipeTransform {
-    public transform(text: any): string {
-        // console.log(linkify);
-        // if (text) {
-        //     const arr: any[] = linkify.find(text);
-
-        //     arr.forEach((item) => {
-        //         if (item.type === 'url') {
-        //             text = text.replace(item.href, `<a class="primary" href=\'${item.href}\' rel=\'noopener\' target=\'_blank\'>${item.href}</a>`);
-        //         }
-        //     });
-        // }
-
+    constructor(
+        @Inject(DOCUMENT) dom: Document) {
         hashtag(linkify);
         mention(linkify);
+    }
 
-        const options = this.options();
-        // console.log(text);
-        // const result = linkifyStr(text, options);
-
-        const result = linkifyStr(text, options);
-
-        return result;
+    public transform(text: any): string {
+        return linkifyStr(text, this.options());
     }
 
     private options(): any {
         return {
-            attributes: null,
-            className: 'primary',
-            format: function (value, type) {
+            attributes: {
+                rel: 'noopener'
+            },
+            className: {
+                mention: () => {
+                    return 'mention';
+                },
+                hashtag: () => {
+                    return 'hashtag';
+                },
+                url: () => {
+                    return 'link';
+                },
+                email: () => {
+                    return 'link';
+                }
+            },
+            format: function (value: string, type: string) {
+                if (value && type && type === 'url') {
+                    value = value.replace('https://www.', '');
+                    value = value.replace('http://www.', '');
+                    value = value.replace('https://', '');
+                    value = value.replace('http://', '');
+                    value = value.endsWith('/') ? value.substring(0, value.length - 1) : value;
+                }
+
                 return value;
             },
             formatHref: {
-                mention: (username) => {
-                    console.log(username);
+                mention: (username: string) => {
                     return this.getUserProfileLink(username);
                 },
-                hashtag: (tag) => {
+                hashtag: (tag: string) => {
                     return this.getTagLink(tag);
                 },
-                url: (url) => {
+                url: (url: string) => {
                     return url;
                 }
             },
@@ -59,7 +68,8 @@ export class LinkifyPipe implements PipeTransform {
     }
 
     private getUserProfileLink(username: string) {
-        return `${this.baseAddress}${username}`;
+        username = username.startsWith('/') ? username.substring(1) : username;
+        return `${this.baseAddress}/${username}`;
     }
 
     private getTagLink(tag: string) {

@@ -56,7 +56,7 @@
             <span style="font-size: 1.3em; padding-bottom: .7rem;">Hi {{currentUser.username}}</span>
             <div fxLayout="row" fxLayoutAlign="space-between center" style="padding-bottom: .7rem; position: relative; margin-right: -.4rem;">
                 <div fxLayout="row" fxLayoutAlign="start center">
-                    <img src="{{currentUser.pictureUri}}" alt="avatar" style="width: 35px; height: 35px; border-radius: 50%;">
+                    <img src="{{currentUser.pictureUri}}" alt="avatar" style="width: 35px; height: 35px; border-radius: 50%;" default="assets/images/user-default-image.png">
                     <span style="margin-left: .7rem;">
                         <strong>{{currentUser.email}}</strong>
                     </span>
@@ -67,7 +67,7 @@
                 <mat-menu #menu xPosition="after">
                     <button mat-menu-item (click)="clearCurrentUser()">
                         <mat-icon>account_circle</mat-icon>
-                        <span>Use another account</span>
+                        <span class="mat-body-1">Use another account</span>
                     </button>
                 </mat-menu>
             </div>

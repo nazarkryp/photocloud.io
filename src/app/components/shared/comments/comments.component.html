@@ -3,13 +3,12 @@
         view more comments
     </a>
     <div style="position: relative;">
-        <div class="comment" [ngClass]="{ 'current' : comment.user.id === currentUser?.id || media.user.id === currentUser?.id }"
-            *ngFor="let comment of page.data;">
+        <div class="comment" [ngClass]="{ 'current' : comment.user.id === currentUser?.id || media.user.id === currentUser?.id }" *ngFor="let comment of page.data;">
             <div>
                 <a class="comment-username" [routerLink]="['/', comment.user.username]">
                     {{comment.user.username}}
                 </a>
-                <span class="comment-text" [innerHTML]="comment.text | raw"></span>
+                <span class="comment-text" [innerHTML]="comment.text | linkify"></span>
                 <div class="actions" fxLayout="row" fxLayoutAlign="end start">
                     <mat-icon class="btn-icon mat-18" (click)="removeComment(comment)">clear</mat-icon>
                 </div>

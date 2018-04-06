@@ -17,7 +17,7 @@ import { LikeService } from 'app/shared/services';
     styleUrls: ['./tags.component.css']
 })
 export class TagsComponent implements OnInit, OnDestroy {
-    private routeSubscription$: Subscription;
+    private routeSubscription: Subscription;
     private currentUserSubscription: Subscription;
 
     public page: Page<MediaViewModel> = new Page<MediaViewModel>();
@@ -76,14 +76,14 @@ export class TagsComponent implements OnInit, OnDestroy {
     }
 
     public ngOnInit() {
-        this.routeSubscription$ = this.route.params.subscribe(async params => {
+        this.routeSubscription = this.route.params.subscribe(async params => {
             this.tag = params['tag'] as string;
             this.getMedia();
         });
     }
 
     public ngOnDestroy(): void {
-        this.routeSubscription$.unsubscribe();
+        this.routeSubscription.unsubscribe();
         this.currentUserSubscription.unsubscribe();
     }
 }

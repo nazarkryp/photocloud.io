@@ -113,11 +113,6 @@ div.edit-image:not([disabled]):hover .change-overlay {
     color: #e91e63;
 }
 
-.user-info a.primary {
-    color: #e91e63;
-    cursor: pointer;
-}
-
 .user-info-bio {
     line-height: 1.5;
     margin-left: .5rem;

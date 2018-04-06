@@ -21,8 +21,7 @@ export class UserMediaResolver implements Resolve<UserViewModel> {
         private userService: UserService) {
     }
 
-    public resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot)
-        : UserViewModel | Observable<UserViewModel> | Promise<UserViewModel> {
+    public resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<UserViewModel> {
         const username = route.paramMap.get('username');
         const userMedia = new UserMediaViewModel();
 

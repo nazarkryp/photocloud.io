@@ -49,7 +49,7 @@
             </a>
             <app-caption caption="{{media.caption}}"></app-caption>
         </div>
-        <div class="media-item-comments" *ngIf="media.commentsCount">
+        <div class="media-item-comments" [hidden]="!media.commentsCount">
             <app-comments #commentsComponent [media]="media"></app-comments>
         </div>
         <div class="media-item-date">

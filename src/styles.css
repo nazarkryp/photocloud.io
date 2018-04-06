@@ -153,7 +153,24 @@ a {
     color: rgb(0, 0, 0, .85);
 }
 
-.primary {
+a.primary {
+    color: #e91e63;
+    cursor: pointer;
+    font-weight: normal;
+}
+
+a.link,
+a.hashtag,
+a.mention {
+    color: #053569;
+    cursor: pointer;
+    font-weight: normal;
+    font-weight: 600;
+}
+
+a.link:hover,
+a.mention:hover,
+a.hashtag:hover {
     color: #e91e63;
 }
 
