@@ -48,6 +48,7 @@
 }
 
 .search-result-last-active {
+    margin: 0 auto 0 0;
     color: rgba(0, 0, 0, .65);
     font-weight: normal;
     font-size: .9em;

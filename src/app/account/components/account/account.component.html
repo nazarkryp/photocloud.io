@@ -1,3 +1,12 @@
-<div fxLayout="row">
-    <h1>Account Component</h1>
+<div class="account-content" fxLayout="column" fxLayoutAlign="center center">
+    <div>
+        <div class="account-logo" fxLayout="row" fxLayoutAlign="center center">
+            <span class="photo">Photo</span>
+            <span class="cloud">Cloud</span>
+        </div>
+        <div class="account-form" [ngClass]="{ 'loading' : isLoading }">
+            <div class="overlay"></div>
+            <router-outlet></router-outlet>
+        </div>
+    </div>
 </div>

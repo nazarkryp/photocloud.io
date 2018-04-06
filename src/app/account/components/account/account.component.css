@@ -1,0 +1,102 @@
+.account-content {
+    min-height: calc(100vh);
+    box-sizing: border-box;
+    margin: -3rem 0;
+    padding: 3rem 0 6rem;
+}
+
+::ng-deep .account-content * {
+    font-family: 'Roboto', sans-serif;
+}
+
+@media screen and (max-width: 400px) {
+    .account-content {
+        background: white;
+    }
+    .account-form {
+        width: 100vw;
+    }
+}
+
+@media screen and (min-width: 401px) {
+    .account-form {
+        width: 400px;
+        border-radius: 2px;
+        box-shadow: 0 3px 8px -3px rgba(0, 0, 0, 0.26);
+    }
+    .account-content {
+        background: linear-gradient(110deg, #ffffff 60%, #fafafa 60%);
+    }
+}
+
+.account-logo {
+    padding-bottom: 2.4rem;
+    font-weight: 900;
+}
+
+.account-logo .photo {
+    font-size: 2em;
+}
+
+.account-logo .cloud {
+    font-size: 3em;
+    color: #e91e63;
+}
+
+.account-form {
+    position: relative;
+    min-height: 380px;
+    box-sizing: border-box;
+    font-size: .9em;
+    background: white;
+    padding: .75rem;
+}
+
+::ng-deep .form-header {
+    padding: 0 0 .7rem 0;
+}
+
+::ng-deep .form-header .form-title {
+    color: rgb(0, 0, 0, .85);
+    font-size: 1em;
+    font-weight: 400;
+    line-height: 2;
+}
+
+.account-form .overlay {
+    z-index: -1;
+    background: #fafafa;
+    opacity: 0;
+    position: absolute;
+    margin: -1.4rem;
+    width: 100%;
+    height: 100%;
+    -webkit-transition: opacity .25s ease-in-out;
+    -moz-transition: opacity .25s ease-in-out;
+    -ms-transition: opacity .25s ease-in-out;
+    -o-transition: opacity .25s ease-in-out;
+    transition: opacity .25s ease-in-out;
+}
+
+.account-form.loading .overlay {
+    z-index: 999;
+    opacity: 0.5;
+}
+
+.disabled {
+    color: #9d9d9d;
+}
+
+.error-message {
+    color: #e91f63;
+    text-align: center;
+}
+
+.form-field .btn-icon {
+    color: #9d9d9d;
+}
+
+.form-field:focus-within .btn-icon,
+.form-field .mat-icon.btn-icon:hover {
+    color: #e91e63;
+}

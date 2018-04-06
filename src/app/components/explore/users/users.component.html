@@ -12,7 +12,7 @@
                 <div class="search-result-user-details" fxLayout="row" fxLayoutAlign="space-between start" fxFlex>
                     <div fxLayout="column">
                         <a class="search-result-username" [routerLink]="['/', user.username]">{{user.username}}</a>
-                        <span class="search-result-last-active" *ngIf="user.lastActive">{{user.lastActive | timeAgo | lowercase}}</span>
+                        <span class="search-result-last-active" *ngIf="user.lastActive" matTooltip="{{user.lastActive | date:'fullDate'}}" matTooltipPosition="after">{{user.lastActive | timeAgo | lowercase}}</span>
                     </div>
                     <div fxLayout="row" fxLayoutAlign="center end">
                         <button class="btn-relationships" mat-button (click)="modifyRelationship(user)" [disabled]="modifying[user.id]" *ngIf="currentUser && currentUser.isActive && currentUser.id !== user.id">

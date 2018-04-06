@@ -18,7 +18,7 @@ export class AuthenticationErrorFilter implements HttpErrorFilter {
         if (response.status === HttpStatusCode.Unauthorized) {
             debugger;
             if (this.currentUserService.canSignInWithCode) {
-                this.router.navigateByUrl('/account/autologin');
+                this.router.navigateByUrl('/account/restore');
             } else {
                 const currentUser = this.currentUserService.retrieveCurrentUser();
                 const clearUserData = !currentUser.isRemembered;

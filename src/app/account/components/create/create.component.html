@@ -1,84 +1,79 @@
-<div class="signup-content" fxLayout="column" fxLayoutAlign="center center" @content>
-    <div>
-        <div style="padding-bottom: 3.4rem;" fxLayout="row" fxLayoutAlign="center center">
-            <span style="font-size: 2em; font-weight: bold;">Photo</span>
-            <span style="font-size: 3em; font-weight: bold; color: #e91e63;">Cloud</span>
+<div @content>
+    <form class="form" fxLayout="column" [formGroup]="formGroup" (ngSubmit)="createAccount()" novalidate>
+        <div class="form-header" fxLayout="column">
+            <span class="form-title">Create account to see photos and videos from your friends or
+                <a class="primary" routerLink="/account/signin" *ngIf="!formGroup.disabled">Sign In</a>
+                <span class="disabled" *ngIf="formGroup.disabled">Sign In</span> if already have one
+            </span>
         </div>
-        <form class="signup-form" fxLayout="column" [formGroup]="formGroup" (ngSubmit)="createAccount()" novalidate>
-            <div class="form-header" fxLayout="column">
-                <span class="form-title">Create account to see photos and videos from your friends or
-                    <a class="primary" routerLink="/account/signin" *ngIf="!formGroup.disabled">Sign In</a>
-                    <span class="disabled" *ngIf="formGroup.disabled">Sign In</span> if already have one
-                </span>
+        <mat-form-field class="form-field">
+            <input formControlName="username" appAutoFocus matInput placeholder="Username" type="text" autocomplete="off" spellcheck="false" [errorStateMatcher]="errorStateMatcher">
+            <div matSuffix>
+                <mat-icon class="primary" matSuffix *ngIf="username.getError('unique')">clear</mat-icon>
+                <mat-icon class="success" matSuffix *ngIf="username.valid">check</mat-icon>
+                <mat-spinner [diameter]="20" [strokeWidth]="2" color="primary" *ngIf="username?.isValidating"></mat-spinner>
             </div>
-            <mat-form-field class="form-field">
-                <input formControlName="username" appAutoFocus matInput placeholder="Username" type="text" autocomplete="off" spellcheck="false" [errorStateMatcher]="errorStateMatcher">
-                <div matSuffix>
-                    <mat-icon class="primary" matSuffix *ngIf="username.getError('unique')">clear</mat-icon>
-                    <mat-icon class="success" matSuffix *ngIf="username.valid">check</mat-icon>
-                    <mat-spinner [diameter]="20" [strokeWidth]="2" color="primary" *ngIf="username?.isValidating"></mat-spinner>
-                </div>
-                <mat-error *ngIf="username.getError('required')  && !username.getError('pattern')">
-                    Username is required
-                </mat-error>
-                <mat-error *ngIf="username.getError('minlength') && !username.getError('pattern')">
-                    Username must be at least {{username.errors.minlength.requiredLength}}
-                </mat-error>
-                <mat-error *ngIf="username.getError('pattern')">
-                    Username can contain only letters and numbers
-                </mat-error>
-                <mat-error *ngIf="username.getError('unique')">
-                    User with such name already exists
-                </mat-error>
-            </mat-form-field>
-            <mat-form-field class="form-field">
-                <input formControlName="email" #emailInput matInput placeholder="E-mail address" type="email" autocomplete="off" spellcheck="false" [errorStateMatcher]="errorStateMatcher">
-                <div matSuffix>
-                    <mat-icon class="primary" matSuffix *ngIf="email.getError('unique')">clear</mat-icon>
-                    <mat-icon class="success" matSuffix *ngIf="email.valid">check</mat-icon>
-                    <mat-spinner [diameter]="20" [strokeWidth]="2" color="primary" *ngIf="email?.isValidating"></mat-spinner>
-                </div>
-                <mat-error *ngIf="email.getError('required')">
-                    E-mail address is required
-                </mat-error>
-                <mat-error *ngIf="email?.getError('maxlength')">
-                    Email cannot be more than {{username.errors.maxlength.requiredLength}}
-                </mat-error>
-                <mat-error *ngIf="email.getError('pattern')">
-                    Email address is not valid
-                </mat-error>
-                <mat-error *ngIf="email.getError('unique')">
-                    User with such e-mail address already exists
-                </mat-error>
-            </mat-form-field>
-            <mat-form-field class="form-field">
-                <input formControlName="password" #passwordInput matInput placeholder="Password" type="password" autocomplete="off" [errorStateMatcher]="errorStateMatcher">
-                <div matSuffix [ngSwitch]="passwordInput.type === 'password'" *ngIf="!formGroup.disabled">
-                    <mat-icon class="mat-24 btn-icon" [ngClass]="{'disabled' : formGroup.disabled }" tabindex="-1" [appPassword]="passwordInput" appPasswordType="text" matTooltip="Show Password" matTooltipPosition="right"
-                        *ngSwitchCase="true">visibility</mat-icon>
-                    <mat-icon class="mat-24 btn-icon" [ngClass]="{'disabled' : formGroup.disabled }" tabindex="-1" [appPassword]="passwordInput" appPasswordType="password" matTooltip="Hide Password"
-                        matTooltipPosition="right" *ngSwitchCase="false">visibility_off</mat-icon>
-                </div>
-                <mat-error *ngIf="password.getError('required')">
-                    Password is required
-                </mat-error>
-                <mat-error *ngIf="password.getError('minlength')">
-                    Password must contain at least {{password.errors.minlength.requiredLength}} symbols
-                </mat-error>
-            </mat-form-field>
-            <div class="agreements-container">
-                <p>
-                    By signing up you agree to our
-                    <a routerLink="/terms" target="_blank">Terms of Service</a> and
-                    <a routerLink="/privacy" target="_blank">Privacy Policy</a>.
-                </p>
+            <mat-error *ngIf="username.getError('required')  && !username.getError('pattern')">
+                Username is required
+            </mat-error>
+            <mat-error *ngIf="username.getError('minlength') && !username.getError('pattern')">
+                Username must be at least {{username.errors.minlength.requiredLength}}
+            </mat-error>
+            <mat-error *ngIf="username.getError('pattern')">
+                Username can contain only letters and numbers
+            </mat-error>
+            <mat-error *ngIf="username.getError('unique')">
+                User with such name already exists
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field class="form-field">
+            <input formControlName="email" #emailInput matInput placeholder="E-mail address" type="email" autocomplete="off" spellcheck="false" [errorStateMatcher]="errorStateMatcher">
+            <div matSuffix>
+                <mat-icon class="primary" matSuffix *ngIf="email.getError('unique')">clear</mat-icon>
+                <mat-icon class="success" matSuffix *ngIf="email.valid">check</mat-icon>
+                <mat-spinner [diameter]="20" [strokeWidth]="2" color="primary" *ngIf="email?.isValidating"></mat-spinner>
             </div>
-            <div style="margin-top: .7rem;" fxLayout="column" fxLayoutAlign="center center" *ngIf="signUpError">
-                <span class="signup-error-message" *ngFor="let error of formGroup.errors.signUpErrors">{{error}}</span>
+            <mat-error *ngIf="email.getError('required')">
+                E-mail address is required
+            </mat-error>
+            <mat-error *ngIf="email?.getError('maxlength')">
+                Email cannot be more than {{username.errors.maxlength.requiredLength}}
+            </mat-error>
+            <mat-error *ngIf="email.getError('pattern')">
+                Email address is not valid
+            </mat-error>
+            <mat-error *ngIf="email.getError('unique')">
+                User with such e-mail address already exists
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field class="form-field">
+            <input formControlName="password" #passwordInput matInput placeholder="Password" type="password" autocomplete="off" [errorStateMatcher]="errorStateMatcher">
+            <div matSuffix [ngSwitch]="passwordInput.type === 'password'" *ngIf="!formGroup.disabled">
+                <mat-icon class="mat-24 btn-icon" [ngClass]="{'disabled' : formGroup.disabled }" tabindex="-1" [appPassword]="passwordInput" appPasswordType="text" matTooltip="Show Password" matTooltipPosition="right"
+                    *ngSwitchCase="true">visibility</mat-icon>
+                <mat-icon class="mat-24 btn-icon" [ngClass]="{'disabled' : formGroup.disabled }" tabindex="-1" [appPassword]="passwordInput" appPasswordType="password" matTooltip="Hide Password" matTooltipPosition="right"
+                    *ngSwitchCase="false">visibility_off</mat-icon>
             </div>
-            <div style="margin-top: .7rem;">
-                <button type="submit" style="width: 100%;" mat-raised-button color="primary" [disabled]="formGroup.disabled">CREATE ACCOUNT</button>
-            </div>
-        </form>
-    </div>
+            <mat-error *ngIf="password.getError('required')">
+                Password is required
+            </mat-error>
+            <mat-error *ngIf="password.getError('minlength')">
+                Password must contain at least {{password.errors.minlength.requiredLength}} symbols
+            </mat-error>
+        </mat-form-field>
+        <div class="agreements-container">
+            <p>
+                By signing up you agree to our
+                <a routerLink="/terms" target="_blank">Terms of Service</a> and
+                <a routerLink="/privacy" target="_blank">Privacy Policy</a>.
+            </p>
+        </div>
+        <div style="margin-top: .7rem;" fxLayout="column" fxLayoutAlign="center center" *ngIf="signUpError">
+            <span class="signup-error-message" *ngFor="let error of formGroup.errors.signUpErrors">{{error}}</span>
+        </div>
+        <div style="margin-top: .7rem;">
+            <button type="submit" style="width: 100%;" mat-raised-button color="primary" [disabled]="formGroup.disabled">CREATE ACCOUNT</button>
+        </div>
+    </form>
+
 </div>

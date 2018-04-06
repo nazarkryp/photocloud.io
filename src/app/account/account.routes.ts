@@ -12,31 +12,44 @@ import { EditResolver } from 'app/account/services/resolvers';
 export const AccountRoutes: Routes = [
     {
         path: '',
-        redirectTo: 'edit',
-        data: {
-            title: 'PhotoCloud - Edit Account'
-        }
-    },
-    {
-        path: 'create',
-        component: CreateComponent,
-        data: {
-            title: 'PhotoCloud - Create Account'
-        }
-    },
-    {
-        path: 'signin',
-        component: SignInComponent,
-        data: {
-            title: 'PhotoCloud - Sign In'
-        }
-    },
-    {
-        path: 'recover',
-        component: RecoverComponent,
-        data: {
-            title: 'PhotoCloud - Reset Password'
-        }
+        component: AccountComponent,
+        children: [
+            {
+                path: 'create',
+                component: CreateComponent,
+                data: {
+                    title: 'PhotoCloud - Create Account'
+                }
+            },
+            {
+                path: 'signin',
+                component: SignInComponent,
+                data: {
+                    title: 'PhotoCloud - Sign In'
+                }
+            },
+            {
+                path: 'recover',
+                component: RecoverComponent,
+                data: {
+                    title: 'PhotoCloud - Reset Password'
+                }
+            },
+            {
+                path: 'restore',
+                component: AutoLoginComponent,
+                data: {
+                    title: 'PhotoCloud - Login'
+                }
+            },
+            {
+                path: 'signin/:code',
+                component: AutoLoginComponent,
+                data: {
+                    title: 'PhotoCloud - Authenticating'
+                }
+            }
+        ]
     },
     {
         path: 'edit',
@@ -47,19 +60,61 @@ export const AccountRoutes: Routes = [
         data: {
             title: 'PhotoCloud - Edit Account'
         }
-    },
-    {
-        path: 'autologin',
-        component: AutoLoginComponent,
-        data: {
-            title: 'PhotoCloud - Login'
-        }
-    },
-    {
-        path: 'signin/:code',
-        component: AutoLoginComponent,
-        data: {
-            title: 'PhotoCloud - Authenticating'
-        }
     }
 ];
+
+
+// export const AccountRoutes: Routes = [
+//     {
+//         path: '',
+//         redirectTo: 'edit',
+//         data: {
+//             title: 'PhotoCloud - Edit Account'
+//         }
+//     },
+//     {
+//         path: 'create',
+//         component: CreateComponent,
+//         data: {
+//             title: 'PhotoCloud - Create Account'
+//         }
+//     },
+//     {
+//         path: 'signin',
+//         component: SignInComponent,
+//         data: {
+//             title: 'PhotoCloud - Sign In'
+//         }
+//     },
+//     {
+//         path: 'recover',
+//         component: RecoverComponent,
+//         data: {
+//             title: 'PhotoCloud - Reset Password'
+//         }
+//     },
+//     {
+//         path: 'edit',
+//         component: EditComponent,
+//         resolve: {
+//             account: EditResolver
+//         },
+//         data: {
+//             title: 'PhotoCloud - Edit Account'
+//         }
+//     },
+//     {
+//         path: 'autologin',
+//         component: AutoLoginComponent,
+//         data: {
+//             title: 'PhotoCloud - Login'
+//         }
+//     },
+//     {
+//         path: 'signin/:code',
+//         component: AutoLoginComponent,
+//         data: {
+//             title: 'PhotoCloud - Authenticating'
+//         }
+//     }
+// ];
