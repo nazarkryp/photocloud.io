@@ -34,10 +34,10 @@ export class AutoLoginComponent implements OnInit {
         this.route.paramMap.subscribe(param => {
             const code = param.get('code');
 
-            if (code) {
-                this.currentUser = null;
-                this.continue(code);
-            }
+            // if (code) {
+            //     this.currentUser = null;
+            //     this.continue(code);
+            // }
         });
     }
 }

@@ -1,12 +1,9 @@
-<div fxLayout="column" fxLayoutAlign="center center" style="background: white; box-shadow: 0 3px 8px -3px rgba(0, 0, 0, 0.26); border-radius: 2px; padding: 2rem 1.4rem;">
-    <h1 style="padding-bottom: 2rem; font-weight: lighter; font-family: 'Roboto', sans-serif;">Welcome back, {{currentUser.username}}</h1>
-    <img src="{{currentUser.pictureUri}}" alt="username" style="width: 100px; height: 100px; object-fit: cover; border-radius: 90px;">
+<div fxLayout="column" fxLayoutAlign="center center" style="height: 100%;">
+    <img src="{{currentUser?.pictureUri}}" default="assets/images/user-default-image.png" alt="username" style="width: 100px; height: 100px; object-fit: cover; border-radius: 90px;">
     <div style="margin-top: 2rem;">
-        <button mat-raised-button color="primary" (click)="continue()">Continue</button>
+        <button mat-raised-button color="primary" (click)="continue()">Continue as {{currentUser?.username}}</button>
     </div>
     <div style="margin-top: 2rem;">
-        <span>Not {{currentUser.username}}?
-            <a style="color: #e91e63; cursor: pointer;" (click)="logout()">Switch account</a>
-        </span>
+        <a style="color: #e91e63; cursor: pointer;" (click)="logout()">Sign in with another account</a>
     </div>
 </div>

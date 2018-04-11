@@ -1,7 +1,7 @@
 header.toolbar {
     background: white;
     /* border-bottom: 1px solid #ebebeb; */
-    box-shadow: 0 3px 8px -4px rgba(0, 0, 0, 0.26);
+    /* box-shadow: 0 3px 8px -4px rgba(0, 0, 0, 0.26); */
     padding: 1.4rem .7rem;
     min-height: 64px;
     position: fixed;

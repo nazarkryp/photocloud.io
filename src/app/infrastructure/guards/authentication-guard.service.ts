@@ -17,6 +17,10 @@ export class AuthenticationGuardService implements CanActivate {
         const currentUser = this.currentUserService.retrieveCurrentUser();
         const isAuthenticated = this.currentUserService.isAuthenticated;
 
+        if (state.url === '/account/restore') {
+            return true;
+        }
+
         if ((currentUser && !isAuthenticated) && state.url !== '/account/signin') {
             this.router.navigateByUrl('/account/signin');
             return false;

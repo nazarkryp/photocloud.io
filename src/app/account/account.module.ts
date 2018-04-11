@@ -23,6 +23,7 @@ import { EditResolver } from 'app/account/services/resolvers';
 import { FileUploadModule } from 'ng2-file-upload';
 import { PasswordDirective } from './directives/password.directive';
 import { AccountComponent } from './components/account/account.component';
+import { LoadingService } from './services/loading.service';
 
 @NgModule({
     imports: [
@@ -48,7 +49,8 @@ import { AccountComponent } from './components/account/account.component';
         AuthenticationGuardService,
         AccountService,
         EditResolver,
-        UploaderService
+        UploaderService,
+        LoadingService
     ]
 })
 export class AccountModule { }

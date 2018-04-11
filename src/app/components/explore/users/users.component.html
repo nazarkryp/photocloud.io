@@ -8,7 +8,9 @@
         </div>
         <div class="search-results-container" [@listAnimation]="page.data.length">
             <div class="search-result" *ngFor="let user of page.data" fxLayout="row" fxLayoutAlign="start center" style="margin-top:20px;">
-                <img [routerLink]="['/', user.username]" src="{{user.pictureUri}}" default="assets/images/user-default-image.png" alt="profile">
+                <a [routerLink]="['/', user.username]">
+                    <img src="{{user.pictureUri}}" default="assets/images/user-default-image.png" alt="profile">
+                </a>
                 <div class="search-result-user-details" fxLayout="row" fxLayoutAlign="space-between start" fxFlex>
                     <div fxLayout="column">
                         <a class="search-result-username" [routerLink]="['/', user.username]">{{user.username}}</a>

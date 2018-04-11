@@ -4,10 +4,9 @@ import { AbstractControl, FormGroup, FormBuilder, FormControl, Validators } from
 import { trigger, animate, style, transition, animateChild, group, query, stagger } from '@angular/animations';
 
 import { DefaultErrorStateMatcher } from 'app/account/matchers';
+import { LoadingService } from 'app/account/services';
 import { CurrentUserService } from 'app/infrastructure/services/current-user.service';
 import { CurrentUserViewModel } from 'app/models/view';
-
-import { NgProgress } from 'ngx-progressbar';
 
 @Component({
     templateUrl: './signin.component.html',
@@ -31,6 +30,7 @@ export class SignInComponent implements OnInit {
     public formGroup: FormGroup;
     public signInError: string;
     public currentUser: CurrentUserViewModel;
+    public tabIndex = 1;
 
     public get username(): AbstractControl {
         return this.formGroup.get('username');
@@ -47,7 +47,7 @@ export class SignInComponent implements OnInit {
     constructor(
         private router: Router,
         private builder: FormBuilder,
-        private progress: NgProgress,
+        private loadingService: LoadingService,
         private currentUserService: CurrentUserService) {
         this.formGroup = this.builder.group({
             username: new FormControl('',
@@ -65,18 +65,30 @@ export class SignInComponent implements OnInit {
     public signIn() {
         if (this.formGroup.valid) {
             this.signInError = null;
-            this.progress.start();
-            this.formGroup.disable();
+            this.startLoading();
             this.currentUserService.signIn(this.username.value, this.password.value, this.rememberMe.value)
+                .finally(() => {
+                    this.finishLoading();
+                })
                 .subscribe(response => {
                     this.router.navigateByUrl('/');
                 }, error => {
-                    this.formGroup.enable();
-                    this.signInError = 'Sorry, your username or password was incorrect. Please check your username and password';
-                    this.progress.done();
                     this.passwordInput.nativeElement.focus();
+                    this.signInError = 'Sorry, your username or password was incorrect. Please check your username and password';
                 });
         }
+    }
+
+    private startLoading() {
+        this.formGroup.disable();
+        this.loadingService.start();
+        this.tabIndex = -1;
+    }
+
+    private finishLoading() {
+        this.formGroup.enable();
+        this.loadingService.done();
+        this.tabIndex = 1;
     }
 
     public clearCurrentUser() {

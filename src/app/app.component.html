@@ -18,7 +18,7 @@
     </div>
 </mat-sidenav-container>
 
-<div style="z-index: 999; top: auto; right: 0; bottom: 0; left: auto; position: fixed; height: 100px; width: 100%; background-color: rgba(0,0,0,.8);" fxLayout="row" fxLayoutAlign="center center" *ngIf="!currentUser && !initialLoad && renderToolbar && showAuthenticationBar">
+<div style="z-index: 999; top: auto; right: 0; bottom: 0; left: auto; position: fixed; height: 100px; width: 100%; background-color: rgba(0,0,0,.65);" fxLayout="row" fxLayoutAlign="center center" *ngIf="!currentUser && !initialLoad && renderToolbar && showAuthenticationBar">
     <mat-icon class="btn-icon" style="position:absolute; right: .5rem; top: .5rem; color: white;" (click)="hideAuthenticationBar()">clear</mat-icon>
     <div style="width: 960px;" fxLayout="row" fxLayoutAlign="space-between center">
         <div fxLayout="row" fxLayoutAlign="start center">

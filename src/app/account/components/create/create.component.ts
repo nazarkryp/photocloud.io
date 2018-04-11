@@ -3,15 +3,15 @@ import { Router } from '@angular/router';
 import { AbstractControl, FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { trigger, animate, style, transition, animateChild, group, query, stagger } from '@angular/animations';
 
-import { CreateAccountRequestModel } from 'app/account/models/request';
-import { AccountService } from 'app/account/services';
+import { Observable } from 'rxjs/Observable';
+
+import { AccountService, LoadingService } from 'app/account/services';
 import { DefaultErrorStateMatcher } from 'app/account/matchers';
 import { ReactiveFormControl } from 'app/account/models/controls';
+import { CreateAccountRequestModel } from 'app/account/models/request';
 
-import { NgProgress } from 'ngx-progressbar';
-import { Observable } from 'rxjs/Observable';
-import { UserService } from 'app/services';
 import { CurrentUserService } from 'app/infrastructure/services';
+import { UserService } from 'app/services';
 
 const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
@@ -35,6 +35,7 @@ export class CreateComponent {
     public formGroup: FormGroup;
     public errorStateMatcher = new DefaultErrorStateMatcher();
     public signUpError: string;
+    public tabIndex = 1;
 
     public get username(): ReactiveFormControl {
         return this.formGroup.get('username') as ReactiveFormControl;
@@ -60,8 +61,8 @@ export class CreateComponent {
         private router: Router,
         private builder: FormBuilder,
         private currentUserService: CurrentUserService,
-        private userService: UserService,
-        private progress: NgProgress) {
+        private loadingService: LoadingService,
+        private userService: UserService) {
         this.formGroup = this.builder.group({
             username: new ReactiveFormControl('',
                 Validators.compose([
@@ -86,6 +87,18 @@ export class CreateComponent {
                     Validators.minLength(6),
                     Validators.pattern(/^\S*$/)]))
         });
+    }
+
+    private startLoading() {
+        this.formGroup.disable();
+        this.loadingService.start();
+        this.tabIndex = -1;
+    }
+
+    private finishLoading() {
+        this.formGroup.enable();
+        this.loadingService.done();
+        this.tabIndex = 1;
     }
 
     public validateUsername(reactiveFormControl: ReactiveFormControl): Promise<{ [key: string]: any; }> | Observable<{ [key: string]: any; }> {
@@ -116,13 +129,10 @@ export class CreateComponent {
                 this.password.value
             );
 
-            this.progress.start();
-            this.formGroup.disable();
+            this.startLoading();
             this.currentUserService.create(createAccountRequestModel)
                 .finally(() => {
-                    this.progress.done();
-                    this.progress.done();
-                    this.formGroup.enable();
+                    this.finishLoading();
                 })
                 .subscribe(() => {
                     if (createAccountRequestModel.signInOnCreated) {
