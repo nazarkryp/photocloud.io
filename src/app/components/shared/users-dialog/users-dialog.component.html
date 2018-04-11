@@ -3,6 +3,9 @@
         <h1>{{title}}</h1>
         <mat-icon class="btn-icon mat-18" (click)="close()" tabindex="-1">clear</mat-icon>
     </div>
+    <!-- <div class="search-box">
+        <input type="text" placeholder="Search" autocomplete="off" spellcheck="false">
+    </div> -->
     <div class="user-items">
         <div class="user-items-empty-container" fxLayout="row" fxLayoutAlign="center center" *ngIf="page.data?.length === 0">
             <mat-spinner [diameter]="50" [strokeWidth]="3" *ngIf="isLoading"></mat-spinner>
@@ -22,7 +25,6 @@
                         </button>
                     </div>
                 </div>
-                <!-- <mat-divider *ngIf="index !== page.data.length - 1"></mat-divider> -->
             </div>
         </div>
         <div fxLayout="row" fxLayoutAlign="center center" *ngIf="page.hasMoreItems" style="padding: .7rem; background: white;">

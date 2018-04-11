@@ -7,10 +7,24 @@
 }
 
 .users-container .users-title {
-    padding: 1rem .75rem .75rem .75rem;
-    border-bottom: 1px solid #f2f2f2;
-    background: white;
-    background: #fafafa;
+    padding: .75rem;
+    /* border-bottom: 1px solid #f2f2f2; */
+}
+
+.users-container .search-box {
+    padding: .75rem;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.users-container .search-box input {
+    box-sizing: border-box;
+    width: 100%;
+    border: none;
+    /* border-radius: 2px; */
+    padding: .7rem;
+    outline: none;
+    background: rgb(240, 240, 240);
 }
 
 .users-container .users-title h1 {
@@ -65,6 +79,7 @@
     height: 100%;
     overflow-y: scroll;
     position: relative;
+    border-top: 1px solid #efefef;
 }
 
 .user-item {
@@ -73,6 +88,10 @@
     position: relative;
     border-bottom: 1px solid #efefef;
 }
+
+/* .user-items::-webkit-scrollbar {
+    display: none;
+} */
 
 /* .user-item:hover {
     background: #fefefe;

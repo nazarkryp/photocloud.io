@@ -6,9 +6,9 @@ function _window(): Window {
 }
 
 @Directive({
-    selector: '[appScroll]'
+    selector: '[appInfiniteScroll]'
 })
-export class ScrollDirective {
+export class InfiniteScrollDirective {
     private previousOffset: number;
 
     @Input()
