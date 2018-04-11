@@ -1,0 +1,23 @@
+.auto-login-container {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    margin: -.7rem;
+}
+
+.auto-login-container h1 {
+    padding-bottom: 1.4rem;
+}
+
+.auto-login-container img {
+    margin-bottom: 2.4rem;
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 90px;
+}
+
+.auto-login-container a,
+.auto-login-container button {
+    margin-bottom: 1.4rem;
+}

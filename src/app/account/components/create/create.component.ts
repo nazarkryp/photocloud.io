@@ -131,9 +131,6 @@ export class CreateComponent {
 
             this.startLoading();
             this.currentUserService.create(createAccountRequestModel)
-                .finally(() => {
-                    this.finishLoading();
-                })
                 .subscribe(() => {
                     if (createAccountRequestModel.signInOnCreated) {
                         this.router.navigateByUrl('/');
@@ -141,6 +138,7 @@ export class CreateComponent {
                         this.router.navigateByUrl('/account/signin');
                     }
                 }, (errorResponse) => {
+                    this.finishLoading();
                     this.signUpError = errorResponse.error.error.modelState;
                 });
         }

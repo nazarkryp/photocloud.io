@@ -113,6 +113,10 @@ const routes: Routes = [
         data: {
             title: 'PhotoCloud - Discover People'
         }
+    },
+    {
+        path: '**',
+        redirectTo: '404'
     }
 ];
 

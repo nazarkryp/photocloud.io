@@ -87,6 +87,16 @@ export class TokenProvider {
         return true;
     }
 
+    public get hasCode(): boolean {
+        const accessToken = this.retrieveAccessToken();
+
+        if (!accessToken) {
+            return false;
+        }
+
+        return accessToken.code != null || accessToken.code !== undefined;
+    }
+
     public removeAccessToken() {
         this.storageService.removeItem(this.tokenStorageKey);
         this.accessToken = null;

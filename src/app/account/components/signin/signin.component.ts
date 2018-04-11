@@ -67,12 +67,10 @@ export class SignInComponent implements OnInit {
             this.signInError = null;
             this.startLoading();
             this.currentUserService.signIn(this.username.value, this.password.value, this.rememberMe.value)
-                .finally(() => {
-                    this.finishLoading();
-                })
                 .subscribe(response => {
                     this.router.navigateByUrl('/');
                 }, error => {
+                    this.finishLoading();
                     this.passwordInput.nativeElement.focus();
                     this.signInError = 'Sorry, your username or password was incorrect. Please check your username and password';
                 });

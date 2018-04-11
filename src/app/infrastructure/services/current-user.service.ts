@@ -175,4 +175,8 @@ export class CurrentUserService {
     public get isAuthenticated(): boolean {
         return this.tokenProvider.isTokenValid;
     }
+
+    public get hasCode(): boolean {
+        return this.tokenProvider.hasCode;
+    }
 }

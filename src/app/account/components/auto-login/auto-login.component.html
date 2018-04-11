@@ -1,9 +1,6 @@
-<div fxLayout="column" fxLayoutAlign="center center" style="height: 100%;">
-    <img src="{{currentUser?.pictureUri}}" default="assets/images/user-default-image.png" alt="username" style="width: 100px; height: 100px; object-fit: cover; border-radius: 90px;">
-    <div style="margin-top: 2rem;">
-        <button mat-raised-button color="primary" (click)="continue()">Continue as {{currentUser?.username}}</button>
-    </div>
-    <div style="margin-top: 2rem;">
-        <a style="color: #e91e63; cursor: pointer;" (click)="logout()">Sign in with another account</a>
-    </div>
+<div class="auto-login-container" fxLayout="column" fxLayoutAlign="center center">
+    <h1>Welcome back</h1>
+    <img src="{{currentUser?.pictureUri}}" default="assets/images/user-default-image.png" alt="username">
+    <button mat-raised-button color="primary" (click)="continue()">Continue as {{currentUser?.username}}</button>
+    <a style="cursor: pointer;" (click)="logout()">Sign in with another account</a>
 </div>

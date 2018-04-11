@@ -21,7 +21,7 @@
             </mat-menu>
         </div>
     </div>
-    <div mat-ripple class="media-item-content" (click)='play($event)'>
+    <div class="media-item-content" (click)='play($event)'>
         <div class="navigation" fxLayout="row" fxLayoutAlign="space-between center" *ngIf="media.attachments.length > 1">
             <div>
                 <mat-icon class="mat-36" *ngIf="media.activeAttachment > 0" (click)="previous()">chevron_left</mat-icon>
