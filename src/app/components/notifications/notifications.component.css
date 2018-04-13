@@ -1,0 +1,7 @@
+.notifications-container {
+    height: 100%;
+    box-sizing: border-box;
+    overflow-y: hidden;
+    color: rgb(0, 0, 0, .85);
+    background: #fafafa;
+}

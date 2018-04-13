@@ -12,9 +12,9 @@
                                 <a class="incomming-request-username" [routerLink]="['/', user.username]" title="{{user.username}}">{{user.username}}</a>
                                 <a class="incomming-request-fullname" [routerLink]="['/', user.username]" title="{{user.fullName}}">{{user.fullName}}</a>
                             </div>
-                            <div *ngIf="!user.isConfirmed && !user.isRemoved" fxLayout="row" fxLayoutAlign="end start">
+                            <div *ngIf="!user.isAccepted && !user.isRemoved" fxLayout="row" fxLayoutAlign="end start">
                                 <button mat-button (click)="removeIncommingRequest(user)" [disabled]="user.isRemovingIncommingRequest">REMOVE</button>
-                                <button mat-raised-button color="primary" (click)="confirmIncommingRequest(user)" [disabled]="user.isConfirmingIncommingRequest">CONFIRM</button>
+                                <button mat-raised-button color="primary" (click)="acceptIncommingRequest(user)" [disabled]="user.isAcceptingIncommingRequest">ACCEPT</button>
                             </div>
                         </div>
                     </div>
@@ -46,7 +46,7 @@
                                 <a class="incomming-request-fullname" [routerLink]="['/', user.username]" title="{{user.fullName}}">{{user.fullName}}</a>
                             </div>
                             <div fxLayout="row" fxLayoutAlign="end start">
-                                <button mat-icon-button fxLayout="row" fxLayoutAlign="center center" (click)="removeOutgoingRequest(user)" *ngIf="!user.isConfirmed && !user.isRemoved">
+                                <button mat-icon-button fxLayout="row" fxLayoutAlign="center center" (click)="removeOutgoingRequest(user)" *ngIf="!user.isAccepted && !user.isRemoved">
                                     <mat-icon class="mat-18" *ngIf="!user.isRemovingIncommingRequest">clear</mat-icon>
                                     <mat-spinner [strokeWidth]="2" [diameter]="20" *ngIf="user.isRemovingIncommingRequest"></mat-spinner>
                                 </button>

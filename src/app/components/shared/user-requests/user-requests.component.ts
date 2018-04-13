@@ -11,9 +11,9 @@ import { MatTabChangeEvent } from '@angular/material';
 import { CurrentUserService } from 'app/infrastructure/services';
 
 @Component({
-    selector: 'app-notifications',
-    templateUrl: './notifications.component.html',
-    styleUrls: ['./notifications.component.css'],
+    selector: 'app-user-requests',
+    templateUrl: './user-requests.component.html',
+    styleUrls: ['./user-requests.component.css'],
     animations: [
         trigger('enterTransition', [
             transition(':enter', [
@@ -23,7 +23,7 @@ import { CurrentUserService } from 'app/infrastructure/services';
         ])
     ]
 })
-export class NotificationsComponent implements OnInit {
+export class UserRequestsComponent implements OnInit {
     @Output() onClosing: EventEmitter<any> = new EventEmitter<any>();
 
     public currentUser: CurrentUserViewModel;
@@ -98,17 +98,17 @@ export class NotificationsComponent implements OnInit {
             });
     }
 
-    public confirmIncommingRequest(incommingRequest: RequestViewModel) {
-        incommingRequest.isConfirmingIncommingRequest = true;
+    public acceptIncommingRequest(incommingRequest: RequestViewModel) {
+        incommingRequest.isAcceptingIncommingRequest = true;
         this.userService.modifyRelationship(incommingRequest.id, {
             action: RelationshipAction.Approve
         }).finally(() => {
-            incommingRequest.isConfirmingIncommingRequest = true;
+            incommingRequest.isAcceptingIncommingRequest = true;
         }).subscribe(userResult => {
             // const indexToRemove = this.incommingRequestsPage.data.findIndex(e => e.id === incommingRequest.id);
             // this.incommingRequestsPage.data.splice(indexToRemove, 1);
             // this.requestService.updateIncommingRequestsCount(this.incommingRequestsPage.data.length);
-            incommingRequest.isConfirmed = true;
+            incommingRequest.isAccepted = true;
         });
     }
 

@@ -14,3 +14,4 @@ export { UserMediaViewModel } from './user-media.model';
 export { UpdateAttachmentViewModel } from './update-attachment.model';
 export { RequestViewModel } from './incomming-request.model';
 export { CountersViewModel } from './counters.model';
+export { ActivityViewModel } from './activity.model';

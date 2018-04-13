@@ -1,8 +1,8 @@
 import { UserViewModel } from './user.model';
 
 export class RequestViewModel extends UserViewModel {
-    public isConfirmingIncommingRequest = false;
+    public isAcceptingIncommingRequest = false;
     public isRemovingIncommingRequest = false;
-    public isConfirmed = false;
+    public isAccepted = false;
     public isRemoved = false;
 }

@@ -1,4 +1,4 @@
-<header class="toolbar" [ngClass]="{ 'scrolled' : scrolled, 'hidden' : scrolledDown }" fxLayout="column" fxLayoutAlign="center center" appHeaderScroll (scrollPosition)="onPositionChange($event)" (scrollDirection)="onScrollDirectionChange($event)">
+<header class="toolbar" [ngClass]="{ 'scrolled' : scrolled, 'hidden' : scrolledDown }" fxLayout="row" fxLayoutAlign="center center" appHeaderScroll (scrollPosition)="onPositionChange($event)" (scrollDirection)="onScrollDirectionChange($event)">
     <div class="mat-toolbar-layout">
         <div fxLayout="row" fxLayoutAlign="space-between center">
             <div fxLayout="row" fxLayoutAlign="start center" fxFlex>

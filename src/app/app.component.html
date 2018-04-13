@@ -4,7 +4,7 @@
 </div>
 <mat-sidenav-container class="sidenav-container">
     <mat-sidenav style="overflow-y: hidden;" #notificationsSidenav align="end">
-        <app-notifications (onClosing)="closeNotifications($event)" *ngIf="notificationsSidenav.opened"></app-notifications>
+        <app-user-requests (onClosing)="closeNotifications($event)" *ngIf="notificationsSidenav.opened"></app-user-requests>
     </mat-sidenav>
     <div class="my-content" fxLayout="column">
         <div>

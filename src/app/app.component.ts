@@ -1,7 +1,7 @@
 import { Component, ViewChild, OnInit, OnDestroy, ViewEncapsulation } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router, NavigationEnd, NavigationStart, NavigationCancel, ResolveStart, ResolveEnd } from '@angular/router';
-import { MatSidenav } from '@angular/material';
+import { MatSidenav, MatDialog } from '@angular/material';
 import { trigger, transition, style, animate } from '@angular/animations';
 
 import { CurrentUserService } from 'app/infrastructure/services';
@@ -9,6 +9,7 @@ import { CurrentUserService } from 'app/infrastructure/services';
 import { NgProgress } from 'ngx-progressbar';
 import { RequestsService } from 'app/services';
 import { CurrentUserViewModel } from 'app/models/view';
+import { NotificationsComponent } from './components/notifications/notifications.component';
 
 @Component({
     selector: 'app-root',
@@ -26,6 +27,7 @@ export class AppComponent implements OnInit {
 
     constructor(
         private router: Router,
+        private dialog: MatDialog,
         private currentUserService: CurrentUserService,
         private progress: NgProgress,
         private incommingRequestsService: RequestsService) {
@@ -37,7 +39,13 @@ export class AppComponent implements OnInit {
     }
 
     public openNotifications($event: boolean) {
-        this.notificationsSidenav.open();
+        this.dialog.open(NotificationsComponent, {
+            width: '400px',
+            height: '75vh'
+        });
+
+        // this.notificationsSidenav.open();
+
     }
 
     public closeNotifications($event: any) {

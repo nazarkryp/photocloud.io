@@ -34,7 +34,7 @@ import { ErrorBoxComponent } from './components/shared/user-media-error/user-med
 import { CaptionComponent } from './components/shared/caption/caption.component';
 import { TagsComponent } from './components/explore/tags/tags.component';
 import { ConfirmComponent } from './components/shared/confirm/confirm.component';
-import { NotificationsComponent } from './components/shared/notifications/notifications.component';
+import { UserRequestsComponent } from './components/shared/user-requests/user-requests.component';
 import { UsersDialogComponent } from './components/shared/users-dialog/users-dialog.component';
 import { UsersComponent } from './components/explore/users/users.component';
 import { SearchBoxComponent } from './components/shared/search-box/search-box.component';
@@ -62,6 +62,7 @@ import { TermsComponent } from './components/terms/terms.component';
 import { PrivacyComponent } from './components/privacy/privacy.component';
 import { AboutComponent } from './components/about/about.component';
 import { CoreModule, CovalentModule } from 'app/core';
+import { NotificationsComponent } from './components/notifications/notifications.component';
 
 @NgModule({
     declarations: [
@@ -80,7 +81,7 @@ import { CoreModule, CovalentModule } from 'app/core';
         CaptionComponent,
         TagsComponent,
         ConfirmComponent,
-        NotificationsComponent,
+        UserRequestsComponent,
         UsersDialogComponent,
         UsersComponent,
         SearchBoxComponent,
@@ -94,14 +95,16 @@ import { CoreModule, CovalentModule } from 'app/core';
         TermsComponent,
         PrivacyComponent,
         AboutComponent,
-        LinkifyPipe
+        LinkifyPipe,
+        NotificationsComponent
     ],
     entryComponents: [
         MediaDetailsComponent,
         CreateMediaComponent,
         ConfirmComponent,
         UsersDialogComponent,
-        ChangePasswordComponent
+        ChangePasswordComponent,
+        NotificationsComponent
     ],
     imports: [
         BrowserModule,

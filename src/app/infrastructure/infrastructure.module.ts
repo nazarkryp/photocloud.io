@@ -9,7 +9,7 @@ import { HttpErrorHandler } from 'app/infrastructure/configuration';
 import { CurrentUserService } from 'app/infrastructure/services';
 import { LocalStorageService } from 'app/infrastructure/services/storage';
 import { ClipboardService } from 'app/infrastructure/services';
-import { TokenMapper, UserMapper } from 'app/infrastructure/mapping';
+import { TokenMapper, UserMapper, ActivityMapper } from 'app/infrastructure/mapping';
 import { RecentMediaResolver, LikedMediaResolver, UserListResolver, UserMediaResolver } from 'app/infrastructure/resolvers';
 
 import {
@@ -24,6 +24,7 @@ import { IncommingRequestsInterceptor } from 'app/account/services/interceptors/
 
 @NgModule({
     providers: [
+        ActivityMapper,
         AttachmentMapper,
         CommentMapper,
         MediaMapper,
