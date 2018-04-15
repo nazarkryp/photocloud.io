@@ -1,17 +1,24 @@
-<div class="notifications-container" fxLayout="column">
-    <div style="border-bottom: 1px solid #eaeaea; padding: .5rem .7rem;" fxLayout="row" fxLayoutAlign="space-between center">
-        <h3>Notifications</h3>
-        <a style="font-size: .9em; color: rgb(0,0,0,.3)">View all</a>
+<div class="notifications" fxLayout="column">
+    <div>
+        <div class="header" fxLayout="row" fxLayoutAlign="space-between center">
+            <h4>{{title}}</h4>
+            <button mat-icon-button (click)="getNotifications()">
+                <mat-icon class="btn-icon mat-18" [ngClass]="{ 'disabled' : isLoading }" svgIcon="refresh"></mat-icon>
+            </button>
+        </div>
     </div>
-    <div style="padding: .5rem .7rem; overflow-y: scroll;">
-        <div *ngFor="let item of page?.data" fxLayout="row" fxLayoutAlign="start center" style="padding: .7rem 0; width: 100%; border-bottom: 1px solid #eaeaea;">
-            <img style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover;" src="{{item.user.pictureUri}}">
-            <div fxLayout="column" style="color: rgb(0, 0, 0, .65); padding-left: .7rem; font-size: .9em; font-weight: 600; line-height: 1.7;">
+    <div class="items">
+        <div class="notification" *ngFor="let notification of page?.data.slice(0, 4);" fxLayout="row" fxLayoutAlign="start center">
+            <img src="{{notification.user.pictureUri}}">
+            <div class="info" fxLayout="column">
                 <span>
-                    <a style="color: rgb(0, 0, 0, .85); font-weight: bold;" [routerLink]="[ '/', item.user.username]">{{item.user.username}}</a> started following you
+                    <a [routerLink]="[ '/', notification.user.username]">{{notification.user.username}}</a> {{notification.activityType | activity}}
                 </span>
-                <span style="color: rgb(0, 0, 0, .3); text-transform: uppercase; font-size: .9em; font-weight: bold;">{{item.date | timeAgo}}</span>
+                <span class="date" matTooltip="{{notification.date | date:'fullDate'}}" matTooltipPosition="after">{{notification.date | timeAgo}}</span>
             </div>
         </div>
+    </div>
+    <div class="footer" *ngIf="page?.data.length > 4">
+        <button mat-button color="primary" (click)="close($event)">View all notifications</button>
     </div>
 </div>

@@ -1,14 +1,14 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
+import { Page, ActivityViewModel } from 'app/models/view';
 import { ActivityService } from 'app/services';
-import { ActivityViewModel, Page } from 'app/models/view';
 
 @Component({
-    selector: 'app-notifications',
-    templateUrl: './notifications.component.html',
-    styleUrls: ['./notifications.component.css']
+    selector: 'app-activity',
+    templateUrl: './activity.component.html',
+    styleUrls: ['./activity.component.css']
 })
-export class NotificationsComponent implements OnInit {
+export class ActivityComponent implements OnInit {
     public isLoading: boolean;
     public page: Page<ActivityViewModel>;
     @Output() public onOpenAllNotifications: EventEmitter<void> = new EventEmitter<void>();

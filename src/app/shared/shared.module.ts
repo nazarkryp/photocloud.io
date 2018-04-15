@@ -7,6 +7,7 @@ import { EditMediaService, LikeService } from 'app/shared/services';
 import { InfiniteScrollDirective } from './directives/scroll.directive';
 import { AutoFocusDirective } from './directives/autofocus.directive';
 import { HeaderScrollDirective } from './directives/header-scroll.directive';
+import { ClickStopPropagationDirective } from './directives/click-stop-propagation.directive';
 
 @NgModule({
     imports: [
@@ -21,6 +22,7 @@ import { HeaderScrollDirective } from './directives/header-scroll.directive';
         ImagePreviewDirective,
         InfiniteScrollDirective,
         AutoFocusDirective,
+        ClickStopPropagationDirective,
         HeaderScrollDirective
     ],
     exports: [
@@ -29,6 +31,7 @@ import { HeaderScrollDirective } from './directives/header-scroll.directive';
         InfiniteScrollDirective,
         HeaderScrollDirective,
         AutoFocusDirective,
+        ClickStopPropagationDirective,
         CommonModule
     ]
 })

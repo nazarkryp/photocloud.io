@@ -27,6 +27,7 @@ header.toolbar.hidden {
 }
 
 .mat-toolbar-layout {
+    position: relative;
     width: 100%;
     max-width: 960px;
 }
@@ -117,4 +118,18 @@ td-notification-count .btn-icon:hover {
 .logo .cloud {
     font-size: 1.7em;
     font-weight: 800;
+}
+
+::ng-deep .cdk-overlay-container .mat-menu-panel {
+    max-width: 400px;
+    width: 400px;
+}
+
+::ng-deep .cdk-overlay-container .mat-menu-panel .mat-menu-content {
+    margin: 0;
+    padding: 0;
+}
+
+::ng-deep .cdk-overlay-container .mat-menu-panel.mat-elevation-z2 {
+    box-shadow: 0 10px 20px -2px rgba(0, 0, 0, 0.26);
 }

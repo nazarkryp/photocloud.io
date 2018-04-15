@@ -1,0 +1,22 @@
+<div fxLayout="column" fxLayoutAlign="start center">
+    <div class="activity" fxLayout="column" fxLayoutAlign="start center">
+        <div class="header" fxLayout="row" fxLayoutAlign="space-between center">
+            <h1>{{title}}</h1>
+            <a style="cursor: pointer; color: rgb(0, 0, 0, .3)">Clear All</a>
+            <!-- <button mat-icon-button (click)="getactivity()">
+                <mat-icon class="btn-icon mat-18" [ngClass]="{ 'disabled' : isLoading }" svgIcon="refresh"></mat-icon>
+            </button> -->
+        </div>
+        <div class="items">
+            <div class="notification" *ngFor="let notification of page?.data" fxLayout="row" fxLayoutAlign="start center">
+                <img src="{{notification.user.pictureUri}}">
+                <div class="info" fxLayout="column">
+                    <span>
+                        <a [routerLink]="[ '/', notification.user.username]">{{notification.user.username}}</a> {{notification.activityType | activity}}
+                    </span>
+                    <span class="date" matTooltip="{{notification.date | date:'fullDate'}}" matTooltipPosition="after">{{notification.date | timeAgo}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

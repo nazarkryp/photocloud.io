@@ -69,6 +69,7 @@ export class SignInComponent implements OnInit {
             this.currentUserService.signIn(this.username.value, this.password.value, this.rememberMe.value)
                 .subscribe(response => {
                     this.router.navigateByUrl('/');
+                    this.finishLoading();
                 }, error => {
                     this.finishLoading();
                     this.passwordInput.nativeElement.focus();

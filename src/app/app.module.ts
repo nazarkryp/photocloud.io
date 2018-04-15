@@ -63,6 +63,8 @@ import { PrivacyComponent } from './components/privacy/privacy.component';
 import { AboutComponent } from './components/about/about.component';
 import { CoreModule, CovalentModule } from 'app/core';
 import { NotificationsComponent } from './components/notifications/notifications.component';
+import { ActivityPipe } from './pipes/activity.pipe';
+import { ActivityComponent } from './components/activity/activity.component';
 
 @NgModule({
     declarations: [
@@ -96,7 +98,9 @@ import { NotificationsComponent } from './components/notifications/notifications
         PrivacyComponent,
         AboutComponent,
         LinkifyPipe,
-        NotificationsComponent
+        NotificationsComponent,
+        ActivityPipe,
+        ActivityComponent
     ],
     entryComponents: [
         MediaDetailsComponent,

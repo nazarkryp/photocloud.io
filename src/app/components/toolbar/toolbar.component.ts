@@ -1,13 +1,14 @@
-import { AfterViewInit, AfterViewChecked, Component, Input, Output, EventEmitter, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { AfterViewInit, AfterViewChecked, Component, Input, Output, EventEmitter, OnInit, OnDestroy, ChangeDetectorRef, ViewChild } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 
 import { CurrentUserService } from 'app/infrastructure/services';
 import { AccountService } from 'app/account/services';
-import { CurrentUserViewModel } from 'app/models/view';
-import { RequestsService } from 'app/services';
+import { CurrentUserViewModel, Page, ActivityViewModel } from 'app/models/view';
+import { RequestsService, ActivityService } from 'app/services';
 import { Uploader } from 'app/core/services';
 import { ScrollDirection } from 'app/shared/directives/header-scroll.directive';
+import { MatMenuTrigger } from '@angular/material';
 
 @Component({
     selector: 'app-toolbar',
@@ -25,6 +26,10 @@ export class ToolbarComponent implements OnInit, OnDestroy, AfterViewChecked, Af
     public scrolled: boolean;
     public scrolledDown: boolean;
     @Output() public openNotificationsEvent = new EventEmitter<boolean>();
+
+    public notifications: Page<ActivityViewModel>;
+
+    @ViewChild(MatMenuTrigger) public trigger: MatMenuTrigger;
 
     constructor(
         private cd: ChangeDetectorRef,
@@ -74,7 +79,9 @@ export class ToolbarComponent implements OnInit, OnDestroy, AfterViewChecked, Af
     }
 
     public openNotifications() {
-        this.openNotificationsEvent.emit(true);
+        this.trigger.closeMenu();
+        this.router.navigate(['activity']);
+        // this.openNotificationsEvent.emit(true);
     }
 
     public ngOnInit(): void {

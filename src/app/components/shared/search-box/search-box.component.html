@@ -4,7 +4,7 @@
         aria-label="UserViewModel">
     <mat-spinner class="search-box-spinner" [strokeWidth]="2" [diameter]="25" *ngIf="isSearching"></mat-spinner>
     <button class="search-box-icon-button" mat-icon-button *ngIf="searchQuery && !isSearching" (click)="clear()">
-        <mat-icon>clear</mat-icon>
+        <mat-icon class="mat-18">clear</mat-icon>
     </button>
     <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onSelectionChanged($event)">
         <mat-option *ngFor="let user of users | async" [value]="user.username">
