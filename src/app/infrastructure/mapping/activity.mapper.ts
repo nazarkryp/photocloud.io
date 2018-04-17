@@ -1,14 +1,17 @@
 import { Injectable } from '@angular/core';
 
-import { UserMapper } from 'app/infrastructure/mapping/user.mapper';
+import { UserMapper } from './user.mapper';
+import { MediaMapper } from './media.mapper';
+import { IMapper } from './mapper';
+
 
 import { ActivityResponse } from 'app/models/response';
 import { ActivityViewModel } from 'app/models/view';
-import { IMapper } from './mapper';
 
 @Injectable()
 export class ActivityMapper implements IMapper<ActivityResponse, ActivityViewModel> {
     constructor(
+        private mediaMapper: MediaMapper,
         private userMapper: UserMapper) { }
 
     public mapFromResponseArray(responseArray: ActivityResponse[]): ActivityViewModel[] {
@@ -25,6 +28,10 @@ export class ActivityMapper implements IMapper<ActivityResponse, ActivityViewMod
         activity.user = this.userMapper.mapFromResponse(response.user);
         activity.activityType = response.activityType;
         activity.date = response.date;
+
+        if (response.media) {
+            activity.media = this.mediaMapper.mapFromResponse(response.media);
+        }
 
         return activity;
     }

@@ -33,27 +33,35 @@
     border-bottom: none;
 }
 
-.notifications .items .notification img {
+.notifications .items .notification .user-thumbnail {
     width: 50px;
     height: 50px;
     border-radius: 50%;
     object-fit: cover;
 }
 
-.notifications .items .notification .info {
+.notifications .items .notification .media-thumbnail {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 2px;
+}
+
+.notifications .items .notification .notification-info {
     color: rgb(0, 0, 0, .65);
     padding-left: .7rem;
     font-size: .9em;
     font-weight: 600;
     line-height: 1.7;
+    width: 100%;
 }
 
-.notifications .items .notification .info a {
+.notifications .items .notification .notification-info a {
     color: rgb(0, 0, 0, .85);
     font-weight: bold;
 }
 
-.notifications .items .notification .info .date {
+.notifications .items .notification .notification-info .date {
     color: rgb(0, 0, 0, .3);
     margin: 0 auto 0 0;
     font-size: .8em;

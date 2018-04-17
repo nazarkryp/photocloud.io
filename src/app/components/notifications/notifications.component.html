@@ -8,13 +8,16 @@
         </div>
     </div>
     <div class="items">
-        <div class="notification" *ngFor="let notification of page?.data.slice(0, 4);" fxLayout="row" fxLayoutAlign="start center">
-            <img src="{{notification.user.pictureUri}}">
-            <div class="info" fxLayout="column">
-                <span>
-                    <a [routerLink]="[ '/', notification.user.username]">{{notification.user.username}}</a> {{notification.activityType | activity}}
-                </span>
-                <span class="date" matTooltip="{{notification.date | date:'fullDate'}}" matTooltipPosition="after">{{notification.date | timeAgo}}</span>
+        <div class="notification" *ngFor="let notification of page?.data.slice(0, 4);" fxLayout="row" fxLayoutAlign="start start">
+            <img class="user-thumbnail" src="{{notification.user.pictureUri}}" alt="user-thumbnail">
+            <div class="notification-info" fxLayout="row" fxLayoutAlign="space-between center">
+                <div fxLayout="column">
+                    <span>
+                        <a [routerLink]="[ '/', notification.user.username]">{{notification.user.username}}</a> {{notification.activityType | activity}}
+                    </span>
+                    <span class="date" matTooltip="{{notification.date | date:'fullDate'}}" matTooltipPosition="after">{{notification.date | timeAgo}}</span>
+                </div>
+                <img class="media-thumbnail" src="{{notification.media.attachments[0].uri}}" alt="media-thumbnail" *ngIf="notification.media">
             </div>
         </div>
     </div>
