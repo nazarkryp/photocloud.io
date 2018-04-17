@@ -21,7 +21,6 @@
 .notifications .items {
     box-sizing: border-box;
     padding: 0 .7rem 0rem;
-    overflow-y: scroll;
 }
 
 .notifications .items .notification {
