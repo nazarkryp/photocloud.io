@@ -2,8 +2,8 @@
     <app-user-details [user]="userMedia.user"></app-user-details>
     <div style="width: 100%;" *ngIf="!userMedia.error; else errorBox" fxLayout="column" fxLayoutAlign="center center">
         <div class="user-media" *ngIf="userMedia.page?.data?.length; else emptyFeed;" appInfiniteScroll [appScrollTriggerOnce]="true" [scrollOffset]="2000" (scrollPosition)="onPositionChange()">
-            <div *ngFor="let media of userMedia.page?.data;">
-                <div class="user-media-item" (click)="openPostDialog(media)">
+            <a *ngFor="let media of userMedia.page?.data;" (click)="openPostDialog($event, media);">
+                <div class="user-media-item">
                     <img class="user-media-thumbnail" src="{{media?.attachments[0].uri}}" alt="media-image" *ngIf="media?.attachments[0].type !== 1">
                     <video class="user-media-thumbnail" *ngIf="media?.attachments[0].type === 1">
                         <source src="{{media?.attachments[0].uri}}">
@@ -23,7 +23,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </a>
         </div>
         <div fxLayout="row" fxLayoutAlign="center center" *ngIf="userMedia?.page?.hasMoreItems" style="height: 40px;">
             <button class="btn-primary" mat-button (click)="getMedia()" [disabled]="isLoading" *ngIf="!isLoading">Load More</button>

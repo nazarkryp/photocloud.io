@@ -20,9 +20,9 @@ export class ActivityPipe implements PipeTransform {
         } else if (activityType === 6) {
             return 'removed you from black list. Now you can follow him';
         } else if (activityType === 7) {
-            return 'commented your post';
+            return 'commented on your post';
         } else if (activityType === 8) {
-            return 'likes your post';
+            return 'liked your post';
         } else {
             return 'unknown';
         }

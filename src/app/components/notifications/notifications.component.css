@@ -5,12 +5,13 @@
     overflow-y: hidden;
     color: rgb(0, 0, 0, .85);
     background: white;
+    position: relative;
 }
 
 .notifications .header {
     box-sizing: border-box;
-    border-bottom: 1px solid #eaeaea;
-    padding: .7rem;
+    /* border-bottom: 1px solid #eaeaea; */
+    padding: .7rem .7rem 1.4rem;
 }
 
 .notifications .header a {

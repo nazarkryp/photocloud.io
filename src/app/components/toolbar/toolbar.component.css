@@ -120,9 +120,18 @@ td-notification-count .btn-icon:hover {
     font-weight: 800;
 }
 
-::ng-deep .cdk-overlay-container .mat-menu-panel {
-    max-width: 400px;
-    width: 400px;
+::ng-deep .cdk-overlay-pane {
+    -webkit-transition: top .1s ease-in-out;
+    -moz-transition: top .1s ease-in-out;
+    -ms-transition: top .1s ease-in-out;
+    -o-transition: top .1s ease-in-out;
+    transition: top .1s ease-in-out;
+    /* top: 64px !important; */
+}
+
+::ng-deep .cdk-overlay-container .mat-menu-panel.notifications-menu {
+    max-width: 350px;
+    width: 350px;
 }
 
 ::ng-deep .cdk-overlay-container .mat-menu-panel .mat-menu-content {
@@ -131,5 +140,5 @@ td-notification-count .btn-icon:hover {
 }
 
 ::ng-deep .cdk-overlay-container .mat-menu-panel.mat-elevation-z2 {
-    box-shadow: 0 10px 20px -2px rgba(0, 0, 0, 0.26);
+    box-shadow: 0 3px 5px -0px rgba(0, 0, 0, 0.26);
 }

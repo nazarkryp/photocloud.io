@@ -14,7 +14,7 @@
 
 <body>
     <app-root>
-        <style>
+        <!-- <style>
             .container {
                 -webkit-animation: animball_two 1s infinite;
                 -moz-animation: animball_two 1s infinite;
@@ -204,6 +204,46 @@
                     <div class="ballcolor ball_4">&nbsp;</div>
                 </div>
             </div>
+        </div> -->
+
+        <style>
+            .loading-container {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                min-height: 100vh;
+                box-sizing: border-box;
+            }
+
+            .loading {
+                max-width: 50%;
+                line-height: 1.4;
+                font-weight: bold;
+                text-align: center;
+            }
+
+            .loading__anim {
+                width: 35px;
+                height: 35px;
+                border: 4px solid rgba(189, 189, 189, 0.25);
+                border-left-color: #e91e63;
+                border-top-color: #e91e63;
+                border-radius: 50%;
+                display: inline-block;
+                animation: rotate 450ms infinite linear;
+            }
+
+            @keyframes rotate {
+                to {
+                    transform: rotate(1turn)
+                }
+            }
+
+        </style>
+        <div class="loading-container">
+            <section class="loading">
+                <div class="loading__anim"></div>
+            </section>
         </div>
     </app-root>
 </body>

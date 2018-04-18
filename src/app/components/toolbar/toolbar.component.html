@@ -1,4 +1,4 @@
-<header class="toolbar" [ngClass]="{ 'scrolled' : scrolled, 'hidden' : scrolledDown }" fxLayout="row" fxLayoutAlign="center center" appHeaderScroll (scrollPosition)="onPositionChange($event)" (scrollDirection)="onScrollDirectionChange($event)">
+<header class="toolbar" [ngClass]="{ 'scrolled' : scrolled, 'hidden' : scrolledDown && !isMenuOpened }" fxLayout="row" fxLayoutAlign="center center" appHeaderScroll (scrollPosition)="onPositionChange($event)" (scrollDirection)="onScrollDirectionChange($event)">
     <div class="mat-toolbar-layout">
         <div fxLayout="row" fxLayoutAlign="space-between center">
             <div fxLayout="row" fxLayoutAlign="start center" fxFlex>
@@ -12,7 +12,7 @@
             </div>
             <div fxFlex fxLayout="row" fxLayoutAlign="end center" *ngIf="!currentUser || !isAuthenticated">
                 <a class="btn-signin" mat-button color="primary" routerLink="/account/signin">
-                    SIGN IN TO PHOTOCLOUD
+                    SIGN IN
                 </a>
             </div>
             <div class="toolbar-actions" fxLayout="row" fxLayoutAlign="end center" fxFlex *ngIf="currentUser && isAuthenticated">
@@ -22,7 +22,7 @@
                 <td-notification-count color="warn" positionX="before" [notifications]="incommingRequestsCount" [matMenuTriggerFor]="notificationsMenu" *ngIf="currentUser.isActive" style="margin: 0;">
                     <mat-icon class="btn-icon mat-36 thin" svgIcon="bell"></mat-icon>
                 </td-notification-count>
-                <mat-menu class="notifications-menu" xPosition="before" #notificationsMenu="matMenu" [overlapTrigger]="false">
+                <mat-menu (menuOpened)="onMenuOpened($event)" class="notifications-menu" xPosition="before" #notificationsMenu="matMenu" [overlapTrigger]="true">
                     <div appClickStopPropagation>
                         <app-notifications (onOpenAllNotifications)="openNotifications($event)"></app-notifications>
                     </div>

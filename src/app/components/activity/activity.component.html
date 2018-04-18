@@ -1,22 +1,32 @@
 <div fxLayout="column" fxLayoutAlign="start center">
-    <div class="activity" fxLayout="column" fxLayoutAlign="start center">
+    <div class="activities" fxLayout="column" fxLayoutAlign="start center">
         <div class="header" fxLayout="row" fxLayoutAlign="space-between center">
-            <h1>{{title}}</h1>
-            <a style="cursor: pointer; color: rgb(0, 0, 0, .3)">Clear All</a>
-            <!-- <button mat-icon-button (click)="getactivity()">
+            <h1>Notifications</h1>
+            <!-- <button mat-icon-button (click)="getactivities()">
                 <mat-icon class="btn-icon mat-18" [ngClass]="{ 'disabled' : isLoading }" svgIcon="refresh"></mat-icon>
             </button> -->
         </div>
-        <div class="items">
-            <div class="notification" *ngFor="let notification of page?.data" fxLayout="row" fxLayoutAlign="start center">
-                <img src="{{notification.user.pictureUri}}">
-                <div class="info" fxLayout="column">
-                    <span>
-                        <a [routerLink]="[ '/', notification.user.username]">{{notification.user.username}}</a> {{notification.activityType | activity}}
-                    </span>
-                    <span class="date" matTooltip="{{notification.date | date:'fullDate'}}" matTooltipPosition="after">{{notification.date | timeAgo}}</span>
+        <div class="items" fxLayout="column" fxLayoutAlign="start center">
+            <div class="activity" *ngFor="let activity of page?.data" fxLayout="row" fxLayoutAlign="start start">
+                <img class="user-thumbnail" src="{{activity.user.pictureUri}}" alt="user-thumbnail" [routerLink]="['/', activity.user.username]">
+                <div class="activity-info" fxLayout="row" fxLayoutAlign="space-between start">
+                    <div fxLayout="column">
+                        <span>
+                            <a [routerLink]="[ '/', activity.user.username]">{{activity.user.username}}</a> {{activity.activityType | activity}}
+                        </span>
+                        <span class="date" matTooltip="{{activity.date | date:'fullDate'}}" matTooltipPosition="after">{{activity.date | timeAgo}}</span>
+                    </div>
+                    <a [ngSwitch]="activity.media.attachments[0].type" *ngIf="activity.media" [routerLink]="['/p/', activity.media.id]">
+                        <img *ngSwitchCase="'0'" class="media-thumbnail" src="{{activity.media.attachments[0].uri}}" alt="media-thumbnail">
+                        <video *ngSwitchCase="'1'" class="media-thumbnail">
+                            <source src="{{activity.media.attachments[0].uri}}">
+                        </video>
+                    </a>
                 </div>
             </div>
+        </div>
+        <div class="footer" *ngIf="page?.hasMoreItems">
+            <button mat-button color="primary" (click)="loadMore($event)">Load More</button>
         </div>
     </div>
 </div>

@@ -16,10 +16,6 @@ export class ActivityComponent implements OnInit {
     constructor(
         private activityService: ActivityService) { }
 
-    public get title(): string {
-        return this.page ? 'Notifications' : (this.isLoading ? 'Loading notifications' : 'You have no notifications');
-    }
-
     public close(event) {
         this.onOpenAllNotifications.next();
     }

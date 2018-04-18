@@ -16,13 +16,12 @@ import { MatMenuTrigger } from '@angular/material';
     styleUrls: ['./toolbar.component.css']
 })
 export class ToolbarComponent implements OnInit, OnDestroy, AfterViewChecked, AfterViewInit {
-    private _currentUser: CurrentUserViewModel;
+    public currentUser: CurrentUserViewModel;
     private currentUserSubscription: Subscription;
     private isResolvingExplorePeople: boolean;
     private isResolvingUserMedia: boolean;
 
     public incommingRequestsCount: number;
-    public renderToolbar: boolean;
     public scrolled: boolean;
     public scrolledDown: boolean;
     @Output() public openNotificationsEvent = new EventEmitter<boolean>();
@@ -39,12 +38,12 @@ export class ToolbarComponent implements OnInit, OnDestroy, AfterViewChecked, Af
         private router: Router) {
     }
 
-    public get currentUser(): CurrentUserViewModel {
-        return this._currentUser;
+    public onMenuOpened(event) {
+        console.log(event);
     }
 
-    public set currentUser(value: CurrentUserViewModel) {
-        this._currentUser = value;
+    public get isMenuOpened(): boolean {
+        return this.trigger ? this.trigger.menuOpen : false;
     }
 
     public get isAuthenticated(): boolean {
@@ -69,7 +68,7 @@ export class ToolbarComponent implements OnInit, OnDestroy, AfterViewChecked, Af
         if (!this.isResolvingUserMedia) {
             this.isResolvingUserMedia = true;
 
-            this.router.navigateByUrl(this._currentUser.username)
+            this.router.navigateByUrl(this.currentUser.username)
                 .then(() => {
                     this.isResolvingUserMedia = false;
                 }).catch(() => {
@@ -96,6 +95,7 @@ export class ToolbarComponent implements OnInit, OnDestroy, AfterViewChecked, Af
     }
 
     public onPositionChange(event) {
+        this.trigger.closeMenu();
         this.scrolled = event;
     }
 
@@ -109,6 +109,9 @@ export class ToolbarComponent implements OnInit, OnDestroy, AfterViewChecked, Af
 
     public ngAfterViewInit(): void {
         this.cd.detectChanges();
+
+        this.trigger.menuOpened.subscribe(() => {
+        });
     }
 
     public ngAfterViewChecked(): void {
@@ -116,11 +119,11 @@ export class ToolbarComponent implements OnInit, OnDestroy, AfterViewChecked, Af
     }
 
     private updateCurrentUser(currentUser: CurrentUserViewModel) {
-        if (this._currentUser && currentUser) {
+        if (this.currentUser && currentUser) {
             const properties = Object.getOwnPropertyNames(currentUser);
 
             properties.forEach(propertyName => {
-                this._currentUser[propertyName] = currentUser[propertyName];
+                this.currentUser[propertyName] = currentUser[propertyName];
             });
         } else {
             this.currentUser = currentUser;

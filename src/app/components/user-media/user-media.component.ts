@@ -98,7 +98,11 @@ export class UserMediaComponent implements OnInit, OnDestroy {
         return validationResult;
     }
 
-    public openPostDialog(media: MediaViewModel) {
+    public getLink(event) {
+        console.log(event);
+    }
+
+    public openPostDialog(event, media: MediaViewModel) {
         const dialog = this.dialog.open(MediaDetailsComponent, {
             viewContainerRef: this.viewContainerRef,
             data: media
