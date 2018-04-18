@@ -7,7 +7,7 @@
             </button>
         </div>
     </div>
-    <div class="items">
+    <div class="items" *ngIf="page?.data?.length">
         <div class="notification" *ngFor="let notification of page?.data.slice(0, 4);" fxLayout="row" fxLayoutAlign="start start">
             <a [routerLink]="['/', notification.user.username]">
                 <img class="user-thumbnail" src="{{notification.user.pictureUri}}" alt="user-thumbnail">

@@ -10,8 +10,7 @@
 
 .notifications .header {
     box-sizing: border-box;
-    /* border-bottom: 1px solid #eaeaea; */
-    padding: .7rem .7rem 1.4rem;
+    padding: .7rem;
 }
 
 .notifications .header a {
@@ -21,7 +20,7 @@
 
 .notifications .items {
     box-sizing: border-box;
-    padding: 0 .7rem 0rem;
+    padding: 0 .7rem .7rem;
 }
 
 .notifications .items .notification {

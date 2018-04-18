@@ -79,10 +79,6 @@ export class UserMediaComponent implements OnInit, OnDestroy, AfterViewChecked {
             });
     }
 
-    public onAppear(media: MediaViewModel) {
-        media.appeared = true;
-    }
-
     private validateUser(user: UserViewModel): ValidationResult {
         const validationResult: ValidationResult = new ValidationResult();
         const currentUser = this.currentUserService.retrieveCurrentUser();
@@ -103,11 +99,7 @@ export class UserMediaComponent implements OnInit, OnDestroy, AfterViewChecked {
         return validationResult;
     }
 
-    public getLink(event) {
-        console.log(event);
-    }
-
-    public openPostDialog(event, media: MediaViewModel) {
+    public openPostDialog(media: MediaViewModel) {
         const dialog = this.dialog.open(MediaDetailsComponent, {
             viewContainerRef: this.viewContainerRef,
             data: media
