@@ -19,6 +19,7 @@ export class MediaViewModel {
     public editing = false;
     public inspectingLikes = false;
     public coverId: number;
+    public appeared = false;
 
     public get created(): Date {
         return this._created;

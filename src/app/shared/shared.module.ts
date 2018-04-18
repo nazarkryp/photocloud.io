@@ -8,6 +8,7 @@ import { InfiniteScrollDirective } from './directives/scroll.directive';
 import { AutoFocusDirective } from './directives/autofocus.directive';
 import { HeaderScrollDirective } from './directives/header-scroll.directive';
 import { ClickStopPropagationDirective } from './directives/click-stop-propagation.directive';
+import { AppearDirective } from './directives/appear.directive';
 
 @NgModule({
     imports: [
@@ -23,7 +24,8 @@ import { ClickStopPropagationDirective } from './directives/click-stop-propagati
         InfiniteScrollDirective,
         AutoFocusDirective,
         ClickStopPropagationDirective,
-        HeaderScrollDirective
+        HeaderScrollDirective,
+        AppearDirective
     ],
     exports: [
         DefaultImageDirective,
@@ -32,6 +34,7 @@ import { ClickStopPropagationDirective } from './directives/click-stop-propagati
         HeaderScrollDirective,
         AutoFocusDirective,
         ClickStopPropagationDirective,
+        AppearDirective,
         CommonModule
     ]
 })

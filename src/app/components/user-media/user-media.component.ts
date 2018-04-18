@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewContainerRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewContainerRef, AfterViewChecked, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material';
 
@@ -20,7 +20,7 @@ import { HttpErrorResponse } from '@angular/common/http';
     templateUrl: './user-media.component.html',
     styleUrls: ['./user-media.component.css']
 })
-export class UserMediaComponent implements OnInit, OnDestroy {
+export class UserMediaComponent implements OnInit, OnDestroy, AfterViewChecked {
     private routeSubscription: Subscription;
 
     public userMedia: UserMediaViewModel;
@@ -32,6 +32,7 @@ export class UserMediaComponent implements OnInit, OnDestroy {
     public isLoading: boolean;
 
     constructor(
+        private cd: ChangeDetectorRef,
         private viewContainerRef: ViewContainerRef,
         private accountService: AccountService,
         private mediaService: MediaService,
@@ -76,6 +77,10 @@ export class UserMediaComponent implements OnInit, OnDestroy {
                         });
                 }
             });
+    }
+
+    public onAppear(media: MediaViewModel) {
+        media.appeared = true;
     }
 
     private validateUser(user: UserViewModel): ValidationResult {
@@ -129,6 +134,10 @@ export class UserMediaComponent implements OnInit, OnDestroy {
             this.reset();
             this.userMedia = this.route.snapshot.data['userMedia'];
         });
+    }
+
+    public ngAfterViewChecked(): void {
+        this.cd.detectChanges();
     }
 
     public ngOnDestroy(): void {
