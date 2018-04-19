@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 
+import { IMapper } from './mapper';
 import { UserMapper } from './user.mapper';
 import { MediaMapper } from './media.mapper';
-import { IMapper } from './mapper';
+import { CommentMapper } from './comment.mapper';
 
 
 import { ActivityResponse } from 'app/models/response';
@@ -11,6 +12,7 @@ import { ActivityViewModel } from 'app/models/view';
 @Injectable()
 export class ActivityMapper implements IMapper<ActivityResponse, ActivityViewModel> {
     constructor(
+        private commentMapper: CommentMapper,
         private mediaMapper: MediaMapper,
         private userMapper: UserMapper) { }
 
@@ -31,6 +33,10 @@ export class ActivityMapper implements IMapper<ActivityResponse, ActivityViewMod
 
         if (response.media) {
             activity.media = this.mediaMapper.mapFromResponse(response.media);
+        }
+
+        if (response.comment) {
+            activity.comment = this.commentMapper.mapFromResponse(response.comment);
         }
 
         return activity;

@@ -10,11 +10,19 @@
             <div class="activity" *ngFor="let activity of page?.data" fxLayout="row" fxLayoutAlign="start start">
                 <img class="user-thumbnail" src="{{activity.user.pictureUri}}" alt="user-thumbnail" [routerLink]="['/', activity.user.username]">
                 <div class="activity-info" fxLayout="row" fxLayoutAlign="space-between start">
-                    <div fxLayout="column">
-                        <span>
-                            <a [routerLink]="[ '/', activity.user.username]">{{activity.user.username}}</a> {{activity.activityType | activity}}
-                        </span>
-                        <span class="date" matTooltip="{{activity.date | date:'fullDate'}}" matTooltipPosition="after">{{activity.date | timeAgo}}</span>
+                    <div style="width: 100%;" fxLayout="column" fxLayoutAlign="start start">
+                        <div fxLayout="column">
+                            <span>
+                                <a [routerLink]="[ '/', activity.user.username]">{{activity.user.username}}</a> {{activity.activityType | activity}}
+                            </span>
+                            <span class="date" matTooltip="{{activity.date | date:'fullDate'}}" matTooltipPosition="after">{{activity.date | timeAgo}}</span>
+                        </div>
+                        <div *ngIf="activity.comment" style="width: 100%; border-left: 3px solid #e91e63; padding: .25rem .5rem; box-sizing: border-box; margin-top: 1.4rem;">
+                            <span style="font-size: .9em; color: rgb(0, 0, 0, .5)" [innerHTML]="activity.comment.text | truncate:100 | linkify"></span>
+                        </div>
+                        <div style="margin-top: .7rem;">
+                            <a style="font-size: .9em; font-weight: 600; cursor: pointer; color: #053569;">Remove</a>
+                        </div>
                     </div>
                     <a [ngSwitch]="activity.media.attachments[0].type" *ngIf="activity.media" [routerLink]="['/p/', activity.media.id]">
                         <img *ngSwitchCase="'0'" class="media-thumbnail" src="{{activity.media.attachments[0].uri}}" alt="media-thumbnail">
@@ -23,10 +31,11 @@
                         </video>
                     </a>
                 </div>
+                <!-- <mat-icon class="btn-icon mat-18 hover" style="margin-left: .7rem;">clear</mat-icon> -->
             </div>
         </div>
         <div class="footer" *ngIf="page?.hasMoreItems">
-            <button mat-button color="primary" (click)="loadMore($event)">Load More</button>
+            <button mat-button color="primary" (click)="getNotifications()">Load More</button>
         </div>
     </div>
 </div>

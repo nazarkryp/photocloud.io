@@ -12,19 +12,21 @@
             <a [routerLink]="['/', notification.user.username]">
                 <img class="user-thumbnail" src="{{notification.user.pictureUri}}" alt="user-thumbnail">
             </a>
-            <div class="notification-info" fxLayout="row" fxLayoutAlign="space-between center">
-                <div fxLayout="column">
-                    <span>
-                        <a [routerLink]="[ '/', notification.user.username]">{{notification.user.username}}</a> {{notification.activityType | activity}}
-                    </span>
-                    <span class="date" matTooltip="{{notification.date | date:'fullDate'}}" matTooltipPosition="after">{{notification.date | timeAgo}}</span>
+            <div class="notification-info" fxLayout="column" fxLayoutAlign="start start">
+                <div style="width: 100%;" fxLayout="row" fxLayoutAlign="space-between center">
+                    <div fxLayout="column" fxLayoutAlign="start">
+                        <span>
+                            <a [routerLink]="[ '/', notification.user.username]">{{notification.user.username}}</a> {{notification.activityType | activity}}
+                        </span>
+                        <span class="date" matTooltip="{{notification.date | date:'fullDate'}}" matTooltipPosition="after">{{notification.date | timeAgo}}</span>
+                    </div>
+                    <a [ngSwitch]="notification.media.attachments[0].type" *ngIf="notification.media" [routerLink]="['/p/', notification.media.id]">
+                        <img *ngSwitchCase="'0'" class="media-thumbnail" src="{{notification.media.attachments[0].uri}}" alt="media-thumbnail">
+                        <video *ngSwitchCase="'1'" class="media-thumbnail">
+                            <source src="{{notification.media.attachments[0].uri}}">
+                        </video>
+                    </a>
                 </div>
-                <a [ngSwitch]="notification.media.attachments[0].type" *ngIf="notification.media" [routerLink]="['/p/', notification.media.id]">
-                    <img *ngSwitchCase="'0'" class="media-thumbnail" src="{{notification.media.attachments[0].uri}}" alt="media-thumbnail">
-                    <video *ngSwitchCase="'1'" class="media-thumbnail">
-                        <source src="{{notification.media.attachments[0].uri}}">
-                    </video>
-                </a>
             </div>
         </div>
     </div>

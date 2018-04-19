@@ -26,7 +26,7 @@
 }
 
 .activities .items .activity {
-    padding: .7rem 0;
+    padding: .7rem 0 1.4rem;
     width: 100%;
 }
 
@@ -38,10 +38,10 @@
 }
 
 .activities .items .activity .media-thumbnail {
-    width: 140px;
-    height: 100px;
+    width: 120px;
+    height: 80px;
     object-fit: cover;
-    border-radius: 10px;
+    border-radius: 7px;
 }
 
 .activities .items .activity .activity-info {
@@ -67,9 +67,16 @@
 
 .activities .footer {
     box-sizing: border-box;
-    border-top: 1px solid #eaeaea;
 }
 
 .activities .footer button {
     width: 100%;
+}
+
+.activity .hover {
+    opacity: 0;
+}
+
+.activity:hover .hover {
+    opacity: 1;
 }

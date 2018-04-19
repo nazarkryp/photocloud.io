@@ -22,16 +22,25 @@ export class ActivityComponent implements OnInit {
 
     public getNotifications() {
         this.isLoading = true;
-        this.activityService.getRecentActivity()
+        this.activityService.getRecentActivity(this.page.pagination)
             .finally(() => {
                 this.isLoading = false;
             })
             .subscribe(page => {
-                this.page = page;
+                if (!this.page.pagination) {
+                    this.page = new Page<ActivityViewModel>();
+                }
+
+                this.page.hasMoreItems = page.hasMoreItems;
+                this.page.pagination = page.pagination;
+                if (page.data) {
+                    this.page.data = this.page.data.concat(page.data);
+                }
             });
     }
 
     public ngOnInit() {
+        this.page = new Page<ActivityViewModel>();
         this.getNotifications();
     }
 }
