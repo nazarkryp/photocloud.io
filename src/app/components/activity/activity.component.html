@@ -5,7 +5,7 @@
             <a style="font-size: .9em; color: rgb(0,0,0,.3); cursor: pointer;" *ngIf="page?.data?.length" (click)="removeAllActivities()">Clear All</a>
         </div>
         <div class="items" fxLayout="column" fxLayoutAlign="start center">
-            <span *ngIf="!page?.data?.length && !isLoading">No items were found</span>
+            <span *ngIf="!page?.data?.length && !isLoading">You have no recent activity</span>
             <div class="activity" *ngFor="let activity of page?.data; let index = index;" fxLayout="row" fxLayoutAlign="start start">
                 <a [routerLink]="['/', activity.user.username]">
                     <img class="user-thumbnail" src="{{activity.user.pictureUri}}" alt="user-thumbnail">

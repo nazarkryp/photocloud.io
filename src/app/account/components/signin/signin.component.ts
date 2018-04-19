@@ -69,7 +69,6 @@ export class SignInComponent implements OnInit {
             this.currentUserService.signIn(this.username.value, this.password.value, this.rememberMe.value)
                 .subscribe(response => {
                     this.router.navigateByUrl('/');
-                    this.finishLoading();
                 }, error => {
                     this.finishLoading();
                     this.passwordInput.nativeElement.focus();
@@ -97,6 +96,7 @@ export class SignInComponent implements OnInit {
     }
 
     public ngOnInit(): void {
+        this.finishLoading();
         this.currentUser = this.currentUserService.retrieveCurrentUser();
 
         if (this.currentUser) {

@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef } from '@angular/core';
+import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AbstractControl, FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { trigger, animate, style, transition, animateChild, group, query, stagger } from '@angular/animations';
@@ -31,7 +31,7 @@ const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA
         ])
     ]
 })
-export class CreateComponent {
+export class CreateComponent implements OnInit {
     public formGroup: FormGroup;
     public errorStateMatcher = new DefaultErrorStateMatcher();
     public signUpError: string;
@@ -142,5 +142,9 @@ export class CreateComponent {
                     this.signUpError = errorResponse.error.error.modelState;
                 });
         }
+    }
+
+    public ngOnInit(): void {
+        this.finishLoading();
     }
 }
