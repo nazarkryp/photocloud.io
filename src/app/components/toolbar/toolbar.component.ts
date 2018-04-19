@@ -24,7 +24,7 @@ export class ToolbarComponent implements OnInit, OnDestroy, AfterViewChecked, Af
     public incommingRequestsCount: number;
     public scrolled: boolean;
     public scrolledDown: boolean;
-    @Output() public openNotificationsEvent = new EventEmitter<boolean>();
+    @Output() public onOpenRequests = new EventEmitter<boolean>();
 
     public notifications: Page<ActivityViewModel>;
 
@@ -36,10 +36,6 @@ export class ToolbarComponent implements OnInit, OnDestroy, AfterViewChecked, Af
         private incommingRequestsService: RequestsService,
         private accountService: AccountService,
         private router: Router) {
-    }
-
-    public onMenuOpened(event) {
-        console.log(event);
     }
 
     public get isMenuOpened(): boolean {
@@ -79,8 +75,12 @@ export class ToolbarComponent implements OnInit, OnDestroy, AfterViewChecked, Af
 
     public openNotifications() {
         this.trigger.closeMenu();
-        this.router.navigate(['activity']);
-        // this.openNotificationsEvent.emit(true);
+        this.router.navigate(['activity', 'recent']);
+    }
+
+    public openRequests() {
+        this.trigger.closeMenu();
+        this.onOpenRequests.emit(true);
     }
 
     public ngOnInit(): void {
@@ -109,9 +109,6 @@ export class ToolbarComponent implements OnInit, OnDestroy, AfterViewChecked, Af
 
     public ngAfterViewInit(): void {
         this.cd.detectChanges();
-
-        this.trigger.menuOpened.subscribe(() => {
-        });
     }
 
     public ngAfterViewChecked(): void {

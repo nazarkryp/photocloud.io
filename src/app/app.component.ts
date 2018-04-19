@@ -38,7 +38,7 @@ export class AppComponent implements OnInit {
             });
     }
 
-    public openNotifications($event: boolean) {
+    public openRequests($event: boolean) {
         // this.dialog.open(NotificationsComponent, {
         //     width: '400px',
         //     height: '75vh'

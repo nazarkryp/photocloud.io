@@ -27,6 +27,7 @@ export class ActivityMapper implements IMapper<ActivityResponse, ActivityViewMod
     public mapFromResponse(response: ActivityResponse): ActivityViewModel {
         const activity = new ActivityViewModel();
 
+        activity.id = response.id;
         activity.user = this.userMapper.mapFromResponse(response.user);
         activity.activityType = response.activityType;
         activity.date = response.date;

@@ -74,7 +74,7 @@ const routes: Routes = [
         }
     },
     {
-        path: 'activity',
+        path: 'activity/recent',
         component: ActivityComponent,
         data: {
             title: 'PhotoCloud - Activity'

@@ -1,16 +1,17 @@
 <div fxLayout="column" fxLayoutAlign="start center">
     <div class="activities" fxLayout="column" fxLayoutAlign="start center">
         <div class="header" fxLayout="row" fxLayoutAlign="space-between center">
-            <h1>Notifications</h1>
-            <!-- <button mat-icon-button (click)="getactivities()">
-                <mat-icon class="btn-icon mat-18" [ngClass]="{ 'disabled' : isLoading }" svgIcon="refresh"></mat-icon>
-            </button> -->
+            <h1>Activity</h1>
+            <a style="font-size: .9em; color: rgb(0,0,0,.3); cursor: pointer;" *ngIf="page?.data?.length" (click)="removeAllActivities()">Clear All</a>
         </div>
         <div class="items" fxLayout="column" fxLayoutAlign="start center">
-            <div class="activity" *ngFor="let activity of page?.data" fxLayout="row" fxLayoutAlign="start start">
-                <img class="user-thumbnail" src="{{activity.user.pictureUri}}" alt="user-thumbnail" [routerLink]="['/', activity.user.username]">
+            <span *ngIf="!page?.data?.length && !isLoading">No items were found</span>
+            <div class="activity" *ngFor="let activity of page?.data; let index = index;" fxLayout="row" fxLayoutAlign="start start">
+                <a [routerLink]="['/', activity.user.username]">
+                    <img class="user-thumbnail" src="{{activity.user.pictureUri}}" alt="user-thumbnail">
+                </a>
                 <div class="activity-info" fxLayout="row" fxLayoutAlign="space-between start">
-                    <div style="width: 100%;" fxLayout="column" fxLayoutAlign="start start">
+                    <div fxLayout="column" fxLayoutAlign="start start">
                         <div fxLayout="column">
                             <span>
                                 <a [routerLink]="[ '/', activity.user.username]">{{activity.user.username}}</a> {{activity.activityType | activity}}
@@ -18,20 +19,28 @@
                             <span class="date" matTooltip="{{activity.date | date:'fullDate'}}" matTooltipPosition="after">{{activity.date | timeAgo}}</span>
                         </div>
                         <div *ngIf="activity.comment" style="width: 100%; border-left: 3px solid #e91e63; padding: .25rem .5rem; box-sizing: border-box; margin-top: 1.4rem;">
-                            <span style="font-size: .9em; color: rgb(0, 0, 0, .5)" [innerHTML]="activity.comment.text | truncate:100 | linkify"></span>
+                            <span style="font-size: .9em; font-weight: normal; color: rgb(0, 0, 0, .5)" [innerHTML]="activity.comment.text | truncate:100 | linkify"></span>
+                        </div>
+                        <div fxLayout="row" *ngIf="activity.activityType === 2">
+                            <a style="font-size: .9em; font-weight: 600; cursor: pointer; color: #053569;" (click)="accept(activity, index)">Accept</a>
+                            <a style="font-size: .9em; font-weight: 600; cursor: pointer; color: #053569; margin-left: .7rem;" (click)="decline(activity, index)">Decline</a>
                         </div>
                         <div style="margin-top: .7rem;">
-                            <a style="font-size: .9em; font-weight: 600; cursor: pointer; color: #053569;">Remove</a>
+                            <a style="font-size: .9em; font-weight: 600; cursor: pointer; color: #053569;" (click)="removeActivity(index, activity)">Remove</a>
                         </div>
                     </div>
+                    <!-- <div fxLayout="row" *ngIf="activity.activityType === 2">
+                        <button mat-button style="font-weight: bold;">Decline</button>
+                        <button mat-button color="primary" style="font-weight: bold;">Accept</button>
+                    </div> -->
                     <a [ngSwitch]="activity.media.attachments[0].type" *ngIf="activity.media" [routerLink]="['/p/', activity.media.id]">
                         <img *ngSwitchCase="'0'" class="media-thumbnail" src="{{activity.media.attachments[0].uri}}" alt="media-thumbnail">
                         <video *ngSwitchCase="'1'" class="media-thumbnail">
                             <source src="{{activity.media.attachments[0].uri}}">
                         </video>
+                        <img *ngSwitchDefault class="media-thumbnail" src="{{activity.media.attachments[0].uri}}" alt="media-thumbnail">
                     </a>
                 </div>
-                <!-- <mat-icon class="btn-icon mat-18 hover" style="margin-left: .7rem;">clear</mat-icon> -->
             </div>
         </div>
         <div class="footer" *ngIf="page?.hasMoreItems">

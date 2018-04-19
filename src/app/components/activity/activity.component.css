@@ -22,7 +22,7 @@
 .activities .items {
     width: 600px;
     box-sizing: border-box;
-    padding: 0 .7rem 0rem;
+    padding: 0 0 0 .7rem;
 }
 
 .activities .items .activity {
@@ -39,7 +39,7 @@
 
 .activities .items .activity .media-thumbnail {
     width: 120px;
-    height: 80px;
+    height: 100px;
     object-fit: cover;
     border-radius: 7px;
 }

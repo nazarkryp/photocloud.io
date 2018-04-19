@@ -2,6 +2,9 @@
     <div>
         <div class="header" fxLayout="row" fxLayoutAlign="space-between center">
             <h3>{{title}}</h3>
+            <button mat-icon-button (click)="openRequests()">
+                <mat-icon class="btn-icon mat-24">people</mat-icon>
+            </button>
             <button mat-icon-button (click)="getNotifications()">
                 <mat-icon class="btn-icon mat-18" [ngClass]="{ 'disabled' : isLoading }" svgIcon="refresh"></mat-icon>
             </button>
@@ -25,12 +28,13 @@
                         <video *ngSwitchCase="'1'" class="media-thumbnail">
                             <source src="{{notification.media.attachments[0].uri}}">
                         </video>
+                        <img *ngSwitchDefault class="media-thumbnail" src="{{notification.media.attachments[0].uri}}" alt="media-thumbnail">
                     </a>
                 </div>
             </div>
         </div>
     </div>
-    <div class="footer" *ngIf="page?.data.length > 4">
-        <button mat-button color="primary" (click)="close($event)">View all notifications</button>
+    <div class="footer">
+        <button mat-button color="primary" (click)="openAllNotifications($event)">View all notifications</button>
     </div>
 </div>

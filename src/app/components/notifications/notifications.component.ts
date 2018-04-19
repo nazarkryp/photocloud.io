@@ -12,6 +12,7 @@ export class NotificationsComponent implements OnInit {
     public isLoading: boolean;
     public page: Page<ActivityViewModel>;
     @Output() public onOpenAllNotifications: EventEmitter<void> = new EventEmitter<void>();
+    @Output() public onOpenRequests: EventEmitter<void> = new EventEmitter<void>();
 
     constructor(
         private activityService: ActivityService) { }
@@ -20,8 +21,12 @@ export class NotificationsComponent implements OnInit {
         return this.page ? 'Notifications' : (this.isLoading ? 'Loading notifications' : 'You have no notifications');
     }
 
-    public close(event) {
+    public openAllNotifications(event) {
         this.onOpenAllNotifications.next();
+    }
+
+    public openRequests() {
+        this.onOpenRequests.next();
     }
 
     public getNotifications() {

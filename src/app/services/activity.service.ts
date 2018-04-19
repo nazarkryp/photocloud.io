@@ -30,4 +30,12 @@ export class ActivityService {
                 return this.pageMapper.mapFromResponse(page);
             });
     }
+
+    public removeActivity(activityId: number): Observable<any> {
+        return this.httpClient.delete(`activities/${activityId}`);
+    }
+
+    public removeAllActivities(): Observable<any> {
+        return this.httpClient.delete(`activities`);
+    }
 }

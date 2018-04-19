@@ -8,8 +8,7 @@
     </mat-sidenav>
     <div class="my-content" fxLayout="column">
         <div>
-            <!-- calc(100vw - (100vw - 100%)) -->
-            <app-toolbar *ngIf="renderToolbar" (openNotificationsEvent)="openNotifications($event)"></app-toolbar>
+            <app-toolbar *ngIf="renderToolbar" (onOpenRequests)="openRequests($event)"></app-toolbar>
         </div>
         <div class="router-container" [ngClass]="{ 'toolbar' : renderToolbar }">
             <router-outlet></router-outlet>

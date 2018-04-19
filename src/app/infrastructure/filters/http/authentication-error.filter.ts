@@ -20,7 +20,7 @@ export class AuthenticationErrorFilter implements HttpErrorFilter {
                 this.router.navigateByUrl('/account/restore');
             } else {
                 const currentUser = this.currentUserService.retrieveCurrentUser();
-                const clearUserData = !currentUser.isRemembered;
+                const clearUserData = currentUser && !currentUser.isRemembered;
                 this.currentUserService.signOut(clearUserData);
                 this.router.navigateByUrl('/account/signin');
             }

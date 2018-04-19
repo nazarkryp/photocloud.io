@@ -24,7 +24,7 @@
                 </td-notification-count>
                 <mat-menu (menuOpened)="onMenuOpened($event)" class="notifications-menu" xPosition="before" #notificationsMenu="matMenu" [overlapTrigger]="true">
                     <div appClickStopPropagation>
-                        <app-notifications (onOpenAllNotifications)="openNotifications($event)"></app-notifications>
+                        <app-notifications (onOpenRequests)="openRequests($event)" (onOpenAllNotifications)="openNotifications($event)"></app-notifications>
                     </div>
                 </mat-menu>
                 <div fxLayout="row" fxLayoutAlign="center center">
