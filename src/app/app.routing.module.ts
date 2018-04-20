@@ -78,7 +78,10 @@ const routes: Routes = [
         component: ActivityComponent,
         data: {
             title: 'PhotoCloud - Activity'
-        }
+        },
+        canActivate: [
+            AuthenticationGuardService
+        ],
     },
     {
         path: ':username',
@@ -112,7 +115,10 @@ const routes: Routes = [
         },
         data: {
             title: 'PhotoCloud - Liked'
-        }
+        },
+        canActivate: [
+            AuthenticationGuardService
+        ],
     },
     {
         path: 'explore/people',
@@ -120,7 +126,10 @@ const routes: Routes = [
         resolve: { page: UserListResolver },
         data: {
             title: 'PhotoCloud - Discover People'
-        }
+        },
+        canActivate: [
+            AuthenticationGuardService
+        ]
     },
     {
         path: '**',

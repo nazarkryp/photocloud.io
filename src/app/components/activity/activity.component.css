@@ -80,3 +80,14 @@
 .activity:hover .hover {
     opacity: 1;
 }
+
+.activities .items .activity .activity-info a.btn-remove {
+    color: rgb(5, 50, 100, .6);
+    cursor: pointer;
+    font-size: .9em;
+    font-weight: 600;
+}
+
+.activities .items .activity .activity-info a.btn-remove:hover {
+    color: rgb(5, 50, 100);
+}

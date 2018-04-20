@@ -2,12 +2,17 @@
     <div>
         <div class="header" fxLayout="row" fxLayoutAlign="space-between center">
             <h3>{{title}}</h3>
-            <button mat-icon-button (click)="openRequests()">
+            <div fxLayout="row" fxLayoutAlign="start center">
+                <a (click)="openRequests()">Requests</a>
+                <!-- <mat-icon class="btn-icon mat-18 people" (click)="openRequests()">people</mat-icon> -->
+                <mat-icon class="btn-icon mat-18" [ngClass]="{ 'disabled' : isLoading }" svgIcon="refresh" (click)="getNotifications()"></mat-icon>
+            </div>
+            <!-- <button mat-icon-button (click)="openRequests()">
                 <mat-icon class="btn-icon mat-24">people</mat-icon>
             </button>
             <button mat-icon-button (click)="getNotifications()">
                 <mat-icon class="btn-icon mat-18" [ngClass]="{ 'disabled' : isLoading }" svgIcon="refresh"></mat-icon>
-            </button>
+            </button> -->
         </div>
     </div>
     <div class="items" *ngIf="page?.data?.length">

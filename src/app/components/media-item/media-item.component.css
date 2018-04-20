@@ -117,9 +117,8 @@
 .media-item-content img,
 .media-item-content video {
     max-width: 100%;
-    -moz-transition: all 0.3s;
-    -webkit-transition: all 0.3s;
-    transition: all 0.3s;
+    -webkit-transition: all .3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition: all .3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .media-item-content:hover img,

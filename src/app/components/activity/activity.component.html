@@ -26,7 +26,7 @@
                             <a style="font-size: .9em; font-weight: 600; cursor: pointer; color: #053569; margin-left: .7rem;" (click)="decline(activity, index)">Decline</a>
                         </div>
                         <div style="margin-top: .7rem;">
-                            <a style="font-size: .9em; font-weight: 600; cursor: pointer; color: #053569;" (click)="removeActivity(index, activity)">Remove</a>
+                            <a class="btn-remove" (click)="removeActivity(index, activity)">Remove</a>
                         </div>
                     </div>
                     <!-- <div fxLayout="row" *ngIf="activity.activityType === 2">
