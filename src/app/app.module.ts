@@ -65,6 +65,7 @@ import { CoreModule, CovalentModule } from 'app/core';
 import { NotificationsComponent } from './components/notifications/notifications.component';
 import { ActivityPipe } from './pipes/activity.pipe';
 import { ActivityComponent } from './components/activity/activity.component';
+import { ManageUsersComponent } from './dashboard/components/manage-users/manage-users.component';
 
 @NgModule({
     declarations: [
@@ -100,7 +101,8 @@ import { ActivityComponent } from './components/activity/activity.component';
         LinkifyPipe,
         NotificationsComponent,
         ActivityPipe,
-        ActivityComponent
+        ActivityComponent,
+        ManageUsersComponent
     ],
     entryComponents: [
         MediaDetailsComponent,

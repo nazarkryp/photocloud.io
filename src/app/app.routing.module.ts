@@ -17,6 +17,7 @@ import { TermsComponent } from 'app/components/terms/terms.component';
 import { PrivacyComponent } from './components/privacy/privacy.component';
 import { AboutComponent } from './components/about/about.component';
 import { ActivityComponent } from './components/activity/activity.component';
+import { ManageUsersComponent } from 'app/dashboard/components/manage-users/manage-users.component';
 
 const routes: Routes = [
     {
@@ -126,6 +127,17 @@ const routes: Routes = [
         resolve: { page: UserListResolver },
         data: {
             title: 'PhotoCloud - Discover People'
+        },
+        canActivate: [
+            AuthenticationGuardService
+        ]
+    },
+    {
+        path: 'manage/users',
+        component: ManageUsersComponent,
+        resolve: { page: UserListResolver },
+        data: {
+            title: 'PhotoCloud - Manage Users'
         },
         canActivate: [
             AuthenticationGuardService

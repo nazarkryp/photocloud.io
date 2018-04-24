@@ -1,0 +1,29 @@
+<div fxLayout="column" fxLayoutAlign="start center">
+    <div class="manage-users-container" fxLayout="column">
+        <div class="user-search-header" fxLayout="row" fxLayoutAlign="space-between center">
+            <h1 class="user-search-title">Manage Users</h1>
+            <button mat-icon-button [disabled]="isLoading" (click)="refresh()">
+                <mat-icon class="btn-icon mat-24" [ngClass]="{ 'disabled' : isLoading }" svgIcon="refresh"></mat-icon>
+            </button>
+        </div>
+        <div class="items">
+            <div class="user" *ngFor="let user of page.data" fxLayout="row" fxLayoutAlign="start center">
+                <a [routerLink]="['/', user.username]">
+                    <img src="{{user.pictureUri}}" default="assets/images/user-default-image.png" alt="profile">
+                </a>
+                <div class="user-details" fxLayout="row" fxLayoutAlign="space-between center" fxFlex>
+                    <div fxFlex>
+                        <a class="username" [routerLink]="['/', user.username]">{{user.username}}</a>
+                    </div>
+                    <div fxFlex>
+                        <span class="status" [ngClass]="{ 'active' : user.isActive, 'not-active' : !user.isActive }">{{user.isActive ? 'Active' : 'Deactivated' }}</span>
+                    </div>
+                    <button mat-raised-button (click)="invertUserStatus(user)">{{ user.isActive ? 'Activate' : 'Deactivate' }}</button>
+                </div>
+            </div>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="center center" *ngIf="page.hasMoreItems" style="border-top: 1px solid #efefef; padding-top: 1.4rem;">
+            <button class="btn-primary" mat-button (click)="getUsers()" [disabled]="isLoading">Load More</button>
+        </div>
+    </div>
+</div>

@@ -60,17 +60,17 @@ export class EditComponent implements OnInit, AfterViewInit, AfterViewChecked {
         private userService: UserService,
         private currentUserService: CurrentUserService,
         private uploaderService: UploaderService,
-        private progressService: NgProgress) {
+        private progress: NgProgress) {
         this.uploader = uploaderService.createUploader((attachment) => this.onSuccessUpload(attachment));
         this.configureFormControls();
     }
 
     public save() {
         const propertiesToUpdate = this.getPropertiesToUpdate();
-        this.progressService.start();
+        this.progress.start();
         this.currentUserService.updateCurrentUser(propertiesToUpdate)
             .finally(() => {
-                this.progressService.done();
+                this.progress.done();
             })
             .subscribe(currentUser => {
                 this.setup(currentUser);
@@ -127,13 +127,13 @@ export class EditComponent implements OnInit, AfterViewInit, AfterViewChecked {
             return;
         }
 
-        this.progressService.start();
+        this.progress.start();
         this.isInvertingAccountStatus = true;
         this.currentUserService.updateCurrentUser({
             isActive: !this.currentUser.isActive
         }).finally(() => {
             this.isInvertingAccountStatus = false;
-            this.progressService.done();
+            this.progress.done();
         }).subscribe(account => {
             this.currentUser.pictureUri = account.pictureUri;
             this.currentUser.isActive = account.isActive;
@@ -154,7 +154,7 @@ export class EditComponent implements OnInit, AfterViewInit, AfterViewChecked {
         this.currentUser = this.activatedRoute.snapshot.data['account'];
         this.currentUser.canAutoLogin = this.currentUserService.canSignInWithCode;
 
-        this.progressService.done();
+        this.progress.done();
     }
 
     public ngAfterViewInit(): void {

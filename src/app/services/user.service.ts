@@ -107,4 +107,8 @@ export class UserService {
                 return page;
             });
     }
+
+    public update(userId: number, options: any): Observable<any> {
+        return this.apiService.patch(`manage/users/${userId}`, options);
+    }
 }

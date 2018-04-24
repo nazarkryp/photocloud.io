@@ -1,0 +1,69 @@
+@media screen and (max-width: 500px) {
+    .manage-users-container {
+        padding: 0 .7rem;
+    }
+}
+
+@media screen and (min-width: 501px) {
+    .manage-users-container {
+        /* padding: 1.4rem; */
+        /* box-shadow: 0 3px 8px -3px rgba(0, 0, 0, 0.26); */
+        /* border-radius: 2px; */
+    }
+}
+
+.manage-users-container {
+    max-width: 960px;
+    width: 100%;
+    box-sizing: border-box;
+    color: rgb(0, 0, 0, .85);
+}
+
+.user-search-header {
+    padding-bottom: 1.4rem;
+}
+
+.manage-users-container .items .user {
+    margin: .7rem 0;
+    /* padding: .7rem; */
+    /* border-bottom: 1px solid #d8d8d8; */
+    /* box-shadow: 0 3px 8px -3px rgba(0, 0, 0, 0.26); */
+}
+
+.manage-users-container .items .user img {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    object-fit: cover;
+    outline: none;
+    cursor: pointer;
+}
+
+.manage-users-container .items .user .user-details {
+    margin-left: .7rem;
+    line-height: 1.2;
+}
+
+.manage-users-container .items .user .user-details .status {
+    font-size: .8em;
+}
+
+.manage-users-container .items .user .user-details .active {
+    color: green;
+}
+
+.manage-users-container .items .user .user-details .not-active {
+    color: red;
+}
+
+.manage-users-container .items .user .user-details .username {
+    padding-bottom: .5rem;
+    font-weight: 600;
+}
+
+.manage-users-container .items .user .user-details .date {
+    margin: 0 auto 0 0;
+    color: rgba(0, 0, 0, .65);
+    font-weight: normal;
+    font-size: .9em;
+}

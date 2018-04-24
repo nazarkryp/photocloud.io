@@ -100,8 +100,12 @@ export class SignInComponent implements OnInit {
         this.currentUser = this.currentUserService.retrieveCurrentUser();
 
         if (this.currentUser) {
-            this.username.setValue(this.currentUser.username);
-            this.rememberMe.setValue(true);
+            if (this.currentUser.isRemembered) {
+                this.username.setValue(this.currentUser.username);
+                this.rememberMe.setValue(true);
+            } else {
+                this.currentUserService.signOut(true);
+            }
         }
     }
 }
