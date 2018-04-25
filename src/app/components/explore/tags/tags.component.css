@@ -31,10 +31,8 @@
     cursor: pointer;
     outline: none;
     color: rgb(0, 0, 0, .85);
-    font-size: 1.2em;
-    letter-spacing: 2px;
+    font-size: 1.1em;
     font-weight: 800;
-    text-transform: uppercase;
 }
 
 .tags-media-item {

@@ -19,7 +19,10 @@
                 </div>
             </div>
             <div style="padding-top: .7rem;" fxLayout="row" fxLayoutAlign="space-between center">
-                <a class="username" [routerLink]="['/', media.user.username]">{{media.user.username}}</a>
+                <div fxLayout="row" fxLayoutAlign="center center">
+                    <img style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; margin-right: .7rem;" [src]="media.user.pictureUri" alt="avatar">
+                    <a class="username" [routerLink]="['/', media.user.username]">{{media.user.username}}</a>
+                </div>
                 <mat-icon class="btn-icon mat-24" [ngClass]="{ 'warn' : media.userHasLiked, 'btn-icon-pulse' : media.userHasLiked }" (click)="like(media)">favorite</mat-icon>
             </div>
         </div>

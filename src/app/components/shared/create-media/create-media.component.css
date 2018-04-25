@@ -131,6 +131,15 @@ textarea.caption {
     vertical-align: bottom;
 }
 
+.preview-items .preview-img-overlay {
+    width: 60px;
+    height: 60px;
+    background: rgb(255, 255, 255, .6);
+    position: absolute;
+    top: 0px;
+    border-radius: 2px;
+}
+
 .preview-items>div {
     width: 70px;
     height: 70px;

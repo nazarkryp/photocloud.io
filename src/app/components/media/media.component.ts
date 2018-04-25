@@ -40,7 +40,13 @@ export class MediaComponent implements OnInit, OnDestroy {
     }
 
     public createMedia() {
-        const dialogRef = this.dialog.open(CreateMediaComponent, { disableClose: false });
+        const dialogRef = this.dialog.open(CreateMediaComponent, {
+            disableClose: false,
+            width: '500px',
+            maxHeight: '100vh',
+            maxWidth: '100vw',
+            hasBackdrop: true
+        });
 
         dialogRef.afterClosed()
             .subscribe(createdPost => {

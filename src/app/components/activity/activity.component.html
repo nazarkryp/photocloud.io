@@ -1,10 +1,10 @@
 <div fxLayout="column" fxLayoutAlign="start center">
     <div class="activities" fxLayout="column" fxLayoutAlign="start center">
         <div class="header" fxLayout="row" fxLayoutAlign="space-between center">
-            <h1>Activity</h1>
+            <h1>ACTIVITY</h1>
             <a style="font-size: .9em; color: rgb(0,0,0,.3); cursor: pointer;" *ngIf="page?.data?.length" (click)="removeAllActivities()">Clear All</a>
         </div>
-        <div class="items" fxLayout="column" fxLayoutAlign="start center">
+        <div class="items" fxLayout="column" [@listAnimation]="page?.data?.length" fxLayoutAlign="start center">
             <span *ngIf="!page?.data?.length && !isLoading">You have no recent activity</span>
             <div class="activity" *ngFor="let activity of page?.data; let index = index;" fxLayout="row" fxLayoutAlign="start start">
                 <a [routerLink]="['/', activity.user.username]">
@@ -29,10 +29,6 @@
                             <a class="btn-remove" (click)="removeActivity(index, activity)">Remove</a>
                         </div>
                     </div>
-                    <!-- <div fxLayout="row" *ngIf="activity.activityType === 2">
-                        <button mat-button style="font-weight: bold;">Decline</button>
-                        <button mat-button color="primary" style="font-weight: bold;">Accept</button>
-                    </div> -->
                     <a [ngSwitch]="activity.media.attachments[0].type" *ngIf="activity.media" [routerLink]="['/p/', activity.media.id]">
                         <img *ngSwitchCase="'0'" class="media-thumbnail" src="{{activity.media.attachments[0].uri}}" alt="media-thumbnail">
                         <video *ngSwitchCase="'1'" class="media-thumbnail">

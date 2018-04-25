@@ -5,11 +5,30 @@ import { ActivityService, UserService } from 'app/services';
 import { MatDialog } from '@angular/material';
 import { ConfirmComponent } from 'app/components/shared/confirm/confirm.component';
 import { RelationshipAction } from 'app/models/shared';
+import { trigger, transition, style, stagger, query, keyframes, animate } from '@angular/animations';
 
 @Component({
-    selector: 'app-activity',
     templateUrl: './activity.component.html',
-    styleUrls: ['./activity.component.css']
+    styleUrls: ['./activity.component.css'],
+    animations: [
+        trigger('listAnimation', [
+            transition('* => *', [
+                // query(':enter', style({ opacity: 0 }), { optional: true }),
+                // query(':enter', stagger('.1s', [
+                //     animate('1s ease-in', keyframes([
+                //         style({ opacity: 0, transform: 'translateY(-75%)', offset: 0 }),
+                //         style({ opacity: .5, transform: 'translateY(35px)', offset: 0.3 }),
+                //         style({ opacity: 1, transform: 'translateY(0)', offset: 1.0 }),
+                //     ]))]), { optional: true }),
+                query(':leave', stagger('.1s', [
+                    animate('1s ease-in', keyframes([
+                        style({ opacity: 1, transform: 'translateY(0)', offset: 0 }),
+                        style({ opacity: .5, transform: 'translateY(35px)', offset: 0.3 }),
+                        style({ opacity: 0, transform: 'translateY(-75%)', offset: 1.0 }),
+                    ]))]), { optional: true })
+            ])
+        ])
+    ]
 })
 export class ActivityComponent implements OnInit {
     public isLoading: boolean;
@@ -45,10 +64,12 @@ export class ActivityComponent implements OnInit {
     }
 
     public removeActivity(index, activity: ActivityViewModel) {
-        this.activityService.removeActivity(activity.id)
-            .subscribe(() => {
-                this.page.data.splice(index, 1);
-            });
+        // this.page.data.pop();
+        this.page.data.splice(index, 1);
+        // this.activityService.removeActivity(activity.id)
+        //     .subscribe(() => {
+        //         this.page.data.splice(index, 1);
+        //     });
     }
 
     public removeAllActivities() {
