@@ -98,3 +98,7 @@
     box-shadow: 0 0 3px #ed4e6e, 0 0 1px #ed4e6e;
     opacity: 1;
 }
+
+::ng-deep .btn-no-ripple .mat-button-focus-overlay {
+    background-color: transparent !important;
+}

@@ -1,4 +1,4 @@
-textarea.caption {
+/* textarea.caption {
     background: #efefef;
     box-sizing: border-box;
     font-family: 'Open Sans', sans-serif;
@@ -101,4 +101,38 @@ textarea.caption {
     object-fit: cover;
     vertical-align: bottom;
     border-radius: 2px;
+} */
+
+textarea.caption {
+    box-sizing: border-box;
+    font-size: .9em;
+    letter-spacing: 1px;
+    font-weight: lighter;
+    border: none;
+    outline: none;
+    width: 100%;
+    resize: none;
+}
+
+.preview-items {
+    overflow: hidden;
+    display: grid;
+    grid-gap: .5rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+    grid-auto-rows: minmax(70px, auto);
+}
+
+.preview-items img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 2px;
+    vertical-align: bottom;
+}
+
+.preview-items>div {
+    width: 70px;
+    height: 70px;
+    position: relative;
 }

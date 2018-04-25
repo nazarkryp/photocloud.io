@@ -1,4 +1,50 @@
-<div class="create-media-container" fxLayout="column">
+<div style="width: 500px;">
+    <div style="width: 100%; box-sizing: border-box; padding: .75rem; border-bottom: 1px solid #d8d8d8;" fxLayout="row" fxLayoutAlign="space-between center">
+        <span style="font-weight: 600; font-size: 1.1em;">CREATE POST</span>
+        <mat-icon class="mat-18">clear</mat-icon>
+    </div>
+    <div style="padding: .75rem .75rem 0;">
+        <textarea class="caption" rows="10" placeholder="Write a caption..."></textarea>
+        <div class="preview-items">
+            <div>
+                <mat-icon class="btn-icon mat-18" style="position: absolute; background: #fafafa; border-radius: 50%; padding: 2px; bottom: 0; right: 0;">clear</mat-icon>
+                <img src="https://res.cloudinary.com/dpfmyl1mn/image/upload/v1522316241/photocloud/prod/lanafeshchuk/j75f9jn9kmgiq2tj9hnp.jpg" alt="">
+            </div>
+            <div mat-ripple>
+                <img src="https://res.cloudinary.com/dpfmyl1mn/image/upload/v1521059893/photocloud/prod/finkthefox/f3qmjdi6hwc5v9sctppr.jpg" alt="">
+            </div>
+            <div mat-ripple>
+                <img src="https://res.cloudinary.com/dpfmyl1mn/image/upload/v1515618671/photocloud/prod/vickibaybeee/njl2ypt9rgh3dht8szfm.jpg" alt="">
+            </div>
+            <div mat-ripple>
+                <img src="https://res.cloudinary.com/dpfmyl1mn/image/upload/v1521640423/photocloud/prod/iryna.kozak/mt0mvmpvw0nrioj6fr35.jpg" alt="">
+            </div>
+            <div mat-ripple>
+                <img src="https://res.cloudinary.com/dpfmyl1mn/image/upload/v1521560817/photocloud/prod/yulia/dafdo9ywyk4ydfc5eoyd.jpg" alt="">
+            </div>
+            <div mat-ripple>
+                <img src="https://res.cloudinary.com/dpfmyl1mn/image/upload/v1524236207/photocloud/development/WS341/lanafeshchuk/jjuej6a48waet70rkuei.jpg" alt="">
+            </div>
+            <div mat-ripple>
+                <img src="https://res.cloudinary.com/dpfmyl1mn/image/upload/v1523229236/photocloud/prod/lanafeshchuk/zzmuifa14l4rrtfrnwoh.jpg" alt="">
+            </div>
+            <div mat-ripple>
+                <img src="https://res.cloudinary.com/dpfmyl1mn/image/upload/v1521535909/photocloud/prod/iryna.kozak/w3c1qmsl8yty8ej2hdk4.jpg" alt="">
+            </div>
+            <div mat-ripple>
+                <img src="https://res.cloudinary.com/dpfmyl1mn/image/upload/v1502873515/photocloud/prod/labudamarta/hxv97yxvratkg4zxlvzl.jpg" alt="">
+            </div>
+            <div mat-ripple>
+                <img src="https://res.cloudinary.com/dpfmyl1mn/image/upload/v1523460070/photocloud/prod/tanianovyk/beach594v3pnyhikm5bn.jpg" alt="">
+            </div>
+
+        </div>
+    </div>
+    <div style="padding: .75rem;" fxLayout="row" fxLayoutAlign="end center">
+        <button mat-raised-button color="accent">POST</button>
+    </div>
+</div>
+<!-- <div class="create-media-container" fxLayout="column">
     <div style="margin: -.5rem; padding: .5rem; border-bottom: 1px solid #d8d8d8; background: white;">
         <div fxLayout="row" fxLayoutAlign="space-between center">
             <span style="font-size: 1.2em; font-weight: 800;">CREATE POST</span>
@@ -12,8 +58,7 @@
                 <div class="upload-attachment-button" fxLayout="row" fxLayoutAlign="center center" mat-ripple (click)="fileInput.click()">
                     <mat-icon>add</mat-icon>
                 </div>
-                <div *ngFor="let item of uploader.queue; let index = index;" class="uploaded-attachment-mini" fxLayout="row" fxLayoutAlign="center center"
-                    mat-ripple (click)="select(index)">
+                <div *ngFor="let item of uploader.queue; let index = index;" class="uploaded-attachment-mini" fxLayout="row" fxLayoutAlign="center center" mat-ripple (click)="select(index)">
                     <img appImagePreview [image]="item?._file" alt="photo">
                     <div class="attachment-progress-container" fxLayout="row" fxLayoutAlign="center center" *ngIf="!item.isUploaded">
                         <mat-progress-spinner color="primary" [strokeWidth]="3" [diameter]="60" mode="determinate" value="{{item.progress}}"></mat-progress-spinner>
@@ -34,4 +79,4 @@
         <button mat-button *ngIf="uploader.queue.length > 0 && !uploader.isUploading" color="primary" (click)="createMedia()">SUBMIT</button>
         <button mat-button disabled *ngIf="uploader.queue.length === 0 || uploader.isUploading">SUBMIT</button>
     </div>
-</div>
+</div> -->

@@ -15,7 +15,7 @@ import { CurrentUserViewModel } from 'app/models/view';
         trigger('content', [
             transition(':enter', [
                 query('.signin-form', [
-                    style({ transform: 'translateX(25px)', opacity: 0 }),
+                    style({ transform: 'translateX(.75rem)', opacity: 0 }),
                     stagger(0, [
                         animate('500ms cubic-bezier(0.35, 0, 0.25, 1)', style('*'))
                     ])
@@ -92,17 +92,21 @@ export class SignInComponent implements OnInit {
     public clearCurrentUser() {
         this.currentUser = null;
         this.username.setValue('');
+        this.password.setValue('');
         this.rememberMe.setValue(false);
+        this.formGroup.markAsPristine();
     }
 
     public ngOnInit(): void {
         this.finishLoading();
-        this.currentUser = this.currentUserService.retrieveCurrentUser();
+        const currentUser = this.currentUserService.retrieveCurrentUser();
 
         if (this.currentUser) {
             if (this.currentUser.isRemembered) {
                 this.username.setValue(this.currentUser.username);
                 this.rememberMe.setValue(true);
+                this.currentUser = currentUser;
+
             } else {
                 this.currentUserService.signOut(true);
             }

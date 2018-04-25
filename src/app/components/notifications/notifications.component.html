@@ -40,6 +40,13 @@
         </div>
     </div>
     <div class="footer">
-        <button mat-button color="primary" (click)="openAllNotifications($event)">View all notifications</button>
+        <button class="btn-no-ripple" mat-button color="primary" (click)="openAllNotifications($event)">
+            <div fxLayout="row" fxLayoutAlign="center center">
+                <span>Show more</span>
+                <mat-icon class="mat-18">
+                    keyboard_arrow_down
+                </mat-icon>
+            </div>
+        </button>
     </div>
 </div>
