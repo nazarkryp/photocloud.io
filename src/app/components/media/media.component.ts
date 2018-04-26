@@ -40,18 +40,17 @@ export class MediaComponent implements OnInit, OnDestroy {
     }
 
     public createMedia() {
-        const dialogRef = this.dialog.open(CreateMediaComponent, {
+        this.dialog.open(CreateMediaComponent, {
             disableClose: false,
             width: '500px',
             maxHeight: '100vh',
             maxWidth: '100vw',
             hasBackdrop: true
-        });
-
-        dialogRef.afterClosed()
+        }).afterClosed()
             .subscribe(createdPost => {
                 if (createdPost) {
                     createdPost.user.pictureUri = this.currentUser.pictureUri;
+
                     if (!this.page.data) {
                         this.page.data = new Array<MediaViewModel>();
                     }

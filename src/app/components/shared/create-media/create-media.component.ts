@@ -31,16 +31,9 @@ export class CreateMediaComponent implements OnInit, OnDestroy {
         private progress: NgProgress,
         private tokenProvider: TokenProvider,
         @Optional() public dialogRef: MatDialogRef<CreateMediaComponent>) {
-        this.uploader = new FileUploader({
-            url: environment.apiUri + 'attachments'
-        });
-
+        this.currentUser = this.currentUserService.retrieveCurrentUser();
         this.media = new CreateMediaModel();
-
-        this.currentUserSubscription = this.currentUserService.getCurrentUser()
-            .subscribe(currentUser => {
-                this.currentUser = currentUser;
-            });
+        this.uploader = new FileUploader({ url: `${environment.apiUri}attachments` });
     }
 
     public ngOnInit() {
@@ -83,14 +76,12 @@ export class CreateMediaComponent implements OnInit, OnDestroy {
     }
 
     private getAuthenticationOptions(): FileUploaderOptions {
+        const headers: Array<{ name: string; value: string; }> = [];
         const accessToken = this.tokenProvider.retrieveAccessToken();
 
-        const headers: Array<{ name: string; value: string; }> = [];
         headers.push({ name: 'Authorization', value: `Bearer ${accessToken.accessToken}` });
 
-        const options = <FileUploaderOptions>{ headers: headers };
-
-        return options;
+        return <FileUploaderOptions>{ headers: headers };
     }
 
     public select(index) {
