@@ -156,7 +156,11 @@ a {
 a.primary {
     color: #e91e63;
     cursor: pointer;
-    font-weight: normal;
+}
+
+a.primary.disabled {
+    color: gray;
+    cursor: default;
 }
 
 a.link,

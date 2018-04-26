@@ -1,4 +1,4 @@
-import { Component, Inject, ViewEncapsulation, Optional, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Inject, ViewEncapsulation, Optional, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { MatDialogRef, MatSnackBarConfig, MatSnackBar, MAT_DIALOG_DATA, MatSlideToggleChange } from '@angular/material';
 
 import { Subscription } from 'rxjs/Subscription';
@@ -19,7 +19,6 @@ import { environment } from 'app/../environments/environment';
 })
 export class CreateMediaComponent implements OnInit, OnDestroy {
     public currentUser: CurrentUserViewModel;
-    private currentUserSubscription: Subscription;
     public maxItemsCount = 4;
 
     public media: CreateMediaModel;
@@ -34,29 +33,6 @@ export class CreateMediaComponent implements OnInit, OnDestroy {
         this.currentUser = this.currentUserService.retrieveCurrentUser();
         this.media = new CreateMediaModel();
         this.uploader = new FileUploader({ url: `${environment.apiUri}attachments` });
-    }
-
-    public ngOnInit() {
-        const options = this.getAuthenticationOptions();
-        this.uploader.setOptions(options);
-
-        this.uploader.onAfterAddingFile = (file) => {
-            file.upload();
-        }
-
-        this.uploader.onCompleteItem = (item: any, json: any, status: any, headers: any) => {
-            const response = JSON.parse(json);
-            const attachment = response as AttachmentViewModel;
-            this.media.attachments.push(attachment);
-
-            if (this.media.attachments.length === 1) {
-                this.media.coverId = this.media.attachments[0].id;
-            }
-        };
-    }
-
-    public ngOnDestroy() {
-        this.currentUserSubscription.unsubscribe();
     }
 
     public createMedia() {
@@ -75,15 +51,6 @@ export class CreateMediaComponent implements OnInit, OnDestroy {
         this.dialogRef.close();
     }
 
-    private getAuthenticationOptions(): FileUploaderOptions {
-        const headers: Array<{ name: string; value: string; }> = [];
-        const accessToken = this.tokenProvider.retrieveAccessToken();
-
-        headers.push({ name: 'Authorization', value: `Bearer ${accessToken.accessToken}` });
-
-        return <FileUploaderOptions>{ headers: headers };
-    }
-
     public select(index) {
         this.media.selectedAttachmentIndex = index;
     }
@@ -93,6 +60,53 @@ export class CreateMediaComponent implements OnInit, OnDestroy {
             this.media.coverId = this.media.attachments[this.media.selectedAttachmentIndex].id;
         } else {
             this.media.coverId = this.media.attachments[0].id;
+        }
+    }
+
+    public remove(index: number) {
+        if (this.uploader.queue[index].isSuccess) {
+            this.media.attachments.splice(index, 1);
+            this.uploader.queue.splice(index, 1);
+        } else {
+            this.uploader.queue[index].cancel();
+            this.uploader.queue.splice(index, 1);
+        }
+    }
+
+    public ngOnInit() {
+        const options = this.getAuthenticationOptions();
+        this.uploader.setOptions(options);
+
+        this.uploader.onAfterAddingFile = (file) => {
+            file.upload();
+        }
+
+        this.uploader.onCompleteItem = this.onUploadComplete.bind(this);
+    }
+
+    public ngOnDestroy(): void {
+        const uploads = this.uploader.queue.filter(e => e.isUploading);
+        uploads.forEach(e => e.cancel());
+    }
+
+    private getAuthenticationOptions(): FileUploaderOptions {
+        const headers: Array<{ name: string; value: string; }> = [];
+        const accessToken = this.tokenProvider.retrieveAccessToken();
+
+        headers.push({ name: 'Authorization', value: `Bearer ${accessToken.accessToken}` });
+
+        return <FileUploaderOptions>{ headers: headers };
+    }
+
+    private onUploadComplete(item: any, json: string, status: number, headers: any) {
+        if (status === 200) {
+            const response = JSON.parse(json);
+            const attachment = response as AttachmentViewModel;
+            this.media.attachments.push(attachment);
+
+            if (this.media.attachments.length === 1) {
+                this.media.coverId = this.media.attachments[0].id;
+            }
         }
     }
 }

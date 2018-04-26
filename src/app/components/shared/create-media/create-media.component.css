@@ -146,7 +146,7 @@ textarea.caption {
     font-size: .8em;
 }
 
-::ng-deep .preview-img-overlay>.mat-spinner circle {
+::ng-deep .preview-img-overlay>.mat-progress-spinner circle {
     stroke: rgb(255, 255, 255, .8);
 }
 

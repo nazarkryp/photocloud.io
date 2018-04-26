@@ -1,100 +1,35 @@
 <div style="width: 100%; max-height: 100vh;">
     <div style="background: white; width: 100%; box-sizing: border-box; padding: .75rem; border-bottom: 1px solid #eaeaea;" fxLayout="row" fxLayoutAlign="space-between center">
         <span style="font-weight: 600; font-size: 1.1em;">CREATE POST</span>
-        <mat-icon class="mat-18">clear</mat-icon>
+        <mat-icon class="btn-icon mat-18" (click)="close()">clear</mat-icon>
     </div>
-    <div style="padding: .75rem .75rem 0; background: white;">
-        <textarea class="caption" rows="5" placeholder="Write a caption..."></textarea>
+    <div style="padding: .75rem .75rem .2rem; background: white;">
+        <div fxLayout="row" style="padding-bottom: .7rem;" *ngIf="media.attachments.length > 0">
+            <div style="margin-right: .7rem;" fxLayout="column" fxLayoutAlign="start center">
+                <img style="width: 85px; height: 85px; object-fit: cover; border-radius: 2px; padding-bottom: .25rem;" [src]="media.attachments[media.selectedAttachmentIndex].uri" alt="preview">
+                <a class="primary disabled" style="font-size: .8em;" (click)="setAsCover()">Use as cover</a>
+            </div>
+            <textarea class="caption" [(ngModel)]="media.caption" rows="5" placeholder="Write a caption..."></textarea>
+        </div>
         <div class="preview-items">
-            <div>
-                <mat-icon mat-ripple class="btn-icon btn-remove mat-18">clear</mat-icon>
-                <img src="https://res.cloudinary.com/dpfmyl1mn/image/upload/v1522316241/photocloud/prod/lanafeshchuk/j75f9jn9kmgiq2tj9hnp.jpg" alt="">
-                <div class="preview-img-overlay" fxLayout="row" fxLayoutAlign="center center">
-                    <span>100</span>
-                    <mat-spinner diameter="40" strokeWidth="2"></mat-spinner>
+            <div *ngFor="let item of uploader.queue; let index = index;">
+                <mat-icon mat-ripple class="btn-icon btn-remove mat-18" (click)="remove(index)">clear</mat-icon>
+                <img appImagePreview [image]="item?._file" alt="upload-preview">
+                <div class="preview-img-overlay" fxLayout="row" fxLayoutAlign="center center" *ngIf="!item.isUploaded">
+                    <span *ngIf="item.progress && item.progress < 100">{{item.progress}}</span>
+                    <mat-progress-spinner diameter="40" strokeWidth="2" [value]="item.progress" mode="{{item.progress && item.progress < 100 ? 'determinate' : 'indeterminate' }}"></mat-progress-spinner>
                 </div>
             </div>
             <div>
-                <mat-icon mat-ripple class="btn-icon btn-remove mat-18">clear</mat-icon>
-                <img src="https://res.cloudinary.com/dpfmyl1mn/image/upload/v1521059893/photocloud/prod/finkthefox/f3qmjdi6hwc5v9sctppr.jpg" alt="">
-                <div class="preview-img-overlay" fxLayout="row" fxLayoutAlign="center center">
-                    <span>100</span>
-                    <mat-spinner diameter="40" strokeWidth="2"></mat-spinner>
-                </div>
-            </div>
-            <div>
-                <mat-icon mat-ripple class="btn-icon btn-remove mat-18">clear</mat-icon>
-                <img src="https://res.cloudinary.com/dpfmyl1mn/image/upload/v1515618671/photocloud/prod/vickibaybeee/njl2ypt9rgh3dht8szfm.jpg" alt="">
-                <div class="preview-img-overlay" fxLayout="row" fxLayoutAlign="center center">
-                    <span>100</span>
-                    <mat-spinner diameter="40" strokeWidth="2"></mat-spinner>
-                </div>
-            </div>
-            <div>
-                <mat-icon mat-ripple mat-ripple class="btn-icon btn-remove mat-18">clear</mat-icon>
-                <img src="https://res.cloudinary.com/dpfmyl1mn/image/upload/v1521640423/photocloud/prod/iryna.kozak/mt0mvmpvw0nrioj6fr35.jpg" alt="">
-                <div class="preview-img-overlay" fxLayout="row" fxLayoutAlign="center center">
-                    <span>100</span>
-                    <mat-spinner diameter="40" strokeWidth="2"></mat-spinner>
-                </div>
-            </div>
-            <div>
-                <mat-icon mat-ripple class="btn-icon btn-remove mat-18">clear</mat-icon>
-                <img src="https://res.cloudinary.com/dpfmyl1mn/image/upload/v1521560817/photocloud/prod/yulia/dafdo9ywyk4ydfc5eoyd.jpg" alt="">
-                <div class="preview-img-overlay" fxLayout="row" fxLayoutAlign="center center">
-                    <span>100</span>
-                    <mat-spinner diameter="40" strokeWidth="2"></mat-spinner>
-                </div>
-            </div>
-            <div>
-                <mat-icon mat-ripple class="btn-icon btn-remove mat-18">clear</mat-icon>
-                <img src="https://res.cloudinary.com/dpfmyl1mn/image/upload/v1524236207/photocloud/development/WS341/lanafeshchuk/jjuej6a48waet70rkuei.jpg" alt="">
-                <div class="preview-img-overlay" fxLayout="row" fxLayoutAlign="center center">
-                    <span>100</span>
-                    <mat-spinner diameter="40" strokeWidth="2"></mat-spinner>
-                </div>
-            </div>
-            <div>
-                <mat-icon mat-ripple class="btn-icon btn-remove mat-18">clear</mat-icon>
-                <img src="https://res.cloudinary.com/dpfmyl1mn/image/upload/v1523229236/photocloud/prod/lanafeshchuk/zzmuifa14l4rrtfrnwoh.jpg" alt="">
-                <div class="preview-img-overlay" fxLayout="row" fxLayoutAlign="center center">
-                    <span>100</span>
-                    <mat-spinner diameter="40" strokeWidth="2"></mat-spinner>
-                </div>
-            </div>
-            <div>
-                <mat-icon mat-ripple class="btn-icon btn-remove mat-18">clear</mat-icon>
-                <img src="https://res.cloudinary.com/dpfmyl1mn/image/upload/v1521535909/photocloud/prod/iryna.kozak/w3c1qmsl8yty8ej2hdk4.jpg" alt="">
-                <div class="preview-img-overlay" fxLayout="row" fxLayoutAlign="center center">
-                    <span>100</span>
-                    <mat-spinner diameter="40" strokeWidth="2"></mat-spinner>
-                </div>
-            </div>
-            <div>
-                <mat-icon mat-ripple class="btn-icon btn-remove mat-18">clear</mat-icon>
-                <img src="https://res.cloudinary.com/dpfmyl1mn/image/upload/v1502873515/photocloud/prod/labudamarta/hxv97yxvratkg4zxlvzl.jpg" alt="">
-                <div class="preview-img-overlay" fxLayout="row" fxLayoutAlign="center center">
-                    <span>100</span>
-                    <mat-spinner diameter="40" strokeWidth="2"></mat-spinner>
-                </div>
-            </div>
-            <div>
-                <mat-icon mat-ripple class="btn-icon btn-remove mat-18">clear</mat-icon>
-                <img src="https://res.cloudinary.com/dpfmyl1mn/image/upload/v1523460070/photocloud/prod/tanianovyk/beach594v3pnyhikm5bn.jpg" alt="">
-                <div class="preview-img-overlay" fxLayout="row" fxLayoutAlign="center center">
-                    <span>100</span>
-                    <mat-spinner diameter="40" strokeWidth="2"></mat-spinner>
-                </div>
-            </div>
-            <div>
-                <div class="btn-add" mat-ripple fxLayout="row" fxLayoutAlign="center center">
+                <div class="btn-add" mat-ripple fxLayout="row" fxLayoutAlign="center center" (click)="fileInput.click()">
                     <mat-icon>add</mat-icon>
                 </div>
             </div>
         </div>
+        <input #fileInput type="file" accept="image/*,video/*" ng2FileSelect [uploader]="uploader" hidden multiple/>
     </div>
-    <div style="padding: .75rem; background: white;" fxLayout="row" fxLayoutAlign="end center">
-        <button mat-raised-button color="primary" style="padding: 0 3.4rem;">CREATE POST</button>
+    <div style="padding: .75rem; border-top: 1px solid #eaeaea;" fxLayout="row" fxLayoutAlign="end center">
+        <button mat-raised-button color="primary" [disabled]="!media.attachments?.length" (click)="createMedia()">CREATE POST</button>
     </div>
 </div>
 <!-- <div class="create-media-container" fxLayout="column">
@@ -132,4 +67,93 @@
         <button mat-button *ngIf="uploader.queue.length > 0 && !uploader.isUploading" color="primary" (click)="createMedia()">SUBMIT</button>
         <button mat-button disabled *ngIf="uploader.queue.length === 0 || uploader.isUploading">SUBMIT</button>
     </div>
+</div> -->
+
+<!-- <div class="preview-items">
+    <div>
+        <mat-icon mat-ripple class="btn-icon btn-remove mat-18">clear</mat-icon>
+        <img src="https://res.cloudinary.com/dpfmyl1mn/image/upload/v1522316241/photocloud/prod/lanafeshchuk/j75f9jn9kmgiq2tj9hnp.jpg" alt="">
+        <div class="preview-img-overlay" fxLayout="row" fxLayoutAlign="center center">
+            <span>100</span>
+            <mat-spinner diameter="40" strokeWidth="2"></mat-spinner>
+        </div>
+    </div>
+    <div>
+        <mat-icon mat-ripple class="btn-icon btn-remove mat-18">clear</mat-icon>
+        <img src="https://res.cloudinary.com/dpfmyl1mn/image/upload/v1521059893/photocloud/prod/finkthefox/f3qmjdi6hwc5v9sctppr.jpg" alt="">
+        <div class="preview-img-overlay" fxLayout="row" fxLayoutAlign="center center">
+            <span>100</span>
+            <mat-spinner diameter="40" strokeWidth="2"></mat-spinner>
+        </div>
+    </div>
+    <div>
+        <mat-icon mat-ripple class="btn-icon btn-remove mat-18">clear</mat-icon>
+        <img src="https://res.cloudinary.com/dpfmyl1mn/image/upload/v1515618671/photocloud/prod/vickibaybeee/njl2ypt9rgh3dht8szfm.jpg" alt="">
+        <div class="preview-img-overlay" fxLayout="row" fxLayoutAlign="center center">
+            <span>100</span>
+            <mat-spinner diameter="40" strokeWidth="2"></mat-spinner>
+        </div>
+    </div>
+    <div>
+        <mat-icon mat-ripple mat-ripple class="btn-icon btn-remove mat-18">clear</mat-icon>
+        <img src="https://res.cloudinary.com/dpfmyl1mn/image/upload/v1521640423/photocloud/prod/iryna.kozak/mt0mvmpvw0nrioj6fr35.jpg" alt="">
+        <div class="preview-img-overlay" fxLayout="row" fxLayoutAlign="center center">
+            <span>100</span>
+            <mat-spinner diameter="40" strokeWidth="2"></mat-spinner>
+        </div>
+    </div>
+    <div>
+        <mat-icon mat-ripple class="btn-icon btn-remove mat-18">clear</mat-icon>
+        <img src="https://res.cloudinary.com/dpfmyl1mn/image/upload/v1521560817/photocloud/prod/yulia/dafdo9ywyk4ydfc5eoyd.jpg" alt="">
+        <div class="preview-img-overlay" fxLayout="row" fxLayoutAlign="center center">
+            <span>100</span>
+            <mat-spinner diameter="40" strokeWidth="2"></mat-spinner>
+        </div>
+    </div>
+    <div>
+        <mat-icon mat-ripple class="btn-icon btn-remove mat-18">clear</mat-icon>
+        <img src="https://res.cloudinary.com/dpfmyl1mn/image/upload/v1524236207/photocloud/development/WS341/lanafeshchuk/jjuej6a48waet70rkuei.jpg" alt="">
+        <div class="preview-img-overlay" fxLayout="row" fxLayoutAlign="center center">
+            <span>100</span>
+            <mat-spinner diameter="40" strokeWidth="2"></mat-spinner>
+        </div>
+    </div>
+    <div>
+        <mat-icon mat-ripple class="btn-icon btn-remove mat-18">clear</mat-icon>
+        <img src="https://res.cloudinary.com/dpfmyl1mn/image/upload/v1523229236/photocloud/prod/lanafeshchuk/zzmuifa14l4rrtfrnwoh.jpg" alt="">
+        <div class="preview-img-overlay" fxLayout="row" fxLayoutAlign="center center">
+            <span>100</span>
+            <mat-spinner diameter="40" strokeWidth="2"></mat-spinner>
+        </div>
+    </div>
+    <div>
+        <mat-icon mat-ripple class="btn-icon btn-remove mat-18">clear</mat-icon>
+        <img src="https://res.cloudinary.com/dpfmyl1mn/image/upload/v1521535909/photocloud/prod/iryna.kozak/w3c1qmsl8yty8ej2hdk4.jpg" alt="">
+        <div class="preview-img-overlay" fxLayout="row" fxLayoutAlign="center center">
+            <span>100</span>
+            <mat-spinner diameter="40" strokeWidth="2"></mat-spinner>
+        </div>
+    </div>
+    <div>
+        <mat-icon mat-ripple class="btn-icon btn-remove mat-18">clear</mat-icon>
+        <img src="https://res.cloudinary.com/dpfmyl1mn/image/upload/v1502873515/photocloud/prod/labudamarta/hxv97yxvratkg4zxlvzl.jpg" alt="">
+        <div class="preview-img-overlay" fxLayout="row" fxLayoutAlign="center center">
+            <span>100</span>
+            <mat-spinner diameter="40" strokeWidth="2"></mat-spinner>
+        </div>
+    </div>
+    <div>
+        <mat-icon mat-ripple class="btn-icon btn-remove mat-18">clear</mat-icon>
+        <img src="https://res.cloudinary.com/dpfmyl1mn/image/upload/v1523460070/photocloud/prod/tanianovyk/beach594v3pnyhikm5bn.jpg" alt="">
+        <div class="preview-img-overlay" fxLayout="row" fxLayoutAlign="center center">
+            <span>100</span>
+            <mat-spinner diameter="40" strokeWidth="2"></mat-spinner>
+        </div>
+    </div>
+    <div>
+        <div class="btn-add" mat-ripple fxLayout="row" fxLayoutAlign="center center">
+            <mat-icon>add</mat-icon>
+        </div>
+    </div>
+</div>
 </div> -->
