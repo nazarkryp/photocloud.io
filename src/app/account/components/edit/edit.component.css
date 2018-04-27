@@ -21,10 +21,6 @@
     position: relative;
 }
 
-.edit-container button {
-    font-weight: bold;
-}
-
 .edit-container .overlay {
     position: absolute;
     margin: -1.4rem;
@@ -45,6 +41,7 @@
 .edit-container .item {
     position: relative;
     margin-top: 2rem;
+    font: inherit;
 }
 
 .edit-container .disabled {
@@ -55,8 +52,8 @@
     font-size: .9em;
 }
 
-.item {
-    font: inherit;
+.edit-container .item h4 {
+    padding-bottom: .7rem;
 }
 
 .item a {
@@ -101,9 +98,10 @@ div.edit-image:not([disabled]):hover .change-overlay {
     opacity: 1;
 }
 
-.btn-deactivate {
-    width: 100%;
+.edit-container .btn-deactivate {
+    font-weight: bold;
     text-transform: uppercase;
+    font-weight: 600;
 }
 
 ::ng-deep .btn-deactivate .mat-button-focus-overlay {
