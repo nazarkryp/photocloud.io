@@ -55,13 +55,13 @@
     top: 0;
     bottom: 0;
     border-radius: inherit;
-    animation: animate .7s linear 2;
+    animation: animate 1s linear 2;
     opacity: 0;
     backface-visibility: hidden;
 }
 
 .btn-pulse:after {
-    animation-delay: .7s;
+    animation-delay: 1s;
 }
 
 @keyframes animate {

@@ -55,12 +55,16 @@ export class CreateMediaComponent implements OnInit, OnDestroy {
         this.media.selectedAttachmentIndex = index;
     }
 
-    public change(toggleChange: MatSlideToggleChange) {
-        if (toggleChange.checked) {
-            this.media.coverId = this.media.attachments[this.media.selectedAttachmentIndex].id;
-        } else {
-            this.media.coverId = this.media.attachments[0].id;
-        }
+    // public change(toggleChange: MatSlideToggleChange) {
+    //     if (toggleChange.checked) {
+    //         this.media.coverId = this.media.attachments[this.media.selectedAttachmentIndex].id;
+    //     } else {
+    //         this.media.coverId = this.media.attachments[0].id;
+    //     }
+    // }
+
+    public setAsCover() {
+        this.media.coverId = this.media.attachments[this.media.selectedAttachmentIndex].id;
     }
 
     public remove(index: number) {
@@ -71,14 +75,17 @@ export class CreateMediaComponent implements OnInit, OnDestroy {
             this.uploader.queue[index].cancel();
             this.uploader.queue.splice(index, 1);
         }
+
+        this.dialogRef.disableClose = this.uploader.queue.length !== 0;
     }
 
     public ngOnInit() {
         const options = this.getAuthenticationOptions();
         this.uploader.setOptions(options);
 
-        this.uploader.onAfterAddingFile = (file) => {
-            file.upload();
+        this.uploader.onAfterAddingAll = (fileItems) => {
+            this.dialogRef.disableClose = true;
+            this.uploader.uploadAll();
         }
 
         this.uploader.onCompleteItem = this.onUploadComplete.bind(this);
