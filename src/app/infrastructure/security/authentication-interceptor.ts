@@ -1,11 +1,11 @@
 ﻿import { Injectable, Injector } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpResponse, HttpErrorResponse } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/mergeMap';
+import { Observable } from 'rxjs';
 
 import { AccessToken } from 'app/infrastructure/security';
 import { TokenProvider } from './token-provider';
+import { mergeMap } from 'rxjs/operators';
 
 @Injectable()
 export class AuthenticationInterceptor implements HttpInterceptor {
@@ -21,7 +21,7 @@ export class AuthenticationInterceptor implements HttpInterceptor {
         const tokenProvider = this.injector.get(TokenProvider);
 
         return tokenProvider.getAccessToken()
-            .mergeMap<AccessToken, HttpEvent<any>>((accessToken) => {
+            .pipe(mergeMap<AccessToken, HttpEvent<any>>((accessToken) => {
                 if (!accessToken) {
                     return next.handle(req);
                 }
@@ -33,6 +33,6 @@ export class AuthenticationInterceptor implements HttpInterceptor {
                 });
 
                 return next.handle(request);
-            });
+            }));
     }
 }

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 import { WebApiService } from 'app/core/services/communication';
 import { CommentViewModel, Page, PaginationViewModel, } from 'app/models/view';
@@ -25,9 +26,9 @@ export class CommentService {
         }
 
         return this.apiService.get<Page<CommentResponse>>(requesUri)
-            .map(page => {
+            .pipe(map(page => {
                 return this.pageMapper.mapFromResponse(page);
-            });
+            }));
     }
 
     public createComment(mediaId: number, comment: any): Observable<CommentViewModel> {

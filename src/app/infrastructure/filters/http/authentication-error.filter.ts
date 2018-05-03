@@ -2,8 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 
-import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 import { HttpStatusCode } from 'app/models/common/http';
 import { HttpErrorFilter } from './http-error.fitler';
@@ -14,7 +13,7 @@ export class AuthenticationErrorFilter implements HttpErrorFilter {
         private router: Router,
         private currentUserService: CurrentUserService) { }
 
-    public handle(response: HttpErrorResponse): ErrorObservable | Observable<HttpErrorResponse> {
+    public handle(response: HttpErrorResponse): Observable<HttpErrorResponse> {
         if (response.status === HttpStatusCode.Unauthorized) {
             if (this.currentUserService.canSignInWithCode) {
                 this.router.navigateByUrl('/account/restore');

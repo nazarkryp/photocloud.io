@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 import { WebApiService } from 'app/core/services/communication';
 import { ActivityViewModel, Page, PaginationViewModel } from 'app/models/view';
@@ -26,9 +27,9 @@ export class ActivityService {
         }
 
         return this.httpClient.get<Page<ActivityResponse>>(requestUri)
-            .map(page => {
+            .pipe(map(page => {
                 return this.pageMapper.mapFromResponse(page);
-            });
+            }));
     }
 
     public removeActivity(activityId: number): Observable<any> {

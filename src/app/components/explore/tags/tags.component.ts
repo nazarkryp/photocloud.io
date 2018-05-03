@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 
 import { CurrentUserService } from 'app/infrastructure/services';
 import { MediaDetailsComponent } from 'app/components/shared/media-details/media-details.component';
@@ -11,6 +11,7 @@ import { AccountService } from 'app/account/services';
 
 import { NgProgress } from 'ngx-progressbar';
 import { LikeService } from 'app/shared/services';
+import { finalize } from 'rxjs/operators';
 
 @Component({
     templateUrl: './tags.component.html',
@@ -46,10 +47,10 @@ export class TagsComponent implements OnInit, OnDestroy {
 
         this.isLoading = true;
         this.mediaService.getMediaByTag(this.tag, this.page.pagination)
-            .finally(() => {
+            .pipe(finalize(() => {
                 this.isLoading = false;
                 this.progress.done();
-            })
+            }))
             .subscribe(page => {
                 this.page.hasMoreItems = page.hasMoreItems;
                 this.page.pagination = page.pagination;

@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Output, OnInit, OnDestroy } from '@angular/core';
 import { trigger, style, animate, transition, query, stagger } from '@angular/animations';
 
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 
 import { UserService, RequestsService } from 'app/services';
 
@@ -9,6 +9,7 @@ import { UserViewModel, RequestViewModel, Page, CurrentUserViewModel } from 'app
 import { RelationshipAction } from 'app/models/shared';
 import { MatTabChangeEvent } from '@angular/material';
 import { CurrentUserService } from 'app/infrastructure/services';
+import { finalize } from 'rxjs/operators';
 
 @Component({
     selector: 'app-user-requests',
@@ -24,6 +25,7 @@ import { CurrentUserService } from 'app/infrastructure/services';
     ]
 })
 export class UserRequestsComponent implements OnInit {
+    // tslint:disable-next-line:no-output-on-prefix
     @Output() onClosing: EventEmitter<any> = new EventEmitter<any>();
 
     public currentUser: CurrentUserViewModel;
@@ -67,9 +69,9 @@ export class UserRequestsComponent implements OnInit {
     public getIncommingRequests() {
         this.isLoading = true;
         this.incommingRequestsSubscription = this.requestService.getIncommingRequests(this.incommingRequestsPage.pagination)
-            .finally(() => {
+            .pipe(finalize(() => {
                 this.isLoading = false;
-            })
+            }))
             .subscribe(page => {
                 this.incommingRequestsPage.hasMoreItems = page.hasMoreItems;
                 this.incommingRequestsPage.pagination = page.pagination;
@@ -84,9 +86,9 @@ export class UserRequestsComponent implements OnInit {
     public getOutgoingRequests() {
         this.isLoading = true;
         this.outgoingRequestsSubscription = this.requestService.getOutgoingRequests(this.outgoingRequestsPage.pagination)
-            .finally(() => {
+            .pipe(finalize(() => {
                 this.isLoading = false;
-            })
+            }))
             .subscribe(page => {
                 this.outgoingRequestsPage.hasMoreItems = page.hasMoreItems;
                 this.outgoingRequestsPage.pagination = page.pagination;
@@ -102,9 +104,9 @@ export class UserRequestsComponent implements OnInit {
         incommingRequest.isAcceptingIncommingRequest = true;
         this.userService.modifyRelationship(incommingRequest.id, {
             action: RelationshipAction.Approve
-        }).finally(() => {
+        }).pipe(finalize(() => {
             incommingRequest.isAcceptingIncommingRequest = true;
-        }).subscribe(userResult => {
+        })).subscribe(userResult => {
             // const indexToRemove = this.incommingRequestsPage.data.findIndex(e => e.id === incommingRequest.id);
             // this.incommingRequestsPage.data.splice(indexToRemove, 1);
             // this.requestService.updateIncommingRequestsCount(this.incommingRequestsPage.data.length);
@@ -116,9 +118,9 @@ export class UserRequestsComponent implements OnInit {
         incommingRequest.isRemovingIncommingRequest = true;
         this.userService.modifyRelationship(incommingRequest.id, {
             action: RelationshipAction.Reject
-        }).finally(() => {
+        }).pipe(finalize(() => {
             incommingRequest.isRemovingIncommingRequest = false;
-        }).subscribe(userResult => {
+        })).subscribe(userResult => {
             // const indexToRemove = this.incommingRequestsPage.data.findIndex(e => e.id === incommingRequest.id);
             // this.incommingRequestsPage.data.splice(indexToRemove, 1);
             // this.requestService.updateIncommingRequestsCount(this.incommingRequestsPage.data.length);
@@ -130,9 +132,9 @@ export class UserRequestsComponent implements OnInit {
         outgoingRequest.isRemovingIncommingRequest = true;
         this.userService.modifyRelationship(outgoingRequest.id, {
             action: RelationshipAction.Unfollow
-        }).finally(() => {
+        }).pipe(finalize(() => {
             outgoingRequest.isRemovingIncommingRequest = false;
-        }).subscribe(userResult => {
+        })).subscribe(userResult => {
             // const indexToRemove = this.outgoingRequestsPage.data.findIndex(e => e.id === outgoingRequest.id);
             outgoingRequest.isRemoved = true;
         });

@@ -6,14 +6,17 @@ import {
     HttpHandler,
     HttpRequest,
     HttpResponse,
-    HttpErrorResponse
+    HttpErrorResponse,
+    HttpSentEvent,
+    HttpHeaderResponse,
+    HttpProgressEvent,
+    HttpUserEvent
 } from '@angular/common/http';
 
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/throw';
-import 'rxjs/add/operator/catch';
+import { Observable } from 'rxjs';
 
 import { HttpErrorHandler } from 'app/infrastructure/configuration';
+import { catchError } from 'rxjs/operators';
 
 @Injectable()
 export class HttpErrorInterceptor implements HttpInterceptor {
@@ -21,8 +24,8 @@ export class HttpErrorInterceptor implements HttpInterceptor {
         private errorHandler: HttpErrorHandler) { }
 
     public intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        const result = next.handle(req)
-            .catch((errorResponse: HttpErrorResponse) => {
+        const result: any = next.handle(req)
+            .pipe(catchError((errorResponse: HttpErrorResponse) => {
                 const error = this.errorHandler.handle(errorResponse);
 
                 if (error) {
@@ -30,7 +33,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
                 }
 
                 return Observable.throw(errorResponse);
-            });
+            }));
 
         return result;
     }

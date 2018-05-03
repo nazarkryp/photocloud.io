@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+
 import { WebApiService } from 'app/core/services/communication';
 import { UserMapper, PageMapper } from 'app/infrastructure/mapping';
 
@@ -19,16 +22,16 @@ export class UserService {
 
     public getUser(username: string): Observable<UserViewModel> {
         return this.apiService.get<UserResponse>(`users/${username}`)
-            .map(response => {
+            .pipe(map(response => {
                 return this.userMapper.mapFromResponse(response);
-            });
+            }));
     }
 
     public checkIfUserExists(username: string): Observable<boolean> {
         return this.apiService.get<ValidationResult>(`users/${username}/validate`)
-            .map(data => {
+            .pipe(map(data => {
                 return data.success;
-            });
+            }));
     }
 
     public getUsers(pagination: PaginationViewModel): Observable<Page<UserViewModel>> {
@@ -39,10 +42,10 @@ export class UserService {
         }
 
         return this.apiService.get<Page<UserResponse>>(requestUri)
-            .map(page => {
+            .pipe(map(page => {
                 const pageViewModel = this.pageMapper.mapFromResponse(page);
                 return pageViewModel;
-            });
+            }));
     }
 
     public searchUsers(query: string): Observable<Page<UserViewModel>> {
@@ -57,9 +60,9 @@ export class UserService {
         }
 
         return this.apiService.get<Page<UserResponse>>(requestUri)
-            .map(response => {
+            .pipe(map(response => {
                 return this.pageMapper.mapFromResponse(response);
-            });
+            }));
     }
 
     public getOutgoingRequests(pagination: PaginationViewModel): Observable<Page<UserViewModel>> {
@@ -70,9 +73,9 @@ export class UserService {
         }
 
         return this.apiService.get<Page<UserResponse>>(requestUri)
-            .map(response => {
+            .pipe(map(response => {
                 return this.pageMapper.mapFromResponse(response);
-            });
+            }));
     }
 
     public modifyRelationship(userId: number, relationshipModel: any): Observable<UserViewModel> {
@@ -87,11 +90,9 @@ export class UserService {
         }
 
         return this.apiService.get<Page<UserResponse>>(requestUri)
-            .map(response => {
-                const page = this.pageMapper.mapFromResponse(response);
-
-                return page;
-            });
+            .pipe(map(response => {
+                return this.pageMapper.mapFromResponse(response);
+            }));
     }
 
     public getFollowings(userId: number, pagination: PaginationViewModel): Observable<Page<UserViewModel>> {
@@ -101,11 +102,9 @@ export class UserService {
         }
 
         return this.apiService.get<Page<UserResponse>>(requestUri)
-            .map(response => {
-                const page = this.pageMapper.mapFromResponse(response);
-
-                return page;
-            });
+            .pipe(map(response => {
+                return this.pageMapper.mapFromResponse(response);
+            }));
     }
 
     public update(userId: number, options: any): Observable<any> {

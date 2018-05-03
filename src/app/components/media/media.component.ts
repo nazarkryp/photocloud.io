@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, HostListener, ElementRef } from '@angular
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material';
 
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 
 import { MediaViewModel, UserViewModel, Page, CommentViewModel, AttachmentViewModel, CurrentUserViewModel } from 'app/models/view';
 import { CurrentUserService } from 'app/infrastructure/services';
@@ -11,6 +11,7 @@ import { CreateMediaComponent } from 'app/components/shared/create-media/create-
 import { ConfirmComponent } from 'app/components/shared/confirm/confirm.component';
 
 import { NgProgress } from 'ngx-progressbar';
+import { finalize } from 'rxjs/operators';
 
 @Component({
     templateUrl: './media.component.html',
@@ -68,10 +69,10 @@ export class MediaComponent implements OnInit, OnDestroy {
         }
 
         this.mediaService.getRecentMedia(this.page.pagination)
-            .finally(() => {
+            .pipe(finalize(() => {
                 this.isLoading = false;
                 this.progress.done();
-            })
+            }))
             .subscribe(page => {
                 this.page.hasMoreItems = page.hasMoreItems;
                 this.page.pagination = page.pagination;

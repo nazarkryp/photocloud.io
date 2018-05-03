@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { AccountModule } from 'app/account/account.module';
 
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 import { AccountService } from 'app/account/services';
 

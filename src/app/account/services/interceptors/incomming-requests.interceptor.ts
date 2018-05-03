@@ -10,9 +10,10 @@ import {
     HttpResponse
 } from '@angular/common/http';
 
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { CurrentUserService } from 'app/infrastructure/services';
 import { RequestsService } from 'app/services';
+import { finalize } from 'rxjs/operators';
 
 @Injectable()
 export class IncommingRequestsInterceptor implements HttpInterceptor {
@@ -37,14 +38,15 @@ export class IncommingRequestsInterceptor implements HttpInterceptor {
 
         this.isLoadingIncommingRequests = true;
 
-        return next.handle(req).finally(() => {
-            const currentUser = this.currentUserService.retrieveCurrentUser();
+        return next.handle(req)
+            .pipe(finalize(() => {
+                const currentUser = this.currentUserService.retrieveCurrentUser();
 
-            if (currentUser && currentUser.isActive && currentUser.isPrivate && !req.url.includes('users/requests/incomming')) {
-                this.incommingRequestsService.getIncommingRequests(null).subscribe(() => {
-                    this.isLoadingIncommingRequests = false;
-                });
-            }
-        });
+                if (currentUser && currentUser.isActive && currentUser.isPrivate && !req.url.includes('users/requests/incomming')) {
+                    this.incommingRequestsService.getIncommingRequests(null).subscribe(() => {
+                        this.isLoadingIncommingRequests = false;
+                    });
+                }
+            }));
     }
 }

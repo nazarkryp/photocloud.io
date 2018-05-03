@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 
-import { ReplaySubject } from 'rxjs/ReplaySubject';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/mergeMap';
+import { Observable, ReplaySubject, of } from 'rxjs';
+import { tap, mergeMap, map } from 'rxjs/operators';
 
 import { CurrentUserViewModel } from 'app/models/view';
 import { UserService } from 'app/services';
@@ -41,28 +40,28 @@ export class CurrentUserService {
 
     public signIn(username: string, password: string, rememberMe: boolean): Observable<any> {
         return this.accountService.signIn(username, password)
-            .mergeMap<AccessToken, CurrentUserViewModel>(accessToken => {
+            .pipe(mergeMap<AccessToken, CurrentUserViewModel>(accessToken => {
                 this.tokenProvider.setAccessToken(accessToken);
                 return this.accountService.getAccount()
-                    .map(currentUser => {
+                    .pipe(map(currentUser => {
                         currentUser.isRemembered = rememberMe;
                         this.saveCurrentUser(currentUser);
                         return currentUser;
-                    });
-            })
+                    }));
+            }));
     }
 
     public create(request: CreateAccountRequestModel): Observable<any> {
         if (request.signInOnCreated) {
             return this.accountService.create(request)
-                .mergeMap<AccessToken, CurrentUserViewModel>(accessToken => {
+                .pipe(mergeMap<AccessToken, CurrentUserViewModel>(accessToken => {
                     this.tokenProvider.setAccessToken(accessToken);
                     return this.accountService.getAccount()
-                        .map(currentUser => {
+                        .pipe(map(currentUser => {
                             this.saveCurrentUser(currentUser);
                             return currentUser;
-                        });
-                });
+                        }));
+                }));
         }
 
         return this.accountService.create(request);
@@ -75,36 +74,36 @@ export class CurrentUserService {
         }
 
         return this.accountService.signInWithCode(code)
-            .mergeMap<AccessToken, CurrentUserViewModel>(accessToken => {
+            .pipe(mergeMap<AccessToken, CurrentUserViewModel>(accessToken => {
                 this.tokenProvider.setAccessToken(accessToken);
                 return this.accountService.getAccount()
-                    .map(currentUser => {
+                    .pipe(map(currentUser => {
                         this.saveCurrentUser(currentUser);
                         return currentUser;
-                    });
-            })
+                    }));
+            }));
     }
 
     public enableSignInWithCode(): Observable<any> {
         return this.accountService.enableSignInWithCode()
-            .do((code) => {
+            .pipe(tap((code) => {
                 const token = this.tokenProvider.retrieveAccessToken();
                 token.code = code;
                 this.tokenProvider.setAccessToken(token);
-            });
+            }));
     }
 
     public disableSignInWithCode(): Observable<any> {
         return this.accountService.disableSignInWithCode()
-            .do(() => {
+            .pipe(tap(() => {
                 const token = this.tokenProvider.retrieveAccessToken();
                 token.code = null;
                 this.tokenProvider.setAccessToken(token);
-            });
+            }));
     }
 
     public recover(username): Observable<any> {
-        return Observable.of(true);
+        return of(true);
     }
 
     public signOut(cleanCurrentUser: boolean = true) {
@@ -124,12 +123,11 @@ export class CurrentUserService {
 
             if (currentUser && this.isAuthenticated) {
                 return this.accountService.getAccount()
-                    .mergeMap<CurrentUserViewModel, CurrentUserViewModel>(serverCurrentUser => {
+                    .pipe(mergeMap<CurrentUserViewModel, CurrentUserViewModel>(serverCurrentUser => {
                         this.saveCurrentUser(serverCurrentUser);
-
-                        this.state.next(serverCurrentUser)
+                        this.state.next(serverCurrentUser);
                         return this.state.asObservable();
-                    });
+                    }));
             }
         }
 
@@ -138,9 +136,9 @@ export class CurrentUserService {
 
     public updateCurrentUser(propertiesToUpdate: any): Observable<CurrentUserViewModel> {
         return this.accountService.updateAccount(propertiesToUpdate)
-            .do(currentUser => {
+            .pipe(tap(currentUser => {
                 this.saveCurrentUser(currentUser);
-            });
+            }));
     }
 
     public updateUser(propertiesToUpdate: any) {
@@ -157,9 +155,9 @@ export class CurrentUserService {
 
     public changeAccountAttachment(propertiesToUpdate: any): Observable<CurrentUserViewModel> {
         return this.accountService.changeAccountAttachment(propertiesToUpdate)
-            .do(currentUser => {
+            .pipe(tap(currentUser => {
                 this.saveCurrentUser(currentUser);
-            });
+            }));
     }
 
     public retrieveCurrentUser(): CurrentUserViewModel {

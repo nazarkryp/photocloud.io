@@ -2,6 +2,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 import { ActivityService } from 'app/services';
 import { ActivityViewModel, Page } from 'app/models/view';
+import { finalize } from 'rxjs/operators';
 
 @Component({
     selector: 'app-notifications',
@@ -11,7 +12,9 @@ import { ActivityViewModel, Page } from 'app/models/view';
 export class NotificationsComponent implements OnInit {
     public isLoading: boolean;
     public page: Page<ActivityViewModel>;
+    // tslint:disable-next-line:no-output-on-prefix
     @Output() public onOpenAllNotifications: EventEmitter<void> = new EventEmitter<void>();
+    // tslint:disable-next-line:no-output-on-prefix
     @Output() public onOpenRequests: EventEmitter<void> = new EventEmitter<void>();
 
     constructor(
@@ -32,9 +35,9 @@ export class NotificationsComponent implements OnInit {
     public getNotifications() {
         this.isLoading = true;
         this.activityService.getRecentActivity()
-            .finally(() => {
+            .pipe(finalize(() => {
                 this.isLoading = false;
-            })
+            }))
             .subscribe(page => {
                 this.page = page;
             });

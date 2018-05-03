@@ -1,9 +1,6 @@
 ﻿import { Injectable } from '@angular/core';
 import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/take';
-
 import { TokenProvider } from 'app/infrastructure/security';
 import { CurrentUserService } from 'app/infrastructure/services';
 

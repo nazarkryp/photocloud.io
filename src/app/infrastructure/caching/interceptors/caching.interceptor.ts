@@ -9,7 +9,8 @@ import {
     HttpErrorResponse
 } from '@angular/common/http';
 
-import { Observable } from 'rxjs/Observable';
+import { Observable, of } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 import { MemoryCache } from 'app/infrastructure/caching';
 
@@ -26,13 +27,13 @@ export class CachingInterceptor implements HttpInterceptor {
 
         const cachedResponse = this.cache.get(req);
         if (cachedResponse) {
-            return Observable.of(cachedResponse);
+            return of(cachedResponse);
         }
 
-        return next.handle(req).do(event => {
+        return next.handle(req).pipe(tap(event => {
             if (event instanceof HttpResponse) {
                 this.cache.put(req, event);
             }
-        });
+        }));
     }
 }

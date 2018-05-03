@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { HttpClient, HttpRequest, HttpHeaders, HttpEvent, HttpEventType, HttpProgressEvent, HttpResponseBase } from '@angular/common/http';
 
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { finalize, map, tap } from 'rxjs/operators';
 
 import { WebApiService } from './communication';

@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 
 import { AccountService } from 'app/account/services';
 import { CurrentUserViewModel } from 'app/models/view';

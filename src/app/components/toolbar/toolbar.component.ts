@@ -1,6 +1,8 @@
 import { AfterViewInit, AfterViewChecked, Component, Input, Output, EventEmitter, OnInit, OnDestroy, ChangeDetectorRef, ViewChild } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
-import { Subscription } from 'rxjs/Subscription';
+import { MatMenuTrigger } from '@angular/material';
+
+import { Subscription } from 'rxjs';
 
 import { CurrentUserService } from 'app/infrastructure/services';
 import { AccountService } from 'app/account/services';
@@ -8,7 +10,6 @@ import { CurrentUserViewModel, Page, ActivityViewModel } from 'app/models/view';
 import { RequestsService, ActivityService } from 'app/services';
 import { Uploader } from 'app/core/services';
 import { ScrollDirection } from 'app/shared/directives/header-scroll.directive';
-import { MatMenuTrigger } from '@angular/material';
 
 @Component({
     selector: 'app-toolbar',
@@ -24,6 +25,7 @@ export class ToolbarComponent implements OnInit, OnDestroy, AfterViewChecked, Af
     public incommingRequestsCount: number;
     public scrolled: boolean;
     public scrolledDown: boolean;
+    // tslint:disable-next-line:no-output-on-prefix
     @Output() public onOpenRequests = new EventEmitter<boolean>();
 
     public notifications: Page<ActivityViewModel>;

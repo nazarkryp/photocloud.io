@@ -6,6 +6,7 @@ import { MatDialog } from '@angular/material';
 import { ConfirmComponent } from 'app/components/shared/confirm/confirm.component';
 import { RelationshipAction } from 'app/models/shared';
 import { trigger, transition, style, stagger, query, keyframes, animate } from '@angular/animations';
+import { finalize } from 'rxjs/operators';
 
 @Component({
     templateUrl: './activity.component.html',
@@ -33,6 +34,7 @@ import { trigger, transition, style, stagger, query, keyframes, animate } from '
 export class ActivityComponent implements OnInit {
     public isLoading: boolean;
     public page: Page<ActivityViewModel>;
+    // tslint:disable-next-line:no-output-on-prefix
     @Output() public onOpenAllNotifications: EventEmitter<void> = new EventEmitter<void>();
 
     constructor(
@@ -47,9 +49,9 @@ export class ActivityComponent implements OnInit {
     public getNotifications() {
         this.isLoading = true;
         this.activityService.getRecentActivity(this.page.pagination)
-            .finally(() => {
+            .pipe(finalize(() => {
                 this.isLoading = false;
-            })
+            }))
             .subscribe(page => {
                 if (!this.page.pagination) {
                     this.page = new Page<ActivityViewModel>();

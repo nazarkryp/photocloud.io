@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { CommentService } from 'app/services';
 import { CurrentUserService } from 'app/infrastructure/services';
 import { MediaViewModel, CurrentUserViewModel, CommentViewModel, Page, PaginationViewModel } from 'app/models/view';
+import { finalize } from 'rxjs/operators';
 
 @Component({
     selector: 'app-comments',
@@ -44,9 +45,9 @@ export class CommentsComponent implements OnInit {
         this.isLoading = true;
 
         this.commentService.getComments(this.media.id, this.page.pagination)
-            .finally(() => {
+            .pipe(finalize(() => {
                 this.isLoading = false;
-            })
+            }))
             .subscribe(page => {
                 this.page.hasMoreItems = page.hasMoreItems;
                 this.page.pagination = page.pagination;

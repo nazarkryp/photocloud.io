@@ -3,8 +3,7 @@ import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material';
 
-import { Subscription } from 'rxjs/Subscription';
-import 'rxjs/add/operator/delay';
+import { Subscription } from 'rxjs';
 
 import { MediaViewModel, Page, CurrentUserViewModel } from 'app/models/view';
 import { MediaDetailsComponent } from 'app/components/shared/media-details';
@@ -12,6 +11,7 @@ import { MediaService } from 'app/services';
 import { CurrentUserService } from 'app/infrastructure/services';
 import { AccountService } from 'app/account/services';
 import { NgProgress } from 'ngx-progressbar';
+import { finalize } from 'rxjs/operators';
 
 @Component({
     templateUrl: './liked-media.component.html',
@@ -33,16 +33,16 @@ export class LikedMediaComponent implements OnInit, OnDestroy {
         private progress: NgProgress) {
         this.currentUserSubscription = this.currentUserService.getCurrentUser().subscribe(currentUser => {
             this.currentUser = currentUser;
-        })
+        });
     }
 
     public getLikedMedia() {
         this.progress.start();
 
         this.mediaService.getLikedMedia(this.page.pagination)
-            .finally(() => {
+            .pipe(finalize(() => {
                 this.progress.done();
-            })
+            }))
             .subscribe(page => {
                 this.page.hasMoreItems = page.hasMoreItems;
                 this.page.pagination = page.pagination;

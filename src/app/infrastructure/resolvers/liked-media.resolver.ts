@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Location } from '@angular/common';
 import { Resolve, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
+
+import { Observable, of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 import { MediaService } from 'app/services';
 import { Page, MediaViewModel } from 'app/models/view';
@@ -24,8 +26,8 @@ export class LikedMediaResolver implements Resolve<Page<MediaViewModel>> {
         this.location.replaceState(`${currentUser.username}/liked`);
 
         return this.mediaService.getLikedMedia(null)
-            .catch(error => {
-                return Observable.of(error);
-            });
+            .pipe(catchError(error => {
+                return of(error);
+            }));
     }
 }

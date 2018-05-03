@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 import { TokenProvider } from 'app/infrastructure/security/token-provider';
 import { AttachmentViewModel } from 'app/models/view';
@@ -28,7 +30,7 @@ export class UploaderService {
 
         this.fileUploader.onAfterAddingFile = (file) => {
             file.upload();
-        }
+        };
 
         this.fileUploader.onCompleteItem = (item: any, json: any, status: any, headers: any) => {
             const response = JSON.parse(json);
@@ -42,7 +44,7 @@ export class UploaderService {
 
     private getAuthenticationOptions(): Observable<FileUploaderOptions> {
         return this.tokenProvider.getAccessToken()
-            .map(accessToken => {
+            .pipe(map(accessToken => {
                 if (!accessToken) {
                     return null;
                 }
@@ -52,6 +54,6 @@ export class UploaderService {
                 const options = <FileUploaderOptions>{ headers: headers };
 
                 return options;
-            });
+            }));
     }
 }

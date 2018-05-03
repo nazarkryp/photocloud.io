@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, ViewEncapsulation, Output, EventEmitter } from '@angular/core';
 import { MatDialog } from '@angular/material';
 
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 import { UsersDialogComponent } from 'app/components/shared/users-dialog/users-dialog.component';
 
@@ -16,6 +16,7 @@ import { MediaService } from 'app/services';
 })
 export class LikesComponent {
     @Input() public media: MediaViewModel;
+    // tslint:disable-next-line:no-output-on-prefix
     @Output() public onClicked = new EventEmitter<Observable<UserViewModel[]>>();
 
     constructor(
@@ -44,7 +45,7 @@ export class LikesComponent {
 
     private getUserLinks(): string[] {
         return this.media.likes.map(e => {
-            return `<a class="like" href="./${e.username}">${e.username}</a>`
+            return `<a class="like" href="./${e.username}">${e.username}</a>`;
         });
     }
 }

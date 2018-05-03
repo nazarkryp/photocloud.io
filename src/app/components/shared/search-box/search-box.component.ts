@@ -3,13 +3,13 @@ import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatAutocompleteSelectedEvent } from '@angular/material';
 
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/debounceTime';
+import { Observable, of } from 'rxjs';
 
 import { UserService } from 'app/services';
 import { Page, UserViewModel } from 'app/models/view';
 
 import { NgProgress } from 'ngx-progressbar';
+import { map, tap, switchMap, debounceTime } from 'rxjs/operators';
 
 @Component({
     selector: 'app-search-box',
@@ -31,7 +31,7 @@ export class SearchBoxComponent implements OnInit {
 
     public searchUsers(searchQuery: string) {
         return this.userService.searchUsers(searchQuery)
-            .map(collection => collection.data);
+            .pipe(map(collection => collection.data));
     }
 
     public onSelectionChanged(event: MatAutocompleteSelectedEvent) {
@@ -39,7 +39,7 @@ export class SearchBoxComponent implements OnInit {
             this.router.navigateByUrl(`/${event.option.value}`)
                 .then((navigationSuccess) => {
                     if (navigationSuccess) {
-                        this.searchControl.setValue('')
+                        this.searchControl.setValue('');
                     }
                 });
         }
@@ -52,18 +52,20 @@ export class SearchBoxComponent implements OnInit {
     public ngOnInit() {
         this.searchControl = new FormControl();
         this.users = this.searchControl.valueChanges
-            .debounceTime(300)
-            .do(_ => {
-                if (this.searchQuery) {
-                    this.progress.start();
-                    this.isSearching = true;
-                }
-            })
-            .switchMap((searchQuery) =>
-                searchQuery ? this.searchUsers(searchQuery) : Observable.of(null))
-            .do(_ => {
-                this.progress.done();
-                this.isSearching = false
-            });
+            .pipe(
+                debounceTime(300),
+                tap(_ => {
+                    if (this.searchQuery) {
+                        this.progress.start();
+                        this.isSearching = true;
+                    }
+                }),
+                switchMap((searchQuery) =>
+                    searchQuery ? this.searchUsers(searchQuery) : of(null)),
+                tap(_ => {
+                    this.progress.done();
+                    this.isSearching = false;
+                })
+            );
     }
 }

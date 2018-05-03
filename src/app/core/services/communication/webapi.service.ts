@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpRequest, HttpHeaderResponse, HttpProgressEvent, HttpResponse, HttpSentEvent, HttpUserEvent, HttpEvent, HttpEventType, HttpResponseBase } from '@angular/common/http';
 
-import { Observable } from 'rxjs/Observable';
-import { last } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { last, tap, map } from 'rxjs/operators';
 
 import { environment } from 'app/../environments/environment';
 
@@ -42,7 +42,7 @@ export class WebApiService {
         const request = new HttpRequest<any>('POST', `${this.baseAddress}${requestUri}`, data, { reportProgress: true });
 
         return this.httpClient.request<T>(request)
-            .do((event: HttpEvent<any>) => {
+            .pipe(tap((event: HttpEvent<any>) => {
                 switch (event.type) {
                     case HttpEventType.UploadProgress:
                         onProgressChanged(event);
@@ -51,12 +51,11 @@ export class WebApiService {
                         onCompleted(event);
                         break;
                 }
-            }).pipe(last())
-            .map(event => {
+            }), last(), map(event => {
                 switch (event.type) {
                     case HttpEventType.Response:
                         return event.body as T;
                 }
-            });
+            }));
     }
 }

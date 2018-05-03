@@ -8,11 +8,12 @@ import { CurrentUserService } from 'app/infrastructure/services';
 
 import { NgProgress } from 'ngx-progressbar';
 import { ReactiveFormControl } from 'app/account/models/controls';
-import { Observable } from 'rxjs/Observable';
+import { Observable, of } from 'rxjs';
 import { UserService, UploaderService } from 'app/services';
 import { ChangePasswordComponent } from 'app/components/shared/change-password/change-password.component';
 
 import { FileUploader } from 'ng2-file-upload';
+import { map, switchMap, tap, debounceTime, finalize } from 'rxjs/operators';
 
 const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
@@ -69,9 +70,9 @@ export class EditComponent implements OnInit, AfterViewInit, AfterViewChecked {
         const propertiesToUpdate = this.getPropertiesToUpdate();
         this.progressService.start();
         this.currentUserService.updateCurrentUser(propertiesToUpdate)
-            .finally(() => {
+            .pipe(finalize(() => {
                 this.progressService.done();
-            })
+            }))
             .subscribe(currentUser => {
                 this.setup(currentUser);
             });
@@ -98,9 +99,9 @@ export class EditComponent implements OnInit, AfterViewInit, AfterViewChecked {
 
         this.currentUserService.updateCurrentUser({
             isPrivate: event.checked
-        }).finally(() => {
+        }).pipe(finalize(() => {
             this.isInvertingAccountPrivateStatus = false;
-        }).subscribe(account => {
+        })).subscribe(account => {
             this.currentUser.isPrivate = account.isPrivate;
             this.backup.isPrivate = account.isPrivate;
         });
@@ -131,10 +132,10 @@ export class EditComponent implements OnInit, AfterViewInit, AfterViewChecked {
         this.isInvertingAccountStatus = true;
         this.currentUserService.updateCurrentUser({
             isActive: !this.currentUser.isActive
-        }).finally(() => {
+        }).pipe(finalize(() => {
             this.isInvertingAccountStatus = false;
             this.progressService.done();
-        }).subscribe(account => {
+        })).subscribe(account => {
             this.currentUser.pictureUri = account.pictureUri;
             this.currentUser.isActive = account.isActive;
             this.backup.isActive = account.isActive;
@@ -181,7 +182,7 @@ export class EditComponent implements OnInit, AfterViewInit, AfterViewChecked {
 
     public get progressSpinnerMode(): string {
         if (this.uploader.queue.length && (this.uploader.progress < 1 || this.uploader.progress === 100)) {
-            return 'indeterminate'
+            return 'indeterminate';
         }
 
         return 'determinate';
@@ -273,41 +274,45 @@ export class EditComponent implements OnInit, AfterViewInit, AfterViewChecked {
     }
 
     private validateUsername(reactiveFormControl: ReactiveFormControl): Promise<{ [key: string]: any; }> | Observable<{ [key: string]: any; }> {
-        return reactiveFormControl.valueChanges.debounceTime(500)
-            ._do(() => {
-                reactiveFormControl.isValidating = true;
-            })
-            .switchMap(e => {
-                return this.userService.checkIfUserExists(reactiveFormControl.value)
-                    .map(result => {
-                        this.currentUser = this.currentUserService.retrieveCurrentUser();
-                        const error = (result && this.currentUser.username !== reactiveFormControl.value) ? { 'unique': true } : null;
-                        reactiveFormControl.setErrors(error);
-                        return Observable.of(error);
-                    });
-            })
-            ._do(() => {
-                reactiveFormControl.isValidating = false;
-            });
+        return reactiveFormControl.valueChanges
+            .pipe(debounceTime(500),
+                tap(() => {
+                    reactiveFormControl.isValidating = true;
+                }),
+                switchMap(e => {
+                    return this.userService.checkIfUserExists(reactiveFormControl.value)
+                        .pipe(map(result => {
+                            this.currentUser = this.currentUserService.retrieveCurrentUser();
+                            const error = (result && this.currentUser.username !== reactiveFormControl.value) ? { 'unique': true } : null;
+                            reactiveFormControl.setErrors(error);
+                            return of(error);
+                        }));
+                }),
+                tap(() => {
+                    reactiveFormControl.isValidating = false;
+                }));
     }
 
     private validateEmail(reactiveFormControl: ReactiveFormControl): Promise<{ [key: string]: any; }> | Observable<{ [key: string]: any; }> {
-        return reactiveFormControl.valueChanges.debounceTime(500)
-            ._do(() => {
-                reactiveFormControl.isValidating = true;
-            })
-            .switchMap(e => {
-                return this.userService.checkIfUserExists(reactiveFormControl.value)
-                    .map(result => {
-                        this.currentUser = this.currentUserService.retrieveCurrentUser();
-                        const error = (result && this.currentUser.email !== reactiveFormControl.value) ? { 'unique': true } : null;
-                        reactiveFormControl.setErrors(error);
-                        return Observable.of(error);
-                    });
-            })
-            ._do(() => {
-                reactiveFormControl.isValidating = false;
-            });
+        return reactiveFormControl.valueChanges
+            .pipe(
+                debounceTime(500),
+                tap(() => {
+                    reactiveFormControl.isValidating = true;
+                }),
+                switchMap(e => {
+                    return this.userService.checkIfUserExists(reactiveFormControl.value)
+                        .pipe(map(result => {
+                            this.currentUser = this.currentUserService.retrieveCurrentUser();
+                            const error = (result && this.currentUser.email !== reactiveFormControl.value) ? { 'unique': true } : null;
+                            reactiveFormControl.setErrors(error);
+                            return of(error);
+                        }));
+                }),
+                tap(() => {
+                    reactiveFormControl.isValidating = false;
+                })
+            );
     }
 
     private validate(formGroup: FormGroup) {
@@ -329,10 +334,10 @@ export class EditComponent implements OnInit, AfterViewInit, AfterViewChecked {
     private onSuccessUpload(attachment: AttachmentViewModel) {
         this.currentUserService.changeAccountAttachment({
             pictureId: attachment.id
-        }).finally(() => {
+        }).pipe(finalize(() => {
             this.uploader.clearQueue();
-        }).subscribe(user => {
-            this.currentUser.pictureUri = user.pictureUri
+        })).subscribe(user => {
+            this.currentUser.pictureUri = user.pictureUri;
         });
     }
 }

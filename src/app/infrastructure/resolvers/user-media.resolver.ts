@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Resolve, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
 
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/map';
+
+import { Observable, of } from 'rxjs';
+import { map, mergeMap, catchError } from 'rxjs/operators';
+
 
 import { UserService, MediaService } from 'app/services';
 import { Page, UserViewModel, ErrorViewModel, CurrentUserViewModel } from 'app/models/view';
@@ -26,7 +28,7 @@ export class UserMediaResolver implements Resolve<UserViewModel> {
         const userMedia = new UserMediaViewModel();
 
         return this.userService.getUser(username)
-            .mergeMap<UserViewModel, UserMediaViewModel>(user => {
+            .pipe(mergeMap<UserViewModel, UserMediaViewModel>(user => {
                 const currentUser = this.currentUserService.retrieveCurrentUser();
                 userMedia.user = user;
                 this.updateCurrentUser(currentUser, user);
@@ -35,18 +37,18 @@ export class UserMediaResolver implements Resolve<UserViewModel> {
                 if (validationResult.hasErrors) {
                     userMedia.error = validationResult.error;
 
-                    return Observable.of(userMedia);
+                    return of(userMedia);
                 }
 
                 return this.mediaService.getUserMedia(username, null)
-                    .map(page => {
+                    .pipe(map(page => {
                         userMedia.page = page;
                         return userMedia;
-                    });
-            })
-            .catch(error => {
-                return Observable.of(error);
-            });
+                    }));
+            }))
+            .pipe(catchError(error => {
+                return of(error);
+            }));
     }
 
     private validateUser(currentUser: CurrentUserViewModel, user: UserViewModel): ValidationResult {

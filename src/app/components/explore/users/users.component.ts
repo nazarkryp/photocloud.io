@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { trigger, transition, style, animate, query, stagger } from '@angular/animations';
 
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 
 import { UserService } from 'app/services';
 import { Page, UserViewModel, CurrentUserViewModel } from 'app/models/view';
@@ -10,6 +10,7 @@ import { RelationshipAction, RelationshipStatus } from 'app/models/shared';
 
 import { NgProgress } from 'ngx-progressbar';
 import { CurrentUserService } from 'app/infrastructure/services';
+import { finalize } from 'rxjs/operators';
 
 @Component({
     templateUrl: './users.component.html',
@@ -62,10 +63,10 @@ export class UsersComponent implements OnInit, OnDestroy {
         this.isLoading = true;
 
         this.userService.getUsers(this.page.pagination)
-            .finally(() => {
+            .pipe(finalize(() => {
                 this.progress.done();
                 this.isLoading = false;
-            })
+            }))
             .subscribe((page: Page<UserViewModel>) => {
                 if (!this.page.pagination) {
                     this.page = new Page<UserViewModel>();
@@ -86,9 +87,9 @@ export class UsersComponent implements OnInit, OnDestroy {
         this.modifying[user.id] = true;
         const action = this.getRelationshipAction(user.relationship.outgoingStatus);
         this.userService.modifyRelationship(user.id, { action: action })
-            .finally(() => {
+            .pipe(finalize(() => {
                 this.modifying[user.id] = false;
-            })
+            }))
             .subscribe((userResponse: UserViewModel) => {
                 user.relationship.outgoingStatus = userResponse.relationship.outgoingStatus;
             }, error => { });

@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
 
+import { Observable } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
+
 import { MediaViewModel, UserViewModel, CurrentUserViewModel } from 'app/models/view';
 import { MediaService } from 'app/services';
 import { CurrentUserService } from 'app/infrastructure/services';
 import { UserMapper } from 'app/infrastructure/mapping';
-import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class LikeService {
@@ -34,11 +36,11 @@ export class LikeService {
         media.likes.splice(indexToRemove, 1);
 
         return this.mediaService.removeMediaLike(media.id)
-            .do(() => { }, (error) => {
+            .pipe(tap(() => { }, (error) => {
                 media.likes.push(this.currentUser);
                 media.likesCount++;
                 media.userHasLiked = true;
-            });
+            }));
     }
 
     private addLike(media: MediaViewModel): Observable<any> {
@@ -48,11 +50,11 @@ export class LikeService {
         media.likes.push(this.currentUser);
 
         return this.mediaService.addMediaLike(media.id)
-            .do(() => { }, (error) => {
+            .pipe(tap(() => { }, (error) => {
                 media.likesCount--;
                 media.userHasLiked = false;
                 const indexToRemove = media.likes.findIndex(e => e.id === this.currentUser.id);
                 media.likes.splice(indexToRemove, 1);
-            });
+            }));
     }
 }

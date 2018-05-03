@@ -3,7 +3,8 @@ import { Router } from '@angular/router';
 import { AbstractControl, FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { trigger, animate, style, transition, animateChild, group, query, stagger } from '@angular/animations';
 
-import { Observable } from 'rxjs/Observable';
+import { Observable, of } from 'rxjs';
+import { debounceTime, tap, switchMap, map } from 'rxjs/operators';
 
 import { AccountService, LoadingService } from 'app/account/services';
 import { DefaultErrorStateMatcher } from 'app/account/matchers';
@@ -102,21 +103,23 @@ export class CreateComponent implements OnInit {
     }
 
     public validateUsername(reactiveFormControl: ReactiveFormControl): Promise<{ [key: string]: any; }> | Observable<{ [key: string]: any; }> {
-        return reactiveFormControl.valueChanges.debounceTime(500)
-            ._do(() => {
+        return reactiveFormControl.valueChanges.pipe(
+            debounceTime(500),
+            tap(() => {
                 reactiveFormControl.isValidating = true;
-            })
-            .switchMap(e => {
+            }),
+            switchMap(e => {
                 return this.userService.checkIfUserExists(reactiveFormControl.value)
-                    .map(result => {
+                    .pipe(map(result => {
                         const error = result ? { 'unique': true } : null;
                         reactiveFormControl.setErrors(error);
-                        return Observable.of(error);
-                    });
-            })
-            ._do(() => {
+
+                        return of(error);
+                    }));
+            }),
+            tap(() => {
                 reactiveFormControl.isValidating = false;
-            });
+            }));
     }
 
     public createAccount() {

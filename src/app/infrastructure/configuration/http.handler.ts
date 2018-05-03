@@ -1,10 +1,9 @@
 import { Injectable, Injector } from '@angular/core';
 import { HttpErrorResponse, HttpEvent } from '@angular/common/http';
 
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 import { HttpErrorFilter } from 'app/infrastructure/filters/http';
-import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
 
 @Injectable()
 export class HttpErrorHandler {
@@ -16,7 +15,7 @@ export class HttpErrorHandler {
         }
     }
 
-    public handle(httpErrorResponse: HttpErrorResponse): ErrorObservable | Observable<HttpErrorResponse> {
+    public handle(httpErrorResponse: HttpErrorResponse): Observable<HttpErrorResponse> {
         for (const filter of this.filters) {
             const error = filter.handle(httpErrorResponse);
 

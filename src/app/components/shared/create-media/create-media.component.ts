@@ -1,8 +1,8 @@
 import { Component, Inject, ViewEncapsulation, Optional, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { MatDialogRef, MatSnackBarConfig, MatSnackBar, MAT_DIALOG_DATA, MatSlideToggleChange } from '@angular/material';
 
-import { Subscription } from 'rxjs/Subscription';
-import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
 
 import { MediaViewModel, UserViewModel, AttachmentViewModel, CommentViewModel, CurrentUserViewModel, CreateMediaModel } from 'app/models/view';
 import { MediaService, CommentService } from 'app/services';
@@ -12,6 +12,7 @@ import { NgProgress } from 'ngx-progressbar';
 import { FileUploader, FileUploaderOptions } from 'ng2-file-upload';
 
 import { environment } from 'app/../environments/environment';
+import { finalize } from 'rxjs/operators';
 
 @Component({
     templateUrl: './create-media.component.html',
@@ -38,9 +39,9 @@ export class CreateMediaComponent implements OnInit, OnDestroy {
     public createMedia() {
         this.progress.start();
         this.mediaService.createMedia(this.media)
-            .finally(() => {
-                this.progress.done()
-            })
+            .pipe(finalize(() => {
+                this.progress.done();
+            }))
             .subscribe(createdPost => {
                 createdPost.user.pictureUri = this.currentUser.pictureUri;
                 this.dialogRef.close(createdPost);
@@ -86,7 +87,7 @@ export class CreateMediaComponent implements OnInit, OnDestroy {
         this.uploader.onAfterAddingAll = (fileItems) => {
             this.dialogRef.disableClose = true;
             this.uploader.uploadAll();
-        }
+        };
 
         this.uploader.onCompleteItem = this.onUploadComplete.bind(this);
     }

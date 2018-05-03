@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 import { WebApiService } from 'app/core/services/communication';
 import { Page, PaginationViewModel, MediaViewModel, UserViewModel, CreateMediaModel, UpdateMediaViewModel } from 'app/models/view';
@@ -23,9 +24,9 @@ export class MediaService {
         const request = this.mediaMapper.mapCreateToRequest(createMediaModel);
 
         return this.apiService.post<MediaResponse>('media', request)
-            .map(response => {
+            .pipe(map(response => {
                 return this.mediaMapper.mapFromResponse(response);
-            });
+            }));
     }
 
     public getRecentMedia(pagination: PaginationViewModel): Observable<Page<MediaViewModel>> {
@@ -36,10 +37,10 @@ export class MediaService {
         }
 
         return this.apiService.get<PageResponse<MediaResponse>>(requestUri)
-            .map(page => {
+            .pipe(map(page => {
                 const pageViewModel = this.pageMapper.mapFromResponse(page);
                 return pageViewModel;
-            });
+            }));
     }
 
     public getUserMedia(username: string, pagination: PaginationViewModel): Observable<Page<MediaViewModel>> {
@@ -50,9 +51,9 @@ export class MediaService {
         }
 
         return this.apiService.get<PageResponse<MediaResponse>>(requestUri)
-            .map(page => {
+            .pipe(map(page => {
                 return this.pageMapper.mapFromResponse(page);
-            });
+            }));
     }
 
     public getMediaByTag(tag: string, pagination: PaginationViewModel) {
@@ -63,10 +64,10 @@ export class MediaService {
         }
 
         return this.apiService.get<PageResponse<MediaResponse>>(requestUri)
-            .map(page => {
+            .pipe(map(page => {
                 const pageViewModel = this.pageMapper.mapFromResponse(page);
                 return pageViewModel;
-            });
+            }));
     }
 
     public getLikedMedia(pagination: PaginationViewModel) {
@@ -77,10 +78,10 @@ export class MediaService {
         }
 
         return this.apiService.get<PageResponse<MediaResponse>>(requestUri)
-            .map(page => {
+            .pipe(map(page => {
                 const pageViewModel = this.pageMapper.mapFromResponse(page);
                 return pageViewModel;
-            });
+            }));
     }
 
     public getMediaById(mediaId: number): Observable<MediaViewModel> {
@@ -90,9 +91,9 @@ export class MediaService {
     public update(media: UpdateMediaViewModel): Observable<MediaViewModel> {
         const request = this.mediaMapper.mapUpdateToRequest(media);
         return this.apiService.patch<MediaResponse>(`media/${media.id}`, request)
-            .map(updatedMedia => {
+            .pipe(map(updatedMedia => {
                 return this.mediaMapper.mapFromResponse(updatedMedia);
-            });
+            }));
     }
 
     public removeMedia(mediaId: number) {

@@ -4,6 +4,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import {
     MatToolbarModule,
+    MatBadgeModule,
     MatButtonModule,
     MatButtonToggleModule,
     MatRippleModule,
@@ -28,6 +29,7 @@ import {
     imports: [
         BrowserAnimationsModule,
         MatToolbarModule,
+        MatBadgeModule,
         MatButtonModule,
         MatButtonToggleModule,
         MatRippleModule,
@@ -50,6 +52,7 @@ import {
     exports: [
         BrowserAnimationsModule,
         MatToolbarModule,
+        MatBadgeModule,
         MatButtonModule,
         MatButtonToggleModule,
         MatRippleModule,

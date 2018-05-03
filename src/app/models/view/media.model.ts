@@ -52,7 +52,7 @@ export class MediaViewModel {
 
         if (index > -1 && index !== newIndex) {
             if (newIndex >= media.attachments.length) {
-                newIndex = media.attachments.length
+                newIndex = media.attachments.length;
             }
 
             const array = media.attachments.slice();

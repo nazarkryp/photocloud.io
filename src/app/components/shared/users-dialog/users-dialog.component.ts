@@ -2,8 +2,8 @@ import { Component, OnInit, OnDestroy, Optional, Inject, ViewEncapsulation, Inpu
 import { MatDialogRef, MatSnackBarConfig, MatSnackBar, MAT_DIALOG_DATA } from '@angular/material';
 import { trigger, transition, style, animate, query, stagger } from '@angular/animations';
 
-import { Observable } from 'rxjs/Observable';
-import { Subscription } from 'rxjs/Subscription';
+import { Observable } from 'rxjs';
+import { Subscription } from 'rxjs';
 
 import { CurrentUserViewModel, UserViewModel, Page } from 'app/models/view';
 import { RelationshipStatus } from 'app/models/shared';
@@ -11,6 +11,7 @@ import { UserService } from 'app/services';
 import { CurrentUserService } from 'app/infrastructure/services';
 
 import { UserDialogDetails } from './models';
+import { finalize } from 'rxjs/operators';
 
 @Component({
     templateUrl: './users-dialog.component.html',
@@ -54,9 +55,9 @@ export class UsersDialogComponent implements OnInit, OnDestroy {
         this.isLoading = true;
 
         this.usersObservableSubscription = this.details.handler(this.details.identifier, this.page.pagination)
-            .finally(() => {
+            .pipe(finalize(() => {
                 this.isLoading = false;
-            })
+            }))
             .subscribe((page: Page<UserViewModel>) => {
                 this.page.hasMoreItems = page.hasMoreItems;
                 this.page.pagination = page.pagination;
@@ -76,9 +77,9 @@ export class UsersDialogComponent implements OnInit, OnDestroy {
 
         const action = this.getRelationshipAction(user.relationship.outgoingStatus);
         this.userService.modifyRelationship(user.id, { action: action })
-            .finally(() => {
+            .pipe(finalize(() => {
                 user.isModifyingRelationship = false;
-            })
+            }))
             .subscribe((userResponse: UserViewModel) => {
                 user.relationship.outgoingStatus = userResponse.relationship.outgoingStatus;
             });

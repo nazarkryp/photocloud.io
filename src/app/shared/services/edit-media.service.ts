@@ -1,9 +1,6 @@
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material';
 
-import 'rxjs/add/operator/mergeMap';
-
-
 import { MediaService } from 'app/services';
 import { UpdateMediaViewModel, MediaViewModel, UpdateAttachmentViewModel } from 'app/models/view';
 import { ConfirmComponent } from 'app/components/shared/confirm/confirm.component';

@@ -1,8 +1,8 @@
 ﻿import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/of';
+import { Observable, of } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
 
 import { LocalStorageService } from 'app/infrastructure/services/storage';
 import { AccessToken } from 'app/infrastructure/security/access-token.model';
@@ -15,7 +15,7 @@ export class TokenProvider {
     private accessToken: AccessToken;
 
     private get tokenStorageKey() {
-        return 'photocloud-access-token'
+        return 'photocloud-access-token';
     }
 
     constructor(
@@ -28,7 +28,7 @@ export class TokenProvider {
         const accessToken = this.retrieveAccessToken();
 
         if (!accessToken) {
-            return Observable.of(null);
+            return of(null);
         }
 
         const expiresIn = (accessToken.expires.getTime() - new Date().getTime()) / 1000 / 60;
@@ -36,9 +36,9 @@ export class TokenProvider {
 
         if (useRefreshToken && expiresIn > 0) {
             return this.refreshToken(accessToken.refreshToken)
-                .do(refreshedAccessToken => {
+                .pipe(tap(refreshedAccessToken => {
                     this.setAccessToken(refreshedAccessToken);
-                });
+                }));
         }
 
         if (expiresIn <= 0) {
@@ -46,10 +46,10 @@ export class TokenProvider {
                 this.removeAccessToken();
             }
 
-            return Observable.of(null);
+            return of(null);
         }
 
-        return Observable.of(accessToken);
+        return of(accessToken);
     }
 
     public setAccessToken(accessToken: AccessToken) {
@@ -61,7 +61,7 @@ export class TokenProvider {
         const refreshTokenData = `grant_type=refresh_token&refresh_token=${refreshToken}`;
 
         return this.httpClient.post<any>(environment.loginUri, refreshTokenData)
-            .map(tokenResponse => this.tokenMapper.mapResponseToAccessToken(tokenResponse));
+            .pipe(map(tokenResponse => this.tokenMapper.mapResponseToAccessToken(tokenResponse)));
     }
 
     public retrieveAccessToken(): AccessToken {

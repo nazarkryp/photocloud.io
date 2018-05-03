@@ -1,13 +1,14 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 
 import { Page, UserViewModel, CurrentUserViewModel } from 'app/models/view';
 import { UserService } from 'app/services';
 import { CurrentUserService } from 'app/infrastructure/services';
 
 import { NgProgress } from 'ngx-progressbar';
+import { finalize } from 'rxjs/operators';
 
 @Component({
     selector: 'app-manage-users',
@@ -37,10 +38,10 @@ export class ManageUsersComponent implements OnInit, OnDestroy {
         this.isLoading = true;
 
         this.userService.getUsers(this.page.pagination)
-            .finally(() => {
+            .pipe(finalize(() => {
                 this.progress.done();
                 this.isLoading = false;
-            })
+            }))
             .subscribe((page: Page<UserViewModel>) => {
                 if (!this.page.pagination) {
                     this.page = new Page<UserViewModel>();
@@ -57,7 +58,7 @@ export class ManageUsersComponent implements OnInit, OnDestroy {
     public invertUserStatus(user: UserViewModel) {
         this.userService.update(user.id, {
             isActive: !user.isActive
-        }).finally(() => { }).subscribe(updatesUser => {
+        }).subscribe(updatesUser => {
             user.isActive = updatesUser.isActive;
             user.pictureUri = updatesUser.pictureUri;
         });

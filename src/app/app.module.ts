@@ -29,6 +29,7 @@ import { FileUploadModule } from 'ng2-file-upload';
 import { RelationshipActionPipe } from './pipes/relationship-action.pipe';
 import { RawPipe } from './pipes/raw.pipe';
 import { LinkifyPipe } from './pipes/linkify.pipe';
+import { TimeAgoPipe } from './pipes/time-ago.pipe';
 
 import { ErrorBoxComponent } from './components/shared/user-media-error/user-media-error.component';
 import { CaptionComponent } from './components/shared/caption/caption.component';
@@ -61,7 +62,7 @@ import { ChangePasswordComponent } from './components/shared/change-password/cha
 import { TermsComponent } from './components/terms/terms.component';
 import { PrivacyComponent } from './components/privacy/privacy.component';
 import { AboutComponent } from './components/about/about.component';
-import { CoreModule, CovalentModule } from 'app/core';
+import { CoreModule } from 'app/core';
 import { NotificationsComponent } from './components/notifications/notifications.component';
 import { ActivityPipe } from './pipes/activity.pipe';
 import { ActivityComponent } from './components/activity/activity.component';
@@ -125,7 +126,6 @@ import { ManageUsersComponent } from './dashboard/components/manage-users/manage
         HttpModule,
         ServiceModule,
         InfrastructureModule,
-        CovalentModule,
         SharedModule,
         CoreModule
     ],

@@ -1,4 +1,4 @@
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 import { UserViewModel, Page, PaginationViewModel } from 'app/models/view';
 

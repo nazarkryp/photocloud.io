@@ -2,8 +2,8 @@ import { Component, Input, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatDialog, MatDialogRef, ProgressSpinnerMode } from '@angular/material';
 
-import { Subscription } from 'rxjs/Subscription';
-import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
 
 import { CurrentUserService } from 'app/infrastructure/services';
 import { CurrentUserViewModel, AttachmentViewModel, UserViewModel, Page } from 'app/models/view';
@@ -13,6 +13,7 @@ import { UsersDialogComponent } from 'app/components/shared/users-dialog/users-d
 
 import { FileUploader } from 'ng2-file-upload';
 import { UserDialogDetails } from 'app/components/shared/users-dialog/models';
+import { finalize } from 'rxjs/operators';
 
 @Component({
     selector: 'app-user-details',
@@ -52,7 +53,7 @@ export class UserDetailsComponent implements OnDestroy {
 
     public get progressSpinnerMode(): string {
         if (this.uploader.queue.length && (this.uploader.progress < 1 || this.uploader.progress === 100)) {
-            return 'indeterminate'
+            return 'indeterminate';
         }
 
         return 'determinate';
@@ -69,10 +70,10 @@ export class UserDetailsComponent implements OnDestroy {
     private onSuccessUpload(attachment: AttachmentViewModel) {
         this.currentUserService.changeAccountAttachment({
             pictureId: attachment.id
-        }).finally(() => {
+        }).pipe(finalize(() => {
             this.uploader.clearQueue();
-        }).subscribe(user => {
-            this.user.pictureUri = user.pictureUri
+        })).subscribe(user => {
+            this.user.pictureUri = user.pictureUri;
         });
     }
 
@@ -101,9 +102,9 @@ export class UserDetailsComponent implements OnDestroy {
         this.isModifyingRelationship = true;
         this.userService.modifyRelationship(this.user.id, {
             action: action
-        }).finally(() => {
+        }).pipe(finalize(() => {
             this.isModifyingRelationship = false;
-        }).subscribe((user: UserViewModel) => {
+        })).subscribe((user: UserViewModel) => {
             if (this.currentUser.id === user.id && user.relationship.outgoingStatus === RelationshipStatus.Following) {
                 this.user.counters.followers++;
             } else if (this.currentUser.id === user.id && user.relationship.outgoingStatus === RelationshipStatus.None && this.user.relationship.outgoingStatus !== RelationshipStatus.Requested) {

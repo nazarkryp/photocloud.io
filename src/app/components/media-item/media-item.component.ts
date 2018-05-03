@@ -1,7 +1,7 @@
 import { Component, ViewEncapsulation, OnInit, Input, Output, EventEmitter, Inject, ViewChild } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { MatSnackBar, MatDialog, MatSnackBarConfig } from '@angular/material';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 
 import { CurrentUserService } from 'app/infrastructure/services';
 import { MediaViewModel, UserViewModel, CommentViewModel, CurrentUserViewModel, UpdateMediaViewModel, UpdateAttachmentViewModel, Page } from 'app/models/view';

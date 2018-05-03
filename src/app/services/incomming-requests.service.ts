@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
-import { Observable } from 'rxjs/Observable';
-import { ReplaySubject } from 'rxjs/ReplaySubject';
+import { Observable, ReplaySubject } from 'rxjs';
+import { tap, map } from 'rxjs/operators';
 
 import { UserService } from 'app/services/user.service';
 import { UserViewModel, Page, RequestViewModel, PaginationViewModel } from 'app/models/view';
@@ -26,22 +26,24 @@ export class RequestsService {
 
     public getIncommingRequests(pagination: PaginationViewModel): Observable<Page<UserViewModel>> {
         return this.userService.getIncommingRequests(pagination)
-            .do(page => {
-                if (!this.incommingRequestsCount || this.incommingRequestsCount !== page.data.length) {
-                    this.incommingRequestsCount = page.data.length;
-                    this.state.next(this.incommingRequestsCount);
-                }
-            })
-            .map(response => {
-                return this.pageMapper.mapFromResponse(response);
-            });
+            .pipe(
+                tap(page => {
+                    if (!this.incommingRequestsCount || this.incommingRequestsCount !== page.data.length) {
+                        this.incommingRequestsCount = page.data.length;
+                        this.state.next(this.incommingRequestsCount);
+                    }
+                }),
+                map(response => {
+                    return this.pageMapper.mapFromResponse(response);
+                })
+            );
     }
 
     public getOutgoingRequests(pagination: PaginationViewModel): Observable<Page<UserViewModel>> {
         return this.userService.getOutgoingRequests(pagination)
-            .map(response => {
+            .pipe(map(response => {
                 return this.pageMapper.mapFromResponse(response);
-            });
+            }));
     }
 
     public updateIncommingRequestsCount(count: number) {

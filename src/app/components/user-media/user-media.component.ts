@@ -2,19 +2,20 @@ import { Component, OnInit, OnDestroy, ViewContainerRef, AfterViewChecked, Chang
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material';
 
-import { Observable } from 'rxjs/Observable';
-import { Subscription } from 'rxjs/Subscription';
+import { Observable } from 'rxjs';
+import { Subscription } from 'rxjs';
 
 import { AccountService } from 'app/account/services';
 import { CurrentUserService } from 'app/infrastructure/services';
 import { MediaService, UserService } from 'app/services';
 import { CurrentUserViewModel, MediaViewModel, AttachmentViewModel, UserViewModel, Page, ErrorViewModel, UserMediaViewModel } from 'app/models/view';
-import { RelationshipStatus, ValidationResult, } from 'app/models/shared'
+import { RelationshipStatus, ValidationResult, } from 'app/models/shared';
 import { MediaDetailsComponent } from 'app/components/shared/media-details/media-details.component';
 import { UsersDialogComponent } from '../shared/users-dialog/users-dialog.component';
 import { NgProgress } from 'ngx-progressbar';
 import { ConfirmComponent } from 'app/components/shared/confirm/confirm.component';
 import { HttpErrorResponse } from '@angular/common/http';
+import { finalize } from 'rxjs/operators';
 
 @Component({
     templateUrl: './user-media.component.html',
@@ -53,13 +54,13 @@ export class UserMediaComponent implements OnInit, OnDestroy, AfterViewChecked {
         }
 
         this.mediaService.getUserMedia(this.userMedia.user.username, this.userMedia.page.pagination)
-            .finally(() => {
+            .pipe(finalize(() => {
                 if (this.progress.isStarted()) {
                     this.progress.done();
                 }
 
                 this.isLoading = false;
-            })
+            }))
             .subscribe((page: Page<MediaViewModel>) => {
                 this.userMedia.page.hasMoreItems = page.hasMoreItems;
                 this.userMedia.page.pagination = page.pagination;

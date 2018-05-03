@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 import { WebApiService } from 'app/core/services/communication';
 import { CurrentUserViewModel, UserViewModel } from 'app/models/view';
@@ -11,6 +11,7 @@ import { TokenMapper } from 'app/infrastructure/mapping/token.mapper';
 import { environment } from 'app/../environments/environment';
 import { UserMapper } from 'app/infrastructure/mapping';
 import { CurrentUserResponse } from 'app/models/response';
+import { map } from 'rxjs/operators';
 
 @Injectable()
 export class AccountService {
@@ -24,23 +25,23 @@ export class AccountService {
 
     public signIn(username: string, password: string): Observable<AccessToken> {
         return this.httpClient.post(environment.loginUri, `grant_type=password&username=${username}&password=${password}`)
-            .map(response => {
+            .pipe(map(response => {
                 return this.tokenMapper.mapResponseToAccessToken(response);
-            });
+            }));
     }
 
     public signInWithCode(code: string): Observable<AccessToken> {
         return this.httpClient.post(`${environment.loginUri}?code=${code}`, 'grant_type=password')
-            .map(response => {
+            .pipe(map(response => {
                 return this.tokenMapper.mapResponseToAccessToken(response);
-            });
+            }));
     }
 
     public enableSignInWithCode(): Observable<any> {
         return this.httpClient.get<any>(environment.apiUri + 'account/code')
-            .map(response => {
+            .pipe(map(response => {
                 return response.code;
-            });
+            }));
     }
 
     public disableSignInWithCode(): Observable<any> {
@@ -49,13 +50,13 @@ export class AccountService {
 
     public create(accountRequestModel: CreateAccountRequestModel): Observable<any> {
         return this.httpClient.post(environment.apiUri + 'account', accountRequestModel)
-            .map(response => {
+            .pipe(map(response => {
                 if (accountRequestModel.signInOnCreated) {
                     return this.tokenMapper.mapResponseToAccessToken(response);
                 }
 
                 return response;
-            });
+            }));
     }
 
     public signOut() {
@@ -64,22 +65,22 @@ export class AccountService {
 
     public updateAccount(propertiesToUpdate: any): Observable<CurrentUserViewModel> {
         return this.apiService.patch<CurrentUserResponse>('account', propertiesToUpdate)
-            .map(response => {
+            .pipe(map(response => {
                 return this.userMapper.mapFromCurrentUserResponse(response);
-            });
+            }));
     }
 
     public changeAccountAttachment(propertiesToUpdate: any): Observable<CurrentUserViewModel> {
         return this.apiService.put<CurrentUserResponse>('account/attachment', propertiesToUpdate)
-            .map(response => {
+            .pipe(map(response => {
                 return this.userMapper.mapFromCurrentUserResponse(response);
-            });
+            }));
     }
 
     public getAccount(): Observable<CurrentUserViewModel> {
         return this.apiService.get<CurrentUserResponse>('account')
-            .map(response => {
+            .pipe(map(response => {
                 return this.userMapper.mapFromCurrentUserResponse(response);
-            });
+            }));
     }
 }

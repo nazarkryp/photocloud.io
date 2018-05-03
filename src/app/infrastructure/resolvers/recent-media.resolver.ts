@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Resolve, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
+
+import { Observable, of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 import { MediaService } from 'app/services';
 import { Page, MediaViewModel } from 'app/models/view';
@@ -13,12 +15,12 @@ export class RecentMediaResolver implements Resolve<Page<MediaViewModel>> {
         private mediaService: MediaService,
         private progress: NgProgress) { }
 
-    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot)
-        : Page<MediaViewModel> | Observable<Page<MediaViewModel>> | Promise<Page<MediaViewModel>> {
+    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Page<MediaViewModel>> {
         this.progress.start();
+
         return this.mediaService.getRecentMedia(null)
-            .catch(error => {
-                return Observable.of(error);
-            });
+            .pipe(catchError(error => {
+                return of(error);
+            }));
     }
 }

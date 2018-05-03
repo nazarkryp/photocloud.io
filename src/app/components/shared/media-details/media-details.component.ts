@@ -4,8 +4,8 @@ import { DOCUMENT } from '@angular/common';
 import { trigger, animate, style, transition, animateChild, group, query, stagger } from '@angular/animations';
 import { MatDialogRef, MatSnackBarConfig, MatSnackBar, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
 
-import { Observable } from 'rxjs/Observable';
-import { Subscription } from 'rxjs/Subscription';
+import { Observable } from 'rxjs';
+import { Subscription } from 'rxjs';
 
 import { ConfirmComponent } from 'app/components/shared/confirm/confirm.component';
 
@@ -16,6 +16,7 @@ import { NgProgress } from 'ngx-progressbar';
 import { EditMediaService, LikeService } from 'app/shared/services';
 import { UserDialogDetails } from 'app/components/shared/users-dialog/models';
 import { CommentsComponent } from 'app/components/shared/comments/comments.component';
+import { finalize } from 'rxjs/operators';
 
 @Component({
     templateUrl: './media-details.component.html',
@@ -72,7 +73,7 @@ export class MediaDetailsComponent implements OnInit, OnDestroy {
 
     public next() {
         if (this.player && !this.player.nativeElement.paused) {
-            this.player.nativeElement.pause()
+            this.player.nativeElement.pause();
         }
 
         if (this.media.activeAttachment < this.media.attachments.length - 1) {
@@ -82,7 +83,7 @@ export class MediaDetailsComponent implements OnInit, OnDestroy {
 
     public previous() {
         if (this.player && !this.player.nativeElement.paused) {
-            this.player.nativeElement.pause()
+            this.player.nativeElement.pause();
         }
 
         if (this.media.activeAttachment > 0) {
@@ -197,9 +198,9 @@ export class MediaDetailsComponent implements OnInit, OnDestroy {
         this.progress.start();
 
         this.mediaService.getMediaById(mediaId)
-            .finally(() => {
+            .pipe(finalize(() => {
                 this.progress.done();
-            })
+            }))
             .subscribe(media => {
                 this.media = media;
                 this.media.activeAttachment = 0;
