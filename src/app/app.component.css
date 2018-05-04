@@ -1,5 +1,5 @@
-::ng-deep .mat-form-field-underline {
-    background: #d8d8d8;
+::ng-deep .mat-form-field-appearance-legacy .mat-form-field-underline {
+    background-color: #eaeaea;
 }
 
 * {

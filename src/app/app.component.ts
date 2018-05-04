@@ -26,10 +26,10 @@ export class AppComponent implements OnInit {
     public showAuthenticationBar = true;
 
     constructor(
+        public progress: ProgressService,
         private router: Router,
         private dialog: MatDialog,
         private currentUserService: CurrentUserService,
-        private progress: ProgressService,
         private incommingRequestsService: RequestsService) {
         this.currentUserService.getCurrentUser(true)
             .subscribe(currentUser => {

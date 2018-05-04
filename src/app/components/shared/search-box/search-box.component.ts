@@ -20,7 +20,6 @@ export class SearchBoxComponent implements OnInit {
     public searchControl: FormControl;
     public users: Observable<UserViewModel[]>;
     public isSearching: boolean;
-    public searchQuery: string;
     @Input() public scrolled;
 
     constructor(
@@ -46,7 +45,7 @@ export class SearchBoxComponent implements OnInit {
     }
 
     public clear() {
-        this.searchQuery = '';
+        this.searchControl.setValue('');
     }
 
     public ngOnInit() {
@@ -55,7 +54,7 @@ export class SearchBoxComponent implements OnInit {
             .pipe(
                 debounceTime(300),
                 tap(_ => {
-                    if (this.searchQuery) {
+                    if (this.searchControl.value) {
                         this.progress.start();
                         this.isSearching = true;
                     }

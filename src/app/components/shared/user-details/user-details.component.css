@@ -26,7 +26,7 @@
     margin-left: 1rem;
 }
 
-.user-info-username {
+.user-info__username {
     font-size: 2em;
     font-weight: 800;
     line-height: 1.5;
@@ -39,6 +39,10 @@
 
 .user-info-username.center-username {
     margin-top: 45px;
+}
+
+.user-info__actions {
+    width: 100px;
 }
 
 .user-info-fullname {
@@ -105,15 +109,33 @@ div.edit-image:not([disabled]):hover .change-overlay {
     white-space: pre;
 }
 
-.user-info-link-button {
+.user-info__counters {
+    font-size: 1.1em;
+}
+
+.user-info__btn-counter {
     cursor: pointer;
 }
 
-.user-info-link-button:hover {
+.user-info__btn-counter:hover {
     color: #e91e63;
 }
 
-.user-info-bio {
+.user-info__counter {
+    font-weight: bold;
+}
+
+.user-info__bio {
+    line-height: 2;
+    text-align: justify;
+}
+
+.user-info__bio__username {
+    font-weight: bold;
+    margin-right: .5rem;
+}
+
+/* .user-info-bio {
     line-height: 1.5;
     margin-left: .5rem;
 }
@@ -122,4 +144,4 @@ div.edit-image:not([disabled]):hover .change-overlay {
     content: '';
     display: block;
     margin-top: .8em;
-}
+} */

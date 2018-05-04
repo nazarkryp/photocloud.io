@@ -141,11 +141,17 @@ export class AppModule {
     constructor(
         private mdIconRegistry: MatIconRegistry,
         private sanitizer: DomSanitizer) {
-        mdIconRegistry.addSvgIcon('heart', sanitizer.bypassSecurityTrustResourceUrl('assets/svg/icons/heart.svg'));
-        mdIconRegistry.addSvgIcon('compass', sanitizer.bypassSecurityTrustResourceUrl('assets/svg/icons/compass.svg'));
-        mdIconRegistry.addSvgIcon('bell', sanitizer.bypassSecurityTrustResourceUrl('assets/svg/icons/bell.svg'));
-        mdIconRegistry.addSvgIcon('refresh', sanitizer.bypassSecurityTrustResourceUrl('assets/svg/icons/reload.svg'));
-        mdIconRegistry.addSvgIcon('comment', sanitizer.bypassSecurityTrustResourceUrl('assets/svg/icons/comment.svg'));
-        mdIconRegistry.addSvgIcon('share', sanitizer.bypassSecurityTrustResourceUrl('assets/svg/icons/share.svg'));
+        mdIconRegistry.addSvgIcon('heart',
+            sanitizer.bypassSecurityTrustResourceUrl('assets/svg/icons/heart.svg'));
+        mdIconRegistry.addSvgIcon('compass',
+            sanitizer.bypassSecurityTrustResourceUrl('assets/svg/icons/compass.svg'));
+        mdIconRegistry.addSvgIcon('bell',
+            sanitizer.bypassSecurityTrustResourceUrl('assets/svg/icons/bell.svg'));
+        mdIconRegistry.addSvgIcon('refresh',
+            sanitizer.bypassSecurityTrustResourceUrl('assets/svg/icons/reload.svg'));
+        mdIconRegistry.addSvgIcon('comment',
+            sanitizer.bypassSecurityTrustResourceUrl('assets/svg/icons/comment.svg'));
+        mdIconRegistry.addSvgIcon('share',
+            sanitizer.bypassSecurityTrustResourceUrl('assets/svg/icons/share.svg'));
     }
 }

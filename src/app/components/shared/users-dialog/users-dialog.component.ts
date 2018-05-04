@@ -118,9 +118,13 @@ export class UsersDialogComponent implements OnInit, OnDestroy {
         }
 
         this.dialogRef.beforeClose().subscribe((page) => {
-            this.isLoading = false;
-            this.usersObservableSubscription.unsubscribe();
-            this.dialogRef.close(page || this.page);
+            if (this.isLoading) {
+                this.isLoading = false;
+                this.dialogRef.close(null);
+            } else {
+                this.usersObservableSubscription.unsubscribe();
+                this.dialogRef.close(page || this.page);
+            }
         });
     }
 }

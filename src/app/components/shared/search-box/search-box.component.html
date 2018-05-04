@@ -1,6 +1,6 @@
 <div class="search-box-container" fxLayout="row" fxLayoutAlign="start center">
     <mat-icon class="mat-18">search</mat-icon>
-    <input class="search-box" [ngClass]="{ 'scrolled' : scrolled}" type="text" placeholder="Search" [(ngModel)]="searchQuery" [matAutocomplete]="auto" [formControl]="searchControl"
+    <input class="search-box" [ngClass]="{ 'scrolled' : scrolled}" type="text" placeholder="Search" [matAutocomplete]="auto" [formControl]="searchControl"
         aria-label="UserViewModel">
     <mat-spinner class="search-box-spinner" [strokeWidth]="2" [diameter]="25" *ngIf="isSearching"></mat-spinner>
     <button class="search-box-icon-button" mat-icon-button *ngIf="searchQuery && !isSearching" (click)="clear()">

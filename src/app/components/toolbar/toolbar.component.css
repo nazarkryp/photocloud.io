@@ -39,8 +39,7 @@ header.toolbar.hidden {
 }
 
 .search-box-container {
-    width: 620px;
-    padding: 0 10px;
+    width: 600px;
     box-sizing: border-box;
 }
 
@@ -78,12 +77,17 @@ mat-icon>svg {
     height: 35px;
 }
 
-.toolbar-actions>* {
-    margin-right: 1.5rem;
+.toolbar-actions {
+    padding-left: 1.4rem;
+    box-sizing: border-box;
 }
 
-.toolbar-actions>:last-child {
-    margin-right: 0;
+.toolbar-actions>mat-icon {
+    /* margin-right: 1.4rem; */
+}
+
+.toolbar-actions>:last-child mat-icon {
+    /* margin-right: .7rem; */
 }
 
 td-notification-count,

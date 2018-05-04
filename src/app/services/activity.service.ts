@@ -1,14 +1,12 @@
 import { Injectable } from '@angular/core';
 
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable, ReplaySubject } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
 
 import { WebApiService } from 'app/core/services/communication';
-import { ActivityViewModel, ActivityPage, PaginationViewModel } from 'app/models/view';
+import { ActivityPage, ActivityViewModel, PaginationViewModel } from 'app/models/view';
 import { ActivityResponse, ActivityPageResponse } from 'app/models/response';
 import { ActivityMapper } from 'app/infrastructure/mapping';
-import { Subject } from 'rxjs/Subject';
-import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { ActivityPageMapper } from '../infrastructure/mapping/activity-page.mapper';
 
 @Injectable()
@@ -67,13 +65,13 @@ export class ActivityService {
     public markAsRead(ids: number[]): Observable<any> {
         return this.httpClient.put<Observable<any>>('activities', {
             ids: ids
-        }).do(() => {
+        }).pipe(tap(() => {
             this.page.unread -= ids.length;
             this.page.data.filter(e => ids.find(id => id === e.id)).forEach((element) => {
                 element.isMarkedAsRead = true;
             });
 
             this.state.next(this.page);
-        });
+        }));
     }
 }

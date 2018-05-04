@@ -27,6 +27,7 @@ import { CommentsComponent } from 'app/components/shared/comments/comments.compo
 })
 export class MediaItemComponent implements OnInit {
     @Input() public media: MediaViewModel;
+    // tslint:disable-next-line:no-output-on-prefix
     @Output() public onRemoved = new EventEmitter<MediaViewModel>();
     @ViewChild('player') public player: any;
     @ViewChild('commentsComponent') public commentsComponent: CommentsComponent;
@@ -53,7 +54,7 @@ export class MediaItemComponent implements OnInit {
 
     public next() {
         if (this.player && !this.player.nativeElement.paused) {
-            this.player.nativeElement.pause()
+            this.player.nativeElement.pause();
         }
 
         if (this.media.activeAttachment < this.media.attachments.length - 1) {
@@ -63,7 +64,7 @@ export class MediaItemComponent implements OnInit {
 
     public previous() {
         if (this.player && !this.player.nativeElement.paused) {
-            this.player.nativeElement.pause()
+            this.player.nativeElement.pause();
         }
 
         if (this.media.activeAttachment > 0) {

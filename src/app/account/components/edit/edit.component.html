@@ -86,14 +86,14 @@
             <div class="item" fxLayout="row" fxLayoutAlign="space-between start">
                 <div>
                     <span class="mat-body-1" [ngClass]="{ 'disabled' : !currentUser.isActive }">Private Account</span>
-                    <p style="color: rgb(0,0,0,.6); font-weight: lighter; font-size: .8em; line-height: 1.5;">When your account is private, only people you approve can see your photos and videos on PhotoCloud. Your existing followers won't be affected</p>
+                    <p class="edit__caption">When your account is private, only people you approve can see your photos and videos on PhotoCloud. Your existing followers won't be affected</p>
                 </div>
                 <mat-slide-toggle color="primary" [(ngModel)]="currentUser.isPrivate" [checked]="currentUser.isPrivate" (change)='invertAccountPrivateStatus($event)' [disabled]="!currentUser.isActive"></mat-slide-toggle>
             </div>
             <div class="item" fxLayout="row" fxLayoutAlign="space-between start">
                 <div>
                     <span class="mat-body-1" [ngClass]="{ 'disabled' : !currentUser.isActive }">Remember me</span>
-                    <p style="color: rgb(0,0,0,.6); font-weight: lighter; font-size: .8em; line-height: 1.5;">When this option is enabled system will allow you to login without password after session has expired</p>
+                    <p class="edit__caption">When this option is enabled system will allow you to login without password after session has expired</p>
                 </div>
                 <mat-slide-toggle color="primary" [(ngModel)]="currentUser.canAutoLogin" [checked]="currentUser.canAutoLogin" (change)='invertAccountAutoLoginStatus($event)' [disabled]="!currentUser.isActive"></mat-slide-toggle>
             </div>
@@ -107,7 +107,7 @@
             <h4>
                 Account
             </h4>
-            <p style="color: rgb(0,0,0,.6); font-weight: lighter; font-size: .8em; line-height: 1.5;">
+            <p class="edit__caption">
                 When you press the button below, your photos, comments and likes will be hidden until you reactivate your account by logging back in.
             </p>
             <button mat-raised-button color="primary" (click)="invertAccountStatus()">{{currentUser.isActive ? 'Temporarily disable my account' : 'Enable account'}}</button>

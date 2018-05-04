@@ -4,7 +4,19 @@ import { Injectable } from '@angular/core';
     providedIn: 'root'
 })
 export class ProgressService {
-    public start() { }
-    public complete() { }
-    public isStarted(): boolean { return false; }
+    private _isLoading: boolean;
+
+    public start() {
+        this._isLoading = true;
+    }
+
+    public complete() {
+        this._isLoading = false;
+    }
+
+    public get isLoading(): boolean {
+        return this._isLoading;
+    }
+
+    public isStarted(): boolean { return this._isLoading; }
 }

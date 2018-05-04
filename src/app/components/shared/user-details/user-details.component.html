@@ -14,56 +14,59 @@
         </div>
         <div class="user-info-data" fxLayout="column" fxFlex>
             <div fxLayout="row" fxLayoutAlign="space-between center">
-                <span class="user-info-username" [ngClass]="{ 'center-username' : !user.isActive }">{{user.username}}</span>
-                <div *ngIf="currentUser && user.id === currentUser.id">
-                    <a mat-icon-button routerLink="/account/edit" matTooltip="Settings" matTooltipPosition="above" style="margin-right: 40px;">
-                        <mat-icon class="btn-icon">settings</mat-icon>
-                    </a>
-                    <button mat-icon-button matTooltip="Logout" matTooltipPosition="above" (click)="logout()">
-                        <mat-icon class="btn-icon">exit_to_app</mat-icon>
-                    </button>
+                <span class="user-info__username" [ngClass]="{ 'center-username' : !user.isActive }">{{user.username}}</span>
+                <div class="user-info__actions" fxLayout="row" fxLayoutAlign="space-between center" *ngIf="currentUser && user.id === currentUser.id">
+                    <mat-icon class="btn-icon" routerLink="/account/edit" matTooltip="Settings" matTooltipPosition="above">settings</mat-icon>
+                    <mat-icon class="btn-icon" matTooltip="Logout" matTooltipPosition="above" (click)="logout()">exit_to_app</mat-icon>
                 </div>
                 <button mat-button class="btn-relationships" *ngIf="currentUser && currentUser.isActive && user.id !== currentUser.id && (user.isActive || (!user.isActive && user.relationship.outgoingStatus !== 0))" (click)="modifyRelationship()"
                     [disabled]="isModifyingRelationship">{{user.relationship.outgoingStatus | relationshipAction | uppercase }}</button>
             </div>
-            <div fxLayout="row" fxLayoutAlign="space-between center" *ngIf="user.isActive" style="font-size: 1.1em;">
-                <span>
-                    <strong>{{user.counters.posts}}</strong>
+            <div class="user-info__counters" fxLayout="row" fxLayoutAlign="space-between center" *ngIf="user.isActive && currentUser">
+                <a>
+                    <span class="user-info__counter">
+                        {{user.counters.posts}}
+                    </span>
                     posts
-                </span>
-                <a class="user-info-link-button" (click)="getFollowers()" *ngIf="currentUser">
-                    <span>
-                        <strong>{{user.counters.followers}}</strong>
-                    </span>
-                    <span>followers</span>
                 </a>
-                <div *ngIf="!currentUser">
-                    <span>
-                        <strong>{{user.counters.followers}}</strong>
+                <a class="user-info__btn-counter" (click)="getFollowers()">
+                    <span class="user-info__counter">
+                        {{user.counters.followers}}
                     </span>
-                    <span>followers</span>
-                </div>
-
-                <a class="user-info-link-button" (click)="getFollowings()" *ngIf="currentUser">
-                    <span>
-                        <strong>{{user.counters.following}}</strong>
-                    </span>
-                    <span>following</span>
+                    followers
                 </a>
-                <div *ngIf="!currentUser">
-                    <span>
-                        <strong>{{user.counters.following}}</strong>
+                <a class="user-info__btn-counter" (click)="getFollowings()">
+                    <span class="user-info__counter">
+                        {{user.counters.following}}
                     </span>
-                    <span>following</span>
-                </div>
+                    following
+                </a>
             </div>
-            <div fxLayout="row" fxLayoutAlign="start start" *ngIf="user.isActive">
-                <p style="line-height: 2; text-align: justify;">
-                    <strong>{{user.fullName}}</strong>
-                    <span [innerHTML]="user.bio | truncate:truncateWidth | linkify"></span>
-                    <a class="primary" (click)="increaseTruncateSize()" *ngIf="user.bio && user.bio.length > defaultTruncateWidth && truncateWidth === defaultTruncateWidth">show more</a>
-                </p>
+            <div class="user-info__counters" fxLayout="row" fxLayoutAlign="space-between center" *ngIf="user.isActive && !currentUser">
+                <a>
+                    <span class="user-info__counter">
+                        {{user.counters.posts}}
+                    </span>
+                    posts
+                </a>
+                <a>
+                    <span class="user-info__counter">
+                        {{user.counters.followers}}
+                    </span>
+                    followers
+                </a>
+                <a>
+                    <span class="user-info__counter">
+                        {{user.counters.following}}
+                    </span>
+                    following
+                </a>
             </div>
+            <p class="user-info__bio" *ngIf="user.isActive">
+                <span class="user-info__bio__username">{{user.fullName}}</span>
+                <span [innerHTML]="user.bio | truncate:truncateWidth | linkify"></span>
+                <a class="primary" (click)="increaseTruncateSize()" *ngIf="user.bio && user.bio.length > defaultTruncateWidth && truncateWidth === defaultTruncateWidth">show more</a>
+            </p>
         </div>
     </div>
     <div class="user-info-small" fxLayout="column" fxLayoutAlign="center center">

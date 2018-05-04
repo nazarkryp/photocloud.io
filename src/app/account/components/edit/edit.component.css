@@ -61,6 +61,14 @@
     cursor: pointer;
 }
 
+.edit__caption {
+    color: rgb(0, 0, 0, .6);
+    font-weight: lighter;
+    font-size: .8em;
+    line-height: 1.5;
+    padding-bottom: .7rem;
+}
+
 textarea.bio {
     line-height: 2;
     resize: none;
