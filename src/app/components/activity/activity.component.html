@@ -1,46 +1,49 @@
 <div fxLayout="column" fxLayoutAlign="start center">
     <div class="activities" fxLayout="column" fxLayoutAlign="start center">
         <div class="header" fxLayout="row" fxLayoutAlign="space-between center">
-            <h1>ACTIVITY</h1>
+            <h3>Activity</h3>
             <a style="font-size: .9em; color: rgb(0,0,0,.3); cursor: pointer;" *ngIf="page?.data?.length" (click)="removeAllActivities()">Clear All</a>
         </div>
-        <div class="items" fxLayout="column" [@listAnimation]="page?.data?.length" fxLayoutAlign="start center">
+        <div class="items" fxLayout="column" [@listAnimation]="page?.data?.length" fxLayoutAlign="start center" appInfiniteScroll [appScrollTriggerOnce]="true" [scrollOffset]="2000" (scrollPosition)="onPositionChange()">
             <span *ngIf="!page?.data?.length && !isLoading">You have no recent activity</span>
-            <div class="activity" *ngFor="let activity of page?.data; let index = index;" fxLayout="row" fxLayoutAlign="start start">
-                <a [routerLink]="['/', activity.user.username]">
-                    <img class="user-thumbnail" src="{{activity.user.pictureUri}}" alt="user-thumbnail">
-                </a>
-                <div class="activity-info" fxLayout="row" fxLayoutAlign="space-between start">
-                    <div fxLayout="column" fxLayoutAlign="start start">
-                        <div fxLayout="column">
-                            <span>
-                                <a [routerLink]="[ '/', activity.user.username]">{{activity.user.username}}</a> {{activity.activityType | activity}}
-                            </span>
-                            <span class="date" matTooltip="{{activity.date | date:'fullDate'}}" matTooltipPosition="after">{{activity.date | timeAgo}}</span>
-                        </div>
-                        <div *ngIf="activity.comment" style="width: 100%; border-left: 3px solid #e91e63; padding: .25rem .5rem; box-sizing: border-box; margin-top: 1.4rem;">
-                            <span style="font-size: .9em; font-weight: normal; color: rgb(0, 0, 0, .5)" [innerHTML]="activity.comment.text | truncate:100 | linkify"></span>
-                        </div>
-                        <div fxLayout="row" *ngIf="activity.activityType === 2">
-                            <a style="font-size: .9em; font-weight: 600; cursor: pointer; color: #053569;" (click)="accept(activity, index)">Accept</a>
-                            <a style="font-size: .9em; font-weight: 600; cursor: pointer; color: #053569; margin-left: .7rem;" (click)="decline(activity, index)">Decline</a>
-                        </div>
-                        <div style="margin-top: .7rem;">
-                            <a class="btn-remove" (click)="removeActivity(index, activity)">Remove</a>
-                        </div>
-                    </div>
-                    <a [ngSwitch]="activity.media.attachments[0].type" *ngIf="activity.media" [routerLink]="['/p/', activity.media.id]">
-                        <img *ngSwitchCase="'0'" class="media-thumbnail" src="{{activity.media.attachments[0].uri}}" alt="media-thumbnail">
-                        <video *ngSwitchCase="'1'" class="media-thumbnail">
-                            <source src="{{activity.media.attachments[0].uri}}">
-                        </video>
-                        <img *ngSwitchDefault class="media-thumbnail" src="{{activity.media.attachments[0].uri}}" alt="media-thumbnail">
+            <div mat-ripple class="activity-container" [ngClass]="{ 'unread' : !activity.isMarkedAsRead }" *ngFor="let activity of page?.data; let index = index;">
+                <div class="activity" fxLayout="row" fxLayoutAlign="start start">
+                    <a [routerLink]="['/', activity.user.username]">
+                        <img class="user-thumbnail" src="{{activity.user.pictureUri}}" alt="user-thumbnail">
                     </a>
+                    <div class="activity-info" fxLayout="row" fxLayoutAlign="space-between start">
+                        <div fxLayout="column" fxLayoutAlign="start start">
+                            <div fxLayout="column">
+                                <span>
+                                    <a [routerLink]="[ '/', activity.user.username]">{{activity.user.username}}</a> {{activity.activityType | activity}}
+                                </span>
+                                <span class="date" matTooltip="{{activity.date | date:'fullDate'}}" matTooltipPosition="after">{{activity.date | timeAgo}}</span>
+                            </div>
+                            <div *ngIf="activity.comment" style="width: 100%; border-left: 3px solid #e91e63; padding: .25rem .5rem; box-sizing: border-box; margin-top: 1.4rem;">
+                                <span style="font-size: .9em; font-weight: normal; color: rgb(0, 0, 0, .5)" [innerHTML]="activity.comment.text | truncate:100 | linkify"></span>
+                            </div>
+                            <div fxLayout="row" *ngIf="activity.activityType === 2">
+                                <a style="font-size: .9em; font-weight: 600; cursor: pointer; color: #053569;" (click)="accept(activity, index)">Accept</a>
+                                <a style="font-size: .9em; font-weight: 600; cursor: pointer; color: #053569; margin-left: .7rem;" (click)="decline(activity, index)">Decline</a>
+                            </div>
+                            <div style="margin-top: .7rem;">
+                                <a class="btn-remove" (click)="removeActivity(index, activity)">Remove</a>
+                            </div>
+                        </div>
+                        <a [ngSwitch]="activity.media.attachments[0].type" *ngIf="activity.media" [routerLink]="['/p/', activity.media.id]">
+                            <img *ngSwitchCase="'0'" class="media-thumbnail" src="{{activity.media.attachments[0].uri}}" alt="media-thumbnail">
+                            <video *ngSwitchCase="'1'" class="media-thumbnail">
+                                <source src="{{activity.media.attachments[0].uri}}">
+                            </video>
+                            <img *ngSwitchDefault class="media-thumbnail" src="{{activity.media.attachments[0].uri}}" alt="media-thumbnail">
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="footer" *ngIf="page?.hasMoreItems">
-            <button mat-button color="primary" (click)="getNotifications()">Load More</button>
+        <div fxLayout="row" fxLayoutAlign="center center" *ngIf="page?.hasMoreItems" style="height: 40px;">
+            <button class="btn-primary" mat-button (click)="getNotifications()" [disabled]="isLoading" *ngIf="!isLoading">Load More</button>
+            <mat-spinner [diameter]="30" [strokeWidth]="3" color="primary" *ngIf="isLoading"></mat-spinner>
         </div>
     </div>
 </div>

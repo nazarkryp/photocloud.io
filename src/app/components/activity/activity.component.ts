@@ -46,23 +46,35 @@ export class ActivityComponent implements OnInit {
         this.onOpenAllNotifications.next();
     }
 
-    public getNotifications() {
+    public getNotifications(showProgress: boolean = true) {
         this.isLoading = true;
+
+        // if (showProgress) {
+        //     this.progress.start();
+        // }
+
         this.activityService.getRecentActivity(this.page.pagination)
             .pipe(finalize(() => {
                 this.isLoading = false;
             }))
             .subscribe(page => {
-                if (!this.page.pagination) {
-                    this.page = new Page<ActivityViewModel>();
-                }
+                this.page = page;
+                // if (!this.page) {
+                //     this.page = new Page<ActivityViewModel>();
+                // }
 
-                this.page.hasMoreItems = page.hasMoreItems;
-                this.page.pagination = page.pagination;
-                if (page.data) {
-                    this.page.data = this.page.data.concat(page.data);
-                }
+                // this.page.hasMoreItems = page.hasMoreItems;
+                // this.page.pagination = page.pagination;
+                // if (page.data) {
+                //     this.page.data = this.page.data.concat(page.data);
+                // }
             });
+    }
+
+    public onPositionChange() {
+        if (!this.isLoading && this.page && this.page.hasMoreItems) {
+            this.getNotifications();
+        }
     }
 
     public removeActivity(index, activity: ActivityViewModel) {

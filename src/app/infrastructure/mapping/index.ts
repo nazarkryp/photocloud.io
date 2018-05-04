@@ -1,4 +1,5 @@
 export { ActivityMapper } from './activity.mapper';
+export { ActivityPageMapper } from './activity-page.mapper';
 export { TokenMapper } from './token.mapper';
 export { UserMapper } from './user.mapper';
 export { AttachmentMapper } from './attachment.mapper';

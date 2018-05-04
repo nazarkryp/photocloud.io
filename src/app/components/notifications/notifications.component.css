@@ -3,7 +3,7 @@
     height: 100%;
     box-sizing: border-box;
     overflow-y: hidden;
-    color: rgb(0, 0, 0, .85);
+    color: rgb(0, 0, 0, .86);
     background: white;
     position: relative;
 }
@@ -13,13 +13,27 @@
     padding: .7rem;
 }
 
-.notifications .header a {
+.notifications .header .actions>* {
     margin-right: 1.4rem;
+}
+
+.notifications .header .actions>:last-child {
+    margin-right: 0;
+}
+
+.notifications .header .actions a {
     cursor: pointer;
     font-size: .8em;
     font-weight: 600;
+}
+
+.notifications .header .actions a:not(:hover) {
     color: rgb(0, 0, 0, .65);
 }
+
+/* .notifications .header .actions a:hover {
+    color: rgb(0, 0, 0, .86);
+} */
 
 .notifications .header .people {
     margin-right: 1.4rem;
@@ -27,23 +41,49 @@
     color: rgb(0, 0, 0, .65);
 }
 
-.notifications .header a:hover {
-    color: rgb(0, 0, 0, .86);
+.notifications .loader {
+    background: #e91e63;
+    /* padding: .7rem 0; */
+    height: 50px;
+    position: relative;
+}
+
+.notifications .loader .active {}
+
+::ng-deep .notifications .loader>.mat-spinner circle {
+    stroke: rgb(255, 255, 255, .8);
+}
+
+.notifications .empty {
+    text-align: center;
+    padding: .7rem;
+}
+
+.notifications .empty span {
+    font-size: .9em;
 }
 
 .notifications .items {
     box-sizing: border-box;
-    padding: .7rem .7rem 0;
+    padding-top: .7rem;
+    position: relative;
 }
 
 .notifications .items .notification {
-    padding: .7rem 0;
+    padding: .7rem;
     width: 100%;
-    border-bottom: 1px solid #eaeaea;
+    border-left: 3px solid transparent;
+    position: relative;
+    /* -webkit-transition: background-color .1s ease-in-out, border-left-color .1s ease-in-out;
+    -moz-transition: background-color .1s ease-in-out, border-left-color .1s ease-in-out;
+    -ms-transition: background-color .1s ease-in-out, border-left-color .1s ease-in-out;
+    -o-transition: background-color .1s ease-in-out, border-left-color .1s ease-in-out;
+    transition: background-color .1s ease-in-out, border-left-color .1s ease-in-out; */
 }
 
-.notifications .items :last-child {
-    border-bottom: none;
+.notifications .items .notification:hover {
+    border-left-color: #e91e63;
+    background-color: #fafafa;
 }
 
 .notifications .items .notification .user-thumbnail {
@@ -70,7 +110,7 @@
 }
 
 .notifications .items .notification .notification-info a {
-    color: rgb(0, 0, 0, .85);
+    color: rgb(0, 0, 0, .86);
     font-weight: bold;
 }
 
@@ -89,4 +129,3 @@
 .notifications .footer button {
     width: 100%;
 }
-

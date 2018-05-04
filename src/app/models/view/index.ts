@@ -1,3 +1,4 @@
+export { ActivityPage } from './activity-page.model';
 export { AttachmentViewModel } from './attachment.model';
 export { CommentViewModel } from './comment.model';
 export { CreateMediaModel } from './create-media.model';

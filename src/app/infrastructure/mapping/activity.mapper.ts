@@ -31,6 +31,7 @@ export class ActivityMapper implements IMapper<ActivityResponse, ActivityViewMod
         activity.user = this.userMapper.mapFromResponse(response.user);
         activity.activityType = response.activityType;
         activity.date = response.date;
+        activity.isMarkedAsRead = response.isMarkedAsRead;
 
         if (response.media) {
             activity.media = this.mediaMapper.mapFromResponse(response.media);

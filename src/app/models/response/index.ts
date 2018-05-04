@@ -1,3 +1,5 @@
+export { ActivityResponse } from './activity.response';
+export { ActivityPageResponse } from './activity-page.response';
 export { AttachmentResponse } from './attachment-response.model';
 export { CommentResponse } from './comment-response.model';
 export { MediaResponse } from './media-response.model';
@@ -7,4 +9,3 @@ export { PageResponse } from './page-response.model';
 export { PaginationResponse } from './pagination-respone.model';
 export { UserRelationshipResponse } from './user-relationship-response.model';
 export { CountersResponse } from './counters-response.model';
-export { ActivityResponse } from './activity.response';

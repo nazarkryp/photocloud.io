@@ -3,7 +3,7 @@
     height: 100%;
     box-sizing: border-box;
     overflow-y: hidden;
-    color: rgb(0, 0, 0, .85);
+    color: rgb(0, 0, 0, .86);
     background: white;
     position: relative;
 }
@@ -20,14 +20,29 @@
 }
 
 .activities .items {
-    width: 600px;
+    width: calc(600px + .7rem + .7rem);
     box-sizing: border-box;
     padding: 0 0 0 .7rem;
 }
 
-.activities .items .activity {
-    padding: .7rem 0 1.4rem;
+.activity-container {
+    padding: .7rem;
     width: 100%;
+    box-sizing: border-box;
+    border-radius: 7px;
+    margin-bottom: .7rem;
+    position: relative;
+}
+
+.activity-container.unread {
+    background-color: rgb(243, 243, 245);
+}
+
+.activities .items .activity {
+    /* padding: .7rem 0 1.4rem; */
+    width: 100%;
+    /* background-color: rgb(33, 150, 243, .1); */
+    /* background-color: rgb(243,243,245); */
 }
 
 .activities .items .activity .user-thumbnail {
@@ -54,7 +69,7 @@
 }
 
 .activities .items .activity .activity-info a {
-    color: rgb(0, 0, 0, .85);
+    color: rgb(0, 0, 0, .86);
     font-weight: bold;
 }
 

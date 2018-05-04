@@ -167,7 +167,7 @@
 }
 
 .big-like-icon {
-    color: rgb(0, 0, 0, .85);
+    color: rgb(0, 0, 0, .86);
     cursor: pointer;
     outline: none;
     width: 27px;
@@ -179,5 +179,5 @@
 }
 
 .icon-button {
-    color: rgb(0, 0, 0, .85);
+    color: rgb(0, 0, 0, .86);
 }

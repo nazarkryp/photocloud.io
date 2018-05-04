@@ -1,52 +1,56 @@
 <div class="notifications" fxLayout="column">
     <div>
         <div class="header" fxLayout="row" fxLayoutAlign="space-between center">
-            <h3>{{title}}</h3>
-            <div fxLayout="row" fxLayoutAlign="start center">
+            <h3>Notifications</h3>
+            <div class="actions" fxLayout="row" fxLayoutAlign="start center">
                 <a (click)="openRequests()">Requests</a>
-                <!-- <mat-icon class="btn-icon mat-18 people" (click)="openRequests()">people</mat-icon> -->
                 <mat-icon class="btn-icon mat-18" [ngClass]="{ 'disabled' : isLoading }" svgIcon="refresh" (click)="getNotifications()"></mat-icon>
             </div>
-            <!-- <button mat-icon-button (click)="openRequests()">
-                <mat-icon class="btn-icon mat-24">people</mat-icon>
-            </button>
-            <button mat-icon-button (click)="getNotifications()">
-                <mat-icon class="btn-icon mat-18" [ngClass]="{ 'disabled' : isLoading }" svgIcon="refresh"></mat-icon>
-            </button> -->
         </div>
     </div>
-    <div class="items" *ngIf="page?.data?.length">
-        <div class="notification" *ngFor="let notification of page?.data.slice(0, 4);" fxLayout="row" fxLayoutAlign="start start">
-            <a [routerLink]="['/', notification.user.username]">
-                <img class="user-thumbnail" src="{{notification.user.pictureUri}}" alt="user-thumbnail">
-            </a>
-            <div class="notification-info" fxLayout="column" fxLayoutAlign="start start">
-                <div style="width: 100%;" fxLayout="row" fxLayoutAlign="space-between center">
-                    <div fxLayout="column" fxLayoutAlign="start">
-                        <span>
-                            <a [routerLink]="[ '/', notification.user.username]">{{notification.user.username}}</a> {{notification.activityType | activity}}
-                        </span>
-                        <span class="date" matTooltip="{{notification.date | date:'fullDate'}}" matTooltipPosition="after">{{notification.date | timeAgo}}</span>
+    <div class="loader" [@showLoaderTransition] *ngIf="isLoading" fxLayout="row" fxLayoutAlign="center center">
+        <mat-spinner diameter="30" strokeWidth="2"></mat-spinner>
+    </div>
+    <div *ngIf="page?.data?.length; else noNotifications">
+        <div class="items">
+            <div mat-ripple class="notification" *ngFor="let notification of page?.data.slice(0, 4);" (click)="open(notification, $event)" fxLayout="row" fxLayoutAlign="start start">
+                <a [routerLink]="['/', notification.user.username]">
+                    <img class="user-thumbnail" src="{{notification.user.pictureUri}}" alt="user-thumbnail">
+                </a>
+                <div class="notification-info" fxLayout="column" fxLayoutAlign="start start">
+                    <div style="width: 100%;" fxLayout="row" fxLayoutAlign="space-between center">
+                        <div fxLayout="column" fxLayoutAlign="start">
+                            <span>
+                                <a [routerLink]="[ '/', notification.user.username]">{{notification.user.username}}</a> {{notification.activityType | activity}}
+                            </span>
+                            <span class="date" matTooltip="{{notification.date | date:'fullDate'}}" matTooltipPosition="after">{{notification.date | timeAgo}}</span>
+                        </div>
+                        <a [ngSwitch]="notification.media.attachments[0].type" *ngIf="notification.media" [routerLink]="['/p/', notification.media.id]">
+                            <img *ngSwitchCase="'0'" class="media-thumbnail" src="{{notification.media.attachments[0].uri}}" alt="media-thumbnail">
+                            <video *ngSwitchCase="'1'" class="media-thumbnail">
+                                <source src="{{notification.media.attachments[0].uri}}">
+                            </video>
+                            <img *ngSwitchDefault class="media-thumbnail" src="{{notification.media.attachments[0].uri}}" alt="media-thumbnail">
+                        </a>
                     </div>
-                    <a [ngSwitch]="notification.media.attachments[0].type" *ngIf="notification.media" [routerLink]="['/p/', notification.media.id]">
-                        <img *ngSwitchCase="'0'" class="media-thumbnail" src="{{notification.media.attachments[0].uri}}" alt="media-thumbnail">
-                        <video *ngSwitchCase="'1'" class="media-thumbnail">
-                            <source src="{{notification.media.attachments[0].uri}}">
-                        </video>
-                        <img *ngSwitchDefault class="media-thumbnail" src="{{notification.media.attachments[0].uri}}" alt="media-thumbnail">
-                    </a>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="footer">
-        <button class="btn-no-ripple" mat-button color="primary" (click)="openAllNotifications($event)">
-            <div fxLayout="row" fxLayoutAlign="center center">
-                <span>Show more</span>
-                <mat-icon class="mat-18" style="padding-top: .25rem;">
-                    keyboard_arrow_down
-                </mat-icon>
-            </div>
-        </button>
+        <div class="footer">
+            <button class="btn-no-ripple" mat-button color="primary" (click)="openAllNotifications($event)">
+                <div fxLayout="row" fxLayoutAlign="center center">
+                    <span>See all activity</span>
+                    <mat-icon class="mat-18" style="padding-top: .25rem;">
+                        keyboard_arrow_down
+                    </mat-icon>
+                </div>
+            </button>
+        </div>
     </div>
 </div>
+
+<ng-template #noNotifications>
+    <div class="empty">
+        <span>Nothing happened yet</span>
+    </div>
+</ng-template>

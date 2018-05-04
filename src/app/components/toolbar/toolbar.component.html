@@ -17,12 +17,6 @@
                 </a>
             </div>
             <div class="toolbar-actions" fxLayout="row" fxLayoutAlign="end center" fxFlex *ngIf="currentUser && isAuthenticated">
-                <!-- <td-notification-count [notifications]="none" (click)="explorePeople()" *ngIf="currentUser.isActive">
-                    <mat-icon class="btn-icon mat-36 thin" svgIcon="compass"></mat-icon>
-                </td-notification-count> -->
-                <!-- <td-notification-count color="warn" positionX="before" [notifications]="incommingRequestsCount" [matMenuTriggerFor]="notificationsMenu" *ngIf="currentUser.isActive" style="margin: 0;">
-                    <mat-icon class="btn-icon mat-36 thin" svgIcon="bell"></mat-icon>
-                </td-notification-count> -->
                 <mat-icon class="btn-icon mat-36 thin" svgIcon="compass" (click)="explorePeople()" *ngIf="currentUser.isActive"></mat-icon>
                 <mat-icon class="btn-icon mat-36 thin" svgIcon="bell" [matMenuTriggerFor]="notificationsMenu" *ngIf="currentUser.isActive"></mat-icon>
                 <mat-menu (menuOpened)="onMenuOpened($event)" class="notifications-menu" xPosition="before" #notificationsMenu="matMenu" [overlapTrigger]="true">

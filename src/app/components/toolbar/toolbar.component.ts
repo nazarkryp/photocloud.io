@@ -10,6 +10,7 @@ import { CurrentUserViewModel, Page, ActivityViewModel } from 'app/models/view';
 import { RequestsService, ActivityService } from 'app/services';
 import { Uploader } from 'app/core/services';
 import { ScrollDirection } from 'app/shared/directives/header-scroll.directive';
+import { NotificationsComponent } from 'app/components/notifications/notifications.component';
 
 @Component({
     selector: 'app-toolbar',
@@ -22,7 +23,7 @@ export class ToolbarComponent implements OnInit, OnDestroy, AfterViewChecked, Af
     private isResolvingExplorePeople: boolean;
     private isResolvingUserMedia: boolean;
 
-    public incommingRequestsCount: number;
+    public unreadActivitiesCount: number;
     public scrolled: boolean;
     public scrolledDown: boolean;
     // tslint:disable-next-line:no-output-on-prefix
@@ -31,9 +32,11 @@ export class ToolbarComponent implements OnInit, OnDestroy, AfterViewChecked, Af
     public notifications: Page<ActivityViewModel>;
 
     @ViewChild(MatMenuTrigger) public trigger: MatMenuTrigger;
+    @ViewChild('appNotifications') public appNotifications: NotificationsComponent;
 
     constructor(
         private cd: ChangeDetectorRef,
+        private activityService: ActivityService,
         private currentUserService: CurrentUserService,
         private incommingRequestsService: RequestsService,
         private accountService: AccountService,
@@ -85,17 +88,6 @@ export class ToolbarComponent implements OnInit, OnDestroy, AfterViewChecked, Af
         this.onOpenRequests.emit(true);
     }
 
-    public ngOnInit(): void {
-        this.currentUserSubscription = this.currentUserService.getCurrentUser()
-            .subscribe(currentUser => {
-                this.updateCurrentUser(currentUser);
-            });
-
-        this.incommingRequestsService.incommingRequests.subscribe(count => {
-            this.incommingRequestsCount = count;
-        });
-    }
-
     public onPositionChange(event) {
         this.trigger.closeMenu();
         this.scrolled = event;
@@ -105,12 +97,29 @@ export class ToolbarComponent implements OnInit, OnDestroy, AfterViewChecked, Af
         this.scrolledDown = event === ScrollDirection.Down;
     }
 
+    public ngOnInit(): void {
+        this.currentUserSubscription = this.currentUserService.getCurrentUser()
+            .subscribe(currentUser => {
+                this.updateCurrentUser(currentUser);
+            });
+
+        this.activityService.activityPage.subscribe(page => {
+            this.unreadActivitiesCount = page.unread;
+        });
+    }
+
     public ngOnDestroy(): void {
         this.currentUserSubscription.unsubscribe();
     }
 
     public ngAfterViewInit(): void {
         this.cd.detectChanges();
+        this.trigger.onMenuOpen.subscribe(() => {
+            this.appNotifications.markAsRead();
+            // if (!this.router.url.includes('/activity/recent')) {
+            //     this.appNotifications.getNotifications();
+            // }
+        });
     }
 
     public ngAfterViewChecked(): void {
