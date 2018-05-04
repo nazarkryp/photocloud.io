@@ -1,8 +1,7 @@
 import { Component, AfterViewInit, ChangeDetectorRef, AfterViewChecked } from '@angular/core';
 
 import { LoadingService } from 'app/account/services';
-
-import { NgProgress } from 'ngx-progressbar';
+import { ProgressService } from 'app/shared/services';
 
 @Component({
     templateUrl: './account.component.html',
@@ -14,7 +13,7 @@ export class AccountComponent implements AfterViewChecked, AfterViewInit {
     constructor(
         private changeDetectorRef: ChangeDetectorRef,
         private loadingService: LoadingService,
-        private progress: NgProgress) {
+        private progress: ProgressService) {
     }
 
     public get isLoading(): boolean {
@@ -32,7 +31,7 @@ export class AccountComponent implements AfterViewChecked, AfterViewInit {
             if (isLoading) {
                 this.progress.start();
             } else {
-                this.progress.done();
+                this.progress.complete();
             }
         });
     }

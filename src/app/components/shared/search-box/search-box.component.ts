@@ -4,12 +4,12 @@ import { Router } from '@angular/router';
 import { MatAutocompleteSelectedEvent } from '@angular/material';
 
 import { Observable, of } from 'rxjs';
+import { map, tap, switchMap, debounceTime } from 'rxjs/operators';
 
 import { UserService } from 'app/services';
-import { Page, UserViewModel } from 'app/models/view';
+import { ProgressService } from 'app/shared/services';
 
-import { NgProgress } from 'ngx-progressbar';
-import { map, tap, switchMap, debounceTime } from 'rxjs/operators';
+import { Page, UserViewModel } from 'app/models/view';
 
 @Component({
     selector: 'app-search-box',
@@ -25,7 +25,7 @@ export class SearchBoxComponent implements OnInit {
 
     constructor(
         private router: Router,
-        private progress: NgProgress,
+        private progress: ProgressService,
         private userService: UserService) {
     }
 
@@ -63,7 +63,7 @@ export class SearchBoxComponent implements OnInit {
                 switchMap((searchQuery) =>
                     searchQuery ? this.searchUsers(searchQuery) : of(null)),
                 tap(_ => {
-                    this.progress.done();
+                    this.progress.complete();
                     this.isSearching = false;
                 })
             );

@@ -6,17 +6,12 @@ import { Observable } from 'rxjs';
 
 import { AccountService } from 'app/account/services';
 
-import { NgProgress } from 'ngx-progressbar';
-
 @Injectable()
 export class EditResolver implements Resolve<AccountModule> {
     constructor(
-        private accountService: AccountService,
-        private progress: NgProgress) { }
+        private accountService: AccountService) { }
 
-    public resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot)
-        : AccountModule | Observable<AccountModule> | Promise<AccountModule> {
-        this.progress.start();
+    public resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<AccountModule> {
         return this.accountService.getAccount();
     }
 }

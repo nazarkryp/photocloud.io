@@ -110,6 +110,10 @@ td-notification-count .btn-icon:hover {
     border-radius: 50% !important;
 }
 
+.logo {
+    text-decoration: none;
+}
+
 .logo .photo {
     font-size: 1.4em;
     font-weight: lighter;

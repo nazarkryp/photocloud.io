@@ -5,9 +5,9 @@ import { MatSidenav, MatDialog } from '@angular/material';
 import { trigger, transition, style, animate } from '@angular/animations';
 
 import { CurrentUserService } from 'app/infrastructure/services';
-
-import { NgProgress } from 'ngx-progressbar';
+import { ProgressService } from 'app/shared/services';
 import { RequestsService } from 'app/services';
+
 import { CurrentUserViewModel } from 'app/models/view';
 import { NotificationsComponent } from './components/notifications/notifications.component';
 
@@ -29,7 +29,7 @@ export class AppComponent implements OnInit {
         private router: Router,
         private dialog: MatDialog,
         private currentUserService: CurrentUserService,
-        private progress: NgProgress,
+        private progress: ProgressService,
         private incommingRequestsService: RequestsService) {
         this.currentUserService.getCurrentUser(true)
             .subscribe(currentUser => {
@@ -61,7 +61,7 @@ export class AppComponent implements OnInit {
                 this.progress.start();
             } else if (event instanceof ResolveEnd) {
                 window.scrollTo(0, 0);
-                this.progress.done();
+                this.progress.complete();
             }
 
             this.navigationInterceptor(event);
@@ -71,7 +71,7 @@ export class AppComponent implements OnInit {
     private navigationInterceptor(event): void {
         if (event instanceof NavigationEnd) {
             if (this.currentUser) {
-                this.hideAuthenticationBar()
+                this.hideAuthenticationBar();
             }
 
             this.renderFooter = this.router.url !== null;

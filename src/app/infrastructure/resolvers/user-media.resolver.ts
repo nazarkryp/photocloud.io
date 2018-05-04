@@ -9,8 +9,6 @@ import { map, mergeMap, catchError } from 'rxjs/operators';
 import { UserService, MediaService } from 'app/services';
 import { Page, UserViewModel, ErrorViewModel, CurrentUserViewModel } from 'app/models/view';
 
-
-import { NgProgress } from 'ngx-progressbar';
 import { UserMediaViewModel } from 'app/models/view';
 import { ValidationResult, RelationshipStatus } from 'app/models/shared';
 import { CurrentUserService } from 'app/infrastructure/services';

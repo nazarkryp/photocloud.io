@@ -3,17 +3,18 @@ import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, FormControl, Validators, AbstractControl } from '@angular/forms';
 import { MatSlideToggleChange, MatDialog } from '@angular/material';
 
+import { Observable, of } from 'rxjs';
+import { map, switchMap, tap, debounceTime, finalize } from 'rxjs/operators';
+
 import { CurrentUserViewModel, AttachmentViewModel } from 'app/models/view';
 import { CurrentUserService } from 'app/infrastructure/services';
-
-import { NgProgress } from 'ngx-progressbar';
-import { ReactiveFormControl } from 'app/account/models/controls';
-import { Observable, of } from 'rxjs';
+import { ProgressService } from 'app/shared/services';
 import { UserService, UploaderService } from 'app/services';
+
+import { ReactiveFormControl } from 'app/account/models/controls';
 import { ChangePasswordComponent } from 'app/components/shared/change-password/change-password.component';
 
 import { FileUploader } from 'ng2-file-upload';
-import { map, switchMap, tap, debounceTime, finalize } from 'rxjs/operators';
 
 const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
@@ -61,7 +62,7 @@ export class EditComponent implements OnInit, AfterViewInit, AfterViewChecked {
         private userService: UserService,
         private currentUserService: CurrentUserService,
         private uploaderService: UploaderService,
-        private progressService: NgProgress) {
+        private progressService: ProgressService) {
         this.uploader = uploaderService.createUploader((attachment) => this.onSuccessUpload(attachment));
         this.configureFormControls();
     }
@@ -71,7 +72,7 @@ export class EditComponent implements OnInit, AfterViewInit, AfterViewChecked {
         this.progressService.start();
         this.currentUserService.updateCurrentUser(propertiesToUpdate)
             .pipe(finalize(() => {
-                this.progressService.done();
+                this.progressService.complete();
             }))
             .subscribe(currentUser => {
                 this.setup(currentUser);
@@ -134,7 +135,7 @@ export class EditComponent implements OnInit, AfterViewInit, AfterViewChecked {
             isActive: !this.currentUser.isActive
         }).pipe(finalize(() => {
             this.isInvertingAccountStatus = false;
-            this.progressService.done();
+            this.progressService.complete();
         })).subscribe(account => {
             this.currentUser.pictureUri = account.pictureUri;
             this.currentUser.isActive = account.isActive;
@@ -155,7 +156,7 @@ export class EditComponent implements OnInit, AfterViewInit, AfterViewChecked {
         this.currentUser = this.activatedRoute.snapshot.data['account'];
         this.currentUser.canAutoLogin = this.currentUserService.canSignInWithCode;
 
-        this.progressService.done();
+        this.progressService.complete();
     }
 
     public ngAfterViewInit(): void {

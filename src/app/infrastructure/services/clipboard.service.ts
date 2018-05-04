@@ -28,7 +28,7 @@ export class ClipboardService {
                     this.document.execCommand('copy');
 
                     resolve(value);
-                } finalize {
+                } finally {
                     if (textarea && textarea.parentNode) {
                         textarea.parentNode.removeChild(textarea);
                     }

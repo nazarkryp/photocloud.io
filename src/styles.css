@@ -1,1 +1,219 @@
-/* You can add global styles to this file, and also import other style files */
+* {
+    font-family: 'Open Sans', sans-serif;
+}
+
+body {
+    color: rgb(0, 0, 0, .86);
+    background-color: white;
+    overflow-y: scroll;
+    margin-left: calc(100vw - 100%);
+    font-size: 100%;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.cdk-global-scrollblock {
+    position: static !important;
+    overflow-y: hidden !important;
+}
+
+.container {
+    width: 75%;
+}
+
+.center {
+    margin: auto;
+}
+
+.mat-dialog-container {
+    padding: 0px !important;
+}
+
+.mat-icon {
+    font-family: 'Material Icons' !important;
+}
+
+.mat-icon.mat-18 {
+    font-size: 18px !important;
+    height: 18px !important;
+    width: auto;
+    max-width: 18px !important;
+    line-height: 18px !important;
+}
+
+.mat-icon.mat-24 {
+    font-size: 24px !important;
+    height: 24px !important;
+    max-width: 24px !important;
+    width: auto;
+}
+
+.mat-icon.mat-36 {
+    font-size: 36px !important;
+    height: 36px !important;
+    width: auto;
+    max-width: 36px !important;
+    line-height: 36px !important;
+}
+
+.mat-icon.mat-48 {
+    font-size: 48px !important;
+    height: 48px !important;
+    width: auto;
+    max-width: 48px !important;
+    line-height: 48px !important;
+}
+
+.mat-icon.mat-72 {
+    font-size: 72px !important;
+    height: 72px !important;
+    width: auto;
+    max-width: 72px !important;
+    line-height: 72px !important;
+}
+
+.mat-icon.mat-18.thin svg,
+.mat-icon.mat-24.thin svg,
+.mat-icon.mat-36.thin svg,
+.mat-icon.mat-48.thin svg,
+.mat-icon.mat-72.thin svg {
+    stroke-width: .9px;
+}
+
+.mat-icon.btn-icon {
+    cursor: pointer;
+    color: rgb(0, 0, 0, .86);
+    outline: none;
+}
+
+.mat-icon.btn-icon-secondary {
+    cursor: pointer;
+    color: #9c9c9c;
+    outline: none;
+}
+
+.mat-icon.btn-icon-light {
+    cursor: pointer;
+    color: white;
+    outline: none;
+}
+
+.mat-icon.btn-icon:hover,
+.mat-icon.btn-icon-light:hover {
+    color: #e91e63;
+}
+
+.mat-icon.btn-icon.warn {
+    color: #e91e63;
+}
+
+.mat-icon.btn-icon.disabled,
+.mat-icon.btn-icon-light:disabled {
+    color: rgb(0, 0, 0, .6);
+}
+
+.mat-button.btn-relationships {
+    background: #efefef;
+    color: rgb(0, 0, 0, .6);
+    border-radius: 2px;
+    font-weight: 900;
+    line-height: 27px;
+    min-width: 110px;
+    padding: 3px 0;
+}
+
+.mat-button.btn-default {
+    width: 100%;
+    background: #efefef;
+    color: rgb(0, 0, 0, .6);
+    text-transform: uppercase;
+    font-size: 0.8em;
+    letter-spacing: 1px;
+    font-weight: 600;
+}
+
+.mat-button.btn-primary {
+    width: 100%;
+    background: #e91e63;
+    color: white;
+    text-transform: uppercase;
+    font-size: 0.8em;
+    letter-spacing: 1px;
+    font-weight: 600;
+}
+
+.mat-button.btn-primary:disabled,
+.mat-button.btn-default:disabled {
+    background-color: rgba(0, 0, 0, .12);
+    color: rgb(0, 0, 0, .86);
+}
+
+a.primary {
+    color: #e91e63;
+    cursor: pointer;
+}
+
+a.primary.disabled {
+    color: gray;
+    cursor: default;
+}
+
+a.link,
+a.hashtag,
+a.mention {
+    color: #053569;
+    cursor: pointer;
+    font-weight: normal;
+    font-weight: 600;
+}
+
+a.link:hover,
+a.mention:hover,
+a.hashtag:hover {
+    color: #e91e63;
+}
+
+.success {
+    color: green;
+}
+
+.form-field {
+    width: 100%;
+}
+
+.btn-icon-pulse {
+    animation-name: pulseanimation;
+    animation-duration: 1000ms;
+    animation-iteration-count: 1;
+    animation-timing-function: linear;
+}
+
+@keyframes pulseanimation {
+    0% {
+        transform: scale(1);
+    }
+    30% {
+        transform: scale(1);
+    }
+    40% {
+        transform: scale(1.5);
+    }
+    50% {
+        transform: scale(1);
+    }
+    60% {
+        transform: scale(1);
+    }
+    70% {
+        transform: scale(1.5);
+    }
+    80% {
+        transform: scale(1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}

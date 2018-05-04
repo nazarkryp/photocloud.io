@@ -1,18 +1,18 @@
 import { Component, Inject, ViewEncapsulation, Optional, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { MatDialogRef, MatSnackBarConfig, MatSnackBar, MAT_DIALOG_DATA, MatSlideToggleChange } from '@angular/material';
 
-import { Subscription } from 'rxjs';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
+import { finalize } from 'rxjs/operators';
 
 import { MediaViewModel, UserViewModel, AttachmentViewModel, CommentViewModel, CurrentUserViewModel, CreateMediaModel } from 'app/models/view';
 import { MediaService, CommentService } from 'app/services';
 import { CurrentUserService } from 'app/infrastructure/services';
 import { TokenProvider } from 'app/infrastructure/security';
-import { NgProgress } from 'ngx-progressbar';
+import { ProgressService } from 'app/shared/services';
+
 import { FileUploader, FileUploaderOptions } from 'ng2-file-upload';
 
 import { environment } from 'app/../environments/environment';
-import { finalize } from 'rxjs/operators';
 
 @Component({
     templateUrl: './create-media.component.html',
@@ -28,7 +28,7 @@ export class CreateMediaComponent implements OnInit, OnDestroy {
     constructor(
         private mediaService: MediaService,
         private currentUserService: CurrentUserService,
-        private progress: NgProgress,
+        private progress: ProgressService,
         private tokenProvider: TokenProvider,
         @Optional() public dialogRef: MatDialogRef<CreateMediaComponent>) {
         this.currentUser = this.currentUserService.retrieveCurrentUser();
@@ -40,7 +40,7 @@ export class CreateMediaComponent implements OnInit, OnDestroy {
         this.progress.start();
         this.mediaService.createMedia(this.media)
             .pipe(finalize(() => {
-                this.progress.done();
+                this.progress.complete();
             }))
             .subscribe(createdPost => {
                 createdPost.user.pictureUri = this.currentUser.pictureUri;

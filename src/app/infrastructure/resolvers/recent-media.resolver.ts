@@ -7,17 +7,12 @@ import { catchError } from 'rxjs/operators';
 import { MediaService } from 'app/services';
 import { Page, MediaViewModel } from 'app/models/view';
 
-import { NgProgress } from 'ngx-progressbar';
-
 @Injectable()
 export class RecentMediaResolver implements Resolve<Page<MediaViewModel>> {
     constructor(
-        private mediaService: MediaService,
-        private progress: NgProgress) { }
+        private mediaService: MediaService) { }
 
-    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Page<MediaViewModel>> {
-        this.progress.start();
-
+    public resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Page<MediaViewModel>> {
         return this.mediaService.getRecentMedia(null)
             .pipe(catchError(error => {
                 return of(error);

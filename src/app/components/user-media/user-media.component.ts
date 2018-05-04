@@ -1,21 +1,21 @@
 import { Component, OnInit, OnDestroy, ViewContainerRef, AfterViewChecked, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
 import { MatDialog } from '@angular/material';
 
-import { Observable } from 'rxjs';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
+import { finalize } from 'rxjs/operators';
 
 import { AccountService } from 'app/account/services';
 import { CurrentUserService } from 'app/infrastructure/services';
+import { ProgressService } from 'app/shared/services';
 import { MediaService, UserService } from 'app/services';
 import { CurrentUserViewModel, MediaViewModel, AttachmentViewModel, UserViewModel, Page, ErrorViewModel, UserMediaViewModel } from 'app/models/view';
 import { RelationshipStatus, ValidationResult, } from 'app/models/shared';
 import { MediaDetailsComponent } from 'app/components/shared/media-details/media-details.component';
 import { UsersDialogComponent } from '../shared/users-dialog/users-dialog.component';
-import { NgProgress } from 'ngx-progressbar';
+
 import { ConfirmComponent } from 'app/components/shared/confirm/confirm.component';
-import { HttpErrorResponse } from '@angular/common/http';
-import { finalize } from 'rxjs/operators';
 
 @Component({
     templateUrl: './user-media.component.html',
@@ -42,7 +42,7 @@ export class UserMediaComponent implements OnInit, OnDestroy, AfterViewChecked {
         private router: Router,
         private route: ActivatedRoute,
         public dialog: MatDialog,
-        private progress: NgProgress) {
+        private progress: ProgressService) {
         this.currentUser = this.currentUserService.retrieveCurrentUser();
     }
 
@@ -56,7 +56,7 @@ export class UserMediaComponent implements OnInit, OnDestroy, AfterViewChecked {
         this.mediaService.getUserMedia(this.userMedia.user.username, this.userMedia.page.pagination)
             .pipe(finalize(() => {
                 if (this.progress.isStarted()) {
-                    this.progress.done();
+                    this.progress.complete();
                 }
 
                 this.isLoading = false;

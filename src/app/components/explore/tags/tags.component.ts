@@ -6,10 +6,11 @@ import { Subscription } from 'rxjs';
 import { CurrentUserService } from 'app/infrastructure/services';
 import { MediaDetailsComponent } from 'app/components/shared/media-details/media-details.component';
 import { Page, MediaViewModel, CurrentUserViewModel } from 'app/models/view';
-import { MediaService } from 'app/services';
 import { AccountService } from 'app/account/services';
+import { MediaService } from 'app/services';
+import { ProgressService } from 'app/shared/services';
 
-import { NgProgress } from 'ngx-progressbar';
+
 import { LikeService } from 'app/shared/services';
 import { finalize } from 'rxjs/operators';
 
@@ -33,7 +34,7 @@ export class TagsComponent implements OnInit, OnDestroy {
         private currentUserService: CurrentUserService,
         private accountService: AccountService,
         private likeService: LikeService,
-        private progress: NgProgress) {
+        private progress: ProgressService) {
         this.currentUserSubscription = this.currentUserService.getCurrentUser()
             .subscribe(currentUser => {
                 this.currentUser = currentUser;
@@ -49,7 +50,7 @@ export class TagsComponent implements OnInit, OnDestroy {
         this.mediaService.getMediaByTag(this.tag, this.page.pagination)
             .pipe(finalize(() => {
                 this.isLoading = false;
-                this.progress.done();
+                this.progress.complete();
             }))
             .subscribe(page => {
                 this.page.hasMoreItems = page.hasMoreItems;

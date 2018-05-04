@@ -23,13 +23,13 @@ import { AuthenticationGuardService } from './infrastructure/guards/authenticati
 import { AccountService } from 'app/account/services';
 
 import { ClipboardModule } from 'ngx-clipboard';
-import { NgProgressModule } from 'ngx-progressbar';
 import { FileUploadModule } from 'ng2-file-upload';
 
 import { RelationshipActionPipe } from './pipes/relationship-action.pipe';
 import { RawPipe } from './pipes/raw.pipe';
 import { LinkifyPipe } from './pipes/linkify.pipe';
 import { TimeAgoPipe } from './pipes/time-ago.pipe';
+import { TruncatePipe } from './pipes/truncate.pipe';
 
 import { ErrorBoxComponent } from './components/shared/user-media-error/user-media-error.component';
 import { CaptionComponent } from './components/shared/caption/caption.component';
@@ -100,8 +100,10 @@ import { ManageUsersComponent } from './dashboard/components/manage-users/manage
         PrivacyComponent,
         AboutComponent,
         LinkifyPipe,
+        TimeAgoPipe,
         NotificationsComponent,
         ActivityPipe,
+        TruncatePipe,
         ActivityComponent,
         ManageUsersComponent
     ],
@@ -120,7 +122,6 @@ import { ManageUsersComponent } from './dashboard/components/manage-users/manage
         FlexLayoutModule,
         FormsModule,
         ReactiveFormsModule,
-        NgProgressModule,
         ClipboardModule,
         FileUploadModule,
         HttpModule,

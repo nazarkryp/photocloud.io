@@ -4,14 +4,14 @@ import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material';
 
 import { Subscription } from 'rxjs';
+import { finalize } from 'rxjs/operators';
 
 import { MediaViewModel, Page, CurrentUserViewModel } from 'app/models/view';
 import { MediaDetailsComponent } from 'app/components/shared/media-details';
 import { MediaService } from 'app/services';
 import { CurrentUserService } from 'app/infrastructure/services';
 import { AccountService } from 'app/account/services';
-import { NgProgress } from 'ngx-progressbar';
-import { finalize } from 'rxjs/operators';
+import { ProgressService } from 'app/shared/services';
 
 @Component({
     templateUrl: './liked-media.component.html',
@@ -30,7 +30,7 @@ export class LikedMediaComponent implements OnInit, OnDestroy {
         private mediaService: MediaService,
         private currentUserService: CurrentUserService,
         private accountService: AccountService,
-        private progress: NgProgress) {
+        private progress: ProgressService) {
         this.currentUserSubscription = this.currentUserService.getCurrentUser().subscribe(currentUser => {
             this.currentUser = currentUser;
         });
@@ -41,7 +41,7 @@ export class LikedMediaComponent implements OnInit, OnDestroy {
 
         this.mediaService.getLikedMedia(this.page.pagination)
             .pipe(finalize(() => {
-                this.progress.done();
+                this.progress.complete();
             }))
             .subscribe(page => {
                 this.page.hasMoreItems = page.hasMoreItems;

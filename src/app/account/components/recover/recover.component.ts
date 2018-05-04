@@ -5,8 +5,7 @@ import { transition, trigger, query, style, stagger, animate } from '@angular/an
 
 import { DefaultErrorStateMatcher } from 'app/account/matchers';
 import { CurrentUserService } from 'app/infrastructure/services';
-
-import { NgProgress } from 'ngx-progressbar';
+import { ProgressService } from 'app/shared/services';
 
 @Component({
     templateUrl: './recover.component.html',
@@ -38,7 +37,7 @@ export class RecoverComponent {
     constructor(
         private router: Router,
         private builder: FormBuilder,
-        private progress: NgProgress,
+        private progress: ProgressService,
         private currentUserService: CurrentUserService) {
         this.formGroup = this.builder.group({
             username: new FormControl('',
@@ -57,14 +56,13 @@ export class RecoverComponent {
             const username = this.formGroup.get('username').value;
 
             this.currentUserService.recover(username)
-                .delay(3000)
                 .subscribe(response => {
                     this.success = true;
-                    this.progress.done();
+                    this.progress.complete();
                 }, error => {
                     this.formGroup.enable();
                     this.recoverError = 'Sorry, user with such username was not found';
-                    this.progress.done();
+                    this.progress.complete();
                 });
         }
     }

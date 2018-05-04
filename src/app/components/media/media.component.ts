@@ -3,15 +3,16 @@ import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material';
 
 import { Subscription } from 'rxjs';
+import { finalize } from 'rxjs/operators';
 
 import { MediaViewModel, UserViewModel, Page, CommentViewModel, AttachmentViewModel, CurrentUserViewModel } from 'app/models/view';
 import { CurrentUserService } from 'app/infrastructure/services';
 import { MediaService } from 'app/services';
 import { CreateMediaComponent } from 'app/components/shared/create-media/create-media.component';
 import { ConfirmComponent } from 'app/components/shared/confirm/confirm.component';
+import { ProgressService } from 'app/shared/services';
 
-import { NgProgress } from 'ngx-progressbar';
-import { finalize } from 'rxjs/operators';
+
 
 @Component({
     templateUrl: './media.component.html',
@@ -30,7 +31,7 @@ export class MediaComponent implements OnInit, OnDestroy {
         private activatedRoute: ActivatedRoute,
         private mediaService: MediaService,
         private currentUserService: CurrentUserService,
-        private progress: NgProgress,
+        private progress: ProgressService,
         private dialog: MatDialog) {
         this.page.data = new Array<MediaViewModel>();
         this.page.hasMoreItems = false;
@@ -71,7 +72,7 @@ export class MediaComponent implements OnInit, OnDestroy {
         this.mediaService.getRecentMedia(this.page.pagination)
             .pipe(finalize(() => {
                 this.isLoading = false;
-                this.progress.done();
+                this.progress.complete();
             }))
             .subscribe(page => {
                 this.page.hasMoreItems = page.hasMoreItems;

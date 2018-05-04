@@ -4,19 +4,19 @@ import { DOCUMENT } from '@angular/common';
 import { trigger, animate, style, transition, animateChild, group, query, stagger } from '@angular/animations';
 import { MatDialogRef, MatSnackBarConfig, MatSnackBar, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
 
-import { Observable } from 'rxjs';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
+import { finalize } from 'rxjs/operators';
 
 import { ConfirmComponent } from 'app/components/shared/confirm/confirm.component';
 
-import { CurrentUserService } from 'app/infrastructure/services';
 import { MediaViewModel, UserViewModel, CommentViewModel, CurrentUserViewModel, UpdateMediaViewModel, UpdateAttachmentViewModel } from 'app/models/view';
+import { CurrentUserService } from 'app/infrastructure/services';
+import { ProgressService } from 'app/shared/services';
 import { MediaService, CommentService } from 'app/services';
-import { NgProgress } from 'ngx-progressbar';
+
 import { EditMediaService, LikeService } from 'app/shared/services';
 import { UserDialogDetails } from 'app/components/shared/users-dialog/models';
 import { CommentsComponent } from 'app/components/shared/comments/comments.component';
-import { finalize } from 'rxjs/operators';
 
 @Component({
     templateUrl: './media-details.component.html',
@@ -54,7 +54,7 @@ export class MediaDetailsComponent implements OnInit, OnDestroy {
         private commentService: CommentService,
         private editMediaService: EditMediaService,
         private likeService: LikeService,
-        private progress: NgProgress,
+        private progress: ProgressService,
         private snackBar: MatSnackBar,
         private dialog: MatDialog,
         @Optional() public dialogRef: MatDialogRef<MediaDetailsComponent>,
@@ -199,7 +199,7 @@ export class MediaDetailsComponent implements OnInit, OnDestroy {
 
         this.mediaService.getMediaById(mediaId)
             .pipe(finalize(() => {
-                this.progress.done();
+                this.progress.complete();
             }))
             .subscribe(media => {
                 this.media = media;

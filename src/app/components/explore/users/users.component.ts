@@ -3,14 +3,15 @@ import { ActivatedRoute } from '@angular/router';
 import { trigger, transition, style, animate, query, stagger } from '@angular/animations';
 
 import { Subscription } from 'rxjs';
+import { finalize } from 'rxjs/operators';
 
 import { UserService } from 'app/services';
 import { Page, UserViewModel, CurrentUserViewModel } from 'app/models/view';
 import { RelationshipAction, RelationshipStatus } from 'app/models/shared';
 
-import { NgProgress } from 'ngx-progressbar';
+
 import { CurrentUserService } from 'app/infrastructure/services';
-import { finalize } from 'rxjs/operators';
+import { ProgressService } from 'app/shared/services';
 
 @Component({
     templateUrl: './users.component.html',
@@ -51,7 +52,7 @@ export class UsersComponent implements OnInit, OnDestroy {
         private route: ActivatedRoute,
         private userService: UserService,
         private currentUserService: CurrentUserService,
-        private progress: NgProgress) {
+        private progress: ProgressService) {
         this.currentUserSubscription = this.currentUserService.getCurrentUser()
             .subscribe((user) => {
                 this.currentUser = user;
@@ -64,7 +65,7 @@ export class UsersComponent implements OnInit, OnDestroy {
 
         this.userService.getUsers(this.page.pagination)
             .pipe(finalize(() => {
-                this.progress.done();
+                this.progress.complete();
                 this.isLoading = false;
             }))
             .subscribe((page: Page<UserViewModel>) => {

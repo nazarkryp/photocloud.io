@@ -38,7 +38,7 @@ export class Uploader {
         formData.append('image', file, file.name);
 
         return this.client.postWithProgress<AttachmentResponse>('/attachments', formData, this.onProgressChanged.bind(this), this.onCompleted.bind(this))
-            .map(response => this.mapper.mapFromResponse(response));
+            .pipe(map(response => this.mapper.mapFromResponse(response)));
     }
 
     public get progress(): number {

@@ -5,8 +5,8 @@ import { map } from 'rxjs/operators';
 
 import { TokenProvider } from 'app/infrastructure/security/token-provider';
 import { AttachmentViewModel } from 'app/models/view';
-import { FileUploader, FileUploaderOptions } from 'ng2-file-upload';
 import { environment } from 'app/../environments/environment';
+import { FileUploader, FileUploaderOptions } from 'ng2-file-upload';
 
 @Injectable()
 export class UploaderService {
@@ -48,6 +48,7 @@ export class UploaderService {
                 if (!accessToken) {
                     return null;
                 }
+
                 const bearerToken = `Bearer ${accessToken.accessToken}`;
                 const headers: Array<{ name: string; value: string; }> = [];
                 headers.push({ name: 'Authorization', value: bearerToken });

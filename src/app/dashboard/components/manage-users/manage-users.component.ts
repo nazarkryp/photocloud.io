@@ -7,7 +7,6 @@ import { Page, UserViewModel, CurrentUserViewModel } from 'app/models/view';
 import { UserService } from 'app/services';
 import { CurrentUserService } from 'app/infrastructure/services';
 
-import { NgProgress } from 'ngx-progressbar';
 import { finalize } from 'rxjs/operators';
 
 @Component({
@@ -25,8 +24,7 @@ export class ManageUsersComponent implements OnInit, OnDestroy {
     constructor(
         private route: ActivatedRoute,
         private userService: UserService,
-        private currentUserService: CurrentUserService,
-        private progress: NgProgress) {
+        private currentUserService: CurrentUserService) {
         this.currentUserSubscription = this.currentUserService.getCurrentUser()
             .subscribe((user) => {
                 this.currentUser = user;
@@ -34,12 +32,12 @@ export class ManageUsersComponent implements OnInit, OnDestroy {
     }
 
     public getUsers() {
-        this.progress.start();
+        // this.progress.start();
         this.isLoading = true;
 
         this.userService.getUsers(this.page.pagination)
             .pipe(finalize(() => {
-                this.progress.done();
+                // this.progress.complete();
                 this.isLoading = false;
             }))
             .subscribe((page: Page<UserViewModel>) => {
