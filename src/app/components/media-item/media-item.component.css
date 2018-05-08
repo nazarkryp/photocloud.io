@@ -49,12 +49,16 @@
     padding-bottom: .7rem;
 }
 
+.media-item-caption .username {
+    margin-right: .25rem;
+}
+
 .media-item-footer .media-item-comments {
     padding-bottom: .7rem;
 }
 
 .media-item-footer .media-item-date {
-    padding-bottom: .25rem;
+    padding-bottom: .7rem;
 }
 
 .media-item-footer .comment-input {
@@ -144,9 +148,19 @@
 }
 
 .media-item-content>.navigation mat-icon {
-    color: white;
-    text-shadow: 2px 2px 4px #000000;
+    color: rgb(255, 255, 255, .8);
+    text-shadow: 2px 2px 4px rgb(0, 0, 0, .86);
     cursor: pointer;
+    -webkit-transition: background-color .15s ease-in-out, transform .15s ease-in-out;
+    -moz-transition: background-color .15s ease-in-out, transform .15s ease-in-out;
+    -ms-transition: background-color .15s ease-in-out, transform .15s ease-in-out;
+    -o-transition: background-color .15s ease-in-out, transform .15s ease-in-out;
+    transition: background-color .15s ease-in-out, transform .15s ease-in-out;
+}
+
+.media-item-content>.navigation mat-icon:hover {
+    color: rgb(255, 255, 255, 1);
+    transform: scale(1.3);
 }
 
 .media-created {
@@ -180,4 +194,19 @@
 
 .icon-button {
     color: rgb(0, 0, 0, .86);
+}
+
+.media-progressbar {
+    position: absolute;
+    top: 0;
+    height: 2px;
+    z-index: 1;
+}
+
+::ng-deep .media-progressbar .mat-progress-bar-background {
+    fill: transparent;
+}
+
+::ng-deep .media-progressbar .mat-progress-bar-buffer {
+    background-color: transparent;
 }

@@ -6,11 +6,26 @@ import { MemoryCache } from 'app/infrastructure/caching';
 import { TokenProvider, AuthenticationInterceptor } from 'app/infrastructure/security';
 import { HttpErrorInterceptor } from 'app/infrastructure/handlers';
 import { HttpErrorHandler } from 'app/infrastructure/configuration';
-import { CurrentUserService } from 'app/infrastructure/services';
+import { ClipboardService, CurrentUserService } from 'app/infrastructure/services';
 import { LocalStorageService } from 'app/infrastructure/services/storage';
-import { ClipboardService } from 'app/infrastructure/services';
-import { TokenMapper, UserMapper, ActivityMapper } from 'app/infrastructure/mapping';
-import { RecentMediaResolver, LikedMediaResolver, UserListResolver, UserMediaResolver } from 'app/infrastructure/resolvers';
+
+import {
+    ActivityMapper,
+    AttachmentMapper,
+    CommentMapper,
+    MediaMapper,
+    PaginationMapper,
+    TokenMapper,
+    UserMapper
+} from 'app/infrastructure/mapping';
+
+import {
+    ActivityResolver,
+    LikedMediaResolver,
+    RecentMediaResolver,
+    UserListResolver,
+    UserMediaResolver
+} from 'app/infrastructure/resolvers';
 
 import {
     AccountNotActiveFilter,
@@ -19,8 +34,8 @@ import {
     HttpNotFoundFilter,
     InternetConnectionFilter
 } from 'app/infrastructure/filters/http';
-import { AttachmentMapper, CommentMapper, MediaMapper, PaginationMapper } from 'app/infrastructure/mapping';
-import { IncommingRequestsInterceptor } from 'app/account/services/interceptors/incomming-requests.interceptor';
+
+import { IncommingRequestsInterceptor } from 'app/account/services/interceptors';
 
 @NgModule({
     providers: [
@@ -37,6 +52,7 @@ import { IncommingRequestsInterceptor } from 'app/account/services/interceptors/
         TokenMapper,
         UserMapper,
         MemoryCache,
+        ActivityResolver,
         LikedMediaResolver,
         RecentMediaResolver,
         UserListResolver,

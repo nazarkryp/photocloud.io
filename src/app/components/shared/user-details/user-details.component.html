@@ -71,7 +71,7 @@
     </div>
     <div class="user-info-small" fxLayout="column" fxLayoutAlign="center center">
         <img class="thumbnail-big" src="{{user.pictureUri}}" default="assets/images/user-default-image.png" alt="{{user.username}}" />
-        <div *ngIf="currentUser && user.id === currentUser.id" fxLayout="row" fxLayoutAlign="space-between center" style="padding: .7rem 0; width: 100%;">
+        <div *ngIf="currentUser && user.id === currentUser.id" fxLayout="row" fxLayoutAlign="space-between center" style="padding: .7rem 0; width: 50%;">
             <a mat-icon-button routerLink="/account/edit" matTooltip="Settings" matTooltipPosition="above" style="margin-right: 40px;">
                 <mat-icon class="btn-icon">settings</mat-icon>
             </a>
@@ -81,6 +81,20 @@
         </div>
         <div style="margin-top: .7rem;">
             <h1>{{user.username}}</h1>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="space-around center" style="width: 100vw; padding: .7rem 0;" *ngIf="user.isActive && !currentUser">
+            <div fxLayout="column" fxLayoutAlign="center center">
+                <strong>{{user.counters.posts}}</strong>
+                posts
+            </div>
+            <div fxLayout="column" fxLayoutAlign="center center">
+                <strong>{{user.counters.followers}}</strong>
+                followers
+            </div>
+            <div fxLayout="column" fxLayoutAlign="center center">
+                <strong>{{user.counters.following}}</strong>
+                following
+            </div>
         </div>
     </div>
     <div style="width: 100%;" fxLayout="row" fxLayoutAlign="end center" *ngIf="user.isActive && user.lastActive">

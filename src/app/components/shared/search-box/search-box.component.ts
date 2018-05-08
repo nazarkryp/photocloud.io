@@ -55,14 +55,14 @@ export class SearchBoxComponent implements OnInit {
                 debounceTime(300),
                 tap(_ => {
                     if (this.searchControl.value) {
-                        this.progress.start();
+                        // this.progress.start();
                         this.isSearching = true;
                     }
                 }),
                 switchMap((searchQuery) =>
                     searchQuery ? this.searchUsers(searchQuery) : of(null)),
                 tap(_ => {
-                    this.progress.complete();
+                    // this.progress.complete();
                     this.isSearching = false;
                 })
             );

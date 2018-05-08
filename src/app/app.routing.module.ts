@@ -11,7 +11,7 @@ import { MediaDetailsComponent } from './components/shared/media-details/media-d
 import { TagsComponent } from './components/explore/tags/tags.component';
 import { ConnectionErrorComponent } from './components/shared/connection-error/connection-error.component';
 import { AuthenticationGuardService } from './infrastructure/guards/authentication-guard.service';
-import { RecentMediaResolver, UserMediaResolver, UserListResolver, LikedMediaResolver } from './infrastructure/resolvers';
+import { RecentMediaResolver, UserMediaResolver, UserListResolver, LikedMediaResolver, ActivityResolver } from './infrastructure/resolvers';
 import { LikedMediaComponent } from 'app/components/liked-media/liked-media.component';
 import { TermsComponent } from 'app/components/terms/terms.component';
 import { PrivacyComponent } from './components/privacy/privacy.component';
@@ -77,6 +77,9 @@ const routes: Routes = [
     {
         path: 'activity/recent',
         component: ActivityComponent,
+        resolve: {
+            activities: ActivityResolver
+        },
         data: {
             title: 'PhotoCloud - Activity'
         },

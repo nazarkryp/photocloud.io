@@ -61,13 +61,11 @@
                 Password must contain at least {{password.errors.minlength.requiredLength}} symbols
             </mat-error>
         </mat-form-field>
-        <div class="agreements-container">
-            <p>
-                By signing up you agree to our
-                <a routerLink="/terms" target="_blank">Terms of Service</a> and
-                <a routerLink="/privacy" target="_blank">Privacy Policy</a>.
-            </p>
-        </div>
+        <p class="agreements">
+            By signing up you agree to our
+            <a routerLink="/terms" target="_blank">Terms of Service</a> and
+            <a routerLink="/privacy" target="_blank">Privacy Policy</a>.
+        </p>
         <div style="margin-top: .7rem;" fxLayout="column" fxLayoutAlign="center center" *ngIf="signUpError">
             <span class="signup-error-message" *ngFor="let error of formGroup.errors.signUpErrors">{{error}}</span>
         </div>
@@ -75,5 +73,4 @@
             <button type="submit" style="width: 100%;" mat-raised-button color="primary" [disabled]="formGroup.disabled">CREATE ACCOUNT</button>
         </div>
     </form>
-
 </div>

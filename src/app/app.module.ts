@@ -68,6 +68,8 @@ import { ActivityPipe } from './pipes/activity.pipe';
 import { ActivityComponent } from './components/activity/activity.component';
 import { ManageUsersComponent } from './dashboard/components/manage-users/manage-users.component';
 
+import { NgProgressModule } from '@ngx-progressbar/core';
+
 @NgModule({
     declarations: [
         AppComponent,
@@ -128,7 +130,8 @@ import { ManageUsersComponent } from './dashboard/components/manage-users/manage
         ServiceModule,
         InfrastructureModule,
         SharedModule,
-        CoreModule
+        CoreModule,
+        NgProgressModule.forRoot()
     ],
     providers: [
         AccountService,

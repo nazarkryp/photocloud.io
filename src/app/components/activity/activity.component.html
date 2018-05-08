@@ -1,12 +1,16 @@
 <div fxLayout="column" fxLayoutAlign="start center">
     <div class="activities" fxLayout="column" fxLayoutAlign="start center">
-        <div class="header" fxLayout="row" fxLayoutAlign="space-between center">
-            <h3>Activity</h3>
-            <a style="font-size: .9em; color: rgb(0,0,0,.3); cursor: pointer;" *ngIf="page?.data?.length" (click)="removeAllActivities()">Clear All</a>
+        <div class="header" fxLayout="row" fxLayoutAlign="center center">
+            <div class="container" fxLayout="row" fxLayoutAlign="space-between center">
+                <h1>Activity</h1>
+                <div>
+                    <button mat-button class="btn-default" *ngIf="page?.data?.length" (click)="removeAllActivities()">CLEAR ALL</button>
+                </div>
+            </div>
         </div>
         <div class="items" fxLayout="column" [@listAnimation]="page?.data?.length" fxLayoutAlign="start center" appInfiniteScroll [appScrollTriggerOnce]="true" [scrollOffset]="2000" (scrollPosition)="onPositionChange()">
             <span *ngIf="!page?.data?.length && !isLoading">You have no recent activity</span>
-            <div mat-ripple class="activity-container" [ngClass]="{ 'unread' : !activity.isMarkedAsRead }" *ngFor="let activity of page?.data; let index = index;">
+            <div mat-ripple (appear)="appear($event, activity)" class="activity-container" [ngClass]="{ 'unread' : !activity.isMarkedAsRead }" *ngFor="let activity of page?.data; let index = index;">
                 <div class="activity" fxLayout="row" fxLayoutAlign="start start">
                     <a [routerLink]="['/', activity.user.username]">
                         <img class="user-thumbnail" src="{{activity.user.pictureUri}}" alt="user-thumbnail">

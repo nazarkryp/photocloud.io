@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation, OnInit, Input, Output, EventEmitter, Inject, ViewChild } from '@angular/core';
+import { Component, ViewEncapsulation, OnInit, Input, Output, EventEmitter, Inject, ViewChild, ElementRef } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { MatSnackBar, MatDialog, MatSnackBarConfig } from '@angular/material';
 import { Subscription } from 'rxjs';
@@ -29,7 +29,7 @@ export class MediaItemComponent implements OnInit {
     @Input() public media: MediaViewModel;
     // tslint:disable-next-line:no-output-on-prefix
     @Output() public onRemoved = new EventEmitter<MediaViewModel>();
-    @ViewChild('player') public player: any;
+    @ViewChild('player') public player: ElementRef;
     @ViewChild('commentsComponent') public commentsComponent: CommentsComponent;
 
     public text: string;
@@ -77,11 +77,7 @@ export class MediaItemComponent implements OnInit {
     }
 
     public play() {
-        if (!this.player) {
-            return;
-        }
-
-        if (this.media.attachments[this.media.activeAttachment].type !== 1) {
+        if (!this.player || this.media.attachments[this.media.activeAttachment].type !== 1) {
             return;
         }
 
@@ -89,6 +85,13 @@ export class MediaItemComponent implements OnInit {
             this.player.nativeElement.play();
         } else {
             this.player.nativeElement.pause();
+        }
+
+        if (!this.player.nativeElement.ontimeupdate) {
+            this.player.nativeElement.ontimeupdate = (event) => {
+                const progress = (this.player.nativeElement.currentTime * 100) / this.player.nativeElement.duration;
+                this.media.attachments[this.media.activeAttachment].progress = progress;
+            };
         }
     }
 

@@ -84,21 +84,22 @@ a {
 }
 
 .mat-icon.btn-icon {
-    cursor: pointer;
     color: rgb(0, 0, 0, .86);
-    outline: none;
 }
 
-.mat-icon.btn-icon-secondary {
+.mat-icon.btn-icon,
+.mat-icon.btn-icon-light {
     cursor: pointer;
-    color: #9c9c9c;
     outline: none;
+    -webkit-transition: color .15s ease-in-out, transform .15s ease-in-out;
+    -moz-transition: color .15s ease-in-out, transform .15s ease-in-out;
+    -ms-transition: color .15s ease-in-out, transform .15s ease-in-out;
+    -o-transition: color .15s ease-in-out, transform .15s ease-in-out;
+    transition: color .15s ease-in-out, transform .15s ease-in-out;
 }
 
 .mat-icon.btn-icon-light {
-    cursor: pointer;
-    color: white;
-    outline: none;
+    color: rgb(255, 255, 255, .86);
 }
 
 .mat-icon.btn-icon:hover,

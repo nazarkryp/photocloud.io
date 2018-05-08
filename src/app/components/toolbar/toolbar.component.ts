@@ -79,17 +79,26 @@ export class ToolbarComponent implements OnInit, OnDestroy, AfterViewChecked, Af
     }
 
     public openNotifications() {
-        this.trigger.closeMenu();
+        if (this.trigger) {
+            this.trigger.closeMenu();
+        }
+
         this.router.navigate(['activity', 'recent']);
     }
 
     public openRequests() {
-        this.trigger.closeMenu();
+        if (this.trigger) {
+            this.trigger.closeMenu();
+        }
+
         this.onOpenRequests.emit(true);
     }
 
     public onPositionChange(event) {
-        this.trigger.closeMenu();
+        if (this.trigger) {
+            this.trigger.closeMenu();
+        }
+
         this.scrolled = event;
     }
 
@@ -114,12 +123,15 @@ export class ToolbarComponent implements OnInit, OnDestroy, AfterViewChecked, Af
 
     public ngAfterViewInit(): void {
         this.cd.detectChanges();
-        this.trigger.onMenuOpen.subscribe(() => {
-            this.appNotifications.markAsRead();
-            // if (!this.router.url.includes('/activity/recent')) {
-            //     this.appNotifications.getNotifications();
-            // }
-        });
+
+        if (this.trigger) {
+            this.trigger.onMenuOpen.subscribe(() => {
+                this.appNotifications.markAsRead();
+                // if (!this.router.url.includes('/activity/recent')) {
+                //     this.appNotifications.getNotifications();
+                // }
+            });
+        }
     }
 
     public ngAfterViewChecked(): void {

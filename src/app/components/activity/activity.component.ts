@@ -1,12 +1,15 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { trigger, transition, style, stagger, query, keyframes, animate } from '@angular/animations';
+import { MatDialog } from '@angular/material';
+
+import { of, Subject } from 'rxjs';
+import { finalize, delay, debounceTime } from 'rxjs/operators';
 
 import { Page, ActivityViewModel } from 'app/models/view';
 import { ActivityService, UserService } from 'app/services';
-import { MatDialog } from '@angular/material';
 import { ConfirmComponent } from 'app/components/shared/confirm/confirm.component';
 import { RelationshipAction } from 'app/models/shared';
-import { trigger, transition, style, stagger, query, keyframes, animate } from '@angular/animations';
-import { finalize } from 'rxjs/operators';
 
 @Component({
     templateUrl: './activity.component.html',
@@ -36,8 +39,11 @@ export class ActivityComponent implements OnInit {
     public page: Page<ActivityViewModel>;
     // tslint:disable-next-line:no-output-on-prefix
     @Output() public onOpenAllNotifications: EventEmitter<void> = new EventEmitter<void>();
+    private markAsReadList: number[];
+    private markAsRead: Subject<number[]> = new Subject<number[]>();
 
     constructor(
+        private route: ActivatedRoute,
         public dialog: MatDialog,
         private userService: UserService,
         private activityService: ActivityService) { }
@@ -46,7 +52,28 @@ export class ActivityComponent implements OnInit {
         this.onOpenAllNotifications.next();
     }
 
-    public getNotifications(showProgress: boolean = true) {
+    public appear(event: any, activity: ActivityViewModel) {
+        if (!activity.isMarkedAsRead) {
+            if (!this.markAsReadList) {
+                this.markAsReadList = Array<number>();
+            }
+
+            this.markAsReadList.push(activity.id);
+            this.markAsRead.next(this.markAsReadList);
+            // of(this.markAsReadList)
+            //     .pipe(debounceTime(2000))
+            //     .subscribe((response) => {
+            //         console.log(response);
+            //         // activity.isMarkedAsRead = true;
+            //     });
+            // this.activityService.markAsRead([activity.id])
+            //     .subscribe(() => {
+            //         activity.isMarkedAsRead = true;
+            //     });
+        }
+    }
+
+    public getRecentActivities(showProgress: boolean = true) {
         this.isLoading = true;
 
         // if (showProgress) {
@@ -73,7 +100,7 @@ export class ActivityComponent implements OnInit {
 
     public onPositionChange() {
         if (!this.isLoading && this.page && this.page.hasMoreItems) {
-            this.getNotifications();
+            this.getRecentActivities();
         }
     }
 
@@ -119,7 +146,18 @@ export class ActivityComponent implements OnInit {
     }
 
     public ngOnInit() {
-        this.page = new Page<ActivityViewModel>();
-        this.getNotifications();
+        this.page = this.route.snapshot.data['activities'];
+
+        this.markAsRead.pipe(debounceTime(2000))
+            .subscribe(ids => {
+                this.activityService.markAsRead(ids)
+                    .subscribe(() => {
+                        this.page.data.filter(e => ids.includes(e.id)).forEach((activity) => {
+                            activity.isMarkedAsRead = true;
+                        });
+
+                        this.markAsReadList = [];
+                    });
+            });
     }
 }

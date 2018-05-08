@@ -140,6 +140,10 @@ export class UserRequestsComponent implements OnInit {
         });
     }
 
+    public swipe(event) {
+        console.log(event);
+    }
+
     public close() {
         this.onClosing.emit({ ok: true });
     }

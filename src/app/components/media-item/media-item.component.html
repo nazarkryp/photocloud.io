@@ -21,6 +21,7 @@
         </div>
     </div>
     <div class="media-item-content" (click)='play($event)'>
+        <mat-progress-bar class="media-progressbar" bufferValue="0" [value]="media.attachments[media.activeAttachment].progress" *ngIf="media.attachments[media.activeAttachment].type"></mat-progress-bar>
         <div class="navigation" fxLayout="row" fxLayoutAlign="space-between center" *ngIf="media.attachments.length > 1">
             <div>
                 <mat-icon class="mat-36" *ngIf="media.activeAttachment > 0" (click)="previous()">chevron_left</mat-icon>
@@ -43,7 +44,7 @@
             <app-likes (onClicked)="openUsersDialog($event)" [media]="media"></app-likes>
         </div>
         <div class="media-item-caption" *ngIf="media.caption">
-            <a [routerLink]="['/', media.user.username]">
+            <a class="username" [routerLink]="['/', media.user.username]">
                 <strong>{{media.user.username}}</strong>
             </a>
             <app-caption caption="{{media.caption}}"></app-caption>

@@ -49,13 +49,13 @@ export class UserMediaComponent implements OnInit, OnDestroy, AfterViewChecked {
     public getMedia(showProgress: boolean = true) {
         this.isLoading = true;
 
-        if (showProgress && !this.progress.isStarted()) {
+        if (showProgress && !this.progress.isLoading) {
             this.progress.start();
         }
 
         this.mediaService.getUserMedia(this.userMedia.user.username, this.userMedia.page.pagination)
             .pipe(finalize(() => {
-                if (this.progress.isStarted()) {
+                if (this.progress.isLoading) {
                     this.progress.complete();
                 }
 

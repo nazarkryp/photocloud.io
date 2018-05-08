@@ -228,3 +228,37 @@ td-notification-count .btn-icon:hover {
     border-bottom: 10px solid transparent;
     border-left: 10px solid #ccc;
 }
+
+.custom-icon-container {
+    position: relative;
+}
+
+.custom-icon-container:hover .btn-icon {
+    color: #e91e63;
+}
+
+.custom-badge {
+    position: absolute;
+    cursor: pointer;
+    width: 17px;
+    height: 17px;
+    box-shadow: 0 3px 8px 0 rgba(0, 0, 0, 0.26);
+    background-color: #e91e63;
+    color: white;
+    padding: 3px;
+    font-size: .7em;
+    top: -2px;
+    right: 2px;
+    border-radius: 50%;
+    font-weight: bold;
+    -webkit-transition: background-color .15s ease-in-out, color .15s ease-in-out;
+    -moz-transition: background-color .15s ease-in-out, color .15s ease-in-out;
+    -ms-transition: background-color .15s ease-in-out, color .15s ease-in-out;
+    -o-transition: background-color .15s ease-in-out, color .15s ease-in-out;
+    transition: background-color .15s ease-in-out, color .15s ease-in-out;
+}
+
+.custom-icon-container:hover .custom-badge {
+    background-color: white;
+    color: rgb(233, 30, 99, .86);
+}

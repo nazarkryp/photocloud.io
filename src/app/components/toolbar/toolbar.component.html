@@ -17,12 +17,17 @@
                 </a>
             </div>
             <div class="toolbar-actions" fxLayout="row" fxLayoutAlign="space-between center" *ngIf="currentUser && isAuthenticated" style="width: 180px;">
-                <!-- <mat-icon class="btn-icon mat-36 thin" svgIcon="compass" (click)="explorePeople()" *ngIf="currentUser.isActive"></mat-icon> -->
+                <mat-icon class="btn-icon mat-36 thin" svgIcon="compass" (click)="explorePeople()" *ngIf="currentUser.isActive"></mat-icon>
                 <!-- <mat-icon class="btn-icon mat-36 thin" matBadge="{{unreadActivitiesCount}}" [matBadgeHidden]="!unreadActivitiesCount" matBadgeColor="primary" matBadgeOverlap="true" svgIcon="bell" [matMenuTriggerFor]="notificationsMenu"
                     *ngIf="currentUser.isActive">
                 </mat-icon> -->
-                <mat-icon class="btn-icon mat-36 thin" (click)="explorePeople()" *ngIf="currentUser.isActive">explore</mat-icon>
-                <mat-icon class="btn-icon mat-36 thin" matBadge="{{unreadActivitiesCount}}" [matBadgeHidden]="!unreadActivitiesCount" matBadgeColor="primary" [matMenuTriggerFor]="notificationsMenu" *ngIf="currentUser.isActive">notifications_none</mat-icon>
+                <!-- <mat-icon class="btn-icon mat-36 thin" (click)="explorePeople()" *ngIf="currentUser.isActive">explore</mat-icon> -->
+                <!-- <mat-icon class="btn-icon mat-36 thin" matBadge="{{unreadActivitiesCount}}" [matBadgeHidden]="!unreadActivitiesCount" matBadgeColor="primary" [matMenuTriggerFor]="notificationsMenu" *ngIf="currentUser.isActive">notifications_none</mat-icon> -->
+                <div class="custom-icon-container" *ngIf="currentUser.isActive" [matMenuTriggerFor]="notificationsMenu">
+                    <mat-icon class="btn-icon mat-36 thin" svgIcon="bell"></mat-icon>
+                    <span mat-ripple class="custom-badge"
+                        *ngIf="unreadActivitiesCount" fxLayout="row" fxLayoutAlign="center center">{{unreadActivitiesCount}}</span>
+                </div>
                 <mat-menu style="display: none;" (menuOpened)="onMenuOpened($event)" class="notifications-menu" xPosition="before" #notificationsMenu="matMenu" [overlapTrigger]="true">
                     <div appClickStopPropagation>
                         <app-notifications #appNotifications (onOpenRequests)="openRequests($event)" (onOpenAllNotifications)="openNotifications($event)"></app-notifications>

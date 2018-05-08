@@ -9,14 +9,23 @@
 }
 
 .activities .header {
-    width: 960px;
+    width: 100vw;
     box-sizing: border-box;
-    padding-bottom: 3.4rem;
+    padding: 0 .7rem 4.2rem;
+}
+
+.activities .header .container {
+    max-width: 960px;
+    width: 100%;
 }
 
 .activities .header a {
     font-size: .9em;
     color: rgb(0, 0, 0, .3)
+}
+
+.activities .header .btn-default {
+    font-weight: bold;
 }
 
 .activities .items {
@@ -32,6 +41,11 @@
     border-radius: 7px;
     margin-bottom: .7rem;
     position: relative;
+    -webkit-transition: background-color 1s ease-in-out;
+    -moz-transition: background-color 1s ease-in-out;
+    -ms-transition: background-color 1s ease-in-out;
+    -o-transition: background-color 1s ease-in-out;
+    transition: background-color 1s ease-in-out;
 }
 
 .activity-container.unread {

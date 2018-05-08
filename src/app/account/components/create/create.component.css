@@ -62,12 +62,14 @@
     text-align: center;
 }
 
-.agreements-container {
+.agreements {
     text-align: center;
     color: rgb(0, 0, 0, .6);
+    line-height: 1.5;
+    padding-bottom: .7rem;
 }
 
-.agreements-container a {
+.agreements a {
     color: #e91e63;
 }
 

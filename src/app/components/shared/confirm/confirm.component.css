@@ -1,10 +1,9 @@
 .confirm-modal {
-    width: 500px;
-    padding: 6px 12px 12px 12px;
+    padding: .7rem;
 }
 
 .confirm-button {
-    margin-left: 15px;
+    margin-left: .7rem;
 }
 
 .confirm-modal-header {
@@ -23,7 +22,7 @@
 }
 
 .confirm-content {
-    margin-top: 12px;
+    margin-top: .7rem;
 }
 
 .confirm-actions {

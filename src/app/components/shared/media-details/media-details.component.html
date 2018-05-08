@@ -1,12 +1,13 @@
 <div [ngClass]="{ 'media-details-container' : !isDialog }" fxLayout="row" fxLayoutAlign="center center" *ngIf="media">
     <div class="single-media" fxLayout="row" fxLayoutAlign="start stretch" *ngIf="!media.editing; else editingTemplate">
         <div mat-ripple class="media-details-attachment-container" (click)='play()'>
+            <mat-progress-bar class="media-details-progressbar" bufferValue="0" [value]="media.attachments[media.activeAttachment].progress" *ngIf="media.attachments[media.activeAttachment].type"></mat-progress-bar>
             <div class="navigation" fxLayout="row" fxLayoutAlign="space-between center" *ngIf="media.attachments.length > 1">
                 <div>
                     <mat-icon class="mat-36" *ngIf="media.activeAttachment > 0" (click)="previous()">chevron_left</mat-icon>
                 </div>
                 <div>
-                    <mat-icon class="mat-36" *ngIf="media.activeAttachment != media.attachments.length - 1" (click)="next()"Ï>chevron_right</mat-icon>
+                    <mat-icon class="mat-36" *ngIf="media.activeAttachment != media.attachments.length - 1" (click)="next()" Ï>chevron_right</mat-icon>
                 </div>
             </div>
             <div *ngFor="let attachment of media.attachments; let index = index;">
@@ -42,7 +43,7 @@
                 </div>
             </div>
             <div class="media-details-caption" *ngIf="media.caption">
-                <a [routerLink]="['/', media.user.username]">
+                <a  class="username" [routerLink]="['/', media.user.username]">
                     <strong>{{media.user.username}}</strong>
                 </a>
                 <app-caption caption="{{media.caption}}"></app-caption>
