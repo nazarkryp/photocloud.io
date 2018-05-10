@@ -7,7 +7,8 @@ import { of, Subject } from 'rxjs';
 import { finalize, delay, debounceTime } from 'rxjs/operators';
 
 import { Page, ActivityViewModel } from 'app/models/view';
-import { ActivityService, UserService } from 'app/services';
+import { UserService } from 'app/services';
+import { ActivityService } from 'app/services/activity';
 import { ConfirmComponent } from 'app/components/shared/confirm/confirm.component';
 import { RelationshipAction } from 'app/models/shared';
 
@@ -102,15 +103,6 @@ export class ActivityComponent implements OnInit {
             }))
             .subscribe(page => {
                 this.page = page;
-                // if (!this.page) {
-                //     this.page = new Page<ActivityViewModel>();
-                // }
-
-                // this.page.hasMoreItems = page.hasMoreItems;
-                // this.page.pagination = page.pagination;
-                // if (page.data) {
-                //     this.page.data = this.page.data.concat(page.data);
-                // }
             });
     }
 
@@ -121,12 +113,9 @@ export class ActivityComponent implements OnInit {
     }
 
     public removeActivity(index, activity: ActivityViewModel) {
-        // this.page.data.pop();
-        // this.page.data.splice(index, 1);
+        this.page.data.splice(index, 1);
         this.activityService.removeActivity(activity.id)
-            .subscribe(() => {
-                this.page.data.splice(index, 1);
-            });
+            .subscribe(() => { });
     }
 
     public removeAllActivities() {

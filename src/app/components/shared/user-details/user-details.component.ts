@@ -92,7 +92,11 @@ export class UserDetailsComponent implements OnDestroy {
         this.openDialog(this.userService.getFollowings.bind(this.userService), this.user.id, 'Following')
             .afterClosed().subscribe((page: Page<UserViewModel>) => {
                 if (page && !page.hasMoreItems && this.user.id === userId) {
-                    this.user.counters.following = page.data.filter(e => e.relationship.outgoingStatus === RelationshipStatus.Following).length;
+                    if (this.user.id === this.currentUser.id) {
+                        this.user.counters.following = page.data.filter(e => e.relationship.outgoingStatus === RelationshipStatus.Following).length;
+                    } else {
+                        this.user.counters.following = page.data.length;
+                    }
                 }
             });
     }

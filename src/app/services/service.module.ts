@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 
+import { ActivityService } from 'app/services/activity';
+
 import {
-    ActivityService,
     CommentService,
     MediaService,
     UploaderService,
@@ -11,6 +12,7 @@ import {
 
 @NgModule({
     providers: [
+
         ActivityService,
         CommentService,
         MediaService,

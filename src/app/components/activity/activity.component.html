@@ -3,7 +3,13 @@
         <div class="header" fxLayout="row" fxLayoutAlign="center center">
             <div class="container" fxLayout="row" fxLayoutAlign="space-between center">
                 <h1>Activity</h1>
-                <div>
+                <div fxLayout="row" fxLayoutAlign="center center">
+                    <!-- <mat-form-field>
+                        <mat-select value="all">
+                            <mat-option value="all">All</mat-option>
+                            <mat-option value="unread">Unread</mat-option>
+                        </mat-select>
+                    </mat-form-field> -->
                     <button mat-button class="btn-default" *ngIf="page?.data?.length" (click)="removeAllActivities()">CLEAR ALL</button>
                 </div>
             </div>

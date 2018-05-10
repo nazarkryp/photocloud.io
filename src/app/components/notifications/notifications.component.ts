@@ -4,7 +4,7 @@ import { trigger, style, animate, transition } from '@angular/animations';
 
 import { finalize } from 'rxjs/operators';
 
-import { ActivityService } from 'app/services';
+import { ActivityService } from 'app/services/activity';
 import { ActivityViewModel, Page, ActivityPage } from 'app/models/view';
 
 @Component({

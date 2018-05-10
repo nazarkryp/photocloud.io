@@ -7,6 +7,7 @@ import { WebApiService } from 'app/core/services/communication';
 import { ActivityPage, ActivityViewModel, PaginationViewModel } from 'app/models/view';
 import { ActivityResponse, ActivityPageResponse } from 'app/models/response';
 import { ActivityMapper, ActivityPageMapper } from 'app/infrastructure/mapping';
+import { CurrentUserService } from 'app/infrastructure/services/current-user.service';
 
 @Injectable()
 export class ActivityService {
@@ -16,9 +17,18 @@ export class ActivityService {
     private page: ActivityPage;
 
     constructor(
+        private currentUserService: CurrentUserService,
         private httpClient: WebApiService,
         private activityMapper: ActivityMapper) {
         this.pageMapper = new ActivityPageMapper(this.activityMapper);
+
+        this.currentUserService.getCurrentUser()
+            .subscribe((currentUser) => {
+                if (!currentUser) {
+                    this.page = null;
+                    this.state.next(null);
+                }
+            });
     }
 
     public get activity(): Observable<ActivityPage> {

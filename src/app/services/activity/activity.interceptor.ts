@@ -4,7 +4,7 @@ import { HttpInterceptor, HttpRequest, HttpHandler, HttpSentEvent, HttpHeaderRes
 import { Observable } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 
-import { ActivityService } from 'app/services';
+import { ActivityService } from './activity.service';
 import { CurrentUserService } from 'app/infrastructure/services';
 
 @Injectable()
@@ -27,14 +27,16 @@ export class ActivityInterceptor implements HttpInterceptor {
             return next.handle(req);
         }
 
-        this.isLoading = true;
-
         return next.handle(req)
             .pipe(finalize(() => {
                 const currentUser = this.currentUserService.retrieveCurrentUser();
 
-                if (currentUser && currentUser.isActive && !req.url.includes('activity/recent')) {
+                if (currentUser && currentUser.isActive && !req.url.includes('activities/recent')) {
+                    this.isLoading = true;
+
                     this.activityService.getRecentActivity().subscribe(() => {
+                        this.isLoading = false;
+                    }, error => {
                         this.isLoading = false;
                     });
                 }

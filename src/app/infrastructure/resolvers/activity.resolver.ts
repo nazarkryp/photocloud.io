@@ -3,8 +3,8 @@ import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/r
 
 import { Observable } from 'rxjs';
 
+import { ActivityService } from 'app/services/activity';
 import { ActivityPage } from 'app/models/view';
-import { ActivityService } from 'app/services';
 
 @Injectable()
 export class ActivityResolver implements Resolve<ActivityPage> {

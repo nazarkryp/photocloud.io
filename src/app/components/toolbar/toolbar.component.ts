@@ -6,9 +6,10 @@ import { Subscription } from 'rxjs';
 
 import { CurrentUserService } from 'app/infrastructure/services';
 import { AccountService } from 'app/account/services';
-import { CurrentUserViewModel, Page, ActivityViewModel } from 'app/models/view';
-import { RequestsService, ActivityService } from 'app/services';
+import { ActivityService } from 'app/services/activity';
+import { RequestsService } from 'app/services';
 import { Uploader } from 'app/core/services';
+import { CurrentUserViewModel, Page, ActivityViewModel } from 'app/models/view';
 import { ScrollDirection } from 'app/shared/directives/header-scroll.directive';
 import { NotificationsComponent } from 'app/components/notifications/notifications.component';
 
@@ -112,8 +113,8 @@ export class ToolbarComponent implements OnInit, OnDestroy, AfterViewChecked, Af
                 this.updateCurrentUser(currentUser);
             });
 
-        this.activityService.activity.subscribe(page => {
-            this.unreadActivitiesCount = page.unread;
+        this.activityService.activity.subscribe(activity => {
+            this.unreadActivitiesCount = activity ? activity.unread : null;
         });
     }
 

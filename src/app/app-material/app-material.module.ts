@@ -20,6 +20,7 @@ import {
     MatSidenavModule,
     MatSlideToggleModule,
     MatAutocompleteModule,
+    MatSelectModule,
     MatDividerModule,
     MatTabsModule,
     MatListModule
@@ -45,6 +46,7 @@ import {
         MatSidenavModule,
         MatSlideToggleModule,
         MatAutocompleteModule,
+        MatSelectModule,
         MatDividerModule,
         MatTabsModule,
         MatListModule
@@ -68,6 +70,7 @@ import {
         MatSidenavModule,
         MatSlideToggleModule,
         MatAutocompleteModule,
+        MatSelectModule,
         MatDividerModule,
         MatTabsModule,
         MatListModule
