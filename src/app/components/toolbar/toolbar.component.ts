@@ -27,7 +27,7 @@ export class ToolbarComponent implements OnInit, OnDestroy, AfterViewChecked, Af
     public scrolled: boolean;
     public scrolledDown: boolean;
     // tslint:disable-next-line:no-output-on-prefix
-    @Output() public onOpenRequests = new EventEmitter<boolean>();
+    @Output() public requestsOpened = new EventEmitter<boolean>();
 
     public notifications: Page<ActivityViewModel>;
 
@@ -91,7 +91,7 @@ export class ToolbarComponent implements OnInit, OnDestroy, AfterViewChecked, Af
             this.trigger.closeMenu();
         }
 
-        this.onOpenRequests.emit(true);
+        this.requestsOpened.emit(true);
     }
 
     public onPositionChange(event) {
@@ -112,7 +112,7 @@ export class ToolbarComponent implements OnInit, OnDestroy, AfterViewChecked, Af
                 this.updateCurrentUser(currentUser);
             });
 
-        this.activityService.activityPage.subscribe(page => {
+        this.activityService.activity.subscribe(page => {
             this.unreadActivitiesCount = page.unread;
         });
     }
@@ -127,9 +127,6 @@ export class ToolbarComponent implements OnInit, OnDestroy, AfterViewChecked, Af
         if (this.trigger) {
             this.trigger.onMenuOpen.subscribe(() => {
                 this.appNotifications.markAsRead();
-                // if (!this.router.url.includes('/activity/recent')) {
-                //     this.appNotifications.getNotifications();
-                // }
             });
         }
     }

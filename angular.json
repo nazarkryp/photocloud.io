@@ -66,6 +66,12 @@
                             "extractLicenses": true,
                             "vendorChunk": false,
                             "buildOptimizer": true
+                        },
+                        "development": {
+                            "fileReplacements": [{
+                                "replace": "src/environments/environment.ts",
+                                "with": "src/environments/environment.dev.ts"
+                            }]
                         }
                     }
                 },
@@ -77,6 +83,9 @@
                     "configurations": {
                         "production": {
                             "browserTarget": "photocloud:build:production"
+                        },
+                        "development": {
+                            "browserTarget": "photocloud:build:development"
                         }
                     }
                 },

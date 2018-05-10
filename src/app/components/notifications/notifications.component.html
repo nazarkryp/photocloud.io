@@ -11,9 +11,9 @@
     <div class="loader" [@showLoaderTransition] *ngIf="isLoading" fxLayout="row" fxLayoutAlign="center center">
         <mat-spinner diameter="30" strokeWidth="2"></mat-spinner>
     </div>
-    <div *ngIf="page?.data?.length; else noNotifications">
+    <div *ngIf="activity?.data?.length; else noNotifications">
         <div class="items">
-            <div mat-ripple class="notification" *ngFor="let notification of page?.data.slice(0, 4);" (click)="open(notification, $event)" fxLayout="row" fxLayoutAlign="start start">
+            <div mat-ripple class="notification" [ngClass]="{ 'unread' : !notification.isMarkedAsRead }" *ngFor="let notification of activity?.data.slice(0, 4);" fxLayout="row" fxLayoutAlign="start start">
                 <a [routerLink]="['/', notification.user.username]">
                     <img class="user-thumbnail" src="{{notification.user.pictureUri}}" alt="user-thumbnail">
                 </a>

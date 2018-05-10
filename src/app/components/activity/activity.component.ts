@@ -1,6 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { trigger, transition, style, stagger, query, keyframes, animate } from '@angular/animations';
+import { trigger, transition, style, stagger, query, keyframes, animate, sequence } from '@angular/animations';
 import { MatDialog } from '@angular/material';
 
 import { of, Subject } from 'rxjs';
@@ -24,21 +24,37 @@ import { RelationshipAction } from 'app/models/shared';
                 //         style({ opacity: .5, transform: 'translateY(35px)', offset: 0.3 }),
                 //         style({ opacity: 1, transform: 'translateY(0)', offset: 1.0 }),
                 //     ]))]), { optional: true }),
-                query(':leave', stagger('.1s', [
-                    animate('1s ease-in', keyframes([
-                        style({ opacity: 1, transform: 'translateY(0)', offset: 0 }),
-                        style({ opacity: .5, transform: 'translateY(35px)', offset: 0.3 }),
-                        style({ opacity: 0, transform: 'translateY(-75%)', offset: 1.0 }),
+                query(':leave', stagger('1s', [
+                    animate('.5s ease-out', keyframes([
+                        style({ opacity: 1, transform: 'translateX(0)', offset: 0 }),
+                        style({ opacity: .5, transform: 'translateX(35px)', offset: 0.3 }),
+                        style({ opacity: 0, transform: 'translateX(-200px)', offset: 1.0 }),
                     ]))]), { optional: true })
             ])
-        ])
+        ]),
+        // trigger('anim', [
+        //     transition('* => void', [
+        //         style({ height: '*', opacity: '1', transform: 'translateX(0)', 'box-shadow': '0 1px 4px 0 rgba(0, 0, 0, 0.3)' }),
+        //         sequence([
+        //             animate('.25s ease', style({ height: '*', opacity: '.2', transform: 'translateX(20px)', 'box-shadow': 'none' })),
+        //             animate('.1s ease', style({ height: '0', opacity: 0, transform: 'translateX(20px)', 'box-shadow': 'none' }))
+        //         ])
+        //     ]),
+        //     transition('void => active', [
+        //         style({ height: '0', opacity: '0', transform: 'translateX(20px)', 'box-shadow': 'none' }),
+        //         sequence([
+        //             animate('.1s ease', style({ height: '*', opacity: '.2', transform: 'translateX(20px)', 'box-shadow': 'none' })),
+        //             animate('.35s ease', style({ height: '*', opacity: 1, transform: 'translateX(0)', 'box-shadow': '0 1px 4px 0 rgba(0, 0, 0, 0.3)' }))
+        //         ])
+        //     ])
+        // ])
     ]
 })
 export class ActivityComponent implements OnInit {
     public isLoading: boolean;
     public page: Page<ActivityViewModel>;
     // tslint:disable-next-line:no-output-on-prefix
-    @Output() public onOpenAllNotifications: EventEmitter<void> = new EventEmitter<void>();
+    @Output() public allNotificatoinsOpened: EventEmitter<void> = new EventEmitter<void>();
     private markAsReadList: number[];
     private markAsRead: Subject<number[]> = new Subject<number[]>();
 
@@ -49,7 +65,7 @@ export class ActivityComponent implements OnInit {
         private activityService: ActivityService) { }
 
     public close(event) {
-        this.onOpenAllNotifications.next();
+        this.allNotificatoinsOpened.next();
     }
 
     public appear(event: any, activity: ActivityViewModel) {
@@ -106,11 +122,11 @@ export class ActivityComponent implements OnInit {
 
     public removeActivity(index, activity: ActivityViewModel) {
         // this.page.data.pop();
-        this.page.data.splice(index, 1);
-        // this.activityService.removeActivity(activity.id)
-        //     .subscribe(() => {
-        //         this.page.data.splice(index, 1);
-        //     });
+        // this.page.data.splice(index, 1);
+        this.activityService.removeActivity(activity.id)
+            .subscribe(() => {
+                this.page.data.splice(index, 1);
+            });
     }
 
     public removeAllActivities() {

@@ -6,8 +6,7 @@ import { map, tap } from 'rxjs/operators';
 import { WebApiService } from 'app/core/services/communication';
 import { ActivityPage, ActivityViewModel, PaginationViewModel } from 'app/models/view';
 import { ActivityResponse, ActivityPageResponse } from 'app/models/response';
-import { ActivityMapper } from 'app/infrastructure/mapping';
-import { ActivityPageMapper } from '../infrastructure/mapping/activity-page.mapper';
+import { ActivityMapper, ActivityPageMapper } from 'app/infrastructure/mapping';
 
 @Injectable()
 export class ActivityService {
@@ -22,7 +21,7 @@ export class ActivityService {
         this.pageMapper = new ActivityPageMapper(this.activityMapper);
     }
 
-    public get activityPage(): Observable<ActivityPage> {
+    public get activity(): Observable<ActivityPage> {
         return this.state.asObservable();
     }
 
@@ -63,10 +62,15 @@ export class ActivityService {
     }
 
     public markAsRead(ids: number[]): Observable<any> {
+        if (!ids.length) {
+
+        }
+
         return this.httpClient.put<Observable<any>>('activities', {
             ids: ids
         }).pipe(tap(() => {
             this.page.unread -= ids.length;
+
             this.page.data.filter(e => ids.find(id => id === e.id)).forEach((element) => {
                 element.isMarkedAsRead = true;
             });

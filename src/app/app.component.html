@@ -5,7 +5,7 @@
     </mat-sidenav>
     <div class="my-content" fxLayout="column">
         <div>
-            <app-toolbar *ngIf="renderToolbar" (onOpenRequests)="openRequests($event)"></app-toolbar>
+            <app-toolbar *ngIf="renderToolbar" (requestsOpened)="openRequests($event)"></app-toolbar>
         </div>
         <div class="router-container" [ngClass]="{ 'toolbar' : renderToolbar }">
             <router-outlet></router-outlet>

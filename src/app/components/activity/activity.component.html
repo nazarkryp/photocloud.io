@@ -11,8 +11,8 @@
         <div class="items" fxLayout="column" [@listAnimation]="page?.data?.length" fxLayoutAlign="start center" appInfiniteScroll [appScrollTriggerOnce]="true" [scrollOffset]="2000" (scrollPosition)="onPositionChange()">
             <span *ngIf="!page?.data?.length && !isLoading">You have no recent activity</span>
             <div mat-ripple (appear)="appear($event, activity)" class="activity-container" [ngClass]="{ 'unread' : !activity.isMarkedAsRead }" *ngFor="let activity of page?.data; let index = index;">
-                <div class="activity" fxLayout="row" fxLayoutAlign="start start">
-                    <a [routerLink]="['/', activity.user.username]">
+                <div class=" activity" fxLayout="row" fxLayoutAlign="start start">
+                    <a [routerLink]="[ '/', activity.user.username]">
                         <img class="user-thumbnail" src="{{activity.user.pictureUri}}" alt="user-thumbnail">
                     </a>
                     <div class="activity-info" fxLayout="row" fxLayoutAlign="space-between start">
@@ -21,12 +21,12 @@
                                 <span>
                                     <a [routerLink]="[ '/', activity.user.username]">{{activity.user.username}}</a> {{activity.activityType | activity}}
                                 </span>
-                                <span class="date" matTooltip="{{activity.date | date:'fullDate'}}" matTooltipPosition="after">{{activity.date | timeAgo}}</span>
+                                <span class="date" matTooltip="{{activity.date | date: 'fullDate'}}" matTooltipPosition="after">{{activity.date | timeAgo}}</span>
                             </div>
                             <div *ngIf="activity.comment" style="width: 100%; border-left: 3px solid #e91e63; padding: .25rem .5rem; box-sizing: border-box; margin-top: 1.4rem;">
                                 <span style="font-size: .9em; font-weight: normal; color: rgb(0, 0, 0, .5)" [innerHTML]="activity.comment.text | truncate:100 | linkify"></span>
                             </div>
-                            <div fxLayout="row" *ngIf="activity.activityType === 2">
+                            <div fxLayout="row" *ngIf="activity.activityType===2">
                                 <a style="font-size: .9em; font-weight: 600; cursor: pointer; color: #053569;" (click)="accept(activity, index)">Accept</a>
                                 <a style="font-size: .9em; font-weight: 600; cursor: pointer; color: #053569; margin-left: .7rem;" (click)="decline(activity, index)">Decline</a>
                             </div>
@@ -34,9 +34,9 @@
                                 <a class="btn-remove" (click)="removeActivity(index, activity)">Remove</a>
                             </div>
                         </div>
-                        <a [ngSwitch]="activity.media.attachments[0].type" *ngIf="activity.media" [routerLink]="['/p/', activity.media.id]">
-                            <img *ngSwitchCase="'0'" class="media-thumbnail" src="{{activity.media.attachments[0].uri}}" alt="media-thumbnail">
-                            <video *ngSwitchCase="'1'" class="media-thumbnail">
+                        <a [ngSwitch]="activity.media.attachments[0].type" *ngIf="activity.media" [routerLink]="[ '/p/', activity.media.id]">
+                            <img *ngSwitchCase=" '0'" class="media-thumbnail" src="{{activity.media.attachments[0].uri}}" alt="media-thumbnail">
+                            <video *ngSwitchCase=" '1'" class="media-thumbnail">
                                 <source src="{{activity.media.attachments[0].uri}}">
                             </video>
                             <img *ngSwitchDefault class="media-thumbnail" src="{{activity.media.attachments[0].uri}}" alt="media-thumbnail">

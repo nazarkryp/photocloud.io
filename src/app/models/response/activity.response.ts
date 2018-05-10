@@ -9,5 +9,5 @@ export class ActivityResponse {
     public date: Date;
     public media: MediaResponse;
     public comment: CommentResponse;
-    public isMarkedAsRead?: boolean;
+    public isMarkedAsRead: boolean;
 }

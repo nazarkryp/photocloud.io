@@ -14,10 +14,14 @@
         </div>
         <div class="user-info-data" fxLayout="column" fxFlex>
             <div fxLayout="row" fxLayoutAlign="space-between center">
-                <span class="user-info__username" [ngClass]="{ 'center-username' : !user.isActive }">{{user.username}}</span>
+                <span class="user-info__username" [ngClass]="{ 'center' : !user.isActive }">{{user.username}}</span>
                 <div class="user-info__actions" fxLayout="row" fxLayoutAlign="space-between center" *ngIf="currentUser && user.id === currentUser.id">
-                    <mat-icon class="btn-icon" routerLink="/account/edit" matTooltip="Settings" matTooltipPosition="above">settings</mat-icon>
-                    <mat-icon class="btn-icon" matTooltip="Logout" matTooltipPosition="above" (click)="logout()">exit_to_app</mat-icon>
+                    <a routerLink="/account/edit" matTooltip="Settings" matTooltipPosition="above">
+                        <mat-icon class="btn-icon">settings</mat-icon>
+                    </a>
+                    <a matTooltip="Logout" matTooltipPosition="above" (click)="logout()">
+                        <mat-icon class="btn-icon">exit_to_app</mat-icon>
+                    </a>
                 </div>
                 <button mat-button class="btn-relationships" *ngIf="currentUser && currentUser.isActive && user.id !== currentUser.id && (user.isActive || (!user.isActive && user.relationship.outgoingStatus !== 0))" (click)="modifyRelationship()"
                     [disabled]="isModifyingRelationship">{{user.relationship.outgoingStatus | relationshipAction | uppercase }}</button>

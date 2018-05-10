@@ -35,7 +35,7 @@ import {
     InternetConnectionFilter
 } from 'app/infrastructure/filters/http';
 
-import { IncommingRequestsInterceptor } from 'app/account/services/interceptors';
+import { ActivityInterceptor } from 'app/services/activity';
 
 @NgModule({
     providers: [
@@ -69,7 +69,7 @@ import { IncommingRequestsInterceptor } from 'app/account/services/interceptors'
         },
         {
             provide: HTTP_INTERCEPTORS,
-            useClass: IncommingRequestsInterceptor,
+            useClass: ActivityInterceptor,
             multi: true
         }
     ]

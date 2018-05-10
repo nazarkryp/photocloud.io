@@ -37,12 +37,16 @@
     text-overflow: ellipsis;
 }
 
-.user-info-username.center-username {
-    margin-top: 45px;
+.user-info__username.center {
+    margin: 45px 0 0 0;
 }
 
 .user-info__actions {
     width: 100px;
+}
+
+.user-info__actions a {
+    line-height: 0;
 }
 
 .user-info-fullname {

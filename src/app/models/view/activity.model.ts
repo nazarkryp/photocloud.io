@@ -9,5 +9,5 @@ export class ActivityViewModel {
     public date: Date;
     public media: MediaViewModel;
     public comment: CommentViewModel;
-    public isMarkedAsRead?: boolean;
+    public isMarkedAsRead: boolean;
 }

@@ -27,31 +27,24 @@ import { ActivityViewModel, Page, ActivityPage } from 'app/models/view';
     ]
 })
 export class NotificationsComponent implements OnInit {
+    @Output()
+    public allNotificatoinsOpened: EventEmitter<void> = new EventEmitter<void>();
+    @Output()
+    public requestsOpened: EventEmitter<void> = new EventEmitter<void>();
+
     public isLoading: boolean;
-    public page: ActivityPage;
-    // tslint:disable-next-line:no-output-on-prefix
-    @Output() public onOpenAllNotifications: EventEmitter<void> = new EventEmitter<void>();
-    // tslint:disable-next-line:no-output-on-prefix
-    @Output() public onOpenRequests: EventEmitter<void> = new EventEmitter<void>();
+    public activity: ActivityPage;
 
     constructor(
         private router: Router,
         private activityService: ActivityService) { }
 
     public openAllNotifications(event) {
-        this.onOpenAllNotifications.next();
+        this.allNotificatoinsOpened.next();
     }
 
     public openRequests() {
-        this.onOpenRequests.next();
-    }
-
-    public open(activity: ActivityViewModel, event) {
-        // if (activity.activityType === ActivityType.AcceptedRequest || activity.activityType === ActivityType.Following) {
-        //     this.router.navigate([activity.user.username]);
-        // } else if (activity.activityType === ActivityType.Commented || activity.activityType === ActivityType.Liked) {
-        //     this.router.navigate(['p', activity.media.id]);
-        // }
+        this.requestsOpened.next();
     }
 
     public getNotifications() {
@@ -64,8 +57,7 @@ export class NotificationsComponent implements OnInit {
             .pipe(finalize(() => {
                 this.isLoading = false;
             }))
-            .subscribe(page => {
-                // this.page = page;
+            .subscribe(() => {
                 this.isLoading = false;
             }, error => {
                 this.isLoading = false;
@@ -73,8 +65,8 @@ export class NotificationsComponent implements OnInit {
     }
 
     public markAsRead() {
-        if (this.page && this.page.data && this.page.data.length) {
-            const ids = this.page.data.slice(0, 4).filter(e => !e.isMarkedAsRead).map(e => e.id);
+        if (this.activity && this.activity.data && this.activity.data.length) {
+            const ids = this.activity.data.slice(0, 4).filter(e => !e.isMarkedAsRead).map(e => e.id);
 
             if (ids.length) {
                 this.activityService.markAsRead(ids)
@@ -84,9 +76,8 @@ export class NotificationsComponent implements OnInit {
     }
 
     public ngOnInit() {
-        this.getNotifications();
-        this.activityService.activityPage.subscribe(page => {
-            this.page = page;
+        this.activityService.activity.subscribe(activity => {
+            this.activity = activity;
         });
     }
 }

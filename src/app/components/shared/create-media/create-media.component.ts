@@ -19,6 +19,7 @@ import { environment } from 'app/../environments/environment';
     styleUrls: ['./create-media.component.css']
 })
 export class CreateMediaComponent implements OnInit, OnDestroy {
+    private isLoading = false;
     public currentUser: CurrentUserViewModel;
     public maxItemsCount = 4;
 
@@ -38,8 +39,10 @@ export class CreateMediaComponent implements OnInit, OnDestroy {
 
     public createMedia() {
         this.progress.start();
+        this.isLoading = true;
         this.mediaService.createMedia(this.media)
             .pipe(finalize(() => {
+                this.isLoading = false;
                 this.progress.complete();
             }))
             .subscribe(createdPost => {

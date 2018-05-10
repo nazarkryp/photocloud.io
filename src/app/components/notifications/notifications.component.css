@@ -74,15 +74,22 @@
     width: 100%;
     border-left: 3px solid transparent;
     position: relative;
-    /* -webkit-transition: background-color .1s ease-in-out, border-left-color .1s ease-in-out;
-    -moz-transition: background-color .1s ease-in-out, border-left-color .1s ease-in-out;
-    -ms-transition: background-color .1s ease-in-out, border-left-color .1s ease-in-out;
-    -o-transition: background-color .1s ease-in-out, border-left-color .1s ease-in-out;
-    transition: background-color .1s ease-in-out, border-left-color .1s ease-in-out; */
+    -webkit-transition: background-color .25s ease-in-out, border-left-color .25s ease-in-out;
+    -moz-transition: background-color .25s ease-in-out, border-left-color .25s ease-in-out;
+    -ms-transition: background-color .25s ease-in-out, border-left-color .25s ease-in-out;
+    -o-transition: background-color .25s ease-in-out, border-left-color .25s ease-in-out;
+    transition: background-color .25s ease-in-out, border-left-color .25s ease-in-out;
+}
+
+.notifications .items .notification.unread {
+    background-color: rgb(34, 149, 243, .1);
 }
 
 .notifications .items .notification:hover {
     border-left-color: #e91e63;
+}
+
+.notifications .items .notification:not(.unread):hover {
     background-color: #fafafa;
 }
 
