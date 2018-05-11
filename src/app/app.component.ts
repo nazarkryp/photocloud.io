@@ -4,10 +4,12 @@ import { Router, NavigationEnd, NavigationStart, NavigationCancel, ResolveStart,
 import { MatSidenav, MatDialog } from '@angular/material';
 import { trigger, transition, style, animate } from '@angular/animations';
 
+import { Observable, Observer } from 'rxjs';
+
+import { HubConnectionService } from 'app/core/services/communication';
 import { CurrentUserService } from 'app/infrastructure/services';
 import { ProgressService } from 'app/shared/services';
 import { RequestsService } from 'app/services';
-
 import { CurrentUserViewModel } from 'app/models/view';
 import { NotificationsComponent } from './components/notifications/notifications.component';
 
@@ -17,8 +19,8 @@ import { NotificationsComponent } from './components/notifications/notifications
     styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-    @ViewChild('notificationsSidenav')
-    public notificationsSidenav: MatSidenav;
+    @ViewChild('requestsSidenav')
+    public requestsSidenav: MatSidenav;
     public renderToolbar = false;
     public renderFooter = false;
     public initialLoad = true;
@@ -29,6 +31,7 @@ export class AppComponent implements OnInit {
         public progress: ProgressService,
         private router: Router,
         private dialog: MatDialog,
+        private connection: HubConnectionService,
         private currentUserService: CurrentUserService,
         private incommingRequestsService: RequestsService) {
         this.currentUserService.getCurrentUser(true)
@@ -36,19 +39,16 @@ export class AppComponent implements OnInit {
                 this.currentUser = currentUser;
                 this.initialLoad = false;
             });
+
+        this.connection.start();
     }
 
     public openRequests($event: boolean) {
-        // this.dialog.open(NotificationsComponent, {
-        //     width: '400px',
-        //     height: '75vh'
-        // });
-
-        this.notificationsSidenav.open();
+        this.requestsSidenav.open();
     }
 
     public closeNotifications($event: any) {
-        this.notificationsSidenav.close();
+        this.requestsSidenav.close();
     }
 
     public hideAuthenticationBar() {

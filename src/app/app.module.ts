@@ -53,7 +53,6 @@ import {
 } from './infrastructure/filters/http';
 import { UserDetailsComponent } from './components/shared/user-details/user-details.component';
 import { FooterComponent } from './components/footer/footer.component';
-import { WebApiService } from 'app/core/services/communication';
 import { LocalStorageService } from 'app/infrastructure/services/storage';
 import { SplashScreenComponent } from './components/shared/splash-screen/splash-screen.component';
 import { LikedMediaComponent } from './components/liked-media/liked-media.component';

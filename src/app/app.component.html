@@ -1,7 +1,7 @@
 <ng-progress [speed]="500" [meteor]="true" [spinner]="false" [color]="'#e91e63'" [trickleSpeed]="300" [thick]="false"></ng-progress>
 <mat-sidenav-container class="sidenav-container">
-    <mat-sidenav #notificationsSidenav position="end">
-        <app-user-requests (onClosing)="closeNotifications($event)" *ngIf="notificationsSidenav.opened"></app-user-requests>
+    <mat-sidenav #requestsSidenav position="end">
+        <app-user-requests (onClosing)="closeNotifications($event)" *ngIf="requestsSidenav.opened"></app-user-requests>
     </mat-sidenav>
     <div class="my-content" fxLayout="column">
         <div>

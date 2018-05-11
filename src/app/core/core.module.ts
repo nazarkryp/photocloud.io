@@ -2,7 +2,7 @@ import { NgModule, Optional, SkipSelf } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 
 import { Uploader } from './services';
-import { WebApiService } from './services/communication';
+import { WebApiService, HubConnectionService } from './services/communication';
 
 @NgModule({
     imports: [
@@ -10,7 +10,8 @@ import { WebApiService } from './services/communication';
     ],
     providers: [
         Uploader,
-        WebApiService
+        WebApiService,
+        HubConnectionService
     ],
     exports: [
         HttpClientModule
