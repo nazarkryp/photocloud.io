@@ -66,12 +66,12 @@ import { ActivityInterceptor } from 'app/services/activity';
             provide: HTTP_INTERCEPTORS,
             useClass: HttpErrorInterceptor,
             multi: true
-        },
-        {
-            provide: HTTP_INTERCEPTORS,
-            useClass: ActivityInterceptor,
-            multi: true
         }
+        // {
+        //     provide: HTTP_INTERCEPTORS,
+        //     useClass: ActivityInterceptor,
+        //     multi: true
+        // }
     ]
 })
 export class InfrastructureModule {

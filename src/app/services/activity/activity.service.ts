@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, ReplaySubject } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 
-import { WebApiService } from 'app/core/services/communication';
+import { WebApiService, HubConnectionService } from 'app/core/services/communication';
 import { ActivityPage, ActivityViewModel, PaginationViewModel } from 'app/models/view';
 import { ActivityResponse, ActivityPageResponse } from 'app/models/response';
 import { ActivityMapper, ActivityPageMapper } from 'app/infrastructure/mapping';
@@ -17,6 +17,7 @@ export class ActivityService {
     private page: ActivityPage;
 
     constructor(
+        private hubConnectionService: HubConnectionService,
         private currentUserService: CurrentUserService,
         private httpClient: WebApiService,
         private activityMapper: ActivityMapper) {
@@ -27,6 +28,18 @@ export class ActivityService {
                 if (!currentUser) {
                     this.page = null;
                     this.state.next(null);
+                }
+            });
+
+        this.hubConnectionService.get<ActivityResponse>('notifications')
+            .subscribe((notification) => {
+                try {
+                    const mapped = this.activityMapper.mapFromResponse(notification);
+                    this.page.data.unshift(mapped);
+                    this.page.unread++;
+                    this.state.next(this.page);
+                } catch (err) {
+                    console.log(err);
                 }
             });
     }

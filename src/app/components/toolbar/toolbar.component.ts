@@ -27,7 +27,6 @@ export class ToolbarComponent implements OnInit, OnDestroy, AfterViewChecked, Af
     public unreadActivitiesCount: number;
     public scrolled: boolean;
     public scrolledDown: boolean;
-    // tslint:disable-next-line:no-output-on-prefix
     @Output() public requestsOpened = new EventEmitter<boolean>();
 
     public notifications: Page<ActivityViewModel>;

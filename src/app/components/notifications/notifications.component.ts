@@ -76,6 +76,7 @@ export class NotificationsComponent implements OnInit {
     }
 
     public ngOnInit() {
+        this.getNotifications();
         this.activityService.activity.subscribe(activity => {
             this.activity = activity;
         });
