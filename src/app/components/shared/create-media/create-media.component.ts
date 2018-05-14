@@ -19,7 +19,7 @@ import { environment } from 'app/../environments/environment';
     styleUrls: ['./create-media.component.css']
 })
 export class CreateMediaComponent implements OnInit, OnDestroy {
-    private isLoading = false;
+    public isLoading = false;
     public currentUser: CurrentUserViewModel;
     public maxItemsCount = 4;
 

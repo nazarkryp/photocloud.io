@@ -25,8 +25,7 @@ export class SearchBoxComponent implements OnInit {
     constructor(
         private router: Router,
         private progress: ProgressService,
-        private userService: UserService) {
-    }
+        private userService: UserService) { }
 
     public searchUsers(searchQuery: string) {
         return this.userService.searchUsers(searchQuery)

@@ -3,41 +3,41 @@ import { DOCUMENT } from '@angular/common';
 
 import { Observable, Observer, ReplaySubject } from 'rxjs';
 
-import { environment } from 'app/../environments/environment';
 import { TokenProvider } from 'app/infrastructure/security';
+import { environment } from 'app/../environments/environment';
 
 declare var $: any;
 
 @Injectable()
 export class HubConnectionService {
+    private connections: { [connectionName: string]: ReplaySubject<any> } = {};
     private started: boolean;
-    public connections: { [connectionName: string]: ReplaySubject<any> } = {};
     private state = new ReplaySubject<any>(1);
     private proxy: any;
+    private readonly connection: any;
 
     constructor(
         @Inject(DOCUMENT) private document: Document,
         private tokenProvider: TokenProvider) {
+        this.connection = $.hubConnection(this.connectionUri, { useDefaultPath: false });
     }
 
     public start(): Observable<any> {
+        this.proxy = this.connection.createHubProxy('notificationsHub');
+
         const accessToken = this.tokenProvider.retrieveAccessToken();
 
         if (accessToken && accessToken.accessToken) {
-            $.signalR.ajaxDefaults.headers = {
-                Authorization: `Bearer ${accessToken.accessToken}`
-            };
+            this.connection.qs = { 'access_token': accessToken.accessToken };
         }
-
-        const connection = $.hubConnection(this.connectionUri, { useDefaultPath: false });
-        this.proxy = connection.createHubProxy('notificationsHub');
 
         this.proxy.on('connected', (data) => { });
 
         return Observable.create((observer: Observer<any>) => {
-            connection.start()
+            this.connection.start()
                 .done(() => {
                     observer.next(true);
+                    // console.log(this.connection.stop);
                 })
                 .fail(() => {
                     observer.error('Connection Error');
@@ -46,8 +46,11 @@ export class HubConnectionService {
     }
 
     public stop() {
-        console.log('Connection closed...');
-        $.connection.hub.stop();
+        this.connection.stop().done(() => {
+            console.log('Connection closed');
+        }).fail(() => {
+            console.log('Could not close connection');
+        });
     }
 
     public get<T>(connectionName: string): Observable<T> {
@@ -62,10 +65,6 @@ export class HubConnectionService {
         }
 
         return connection.asObservable();
-        // console.log($.connection.hub);
-        // $.connection.notificationsHub.client.notifications = (data) => {
-        //     this.state.next(data);
-        // };
     }
 
     private get connectionUri(): string {
