@@ -1,69 +1,71 @@
 import { Injectable, Inject, Renderer2 } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 
-import { Observable } from 'rxjs';
+import { Observable, Observer, ReplaySubject } from 'rxjs';
 
 import { environment } from 'app/../environments/environment';
 import { TokenProvider } from 'app/infrastructure/security';
 
 declare var $: any;
 
-function connection() {
-    return $.connection;
-}
-
 @Injectable()
 export class HubConnectionService {
-    private hub: any;
-    private notifications: any;
     private started: boolean;
+    public connections: { [connectionName: string]: ReplaySubject<any> } = {};
+    private state = new ReplaySubject<any>(1);
+    private proxy: any;
 
     constructor(
         @Inject(DOCUMENT) private document: Document,
         private tokenProvider: TokenProvider) {
-        this.hub = connection().hub;
-        this.hub.url = this.connectionUri;
-        this.notifications = connection().notificationsHub;
     }
 
-    public start() {
+    public start(): Observable<any> {
         const accessToken = this.tokenProvider.retrieveAccessToken();
 
         if (accessToken && accessToken.accessToken) {
             $.signalR.ajaxDefaults.headers = {
                 Authorization: `Bearer ${accessToken.accessToken}`
             };
-
-            // this.hub.start().done(() => {
-            //     this.started = true;
-            //     console.log('Real-time notifications working');
-            // }).fail((error) => {
-            //     console.log(error);
-            // });
         }
+
+        const connection = $.hubConnection(this.connectionUri, { useDefaultPath: false });
+        this.proxy = connection.createHubProxy('notificationsHub');
+
+        this.proxy.on('connected', (data) => { });
+
+        return Observable.create((observer: Observer<any>) => {
+            connection.start()
+                .done(() => {
+                    observer.next(true);
+                })
+                .fail(() => {
+                    observer.error('Connection Error');
+                });
+        });
     }
 
-    public get<T>(callbackName: string) {
-        const observable: Observable<T> = Observable.create(observer => {
-            if (!this.started) {
-                this.hub.start().done(() => {
-                    this.started = true;
-                    console.log('Real-time notifications working');
-                    this.notifications.client[callbackName] = (data) => {
-                        console.log(data);
-                        observer.next(data);
-                    };
-                }).fail((error) => {
-                    console.log(error);
-                });
-            } else {
-                this.notifications.client[callbackName] = (data) => {
-                    observer.next(data);
-                };
-            }
-        });
+    public stop() {
+        console.log('Connection closed...');
+        $.connection.hub.stop();
+    }
 
-        return observable;
+    public get<T>(connectionName: string): Observable<T> {
+        let connection = this.connections[connectionName];
+
+        if (!connection) {
+            connection = (this.connections[connectionName] = new ReplaySubject<T>());
+
+            this.proxy.on(connectionName, (data) => {
+                connection.next(data);
+            });
+        }
+
+        return connection.asObservable();
+        // console.log($.connection.hub);
+        // $.connection.notificationsHub.client.notifications = (data) => {
+        //     this.state.next(data);
+        // };
     }
 
     private get connectionUri(): string {
@@ -73,10 +75,4 @@ export class HubConnectionService {
 
         return `${environment.baseAddress}/signalr`;
     }
-
-    // private append() {
-    //     const script = document.createElement('script');
-    //     script.src = `${this.connectionUri}/hubs`;
-    //     document.getElementsByTagName('head')[0].appendChild(script);
-    // }
 }

@@ -32,7 +32,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
                     return error;
                 }
 
-                return Observable.throw(errorResponse);
+                throw (errorResponse);
             }));
 
         return result;

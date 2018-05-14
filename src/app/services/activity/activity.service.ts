@@ -17,7 +17,7 @@ export class ActivityService {
     private page: ActivityPage;
 
     constructor(
-        private hubConnectionService: HubConnectionService,
+        private connection: HubConnectionService,
         private currentUserService: CurrentUserService,
         private httpClient: WebApiService,
         private activityMapper: ActivityMapper) {
@@ -25,21 +25,14 @@ export class ActivityService {
 
         this.currentUserService.getCurrentUser()
             .subscribe((currentUser) => {
-                if (!currentUser) {
+                if (currentUser) {
+                    this.connection.start()
+                        .subscribe(() => this.subscribeForNotifications());
+                } else {
+                    console.log('Connection stopped');
+                    this.connection.stop();
                     this.page = null;
                     this.state.next(null);
-                }
-            });
-
-        this.hubConnectionService.get<ActivityResponse>('notifications')
-            .subscribe((notification) => {
-                try {
-                    const mapped = this.activityMapper.mapFromResponse(notification);
-                    this.page.data.unshift(mapped);
-                    this.page.unread++;
-                    this.state.next(this.page);
-                } catch (err) {
-                    console.log(err);
                 }
             });
     }
@@ -100,5 +93,16 @@ export class ActivityService {
 
             this.state.next(this.page);
         }));
+    }
+
+    private subscribeForNotifications() {
+        this.connection.get<ActivityResponse>('notifications')
+            .subscribe((notification: ActivityResponse) => {
+                console.log(notification);
+                const mapped = this.activityMapper.mapFromResponse(notification);
+                this.page.data.unshift(mapped);
+                this.page.unread++;
+                this.state.next(this.page);
+            });
     }
 }

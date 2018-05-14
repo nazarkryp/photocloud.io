@@ -6,7 +6,6 @@ import { trigger, transition, style, animate } from '@angular/animations';
 
 import { Observable, Observer } from 'rxjs';
 
-import { HubConnectionService } from 'app/core/services/communication';
 import { CurrentUserService } from 'app/infrastructure/services';
 import { ProgressService } from 'app/shared/services';
 import { RequestsService } from 'app/services';
@@ -31,7 +30,6 @@ export class AppComponent implements OnInit {
         public progress: ProgressService,
         private router: Router,
         private dialog: MatDialog,
-        private connection: HubConnectionService,
         private currentUserService: CurrentUserService,
         private incommingRequestsService: RequestsService) {
         this.currentUserService.getCurrentUser(true)
@@ -39,8 +37,6 @@ export class AppComponent implements OnInit {
                 this.currentUser = currentUser;
                 this.initialLoad = false;
             });
-
-        this.connection.start();
     }
 
     public openRequests($event: boolean) {
