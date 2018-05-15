@@ -77,16 +77,6 @@ export class ActivityComponent implements OnInit {
 
             this.markAsReadList.push(activity.id);
             this.markAsRead.next(this.markAsReadList);
-            // of(this.markAsReadList)
-            //     .pipe(debounceTime(2000))
-            //     .subscribe((response) => {
-            //         console.log(response);
-            //         // activity.isMarkedAsRead = true;
-            //     });
-            // this.activityService.markAsRead([activity.id])
-            //     .subscribe(() => {
-            //         activity.isMarkedAsRead = true;
-            //     });
         }
     }
 
@@ -153,7 +143,7 @@ export class ActivityComponent implements OnInit {
     public ngOnInit() {
         this.page = this.route.snapshot.data['activities'];
 
-        this.markAsRead.pipe(debounceTime(2000))
+        this.markAsRead.pipe(debounceTime(1000))
             .subscribe(ids => {
                 this.activityService.markAsRead(ids)
                     .subscribe(() => {

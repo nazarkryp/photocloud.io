@@ -18,12 +18,13 @@ import { NotificationsComponent } from 'app/components/notifications/notificatio
     templateUrl: './toolbar.component.html',
     styleUrls: ['./toolbar.component.css']
 })
-export class ToolbarComponent implements OnInit, OnDestroy, AfterViewChecked, AfterViewInit {
-    public currentUser: CurrentUserViewModel;
+export class ToolbarComponent implements OnInit, OnDestroy, AfterViewChecked {
     private currentUserSubscription: Subscription;
+    private menuSubscription: Subscription;
     private isResolvingExplorePeople: boolean;
     private isResolvingUserMedia: boolean;
 
+    public currentUser: CurrentUserViewModel;
     public unreadActivitiesCount: number;
     public scrolled: boolean;
     public scrolledDown: boolean;
@@ -110,6 +111,7 @@ export class ToolbarComponent implements OnInit, OnDestroy, AfterViewChecked, Af
         this.currentUserSubscription = this.currentUserService.getCurrentUser()
             .subscribe(currentUser => {
                 this.updateCurrentUser(currentUser);
+                this.activityService.getRecentActivity().subscribe();
             });
 
         this.activityService.activity.subscribe(activity => {
@@ -121,18 +123,19 @@ export class ToolbarComponent implements OnInit, OnDestroy, AfterViewChecked, Af
         this.currentUserSubscription.unsubscribe();
     }
 
-    public ngAfterViewInit(): void {
-        this.cd.detectChanges();
-
-        if (this.trigger) {
-            this.trigger.onMenuOpen.subscribe(() => {
-                this.appNotifications.markAsRead();
-            });
-        }
-    }
-
     public ngAfterViewChecked(): void {
         this.cd.detectChanges();
+
+        if (this.trigger && !this.menuSubscription) {
+            this.menuSubscription = this.trigger.onMenuOpen.subscribe(() => {
+                this.appNotifications.markAsRead();
+            });
+        } else {
+            if (this.menuSubscription) {
+                this.menuSubscription.unsubscribe();
+                this.menuSubscription = null;
+            }
+        }
     }
 
     private updateCurrentUser(currentUser: CurrentUserViewModel) {

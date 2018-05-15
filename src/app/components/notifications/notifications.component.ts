@@ -6,6 +6,7 @@ import { finalize } from 'rxjs/operators';
 
 import { ActivityService } from 'app/services/activity';
 import { ActivityViewModel, Page, ActivityPage } from 'app/models/view';
+import { CurrentUserService } from 'app/infrastructure/services';
 
 @Component({
     selector: 'app-notifications',
@@ -37,7 +38,8 @@ export class NotificationsComponent implements OnInit {
 
     constructor(
         private router: Router,
-        private activityService: ActivityService) { }
+        private activityService: ActivityService,
+        private currentUserService: CurrentUserService) { }
 
     public openAllNotifications(event) {
         this.allNotificatoinsOpened.next();
@@ -76,7 +78,6 @@ export class NotificationsComponent implements OnInit {
     }
 
     public ngOnInit() {
-        this.getNotifications();
         this.activityService.activity.subscribe(activity => {
             this.activity = activity;
         });

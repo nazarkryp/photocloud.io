@@ -14,15 +14,15 @@ export class HubConnectionService {
     private started: boolean;
     private state = new ReplaySubject<any>(1);
     private proxy: any;
-    private readonly connection: any;
+    private connection: any;
 
     constructor(
         @Inject(DOCUMENT) private document: Document,
         private tokenProvider: TokenProvider) {
-        this.connection = $.hubConnection(this.connectionUri, { useDefaultPath: false });
     }
 
     public start(): Observable<any> {
+        this.connection = $.hubConnection(this.connectionUri, { useDefaultPath: false });
         this.proxy = this.connection.createHubProxy('notificationsHub');
 
         const accessToken = this.tokenProvider.retrieveAccessToken();
@@ -37,7 +37,6 @@ export class HubConnectionService {
             this.connection.start()
                 .done(() => {
                     observer.next(true);
-                    // console.log(this.connection.stop);
                 })
                 .fail(() => {
                     observer.error('Connection Error');
@@ -46,11 +45,10 @@ export class HubConnectionService {
     }
 
     public stop() {
-        this.connection.stop().done(() => {
-            console.log('Connection closed');
-        }).fail(() => {
-            console.log('Could not close connection');
-        });
+        if (this.connection) {
+            this.connection = this.connection.stop(true, true);
+            this.connections = {};
+        }
     }
 
     public get<T>(connectionName: string): Observable<T> {

@@ -14,7 +14,7 @@ export class ActivityService {
     private readonly state: ReplaySubject<ActivityPage> = new ReplaySubject<ActivityPage>(1);
 
     private pageMapper: ActivityPageMapper<ActivityResponse, ActivityViewModel>;
-    private page: ActivityPage;
+    private page: ActivityPage = new ActivityPage();
 
     constructor(
         private connection: HubConnectionService,
@@ -22,14 +22,13 @@ export class ActivityService {
         private httpClient: WebApiService,
         private activityMapper: ActivityMapper) {
         this.pageMapper = new ActivityPageMapper(this.activityMapper);
-
         this.currentUserService.getCurrentUser()
             .subscribe((currentUser) => {
-                if (currentUser) {
+                if (currentUser && currentUser.isActive) {
+                    this.initializeActivity();
                     this.connection.start()
                         .subscribe(() => this.subscribeForNotifications());
                 } else {
-                    console.log('Connection stopped');
                     this.connection.stop();
                     this.page = null;
                     this.state.next(null);
@@ -78,10 +77,6 @@ export class ActivityService {
     }
 
     public markAsRead(ids: number[]): Observable<any> {
-        if (!ids.length) {
-
-        }
-
         return this.httpClient.put<Observable<any>>('activities', {
             ids: ids
         }).pipe(tap(() => {
@@ -97,12 +92,21 @@ export class ActivityService {
 
     private subscribeForNotifications() {
         this.connection.get<ActivityResponse>('notifications')
-            .subscribe((notification: ActivityResponse) => {
-                console.log(notification);
-                const mapped = this.activityMapper.mapFromResponse(notification);
-                this.page.data.unshift(mapped);
-                this.page.unread++;
-                this.state.next(this.page);
+            .subscribe((activity: ActivityResponse) => {
+                this.appendActivity(activity);
             });
+    }
+
+    private appendActivity(activity: ActivityResponse) {
+        const mapped = this.activityMapper.mapFromResponse(activity);
+        this.page.data.unshift(mapped);
+        this.page.unread++;
+        this.state.next(this.page);
+    }
+
+    private initializeActivity() {
+        this.page = new ActivityPage();
+        this.page.data = Array<ActivityViewModel>();
+        this.page.unread = 0;
     }
 }
