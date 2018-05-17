@@ -11,25 +11,25 @@ export class AuthenticationGuardService implements CanActivate {
         private currentUserService: CurrentUserService) { }
 
     public canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-        const currentUser = this.currentUserService.retrieveCurrentUser();
-        const isAuthenticated = this.currentUserService.isAuthenticated;
-        const hasCode = this.currentUserService.hasCode;
+        let currentUser = this.currentUserService.retrieveCurrentUser();
+        let isAuthenticated = this.currentUserService.isAuthenticated;
 
-        if ((currentUser && !hasCode && isAuthenticated) && state.url === '/account/restore') {
-            this.router.navigateByUrl('/');
-            return false;
+        if (!isAuthenticated && currentUser && !currentUser.isRemembered) {
+            currentUser = null;
+            isAuthenticated = false;
+            this.currentUserService.signOut(true);
         }
 
-        if ((currentUser && !isAuthenticated) && state.url !== '/account/signin') {
+        if ((!isAuthenticated && currentUser && currentUser.isRemembered) && state.url !== '/account/signin') {
             this.router.navigateByUrl('/account/signin');
             return false;
         }
 
-        if ((currentUser && !isAuthenticated) && state.url === '/account/signin') {
+        if ((currentUser && !isAuthenticated) && (state.url === '/account/signin' || state.url === '/account/create')) {
             return true;
         }
 
-        if (currentUser != null && (state.url === '/account/signin' || state.url === '/account/create' || state.url === '/account/recover')) {
+        if (currentUser && isAuthenticated && (state.url === '/account/signin' || state.url === '/account/create' || state.url === '/account/recover')) {
             this.router.navigateByUrl('/');
             return false;
         }

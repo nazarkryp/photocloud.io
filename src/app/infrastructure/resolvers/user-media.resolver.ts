@@ -26,39 +26,41 @@ export class UserMediaResolver implements Resolve<UserViewModel> {
         const userMedia = new UserMediaViewModel();
 
         return this.userService.getUser(username)
-            .pipe(mergeMap<UserViewModel, UserMediaViewModel>(user => {
-                const currentUser = this.currentUserService.retrieveCurrentUser();
-                userMedia.user = user;
-                this.updateCurrentUser(currentUser, user);
+            .pipe(
+                mergeMap<UserViewModel, UserMediaViewModel>(user => {
+                    const currentUser = this.currentUserService.retrieveCurrentUser();
+                    userMedia.user = user;
+                    this.updateCurrentUser(currentUser, user);
 
-                const validationResult = this.validateUser(currentUser, user);
+                    const validationResult = this.validateUser(currentUser, user);
 
-                if (validationResult.hasErrors) {
-                    userMedia.error = validationResult.error;
+                    if (validationResult.hasErrors) {
+                        userMedia.error = validationResult.error;
 
-                    return of(userMedia);
-                }
+                        return of(userMedia);
+                    }
 
-                return this.mediaService.getUserMedia(username, null)
-                    .pipe(map(page => {
-                        userMedia.page = page;
-                        return userMedia;
-                    }));
-            }))
-            .pipe(catchError(error => {
-                return of(error);
-            }));
+                    return this.mediaService.getUserMedia(username, null)
+                        .pipe(
+                            map(page => {
+                                userMedia.page = page;
+                                return userMedia;
+                            }));
+                }))
+            .pipe(
+                catchError(error => {
+                    return of(error);
+                }));
     }
 
     private validateUser(currentUser: CurrentUserViewModel, user: UserViewModel): ValidationResult {
         const validationResult: ValidationResult = new ValidationResult();
+        const hasNoAccess = (!currentUser || user.id !== currentUser.id) && user.relationship.outgoingStatus !== RelationshipStatus.Following;
 
         if (!user.isActive) {
             validationResult.hasErrors = true;
             validationResult.error = new ErrorViewModel('Account is not active');
-        } else if (user.isPrivate
-            && (!this.currentUserService.isAuthenticated || (!currentUser || user.id !== currentUser.id))
-            && user.relationship.outgoingStatus !== RelationshipStatus.Following) {
+        } else if (user.isPrivate && (!this.currentUserService.isAuthenticated || hasNoAccess)) {
             validationResult.hasErrors = true;
             validationResult.error = new ErrorViewModel('Account is private');
             validationResult.error.description = currentUser

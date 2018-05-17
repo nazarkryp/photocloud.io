@@ -108,10 +108,10 @@ export class CurrentUserService {
 
     public signOut(cleanCurrentUser: boolean = true) {
         if (cleanCurrentUser) {
-            this.storageService.clear();
-        } else {
-            this.tokenProvider.removeAccessToken();
+            this.storageService.removeItem(this.currentUserStorageKey);
         }
+
+        this.tokenProvider.removeAccessToken();
 
         this.currentUser = null;
         this.state.next(null);

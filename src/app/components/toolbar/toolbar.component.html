@@ -35,6 +35,6 @@
 
 <mat-menu class="notifications-menu" xPosition="before" [overlapTrigger]="true" #notificationsMenu="matMenu">
     <div appClickStopPropagation>
-        <app-notifications #appNotifications (requestsOpened)="openRequests($event)" (allNotificatoinsOpened)="openNotifications($event)"></app-notifications>
+        <app-notifications #appNotifications (requestsOpened)="openRequests()" (allNotificatoinsOpened)="openNotifications()"></app-notifications>
     </div>
 </mat-menu>
