@@ -110,6 +110,7 @@ export class UsersComponent implements OnInit, OnDestroy {
 
     public ngOnInit() {
         this.page = this.route.snapshot.data['page'];
+
         if (this.page.data) {
             this.page.data.map((user: UserViewModel) => {
                 this.modifying[user.id] = false;

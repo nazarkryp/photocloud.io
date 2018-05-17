@@ -11,34 +11,30 @@
             <div class="search-box-container" *ngIf="currentUser && isAuthenticated && currentUser.isActive">
                 <app-search-box [scrolled]="scrolled"></app-search-box>
             </div>
-            <div fxLayout="row" fxLayoutAlign="end center" *ngIf="!currentUser || !isAuthenticated" style="width: 180px;">
+            <div fxLayout="row" fxLayoutAlign="end center" *ngIf="!currentUser || !isAuthenticated" style="min-width: 180px;">
+                <a class="btn-signin" mat-stroked-button color="primary" routerLink="/account/create" *ngIf="!currentUser">
+                    CREATE ACCOUNT
+                </a>
                 <a class="btn-signin" mat-button color="primary" routerLink="/account/signin">
                     SIGN IN
                 </a>
             </div>
-            <div class="toolbar-actions" fxLayout="row" fxLayoutAlign="space-between center" *ngIf="currentUser && isAuthenticated" style="width: 180px;">
-                <mat-icon class="btn-icon mat-36 thin" svgIcon="compass" (click)="explorePeople()" *ngIf="currentUser.isActive"></mat-icon>
-                <!-- <mat-icon class="btn-icon mat-36 thin" matBadge="{{unreadActivitiesCount}}" [matBadgeHidden]="!unreadActivitiesCount" matBadgeColor="primary" matBadgeOverlap="true" svgIcon="bell" [matMenuTriggerFor]="notificationsMenu"
-                    *ngIf="currentUser.isActive">
-                </mat-icon> -->
-                <!-- <mat-icon class="btn-icon mat-36 thin" (click)="explorePeople()" *ngIf="currentUser.isActive">explore</mat-icon> -->
-                <!-- <mat-icon class="btn-icon mat-36 thin" matBadge="{{unreadActivitiesCount}}" [matBadgeHidden]="!unreadActivitiesCount" matBadgeColor="primary" [matMenuTriggerFor]="notificationsMenu" *ngIf="currentUser.isActive">notifications_none</mat-icon> -->
-                <div class="custom-icon-container" *ngIf="currentUser.isActive" [matMenuTriggerFor]="notificationsMenu" fxLayout="row" fxLayoutAlign="center center">
+            <div class="toolbar-actions" fxLayout="row" fxLayoutAlign="space-between center" *ngIf="currentUser && isAuthenticated">
+                <mat-icon class="btn-icon mat-36 thin" svgIcon="compass" routerLink="/explore/people" *ngIf="currentUser.isActive"></mat-icon>
+                <div class="custom-icon-container" *ngIf="currentUser.isActive" fxLayout="row" fxLayoutAlign="center center" [matMenuTriggerFor]="notificationsMenu" (click)="openMenu()">
                     <mat-icon class="btn-icon mat-36 thin" svgIcon="bell"></mat-icon>
-                    <span mat-ripple class="custom-badge"
-                        *ngIf="unreadActivitiesCount" fxLayout="row" fxLayoutAlign="center center">{{unreadActivitiesCount}}</span>
+                    <span mat-ripple class="custom-badge" *ngIf="unreadActivitiesCount" fxLayout="row" fxLayoutAlign="center center">{{unreadActivitiesCount}}</span>
                 </div>
-                <mat-menu style="display: none;" (menuOpened)="onMenuOpened($event)" class="notifications-menu" xPosition="before" #notificationsMenu="matMenu" [overlapTrigger]="true">
-                    <div appClickStopPropagation>
-                        <app-notifications #appNotifications (requestsOpened)="openRequests($event)" (allNotificatoinsOpened)="openNotifications($event)"></app-notifications>
-                    </div>
-                </mat-menu>
-                <div fxLayout="row" fxLayoutAlign="center center">
-                    <a (click)="profile()" fxLayout="row" fxLayoutAlign="center center">
-                        <img class="avatar" src="{{currentUser.pictureUri}}" default="assets/images/user-default-image.png" alt="{{currentUser.username}}" matTooltipPosition="after">
-                    </a>
-                </div>
+                <a [routerLink]="['/', currentUser.username]" fxLayout="row" fxLayoutAlign="center center">
+                    <img class="avatar" src="{{currentUser.pictureUri}}" default="assets/images/user-default-image.png" alt="{{currentUser.username}}" matTooltipPosition="after">
+                </a>
             </div>
         </div>
     </div>
 </header>
+
+<mat-menu class="notifications-menu" xPosition="before" [overlapTrigger]="true" #notificationsMenu="matMenu">
+    <div appClickStopPropagation>
+        <app-notifications #appNotifications (requestsOpened)="openRequests($event)" (allNotificatoinsOpened)="openNotifications($event)"></app-notifications>
+    </div>
+</mat-menu>

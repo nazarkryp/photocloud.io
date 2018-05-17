@@ -8,6 +8,7 @@ import { ActivityPage, ActivityViewModel, PaginationViewModel } from 'app/models
 import { ActivityResponse, ActivityPageResponse } from 'app/models/response';
 import { ActivityMapper, ActivityPageMapper } from 'app/infrastructure/mapping';
 import { CurrentUserService } from 'app/infrastructure/services/current-user.service';
+import { ActivityType } from '../../models/shared';
 
 @Injectable()
 export class ActivityService {
@@ -24,7 +25,7 @@ export class ActivityService {
         this.pageMapper = new ActivityPageMapper(this.activityMapper);
         this.currentUserService.getCurrentUser()
             .subscribe((currentUser) => {
-                if (currentUser && currentUser.isActive) {
+                if (currentUser && currentUser.isActive && this.currentUserService.isAuthenticated) {
                     this.initializeActivity();
                     this.connection.start()
                         .subscribe(() => this.subscribeForNotifications());
@@ -69,6 +70,9 @@ export class ActivityService {
     }
 
     public removeActivity(activityId: number): Observable<any> {
+        const index = this.page.data.findIndex(e => e.id === activityId);
+        this.page.data.splice(index, 1);
+        this.state.next(this.page);
         return this.httpClient.delete(`activities/${activityId}`);
     }
 
@@ -99,6 +103,11 @@ export class ActivityService {
 
     private appendActivity(activity: ActivityResponse) {
         const mapped = this.activityMapper.mapFromResponse(activity);
+
+        if (mapped.activityType === ActivityType.Liked && this.page.data.find(e => e.user.id === mapped.user.id && e.activityType === mapped.activityType && e.media.id === mapped.media.id)) {
+            return;
+        }
+
         this.page.data.unshift(mapped);
         this.page.unread++;
         this.state.next(this.page);

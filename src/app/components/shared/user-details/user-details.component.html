@@ -1,10 +1,10 @@
-<div fxLayout="column" fxLayoutAlign="center start">
+<div fxLayout="column" fxLayoutAlign="center start" *ngIf="user">
     <div class="user-info" fxLayout="row" fxLayoutAlign="center start">
         <div fxLayout="column" fxLayoutAlign="center center">
             <mat-progress-spinner [value]="progress" [mode]="progressSpinnerMode" [diameter]="160" [strokeWidth]="3" style="position: absolute; z-index: 0;"></mat-progress-spinner>
-            <img class="thumbnail-big" src="{{user.pictureUri}}" default="assets/images/user-default-image.png" alt="{{user.username}}" *ngIf="!currentUser || (currentUser && !currentUser.isActive) || user.id !== currentUser.id"
+            <img class="thumbnail-big" src="{{user.pictureUri}}" default="assets/images/user-default-image.png" alt="{{user.username}}" *ngIf="!isAuthenticated || (!currentUser || (currentUser && !currentUser?.isActive) || user.id !== currentUser?.id)"
             />
-            <div class="edit-image" *ngIf="currentUser && currentUser.isActive && user.id === currentUser.id">
+            <div class="edit-image" *ngIf="isAuthenticated && currentUser && currentUser.isActive && user.id === currentUser.id">
                 <div *ngIf="!isUploading" class="change-overlay" fxLayout="row" fxLayoutAlign="center center" (click)="fileInput.click()">
                     <span>Change</span>
                 </div>
@@ -15,7 +15,7 @@
         <div class="user-info-data" fxLayout="column" fxFlex>
             <div fxLayout="row" fxLayoutAlign="space-between center">
                 <span class="user-info__username" [ngClass]="{ 'center' : !user.isActive }">{{user.username}}</span>
-                <div class="user-info__actions" fxLayout="row" fxLayoutAlign="space-between center" *ngIf="currentUser && user.id === currentUser.id">
+                <div class="user-info__actions" fxLayout="row" fxLayoutAlign="space-between center" *ngIf="isAuthenticated && currentUser && user.id === currentUser.id">
                     <a routerLink="/account/edit" matTooltip="Settings" matTooltipPosition="above">
                         <mat-icon class="btn-icon">settings</mat-icon>
                     </a>
@@ -23,10 +23,10 @@
                         <mat-icon class="btn-icon">exit_to_app</mat-icon>
                     </a>
                 </div>
-                <button mat-button class="btn-relationships" *ngIf="currentUser && currentUser.isActive && user.id !== currentUser.id && (user.isActive || (!user.isActive && user.relationship.outgoingStatus !== 0))" (click)="modifyRelationship()"
-                    [disabled]="isModifyingRelationship">{{user.relationship.outgoingStatus | relationshipAction | uppercase }}</button>
+                <button mat-button class="btn-relationships" *ngIf="isAuthenticated && currentUser && currentUser?.isActive && user.id !== currentUser.id && (user.isActive || (!user.isActive && user.relationship.outgoingStatus !== 0))"
+                    (click)="modifyRelationship()" [disabled]="isModifyingRelationship">{{user.relationship.outgoingStatus | relationshipAction | uppercase }}</button>
             </div>
-            <div class="user-info__counters" fxLayout="row" fxLayoutAlign="space-between center" *ngIf="user.isActive && currentUser">
+            <div class="user-info__counters" fxLayout="row" fxLayoutAlign="space-between center" *ngIf="isAuthenticated && user.isActive && currentUser">
                 <a>
                     <span class="user-info__counter">
                         {{user.counters.posts}}

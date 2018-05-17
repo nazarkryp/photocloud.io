@@ -123,11 +123,12 @@ export class CurrentUserService {
 
             if (currentUser && this.isAuthenticated) {
                 return this.accountService.getAccount()
-                    .pipe(mergeMap<CurrentUserViewModel, CurrentUserViewModel>(serverCurrentUser => {
-                        this.saveCurrentUser(serverCurrentUser);
-                        this.state.next(serverCurrentUser);
-                        return this.state.asObservable();
-                    }));
+                    .pipe(
+                        mergeMap<CurrentUserViewModel, CurrentUserViewModel>(serverCurrentUser => {
+                            this.saveCurrentUser(serverCurrentUser);
+                            this.state.next(serverCurrentUser);
+                            return this.state.asObservable();
+                        }));
             }
         }
 

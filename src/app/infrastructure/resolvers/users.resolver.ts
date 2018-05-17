@@ -7,7 +7,7 @@ import { UserService } from 'app/services';
 import { Page, UserViewModel } from 'app/models/view';
 
 @Injectable()
-export class UserListResolver implements Resolve<Page<UserViewModel>> {
+export class UsersResolver implements Resolve<Page<UserViewModel>> {
     constructor(
         private userService: UserService) {
     }

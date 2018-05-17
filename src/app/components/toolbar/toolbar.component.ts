@@ -9,7 +9,7 @@ import { AccountService } from 'app/account/services';
 import { ActivityService } from 'app/services/activity';
 import { RequestsService } from 'app/services';
 import { Uploader } from 'app/core/services';
-import { CurrentUserViewModel, Page, ActivityViewModel } from 'app/models/view';
+import { CurrentUserViewModel, ActivityViewModel, ActivityPage } from 'app/models/view';
 import { ScrollDirection } from 'app/shared/directives/header-scroll.directive';
 import { NotificationsComponent } from 'app/components/notifications/notifications.component';
 
@@ -18,11 +18,9 @@ import { NotificationsComponent } from 'app/components/notifications/notificatio
     templateUrl: './toolbar.component.html',
     styleUrls: ['./toolbar.component.css']
 })
-export class ToolbarComponent implements OnInit, OnDestroy, AfterViewChecked {
+export class ToolbarComponent implements OnInit, OnDestroy, AfterViewChecked, AfterViewInit {
     private currentUserSubscription: Subscription;
     private menuSubscription: Subscription;
-    private isResolvingExplorePeople: boolean;
-    private isResolvingUserMedia: boolean;
 
     public currentUser: CurrentUserViewModel;
     public unreadActivitiesCount: number;
@@ -30,9 +28,9 @@ export class ToolbarComponent implements OnInit, OnDestroy, AfterViewChecked {
     public scrolledDown: boolean;
     @Output() public requestsOpened = new EventEmitter<boolean>();
 
-    public notifications: Page<ActivityViewModel>;
+    public notifications: ActivityPage;
 
-    @ViewChild(MatMenuTrigger) public trigger: MatMenuTrigger;
+    @ViewChild(MatMenuTrigger) private trigger: MatMenuTrigger;
     @ViewChild('appNotifications') public appNotifications: NotificationsComponent;
 
     constructor(
@@ -50,33 +48,6 @@ export class ToolbarComponent implements OnInit, OnDestroy, AfterViewChecked {
 
     public get isAuthenticated(): boolean {
         return this.currentUserService.isAuthenticated;
-    }
-
-    public explorePeople() {
-        if (!this.isResolvingExplorePeople) {
-            this.isResolvingExplorePeople = true;
-
-            this.router.navigateByUrl('/explore/people')
-                .then(() => {
-                    this.isResolvingExplorePeople = false;
-                })
-                .catch(() => {
-                    this.isResolvingExplorePeople = false;
-                });
-        }
-    }
-
-    public profile() {
-        if (!this.isResolvingUserMedia) {
-            this.isResolvingUserMedia = true;
-
-            this.router.navigateByUrl(this.currentUser.username)
-                .then(() => {
-                    this.isResolvingUserMedia = false;
-                }).catch(() => {
-                    this.isResolvingUserMedia = false;
-                });
-        }
     }
 
     public openNotifications() {
@@ -107,11 +78,21 @@ export class ToolbarComponent implements OnInit, OnDestroy, AfterViewChecked {
         this.scrolledDown = event === ScrollDirection.Down;
     }
 
+    public openMenu() {
+        this.trigger.openMenu();
+        this.menuSubscription = this.trigger.menuOpened.subscribe(() => {
+            this.appNotifications.markAsRead();
+        });
+    }
+
     public ngOnInit(): void {
         this.currentUserSubscription = this.currentUserService.getCurrentUser()
             .subscribe(currentUser => {
                 this.updateCurrentUser(currentUser);
-                this.activityService.getRecentActivity().subscribe();
+
+                if (this.currentUserService.isAuthenticated) {
+                    this.activityService.getRecentActivity().subscribe();
+                }
             });
 
         this.activityService.activity.subscribe(activity => {
@@ -121,21 +102,19 @@ export class ToolbarComponent implements OnInit, OnDestroy, AfterViewChecked {
 
     public ngOnDestroy(): void {
         this.currentUserSubscription.unsubscribe();
+        if (this.menuSubscription && !this.menuSubscription.closed) {
+            this.menuSubscription.unsubscribe();
+        }
     }
 
     public ngAfterViewChecked(): void {
         this.cd.detectChanges();
+    }
 
-        if (this.trigger && !this.menuSubscription) {
-            this.menuSubscription = this.trigger.onMenuOpen.subscribe(() => {
-                this.appNotifications.markAsRead();
-            });
-        } else {
-            if (this.menuSubscription) {
-                this.menuSubscription.unsubscribe();
-                this.menuSubscription = null;
-            }
-        }
+    public ngAfterViewInit(): void {
+        // this.menuSubscription = this.trigger.menuOpened.subscribe(() => {
+        //     this.appNotifications.markAsRead();
+        // });
     }
 
     private updateCurrentUser(currentUser: CurrentUserViewModel) {
@@ -149,4 +128,16 @@ export class ToolbarComponent implements OnInit, OnDestroy, AfterViewChecked {
             this.currentUser = currentUser;
         }
     }
+
+    // private configureNotificationsMenu() {
+    //     if (this.trigger && (!this.menuSubscription || this.menuSubscription.closed)) {
+    //         this.menuSubscription = this.trigger.onMenuOpen.subscribe(() => {
+    //             this.appNotifications.markAsRead();
+    //         });
+    //     } else {
+    //         if (this.menuSubscription && !this.menuSubscription.closed) {
+    //             this.menuSubscription.unsubscribe();
+    //         }
+    //     }
+    // }
 }

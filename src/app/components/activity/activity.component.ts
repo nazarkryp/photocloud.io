@@ -80,12 +80,8 @@ export class ActivityComponent implements OnInit {
         }
     }
 
-    public getRecentActivities(showProgress: boolean = true) {
+    public getRecentActivities() {
         this.isLoading = true;
-
-        // if (showProgress) {
-        //     this.progress.start();
-        // }
 
         this.activityService.getRecentActivity(this.page.pagination)
             .pipe(finalize(() => {

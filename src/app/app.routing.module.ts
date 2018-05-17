@@ -11,7 +11,7 @@ import { MediaDetailsComponent } from './components/shared/media-details/media-d
 import { TagsComponent } from './components/explore/tags/tags.component';
 import { ConnectionErrorComponent } from './components/shared/connection-error/connection-error.component';
 import { AuthenticationGuardService } from './infrastructure/guards/authentication-guard.service';
-import { RecentMediaResolver, UserMediaResolver, UserListResolver, LikedMediaResolver, ActivityResolver } from './infrastructure/resolvers';
+import { RecentMediaResolver, UserMediaResolver, UsersResolver, LikedMediaResolver, ActivityResolver } from './infrastructure/resolvers';
 import { LikedMediaComponent } from 'app/components/liked-media/liked-media.component';
 import { TermsComponent } from 'app/components/terms/terms.component';
 import { PrivacyComponent } from './components/privacy/privacy.component';
@@ -127,7 +127,7 @@ const routes: Routes = [
     {
         path: 'explore/people',
         component: UsersComponent,
-        resolve: { page: UserListResolver },
+        resolve: { page: UsersResolver },
         data: {
             title: 'PhotoCloud - Discover People'
         },
@@ -138,7 +138,7 @@ const routes: Routes = [
     {
         path: 'manage/users',
         component: ManageUsersComponent,
-        resolve: { page: UserListResolver },
+        resolve: { page: UsersResolver },
         data: {
             title: 'PhotoCloud - Manage Users'
         },
@@ -151,9 +151,6 @@ const routes: Routes = [
         redirectTo: '404'
     }
 ];
-
-declare var ga;
-
 @NgModule({
     imports: [RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })],
     exports: [RouterModule]

@@ -80,6 +80,7 @@ mat-icon>svg {
 .toolbar-actions {
     padding-left: 1.4rem;
     box-sizing: border-box;
+    width: 180px;
 }
 
 .toolbar-actions>mat-icon {
@@ -104,9 +105,9 @@ td-notification-count .btn-icon:hover {
 }
 
 .btn-signin {
-    font-weight: bold;
+    /* font-weight: bold;
     color: #e91e63;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Roboto', sans-serif; */
 }
 
 ::ng-deep .btn-signin .mat-button-focus-overlay {
@@ -140,6 +141,10 @@ td-notification-count .btn-icon:hover {
 ::ng-deep .cdk-overlay-container .mat-menu-panel.notifications-menu {
     max-width: 350px;
     width: 350px;
+}
+
+.notifications-menu {
+    display: none;
 }
 
 ::ng-deep .cdk-overlay-container .mat-menu-panel .mat-menu-content {

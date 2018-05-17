@@ -32,6 +32,7 @@ export class UserMediaResolver implements Resolve<UserViewModel> {
                 this.updateCurrentUser(currentUser, user);
 
                 const validationResult = this.validateUser(currentUser, user);
+
                 if (validationResult.hasErrors) {
                     userMedia.error = validationResult.error;
 
@@ -56,7 +57,7 @@ export class UserMediaResolver implements Resolve<UserViewModel> {
             validationResult.hasErrors = true;
             validationResult.error = new ErrorViewModel('Account is not active');
         } else if (user.isPrivate
-            && (!currentUser || user.id !== currentUser.id)
+            && (!this.currentUserService.isAuthenticated || (!currentUser || user.id !== currentUser.id))
             && user.relationship.outgoingStatus !== RelationshipStatus.Following) {
             validationResult.hasErrors = true;
             validationResult.error = new ErrorViewModel('Account is private');

@@ -37,10 +37,8 @@
 }
 
 .mat-fab-bottom-right {
-    top: auto;
-    right: 35px;
-    bottom: 35px;
-    left: auto;
+    bottom: 2rem;
+    left: calc(100vw - 3rem - 56px);
     position: fixed;
 }
 

@@ -43,6 +43,10 @@ export class UserDetailsComponent implements OnDestroy {
             });
     }
 
+    public get isAuthenticated(): boolean {
+        return this.currentUserService.isAuthenticated;
+    }
+
     public get isUploading(): boolean {
         return this.uploader.isUploading && this.uploader.queue && this.uploader.queue.length > 0;
     }

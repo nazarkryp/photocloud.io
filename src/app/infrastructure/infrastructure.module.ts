@@ -23,7 +23,7 @@ import {
     ActivityResolver,
     LikedMediaResolver,
     RecentMediaResolver,
-    UserListResolver,
+    UsersResolver,
     UserMediaResolver
 } from 'app/infrastructure/resolvers';
 
@@ -55,7 +55,7 @@ import { ActivityInterceptor } from 'app/services/activity';
         ActivityResolver,
         LikedMediaResolver,
         RecentMediaResolver,
-        UserListResolver,
+        UsersResolver,
         UserMediaResolver,
         {
             provide: HTTP_INTERCEPTORS,
