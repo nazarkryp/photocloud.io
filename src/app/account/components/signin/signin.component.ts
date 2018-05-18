@@ -101,9 +101,9 @@ export class SignInComponent implements OnInit {
         this.finishLoading();
         const currentUser = this.currentUserService.retrieveCurrentUser();
 
-        if (this.currentUser) {
-            if (this.currentUser.isRemembered) {
-                this.username.setValue(this.currentUser.username);
+        if (currentUser) {
+            if (currentUser.isRemembered) {
+                this.username.setValue(currentUser.username);
                 this.rememberMe.setValue(true);
                 this.currentUser = currentUser;
 

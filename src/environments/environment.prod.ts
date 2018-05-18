@@ -1,6 +1,6 @@
 export const environment = {
     production: true,
-    apiUri: '/v1/',
-    loginUri: '/authorize',
-    baseAddress: ''
+    apiUri: 'https://thephotocloud.com/v1/',
+    loginUri: 'https://thephotocloud.com/authorize',
+    baseAddress: 'https://thephotocloud.com'
 };

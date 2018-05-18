@@ -77,6 +77,10 @@ mat-icon>svg {
     height: 35px;
 }
 
+.authentication-actions>:first-child {
+    margin-right: 1.4rem;
+}
+
 .toolbar-actions {
     padding-left: 1.4rem;
     box-sizing: border-box;

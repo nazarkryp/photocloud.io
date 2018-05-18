@@ -1,8 +1,8 @@
 .privacy-container {
     width: 600px;
+    line-height: 1.58;
 }
 
 .privacy-container p {
     font-size: 21px;
-    line-height: 1.58;
 }
