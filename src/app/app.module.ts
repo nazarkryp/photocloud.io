@@ -68,6 +68,8 @@ import { ActivityComponent } from './components/activity/activity.component';
 import { ManageUsersComponent } from './dashboard/components/manage-users/manage-users.component';
 
 import { NgProgressModule } from '@ngx-progressbar/core';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 @NgModule({
     declarations: [
@@ -130,7 +132,8 @@ import { NgProgressModule } from '@ngx-progressbar/core';
         InfrastructureModule,
         SharedModule,
         CoreModule,
-        NgProgressModule.forRoot()
+        NgProgressModule.forRoot(),
+        ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production })
     ],
     providers: [
         AccountService,

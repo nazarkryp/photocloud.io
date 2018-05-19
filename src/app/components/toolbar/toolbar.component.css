@@ -78,21 +78,13 @@ mat-icon>svg {
 }
 
 .authentication-actions>:first-child {
-    margin-right: 1.4rem;
+    margin-right: .7rem;
 }
 
 .toolbar-actions {
     padding-left: 1.4rem;
     box-sizing: border-box;
     width: 180px;
-}
-
-.toolbar-actions>mat-icon {
-    /* margin-right: 1.4rem; */
-}
-
-.toolbar-actions>:last-child mat-icon {
-    /* margin-right: .7rem; */
 }
 
 td-notification-count,

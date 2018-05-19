@@ -1,4 +1,4 @@
-<div class="users-container" fxLayout="column">
+<div class="users-dialog-container" fxLayout="column">
     <div class="users-title" fxLayout="row" fxLayoutAlign="space-between center">
         <h1>{{title}}</h1>
         <mat-icon class="btn-icon mat-18" (click)="close()" tabindex="-1">clear</mat-icon>
@@ -6,8 +6,8 @@
     <!-- <div class="search-box">
         <input type="text" placeholder="Search" autocomplete="off" spellcheck="false">
     </div> -->
-    <div class="user-items">
-        <div class="user-items-empty-container" fxLayout="row" fxLayoutAlign="center center" *ngIf="page.data?.length === 0">
+    <div class="user-dealog-items">
+        <div class="user-dealog-items-empty-container" fxLayout="row" fxLayoutAlign="center center" *ngIf="page.data?.length === 0">
             <mat-spinner [diameter]="50" [strokeWidth]="3" *ngIf="isLoading"></mat-spinner>
             <p *ngIf="!isLoading">Users not found</p>
         </div>

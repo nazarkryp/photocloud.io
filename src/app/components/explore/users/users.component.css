@@ -1,18 +1,27 @@
 @media screen and (max-width: 500px) {
-    .user-search-container {
+    .users-header,
+    .users-container {
         padding: 0 .7rem;
+    }
+    .users-header {
+        border-bottom: none;
     }
 }
 
 @media screen and (min-width: 501px) {
-    .user-search-container {
-        padding: 1.4rem;
-        box-shadow: 0 3px 8px -3px rgba(0, 0, 0, 0.26);
-        border-radius: 2px;
+    .users-header {
+        border-bottom: 1px solid #eaeaea;
     }
 }
 
-.user-search-container {
+.users-header {
+    max-width: 960px;
+    width: 100%;
+    padding-bottom: 1.4rem;
+}
+
+.users-container {
+    padding-top: .7rem;
     max-width: 600px;
     width: 100%;
     box-sizing: border-box;
@@ -23,11 +32,11 @@
     padding-bottom: 1.4rem;
 }
 
-.search-results-container>.search-result {
-    margin: 1rem 0;
+.users-container .item {
+    margin-top: 1rem;
 }
 
-.search-result img {
+.users-container .item img {
     width: 60px;
     height: 60px;
     border-radius: 50%;
@@ -36,20 +45,19 @@
     cursor: pointer;
 }
 
-.search-result-user-details {
+.users-container .item .item-details {
     margin-left: .7rem;
-    line-height: 1.2;
+    line-height: 1.5;
 }
 
-.search-result-username {
+.item-details .username {
     width: 110px;
-    padding-bottom: .5rem;
     font-weight: 900;
 }
 
-.search-result-last-active {
+.item-details .date {
     margin: 0 auto 0 0;
     color: rgba(0, 0, 0, .65);
     font-weight: normal;
-    font-size: .9em;
+    font-size: .8em;
 }

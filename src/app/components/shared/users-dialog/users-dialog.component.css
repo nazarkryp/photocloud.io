@@ -1,4 +1,4 @@
-.users-container {
+.users-dialog-container {
     height: 100%;
     box-sizing: border-box;
     overflow-y: hidden;
@@ -6,18 +6,18 @@
     background: #fafafa;
 }
 
-.users-container .users-title {
+.users-dialog-container .users-title {
     padding: .75rem;
     /* border-bottom: 1px solid #f2f2f2; */
 }
 
-.users-container .search-box {
+.users-dialog-container .search-box {
     padding: .75rem;
     box-sizing: border-box;
     width: 100%;
 }
 
-.users-container .search-box input {
+.users-dialog-container .search-box input {
     box-sizing: border-box;
     width: 100%;
     border: none;
@@ -27,12 +27,12 @@
     background: rgb(240, 240, 240);
 }
 
-.users-container .users-title h1 {
+.users-dialog-container .users-title h1 {
     font-weight: 900;
     font-size: 1.1em;
 }
 
-.user-items-empty-container {
+.user-dealog-items-empty-container {
     position: absolute;
     width: 100%;
     height: 100%;
@@ -41,7 +41,7 @@
     padding: 0;
 }
 
-.user-items-empty-container {
+.user-dealog-items-empty-container {
     text-transform: uppercase;
     font-weight: 900;
     color: rgb(0, 0, 0, .6);
@@ -75,7 +75,7 @@
     letter-spacing: 1px;
 }
 
-.user-items {
+.user-dealog-items {
     height: 100%;
     overflow-y: scroll;
     position: relative;
@@ -89,7 +89,7 @@
     border-bottom: 1px solid #efefef;
 }
 
-/* .user-items::-webkit-scrollbar {
+/* .user-dealog-items::-webkit-scrollbar {
     display: none;
 } */
 

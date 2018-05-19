@@ -1,5 +1,35 @@
 <div fxLayout="column" fxLayoutAlign="start center">
-    <div class="user-search-container" fxLayout="column">
+    <div class="users-header" fxLayout="space-between center">
+        <h1>People</h1>
+    </div>
+    <div class="users-container" [@listAnimation]="page.data.length">
+        <div class="item" *ngFor="let user of page.data" fxLayout="row" fxLayoutAlign="start center">
+            <a [routerLink]="['/', user.username]">
+                <img src="{{user.pictureUri}}" default="assets/images/user-default-image.png" alt="profile">
+            </a>
+            <div class="item-details" fxLayout="row" fxLayoutAlign="space-between start" fxFlex>
+                <div fxLayout="column">
+                    <a class="username" [routerLink]="['/', user.username]">{{user.username}}</a>
+                    <span class="date" *ngIf="user.lastActive" matTooltip="{{ user.lastActive | date:'fullDate' }}" matTooltipPosition="after">{{user.lastActive | timeAgo | lowercase}}</span>
+                </div>
+                <button class="btn-relationships" mat-button (click)="modifyRelationship(user)" [disabled]="modifying[user.id]" *ngIf="currentUser && currentUser.isActive && currentUser.id !== user.id">
+                    {{user.relationship.outgoingStatus | relationshipAction | uppercase}}
+                </button>
+                <!-- <div fxLayout="row" fxLayoutAlign="center end">
+                        <button class="btn-relationships" mat-button (click)="modifyRelationship(user)" [disabled]="modifying[user.id]" *ngIf="currentUser && currentUser.isActive && currentUser.id !== user.id">
+                            {{user.relationship.outgoingStatus | relationshipAction | uppercase}}
+                        </button>
+                    </div> -->
+            </div>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="center center" *ngIf="page.hasMoreItems" style="border-top: 1px solid #efefef; padding-top: 1.4rem;">
+            <button class="btn-primary" mat-button (click)="getUsers()" [disabled]="isLoading">Load More</button>
+        </div>
+    </div>
+</div>
+
+<!-- <div fxLayout="column" fxLayoutAlign="start center">
+    <div class="users-container" fxLayout="column">
         <div class="user-search-header" fxLayout="row" fxLayoutAlign="space-between center">
             <h1 class="user-search-title">Discover People</h1>
             <button mat-icon-button [disabled]="isLoading" (click)="refresh()">
@@ -17,9 +47,6 @@
                         <span class="search-result-last-active" *ngIf="user.lastActive" matTooltip="{{user.lastActive | date:'fullDate'}}" matTooltipPosition="after">{{user.lastActive | timeAgo | lowercase}}</span>
                     </div>
                     <div fxLayout="row" fxLayoutAlign="center end">
-                        <!-- <button mat-stroked-button color="primary">
-                            {{user.relationship.outgoingStatus | relationshipAction | uppercase}}
-                        </button> -->
                         <button class="btn-relationships" mat-button (click)="modifyRelationship(user)" [disabled]="modifying[user.id]" *ngIf="currentUser && currentUser.isActive && currentUser.id !== user.id">
                             {{user.relationship.outgoingStatus | relationshipAction | uppercase}}
                         </button>
@@ -31,4 +58,4 @@
             <button class="btn-primary" mat-button (click)="getUsers()" [disabled]="isLoading">Load More</button>
         </div>
     </div>
-</div>
+</div> -->
