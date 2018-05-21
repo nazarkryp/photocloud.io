@@ -1,8 +1,9 @@
 <div fxLayout="column" fxLayoutAlign="start center">
-    <div class="users-header" fxLayout="space-between center">
-        <h1>People</h1>
+    <div class="users-header" fxLayoutAlign="space-between center">
+        <h3>Discover People</h3>
     </div>
     <div class="users-container" [@listAnimation]="page.data.length">
+        <!-- <input type="text" placeholder="Search" style="padding: .5rem .7rem; border: 1px solid #eaeaea; border-radius: 2px;  font-weight: lighter; font-size: .9em; outline: none;"> -->
         <div class="item" *ngFor="let user of page.data" fxLayout="row" fxLayoutAlign="start center">
             <a [routerLink]="['/', user.username]">
                 <img src="{{user.pictureUri}}" default="assets/images/user-default-image.png" alt="profile">

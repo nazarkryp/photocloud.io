@@ -139,6 +139,7 @@
     object-fit: cover;
     border-radius: 2px;
     padding-bottom: .5rem;
+    box-sizing: border-box;
 }
 
 .create-media-container .content .details .preview a {
