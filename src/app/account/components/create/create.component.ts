@@ -35,7 +35,7 @@ const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA
 export class CreateComponent implements OnInit {
     public formGroup: FormGroup;
     public errorStateMatcher = new DefaultErrorStateMatcher();
-    public signUpError: string;
+    public signUpErrors: string;
     public tabIndex = 1;
 
     public get username(): ReactiveFormControl {
@@ -124,7 +124,7 @@ export class CreateComponent implements OnInit {
 
     public createAccount() {
         if (this.formGroup.valid) {
-            this.signUpError = null;
+            this.signUpErrors = null;
 
             const createAccountRequestModel = new CreateAccountRequestModel(
                 this.username.value,
@@ -143,7 +143,7 @@ export class CreateComponent implements OnInit {
                     }
                 }, (errorResponse) => {
                     this.finishLoading();
-                    this.signUpError = errorResponse.error.error.modelState;
+                    this.signUpErrors = errorResponse.error.error.modelState;
                 });
         }
     }

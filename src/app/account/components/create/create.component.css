@@ -43,23 +43,18 @@
     line-height: 2;
 }
 
-.form-header {
-    padding: 0 0 .7rem 0;
+.errors-container {
+    background: #ea1f62;
+    box-shadow: 0 3px 8px -3px #e91e63;
+    padding: 1.4rem .7rem;
+    border-radius: 5px;
+    margin-bottom: 1.4rem;
 }
 
-/* .input {
-    padding: 12px;
-    border: 2px solid #efefef;
-    border-radius: 5px;
-    width: 100%;
-    box-sizing: border-box;
-    outline: none;
-    margin-top: 24px;
-} */
-
 .error-message {
-    color: #e91f63;
+    color: rgb(255, 255, 255, .86);
     text-align: center;
+    padding-bottom: .25rem;
 }
 
 .agreements {

@@ -155,6 +155,7 @@ a {
 a.primary {
     color: #e91e63;
     cursor: pointer;
+    outline: none;
 }
 
 a.primary.disabled {
