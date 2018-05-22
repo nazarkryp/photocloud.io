@@ -37,13 +37,19 @@
                 E-mail address is required
             </mat-error>
             <mat-error *ngIf="email?.getError('maxlength')">
-                Email cannot be more than {{username.errors.maxlength.requiredLength}}
+                Email cannot be more than {{email.errors.maxlength.requiredLength}}
             </mat-error>
             <mat-error *ngIf="email.getError('pattern')">
                 Email address is not valid
             </mat-error>
             <mat-error *ngIf="email.getError('unique')">
                 User with such e-mail address already exists
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field class="form-field">
+            <input formControlName="fullName" appAutoFocus matInput placeholder="Full name" type="text" autocomplete="off" spellcheck="false" [errorStateMatcher]="errorStateMatcher">
+            <mat-error *ngIf="fullName?.getError('maxlength')">
+                Email cannot be more than {{fullName.errors.maxlength.requiredLength}}
             </mat-error>
         </mat-form-field>
         <mat-form-field class="form-field">

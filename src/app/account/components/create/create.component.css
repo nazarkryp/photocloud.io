@@ -47,7 +47,7 @@
     padding: 0 0 .7rem 0;
 }
 
-.input {
+/* .input {
     padding: 12px;
     border: 2px solid #efefef;
     border-radius: 5px;
@@ -55,7 +55,7 @@
     box-sizing: border-box;
     outline: none;
     margin-top: 24px;
-}
+} */
 
 .error-message {
     color: #e91f63;

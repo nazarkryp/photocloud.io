@@ -129,7 +129,8 @@ export class CreateComponent implements OnInit {
             const createAccountRequestModel = new CreateAccountRequestModel(
                 this.username.value,
                 this.email.value,
-                this.password.value
+                this.password.value,
+                this.fullName.value
             );
 
             this.startLoading();
@@ -149,5 +150,17 @@ export class CreateComponent implements OnInit {
 
     public ngOnInit(): void {
         this.finishLoading();
+
+        this.username.valueChanges.subscribe(value => {
+            if (!value) {
+                this.username.isValidating = false;
+            }
+        });
+
+        this.email.valueChanges.subscribe(value => {
+            if (!value) {
+                this.email.isValidating = false;
+            }
+        });
     }
 }
