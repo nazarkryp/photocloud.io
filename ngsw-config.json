@@ -20,5 +20,13 @@
                 "/assets/**"
             ]
         }
+    }, {
+        "name": "fonts",
+        "installMode": "prefetch",
+        "resources": {
+            "urls": [
+                "https://fonts.googleapis.com/**"
+            ]
+        }
     }]
 }

@@ -1,19 +1,11 @@
 <div fxLayout="column" fxLayoutAlign="start center">
-    <div class="activities" fxLayout="column" fxLayoutAlign="start center">
-        <div class="header" fxLayout="row" fxLayoutAlign="center center">
-            <div class="container" fxLayout="row" fxLayoutAlign="space-between center">
-                <h1>Activity</h1>
-                <div fxLayout="row" fxLayoutAlign="center center">
-                    <!-- <mat-form-field>
-                        <mat-select value="all">
-                            <mat-option value="all">All</mat-option>
-                            <mat-option value="unread">Unread</mat-option>
-                        </mat-select>
-                    </mat-form-field> -->
-                    <button mat-button class="btn-default" *ngIf="page?.data?.length" (click)="removeAllActivities()">CLEAR ALL</button>
-                </div>
-            </div>
+    <div class="activities-header" fxLayoutAlign="space-between center">
+        <h1>Activity</h1>
+        <div fxLayout="row" fxLayoutAlign="center center">
+            <button mat-button class="btn-default" *ngIf="page?.data?.length" (click)="removeAllActivities()">CLEAR ALL</button>
         </div>
+    </div>
+    <div class="activities-container" fxLayout="column" fxLayoutAlign="start center">
         <div class="items" fxLayout="column" [@listAnimation]="page?.data?.length" fxLayoutAlign="start center" appInfiniteScroll [appScrollTriggerOnce]="true" [scrollOffset]="2000" (scrollPosition)="onPositionChange()">
             <span *ngIf="!page?.data?.length && !isLoading">You have no recent activity</span>
             <div mat-ripple (appear)="appear($event, activity)" class="activity-container" [ngClass]="{ 'unread' : !activity.isMarkedAsRead }" *ngFor="let activity of page?.data; let index = index;">

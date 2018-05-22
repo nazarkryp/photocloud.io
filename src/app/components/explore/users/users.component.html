@@ -1,11 +1,11 @@
 <div fxLayout="column" fxLayoutAlign="start center">
     <div class="users-header" fxLayoutAlign="space-between center">
-        <h3>Discover People</h3>
+        <h1>Discover People</h1>
     </div>
     <div class="users-container" [@listAnimation]="page.data.length">
         <!-- <input type="text" placeholder="Search" style="padding: .5rem .7rem; border: 1px solid #eaeaea; border-radius: 2px;  font-weight: lighter; font-size: .9em; outline: none;"> -->
         <div class="item" *ngFor="let user of page.data" fxLayout="row" fxLayoutAlign="start center">
-            <a [routerLink]="['/', user.username]">
+            <a class="link" [routerLink]="['/', user.username]">
                 <img src="{{user.pictureUri}}" default="assets/images/user-default-image.png" alt="profile">
             </a>
             <div class="item-details" fxLayout="row" fxLayoutAlign="space-between start" fxFlex>
@@ -23,7 +23,7 @@
                     </div> -->
             </div>
         </div>
-        <div fxLayout="row" fxLayoutAlign="center center" *ngIf="page.hasMoreItems" style="border-top: 1px solid #efefef; padding-top: 1.4rem;">
+        <div fxLayout="row" fxLayoutAlign="center center" *ngIf="page.hasMoreItems" style="padding-top: 1.4rem;">
             <button class="btn-primary" mat-button (click)="getUsers()" [disabled]="isLoading">Load More</button>
         </div>
     </div>

@@ -110,7 +110,7 @@
             <p class="edit__caption">
                 When you press the button below, your photos, comments and likes will be hidden until you reactivate your account by logging back in.
             </p>
-            <button mat-raised-button color="primary" (click)="invertAccountStatus()">{{currentUser.isActive ? 'Temporarily disable my account' : 'Enable account'}}</button>
+            <button mat-stroked-button color="primary" (click)="invertAccountStatus()">{{currentUser.isActive ? 'Temporarily disable my account' : 'Enable account'}}</button>
         </div>
     </div>
 </div>

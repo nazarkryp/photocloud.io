@@ -141,12 +141,12 @@ export class ActivityComponent implements OnInit {
 
         this.markAsRead.pipe(debounceTime(1000))
             .subscribe(ids => {
+                this.page.data.filter(e => ids.includes(e.id)).forEach((activity) => {
+                    activity.isMarkedAsRead = true;
+                });
+
                 this.activityService.markAsRead(ids)
                     .subscribe(() => {
-                        this.page.data.filter(e => ids.includes(e.id)).forEach((activity) => {
-                            activity.isMarkedAsRead = true;
-                        });
-
                         this.markAsReadList = [];
                     });
             });
