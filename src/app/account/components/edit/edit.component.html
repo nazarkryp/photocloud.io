@@ -17,7 +17,8 @@
                 Personal information
             </h4>
             <form class="form" [formGroup]="formGroup" (ngSubmit)="save()">
-                <mat-form-field style="width: 100%;">
+                <mat-form-field style="width: 100%;" appearance="outline">
+                    <mat-label>Username</mat-label>
                     <input formControlName="username" matInput placeholder="Username" type="text" autocomplete="off" spellcheck="false">
                     <div matSuffix>
                         <mat-icon class="primary" matSuffix *ngIf="username?.getError('unique')">clear</mat-icon>
@@ -37,11 +38,13 @@
                         User with such name already exists
                     </mat-error>
                 </mat-form-field>
-                <mat-form-field style="width: 100%;">
-                    <input formControlName="fullName" matInput placeholder="Full Name" type="text" autocomplete="off" spellcheck="false">
+                <mat-form-field style="width: 100%;" appearance="outline">
+                    <mat-label>Full Name</mat-label>
+                    <input formControlName="fullName" matInput placeholder="Type your first and last name" type="text" autocomplete="off" spellcheck="false">
                 </mat-form-field>
-                <mat-form-field style="width: 100%;">
-                    <textarea class="bio" formControlName="bio" rows="3" matInput placeholder="Bio" type="text" autocomplete="off" spellcheck="false"></textarea>
+                <mat-form-field style="width: 100%;" appearance="outline">
+                    <mat-label>Bio</mat-label>
+                    <textarea class="bio" formControlName="bio" rows="3" matInput placeholder="Tell your followers something about yourself" type="text" autocomplete="off" spellcheck="false"></textarea>
                 </mat-form-field>
                 <div fxLayout="row" fxLayoutAlign="end center" style="height: 40px;">
                     <button mat-button *ngIf="formGroup.dirty" (click)="cancel()">CANCEL</button>
@@ -55,10 +58,11 @@
                 Private information
             </h4>
             <form class="form" [formGroup]="privateFormGroup">
-                <mat-form-field style="width: 100%;">
-                    <input formControlName="email" matInput placeholder="Email Address" type="email" autocomplete="off" spellcheck="false">
+                <mat-form-field style="width: 100%;" appearance="outline">
+                    <mat-label>Email address</mat-label>
+                    <input formControlName="email" matInput placeholder="example@email.com" type="email" autocomplete="off" spellcheck="false">
                     <mat-hint>
-                        A valid email address please. Don't worry we won't send you any spam
+                        A valid email address please. Don't worry, we promise we won't send you any spam
                     </mat-hint>
                     <div matSuffix>
                         <mat-icon class="primary" matSuffix *ngIf="email?.getError('unique')">clear</mat-icon>
@@ -85,14 +89,14 @@
             </form>
             <div class="item" fxLayout="row" fxLayoutAlign="space-between start">
                 <div>
-                    <span class="mat-body-1" [ngClass]="{ 'disabled' : !currentUser.isActive }">Private Account</span>
+                    <span class="body-1" [ngClass]="{ 'disabled' : !currentUser.isActive }">Private Account</span>
                     <p class="edit__caption" [ngClass]="{ 'disabled' : !currentUser.isActive }">When your account is private, only people you approve can see your photos and videos on PhotoCloud. Your existing followers won't be affected</p>
                 </div>
                 <mat-slide-toggle color="primary" [(ngModel)]="currentUser.isPrivate" [checked]="currentUser.isPrivate" (change)='invertAccountPrivateStatus($event)' [disabled]="!currentUser.isActive"></mat-slide-toggle>
             </div>
             <div class="item" fxLayout="row" fxLayoutAlign="space-between start">
                 <div>
-                    <span class="mat-body-1" [ngClass]="{ 'disabled' : !currentUser.isActive }">Remember me</span>
+                    <span class="body-1" [ngClass]="{ 'disabled' : !currentUser.isActive }">Remember me</span>
                     <p class="edit__caption" [ngClass]="{ 'disabled' : !currentUser.isActive }">When this option is enabled system will allow you to login without password after session has expired</p>
                 </div>
                 <mat-slide-toggle color="primary" [(ngModel)]="currentUser.canAutoLogin" [checked]="currentUser.canAutoLogin" (change)='invertAccountAutoLoginStatus($event)' [disabled]="!currentUser.isActive"></mat-slide-toggle>

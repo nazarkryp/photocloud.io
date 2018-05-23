@@ -63,8 +63,9 @@
                 </div>
                 <span class="form-title">Session has expired. Please enter password to continue</span>
             </div>
-            <mat-form-field class="form-field">
-                <input formControlName="password" #passwordInput matInput placeholder="Password" type="password" autocomplete="off" [errorStateMatcher]="errorStateMatcher" tabIndex="{{tabIndex}}">
+            <mat-form-field class="form-field" appearance="outline">
+                <mat-label>Password</mat-label>
+                <input formControlName="password" #passwordInput matInput placeholder="Type your password" type="password" autocomplete="off" [errorStateMatcher]="errorStateMatcher" tabIndex="{{tabIndex}}">
                 <div matSuffix [ngSwitch]="passwordInput.type === 'password'" *ngIf="!formGroup.disabled">
                     <mat-icon class="mat-24 btn-icon" tabindex="-1" [appPassword]="passwordInput" appPasswordType="text" matTooltip="Show Password" matTooltipPosition="right" *ngSwitchCase="true">visibility</mat-icon>
                     <mat-icon class="mat-24 btn-icon" tabindex="-1" [appPassword]="passwordInput" appPasswordType="password" matTooltip="Hide Password" matTooltipPosition="right" *ngSwitchCase="false">visibility_off</mat-icon>

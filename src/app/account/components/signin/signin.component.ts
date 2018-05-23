@@ -95,6 +95,7 @@ export class SignInComponent implements OnInit {
         this.password.setValue('');
         this.rememberMe.setValue(false);
         this.formGroup.markAsPristine();
+        this.currentUserService.signOut(true);
     }
 
     public ngOnInit(): void {

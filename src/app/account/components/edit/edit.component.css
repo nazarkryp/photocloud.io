@@ -61,10 +61,18 @@
     cursor: pointer;
 }
 
+.body-1 {
+    font-size: .9em;
+    font-weight: bold;
+    color: rgb(0, 0, 0, .86);
+    padding-bottom: .25rem;
+    display: block;
+}
+
 .edit__caption {
     color: rgb(0, 0, 0, .6);
     font-weight: lighter;
-    font-size: .8em;
+    font-size: .9em;
     line-height: 1.5;
     padding-bottom: .7rem;
 }

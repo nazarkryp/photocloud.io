@@ -46,14 +46,14 @@
 .errors-container {
     background: #ea1f62;
     box-shadow: 0 3px 8px -3px #e91e63;
-    padding: 1.4rem .7rem;
+    padding: .7rem;
     border-radius: 5px;
     margin-bottom: 1.4rem;
 }
 
 .error-message {
     color: rgb(255, 255, 255, .86);
-    text-align: center;
+    text-align: start;
     padding-bottom: .25rem;
 }
 

@@ -6,10 +6,9 @@
                 <span class="disabled" *ngIf="formGroup.disabled">Sign In</span> if already have one
             </span>
         </div>
-        <div class="errors-container" fxLayout="column" fxLayoutAlign="center center">
-            <span style="color: rgb(255,255,255, .86); width: 100%; box-sizing: border-box;">Please take a look on the following errors</span>
-            <span class="error-message">Account creation is temporarily disabled.</span>
-            <span class="error-message">This is closed club bitch.</span>
+        <div class="errors-container" fxLayout="column" *ngIf="signUpErrors && signUpErrors.length">
+            <span style="color: rgb(255,255,255, .86); width: 100%;  padding-bottom: .5rem; font-weight: bolder; box-sizing: border-box;">Errors in the house:</span>
+            <span class="error-message" *ngFor="let error of signUpErrors">- {{error}}</span>
         </div>
         <mat-form-field class="form-field" appearance="outline">
             <mat-label>Username</mat-label>
@@ -81,9 +80,6 @@
             <a routerLink="/terms" target="_blank">Terms of Service</a> and
             <a routerLink="/privacy" target="_blank">Privacy Policy</a>.
         </p>
-        <!-- <div class="errors-container" fxLayout="column" fxLayoutAlign="center center" *ngIf="signUpErrors && signUpErrors.length">
-            <span class="error-message" *ngFor="let error of signUpErrors">{{error}}</span>
-        </div> -->
         <div style="margin-top: .7rem;">
             <button type="submit" style="width: 100%;" mat-raised-button color="primary" [disabled]="formGroup.disabled">CREATE ACCOUNT</button>
         </div>
