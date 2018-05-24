@@ -29,7 +29,7 @@
 }
 
 .media-details-comments-header {
-    font-weight: 900;
+    font-weight: bold;
     text-transform: uppercase;
     letter-spacing: 1px;
     padding-bottom: .7rem;
@@ -89,7 +89,7 @@
 }
 
 .media-details-username {
-    font-weight: 900;
+    font-weight: bold;
 }
 
 .media-details-attachment.dialog {

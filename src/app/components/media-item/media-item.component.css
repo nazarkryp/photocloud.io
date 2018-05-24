@@ -33,7 +33,7 @@
 
 .media-item-owner>a {
     margin-left: .5rem;
-    font-weight: 900;
+    font-weight: bold;
 }
 
 .media-item-footer {
@@ -122,8 +122,8 @@
 .media-item-content img,
 .media-item-content video {
     max-width: 100%;
-    -webkit-transition: all .3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    transition: all .3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    -webkit-transition: transform .3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition: transform .3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .media-item-content:hover img,
@@ -142,8 +142,17 @@
     width: 100%;
     padding: 0 .5rem 0 .5rem;
     z-index: 100;
+    -webkit-transition: opacity .3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition: opacity .3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
+app-attachment-counter {
+    opacity: 0;
+    -webkit-transition: opacity .3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition: opacity .3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.media-item-content:not([disabled]):hover>app-attachment-counter,
 .media-item-content:not([disabled]):hover>.navigation {
     opacity: 1;
 }

@@ -1,5 +1,5 @@
 <div class="media-view-container">
-    <div class="attachment-container" mat-ripple>
+    <div class="attachment-container" mat-ripple (click)='play()'>
         <div class="navigation" fxLayout="row" fxLayoutAlign="space-between center" *ngIf="media.attachments.length > 1">
             <div>
                 <mat-icon class="mat-36" *ngIf="media.activeAttachment > 0" (click)="previous()">chevron_left</mat-icon>
@@ -18,15 +18,33 @@
         </div>
         <!-- <img #attachment class="attachment" [src]="media.attachments[0].uri" alt="Media Attachment"> -->
     </div>
-    <!-- <aside class="media-view-details">
-        <header style="padding: .7rem .7rem .7rem 0;">
-            header
+    <aside class="media-view-details">
+        <header style="padding-bottom: .7rem;">
+            <div fxLayout="row" style="width: 100%;">
+                <img style="width: 45px; height: 45px; object-fit: cover; border-radius: 50%;" [src]="media.user.pictureUri" alt="User avatar">
+                <div style="padding-left: .7rem; width: 100%;" fxLayout="row" fxLayoutAlign="space-between center">
+                    <div fxLayout="column">
+                        <span style="padding-bottom: .5rem; display: block;">{{media.user.username}}</span>
+                        <span style="font-size: .9em; font-weight: lighter; color: rgb(0, 0, 0, .65); margin-right: auto;" matTooltip="{{media.created | date:'fullDate'}}" matTooltipPosition="right">{{media.created | timeAgo}}</span>
+                    </div>
+                    <div style="height: 100%;" fxLayout="column" fxLayoutAlign="start">
+                        <mat-icon class="btn-icon mat-18">edit</mat-icon>
+                    </div>
+                </div>
+            </div>
         </header>
-        <main style="padding: .7rem .7rem .7rem 0;">
-            content
+        <main fxLayout="column" fxLayoutAlign="start start" style="padding-bottom: .7rem; width: 100%;">
+            <div style="padding-bottom: .7rem; width: 100%;" fxLayout="row" *ngIf="media.caption">
+                <a style="margin-right: .25rem;" [routerLink]="['/', media.user.username]">
+                    <strong>{{media.user.username}}</strong>
+                </a>
+                <app-caption caption="{{media.caption}}"></app-caption>
+            </div>
+            <div style="padding-bottom: .7rem; width: 100%;">likes</div>
+            <div style="width: 100%;">comments</div>
         </main>
-        <footer style="padding: .7rem .7rem .7rem 0;">
+        <footer>
             footer
         </footer>
-    </aside> -->
+    </aside>
 </div>

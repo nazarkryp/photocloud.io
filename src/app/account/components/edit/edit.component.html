@@ -1,4 +1,4 @@
-<div class="settings-container" fxLayout="column" fxLayoutAlign="start center">
+<div class="page-container" fxLayout="column" fxLayoutAlign="start center">
     <div class="settings-header" fxLayout="row" fxLayoutAlign="space-between center">
         <h1 class="page-title">Settings</h1>
     </div>
@@ -99,10 +99,10 @@
             </div>
             <div class="item" fxLayout="row" fxLayoutAlign="space-between start">
                 <div>
-                    <span class="body-1" [ngClass]="{ 'disabled' : !currentUser.isActive }" (change)='invertRememberMe($event)'>Remember me</span>
+                    <span class="body-1" [ngClass]="{ 'disabled' : !currentUser.isActive }">Remember me</span>
                     <p class="edit__caption" [ngClass]="{ 'disabled' : !currentUser.isActive }">When this option is enabled system will allow you to login without password after session has expired</p>
                 </div>
-                <mat-slide-toggle color="primary" [(ngModel)]="currentUser.canAutoLogin" [checked]="currentUser.canAutoLogin" (change)='invertAccountAutoLoginStatus($event)' [disabled]="!currentUser.isActive"></mat-slide-toggle>
+                <mat-slide-toggle color="primary" [(ngModel)]="currentUser.isRemembered" [checked]="currentUser.isRemembered" (change)='invertRememberMe($event)' [disabled]="!currentUser.isActive"></mat-slide-toggle>
             </div>
         </div>
 

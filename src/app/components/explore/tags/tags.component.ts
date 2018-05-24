@@ -1,10 +1,13 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material';
+
 import { Subscription } from 'rxjs';
+import { finalize } from 'rxjs/operators';
 
 import { CurrentUserService } from 'app/infrastructure/services';
 import { MediaDetailsComponent } from 'app/components/shared/media-details/media-details.component';
+import { MediaViewComponent } from 'app/components/media-view/media-view.component';
 import { Page, MediaViewModel, CurrentUserViewModel } from 'app/models/view';
 import { AccountService } from 'app/account/services';
 import { MediaService } from 'app/services';
@@ -12,7 +15,6 @@ import { ProgressService } from 'app/shared/services';
 
 
 import { LikeService } from 'app/shared/services';
-import { finalize } from 'rxjs/operators';
 
 @Component({
     templateUrl: './tags.component.html',
@@ -66,7 +68,7 @@ export class TagsComponent implements OnInit, OnDestroy {
     }
 
     public openPostDialog(media: MediaViewModel) {
-        const dialogRef = this.dialog.open(MediaDetailsComponent, {
+        const dialogRef = this.dialog.open(MediaViewComponent, {
             data: media
         });
     }

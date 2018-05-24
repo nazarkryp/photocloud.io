@@ -1,7 +1,6 @@
 .tags-media-container {
     min-height: calc(100vh - 228px);
-    box-sizing: border-box;
-    padding: 0 1.4rem;
+    padding: 0 .7rem;
 }
 
 .tags-media-container>div {
@@ -10,11 +9,18 @@
 
 .tags-media-header {
     width: 960px;
+    padding-bottom: 2.8rem;
 }
 
-.tags-media-header h1 {
+.tags-media-header .page-subtitle {
+    color: rgb(0, 0, 0, .6);
+    font-size: 1.2em;
+}
+
+.tags-media-header .page-title {
     font-size: 3em;
     text-transform: uppercase;
+    font-weight: lighter;
 }
 
 .tags-media {
@@ -23,13 +29,12 @@
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     grid-gap: 30px;
-    padding: 3rem 0;
 }
 
 .tags-media .username {
     cursor: pointer;
     outline: none;
-    font-weight: 800;
+    font-weight: bold;
 }
 
 .tags-media-item {
@@ -92,4 +97,5 @@
 
 .multiple-attachments-icon {
     color: white;
+    text-shadow: 2px 2px 4px #000000;
 }

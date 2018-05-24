@@ -1,7 +1,7 @@
 @media screen and (max-width: 500px) {
     .users-header,
     .users-container {
-        padding: 0 .7rem;
+        /* padding: 0 .7rem; */
     }
     .users-header {
         border-bottom: none;
@@ -35,8 +35,8 @@
     padding-bottom: 1.4rem;
 }
 
-.users-container .item {
-    margin-top: 1rem;
+.users-container>.item {
+    padding-bottom: 1.4rem;
 }
 
 .users-container .item a.link {
@@ -59,7 +59,7 @@
 
 .item-details .username {
     width: 110px;
-    font-weight: 900;
+    font-weight: bold;
 }
 
 .item-details .date {

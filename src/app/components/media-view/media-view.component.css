@@ -30,7 +30,7 @@
     background-color: white;
     padding: .7rem;
     box-sizing: border-box;
-    min-width: 400px;
+    min-width: 350px;
 }
 
 .attachment-container .navigation {
@@ -42,6 +42,8 @@
     width: 100%;
     padding: 0 .7rem;
     z-index: 1;
+    -webkit-transition: opacity .3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition: opacity .3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .attachment-container:not([disabled]):hover .navigation {

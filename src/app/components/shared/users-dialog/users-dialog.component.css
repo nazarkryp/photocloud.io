@@ -28,7 +28,7 @@
 }
 
 .users-dialog-container .users-title h1 {
-    font-weight: 900;
+    font-weight: bold;
     font-size: 1.1em;
 }
 
@@ -43,7 +43,7 @@
 
 .user-dealog-items-empty-container {
     text-transform: uppercase;
-    font-weight: 900;
+    font-weight: bold;
     color: rgb(0, 0, 0, .6);
 }
 
@@ -65,7 +65,7 @@
 }
 
 .user-username {
-    font-weight: 900;
+    font-weight: bold;
 }
 
 .user-fullname {

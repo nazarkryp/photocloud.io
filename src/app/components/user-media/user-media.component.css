@@ -1,6 +1,6 @@
 .user-media-container {
     min-height: calc(100vh - 228px);
-    box-sizing: border-box;
+    padding: 0 .7rem;
 }
 
 .user-media {

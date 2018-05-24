@@ -123,13 +123,13 @@ td-notification-count .btn-icon:hover {
 }
 
 .logo .photo {
-    font-size: 1.4em;
+    font-size: 1.6em;
     font-weight: lighter;
 }
 
 .logo .cloud {
-    font-size: 1.7em;
-    font-weight: 800;
+    font-size: 1.9em;
+    font-weight: bold;
 }
 
 ::ng-deep .cdk-overlay-pane {

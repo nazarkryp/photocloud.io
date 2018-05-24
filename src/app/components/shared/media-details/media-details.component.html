@@ -88,16 +88,16 @@
         <div class="media-details-info-container" [ngClass]="{ 'dialog' : isDialog }" fxLayout="column">
             <div class="media-details-caption-edit" fxLayout="column">
                 <div fxLayout="row" fxLayoutAlign="space-between center" style="padding-bottom: .5rem;">
-                    <span style="font-weight: 800;">Edit caption</span>
+                    <span style="font-weight: bold;">Edit caption</span>
                 </div>
                 <textarea type="text" rows="3" placeholder="Write a caption..." [(ngModel)]="updateMediaModel.caption"></textarea>
             </div>
             <div style="padding-top: 1rem;" fxLayout="column">
-                <span style="font-weight: 900; padding-bottom: .5rem;">Comments settings</span>
+                <span style="font-weight: bold; padding-bottom: .5rem;">Comments settings</span>
                 <mat-slide-toggle [(ngModel)]="updateMediaModel.allowComments" labelPosition="before">Allow comments</mat-slide-toggle>
             </div>
             <div style="padding-top: 1rem;" fxLayout="row" fxLayoutAlign="space-between center">
-                <span style="font-weight: 900;">Manage attachments</span>
+                <span style="font-weight: bold;">Manage attachments</span>
             </div>
             <div fxFlex>
                 <div class="media-details-edit-attachments">
@@ -110,7 +110,7 @@
                                 <mat-icon class="mat-36">check</mat-icon>
                             </div>
                             <div class="media-details-edit-overlay-removed" fxLayout="column" fxLayoutAlign="center center">
-                                <span style="letter-spacing: 1px; font-weight: 900;">REMOVED</span>
+                                <span style="letter-spacing: 1px; font-weight: bold;">REMOVED</span>
                                 <button mat-icon-button color="primary" (click)="restoreRemovedAttachment(attachment)">
                                     <mat-icon>restore</mat-icon>
                                 </button>

@@ -75,7 +75,7 @@
     </div>
     <div class="user-info-small" fxLayout="column" fxLayoutAlign="center center">
         <img class="thumbnail-big" src="{{user.pictureUri}}" default="assets/images/user-default-image.png" alt="{{user.username}}" />
-        <div *ngIf="currentUser && user.id === currentUser.id" fxLayout="row" fxLayoutAlign="space-between center" style="padding: .7rem 0;">
+        <div *ngIf="currentUser && user.id === currentUser.id" fxLayout="row" fxLayoutAlign="space-between center" style="margin-top: .7rem; padding-bottom: .5rem;">
             <a mat-icon-button routerLink="/account/edit" matTooltip="Settings" matTooltipPosition="above" style="margin-right: 40px;">
                 <mat-icon class="btn-icon">settings</mat-icon>
             </a>
@@ -83,9 +83,7 @@
                 <mat-icon class="btn-icon">exit_to_app</mat-icon>
             </button>
         </div>
-        <div style="margin-top: .7rem;">
-            <h1>{{user.username}}</h1>
-        </div>
+        <h1>{{user.username}}</h1>
         <div fxLayout="row" fxLayoutAlign="space-around center" style="width: 100vw; padding: .7rem 0;" *ngIf="user.isActive && !currentUser">
             <div fxLayout="column" fxLayoutAlign="center center">
                 <strong>{{user.counters.posts}}</strong>
@@ -102,6 +100,6 @@
         </div>
     </div>
     <div style="width: 100%;" fxLayout="row" fxLayoutAlign="end center" *ngIf="user.isActive && user.lastActive">
-        <span matTooltip="{{user.lastActive | date:'fullDate'}}" matTooltipPosition="after" style="font-size: .9em; font-weight: 900; text-transform: uppercase; color: #C8C8C8;">{{user.lastActive | timeAgo}}</span>
+        <span matTooltip="{{user.lastActive | date:'fullDate'}}" matTooltipPosition="after" style="font-size: .9em; font-weight: bold; text-transform: uppercase; color: #C8C8C8;">{{user.lastActive | timeAgo}}</span>
     </div>
 </div>

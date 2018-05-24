@@ -31,7 +31,7 @@
 
 .text-button {
     font-size: .9em;
-    font-weight: 900;
+    font-weight: bold;
     color: #757575;
     cursor: pointer;
 }
@@ -47,7 +47,7 @@
 
 .comment-username {
     /* color: rgb(0,0,0,.85); */
-    font-weight: 900;
+    font-weight: bold;
 }
 
 .comment-text {

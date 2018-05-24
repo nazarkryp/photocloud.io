@@ -10,7 +10,8 @@
 
 .notifications .header {
     box-sizing: border-box;
-    padding: .7rem;
+    padding: .7rem .7rem 1.4rem;
+    /* border-bottom: 1px solid #eaeaea; */
 }
 
 .notifications .header .actions>* {
@@ -65,7 +66,6 @@
 
 .notifications .items {
     box-sizing: border-box;
-    padding-top: .7rem;
     position: relative;
 }
 

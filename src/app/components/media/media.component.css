@@ -1,19 +1,17 @@
 @media screen and (max-width: 500px) {
     .media-container {
-        width: 100%;
-    }
-    .media-item-container {
-        padding: 0 .7rem;
+        max-width: 100%;
     }
 }
 
 @media screen and (min-width: 701px) {
     .media-container {
-        width: 600px;
+        max-width: 600px;
     }
 }
 
 .media-container {
+    width: 100%;
     min-height: calc(100vh - 228px);
 }
 

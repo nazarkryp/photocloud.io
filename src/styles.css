@@ -124,7 +124,7 @@ a {
     background: #efefef;
     color: rgb(0, 0, 0, .6);
     border-radius: 2px;
-    font-weight: 900;
+    font-weight: bold;
     line-height: 27px;
     min-width: 110px;
     padding: 3px 0;
@@ -222,4 +222,9 @@ a.hashtag:hover {
     100% {
         transform: scale(1);
     }
+}
+
+.page-container {
+    min-height: calc(100vh - 228px);
+    padding: 0 .7rem;
 }

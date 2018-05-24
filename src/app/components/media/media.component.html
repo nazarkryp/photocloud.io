@@ -1,4 +1,4 @@
-<div fxLayout="column" fxLayoutAlign="start center" appInfiniteScroll [appScrollTriggerOnce]="true" [scrollOffset]="3000" (scrollPosition)="onPositionChange()">
+<div class="page-container" fxLayout="column" fxLayoutAlign="start center" appInfiniteScroll [appScrollTriggerOnce]="true" [scrollOffset]="3000" (scrollPosition)="onPositionChange()">
     <div class="media-container" *ngIf="isLoading || (page && page.data && page.data.length > 0); else emptyFeed;">
         <div class="media-item-container" *ngFor="let media of page.data; trackBy: index;">
             <app-media-item [media]="media" (onRemoved)="onRemoved($event)"></app-media-item>

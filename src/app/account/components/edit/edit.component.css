@@ -1,16 +1,6 @@
-.settings-container {
-    padding: 0 .7rem .7rem;
-}
-
 @media screen and (max-width: 500px) {
     .edit-container .btn-deactivate {
         width: 100%;
-    }
-}
-
-@media screen and (min-width: 501px) {
-    .edit-container {
-        border-radius: 2px;
     }
 }
 
