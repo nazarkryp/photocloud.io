@@ -108,6 +108,12 @@ export class EditComponent implements OnInit, AfterViewInit, AfterViewChecked {
         });
     }
 
+    public invertRememberMe(event: MatSlideToggleChange) {
+        this.currentUserService.updateUser({
+            isRemembered: event.checked
+        });
+    }
+
     public invertAccountAutoLoginStatus(event: MatSlideToggleChange) {
         let observable: Observable<any>;
 

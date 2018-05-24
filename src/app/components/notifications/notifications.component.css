@@ -23,8 +23,8 @@
 
 .notifications .header .actions a {
     cursor: pointer;
-    font-size: .8em;
-    font-weight: 600;
+    font-size: .9em;
+    font-weight: bold;
 }
 
 .notifications .header .actions a:not(:hover) {
@@ -122,9 +122,8 @@
 }
 
 .notifications .items .notification .notification-info .date {
-    color: rgb(0, 0, 0, .3);
+    color: rgb(0, 0, 0, .65);
     margin: 0 auto 0 0;
-    font-size: .8em;
     font-weight: lighter;
 }
 

@@ -1,0 +1,32 @@
+<div class="media-view-container">
+    <div class="attachment-container" mat-ripple>
+        <div class="navigation" fxLayout="row" fxLayoutAlign="space-between center" *ngIf="media.attachments.length > 1">
+            <div>
+                <mat-icon class="mat-36" *ngIf="media.activeAttachment > 0" (click)="previous()">chevron_left</mat-icon>
+            </div>
+            <div>
+                <mat-icon class="mat-36" *ngIf="media.activeAttachment != media.attachments.length - 1" (click)="next()" Ï>chevron_right</mat-icon>
+            </div>
+        </div>
+        <div class="attachment-items" *ngFor="let attachment of media.attachments; let index = index;">
+            <div class="attachment-item-container" [hidden]="index !== media.activeAttachment" *ngIf="(media.activeAttachment === index && attachment.type === 1) || (attachment.type !== 1)">
+                <img class="attachment-image" src="{{attachment.uri}}" alt="media-image" *ngIf="attachment.type !== 1">
+                <video class="attachment-image" *ngIf="attachment.type === 1" loop #player>
+                    <source src="{{attachment.uri}}">
+                </video>
+            </div>
+        </div>
+        <!-- <img #attachment class="attachment" [src]="media.attachments[0].uri" alt="Media Attachment"> -->
+    </div>
+    <!-- <aside class="media-view-details">
+        <header style="padding: .7rem .7rem .7rem 0;">
+            header
+        </header>
+        <main style="padding: .7rem .7rem .7rem 0;">
+            content
+        </main>
+        <footer style="padding: .7rem .7rem .7rem 0;">
+            footer
+        </footer>
+    </aside> -->
+</div>

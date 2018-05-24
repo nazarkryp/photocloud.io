@@ -70,6 +70,8 @@ import { ManageUsersComponent } from './dashboard/components/manage-users/manage
 import { NgProgressModule } from '@ngx-progressbar/core';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import { AttachmentCounterComponent } from './components/shared/attachment-counter/attachment-counter.component';
+import { MediaViewComponent } from './components/media-view/media-view.component';
 
 @NgModule({
     declarations: [
@@ -108,7 +110,9 @@ import { environment } from '../environments/environment';
         ActivityPipe,
         TruncatePipe,
         ActivityComponent,
-        ManageUsersComponent
+        ManageUsersComponent,
+        AttachmentCounterComponent,
+        MediaViewComponent
     ],
     entryComponents: [
         MediaDetailsComponent,
@@ -116,7 +120,8 @@ import { environment } from '../environments/environment';
         ConfirmComponent,
         UsersDialogComponent,
         ChangePasswordComponent,
-        NotificationsComponent
+        NotificationsComponent,
+        MediaViewComponent
     ],
     imports: [
         BrowserModule,

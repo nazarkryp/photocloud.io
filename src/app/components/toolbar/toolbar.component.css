@@ -85,6 +85,13 @@ mat-icon>svg {
     padding-left: 1.4rem;
     box-sizing: border-box;
     width: 180px;
+    display: flex;
+    align-items: center;
+    place-content: center space-between;
+}
+
+.toolbar-actions.not-active {
+    place-content: center flex-end;
 }
 
 td-notification-count,
@@ -126,11 +133,11 @@ td-notification-count .btn-icon:hover {
 }
 
 ::ng-deep .cdk-overlay-pane {
-    -webkit-transition: top .1s ease-in-out;
+    /* -webkit-transition: top .1s ease-in-out;
     -moz-transition: top .1s ease-in-out;
     -ms-transition: top .1s ease-in-out;
     -o-transition: top .1s ease-in-out;
-    transition: top .1s ease-in-out;
+    transition: top .1s ease-in-out; */
     /* top: 64px !important; */
 }
 

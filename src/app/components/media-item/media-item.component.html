@@ -38,6 +38,7 @@
                 </video>
             </div>
         </div>
+        <app-attachment-counter [currentIndex]="media.activeAttachment + 1" [total]="media.attachments.length"></app-attachment-counter>
     </div>
     <div class="media-item-footer" *ngIf="!media.editing">
         <div class="media-item-likes">
@@ -45,7 +46,7 @@
         </div>
         <div class="media-item-caption" *ngIf="media.caption">
             <a class="username" [routerLink]="['/', media.user.username]">
-                <strong>{{media.user.username}}</strong>
+                {{media.user.username}}
             </a>
             <app-caption caption="{{media.caption}}"></app-caption>
         </div>

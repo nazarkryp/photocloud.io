@@ -12,7 +12,7 @@ export class MediaViewModel {
     public allowComments: boolean;
     public likesCount: number;
     public commentsCount: number;
-    public activeAttachment: number;
+    public activeAttachment = 0;
     public comments: CommentViewModel[];
     public user: UserViewModel;
     public likes: UserViewModel[];

@@ -1,0 +1,65 @@
+.media-view-container {
+    overflow-x: hidden;
+    max-width: calc(100vw - 1.4rem);
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+}
+
+@media (max-width: 999px) {
+    .media-view-container {
+        flex-direction: column;
+    }
+}
+
+.media-view-container .attachment-container {
+    max-height: calc(100vh - 1.4rem);
+    position: relative;
+}
+
+.media-view-container .attachment-container>.attachment-items,
+.media-view-container .attachment-container>.attachment-items>.attachment-item-container,
+.media-view-container .attachment-container>.attachment-items>.attachment-item-container .attachment-image {
+    max-height: inherit;
+    width: auto;
+    vertical-align: bottom;
+    max-width: 100%;
+}
+
+.media-view-details {
+    background-color: white;
+    padding: .7rem;
+    box-sizing: border-box;
+    min-width: 400px;
+}
+
+.attachment-container .navigation {
+    position: absolute;
+    opacity: 0;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    padding: 0 .7rem;
+    z-index: 1;
+}
+
+.attachment-container:not([disabled]):hover .navigation {
+    opacity: 1;
+}
+
+.attachment-container>.navigation mat-icon {
+    color: rgb(255, 255, 255, .8);
+    text-shadow: 2px 2px 4px rgb(0, 0, 0, .86);
+    cursor: pointer;
+    -webkit-transition: background-color .15s ease-in-out, transform .15s ease-in-out;
+    -moz-transition: background-color .15s ease-in-out, transform .15s ease-in-out;
+    -ms-transition: background-color .15s ease-in-out, transform .15s ease-in-out;
+    -o-transition: background-color .15s ease-in-out, transform .15s ease-in-out;
+    transition: background-color .15s ease-in-out, transform .15s ease-in-out;
+}
+
+.attachment-container>.navigation mat-icon:hover {
+    color: rgb(255, 255, 255, 1);
+    /* transform: scale(1.3); */
+}

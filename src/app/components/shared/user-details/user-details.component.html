@@ -75,7 +75,7 @@
     </div>
     <div class="user-info-small" fxLayout="column" fxLayoutAlign="center center">
         <img class="thumbnail-big" src="{{user.pictureUri}}" default="assets/images/user-default-image.png" alt="{{user.username}}" />
-        <div *ngIf="currentUser && user.id === currentUser.id" fxLayout="row" fxLayoutAlign="space-between center" style="padding: .7rem 0; width: 50%;">
+        <div *ngIf="currentUser && user.id === currentUser.id" fxLayout="row" fxLayoutAlign="space-between center" style="padding: .7rem 0;">
             <a mat-icon-button routerLink="/account/edit" matTooltip="Settings" matTooltipPosition="above" style="margin-right: 40px;">
                 <mat-icon class="btn-icon">settings</mat-icon>
             </a>

@@ -1,41 +1,51 @@
+.settings-container {
+    padding: 0 .7rem .7rem;
+}
+
 @media screen and (max-width: 500px) {
-    .edit-container {
-        padding: .7rem;
+    .edit-container .btn-deactivate {
+        width: 100%;
     }
 }
 
 @media screen and (min-width: 501px) {
     .edit-container {
-        box-shadow: 0 3px 8px -3px rgba(0, 0, 0, 0.26);
         border-radius: 2px;
-        padding: 1.4rem;
     }
+}
+
+.settings-header {
+    max-width: 960px;
+    width: 100%;
+    padding-bottom: 2.8rem;
+}
+
+.settings-header .page-title {
+    font-weight: lighter;
 }
 
 .edit-container {
     max-width: 600px;
     width: 100%;
     color: rgb(0, 0, 0, .86);
-    background: white;
     box-sizing: border-box;
     position: relative;
 }
 
 .edit-container .overlay {
     position: absolute;
-    margin: -1.4rem;
     width: 100%;
     height: 100%;
-    background: rgba(255, 255, 255, 0.5);
+    background: rgba(255, 255, 255, .65);
     z-index: 999;
     border-radius: 2px;
 }
 
 .edit-container img {
-    width: 7rem;
-    height: 7rem;
+    width: 120px;
+    height: 120px;
     object-fit: cover;
-    border-radius: 90px;
+    border-radius: 50%;
 }
 
 .edit-container .item {
@@ -48,9 +58,7 @@
     color: rgba(0, 0, 0, 0.38);
 }
 
-.form {
-    font-size: .9em;
-}
+.form {}
 
 .edit-container .item h4 {
     padding-bottom: .7rem;
@@ -62,7 +70,6 @@
 }
 
 .body-1 {
-    font-size: .9em;
     font-weight: bold;
     color: rgb(0, 0, 0, .86);
     padding-bottom: .25rem;
@@ -71,8 +78,6 @@
 
 .edit__caption {
     color: rgb(0, 0, 0, .6);
-    font-weight: lighter;
-    font-size: .9em;
     line-height: 1.5;
     padding-bottom: .7rem;
 }
@@ -115,9 +120,8 @@ div.edit-image:not([disabled]):hover .change-overlay {
 }
 
 .edit-container .btn-deactivate {
-    font-weight: bold;
-    text-transform: uppercase;
-    font-weight: 600;
+    min-width: 200px;
+    margin-top: .7rem;
 }
 
 ::ng-deep .btn-deactivate .mat-button-focus-overlay {

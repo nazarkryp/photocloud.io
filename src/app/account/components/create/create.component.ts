@@ -134,9 +134,10 @@ export class CreateComponent implements OnInit {
             );
 
             this.startLoading();
-            this.currentUserService.create(createAccountRequestModel)
+            const signin = true;
+            this.currentUserService.create(createAccountRequestModel, signin)
                 .subscribe(() => {
-                    if (createAccountRequestModel.signInOnCreated) {
+                    if (signin) {
                         this.router.navigateByUrl('/');
                     } else {
                         this.router.navigateByUrl('/account/signin');

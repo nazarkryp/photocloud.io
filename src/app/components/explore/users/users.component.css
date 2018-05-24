@@ -17,7 +17,7 @@
 .users-header {
     max-width: 960px;
     width: 100%;
-    padding-bottom: 1.4rem;
+    padding-bottom: 2.8rem;
 }
 
 .users-header>* {
@@ -25,7 +25,6 @@
 }
 
 .users-container {
-    padding-top: .7rem;
     max-width: 600px;
     width: 100%;
     box-sizing: border-box;
@@ -67,5 +66,5 @@
     margin: 0 auto 0 0;
     color: rgba(0, 0, 0, .65);
     font-weight: normal;
-    font-size: .8em;
+    font-size: .9em;
 }

@@ -1,4 +1,7 @@
-<div style="position: relative;" fxLayout="column" fxLayoutAlign="start center">
+<div class="settings-container" fxLayout="column" fxLayoutAlign="start center">
+    <div class="settings-header" fxLayout="row" fxLayoutAlign="space-between center">
+        <h1 class="page-title">Settings</h1>
+    </div>
     <div class="edit-container">
         <div class="overlay" *ngIf="isInvertingAccountStatus">
         </div>
@@ -96,15 +99,11 @@
             </div>
             <div class="item" fxLayout="row" fxLayoutAlign="space-between start">
                 <div>
-                    <span class="body-1" [ngClass]="{ 'disabled' : !currentUser.isActive }">Remember me</span>
+                    <span class="body-1" [ngClass]="{ 'disabled' : !currentUser.isActive }" (change)='invertRememberMe($event)'>Remember me</span>
                     <p class="edit__caption" [ngClass]="{ 'disabled' : !currentUser.isActive }">When this option is enabled system will allow you to login without password after session has expired</p>
                 </div>
                 <mat-slide-toggle color="primary" [(ngModel)]="currentUser.canAutoLogin" [checked]="currentUser.canAutoLogin" (change)='invertAccountAutoLoginStatus($event)' [disabled]="!currentUser.isActive"></mat-slide-toggle>
             </div>
-            <!-- <div class="item">
-                <a class="mat-body-1" *ngIf="currentUser.isActive" (click)="changePassword()">Change Password</a>
-                <span class="mat-body-1 disabled" *ngIf="!currentUser.isActive">Change Password</span>
-            </div> -->
         </div>
 
         <div class="item" fxLayout="column" fxLayoutAlign="center start">
@@ -114,7 +113,7 @@
             <p class="edit__caption">
                 When you press the button below, your photos, comments and likes will be hidden until you reactivate your account by logging back in.
             </p>
-            <button mat-stroked-button color="primary" (click)="invertAccountStatus()">{{currentUser.isActive ? 'Temporarily disable my account' : 'Enable account'}}</button>
+            <button class="btn-deactivate" mat-stroked-button color="primary" (click)="invertAccountStatus()">{{currentUser.isActive ? 'TEMPORARILY DISABLE ACCOUNT' : 'ACTIVATE ACCOUNT'}}</button>
         </div>
     </div>
 </div>

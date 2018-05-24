@@ -16,6 +16,8 @@ import { MediaDetailsComponent } from 'app/components/shared/media-details/media
 import { UsersDialogComponent } from '../shared/users-dialog/users-dialog.component';
 
 import { ConfirmComponent } from 'app/components/shared/confirm/confirm.component';
+import { MediaViewComponent } from '../media-view/media-view.component';
+import { ScrollStrategy, Overlay } from '@angular/cdk/overlay';
 
 @Component({
     templateUrl: './user-media.component.html',
@@ -33,6 +35,7 @@ export class UserMediaComponent implements OnInit, OnDestroy, AfterViewChecked {
     public isLoading: boolean;
 
     constructor(
+        private overlay: Overlay,
         private cd: ChangeDetectorRef,
         private viewContainerRef: ViewContainerRef,
         private accountService: AccountService,
@@ -101,19 +104,29 @@ export class UserMediaComponent implements OnInit, OnDestroy, AfterViewChecked {
     }
 
     public openPostDialog(media: MediaViewModel) {
-        const dialog = this.dialog.open(MediaDetailsComponent, {
+        this.dialog.open(MediaViewComponent, {
             viewContainerRef: this.viewContainerRef,
+            scrollStrategy: this.overlay.scrollStrategies.block(),
+            height: 'auto',
+            width: 'auto',
+            maxHeight: 'calc(100vh - 1.4rem)',
+            maxWidth: 'calc(100vw - 1.4rem)',
             data: media
-        }).afterClosed().subscribe(remove => {
-            media.editing = false;
-            media.inspectingLikes = false;
-
-            if (remove) {
-                const indexToRemove = this.userMedia.page.data.findIndex(e => e.id === media.id);
-                this.userMedia.page.data.splice(indexToRemove, 1);
-                this.mediaService.removeMedia(media.id).subscribe();
-            }
         });
+
+        // const dialog = this.dialog.open(MediaDetailsComponent, {
+        //     viewContainerRef: this.viewContainerRef,
+        //     data: media
+        // }).afterClosed().subscribe(remove => {
+        //     media.editing = false;
+        //     media.inspectingLikes = false;
+
+        //     if (remove) {
+        //         const indexToRemove = this.userMedia.page.data.findIndex(e => e.id === media.id);
+        //         this.userMedia.page.data.splice(indexToRemove, 1);
+        //         this.mediaService.removeMedia(media.id).subscribe();
+        //     }
+        // });
     }
 
     public onPositionChange() {

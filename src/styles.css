@@ -2,6 +2,10 @@
     font-family: 'Open Sans', sans-serif;
 }
 
+html {
+    font-size: .9em;
+}
+
 body {
     color: rgb(0, 0, 0, .86);
     background-color: white;

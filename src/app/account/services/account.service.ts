@@ -48,10 +48,12 @@ export class AccountService {
         return this.httpClient.delete<any>(environment.apiUri + 'account/code');
     }
 
-    public create(accountRequestModel: CreateAccountRequestModel): Observable<any> {
+    public create(accountRequestModel: CreateAccountRequestModel, signIn: boolean): Observable<any> {
+        accountRequestModel.signInOnCreated = signIn;
+
         return this.httpClient.post(environment.apiUri + 'account', accountRequestModel)
             .pipe(map(response => {
-                if (accountRequestModel.signInOnCreated) {
+                if (signIn) {
                     return this.tokenMapper.mapResponseToAccessToken(response);
                 }
 

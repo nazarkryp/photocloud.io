@@ -6,7 +6,7 @@
         </div>
     </div>
     <div class="activities-container" fxLayout="column" fxLayoutAlign="start center">
-        <div class="items" fxLayout="column" [@listAnimation]="page?.data?.length" fxLayoutAlign="start center" appInfiniteScroll [appScrollTriggerOnce]="true" [scrollOffset]="2000" (scrollPosition)="onPositionChange()">
+        <div class="items" fxLayout="column" fxLayoutAlign="start center" appInfiniteScroll [appScrollTriggerOnce]="true" [scrollOffset]="2000" (scrollPosition)="onPositionChange()">
             <span *ngIf="!page?.data?.length && !isLoading">You have no recent activity</span>
             <div mat-ripple (appear)="appear($event, activity)" class="activity-container" [ngClass]="{ 'unread' : !activity.isMarkedAsRead }" *ngFor="let activity of page?.data; let index = index;">
                 <div class=" activity" fxLayout="row" fxLayoutAlign="start start">
@@ -22,13 +22,13 @@
                                 <span class="date" matTooltip="{{activity.date | date: 'fullDate'}}" matTooltipPosition="after">{{activity.date | timeAgo}}</span>
                             </div>
                             <div *ngIf="activity.comment" style="width: 100%; border-left: 3px solid #e91e63; padding: .25rem .5rem; box-sizing: border-box; margin-top: 1.4rem;">
-                                <span style="font-size: .9em; font-weight: normal; color: rgb(0, 0, 0, .5)" [innerHTML]="activity.comment.text | truncate:100 | linkify"></span>
+                                <span style="font-weight: normal; color: rgb(0, 0, 0, .5)" [innerHTML]="activity.comment.text | truncate:100 | linkify"></span>
                             </div>
                             <div fxLayout="row" *ngIf="activity.activityType===2">
-                                <a style="font-size: .9em; font-weight: 600; cursor: pointer; color: #053569;" (click)="accept(activity, index)">Accept</a>
-                                <a style="font-size: .9em; font-weight: 600; cursor: pointer; color: #053569; margin-left: .7rem;" (click)="decline(activity, index)">Decline</a>
+                                <a style="font-weight: bold; cursor: pointer; color: #053569;" (click)="accept(activity, index)">Accept</a>
+                                <a style="font-weight: bold; cursor: pointer; color: #053569; margin-left: .7rem;" (click)="decline(activity, index)">Decline</a>
                             </div>
-                            <div style="margin-top: .7rem;">
+                            <div style="margin-top: 1.4rem;">
                                 <a class="btn-remove" (click)="removeActivity(index, activity)">Remove</a>
                             </div>
                         </div>

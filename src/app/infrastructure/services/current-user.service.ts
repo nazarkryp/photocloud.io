@@ -51,9 +51,9 @@ export class CurrentUserService {
             }));
     }
 
-    public create(request: CreateAccountRequestModel): Observable<any> {
-        if (request.signInOnCreated) {
-            return this.accountService.create(request)
+    public create(request: CreateAccountRequestModel, signIn: boolean): Observable<any> {
+        if (signIn) {
+            return this.accountService.create(request, true)
                 .pipe(mergeMap<AccessToken, CurrentUserViewModel>(accessToken => {
                     this.tokenProvider.setAccessToken(accessToken);
                     return this.accountService.getAccount()
@@ -64,7 +64,7 @@ export class CurrentUserService {
                 }));
         }
 
-        return this.accountService.create(request);
+        return this.accountService.create(request, false);
     }
 
     public signInWithCode(code: string = null): Observable<any> {

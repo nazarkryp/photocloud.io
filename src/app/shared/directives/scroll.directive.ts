@@ -1,5 +1,6 @@
-import { Directive, HostListener, ElementRef, Output, EventEmitter, Inject, Input } from '@angular/core';
+import { Directive, HostListener, ElementRef, Output, EventEmitter, Inject, Input, ChangeDetectorRef } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
+import { ScrollDispatcher, ViewportRuler } from '@angular/cdk/scrolling';
 
 function _window(): Window {
     return window;
@@ -20,7 +21,8 @@ export class InfiniteScrollDirective {
     public scrollPosition = new EventEmitter();
 
     constructor(
-        @Inject(DOCUMENT) private document: Document) { }
+        @Inject(DOCUMENT) private document: Document) {
+    }
 
     @HostListener('window:scroll', ['$event'])
     public onScroll(event) {
