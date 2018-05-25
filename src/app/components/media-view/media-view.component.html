@@ -18,7 +18,7 @@
         </div>
         <!-- <img #attachment class="attachment" [src]="media.attachments[0].uri" alt="Media Attachment"> -->
     </div>
-    <aside class="media-view-details">
+    <aside class="media-view-details" fxLayout="column">
         <header style="padding-bottom: .7rem;">
             <div fxLayout="row" style="width: 100%;">
                 <img style="width: 45px; height: 45px; object-fit: cover; border-radius: 50%;" [src]="media.user.pictureUri" alt="User avatar">
@@ -33,18 +33,25 @@
                 </div>
             </div>
         </header>
-        <main fxLayout="column" fxLayoutAlign="start start" style="padding-bottom: .7rem; width: 100%;">
+        <main fxLayout="column" fxLayoutAlign="start start" style="padding-bottom: .7rem;" fxFlex>
+            <div style="padding-bottom: .7rem; width: 100%; line-height: 1.5;" fxLayout="row" fxLayoutAlign="start center">
+                <mat-icon class="mat-18" style="color: rgb(0,0,0,.85); margin-right: .25rem;" *ngIf="media.likesCount === 0 || media.likesCount > 3">favorite</mat-icon>
+                <app-likes [media]="media" (onClicked)="inspectLikes($event)"></app-likes>
+            </div>
             <div style="padding-bottom: .7rem; width: 100%;" fxLayout="row" *ngIf="media.caption">
                 <a style="margin-right: .25rem;" [routerLink]="['/', media.user.username]">
                     <strong>{{media.user.username}}</strong>
                 </a>
                 <app-caption caption="{{media.caption}}"></app-caption>
             </div>
-            <div style="padding-bottom: .7rem; width: 100%;">likes</div>
-            <div style="width: 100%;">comments</div>
+            <div style="width: 100%;">Comments</div>
         </main>
         <footer>
-            footer
+            <!-- <input type="text" style="outline: none; border: 1px solid #eaeaea; border-radius: 2px; width: 100%; box-sizing: border-box; padding: .7rem;" placeholder="Type your comment"> -->
+            <mat-form-field class="mat-form-comment-field" appearance="outline">
+                <mat-label>Comment</mat-label>
+                <input matInput type="text" placeholder="Type your comment">
+            </mat-form-field>
         </footer>
     </aside>
 </div>

@@ -111,7 +111,8 @@ export class UserMediaComponent implements OnInit, OnDestroy, AfterViewChecked {
             width: 'auto',
             maxHeight: 'calc(100vh - 1.4rem)',
             maxWidth: 'calc(100vw - 1.4rem)',
-            data: media
+            data: media,
+            autoFocus: false
         });
 
         // const dialog = this.dialog.open(MediaDetailsComponent, {
