@@ -1,8 +1,4 @@
-.comments {
-    line-height: 1.9em;
-    position: relative;
-    box-sizing: border-box;
-}
+.comments {}
 
 .comment {
     box-sizing: border-box;
@@ -42,11 +38,10 @@
 
 .text-button.disabled,
 .text-button.disabled:hover {
-    color: rgb(0,0,0,.6);
+    color: rgb(0, 0, 0, .6);
 }
 
 .comment-username {
-    /* color: rgb(0,0,0,.85); */
     font-weight: bold;
 }
 

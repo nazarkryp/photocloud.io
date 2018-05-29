@@ -1,7 +1,11 @@
 import { Component, OnInit, Input, Inject, ViewChild, ElementRef } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 
-import { MediaViewModel } from 'app/models/view';
+import { MediaViewModel, CommentViewModel, UserViewModel, CurrentUserViewModel } from 'app/models/view';
+import { LikeService } from 'app/shared/services';
+import { CommentsComponent } from 'app/components/shared/comments/comments.component';
+import { CommentService } from 'app/services';
+import { CurrentUserService } from 'app/infrastructure/services';
 
 @Component({
     selector: 'app-media-view',
@@ -9,15 +13,25 @@ import { MediaViewModel } from 'app/models/view';
     styleUrls: ['./media-view.component.css']
 })
 export class MediaViewComponent implements OnInit {
+    private currentUser: CurrentUserViewModel;
+
     @ViewChild('attachment')
     private attachment: ElementRef;
+
     @ViewChild('player')
     public player: any;
+    @ViewChild('commentsComponent')
+    public commentsComponent: CommentsComponent;
 
     constructor(
         private ref: MatDialogRef<MediaViewComponent>,
-        @Inject(MAT_DIALOG_DATA) public media: MediaViewModel
-    ) { }
+        @Inject(MAT_DIALOG_DATA) public media: MediaViewModel,
+        private commentService: CommentService,
+        private currentUserService: CurrentUserService,
+        private likeService: LikeService
+    ) {
+        this.currentUser = this.currentUserService.retrieveCurrentUser();
+    }
 
     public next() {
         if (this.player && !this.player.nativeElement.paused) {
@@ -56,6 +70,20 @@ export class MediaViewComponent implements OnInit {
                 this.media.attachments[this.media.activeAttachment].progress = progress;
             };
         }
+    }
+
+    public like() {
+        this.likeService.like(this.media).subscribe(() => { }, () => { });
+    }
+
+    public createComment(text) {
+        const result = this.commentService.addComment(this.media, text);
+
+        this.commentsComponent.createComment(result.comment);
+
+        result.commentObservable.subscribe(() => { }, (error) => {
+            this.commentsComponent.removeComment(result.comment);
+        });
     }
 
     public ngOnInit() {

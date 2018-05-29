@@ -56,6 +56,7 @@
 
 .media-item-footer .media-item-comments {
     padding-bottom: .7rem;
+    line-height: 1.5;
 }
 
 .media-item-footer .media-item-date {

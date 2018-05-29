@@ -80,4 +80,19 @@ export class UserMapper implements IMapper<UserResponse, UserViewModel> {
 
         return user;
     }
+
+    public mapFromCurrentUser(response: CurrentUserViewModel): UserViewModel {
+        const user = new UserViewModel();
+
+        user.id = response.id;
+        user.username = response.username;
+        user.fullName = response.fullName;
+        user.bio = response.bio;
+        user.email = response.email;
+        user.pictureUri = response.pictureUri;
+        user.isPrivate = response.isPrivate;
+        user.isActive = response.isActive;
+
+        return user;
+    }
 }

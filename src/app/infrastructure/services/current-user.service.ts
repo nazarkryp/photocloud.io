@@ -4,8 +4,8 @@ import { Observable, ReplaySubject, of } from 'rxjs';
 import { tap, mergeMap, map } from 'rxjs/operators';
 
 import { CurrentUserViewModel } from 'app/models/view';
-import { UserService } from 'app/services';
-import { AccountService } from 'app/account/services';
+import { UserService } from 'app/services/user.service';
+import { AccountService } from 'app/account/services/account.service';
 import { LocalStorageService } from 'app/infrastructure/services/storage';
 import { TokenProvider } from 'app/infrastructure/security';
 import { AccessToken } from 'app/infrastructure/security/access-token.model';

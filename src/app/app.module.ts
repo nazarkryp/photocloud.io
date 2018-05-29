@@ -72,6 +72,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { AttachmentCounterComponent } from './components/shared/attachment-counter/attachment-counter.component';
 import { MediaViewComponent } from './components/media-view/media-view.component';
+import { CommentBoxComponent } from './components/shared/comment-box/comment-box.component';
 
 @NgModule({
     declarations: [
@@ -112,7 +113,8 @@ import { MediaViewComponent } from './components/media-view/media-view.component
         ActivityComponent,
         ManageUsersComponent,
         AttachmentCounterComponent,
-        MediaViewComponent
+        MediaViewComponent,
+        CommentBoxComponent
     ],
     entryComponents: [
         MediaDetailsComponent,

@@ -1,0 +1,6 @@
+<!-- <input class="comment-box" type="text" placeholder="Type your comment" [(ngModel)]="comment" (keydown.enter)="submit($event)"> -->
+<mat-form-field class="mat-form-comment-field" appearance="outline">
+    <mat-label>Comment</mat-label>
+    <input #commentInput matInput type="text" placeholder="Type your comment" [(ngModel)]="comment" (keydown.enter)="submit($event)">
+    <mat-hint align="end">Hit enter key to submit your comment</mat-hint>
+</mat-form-field>

@@ -16,42 +16,60 @@
                 </video>
             </div>
         </div>
-        <!-- <img #attachment class="attachment" [src]="media.attachments[0].uri" alt="Media Attachment"> -->
     </div>
     <aside class="media-view-details" fxLayout="column">
-        <header style="padding-bottom: .7rem;">
-            <div fxLayout="row" style="width: 100%;">
-                <img style="width: 45px; height: 45px; object-fit: cover; border-radius: 50%;" [src]="media.user.pictureUri" alt="User avatar">
-                <div style="padding-left: .7rem; width: 100%;" fxLayout="row" fxLayoutAlign="space-between center">
+        <header>
+            <div fxLayout="row">
+                <img class="avatar" [src]="media.user.pictureUri" alt="User avatar">
+                <div class="details" fxLayout="row" fxLayoutAlign="space-between center">
                     <div fxLayout="column">
-                        <span style="padding-bottom: .5rem; display: block;">{{media.user.username}}</span>
-                        <span style="font-size: .9em; font-weight: lighter; color: rgb(0, 0, 0, .65); margin-right: auto;" matTooltip="{{media.created | date:'fullDate'}}" matTooltipPosition="right">{{media.created | timeAgo}}</span>
+                        <span class="username">{{media.user.username}}</span>
+                        <span class="date" matTooltip="{{media.created | date:'fullDate'}}" matTooltipPosition="right">{{media.created | timeAgo}}</span>
                     </div>
-                    <div style="height: 100%;" fxLayout="column" fxLayoutAlign="start">
+                    <div class="icon-wrapper" fxLayout="column" fxLayoutAlign="start" *ngIf="currentUser && currentUser.id === media.user.id">
                         <mat-icon class="btn-icon mat-18">edit</mat-icon>
                     </div>
                 </div>
             </div>
         </header>
-        <main fxLayout="column" fxLayoutAlign="start start" style="padding-bottom: .7rem;" fxFlex>
-            <div style="padding-bottom: .7rem; width: 100%; line-height: 1.5;" fxLayout="row" fxLayoutAlign="start center">
-                <mat-icon class="mat-18" style="color: rgb(0,0,0,.85); margin-right: .25rem;" *ngIf="media.likesCount === 0 || media.likesCount > 3">favorite</mat-icon>
-                <app-likes [media]="media" (onClicked)="inspectLikes($event)"></app-likes>
-            </div>
-            <div style="padding-bottom: .7rem; width: 100%;" fxLayout="row" *ngIf="media.caption">
-                <a style="margin-right: .25rem;" [routerLink]="['/', media.user.username]">
-                    <strong>{{media.user.username}}</strong>
+        <main fxLayout="column" fxLayoutAlign="start start" fxFlex>
+            <!-- <div>
+                <div style="padding-bottom: .7rem; width: 100%; line-height: 1.5;" fxLayout="row" fxLayoutAlign="start center">
+                    <mat-icon class="mat-18" style="color: rgb(0,0,0,.85); margin-right: .25rem;" *ngIf="media.likesCount === 0 || media.likesCount > 3">favorite</mat-icon>
+                    <app-likes [media]="media"></app-likes>
+                </div>
+            </div> -->
+            <div class="caption-container" *ngIf="media.caption">
+                <a class="author-username" [routerLink]="['/', media.user.username]">
+                    {{media.user.username}}
                 </a>
                 <app-caption caption="{{media.caption}}"></app-caption>
             </div>
-            <div style="width: 100%;">Comments</div>
+            <span class="comments-header">Comments</span>
+            <div class="comments-container" [ngClass]="{ 'empty' : !media.commentsCount }" fxLayout="column" fxFlex>
+                <div *ngIf="!media.commentsCount">
+                    <span class="subtitle">No comments yet</span>
+                </div>
+                <app-comments #commentsComponent [media]="media" [hidden]="!media.commentsCount"></app-comments>
+            </div>
         </main>
+        <!-- <footer style="padding-bottom: .7rem;">
+            <app-comment-box (submitted)="createComment($event)"></app-comment-box>
+        </footer> -->
         <footer>
-            <!-- <input type="text" style="outline: none; border: 1px solid #eaeaea; border-radius: 2px; width: 100%; box-sizing: border-box; padding: .7rem;" placeholder="Type your comment"> -->
-            <mat-form-field class="mat-form-comment-field" appearance="outline">
-                <mat-label>Comment</mat-label>
-                <input matInput type="text" placeholder="Type your comment">
-            </mat-form-field>
+            <div class="actions" fxLayout="row" fxLayoutAlign="space-between center">
+                <div>
+                    <mat-icon class="btn-icon mat-24" [ngClass]="{ 'warn' : media.userHasLiked }" (click)="like()">favorite_border</mat-icon>
+                    <mat-icon class="btn-icon mat-24 comment-icon" *ngIf="media.allowComments" (click)="commentInput.focus()">comment_outline</mat-icon>
+                </div>
+                <mat-icon class="btn-icon mat-24">share</mat-icon>
+            </div>
+            <div>
+                <div class="likes-container" fxLayout="row" fxLayoutAlign="start center">
+                    <app-likes [media]="media"></app-likes>
+                </div>
+            </div>
+            <app-comment-box (submitted)="createComment($event)"></app-comment-box>
         </footer>
     </aside>
 </div>

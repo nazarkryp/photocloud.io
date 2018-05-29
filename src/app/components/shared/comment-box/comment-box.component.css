@@ -1,0 +1,29 @@
+/* .comment-box {
+    border: 2px solid #eaeaea;
+    border-radius: 5px;
+    padding: .7rem;
+    outline: none;
+    width: 100%;
+    box-sizing: border-box;
+    -webkit-transition: border-color .25s ease-in-out;
+    -moz-transition: border-color .25s ease-in-out;
+    -ms-transition: border-color .25s ease-in-out;
+    -o-transition: border-color .25s ease-in-out;
+    transition: border-color .25s ease-in-out;
+}
+
+.comment-box:focus {
+    border-color: #e91e63;
+} */
+
+.mat-form-comment-field {
+    width: 100%;
+}
+
+:host ::ng-deep .mat-form-field.mat-form-comment-field div.mat-input-wrapper.mat-form-field-wrapper {
+    padding-bottom: 0;
+}
+
+:host ::ng-deep .mat-form-field.mat-form-comment-field .mat-form-field-appearance-outline .mat-form-field-infix {
+    padding: 0 !important;
+}

@@ -1,20 +1,26 @@
 import { Injectable } from '@angular/core';
 
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, tap, catchError } from 'rxjs/operators';
 
 import { WebApiService } from 'app/core/services/communication';
-import { CommentViewModel, Page, PaginationViewModel, } from 'app/models/view';
-import { PageMapper, CommentMapper } from 'app/infrastructure/mapping';
+import { CommentViewModel, Page, PaginationViewModel, MediaViewModel, CurrentUserViewModel, UserViewModel, } from 'app/models/view';
+import { PageMapper, CommentMapper, UserMapper } from 'app/infrastructure/mapping';
 import { CommentResponse } from 'app/models/response';
+import { CurrentUserService } from 'app/infrastructure/services/current-user.service';
 
 @Injectable()
 export class CommentService {
     private pageMapper: PageMapper<CommentResponse, CommentViewModel>;
+    private currentUser: UserViewModel;
 
     constructor(
         private apiService: WebApiService,
-        private commentMapper: CommentMapper) {
+        private commentMapper: CommentMapper,
+        private currentUserService: CurrentUserService,
+        private userMapper: UserMapper) {
+        const currentUser = this.currentUserService.retrieveCurrentUser();
+        this.currentUser = this.userMapper.mapFromCurrentUser(currentUser);
         this.pageMapper = new PageMapper(commentMapper);
     }
 
@@ -29,6 +35,37 @@ export class CommentService {
             .pipe(map(page => {
                 return this.pageMapper.mapFromResponse(page);
             }));
+    }
+
+    public addComment(media: MediaViewModel, commentBody: string): {
+        comment: CommentViewModel;
+        commentObservable: Observable<{} | CommentViewModel>;
+    } {
+        if (!media.comments) {
+            media.comments = new Array<CommentViewModel>();
+        }
+
+        const comment = new CommentViewModel();
+        comment.text = commentBody;
+        comment.date = new Date();
+        comment.user = new UserViewModel();
+        comment.user.id = this.currentUser.id;
+        comment.user.username = this.currentUser.username;
+
+        media.commentsCount++;
+
+        const commentObservable = this.createComment(media.id, { text: commentBody })
+            .pipe(tap(createdComment => {
+                comment.id = createdComment.id;
+                comment.date = createdComment.date;
+            }), catchError(error => {
+                media.commentsCount--;
+                return error;
+            }));
+
+        const result = { comment, commentObservable };
+
+        return result;
     }
 
     public createComment(mediaId: number, comment: any): Observable<CommentViewModel> {
