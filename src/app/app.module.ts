@@ -73,6 +73,7 @@ import { environment } from '../environments/environment';
 import { AttachmentCounterComponent } from './components/shared/attachment-counter/attachment-counter.component';
 import { MediaViewComponent } from './components/media-view/media-view.component';
 import { CommentBoxComponent } from './components/shared/comment-box/comment-box.component';
+import { MediaEditComponentComponent } from './components/shared/media-edit-component/media-edit-component.component';
 
 @NgModule({
     declarations: [
@@ -114,7 +115,8 @@ import { CommentBoxComponent } from './components/shared/comment-box/comment-box
         ManageUsersComponent,
         AttachmentCounterComponent,
         MediaViewComponent,
-        CommentBoxComponent
+        CommentBoxComponent,
+        MediaEditComponentComponent
     ],
     entryComponents: [
         MediaDetailsComponent,

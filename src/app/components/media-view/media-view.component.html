@@ -17,17 +17,17 @@
             </div>
         </div>
     </div>
-    <aside class="media-view-details" fxLayout="column">
+    <aside class="media-view-details" fxLayout="column" *ngIf="!media.editing; else editMode;">
         <header>
             <div fxLayout="row">
                 <img class="avatar" [src]="media.user.pictureUri" alt="User avatar">
                 <div class="details" fxLayout="row" fxLayoutAlign="space-between center">
                     <div fxLayout="column">
-                        <span class="username">{{media.user.username}}</span>
+                        <a class="username" [routerLink]="['/', media.user.username]">{{media.user.username}}</a>
                         <span class="date" matTooltip="{{media.created | date:'fullDate'}}" matTooltipPosition="right">{{media.created | timeAgo}}</span>
                     </div>
                     <div class="icon-wrapper" fxLayout="column" fxLayoutAlign="start" *ngIf="currentUser && currentUser.id === media.user.id">
-                        <mat-icon class="btn-icon mat-18">edit</mat-icon>
+                        <mat-icon class="btn-icon mat-18" (click)="media.editing = true">edit</mat-icon>
                     </div>
                 </div>
             </div>
@@ -58,11 +58,11 @@
         </footer> -->
         <footer>
             <div class="actions" fxLayout="row" fxLayoutAlign="space-between center">
-                <div>
+                <div style="position: relative;">
                     <mat-icon class="btn-icon mat-24" [ngClass]="{ 'warn' : media.userHasLiked }" (click)="like()">favorite_border</mat-icon>
                     <mat-icon class="btn-icon mat-24 comment-icon" *ngIf="media.allowComments" (click)="commentBox.focusCommentInput()">comment_outline</mat-icon>
                 </div>
-                <mat-icon class="btn-icon mat-24">share</mat-icon>
+                <mat-icon class="btn-icon mat-24" matTooltip="Share" matTooltipPosition="left">share</mat-icon>
             </div>
             <div>
                 <div class="likes-container" fxLayout="row" fxLayoutAlign="start center">
@@ -73,3 +73,9 @@
         </footer>
     </aside>
 </div>
+
+<ng-template #editMode>
+    <aside class="media-view-details">
+        <app-media-edit-component [media]="media"></app-media-edit-component>
+    </aside>
+</ng-template>

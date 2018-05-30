@@ -24,6 +24,7 @@ export class MediaViewComponent implements OnInit {
     public player: any;
     @ViewChild('commentsComponent')
     public commentsComponent: CommentsComponent;
+    public editing: boolean;
 
     constructor(
         private ref: MatDialogRef<MediaViewComponent>,

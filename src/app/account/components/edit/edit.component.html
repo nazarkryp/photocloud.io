@@ -106,14 +106,16 @@
             </div>
         </div>
 
-        <div class="item" fxLayout="column" fxLayoutAlign="center end">
+        <div class="item" fxLayout="column" fxLayoutAlign="center start">
             <h4>
                 Account
             </h4>
             <p class="edit__caption">
                 When you press the button below, your photos, comments and likes will be hidden until you reactivate your account by logging back in.
             </p>
-            <button class="btn-deactivate" mat-stroked-button color="primary" (click)="invertAccountStatus()">{{currentUser.isActive ? 'TEMPORARILY DISABLE ACCOUNT' : 'ACTIVATE ACCOUNT'}}</button>
+            <div fxLayout="column" fxLayoutAlign="center end" style="width: 100%;">
+                <button class="btn-deactivate" mat-stroked-button color="primary" (click)="invertAccountStatus()">{{currentUser.isActive ? 'TEMPORARILY DISABLE ACCOUNT' : 'ACTIVATE ACCOUNT'}}</button>
+            </div>
         </div>
     </div>
 </div>

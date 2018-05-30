@@ -13,8 +13,8 @@
                                 <a class="incomming-request-fullname" [routerLink]="['/', user.username]" title="{{user.fullName}}">{{user.fullName}}</a>
                             </div>
                             <div *ngIf="!user.isAccepted && !user.isRemoved" fxLayout="row" fxLayoutAlign="end start">
+                                <button mat-stroked-button color="primary" (click)="acceptIncommingRequest(user)" [disabled]="user.isAcceptingIncommingRequest">ACCEPT</button>
                                 <button mat-button (click)="removeIncommingRequest(user)" [disabled]="user.isRemovingIncommingRequest">REMOVE</button>
-                                <button mat-raised-button color="primary" (click)="acceptIncommingRequest(user)" [disabled]="user.isAcceptingIncommingRequest">ACCEPT</button>
                             </div>
                         </div>
                     </div>
