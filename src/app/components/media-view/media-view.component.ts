@@ -6,6 +6,7 @@ import { LikeService } from 'app/shared/services';
 import { CommentsComponent } from 'app/components/shared/comments/comments.component';
 import { CommentService } from 'app/services';
 import { CurrentUserService } from 'app/infrastructure/services';
+import { CommentBoxComponent } from '../shared/comment-box/comment-box.component';
 
 @Component({
     selector: 'app-media-view',
@@ -17,7 +18,8 @@ export class MediaViewComponent implements OnInit {
 
     @ViewChild('attachment')
     private attachment: ElementRef;
-
+    @ViewChild('commentBox')
+    public commentBox: CommentBoxComponent;
     @ViewChild('player')
     public player: any;
     @ViewChild('commentsComponent')

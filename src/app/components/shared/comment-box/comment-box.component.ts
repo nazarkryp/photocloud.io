@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
 
 @Component({
     selector: 'app-comment-box',
@@ -6,6 +6,9 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
     styleUrls: ['./comment-box.component.css']
 })
 export class CommentBoxComponent {
+    @ViewChild('commentInput')
+    private commentInput: ElementRef;
+
     @Output('submitted')
     public submitted: EventEmitter<string> = new EventEmitter<string>();
 
@@ -16,5 +19,9 @@ export class CommentBoxComponent {
             this.submitted.next(this.comment);
             this.comment = '';
         }
+    }
+
+    public focusCommentInput() {
+        this.commentInput.nativeElement.focus();
     }
 }
