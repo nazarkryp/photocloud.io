@@ -14,5 +14,6 @@
 }
 
 .lightbox-container .preview-container img {
+    max-height: inherit;
     vertical-align: bottom;
 }

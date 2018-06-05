@@ -75,9 +75,12 @@ export class UserDetailsComponent implements OnDestroy {
     public preview() {
         if (this.user.pictureUri) {
             this.dialog.open(LightboxComponent, {
+                height: 'auto',
+                width: 'auto',
+                maxHeight: 'calc(100vh - 1.4rem)',
+                maxWidth: 'calc(100vw - 1.4rem)',
+                autoFocus: false,
                 data: {
-                    maxHeight: 'calc(100vh - 1.4rem)',
-                    maxWidth: 'calc(100vw - 1.4rem)',
                     uri: this.user.pictureUri
                 }
             });
