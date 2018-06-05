@@ -1,0 +1,18 @@
+.lightbox-container {
+    overflow-x: hidden;
+    overflow-y: hidden;
+    max-height: calc(100vh - 1.4rem);
+    max-width: calc(100vw - 1.4rem);
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+}
+
+.lightbox-container .preview-container {
+    max-height: calc(100vh - 1.4rem);
+    position: relative;
+}
+
+.lightbox-container .preview-container img {
+    vertical-align: bottom;
+}

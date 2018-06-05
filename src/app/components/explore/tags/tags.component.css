@@ -7,20 +7,23 @@
     max-width: 960px;
 }
 
-.tags-media-header {
+.tags-header {
     width: 960px;
     padding-bottom: 2.8rem;
 }
 
-.tags-media-header .page-subtitle {
-    color: rgb(0, 0, 0, .6);
+.tags-header .page-subtitle {
+    color: rgb(0, 0, 0, .65);
     font-size: 1.2em;
 }
 
-.tags-media-header .page-title {
-    font-size: 3em;
+.tags-header h1 {
     text-transform: uppercase;
     font-weight: lighter;
+}
+
+.tags-empty-container h2 {
+    color: rgb(0, 0, 0, .65);
 }
 
 .tags-media {

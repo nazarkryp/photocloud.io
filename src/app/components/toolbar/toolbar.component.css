@@ -88,10 +88,12 @@ mat-icon>svg {
     display: flex;
     align-items: center;
     place-content: center space-between;
+    justify-content: center space-between;
 }
 
 .toolbar-actions.not-active {
     place-content: center flex-end;
+    justify-content: center flex-end;
 }
 
 td-notification-count,
@@ -123,7 +125,7 @@ td-notification-count .btn-icon:hover {
 }
 
 .logo .photo {
-    font-size: 1.6em;
+    font-size: 1.4em;
     font-weight: lighter;
 }
 
@@ -147,7 +149,7 @@ td-notification-count .btn-icon:hover {
 }
 
 .notifications-menu {
-    display: none;
+    /* display: none; */
 }
 
 ::ng-deep .cdk-overlay-container .mat-menu-panel .mat-menu-content {

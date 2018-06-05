@@ -74,6 +74,7 @@ import { AttachmentCounterComponent } from './components/shared/attachment-count
 import { MediaViewComponent } from './components/media-view/media-view.component';
 import { CommentBoxComponent } from './components/shared/comment-box/comment-box.component';
 import { MediaEditComponentComponent } from './components/shared/media-edit-component/media-edit-component.component';
+import { LightboxComponent } from './components/shared/lightbox/lightbox.component';
 
 @NgModule({
     declarations: [
@@ -116,7 +117,8 @@ import { MediaEditComponentComponent } from './components/shared/media-edit-comp
         AttachmentCounterComponent,
         MediaViewComponent,
         CommentBoxComponent,
-        MediaEditComponentComponent
+        MediaEditComponentComponent,
+        LightboxComponent
     ],
     entryComponents: [
         MediaDetailsComponent,
@@ -125,7 +127,8 @@ import { MediaEditComponentComponent } from './components/shared/media-edit-comp
         UsersDialogComponent,
         ChangePasswordComponent,
         NotificationsComponent,
-        MediaViewComponent
+        MediaViewComponent,
+        LightboxComponent
     ],
     imports: [
         BrowserModule,

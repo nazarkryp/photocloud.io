@@ -1,10 +1,10 @@
 <div class="page-container" fxLayout="column" fxLayoutAlign="start center">
-    <div class="tags-media-header" fxLayout="column" fxLayoutAlign="center start">
-        <span class="page-subtitle">Search by hashtags</span>
-        <h1 class="page-title">#{{tag}}</h1>
-        <div style="margin-top: 0rem; color: #444444; font-size: 1.5em;" *ngIf="!isLoading && (!page?.data || !page?.data.length)">
-            <h3>No posts matching '{{tag}}' were found</h3>
-        </div>
+    <div class="tags-header" fxLayout="column" fxLayoutAlign="center start">
+        <!-- <span class="page-subtitle">See results for</span> -->
+        <h1>#{{tag}}</h1>
+    </div>
+    <div class="tags-empty-container" *ngIf="!isLoading && (!page?.data || !page?.data.length)" fxLayout="column" fxLayoutAlign="center center" fxFlex>
+        <h2>No posts matching '{{tag}}' were found</h2>
     </div>
     <div class="tags-media" appInfiniteScroll [appScrollTriggerOnce]="true" [scrollOffset]="6000" (scrollPosition)="onPositionChange()">
         <div *ngFor="let media of page?.data;">

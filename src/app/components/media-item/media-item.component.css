@@ -175,7 +175,7 @@ app-attachment-counter {
 
 .media-created {
     font-size: 0.7em;
-    color: rgb(0, 0, 0, .6);
+    color: rgb(0, 0, 0, .65);
     font-weight: 600;
     text-transform: uppercase;
     cursor: pointer;

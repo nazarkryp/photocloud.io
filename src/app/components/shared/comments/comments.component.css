@@ -38,7 +38,7 @@
 
 .text-button.disabled,
 .text-button.disabled:hover {
-    color: rgb(0, 0, 0, .6);
+    color: rgb(0, 0, 0, .65);
 }
 
 .comment-username {

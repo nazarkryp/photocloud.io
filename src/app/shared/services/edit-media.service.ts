@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material';
 
+import { Observable } from 'rxjs';
+import { tap, catchError } from 'rxjs/operators';
+
 import { MediaService } from 'app/services';
 import { UpdateMediaViewModel, MediaViewModel, UpdateAttachmentViewModel } from 'app/models/view';
 import { ConfirmComponent } from 'app/components/shared/confirm/confirm.component';
@@ -32,9 +35,9 @@ export class EditMediaService {
         return updateMediaModel;
     }
 
-    public select(updateMediaModel: UpdateMediaViewModel, attachmentToSelect: UpdateAttachmentViewModel) {
-        if (!attachmentToSelect.removed) {
-            updateMediaModel.coverId = attachmentToSelect.id;
+    public changeCover(target: UpdateMediaViewModel, attachment: UpdateAttachmentViewModel) {
+        if (!attachment.removed) {
+            target.coverId = attachment.id;
         }
     }
 
@@ -46,8 +49,23 @@ export class EditMediaService {
         attachmentToRestore.removed = false;
     }
 
-    public updateMedia(media: MediaViewModel, updateMediaModel: UpdateMediaViewModel) {
-        this.update(media, updateMediaModel);
+    public updateMedia(media: MediaViewModel, updateMediaModel: UpdateMediaViewModel): Observable<MediaViewModel> {
+        const backup = this.createBackup(media);
+
+        media.caption = updateMediaModel.caption;
+        media.coverId = updateMediaModel.coverId;
+        media.allowComments = updateMediaModel.allowComments;
+        media.attachments = updateMediaModel.attachments;
+
+        return this.mediaService.update(updateMediaModel)
+            .pipe(tap((updatedMedia) => {
+                // media.caption = updatedMedia.caption;
+                // media.coverId = updatedMedia.coverId;
+                // media.attachments = updatedMedia.attachments;
+            }, catchError(error => {
+                this.restoreFromBackup(backup, media);
+                return error;
+            })));
     }
 
     public cancel(media: MediaViewModel, updateMediaModel: UpdateMediaViewModel): any {
@@ -78,25 +96,6 @@ export class EditMediaService {
             media.editing = false;
             updateMediaModel = null;
         }
-    }
-
-    private update(media: MediaViewModel, updateMediaModel: UpdateMediaViewModel) {
-        const backup = this.createBackup(media);
-
-        media.editing = false;
-        media.caption = updateMediaModel.caption;
-        media.coverId = updateMediaModel.coverId;
-        media.allowComments = updateMediaModel.allowComments;
-        media.attachments = updateMediaModel.attachments;
-
-        this.mediaService.update(updateMediaModel)
-            .subscribe((updatedMedia) => {
-                media.caption = updatedMedia.caption;
-                media.coverId = updatedMedia.coverId;
-                media.attachments = updatedMedia.attachments;
-            }, (error) => {
-                this.restoreFromBackup(backup, media);
-            });
     }
 
     private remove(attachmentToRemove: UpdateAttachmentViewModel) {

@@ -1,9 +1,9 @@
 <div fxLayout="column" fxLayoutAlign="center start" *ngIf="user">
     <div class="user-info" fxLayout="row" fxLayoutAlign="center start">
         <div fxLayout="column" fxLayoutAlign="center center">
-            <mat-progress-spinner [value]="progress" [mode]="progressSpinnerMode" [diameter]="160" [strokeWidth]="3" style="position: absolute; z-index: 0;"></mat-progress-spinner>
+            <mat-progress-spinner [value]="progress" [mode]="progressSpinnerMode" [diameter]="160" [strokeWidth]="3" style="position: absolute; z-index: 0;" *ngIf="isAuthenticated && currentUser && currentUser.isActive && user.id === currentUser.id"></mat-progress-spinner>
             <img class="thumbnail-big" src="{{user.pictureUri}}" default="assets/images/user-default-image.png" alt="{{user.username}}" *ngIf="!isAuthenticated || (!currentUser || (currentUser && !currentUser?.isActive) || user.id !== currentUser?.id)"
-            />
+                (click)="preview()" />
             <div class="edit-image" *ngIf="isAuthenticated && currentUser && currentUser.isActive && user.id === currentUser.id">
                 <div *ngIf="!isUploading" class="change-overlay" fxLayout="row" fxLayoutAlign="center center" (click)="fileInput.click()">
                     <span>Change</span>

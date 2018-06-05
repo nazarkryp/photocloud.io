@@ -182,7 +182,7 @@ export class MediaDetailsComponent implements OnInit, OnDestroy {
     }
 
     public select(attachment: UpdateAttachmentViewModel) {
-        this.editMediaService.select(this.updateMediaModel, attachment);
+        this.editMediaService.changeCover(this.updateMediaModel, attachment);
     }
 
     public removeAttachment(attachmentToRemove: UpdateAttachmentViewModel) {

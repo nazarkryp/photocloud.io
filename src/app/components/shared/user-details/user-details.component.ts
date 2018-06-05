@@ -14,6 +14,7 @@ import { UsersDialogComponent } from 'app/components/shared/users-dialog/users-d
 import { FileUploader } from 'ng2-file-upload';
 import { UserDialogDetails } from 'app/components/shared/users-dialog/models';
 import { finalize } from 'rxjs/operators';
+import { LightboxComponent } from '../lightbox/lightbox.component';
 
 @Component({
     selector: 'app-user-details',
@@ -71,14 +72,16 @@ export class UserDetailsComponent implements OnDestroy {
         this.truncateWidth = 10000;
     }
 
-    private onSuccessUpload(attachment: AttachmentViewModel) {
-        this.currentUserService.changeAccountAttachment({
-            pictureId: attachment.id
-        }).pipe(finalize(() => {
-            this.uploader.clearQueue();
-        })).subscribe(user => {
-            this.user.pictureUri = user.pictureUri;
-        });
+    public preview() {
+        if (this.user.pictureUri) {
+            this.dialog.open(LightboxComponent, {
+                data: {
+                    maxHeight: 'calc(100vh - 1.4rem)',
+                    maxWidth: 'calc(100vw - 1.4rem)',
+                    uri: this.user.pictureUri
+                }
+            });
+        }
     }
 
     public getFollowers() {
@@ -155,6 +158,16 @@ export class UserDetailsComponent implements OnDestroy {
             width: '500px',
             height: '600px',
             data: details
+        });
+    }
+
+    private onSuccessUpload(attachment: AttachmentViewModel) {
+        this.currentUserService.changeAccountAttachment({
+            pictureId: attachment.id
+        }).pipe(finalize(() => {
+            this.uploader.clearQueue();
+        })).subscribe(user => {
+            this.user.pictureUri = user.pictureUri;
         });
     }
 }

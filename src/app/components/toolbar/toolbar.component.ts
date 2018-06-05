@@ -21,6 +21,7 @@ import { NotificationsComponent } from 'app/components/notifications/notificatio
 export class ToolbarComponent implements OnInit, OnDestroy, AfterViewChecked, AfterViewInit {
     private currentUserSubscription: Subscription;
     private menuSubscription: Subscription;
+    private _trigger: MatMenuTrigger;
 
     public currentUser: CurrentUserViewModel;
     public unreadActivitiesCount: number;
@@ -30,7 +31,16 @@ export class ToolbarComponent implements OnInit, OnDestroy, AfterViewChecked, Af
 
     public notifications: ActivityPage;
 
-    @ViewChild(MatMenuTrigger) private trigger: MatMenuTrigger;
+    @ViewChild(MatMenuTrigger) private set trigger(value: MatMenuTrigger) {
+        this._trigger = value;
+
+        if (this._trigger) {
+            this.menuSubscription = this._trigger.menuOpened.subscribe(() => this.appNotifications.markAsRead());
+        } else if (this.menuSubscription && !this.menuSubscription.closed) {
+            this.menuSubscription.unsubscribe();
+        }
+    }
+
     @ViewChild('appNotifications') public appNotifications: NotificationsComponent;
 
     constructor(
@@ -79,10 +89,7 @@ export class ToolbarComponent implements OnInit, OnDestroy, AfterViewChecked, Af
     }
 
     public openMenu() {
-        this.trigger.openMenu();
-        this.menuSubscription = this.trigger.menuOpened.subscribe(() => {
-            this.appNotifications.markAsRead();
-        });
+
     }
 
     public ngOnInit(): void {

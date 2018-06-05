@@ -17,7 +17,11 @@ export class MediaEditComponentComponent implements OnInit {
     }
 
     public select(attachment: UpdateAttachmentViewModel) {
-        this.editMediaService.select(this.updateMediaModel, attachment);
+        this.editMediaService.changeCover(this.updateMediaModel, attachment);
+
+        if (!attachment.removed) {
+            this.media.activeAttachment = this.media.attachments.findIndex(e => e.id === attachment.id);
+        }
     }
 
     public remove(attachmentToRemove: UpdateAttachmentViewModel) {
@@ -28,12 +32,11 @@ export class MediaEditComponentComponent implements OnInit {
         this.editMediaService.restoreAttachment(this.updateMediaModel, attachmentToRestore);
     }
 
-    public update() {
-        this.editMediaService.updateMedia(this.media, this.updateMediaModel);
-    }
-
     public save() {
-        this.update();
+        this.editMediaService.updateMedia(this.media, this.updateMediaModel).subscribe(() => {
+
+        });
+
         this.media.editing = false;
     }
 

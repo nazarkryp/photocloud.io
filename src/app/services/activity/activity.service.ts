@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { Observable, ReplaySubject } from 'rxjs';
+import { Observable, ReplaySubject, of } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 
 import { WebApiService, HubConnectionService } from 'app/core/services/communication';
@@ -84,10 +84,11 @@ export class ActivityService {
         return this.httpClient.put<Observable<any>>('activities', {
             ids: ids
         }).pipe(tap(() => {
-            this.page.unread -= ids.length;
-
             this.page.data.filter(e => ids.find(id => id === e.id)).forEach((element) => {
-                element.isMarkedAsRead = true;
+                if (!element.isMarkedAsRead) {
+                    element.isMarkedAsRead = true;
+                    this.page.unread--;
+                }
             });
 
             this.state.next(this.page);

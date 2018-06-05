@@ -55,6 +55,7 @@
 }
 
 .thumbnail-big {
+    cursor: pointer;
     width: 150px;
     height: 150px;
     object-fit: cover;
@@ -91,10 +92,6 @@ div.edit-image:not([disabled]):hover .change-overlay {
     cursor: pointer;
     background: rgba(0, 0, 0, .5);
     opacity: 1;
-}
-
-.thumbnail-big.pointer {
-    cursor: pointer;
 }
 
 .user-details {

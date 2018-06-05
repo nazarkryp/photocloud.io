@@ -1,6 +1,7 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewContainerRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material';
+import { Overlay } from '@angular/cdk/overlay';
 
 import { Subscription } from 'rxjs';
 import { finalize } from 'rxjs/operators';
@@ -12,8 +13,6 @@ import { Page, MediaViewModel, CurrentUserViewModel } from 'app/models/view';
 import { AccountService } from 'app/account/services';
 import { MediaService } from 'app/services';
 import { ProgressService } from 'app/shared/services';
-
-
 import { LikeService } from 'app/shared/services';
 
 @Component({
@@ -30,6 +29,8 @@ export class TagsComponent implements OnInit, OnDestroy {
     public isLoading: boolean;
 
     constructor(
+        private overlay: Overlay,
+        private viewContainerRef: ViewContainerRef,
         public dialog: MatDialog,
         private route: ActivatedRoute,
         private mediaService: MediaService,
@@ -68,8 +69,17 @@ export class TagsComponent implements OnInit, OnDestroy {
     }
 
     public openPostDialog(media: MediaViewModel) {
-        const dialogRef = this.dialog.open(MediaViewComponent, {
-            data: media
+        this.dialog.open(MediaViewComponent, {
+            viewContainerRef: this.viewContainerRef,
+            scrollStrategy: this.overlay.scrollStrategies.block(),
+            height: 'auto',
+            width: 'auto',
+            maxHeight: 'calc(100vh - 1.4rem)',
+            maxWidth: 'calc(100vw - 1.4rem)',
+            data: media,
+            autoFocus: false
+        }).afterClosed().subscribe(() => {
+            media.editing = false;
         });
     }
 
