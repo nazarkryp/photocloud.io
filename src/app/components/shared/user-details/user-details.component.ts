@@ -15,6 +15,7 @@ import { FileUploader } from 'ng2-file-upload';
 import { UserDialogDetails } from 'app/components/shared/users-dialog/models';
 import { finalize } from 'rxjs/operators';
 import { LightboxComponent } from '../lightbox/lightbox.component';
+import { PromptService } from 'app/modules/prompt';
 
 @Component({
     selector: 'app-user-details',
@@ -31,6 +32,7 @@ export class UserDetailsComponent implements OnDestroy {
     public truncateWidth: number;
 
     constructor(
+        private prompt: PromptService,
         private router: Router,
         private dialog: MatDialog,
         private uploaderService: UploaderService,

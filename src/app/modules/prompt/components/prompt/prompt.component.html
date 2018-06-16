@@ -1,0 +1,14 @@
+<div class="prompt-container">
+    <header>
+        <strong>{{prompt.title}}</strong>
+    </header>
+    <main>
+        <p>{{prompt.description}}</p>
+    </main>
+    <footer>
+        <div fxLayout="row" fxLayoutAlign="end center">
+            <button mat-button (click)="cancel()">CANCEL</button>
+            <button mat-button color="primary" (click)="submit()">OKAY</button>
+        </div>
+    </footer>
+</div>

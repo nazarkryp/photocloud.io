@@ -73,33 +73,108 @@
             </p>
         </div>
     </div>
-    <div class="user-info-small" fxLayout="column" fxLayoutAlign="center center">
-        <img class="thumbnail-big" src="{{user.pictureUri}}" default="assets/images/user-default-image.png" alt="{{user.username}}" />
-        <div *ngIf="currentUser && user.id === currentUser.id" fxLayout="row" fxLayoutAlign="space-between center" style="margin-top: .7rem; padding-bottom: .5rem;">
-            <a mat-icon-button routerLink="/account/edit" matTooltip="Settings" matTooltipPosition="above" style="margin-right: 40px;">
-                <mat-icon class="btn-icon">settings</mat-icon>
-            </a>
-            <button mat-icon-button matTooltip="Logout" matTooltipPosition="above" (click)="logout()">
-                <mat-icon class="btn-icon">exit_to_app</mat-icon>
-            </button>
-        </div>
-        <h1>{{user.username}}</h1>
-        <div fxLayout="row" fxLayoutAlign="space-around center" style="width: 100vw; padding: .7rem 0;" *ngIf="user.isActive && !currentUser">
-            <div fxLayout="column" fxLayoutAlign="center center">
-                <strong>{{user.counters.posts}}</strong>
-                posts
+    <div style="width: 100%; padding: .7rem;" fxLayout="row" fxLayoutAlign="end center" *ngIf="user.isActive && user.lastActive">
+        <span matTooltip="{{user.lastActive | date:'fullDate'}}" matTooltipPosition="after" style="font-size: .9em; font-weight: bold; text-transform: uppercase; color: #C8C8C8;">{{user.lastActive | timeAgo}}</span>
+    </div>
+</div>
+
+<!-- <div class="user-info-small" fxLayout="column" style="width: 100vw; padding: 0 .7rem; line-height: 1.5;" *ngIf="user">
+    <div fxLayout="row" fxLayoutAlign="start">
+        <img style="width: 75px; height: 75px; object-fit: cover; border-radius: 50%;" src="{{user.pictureUri}}" default="assets/images/user-default-image.png" alt="{{user.username}}" />
+        <div style="padding-left: .7rem; width: 100%; box-sizing: border-box;">
+            <div fxLayout="row" fxLayoutAlign="space-between center" style="padding-bottom: .7rem;">
+                <h2 style="max-width: 150px;overflow: hidden;box-sizing: border-box;text-overflow: ellipsis;">{{user.username}}</h2>
+                <div>
+                    <button mat-button class="btn-relationships" *ngIf="isAuthenticated && currentUser && currentUser?.isActive && user.id !== currentUser.id && (user.isActive || (!user.isActive && user.relationship.outgoingStatus !== 0))"
+                        (click)="modifyRelationship()" [disabled]="isModifyingRelationship">{{user.relationship.outgoingStatus | relationshipAction | uppercase }}</button>
+                    <div class="user-info__actions" fxLayout="row" fxLayoutAlign="space-between center" *ngIf="isAuthenticated && currentUser && user.id === currentUser.id">
+                        <a routerLink="/account/edit" matTooltip="Settings" matTooltipPosition="above">
+                            <mat-icon class="btn-icon mat-18">settings</mat-icon>
+                        </a>
+                        <a matTooltip="Logout" matTooltipPosition="above" (click)="logout()">
+                            <mat-icon class="btn-icon mat-18">exit_to_app</mat-icon>
+                        </a>
+                    </div>
+                </div>
             </div>
-            <div fxLayout="column" fxLayoutAlign="center center">
-                <strong>{{user.counters.followers}}</strong>
-                followers
-            </div>
-            <div fxLayout="column" fxLayoutAlign="center center">
-                <strong>{{user.counters.following}}</strong>
-                following
+            <div class="user-info__counters" fxLayout="row" fxLayoutAlign="space-between center" style="width: 100%;" *ngIf="user.isActive">
+                <div fxLayout="column" fxLayoutAlign="center start">
+                    Posts
+                    <span class="user-info__counter">
+                        {{user.counters.posts}}
+                    </span>
+                </div>
+                <div fxLayout="column" fxLayoutAlign="center start">
+                    Followers
+                    <span class="user-info__counter">
+                        {{user.counters.followers}}
+                    </span>
+                </div>
+                <div fxLayout="column" fxLayoutAlign="center start">
+                    Following
+                    <span class="user-info__counter">
+                        {{user.counters.following}}
+                    </span>
+                </div>
             </div>
         </div>
     </div>
-    <div style="width: 100%;" fxLayout="row" fxLayoutAlign="end center" *ngIf="user.isActive && user.lastActive">
-        <span matTooltip="{{user.lastActive | date:'fullDate'}}" matTooltipPosition="after" style="font-size: .9em; font-weight: bold; text-transform: uppercase; color: #C8C8C8;">{{user.lastActive | timeAgo}}</span>
+    <div>
+        <strong>Bio</strong>
+        <div>
+            <span [innerHTML]="user.bio | truncate:truncateWidth | linkify"></span>
+            <a class="primary" (click)="increaseTruncateSize()" *ngIf="user.bio && user.bio.length > defaultTruncateWidth && truncateWidth === defaultTruncateWidth">show more</a>
+        </div>
+    </div>
+</div> -->
+
+<div class="user-info-small" fxLayout="column" style="width: 100vw; padding: 0 .7rem; line-height: 1.5;" *ngIf="user">
+    <div fxLayout="row" fxLayoutAlign="start">
+        <img style="width: 75px; height: 75px; object-fit: cover; border-radius: 50%;" src="{{user.pictureUri}}" default="assets/images/user-default-image.png" alt="{{user.username}}" />
+        <div style="padding-left: .7rem; width: 100%; box-sizing: border-box;">
+            <div class="user-info__counters" fxLayout="row" fxLayoutAlign="space-between center" style="width: 100%; padding-bottom: .7rem;" *ngIf="user.isActive">
+                <div fxLayout="column" fxLayoutAlign="center start">
+                    Posts
+                    <span class="user-info__counter">
+                        {{user.counters.posts}}
+                    </span>
+                </div>
+                <div fxLayout="column" fxLayoutAlign="center start">
+                    Followers
+                    <span class="user-info__counter">
+                        {{user.counters.followers}}
+                    </span>
+                </div>
+                <div fxLayout="column" fxLayoutAlign="center start">
+                    Following
+                    <span class="user-info__counter">
+                        {{user.counters.following}}
+                    </span>
+                </div>
+            </div>
+            <div>
+                <button mat-button class="btn-relationships" *ngIf="isAuthenticated && currentUser && currentUser?.isActive && user.id !== currentUser.id && (user.isActive || (!user.isActive && user.relationship.outgoingStatus !== 0))"
+                    (click)="modifyRelationship()" [disabled]="isModifyingRelationship">{{user.relationship.outgoingStatus | relationshipAction | uppercase }}</button>
+                <div style="width: 100%;" fxLayout="row" fxLayoutAlign="space-between center" *ngIf="isAuthenticated && currentUser && user.id === currentUser.id">
+                    <a mat-button routerLink="/account/edit" class="btn-relationships" style="width: 49%;">
+                        Edit
+                    </a>
+                    <a mat-button (click)="logout()" class="btn-relationships" style="width: 49%;">
+                        Logout
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div>
+        <h2>{{user.fullName}}</h2>
+        <h3>{{user.username}}</h3>
+    </div>
+    <div>
+        <strong>Bio</strong>
+        <div>
+            <span [innerHTML]="user.bio | truncate:truncateWidth | linkify"></span>
+            <a class="primary" (click)="increaseTruncateSize()" *ngIf="user.bio && user.bio.length > defaultTruncateWidth && truncateWidth === defaultTruncateWidth">show more</a>
+        </div>
     </div>
 </div>

@@ -75,6 +75,7 @@ import { MediaViewComponent } from './components/media-view/media-view.component
 import { CommentBoxComponent } from './components/shared/comment-box/comment-box.component';
 import { MediaEditComponentComponent } from './components/shared/media-edit-component/media-edit-component.component';
 import { LightboxComponent } from './components/shared/lightbox/lightbox.component';
+import { PromptModule } from 'app/modules/prompt';
 
 @NgModule({
     declarations: [
@@ -144,6 +145,7 @@ import { LightboxComponent } from './components/shared/lightbox/lightbox.compone
         InfrastructureModule,
         SharedModule,
         CoreModule,
+        PromptModule,
         NgProgressModule.forRoot(),
         ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production })
     ],

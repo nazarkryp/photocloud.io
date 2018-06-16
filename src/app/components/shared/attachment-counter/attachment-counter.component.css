@@ -5,8 +5,8 @@
     padding: .25rem;
     background: rgb(0, 0, 0);
     border-radius: 2px;
-    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.86);
-    opacity: .6;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.86);
+    opacity: .5;
 }
 
 .attachment-counter {

@@ -166,7 +166,10 @@ export class MediaItemComponent implements OnInit {
     }
 
     public save() {
-        this.editMediaService.updateMedia(this.media, this.updateMediaModel);
+        this.editMediaService.updateMedia(this.media, this.updateMediaModel)
+            .subscribe(() => { });
+
+        this.media.editing = false;
     }
 
     public cancel() {

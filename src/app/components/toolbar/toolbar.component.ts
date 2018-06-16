@@ -12,6 +12,7 @@ import { Uploader } from 'app/core/services';
 import { CurrentUserViewModel, ActivityViewModel, ActivityPage } from 'app/models/view';
 import { ScrollDirection } from 'app/shared/directives/header-scroll.directive';
 import { NotificationsComponent } from 'app/components/notifications/notifications.component';
+import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 
 @Component({
     selector: 'app-toolbar',
@@ -43,13 +44,19 @@ export class ToolbarComponent implements OnInit, OnDestroy, AfterViewChecked, Af
 
     @ViewChild('appNotifications') public appNotifications: NotificationsComponent;
 
+    public mobile: boolean;
+
     constructor(
+        private breakpointObserver: BreakpointObserver,
         private cd: ChangeDetectorRef,
         private activityService: ActivityService,
         private currentUserService: CurrentUserService,
         private incommingRequestsService: RequestsService,
         private accountService: AccountService,
         private router: Router) {
+        this.breakpointObserver.observe('(min-width: 500px)').subscribe((state: BreakpointState) => {
+            this.mobile = !state.matches;
+        });
     }
 
     public get isMenuOpened(): boolean {

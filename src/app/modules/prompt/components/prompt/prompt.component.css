@@ -1,0 +1,22 @@
+.prompt-container {
+    line-height: 1.5;
+    font-family: 'Roboto', sans-serif;
+}
+
+.prompt-container header {
+    padding: 1.4rem;
+}
+
+.prompt-container main {
+    padding: 0 1.4rem 2rem;
+    font-size: .9em;
+}
+
+.prompt-container footer {
+    border-top: 1px solid #eaeaea;
+    padding: .7rem;
+}
+
+.prompt-container footer button {
+    font-weight: bold;
+}

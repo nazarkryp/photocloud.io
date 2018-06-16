@@ -62,7 +62,7 @@
                     <mat-icon class="btn-icon mat-24" [ngClass]="{ 'warn' : media.userHasLiked }" (click)="like()">favorite_border</mat-icon>
                     <mat-icon class="btn-icon mat-24 comment-icon" *ngIf="media.allowComments" (click)="commentBox.focusCommentInput()">comment_outline</mat-icon>
                 </div>
-                <mat-icon class="btn-icon mat-24" matTooltip="Share" matTooltipPosition="left">share</mat-icon>
+                <mat-icon class="btn-icon mat-24" matTooltip="Share" matTooltipPosition="left" ngxClipboard [cbContent]="shareMediaLink" (cbOnSuccess)="showToast('Copied to clipboard')">share</mat-icon>
             </div>
             <div>
                 <div class="likes-container" fxLayout="row" fxLayoutAlign="start center">

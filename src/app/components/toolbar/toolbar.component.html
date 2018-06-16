@@ -27,10 +27,10 @@
             </div>
             <div class="toolbar-actions" [ngClass]="{ 'not-active' : !currentUser.isActive }" *ngIf="currentUser && isAuthenticated">
                 <a routerLink="/explore/people" *ngIf="currentUser.isActive">
-                    <mat-icon class="btn-icon mat-36 thin" svgIcon="compass"></mat-icon>
+                    <mat-icon class="btn-icon thin" [ngClass]="{ 'mat-24' : mobile, 'mat-36' : !mobile }" svgIcon="compass"></mat-icon>
                 </a>
                 <div class="custom-icon-container" *ngIf="currentUser.isActive" fxLayout="row" fxLayoutAlign="center center" [matMenuTriggerFor]="notificationsMenu">
-                    <mat-icon class="btn-icon mat-36 thin" svgIcon="bell"></mat-icon>
+                    <mat-icon class="btn-icon thin" [ngClass]="{ 'mat-24' : mobile, 'mat-36' : !mobile }" svgIcon="bell"></mat-icon>
                     <span mat-ripple class="custom-badge" *ngIf="unreadActivitiesCount" fxLayout="row" fxLayoutAlign="center center">{{unreadActivitiesCount}}</span>
                 </div>
                 <a [routerLink]="['/', currentUser.username]" fxLayout="row" fxLayoutAlign="center center">

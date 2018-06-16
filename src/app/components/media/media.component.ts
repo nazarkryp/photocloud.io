@@ -11,8 +11,7 @@ import { MediaService } from 'app/services';
 import { CreateMediaComponent } from 'app/components/shared/create-media/create-media.component';
 import { ConfirmComponent } from 'app/components/shared/confirm/confirm.component';
 import { ProgressService } from 'app/shared/services';
-
-
+import { PromptService } from 'app/modules/prompt/services/prompt.service';
 
 @Component({
     templateUrl: './media.component.html',
@@ -32,7 +31,8 @@ export class MediaComponent implements OnInit, OnDestroy {
         private mediaService: MediaService,
         private currentUserService: CurrentUserService,
         private progress: ProgressService,
-        private dialog: MatDialog) {
+        private dialog: MatDialog,
+        private prompt: PromptService) {
         this.page.data = new Array<MediaViewModel>();
         this.page.hasMoreItems = false;
         this.currentUserSubscription = this.currentUserService.getCurrentUser()
@@ -86,15 +86,11 @@ export class MediaComponent implements OnInit, OnDestroy {
     }
 
     public onRemoved(media: MediaViewModel) {
-        const dialogRef = this.dialog.open(ConfirmComponent, {
-            data: {
-                title: 'DELETE POST',
-                message: 'Are you sure you want you want to delete this media?'
-            }
-        });
-
-        dialogRef.afterClosed().subscribe(confirmed => {
-            if (confirmed) {
+        this.prompt.prompt({
+            title: 'DELETE',
+            description: `Are you sure want to delete this post?`
+        }).subscribe(result => {
+            if (result) {
                 const indexToRemove = this.page.data.findIndex(p => p.id === media.id);
                 this.page.data.splice(indexToRemove, 1);
                 this.mediaService.removeMedia(media.id)

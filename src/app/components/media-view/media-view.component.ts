@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Inject, ViewChild, ElementRef } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialogRef, MatSnackBarConfig, MatSnackBar } from '@angular/material';
 
 import { MediaViewModel, CommentViewModel, UserViewModel, CurrentUserViewModel } from 'app/models/view';
 import { LikeService } from 'app/shared/services';
@@ -7,6 +7,7 @@ import { CommentsComponent } from 'app/components/shared/comments/comments.compo
 import { CommentService } from 'app/services';
 import { CurrentUserService } from 'app/infrastructure/services';
 import { CommentBoxComponent } from '../shared/comment-box/comment-box.component';
+import { DOCUMENT } from '@angular/common';
 
 @Component({
     selector: 'app-media-view',
@@ -27,13 +28,20 @@ export class MediaViewComponent implements OnInit {
     public editing: boolean;
 
     constructor(
+        private snackBar: MatSnackBar,
         private ref: MatDialogRef<MediaViewComponent>,
+        @Inject(DOCUMENT) private document: Document,
         @Inject(MAT_DIALOG_DATA) public media: MediaViewModel,
         private commentService: CommentService,
         private currentUserService: CurrentUserService,
         private likeService: LikeService
     ) {
         this.currentUser = this.currentUserService.retrieveCurrentUser();
+    }
+
+    public get shareMediaLink(): string {
+        const pathArray = this.document.location.href.split('/');
+        return `${pathArray[0]}//${pathArray[2]}/p/${this.media.id}`;
     }
 
     public next() {
@@ -87,6 +95,12 @@ export class MediaViewComponent implements OnInit {
         result.commentObservable.subscribe(() => { }, (error) => {
             this.commentsComponent.removeComment(result.comment);
         });
+    }
+
+    public showToast(message: string) {
+        const config = new MatSnackBarConfig();
+        config.duration = 1500;
+        const result = this.snackBar.open(message, null, config);
     }
 
     public ngOnInit() {

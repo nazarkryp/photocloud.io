@@ -3,8 +3,9 @@
         <span class="category-header">Attachments</span>
         <div class="preview-items">
             <div class="preview-item" *ngFor="let item of updateMediaModel.attachments; let index = index;">
-                <mat-icon mat-ripple class="btn-icon btn-remove mat-18" (click)="remove(item)">clear</mat-icon>
-                <div class="attachment-preview-container" mat-ripple (click)="select(item)">
+                <mat-icon mat-ripple class="btn-icon btn-remove mat-18" (click)="restoreAttachment(item)" *ngIf="item.removed" matTooltip="Undo" matTooltipPosition="below">undo</mat-icon>
+                <mat-icon mat-ripple class="btn-icon btn-remove mat-18" (click)="removeAttachment(item)" *ngIf="!item.removed" matTooltip="Remove" matTooltipPosition="below">clear</mat-icon>
+                <div class="attachment-preview-container" [ngClass]="{ 'transparent' : item.removed }" mat-ripple (click)="select(item)">
                     <img [src]="item.uri" *ngIf="item.type !== 1">
                     <video *ngIf="item.type === 1">
                         <source src="{{item.uri}}">
@@ -24,7 +25,7 @@
                 <span class="option">Allow comments</span>
                 <p class="option-desctiption">When this options is disabled you are the only one who is able to leave comments under this post</p>
             </div>
-            <mat-slide-toggle color="primary"></mat-slide-toggle>
+            <mat-slide-toggle color="primary" [(ngModel)]="updateMediaModel.allowComments"></mat-slide-toggle>
         </div>
     </div>
     <div class="actions-category" fxLayout="row" fxLayoutAlign="end center">

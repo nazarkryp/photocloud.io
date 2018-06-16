@@ -27,7 +27,7 @@
 }
 
 .user-info__username {
-    font-size: 2em;
+    font-size: 1.5em;
     font-weight: bold;
     line-height: 1.5;
     padding-right: 1.4rem;
@@ -115,6 +115,8 @@ div.edit-image:not([disabled]):hover .change-overlay {
 }
 
 .user-info__btn-counter {
+    font-weight: bold;
+    color: rgb(0, 0, 0, .86);
     cursor: pointer;
 }
 
@@ -135,6 +137,14 @@ div.edit-image:not([disabled]):hover .change-overlay {
 .user-info__bio__username {
     font-weight: bold;
     margin-right: .5rem;
+}
+
+.user-info-small .user-info__counters {
+    font-size: 1em;
+}
+
+.user-info-small .btn-relationships {
+    width: 100%;
 }
 
 /* .user-info-bio {

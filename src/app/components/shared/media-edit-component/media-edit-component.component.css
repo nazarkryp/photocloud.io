@@ -56,6 +56,15 @@
     width: 90px;
     height: 90px;
     position: relative;
+    -webkit-transition: opacity .25s ease-in-out;
+    -moz-transition: opacity .25s ease-in-out;
+    -ms-transition: opacity .25s ease-in-out;
+    -o-transition: opacity .25s ease-in-out;
+    transition: opacity .25s ease-in-out;
+}
+
+.edit-media-container .preview-items .attachment-preview-container.transparent {
+    opacity: .5;
 }
 
 .edit-media-container .preview-items .attachment-preview-container img,
@@ -67,6 +76,7 @@
 }
 
 .edit-media-container textarea.caption {
+    line-height: 1.5;
     box-sizing: border-box;
     font-size: .9em;
     letter-spacing: 1px;
@@ -85,6 +95,7 @@
 .option-desctiption {
     font-size: .9em;
     color: rgb(0, 0, 0, .65);
+    line-height: 1.5;
 }
 
 .actions-category {

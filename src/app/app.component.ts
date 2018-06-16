@@ -54,6 +54,7 @@ export class AppComponent implements OnInit {
     public ngOnInit(): void {
         this.router.events.subscribe(event => {
             if (event instanceof ResolveStart) {
+                this.dialog.closeAll();
                 this.progress.start();
             } else if (event instanceof ResolveEnd) {
                 window.scrollTo(0, 0);

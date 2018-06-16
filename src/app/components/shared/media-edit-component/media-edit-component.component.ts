@@ -24,8 +24,12 @@ export class MediaEditComponentComponent implements OnInit {
         }
     }
 
-    public remove(attachmentToRemove: UpdateAttachmentViewModel) {
+    public removeAttachment(attachmentToRemove: UpdateAttachmentViewModel) {
         this.editMediaService.removeAttachment(this.updateMediaModel, attachmentToRemove);
+    }
+
+    public restoreAttachment(attachmentToRemove: UpdateAttachmentViewModel) {
+        this.editMediaService.restoreAttachment(this.updateMediaModel, attachmentToRemove);
     }
 
     public restoreRemovedAttachment(attachmentToRestore: UpdateAttachmentViewModel) {

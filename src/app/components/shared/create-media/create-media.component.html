@@ -31,6 +31,6 @@
         <input #fileInput type="file" accept="image/*,video/*" ng2FileSelect [uploader]="uploader" hidden multiple/>
     </div>
     <div class="footer" fxLayout="row" fxLayoutAlign="end center">
-        <button mat-stroked-button color="primary" [disabled]="!uploader.queue.length || uploader.isUploading || isLoading" (click)="createMedia()">CREATE POST</button>
+        <button mat-raised-button color="primary" [disabled]="!uploader.queue.length || uploader.isUploading || isLoading" (click)="createMedia()">CREATE POST</button>
     </div>
 </div>
