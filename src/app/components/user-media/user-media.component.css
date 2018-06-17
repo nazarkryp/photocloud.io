@@ -1,8 +1,3 @@
-.user-media-container {
-    min-height: calc(100vh - 228px);
-    padding: 0 .7rem;
-}
-
 .user-media {
     width: 100%;
     max-width: 960px;
