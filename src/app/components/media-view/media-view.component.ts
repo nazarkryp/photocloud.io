@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Inject, ViewChild, ElementRef } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef, MatSnackBarConfig, MatSnackBar } from '@angular/material';
 
-import { MediaViewModel, CommentViewModel, UserViewModel, CurrentUserViewModel } from 'app/models/view';
+import { MediaViewModel, CommentViewModel, UserViewModel, CurrentUserViewModel, AttachmentViewModel } from 'app/models/view';
 import { LikeService } from 'app/shared/services';
 import { CommentsComponent } from 'app/components/shared/comments/comments.component';
 import { CommentService } from 'app/services';
@@ -42,6 +42,10 @@ export class MediaViewComponent implements OnInit {
     public get shareMediaLink(): string {
         const pathArray = this.document.location.href.split('/');
         return `${pathArray[0]}//${pathArray[2]}/p/${this.media.id}`;
+    }
+
+    public select(attachment: AttachmentViewModel) {
+        this.media.activeAttachment = this.media.attachments.findIndex(e => e.id === attachment.id);
     }
 
     public next() {
@@ -110,5 +114,9 @@ export class MediaViewComponent implements OnInit {
         // image.onload = (event) => {
         //     console.log(`${image.clientWidth} ${image.clientHeight}`);
         // };
+    }
+
+    public close() {
+        this.ref.close();
     }
 }

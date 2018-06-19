@@ -38,6 +38,7 @@
     bottom: 2rem;
     left: calc(100vw - 3rem - 56px);
     position: fixed;
+    z-index: 999;
 }
 
 .btn-pulse:before,

@@ -1,4 +1,10 @@
 <div class="media-view-container">
+    <div class="media-view-container__header" fxLayout="row" fxLayoutAlign="space-between center">
+        <span style="font-weight: bold;">{{media.user.username}}</span>
+        <button mat-icon-button (click)="close()">
+            <mat-icon class="mat-18">clear</mat-icon>
+        </button>
+    </div>
     <div class="attachment-container" mat-ripple (click)='play()'>
         <div class="navigation" fxLayout="row" fxLayoutAlign="space-between center" *ngIf="media.attachments.length > 1">
             <div>
@@ -11,7 +17,7 @@
         <div class="attachment-items" *ngFor="let attachment of media.attachments; let index = index;">
             <div class="attachment-item-container" [hidden]="index !== media.activeAttachment" *ngIf="(media.activeAttachment === index && attachment.type === 1) || (attachment.type !== 1)">
                 <img class="attachment-image" src="{{attachment.uri}}" alt="media-image" *ngIf="attachment.type !== 1">
-                <video class="attachment-image" *ngIf="attachment.type === 1" loop #player>
+                <video class="attachment-image" *ngIf="attachment.type === 1" loop #player type="video/mp4">
                     <source src="{{attachment.uri}}">
                 </video>
             </div>
@@ -32,7 +38,7 @@
                 </div>
             </div>
         </header>
-        <main fxLayout="column" fxLayoutAlign="start start" fxFlex>
+        <main fxLayout="column" fxLayoutAlign="start start" fxFlex style="min-height: 400px;">
             <!-- <div>
                 <div style="padding-bottom: .7rem; width: 100%; line-height: 1.5;" fxLayout="row" fxLayoutAlign="start center">
                     <mat-icon class="mat-18" style="color: rgb(0,0,0,.85); margin-right: .25rem;" *ngIf="media.likesCount === 0 || media.likesCount > 3">favorite</mat-icon>
@@ -52,10 +58,20 @@
                 </div>
                 <app-comments #commentsComponent [media]="media" [hidden]="!media.commentsCount"></app-comments>
             </div>
+            <div style="width: 100%;" *ngIf="media.attachments.length > 1">
+                <span style="font-weight: bold; padding-bottom: .7rem; display: block;">Attachments</span>
+                <div class="media-preview-items">
+                    <div class="preview-item" *ngFor="let item of media.attachments; let index = index;">
+                        <div class="attachment-preview-container" [ngClass]="{ 'transparent' : item.removed }" mat-ripple (click)="select(item)">
+                            <img [src]="item.uri" *ngIf="item.type !== 1">
+                            <video *ngIf="item.type === 1">
+                                <source src="{{item.uri}}">
+                            </video>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </main>
-        <!-- <footer style="padding-bottom: .7rem;">
-            <app-comment-box (submitted)="createComment($event)"></app-comment-box>
-        </footer> -->
         <footer>
             <div class="actions" fxLayout="row" fxLayoutAlign="space-between center">
                 <div style="position: relative;">
