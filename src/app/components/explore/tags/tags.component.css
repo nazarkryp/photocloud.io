@@ -72,19 +72,23 @@
     overflow: hidden;
 }
 
-.tags-media-item img,
-.tags-media-item video {
+.tags-media-item img.tags-media-thumbnail,
+.tags-media-item video.tags-media-thumbnail {
     max-width: 100%;
-    -moz-transition: all 0.3s;
-    -webkit-transition: all 0.3s;
-    transition: all 0.3s;
+    -webkit-transition: transform .3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    -moz-transition: transform .3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition: transform .3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-.tags-media-item:hover img,
-.tags-media-item:hover video {
-    -moz-transform: scale(1.2);
-    -webkit-transform: scale(1.2);
-    transform: scale(1.2);
+.tags-media-item:hover img.tags-media-thumbnail,
+.tags-media-item:hover video.tags-media-thumbnail {
+    -moz-transform: scale(1.1);
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+}
+
+.tags-media-item:hover .tags-media-item__details {
+    opacity: 1;
 }
 
 .multiple-attachments-icon-container {
@@ -101,4 +105,20 @@
 .multiple-attachments-icon {
     color: white;
     text-shadow: 2px 2px 4px #000000;
+}
+
+.tags-media-item__details {
+    opacity: 0;
+    padding: 0 .7rem .7rem;
+    bottom: 0;
+    position: absolute;
+    width: 100%;
+    background: linear-gradient(to bottom, transparent, rgb(0, 0, 0, .7));
+    -webkit-transition: opacity .3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    -moz-transition: opacity .3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition: opacity .3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.btn-icon.white:not(:hover) {
+    color: rgb(255, 255, 255, .86);
 }

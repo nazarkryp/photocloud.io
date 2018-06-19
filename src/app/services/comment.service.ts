@@ -19,9 +19,12 @@ export class CommentService {
         private commentMapper: CommentMapper,
         private currentUserService: CurrentUserService,
         private userMapper: UserMapper) {
-        const currentUser = this.currentUserService.retrieveCurrentUser();
-        this.currentUser = this.userMapper.mapFromCurrentUser(currentUser);
-        this.pageMapper = new PageMapper(commentMapper);
+        this.currentUserService.getCurrentUser().subscribe(currentUser => {
+            if (currentUser) {
+                this.currentUser = this.userMapper.mapFromCurrentUser(currentUser);
+                this.pageMapper = new PageMapper(commentMapper);
+            }
+        });
     }
 
     public getComments(mediaId: number, pagination: PaginationViewModel): Observable<Page<CommentViewModel>> {

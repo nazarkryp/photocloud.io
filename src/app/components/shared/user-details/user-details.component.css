@@ -115,7 +115,6 @@ div.edit-image:not([disabled]):hover .change-overlay {
 }
 
 .user-info__btn-counter {
-    font-weight: bold;
     color: rgb(0, 0, 0, .86);
     cursor: pointer;
 }

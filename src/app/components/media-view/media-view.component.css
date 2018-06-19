@@ -208,13 +208,13 @@
     display: grid;
     grid-gap: 1.4rem .7rem;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-    grid-auto-rows: minmax(100px, auto);
+    grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
+    grid-auto-rows: minmax(50px, auto);
 }
 
 .media-preview-items .preview-item {
-    width: 100px;
-    height: 100px;
+    width: 50px;
+    height: 50px;
     position: relative;
 }
 
@@ -235,8 +235,8 @@
 }
 
 .media-preview-items .attachment-preview-container {
-    width: 100px;
-    height: 100px;
+    width: 50px;
+    height: 50px;
     position: relative;
     -webkit-transition: opacity .25s ease-in-out;
     -moz-transition: opacity .25s ease-in-out;
