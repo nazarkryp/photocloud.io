@@ -11,6 +11,7 @@ import { UserService } from 'app/services';
 import { ActivityService } from 'app/services/activity';
 import { ConfirmComponent } from 'app/components/shared/confirm/confirm.component';
 import { RelationshipAction } from 'app/models/shared';
+import { PromptService } from 'app/modules/prompt';
 
 @Component({
     templateUrl: './activity.component.html',
@@ -61,7 +62,8 @@ export class ActivityComponent implements OnInit {
 
     constructor(
         private route: ActivatedRoute,
-        public dialog: MatDialog,
+        private dialog: MatDialog,
+        private prompt: PromptService,
         private userService: UserService,
         private activityService: ActivityService) { }
 
@@ -105,14 +107,10 @@ export class ActivityComponent implements OnInit {
     }
 
     public removeAllActivities() {
-        const dialogRef = this.dialog.open(ConfirmComponent, {
-            data: {
-                title: 'CLEAR ACTIVITY',
-                message: 'Are you sure you want you want to clear activity?'
-            }
-        });
-
-        dialogRef.afterClosed().subscribe(confirmed => {
+        this.prompt.prompt({
+            title: 'CLEAR RECENT ACTIVITY',
+            description: 'Are you sure you want to clear recent activity?'
+        }).subscribe(confirmed => {
             if (confirmed) {
                 this.activityService.removeAllActivities()
                     .subscribe(() => {

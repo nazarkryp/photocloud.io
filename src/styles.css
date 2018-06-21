@@ -131,11 +131,10 @@ a {
 }
 
 .mat-button.btn-default {
-    width: 100%;
     background: #efefef;
     color: rgb(0, 0, 0, .65);
     text-transform: uppercase;
-    font-size: 0.8em;
+    font-size: 0.9em;
     letter-spacing: 1px;
     font-weight: 600;
 }

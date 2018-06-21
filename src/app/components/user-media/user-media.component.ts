@@ -18,6 +18,7 @@ import { UsersDialogComponent } from '../shared/users-dialog/users-dialog.compon
 import { ConfirmComponent } from 'app/components/shared/confirm/confirm.component';
 import { MediaViewComponent } from '../media-view/media-view.component';
 import { ScrollStrategy, Overlay } from '@angular/cdk/overlay';
+import { MediaViewService } from '../media-view/services/media-view.service';
 
 @Component({
     templateUrl: './user-media.component.html',
@@ -35,16 +36,14 @@ export class UserMediaComponent implements OnInit, OnDestroy, AfterViewChecked {
     public isLoading: boolean;
 
     constructor(
-        private overlay: Overlay,
         private cd: ChangeDetectorRef,
-        private viewContainerRef: ViewContainerRef,
         private accountService: AccountService,
         private mediaService: MediaService,
         private userService: UserService,
         private currentUserService: CurrentUserService,
         private router: Router,
         private route: ActivatedRoute,
-        public dialog: MatDialog,
+        private mediaViewService: MediaViewService,
         private progress: ProgressService) {
         this.currentUser = this.currentUserService.retrieveCurrentUser();
     }
@@ -104,18 +103,19 @@ export class UserMediaComponent implements OnInit, OnDestroy, AfterViewChecked {
     }
 
     public openPostDialog(media: MediaViewModel) {
-        this.dialog.open(MediaViewComponent, {
-            viewContainerRef: this.viewContainerRef,
-            scrollStrategy: this.overlay.scrollStrategies.block(),
-            height: 'auto',
-            width: 'auto',
-            maxHeight: 'calc(100vh - 1.4rem)',
-            maxWidth: 'calc(100vw - 1.4rem)',
-            data: media,
-            autoFocus: false
-        }).afterClosed().subscribe(() => {
-            media.editing = false;
-        });
+        this.mediaViewService.open(media);
+        // this.dialog.open(MediaViewComponent, {
+        //     viewContainerRef: this.viewContainerRef,
+        //     scrollStrategy: this.overlay.scrollStrategies.block(),
+        //     height: 'auto',
+        //     width: 'auto',
+        //     maxHeight: 'calc(100vh - 1.4rem)',
+        //     maxWidth: 'calc(100vw - 1.4rem)',
+        //     data: media,
+        //     autoFocus: false
+        // }).afterClosed().subscribe(() => {
+        //     media.editing = false;
+        // });
 
         // const dialog = this.dialog.open(MediaDetailsComponent, {
         //     viewContainerRef: this.viewContainerRef,

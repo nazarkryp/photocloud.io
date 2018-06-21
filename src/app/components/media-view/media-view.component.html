@@ -1,28 +1,28 @@
-<div class="media-view-container">
-    <div class="media-view-container__header" fxLayout="row" fxLayoutAlign="space-between center">
-        <span style="font-weight: bold;">{{media.user.username}}</span>
-        <button mat-icon-button (click)="close()">
-            <mat-icon class="mat-18">clear</mat-icon>
-        </button>
+<div class="media-view">
+    <div style="position: absolute; top: .7rem; left: .7rem; z-index: 999;" (click)="close()" *ngIf="isMobile">
+        <mat-icon class="mat-18" style="color: white; text-shadow: 2px 2px 4px rgb(0, 0, 0, .86);">arrow_back_ios</mat-icon>
     </div>
-    <div class="attachment-container" mat-ripple (click)='play()'>
-        <div class="navigation" fxLayout="row" fxLayoutAlign="space-between center" *ngIf="media.attachments.length > 1">
-            <div>
-                <mat-icon class="mat-36" *ngIf="media.activeAttachment > 0" (click)="previous()">chevron_left</mat-icon>
+    <div>
+        <div mat-ripple class="media-view__attachment-container" fxLayout="row" fxLayoutAlign="center center" (click)='play()'>
+            <div class="navigation" fxLayout="row" fxLayoutAlign="space-between center" *ngIf="media.attachments.length > 1">
+                <div>
+                    <mat-icon class="mat-36" *ngIf="media.activeAttachment > 0" (click)="previous()">chevron_left</mat-icon>
+                </div>
+                <div>
+                    <mat-icon class="mat-36" *ngIf="media.activeAttachment != media.attachments.length - 1" (click)="next()" Ï>chevron_right</mat-icon>
+                </div>
             </div>
-            <div>
-                <mat-icon class="mat-36" *ngIf="media.activeAttachment != media.attachments.length - 1" (click)="next()" Ï>chevron_right</mat-icon>
+            <div class="attachment-items" *ngFor="let attachment of media.attachments; let index = index;">
+                <div class="attachment-item-container" [hidden]="index !== media.activeAttachment" *ngIf="(media.activeAttachment === index && attachment.type === 1) || (attachment.type !== 1)">
+                    <img class="attachment-image" src="{{attachment.uri}}" alt="media-image" *ngIf="attachment.type !== 1">
+                    <video class="attachment-image" *ngIf="attachment.type === 1" loop #player type="video/mp4">
+                        <source src="{{attachment.uri}}">
+                    </video>
+                </div>
             </div>
         </div>
-        <div class="attachment-items" *ngFor="let attachment of media.attachments; let index = index;">
-            <div class="attachment-item-container" [hidden]="index !== media.activeAttachment" *ngIf="(media.activeAttachment === index && attachment.type === 1) || (attachment.type !== 1)">
-                <img class="attachment-image" src="{{attachment.uri}}" alt="media-image" *ngIf="attachment.type !== 1">
-                <video class="attachment-image" *ngIf="attachment.type === 1" loop #player type="video/mp4">
-                    <source src="{{attachment.uri}}">
-                </video>
-            </div>
-        </div>
     </div>
+
     <aside class="media-view-details" fxLayout="column" *ngIf="!media.editing; else editMode;">
         <header>
             <div fxLayout="row">
@@ -39,12 +39,6 @@
             </div>
         </header>
         <main fxLayout="column" fxLayoutAlign="start start" fxFlex style="min-height: 400px;">
-            <!-- <div>
-                <div style="padding-bottom: .7rem; width: 100%; line-height: 1.5;" fxLayout="row" fxLayoutAlign="start center">
-                    <mat-icon class="mat-18" style="color: rgb(0,0,0,.85); margin-right: .25rem;" *ngIf="media.likesCount === 0 || media.likesCount > 3">favorite</mat-icon>
-                    <app-likes [media]="media"></app-likes>
-                </div>
-            </div> -->
             <div class="caption-container" *ngIf="media.caption">
                 <a class="author-username" [routerLink]="['/', media.user.username]">
                     {{media.user.username}}

@@ -1,5 +1,7 @@
 import { Component, OnInit, Input, Inject, ViewChild, ElementRef } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
 import { MAT_DIALOG_DATA, MatDialogRef, MatSnackBarConfig, MatSnackBar } from '@angular/material';
+import { BreakpointObserver } from '@angular/cdk/layout';
 
 import { MediaViewModel, CommentViewModel, UserViewModel, CurrentUserViewModel, AttachmentViewModel } from 'app/models/view';
 import { LikeService } from 'app/shared/services';
@@ -7,7 +9,6 @@ import { CommentsComponent } from 'app/components/shared/comments/comments.compo
 import { CommentService } from 'app/services';
 import { CurrentUserService } from 'app/infrastructure/services';
 import { CommentBoxComponent } from '../shared/comment-box/comment-box.component';
-import { DOCUMENT } from '@angular/common';
 
 @Component({
     selector: 'app-media-view',
@@ -26,9 +27,11 @@ export class MediaViewComponent implements OnInit {
     @ViewChild('commentsComponent')
     public commentsComponent: CommentsComponent;
     public editing: boolean;
+    public isMobile: boolean;
 
     constructor(
         private snackBar: MatSnackBar,
+        private breakpointObserver: BreakpointObserver,
         private ref: MatDialogRef<MediaViewComponent>,
         @Inject(DOCUMENT) private document: Document,
         @Inject(MAT_DIALOG_DATA) public media: MediaViewModel,
@@ -36,6 +39,7 @@ export class MediaViewComponent implements OnInit {
         private currentUserService: CurrentUserService,
         private likeService: LikeService
     ) {
+        this.isMobile = this.breakpointObserver.isMatched('(max-width: 500px)');
         this.currentUser = this.currentUserService.retrieveCurrentUser();
     }
 
@@ -108,6 +112,10 @@ export class MediaViewComponent implements OnInit {
     }
 
     public ngOnInit() {
+        this.ref.beforeClose().subscribe(() => {
+            this.media.editing = false;
+            this.media.activeAttachment = 0;
+        });
         // const image = this.attachment.nativeElement;
 
         // console.log(window.innerHeight);

@@ -14,6 +14,7 @@ import { AccountService } from 'app/account/services';
 import { MediaService } from 'app/services';
 import { ProgressService } from 'app/shared/services';
 import { LikeService } from 'app/shared/services';
+import { MediaViewService } from 'app/components/media-view/services/media-view.service';
 
 @Component({
     templateUrl: './tags.component.html',
@@ -29,10 +30,9 @@ export class TagsComponent implements OnInit, OnDestroy {
     public isLoading: boolean;
 
     constructor(
-        private overlay: Overlay,
-        private viewContainerRef: ViewContainerRef,
-        public dialog: MatDialog,
+        private dialog: MatDialog,
         private route: ActivatedRoute,
+        private mediaViewService: MediaViewService,
         private mediaService: MediaService,
         private currentUserService: CurrentUserService,
         private accountService: AccountService,
@@ -65,22 +65,11 @@ export class TagsComponent implements OnInit, OnDestroy {
     }
 
     public like(media) {
-        this.likeService.like(media);
+        this.likeService.like(media).subscribe(() => { });
     }
 
     public openPostDialog(media: MediaViewModel) {
-        this.dialog.open(MediaViewComponent, {
-            viewContainerRef: this.viewContainerRef,
-            scrollStrategy: this.overlay.scrollStrategies.block(),
-            height: 'auto',
-            width: 'auto',
-            maxHeight: 'calc(100vh - 1.4rem)',
-            maxWidth: 'calc(100vw - 1.4rem)',
-            data: media,
-            autoFocus: false
-        }).afterClosed().subscribe(() => {
-            media.editing = false;
-        });
+        this.mediaViewService.open(media);
     }
 
     public onPositionChange() {

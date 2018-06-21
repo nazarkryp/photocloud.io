@@ -1,5 +1,5 @@
 <div class="users-dialog-container" fxLayout="column">
-    <div class="users-title" fxLayout="row" fxLayoutAlign="space-between center">
+    <div class="users-dialog-header" fxLayout="row" fxLayoutAlign="space-between center">
         <h1>{{title}}</h1>
         <mat-icon class="btn-icon mat-18" (click)="close()" tabindex="-1">clear</mat-icon>
     </div>
@@ -27,7 +27,7 @@
                 </div>
             </div>
         </div>
-        <div fxLayout="row" fxLayoutAlign="center center" *ngIf="page.hasMoreItems" style="padding: .7rem; background: white;">
+        <div class="user-dealog-items__footer" fxLayout="row" fxLayoutAlign="center center" *ngIf="page.hasMoreItems">
             <button class="btn-default" mat-button (click)="getUsers()" [disabled]="isLoading">LOAD MORE</button>
         </div>
     </div>

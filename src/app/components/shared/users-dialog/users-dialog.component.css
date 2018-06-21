@@ -6,9 +6,8 @@
     background: #fafafa;
 }
 
-.users-dialog-container .users-title {
-    padding: .75rem;
-    /* border-bottom: 1px solid #f2f2f2; */
+.users-dialog-container .users-dialog-header {
+    padding: 1.4rem .7rem;
 }
 
 .users-dialog-container .search-box {
@@ -21,13 +20,12 @@
     box-sizing: border-box;
     width: 100%;
     border: none;
-    /* border-radius: 2px; */
     padding: .7rem;
     outline: none;
     background: rgb(240, 240, 240);
 }
 
-.users-dialog-container .users-title h1 {
+.users-dialog-container .users-dialog-header h1 {
     font-weight: bold;
     font-size: 1.1em;
 }
@@ -80,6 +78,15 @@
     overflow-y: scroll;
     position: relative;
     border-top: 1px solid #efefef;
+}
+
+.user-dealog-items__footer {
+    padding: .7rem;
+    background: white;
+}
+
+.user-dealog-items__footer .btn-default {
+    width: 100%;
 }
 
 .user-item {

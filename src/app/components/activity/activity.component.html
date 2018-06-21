@@ -8,7 +8,7 @@
     <div class="activities-container" fxLayout="column" fxLayoutAlign="start center">
         <div class="items" fxLayout="column" fxLayoutAlign="start center" appInfiniteScroll [appScrollTriggerOnce]="true" [scrollOffset]="2000" (scrollPosition)="onPositionChange()">
             <span *ngIf="!page?.data?.length && !isLoading">You have no recent activity</span>
-            <div mat-ripple (appear)="appear($event, activity)" class="activity-container" [ngClass]="{ 'unread' : !activity.isMarkedAsRead }" *ngFor="let activity of page?.data; let index = index;">
+            <div (appear)="appear($event, activity)" class="activity-container" [ngClass]="{ 'unread' : !activity.isMarkedAsRead }" *ngFor="let activity of page?.data; let index = index;">
                 <div class=" activity" fxLayout="row" fxLayoutAlign="start start">
                     <a [routerLink]="[ '/', activity.user.username]">
                         <img class="user-thumbnail" src="{{activity.user.pictureUri}}" alt="user-thumbnail">
@@ -38,10 +38,9 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div fxLayout="row" fxLayoutAlign="center center" *ngIf="page?.hasMoreItems" style="height: 40px;">
-            <button class="btn-primary" mat-button (click)="getNotifications()" [disabled]="isLoading" *ngIf="!isLoading">Load More</button>
-            <mat-spinner [diameter]="30" [strokeWidth]="3" color="primary" *ngIf="isLoading"></mat-spinner>
+            <div class="footer" fxLayout="row" fxLayoutAlign="center center" *ngIf="page?.hasMoreItems">
+                <mat-spinner [diameter]="30" [strokeWidth]="2" color="primary" *ngIf="isLoading"></mat-spinner>
+            </div>
         </div>
     </div>
 </div>
