@@ -1,8 +1,10 @@
 <div class="media-item" *ngIf="media">
     <div class="media-item-header" fxLayout="row" fxLayoutAlign="space-between center" *ngIf="!media.editing">
         <div class="media-item-owner" fxLayout="row" fxLayoutAlign="start center">
-            <img [routerLink]="['/', media.user.username]" src="{{media.user.pictureUri}}" default="assets/images/user-default-image.png" alt="profile">
-            <a [routerLink]="['/', media.user.username]">{{media.user.username}}</a>
+            <a [routerLink]="['/', media.user.username]">
+                <img src="{{media.user.pictureUri}}" default="assets/images/user-default-image.png" alt="profile">
+            </a>
+            <a class="username" [routerLink]="['/', media.user.username]">{{media.user.username}}</a>
         </div>
         <div *ngIf="currentUser && media.user.id === currentUser.id">
             <button mat-icon-button type="button" [matMenuTriggerFor]="menu">

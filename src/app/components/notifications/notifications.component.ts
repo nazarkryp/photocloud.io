@@ -7,6 +7,7 @@ import { finalize } from 'rxjs/operators';
 import { ActivityService } from 'app/services/activity';
 import { ActivityViewModel, Page, ActivityPage } from 'app/models/view';
 import { CurrentUserService } from 'app/infrastructure/services';
+import { ActivityType } from '../../models/shared';
 
 @Component({
     selector: 'app-notifications',
@@ -43,6 +44,12 @@ export class NotificationsComponent implements OnInit {
 
     public openAllNotifications(event) {
         this.allNotificatoinsOpened.next();
+    }
+
+    public handleNotification(activity: ActivityViewModel) {
+        if (activity.activityType === ActivityType.Requested) {
+            this.openRequests();
+        }
     }
 
     public openRequests() {

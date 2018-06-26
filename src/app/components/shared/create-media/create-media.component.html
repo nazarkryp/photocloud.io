@@ -6,7 +6,11 @@
     <div class="content">
         <div class="details" fxLayout="row" *ngIf="media.attachments.length > 0">
             <div class="preview" fxLayout="column" fxLayoutAlign="start center">
-                <img [src]="media.attachments[media.selectedAttachmentIndex].uri" alt="preview">
+                <img [src]="media.attachments[media.selectedAttachmentIndex].uri" alt="preview" *ngIf="media.attachments[media.selectedAttachmentIndex].type !== 1">
+                <video *ngIf="media.attachments[media.selectedAttachmentIndex].type === 1">
+                    <source [src]="media.attachments[media.selectedAttachmentIndex].uri">
+                </video>
+                <!-- <img [src]="media.attachments[media.selectedAttachmentIndex].uri" alt="preview"> -->
                 <a class="primary" [ngClass]="{ 'disabled' : media.coverAttachmentIndex === media.selectedAttachmentIndex }" (click)="setAsCover()">Use as cover</a>
             </div>
             <textarea class="caption" [(ngModel)]="media.caption" rows="5" placeholder="Write a caption..."></textarea>
@@ -15,7 +19,9 @@
             <div *ngFor="let item of uploader.queue; let index = index;">
                 <mat-icon mat-ripple class="btn-icon btn-remove mat-18" (click)="remove(index)">clear</mat-icon>
                 <div class="preview-container" mat-ripple (click)="select(index)">
-                    <img appImagePreview [image]="item?._file" alt="upload-preview">
+                    <video appImagePreview [image]="item?._file" *ngIf="item?._file.type === 'video/mp4'" loop>
+                    </video>
+                    <img appImagePreview [image]="item?._file" alt="upload-preview" *ngIf="item?._file.type !== 'video/mp4'">
                 </div>
                 <div class="preview-img-overlay" fxLayout="row" fxLayoutAlign="center center" *ngIf="!item.isUploaded">
                     <span *ngIf="item.progress && item.progress < 100">{{item.progress}}</span>

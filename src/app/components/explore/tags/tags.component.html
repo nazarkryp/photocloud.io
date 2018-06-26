@@ -19,10 +19,10 @@
                 </div>
                 <div class="tags-media-item__details" fxLayout="row" fxLayoutAlign="space-between center">
                     <div fxLayout="row" fxLayoutAlign="center center">
-                        <img style="width: 35px; height: 35px; border-radius: 50%; object-fit: cover; margin-right: 1.4rem;" [src]="media.user.pictureUri" alt="avatar">
+                        <img style="width: 35px; height: 35px; border-radius: 50%; object-fit: cover; margin-right: 1.4rem; box-shadow: 0 3px 8px -3px rgba(0, 0, 0, 0.26);" [src]="media.user.pictureUri" alt="avatar">
                         <a class="username" style="color: rgb(255, 255, 255, .86); font-size: .9em;" [routerLink]="['/', media.user.username]">{{media.user.username}}</a>
                     </div>
-                    <div style="padding: .35rem .35rem .15rem .35rem; background: rgb(255, 255, 255, .3); border-radius: 7px;">
+                    <div class="btn-like">
                         <mat-icon class="btn-icon mat-18 white" [ngClass]="{ 'warn' : media.userHasLiked, 'btn-icon-pulse' : media.userHasLiked }" (click)="like(media)" svgIcon="heart"></mat-icon>
                     </div>
                 </div>

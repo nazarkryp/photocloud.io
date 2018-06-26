@@ -1,7 +1,8 @@
 import { Directive, ElementRef, Input, Renderer, OnChanges, SimpleChanges } from '@angular/core';
 
-@Directive({ selector: 'img[appImagePreview]' })
-
+@Directive({
+    selector: '[appImagePreview]'
+})
 export class ImagePreviewDirective implements OnChanges {
     @Input() public image: any;
 
@@ -13,7 +14,11 @@ export class ImagePreviewDirective implements OnChanges {
 
         reader.onloadend = function (e) {
             el.nativeElement.src = reader.result;
-            el.nativeElement.poster = reader.result;
+
+            if (el.nativeElement.localName === 'video') {
+                el.nativeElement.muted = 'muted';
+                el.nativeElement.play();
+            }
         };
 
         if (this.image) {

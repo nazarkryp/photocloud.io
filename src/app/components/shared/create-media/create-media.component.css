@@ -28,7 +28,8 @@
     margin-right: .7rem;
 }
 
-.create-media-container .content .details .preview img {
+.create-media-container .content .details .preview img,
+.create-media-container .content .details .preview video {
     width: 85px;
     height: 85px;
     object-fit: cover;
@@ -67,7 +68,8 @@
     position: relative;
 }
 
-.create-media-container .preview-items .preview-container img {
+.create-media-container .preview-items .preview-container img,
+.create-media-container .preview-items .preview-container video {
     width: 60px;
     height: 60px;
     object-fit: cover;

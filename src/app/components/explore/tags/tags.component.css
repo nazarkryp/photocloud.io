@@ -38,12 +38,14 @@
     cursor: pointer;
     outline: none;
     font-weight: bold;
+    text-shadow: 2px 2px 4px rgb(0, 0, 0, .86);
 }
 
 .tags-media-item {
     position: relative;
     overflow: hidden;
     cursor: pointer;
+    box-shadow: 0 3px 8px -3px rgba(0, 0, 0, 0.26);
 }
 
 .tags-media-item:after {
@@ -121,4 +123,21 @@
 
 .btn-icon.white:not(:hover):not(.warn) {
     color: rgb(255, 255, 255, .86);
+}
+
+.btn-like {
+    padding: .35rem .35rem .15rem .35rem;
+    background-color: rgb(150, 150, 150, .3);
+    border-radius: 7px;
+    -webkit-transition: background-color .3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    -moz-transition: background-color .3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition: background-color .3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.btn-like:hover {
+    background-color: rgb(255, 255, 255, .5);
+}
+
+.btn-like:active {
+    background-color: rgb(240, 240, 240, .2);
 }

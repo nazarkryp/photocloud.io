@@ -1,3 +1,7 @@
+.caption {
+    overflow-wrap: break-word;
+}
+
 .caption a.hashtag {
     /* font-weight: bold !important; */
 }

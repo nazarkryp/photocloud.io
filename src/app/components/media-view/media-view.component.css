@@ -128,10 +128,10 @@
 .media-view-details main {
     padding: 0 0 1.4rem .7rem;
     overflow-y: hidden;
-    min-height: 400px;
 }
 
 .caption-container {
+    font-size: .9em;
     padding: 0 .7rem .7rem 0;
     line-height: 1.5;
     width: 100%;

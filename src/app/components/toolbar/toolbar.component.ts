@@ -60,7 +60,7 @@ export class ToolbarComponent implements OnInit, OnDestroy, AfterViewChecked, Af
     }
 
     public get isMenuOpened(): boolean {
-        return this.trigger ? this.trigger.menuOpen : false;
+        return this._trigger ? this._trigger.menuOpen : false;
     }
 
     public get isAuthenticated(): boolean {
@@ -68,24 +68,24 @@ export class ToolbarComponent implements OnInit, OnDestroy, AfterViewChecked, Af
     }
 
     public openNotifications() {
-        if (this.trigger) {
-            this.trigger.closeMenu();
+        if (this._trigger) {
+            this._trigger.closeMenu();
         }
 
         this.router.navigate(['activity', 'recent']);
     }
 
     public openRequests() {
-        if (this.trigger) {
-            this.trigger.closeMenu();
+        if (this._trigger) {
+            this._trigger.closeMenu();
         }
 
         this.requestsOpened.emit(true);
     }
 
     public onPositionChange(event) {
-        if (this.trigger) {
-            this.trigger.closeMenu();
+        if (this._trigger) {
+            this._trigger.closeMenu();
         }
 
         this.scrolled = event;

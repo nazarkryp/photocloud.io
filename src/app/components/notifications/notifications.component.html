@@ -13,7 +13,7 @@
     </div>
     <div *ngIf="activity?.data?.length; else noNotifications">
         <div class="items">
-            <div mat-ripple class="notification" [ngClass]="{ 'unread' : !notification.isMarkedAsRead }" *ngFor="let notification of activity?.data.slice(0, 4);" fxLayout="row" fxLayoutAlign="start start">
+            <div mat-ripple (click)="handleNotification(notification)" class="notification" [ngClass]="{ 'unread' : !notification.isMarkedAsRead }" *ngFor="let notification of activity?.data.slice(0, 4);" fxLayout="row" fxLayoutAlign="start start">
                 <a [routerLink]="['/', notification.user.username]">
                     <img class="user-thumbnail" src="{{notification.user.pictureUri}}" alt="user-thumbnail">
                 </a>

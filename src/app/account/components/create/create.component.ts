@@ -70,7 +70,7 @@ export class CreateComponent implements OnInit {
                     Validators.required,
                     Validators.maxLength(50),
                     Validators.minLength(3),
-                    Validators.pattern(/^[a-z0-9]+$/i)]),
+                    Validators.pattern(/^[a-zA-Z0-9._-]+$/i)]),
                 [this.validateUsername.bind(this)]),
             fullName: new FormControl('',
                 Validators.compose([
