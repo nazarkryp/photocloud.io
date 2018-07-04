@@ -13,7 +13,7 @@
                     <video class="thumbnail" *ngIf="media.attachments[0].type === 1" loop #player>
                         <source src="{{media.attachments[0].uri}}">
                     </video>
-                    <mat-icon class="multiple-attachments-icon" *ngIf="media.attachments.length > 1">layers</mat-icon>
+                    <mat-icon class="attachments-icon" *ngIf="media.attachments.length > 1">layers</mat-icon>
                 </div>
                 <div class="media-description" fxLayout="row" fxLayoutAlign="space-between start">
                     <div class="tag-user-info" fxLayout="column" fxLayoutAlign="center start">

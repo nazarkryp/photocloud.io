@@ -8,16 +8,16 @@
         </div>
         <div *ngIf="currentUser && media.user.id === currentUser.id">
             <button mat-icon-button type="button" [matMenuTriggerFor]="menu">
-                <mat-icon class="mat-24">expand_more</mat-icon>
+                <mat-icon>expand_more</mat-icon>
             </button>
             <mat-menu #menu="matMenu" xPosition="before">
-                <button mat-menu-item (click)="edit()">
+                <button class="media-menu-button" mat-menu-item (click)="edit()">
                     <mat-icon class="mat-18">edit</mat-icon>
-                    <span>Edit</span>
+                    Edit
                 </button>
-                <button mat-menu-item (click)="remove()">
+                <button class="media-menu-button" mat-menu-item (click)="remove()">
                     <mat-icon class="mat-18">delete</mat-icon>
-                    <span>Remove</span>
+                    Remove
                 </button>
             </mat-menu>
         </div>
@@ -26,10 +26,10 @@
         <mat-progress-bar class="media-progressbar" bufferValue="0" [value]="media.attachments[media.activeAttachment].progress" *ngIf="media.attachments[media.activeAttachment].type"></mat-progress-bar>
         <div class="navigation" fxLayout="row" fxLayoutAlign="space-between center" *ngIf="media.attachments.length > 1">
             <div>
-                <mat-icon class="mat-36" *ngIf="media.activeAttachment > 0" (click)="previous()">chevron_left</mat-icon>
+                <mat-icon *ngIf="media.activeAttachment > 0" (click)="previous()">chevron_left</mat-icon>
             </div>
             <div>
-                <mat-icon class="mat-36" *ngIf="media.activeAttachment != media.attachments.length - 1" (click)="next()">chevron_right</mat-icon>
+                <mat-icon *ngIf="media.activeAttachment != media.attachments.length - 1" (click)="next()">chevron_right</mat-icon>
             </div>
         </div>
         <div mat-ripple *ngFor="let attachment of media.attachments; let index = index;">

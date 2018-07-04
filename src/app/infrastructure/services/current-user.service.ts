@@ -14,7 +14,6 @@ import { CreateAccountRequestModel } from 'app/account/models/request';
 @Injectable()
 export class CurrentUserService {
     private currentUserStorageKey = 'photocloud-current-user';
-    private currentUser: CurrentUserViewModel;
     private state: ReplaySubject<CurrentUserViewModel> = new ReplaySubject<CurrentUserViewModel>(1);
     private intervalNumber: number;
     private gettingIncommingRequests: boolean;
@@ -112,8 +111,6 @@ export class CurrentUserService {
         }
 
         this.tokenProvider.removeAccessToken();
-
-        this.currentUser = null;
         this.state.next(null);
     }
 
@@ -138,7 +135,7 @@ export class CurrentUserService {
     public updateCurrentUser(propertiesToUpdate: any): Observable<CurrentUserViewModel> {
         return this.accountService.updateAccount(propertiesToUpdate)
             .pipe(tap(currentUser => {
-                this.saveCurrentUser(currentUser);
+                this.updateUser(currentUser);
             }));
     }
 
@@ -162,13 +159,12 @@ export class CurrentUserService {
     }
 
     public retrieveCurrentUser(): CurrentUserViewModel {
-        return (this.currentUser = (this.currentUser ? this.currentUser : this.storageService.get<CurrentUserViewModel>(this.currentUserStorageKey, CurrentUserViewModel)));
+        return this.storageService.get<CurrentUserViewModel>(this.currentUserStorageKey, CurrentUserViewModel);
     }
 
     private saveCurrentUser(currentUser: CurrentUserViewModel) {
-        this.state.next(currentUser);
         this.storageService.set<CurrentUserViewModel>(this.currentUserStorageKey, currentUser);
-        this.currentUser = currentUser;
+        this.state.next(currentUser);
     }
 
     public get isAuthenticated(): boolean {

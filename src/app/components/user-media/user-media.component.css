@@ -110,18 +110,18 @@
     font-size: 1.2em;
 }
 
-.multiple-attachments-icon-container {
+.attachments-icon-container {
     position: absolute;
     top: 15px;
     right: 15px;
     z-index: 777;
 }
 
-.multiple-attachments-icon-container>:last-child {
+.attachments-icon-container>:last-child {
     margin-left: .5rem;
 }
 
-.multiple-attachments-icon {
+.attachments-icon {
     color: white;
     text-shadow: 2px 2px 4px #000000;
 }

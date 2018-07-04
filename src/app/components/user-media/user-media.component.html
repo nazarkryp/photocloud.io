@@ -8,9 +8,9 @@
                     <video class="user-media-thumbnail" *ngIf="media?.attachments[0].type === 1">
                         <source src="{{media?.attachments[0].uri}}">
                     </video>
-                    <div class="multiple-attachments-icon-container" fxLayout="row" fxLayoutAlign="start center" *ngIf="media.attachments.length > 1 || media?.attachments[0].type === 1">
-                        <mat-icon class="multiple-attachments-icon" *ngIf="media.attachments[0].type === 1">videocam</mat-icon>
-                        <mat-icon class="multiple-attachments-icon" *ngIf="media.attachments.length > 1">layers</mat-icon>
+                    <div class="attachments-icon-container" fxLayout="row" fxLayoutAlign="start center" *ngIf="media.attachments.length > 1 || media?.attachments[0].type === 1">
+                        <mat-icon class="attachments-icon" *ngIf="media.attachments[0].type === 1">videocam</mat-icon>
+                        <mat-icon class="attachments-icon" *ngIf="media.attachments.length > 1">layers</mat-icon>
                     </div>
                     <div class="user-media-details" fxLayout="row" fxLayoutAlign="space-between center">
                         <div fxLayout="row" fxLayoutAlign="center center">

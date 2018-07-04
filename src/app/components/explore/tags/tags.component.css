@@ -37,7 +37,7 @@
 .tags-media .username {
     cursor: pointer;
     outline: none;
-    font-weight: bold;
+    /* font-weight: bold; */
     text-shadow: 2px 2px 4px rgb(0, 0, 0, .86);
 }
 
@@ -93,18 +93,18 @@
     opacity: 1;
 }
 
-.multiple-attachments-icon-container {
+.attachments-icon-container {
     position: absolute;
-    top: 15px;
-    right: 15px;
-    z-index: 777;
+    top: .7rem;
+    right: .7rem;
+    z-index: 1;
 }
 
-.multiple-attachments-icon-container>:last-child {
+.attachments-icon-container>:last-child {
     margin-left: .5rem;
 }
 
-.multiple-attachments-icon {
+.attachments-icon {
     color: white;
     text-shadow: 2px 2px 4px #000000;
 }

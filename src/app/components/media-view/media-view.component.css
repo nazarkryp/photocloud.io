@@ -1,3 +1,7 @@
+::ng-deep .mat-dialog-container {
+    background: rgba(255, 255, 255, .9);
+}
+
 .media-view {
     overflow-x: hidden;
     overflow-y: hidden;
@@ -126,12 +130,12 @@
 }
 
 .media-view-details main {
+    font-size: .9em;
     padding: 0 0 1.4rem .7rem;
     overflow-y: hidden;
 }
 
 .caption-container {
-    font-size: .9em;
     padding: 0 .7rem .7rem 0;
     line-height: 1.5;
     width: 100%;
