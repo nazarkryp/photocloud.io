@@ -42,6 +42,7 @@ import { ProgressService } from 'app/shared/services';
 })
 export class UsersComponent implements OnInit, OnDestroy {
     private currentUserSubscription: Subscription;
+    private orderBy: string;
     public title = 'Explore People';
     public isLoading: boolean;
     public page: Page<UserViewModel>;
@@ -59,11 +60,30 @@ export class UsersComponent implements OnInit, OnDestroy {
             });
     }
 
-    public getUsers() {
-        this.progress.start();
+    public onPositionChange() {
+        if (!this.isLoading && this.page && this.page.hasMoreItems) {
+            this.getUsers(false);
+        }
+    }
+
+    public orderByLastActive() {
+        this.orderBy = 'lastActive';
+        this.refresh();
+    }
+
+    public orderByNew() {
+        this.orderBy = 'id';
+        this.refresh();
+    }
+
+    public getUsers(showProgress: boolean = true) {
         this.isLoading = true;
 
-        this.userService.getUsers(this.page.pagination)
+        if (showProgress) {
+            this.progress.start();
+        }
+
+        this.userService.getUsers(this.page.pagination, this.orderBy)
             .pipe(finalize(() => {
                 this.progress.complete();
                 this.isLoading = false;

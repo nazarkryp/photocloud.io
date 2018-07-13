@@ -7,7 +7,7 @@ import { WebApiService } from 'app/core/services/communication';
 import { UserMapper, PageMapper } from 'app/infrastructure/mapping';
 
 import { Page, PaginationViewModel, UserViewModel } from 'app/models/view';
-import { ValidationResult } from 'app/models/common';
+import { ValidationResult, QueryFilter } from 'app/models/common';
 import { UserResponse } from 'app/models/response';
 
 @Injectable()
@@ -34,11 +34,11 @@ export class UserService {
             }));
     }
 
-    public getUsers(pagination: PaginationViewModel): Observable<Page<UserViewModel>> {
-        let requestUri = 'users';
+    public getUsers(pagination: PaginationViewModel, orderBy: string = 'id'): Observable<Page<UserViewModel>> {
+        let requestUri = `users?orderBy=${orderBy}`;
 
         if (pagination != null && pagination.next != null) {
-            requestUri = requestUri + '?next=' + pagination.next;
+            requestUri = requestUri + '&next=' + pagination.next;
         }
 
         return this.apiService.get<Page<UserResponse>>(requestUri)

@@ -51,6 +51,7 @@
     outline: none;
     width: 100%;
     resize: none;
+    line-height: 1.5;
 }
 
 .create-media-container .preview-items {

@@ -1,5 +1,5 @@
 @media screen and (max-width: 500px) {
-    .edit-container .btn-deactivate {
+    .edit-container .btn-default {
         width: 100%;
     }
 }

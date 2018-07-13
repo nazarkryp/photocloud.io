@@ -37,8 +37,15 @@
 .tags-media .username {
     cursor: pointer;
     outline: none;
-    /* font-weight: bold; */
     text-shadow: 2px 2px 4px rgb(0, 0, 0, .86);
+    opacity: .86;
+    -webkit-transition: opacity .1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    -moz-transition: opacity .1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition: opacity .1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.tags-media .username:hover {
+    opacity: 1;
 }
 
 .tags-media-item {
@@ -93,6 +100,15 @@
     opacity: 1;
 }
 
+.tags-media-item__details .avatar {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 1.4rem;
+    box-shadow: 0 3px 8px -3px rgba(0, 0, 0, 0.26);
+}
+
 .attachments-icon-container {
     position: absolute;
     top: .7rem;
@@ -115,7 +131,6 @@
     bottom: 0;
     position: absolute;
     width: 100%;
-    background: linear-gradient(to bottom, transparent, rgb(0, 0, 0, .7));
     -webkit-transition: opacity .3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     -moz-transition: opacity .3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     transition: opacity .3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
@@ -126,18 +141,21 @@
 }
 
 .btn-like {
-    padding: .35rem .35rem .15rem .35rem;
-    background-color: rgb(150, 150, 150, .3);
-    border-radius: 7px;
-    -webkit-transition: background-color .3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    -moz-transition: background-color .3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    transition: background-color .3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    line-height: 0;
+    min-width: 75px;
+    padding: .5rem .7rem;
+    background-color: #fff;
+    opacity: .8;
+    border-radius: 2px;
+    -webkit-transition: opacity .25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    -moz-transition: opacity .25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition: opacity .25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.btn-like.active {
+    color: #e91e63;
 }
 
 .btn-like:hover {
-    background-color: rgb(255, 255, 255, .5);
-}
-
-.btn-like:active {
-    background-color: rgb(240, 240, 240, .2);
+    opacity: 1;
 }
