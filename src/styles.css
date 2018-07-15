@@ -124,7 +124,6 @@ a {
     background: #efefef;
     color: rgb(0, 0, 0, .65);
     border-radius: 2px;
-    font-weight: bold;
     line-height: 27px;
     min-width: 110px;
     padding: 3px 0;
@@ -227,3 +226,16 @@ a.hashtag:hover {
     min-height: calc(100vh - 228px);
     padding: 0 .7rem;
 }
+
+/* @keyframes radial-pulse {
+    0% {
+        box-shadow: 0 0 0 0px rgb(233, 30, 99, .5);
+    }
+    100% {
+        box-shadow: 0 0 0 30px rgba(0, 0, 0, 0);
+    }
+}
+
+.pulse-animation {
+    animation: radial-pulse 1s infinite;
+} */

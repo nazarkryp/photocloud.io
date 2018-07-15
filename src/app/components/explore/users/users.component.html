@@ -1,10 +1,14 @@
 <div class="page-container" fxLayout="column" fxLayoutAlign="start center">
     <div class="users-header" fxLayoutAlign="space-between center">
         <h1>Discover People</h1>
-        <div>
-            <button mat-button (click)="orderByNew()">New</button> |
-            <button mat-button (click)="orderByLastActive()">Last Active</button>
-        </div>
+        <!-- <div>
+            <button mat-button [class.active]="orderBy == 'id'" (click)="orderByNew()">NEW</button> |
+            <button mat-button [class.active]="orderBy == 'lastActive'" (click)="orderByLastActive()">LAST ACTIVE</button>
+        </div> -->
+        <mat-button-toggle-group name="orderBy" (change)="orderByChanged($event.value)">
+            <mat-button-toggle [checked]="orderBy == 'id'" value="id">NEW</mat-button-toggle>
+            <mat-button-toggle [checked]="orderBy == 'lastActive'" value="lastActive">LAST ACTIVE</mat-button-toggle>
+        </mat-button-toggle-group>
     </div>
     <div class="users-container" appInfiniteScroll [appScrollTriggerOnce]="true" [scrollOffset]="1000" (scrollPosition)="onPositionChange()">
         <div class="item" *ngFor="let user of page.data; let index = index;" fxLayout="row" fxLayoutAlign="start center">

@@ -1,10 +1,19 @@
 @media screen and (max-width: 500px) {
-    .users-header,
-    .users-container {
-        /* padding: 0 .7rem; */
-    }
     .users-header {
-        border-bottom: none;
+        flex-direction: column !important;
+        align-items: start !important;
+    }
+    .users-header h1 {
+        padding-bottom: 1.4rem;
+    }
+    .mat-button-toggle-group,
+    .mat-button-toggle-standalone {
+        box-shadow: 0 3px 8px -4px rgba(0, 0, 0, 0.26);
+        width: 100%;
+    }
+    .mat-button-toggle {
+        width: 100%;
+        text-align: center;
     }
 }
 
@@ -18,6 +27,11 @@
     max-width: 960px;
     width: 100%;
     padding-bottom: 2.8rem;
+}
+
+.users-header button.active {
+    background-color: crimson;
+    color: rgba(255, 255, 255, .86);
 }
 
 .users-header>* {
@@ -67,4 +81,27 @@
     color: rgba(0, 0, 0, .65);
     font-weight: normal;
     font-size: .9em;
+    cursor: pointer;
+}
+
+.item-details .date:hover {
+    text-decoration: underline;
+}
+
+.mat-button-toggle-group,
+.mat-button-toggle-standalone {
+    box-shadow: 0 3px 8px -4px rgba(0, 0, 0, 0.26);
+}
+
+::ng-deep .mat-button-toggle-button {
+    min-width: 120px;
+}
+
+/* .mat-button-toggle {
+    font-weight: bold;
+} */
+
+.mat-button-toggle-checked {
+    background-color: crimson;
+    color: rgba(255, 255, 255, .86);
 }

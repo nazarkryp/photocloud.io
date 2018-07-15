@@ -15,34 +15,11 @@ import { ProgressService } from 'app/shared/services';
 
 @Component({
     templateUrl: './users.component.html',
-    styleUrls: ['./users.component.css'],
-    animations: [
-        trigger('listAnimation', [
-            transition('* => *', [
-                query(':leave', [
-                    stagger(50, [
-                        animate('0.5s', style({ opacity: 0 }))
-                    ])
-                ], { optional: true }),
-                query(':enter', [
-                    style({
-                        opacity: 0,
-                        transform: 'translateY(20%)'
-                    }),
-                    stagger(50, [
-                        animate('0.5s', style({
-                            opacity: 1,
-                            transform: 'translateY(0)'
-                        }))
-                    ])
-                ], { optional: true })
-            ])
-        ])
-    ]
+    styleUrls: ['./users.component.css']
 })
 export class UsersComponent implements OnInit, OnDestroy {
     private currentUserSubscription: Subscription;
-    private orderBy: string;
+    private orderBy = 'id';
     public title = 'Explore People';
     public isLoading: boolean;
     public page: Page<UserViewModel>;
@@ -66,13 +43,8 @@ export class UsersComponent implements OnInit, OnDestroy {
         }
     }
 
-    public orderByLastActive() {
-        this.orderBy = 'lastActive';
-        this.refresh();
-    }
-
-    public orderByNew() {
-        this.orderBy = 'id';
+    public orderByChanged(orderBy: string) {
+        this.orderBy = orderBy;
         this.refresh();
     }
 

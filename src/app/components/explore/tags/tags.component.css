@@ -144,18 +144,22 @@
     line-height: 0;
     min-width: 75px;
     padding: .5rem .7rem;
-    background-color: #fff;
-    opacity: .8;
+    background-color: rgb(0, 0, 0, .3);
+    color: rgb(255, 255, 255, .86);
+    font-weight: bold;
+    /* text-shadow: 0px 0px 1px rgb(255, 255, 255, .86); */
     border-radius: 2px;
-    -webkit-transition: opacity .25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    -moz-transition: opacity .25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    transition: opacity .25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    -webkit-transition: background-color .5s ease-in-out;
+    -moz-transition: background-color .5s ease-in-out;
+    transition: background-color .5s ease-in-out;
 }
 
 .btn-like.active {
-    color: #e91e63;
+    color: rgb(220, 20, 60, .86);
+    background-color: rgb(0, 0, 0, .5);
+    /* text-shadow: 0px 0px 1px rgb(220, 20, 60, .86); */
 }
 
 .btn-like:hover {
-    opacity: 1;
+    /* background-color: rgb(255, 255, 255, 1); */
 }
