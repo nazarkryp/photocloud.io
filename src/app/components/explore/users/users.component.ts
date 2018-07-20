@@ -19,7 +19,7 @@ import { ProgressService } from 'app/shared/services';
 })
 export class UsersComponent implements OnInit, OnDestroy {
     private currentUserSubscription: Subscription;
-    private orderBy = 'id';
+    public orderBy = 'id';
     public title = 'Explore People';
     public isLoading: boolean;
     public page: Page<UserViewModel>;
