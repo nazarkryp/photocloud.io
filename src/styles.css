@@ -199,24 +199,31 @@ a.hashtag:hover {
     0% {
         transform: scale(1);
     }
+
     30% {
         transform: scale(1);
     }
+
     40% {
         transform: scale(1.5);
     }
+
     50% {
         transform: scale(1);
     }
+
     60% {
         transform: scale(1);
     }
+
     70% {
         transform: scale(1.5);
     }
+
     80% {
         transform: scale(1);
     }
+
     100% {
         transform: scale(1);
     }
@@ -239,3 +246,9 @@ a.hashtag:hover {
 .pulse-animation {
     animation: radial-pulse 1s infinite;
 } */
+
+.media-view-dialog-container {}
+
+.dialog-backdrop {
+    background: rgba(255, 255, 255, .5);
+}

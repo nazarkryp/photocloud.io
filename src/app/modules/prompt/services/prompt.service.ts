@@ -18,7 +18,8 @@ export class PromptService {
         return this.dialog.open(PromptComponent, {
             width: '420px',
             autoFocus: false,
-            data: prompt
+            data: prompt,
+            backdropClass: 'dialog-backdrop'
         }).afterClosed();
     }
 }

@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
-import { MatDialog, MatDialogRef } from '@angular/material';
-import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
+import { MatDialog, MatDialogRef, MatDialogConfig } from '@angular/material';
+import { BreakpointObserver } from '@angular/cdk/layout';
 
 import { MediaViewModel } from 'app/models/view';
 import { MediaViewComponent } from 'app/components/media-view/media-view.component';
-import { tap } from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root'
@@ -17,13 +16,16 @@ export class MediaViewService {
     public open(media: MediaViewModel): MatDialogRef<MediaViewComponent, any> {
         const isMobile = this.breakpointObserver.isMatched('(max-width: 500px)');
 
-        const config = {
+        const config: MatDialogConfig<any> = {
             height: 'auto',
             width: 'auto',
             maxHeight: 'calc(100vh - 1.4rem)',
             maxWidth: 'calc(100vw - 1.4rem)',
             data: media,
-            autoFocus: false
+            autoFocus: false,
+            panelClass: 'media-view-dialog-container',
+            backdropClass: 'dialog-backdrop',
+            hasBackdrop: true
         };
 
         if (isMobile) {

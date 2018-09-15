@@ -82,6 +82,7 @@ export class UserDetailsComponent implements OnDestroy {
                 maxHeight: 'calc(100vh - 1.4rem)',
                 maxWidth: 'calc(100vw - 1.4rem)',
                 autoFocus: false,
+                backdropClass: 'dialog-backdrop',
                 data: {
                     uri: this.user.pictureUri
                 }
@@ -162,7 +163,8 @@ export class UserDetailsComponent implements OnDestroy {
         return this.dialog.open(UsersDialogComponent, {
             width: '500px',
             height: '600px',
-            data: details
+            data: details,
+            backdropClass: 'dialog-backdrop'
         });
     }
 
