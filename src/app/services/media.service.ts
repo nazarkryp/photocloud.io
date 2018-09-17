@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+\import { Injectable } from '@angular/core';
 
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -43,11 +43,19 @@ export class MediaService {
             }));
     }
 
-    public getUserMedia(username: string, pagination: PaginationViewModel): Observable<Page<MediaViewModel>> {
+    public getUserMedia(username: string, pagination: PaginationViewModel, mediaType?: number): Observable<Page<MediaViewModel>> {
         let requestUri = 'media/' + username;
 
         if (pagination != null && pagination.next != null) {
             requestUri = requestUri + '?next=' + pagination.next;
+        }
+
+        if (mediaType) {
+            if (pagination != null && pagination.next != null) {
+                requestUri = `${requestUri}&mediaType=${mediaType}`;
+            } else {
+                requestUri = `${requestUri}?mediaType=${mediaType}`;
+            }
         }
 
         return this.apiService.get<PageResponse<MediaResponse>>(requestUri)

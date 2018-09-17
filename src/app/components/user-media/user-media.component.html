@@ -4,9 +4,9 @@
     </header>
     <main class="content" *ngIf="!userMedia.error; else errorBox" fxLayout="column" fxLayoutAlign="center center">
         <div class="user-media-options" fxLayout="row" fxLayoutAlign="center">
-            <button mat-button disableRipple=true>ALL</button>
-            <button mat-button>PHOTOS</button>
-            <button mat-button>VIDEOS</button>
+            <button mat-button (click)="applyFilter()">ALL</button>
+            <button mat-button (click)="applyFilter(0)">PHOTOS</button>
+            <button mat-button (click)="applyFilter(1)">VIDEOS</button>
         </div>
         <div class="user-media" *ngIf="userMedia.page?.data?.length; else emptyFeed;" appInfiniteScroll [appScrollTriggerOnce]="true" [scrollOffset]="2000" (scrollPosition)="onPositionChange()">
             <a *ngFor="let media of userMedia.page?.data;" (click)="openPostDialog(media);">
