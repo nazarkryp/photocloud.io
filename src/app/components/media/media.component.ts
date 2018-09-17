@@ -47,7 +47,9 @@ export class MediaComponent implements OnInit, OnDestroy {
             width: '500px',
             maxHeight: '100vh',
             maxWidth: '100vw',
-            hasBackdrop: true
+            hasBackdrop: true,
+            panelClass: 'dialog-container',
+            backdropClass: 'dialog-backdrop'
         }).afterClosed()
             .subscribe(createdPost => {
                 if (createdPost) {

@@ -247,8 +247,15 @@ a.hashtag:hover {
     animation: radial-pulse 1s infinite;
 } */
 
-.media-view-dialog-container {}
+.dialog-container {
+    /* padding: 100px;
+    box-shadow: 0 0px 0px 0px rgba(0, 0, 0, .2), 0 10px 10px -10px rgba(0, 0, 0, .14), 0 0px 50px 10px rgba(0, 0, 0, .12); */
+}
+
+.dialog-container .mat-dialog-container {
+    box-shadow: 0 0px 0px 0px rgba(0, 0, 0, .2), 0 10px 10px -10px rgba(0, 0, 0, .14), 0 0px 50px 10px rgba(0, 0, 0, .12);
+}
 
 .dialog-backdrop {
-    background: rgba(255, 255, 255, .5);
+    background: rgba(255, 255, 255, .7);
 }

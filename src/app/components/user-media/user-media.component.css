@@ -151,3 +151,14 @@
         opacity: 1;
     }
 }
+
+.user-media-options {
+    border-top: 1px solid #eaeaea;
+    max-width: 960px;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.page-container main.content {
+    width: 100%;
+}

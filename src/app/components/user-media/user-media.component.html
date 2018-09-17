@@ -1,6 +1,13 @@
 <div class="page-container" fxLayout="column" fxLayoutAlign="start center">
-    <app-user-details [user]="userMedia.user"></app-user-details>
-    <div style="width: 100%;" *ngIf="!userMedia.error; else errorBox" fxLayout="column" fxLayoutAlign="center center">
+    <header>
+        <app-user-details [user]="userMedia.user"></app-user-details>
+    </header>
+    <main class="content" *ngIf="!userMedia.error; else errorBox" fxLayout="column" fxLayoutAlign="center center">
+        <div class="user-media-options" fxLayout="row" fxLayoutAlign="center">
+            <button mat-button disableRipple=true>ALL</button>
+            <button mat-button>PHOTOS</button>
+            <button mat-button>VIDEOS</button>
+        </div>
         <div class="user-media" *ngIf="userMedia.page?.data?.length; else emptyFeed;" appInfiniteScroll [appScrollTriggerOnce]="true" [scrollOffset]="2000" (scrollPosition)="onPositionChange()">
             <a *ngFor="let media of userMedia.page?.data;" (click)="openPostDialog(media);">
                 <div class="user-media-item">
@@ -25,14 +32,14 @@
                 </div>
             </a>
         </div>
+        <div fxLayout="row" fxLayoutAlign="center center" *ngIf="userMedia?.page?.data.length && !userMedia?.page?.hasMoreItems" style="height: 40px;">
+            <span style="font-size: .9em; color: rgb(0, 0, 0, .35);">You've reached the end of the list</span>
+        </div>
         <div fxLayout="row" fxLayoutAlign="center center" *ngIf="userMedia?.page?.hasMoreItems" style="height: 40px;">
             <button class="btn-primary" mat-button (click)="getMedia()" [disabled]="isLoading" *ngIf="!isLoading">Load More</button>
             <mat-spinner [diameter]="30" [strokeWidth]="2" color="primary" *ngIf="isLoading"></mat-spinner>
         </div>
-        <div fxLayout="row" fxLayoutAlign="center center" *ngIf="userMedia?.page?.data.length && !userMedia?.page?.hasMoreItems" style="height: 40px;">
-            <span style="font-size: .9em; color: rgb(0, 0, 0, .35);">You've reached the end of the list</span>
-        </div>
-    </div>
+    </main>
 </div>
 
 <ng-template #errorBox>

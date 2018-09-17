@@ -19,6 +19,7 @@ export class PromptService {
             width: '420px',
             autoFocus: false,
             data: prompt,
+            panelClass: 'dialog-container',
             backdropClass: 'dialog-backdrop'
         }).afterClosed();
     }

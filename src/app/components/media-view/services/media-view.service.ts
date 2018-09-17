@@ -23,7 +23,7 @@ export class MediaViewService {
             maxWidth: 'calc(100vw - 1.4rem)',
             data: media,
             autoFocus: false,
-            panelClass: 'media-view-dialog-container',
+            panelClass: 'dialog-container',
             backdropClass: 'dialog-backdrop',
             hasBackdrop: true
         };
