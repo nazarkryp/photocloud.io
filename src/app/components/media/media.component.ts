@@ -12,6 +12,7 @@ import { CreateMediaComponent } from 'app/components/shared/create-media/create-
 import { ConfirmComponent } from 'app/components/shared/confirm/confirm.component';
 import { ProgressService } from 'app/shared/services';
 import { PromptService } from 'app/modules/prompt/services/prompt.service';
+import { CreateMediaService } from 'app/shared/services/create-media.service';
 
 @Component({
     templateUrl: './media.component.html',
@@ -26,13 +27,13 @@ export class MediaComponent implements OnInit, OnDestroy {
     public state = 'hide';
 
     constructor(
-        public el: ElementRef,
-        private activatedRoute: ActivatedRoute,
-        private mediaService: MediaService,
-        private currentUserService: CurrentUserService,
-        private progress: ProgressService,
-        private dialog: MatDialog,
-        private prompt: PromptService) {
+        private readonly el: ElementRef,
+        private readonly activatedRoute: ActivatedRoute,
+        private readonly mediaService: MediaService,
+        private readonly currentUserService: CurrentUserService,
+        private readonly progress: ProgressService,
+        private readonly createMediaService: CreateMediaService,
+        private readonly prompt: PromptService) {
         this.page.data = new Array<MediaViewModel>();
         this.page.hasMoreItems = false;
         this.currentUserSubscription = this.currentUserService.getCurrentUser()
@@ -42,15 +43,7 @@ export class MediaComponent implements OnInit, OnDestroy {
     }
 
     public createMedia() {
-        this.dialog.open(CreateMediaComponent, {
-            disableClose: false,
-            width: '500px',
-            maxHeight: '100vh',
-            maxWidth: '100vw',
-            hasBackdrop: true,
-            panelClass: 'dialog-container',
-            backdropClass: 'dialog-backdrop'
-        }).afterClosed()
+        this.createMediaService.open()
             .subscribe(createdPost => {
                 if (createdPost) {
                     createdPost.user.pictureUri = this.currentUser.pictureUri;

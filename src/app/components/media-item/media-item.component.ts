@@ -115,7 +115,9 @@ export class MediaItemComponent implements OnInit {
         this.dialog.open(UsersDialogComponent, {
             width: '500px',
             height: '600px',
-            data: details
+            data: details,
+            panelClass: 'dialog-container',
+            backdropClass: 'dialog-backdrop'
         }).afterClosed().subscribe((page: Page<UserViewModel>) => {
             if (page && !page.hasMoreItems) {
                 this.media.likes = page.data;
