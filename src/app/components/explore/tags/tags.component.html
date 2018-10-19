@@ -11,7 +11,7 @@
     <div class="tags-media" appInfiniteScroll [appScrollTriggerOnce]="true" [scrollOffset]="6000" (scrollPosition)="onPositionChange()">
         <div *ngFor="let media of page?.data;">
             <div class="tags-media-item">
-                <img class="tags-media-thumbnail" src="{{media?.attachments[0].uri}}" alt="media-image" *ngIf="media?.attachments[0].type !== 1" (click)="openPostDialog(media)">
+                <img class="tags-media-thumbnail" src="{{media?.attachments[0].thumbnail}}" alt="media-image" *ngIf="media?.attachments[0].type !== 1" (click)="openPostDialog(media)">
                 <video class="tags-media-thumbnail" *ngIf="media?.attachments[0].type === 1" (click)="openPostDialog(media)">
                     <source src="{{media?.attachments[0].uri}}">
                 </video>

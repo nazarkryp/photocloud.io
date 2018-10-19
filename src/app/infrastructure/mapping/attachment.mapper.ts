@@ -10,6 +10,7 @@ export class AttachmentMapper {
 
         attachment.id = response.id;
         attachment.uri = response.uri;
+        attachment.thumbnail = response.thumbnail;
         attachment.type = response.type;
 
         return attachment;

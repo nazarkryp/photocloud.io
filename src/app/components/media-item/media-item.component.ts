@@ -89,7 +89,6 @@ export class MediaItemComponent implements OnInit {
 
         if (this.player && !this.player.nativeElement.ontimeupdate) {
             this.player.nativeElement.ontimeupdate = (event) => {
-                console.log(event);
                 const progress = (this.player.nativeElement.currentTime * 100) / this.player.nativeElement.duration;
                 this.media.attachments[this.media.activeAttachment].progress = progress;
             };

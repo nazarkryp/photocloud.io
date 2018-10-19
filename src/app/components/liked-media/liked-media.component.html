@@ -9,7 +9,7 @@
         <div class="tag-media" fxFlex>
             <div class="tag-media-item" *ngFor="let media of page?.data;" fxLayout="column">
                 <div mat-ripple class="thumbnail-container" style="height: 300px; width: 100%; position: relative;" (click)="openPostDialog(media)">
-                    <img class="thumbnail" src="{{media.attachments[0].uri}}" alt="media" *ngIf="media.attachments[0].type !== 1">
+                    <img class="thumbnail" src="{{media.attachments[0].thumbnail}}" alt="media" *ngIf="media.attachments[0].type !== 1">
                     <video class="thumbnail" *ngIf="media.attachments[0].type === 1" loop #player>
                         <source src="{{media.attachments[0].uri}}">
                     </video>

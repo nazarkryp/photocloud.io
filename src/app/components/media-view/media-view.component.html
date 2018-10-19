@@ -52,7 +52,7 @@
                 </div>
                 <app-comments #commentsComponent [media]="media" [hidden]="!media.commentsCount"></app-comments>
             </div>
-            <div style="width: 100%;" *ngIf="media.attachments.length > 1">
+            <!-- <div style="width: 100%;" *ngIf="media.attachments.length > 1">
                 <span style="font-weight: bold; padding-bottom: .7rem; display: block;">Attachments</span>
                 <div class="media-preview-items">
                     <div class="preview-item" *ngFor="let item of media.attachments; let index = index;">
@@ -64,7 +64,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
         </main>
         <footer>
             <div class="actions" fxLayout="row" fxLayoutAlign="space-between center">
