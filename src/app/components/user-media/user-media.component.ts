@@ -1,11 +1,10 @@
 import { Component, OnInit, OnDestroy, AfterViewChecked, ChangeDetectorRef } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 
 import { Subscription } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 
-import { AccountService } from 'app/account/services';
 import { CurrentUserService } from 'app/infrastructure/services';
 import { ProgressService } from 'app/shared/services';
 import { MediaService, UserService } from 'app/services';
@@ -23,11 +22,10 @@ export class UserMediaComponent implements OnInit, OnDestroy, AfterViewChecked {
 
     public userMedia: UserMediaViewModel;
     public currentUser: CurrentUserViewModel;
-
     public canEditRelationship: boolean;
     public isModifyingRelationship = false;
-
     public isLoading: boolean;
+    public mediaType = 0;
 
     constructor(
         private cd: ChangeDetectorRef,
@@ -40,28 +38,25 @@ export class UserMediaComponent implements OnInit, OnDestroy, AfterViewChecked {
         this.currentUser = this.currentUserService.retrieveCurrentUser();
     }
 
-    public getMedia(showProgress: boolean = true, mediaType?: number) {
+    public getMedia(showProgress: boolean = true, mediaType: number = null) {
         this.isLoading = true;
 
         if (showProgress && !this.progress.isLoading) {
             this.progress.start();
         }
 
-        this.mediaService.getUserMedia(this.userMedia.user.username, this.userMedia.page.pagination, mediaType)
+        this.mediaService.getUserMedia(this.userMedia.user.username, this.userMedia.page.pagination, this.mediaType)
             .pipe(finalize(() => {
-                if (this.progress.isLoading) {
-                    this.progress.complete();
-                }
-
                 this.isLoading = false;
+                this.progress.complete();
             }))
-            .subscribe((page: Page<MediaViewModel>) => {
+            .subscribe(page => {
                 this.userMedia.page.hasMoreItems = page.hasMoreItems;
                 this.userMedia.page.pagination = page.pagination;
 
-                if (page.data && !mediaType) {
+                if (page.data && mediaType === null) {
                     this.userMedia.page.data = this.userMedia.page.data.concat(page.data);
-                } else if (page.data && mediaType) {
+                } else if (page.data && mediaType !== null) {
                     this.userMedia.page.data = page.data;
                 }
             }, (error: HttpErrorResponse) => {
@@ -133,6 +128,7 @@ export class UserMediaComponent implements OnInit, OnDestroy, AfterViewChecked {
     }
 
     public applyFilter(mediaType: number) {
+        this.mediaType = mediaType;
         this.getMedia(true, mediaType);
     }
 

@@ -3,7 +3,7 @@ import { Routes } from '@angular/router';
 import { AccountComponent } from './components/account/account.component';
 import { CreateComponent } from './components/create/create.component';
 import { SignInComponent } from './components/signin/signin.component';
-import { EditComponent } from './components/edit/edit.component';
+import { SettingsComponent } from './components/settings/settings.component';
 import { RecoverComponent } from './components/recover/recover.component';
 import { AutoLoginComponent } from './components/auto-login/auto-login.component';
 
@@ -53,7 +53,7 @@ export const AccountRoutes: Routes = [
     },
     {
         path: 'edit',
-        component: EditComponent,
+        component: SettingsComponent,
         resolve: {
             account: EditResolver
         },

@@ -12,57 +12,23 @@ import { ActivityService } from 'app/services/activity';
 import { ConfirmComponent } from 'app/components/shared/confirm/confirm.component';
 import { RelationshipAction } from 'app/models/shared';
 import { PromptService } from 'app/modules/prompt';
+import { MediaViewService } from '../media-view/services/media-view.service';
 
 @Component({
     templateUrl: './activity.component.html',
-    styleUrls: ['./activity.component.css'],
-    animations: [
-        trigger('listAnimation', [
-            transition('* => *', [
-                // query(':enter', style({ opacity: 0 }), { optional: true }),
-                // query(':enter', stagger('.1s', [
-                //     animate('1s ease-in', keyframes([
-                //         style({ opacity: 0, transform: 'translateY(-75%)', offset: 0 }),
-                //         style({ opacity: .5, transform: 'translateY(35px)', offset: 0.3 }),
-                //         style({ opacity: 1, transform: 'translateY(0)', offset: 1.0 }),
-                //     ]))]), { optional: true }),
-                query(':leave', stagger('1s', [
-                    animate('.5s ease-out', keyframes([
-                        style({ opacity: 1, transform: 'translateX(0)', offset: 0 }),
-                        style({ opacity: .5, transform: 'translateX(35px)', offset: 0.3 }),
-                        style({ opacity: 0, transform: 'translateX(-200px)', offset: 1.0 }),
-                    ]))]), { optional: true })
-            ])
-        ]),
-        // trigger('anim', [
-        //     transition('* => void', [
-        //         style({ height: '*', opacity: '1', transform: 'translateX(0)', 'box-shadow': '0 1px 4px 0 rgba(0, 0, 0, 0.3)' }),
-        //         sequence([
-        //             animate('.25s ease', style({ height: '*', opacity: '.2', transform: 'translateX(20px)', 'box-shadow': 'none' })),
-        //             animate('.1s ease', style({ height: '0', opacity: 0, transform: 'translateX(20px)', 'box-shadow': 'none' }))
-        //         ])
-        //     ]),
-        //     transition('void => active', [
-        //         style({ height: '0', opacity: '0', transform: 'translateX(20px)', 'box-shadow': 'none' }),
-        //         sequence([
-        //             animate('.1s ease', style({ height: '*', opacity: '.2', transform: 'translateX(20px)', 'box-shadow': 'none' })),
-        //             animate('.35s ease', style({ height: '*', opacity: 1, transform: 'translateX(0)', 'box-shadow': '0 1px 4px 0 rgba(0, 0, 0, 0.3)' }))
-        //         ])
-        //     ])
-        // ])
-    ]
+    styleUrls: ['./activity.component.css']
 })
 export class ActivityComponent implements OnInit {
-    public isLoading: boolean;
-    public page: Page<ActivityViewModel>;
-    // tslint:disable-next-line:no-output-on-prefix
-    @Output() public allNotificatoinsOpened: EventEmitter<void> = new EventEmitter<void>();
     private markAsReadList: number[];
     private markAsRead: Subject<number[]> = new Subject<number[]>();
 
+    @Output() public allNotificatoinsOpened: EventEmitter<void> = new EventEmitter<void>();
+    public isLoading: boolean;
+    public page: Page<ActivityViewModel>;
+
     constructor(
         private route: ActivatedRoute,
-        private dialog: MatDialog,
+        private mediaViewService: MediaViewService,
         private prompt: PromptService,
         private userService: UserService,
         private activityService: ActivityService) { }
@@ -109,7 +75,7 @@ export class ActivityComponent implements OnInit {
     public removeAllActivities() {
         this.prompt.prompt({
             title: 'CLEAR RECENT ACTIVITY',
-            description: 'Are you sure you want to clear recent activity?'
+            description: 'Are you sure you want to clear all activity history? You won\'t be able to undo that action.'
         }).subscribe(confirmed => {
             if (confirmed) {
                 this.activityService.removeAllActivities()
@@ -118,6 +84,10 @@ export class ActivityComponent implements OnInit {
                     });
             }
         });
+    }
+
+    public openMedia(media) {
+        this.mediaViewService.open(media);
     }
 
     public accept(activity: ActivityViewModel, index) {

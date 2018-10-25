@@ -1,21 +1,20 @@
 <div class="page-container" fxLayout="column" fxLayoutAlign="start center">
     <div class="settings-header" fxLayout="row" fxLayoutAlign="space-between center">
-        <h1 class="page-title">Settings</h1>
+        <h2 class="settings-header__title">Account settings</h2>
     </div>
-    <div class="edit-container">
-        <div class="overlay" *ngIf="isInvertingAccountStatus">
-        </div>
+    <div class="settings-container">
+        <div class="settings-container__overlay" *ngIf="isInvertingAccountStatus"></div>
         <div fxLayout="row" fxLayoutAlign="center center">
             <mat-progress-spinner [value]="progress" [mode]="progressSpinnerMode" [diameter]="120" [strokeWidth]="3" style="position: absolute; z-index: 0;"></mat-progress-spinner>
-            <div class="edit-image">
+            <div class="settings-image">
                 <div class="change-overlay" fxLayout="row" fxLayoutAlign="center center" (click)="fileInput.click()" *ngIf="currentUser.isActive && !isUploading">
                     <span>Change</span>
                 </div>
                 <img class="thumbnail-big" src="{{currentUser.pictureUri}}" default="assets/images/user-default-image.png" appImagePreview [image]="uploader.queue[0]?._file" alt="{{currentUser.username}}" />
-                <input #fileInput type="file" accept="image/*" ng2FileSelect [uploader]="uploader" hidden/>
+                <input #fileInput type="file" accept="image/*" ng2FileSelect [uploader]="uploader" hidden />
             </div>
         </div>
-        <div class="item">
+        <div class="settings__item">
             <h4>
                 Personal information
             </h4>
@@ -49,14 +48,14 @@
                     <mat-label>Bio</mat-label>
                     <textarea class="bio" formControlName="bio" rows="3" matInput placeholder="Tell your followers something about yourself" type="text" autocomplete="off" spellcheck="false"></textarea>
                 </mat-form-field>
-                <div fxLayout="row" fxLayoutAlign="end center" style="height: 40px;">
-                    <button mat-button *ngIf="formGroup.dirty" (click)="cancel()">CANCEL</button>
-                    <button mat-raised-button color="primary" type="sumit" *ngIf="formGroup.valid && formGroup.dirty">SAVE CHANGES</button>
+                <div fxLayout="row" fxLayoutAlign="end center">
+                    <button mat-button [disabled]="!formGroup.dirty" (click)="cancel()">CANCEL</button>
+                    <button mat-flat-button color="primary" type="sumit" [disabled]="!formGroup.valid || !formGroup.dirty">SAVE CHANGES</button>
                 </div>
             </form>
         </div>
 
-        <div class="item">
+        <div class="settings__item">
             <h4>
                 Private information
             </h4>
@@ -90,27 +89,27 @@
                     <button type="submit" mat-raised-button color="primary" *ngIf="privateFormGroup.valid && privateFormGroup.dirty">SAVE CHANGES</button>
                 </div>
             </form>
-            <div class="item" fxLayout="row" fxLayoutAlign="space-between start">
+            <div class="settings__item" fxLayout="row" fxLayoutAlign="space-between start">
                 <div>
                     <span class="body-1" [ngClass]="{ 'disabled' : !currentUser.isActive }">Private Account</span>
-                    <p class="edit__caption" [ngClass]="{ 'disabled' : !currentUser.isActive }">When your account is private, only people you approve can see your photos and videos on PhotoCloud. Your existing followers won't be affected</p>
+                    <p class="settings__caption" [ngClass]="{ 'disabled' : !currentUser.isActive }">When your account is private, only people you approve can see your photos and videos on PhotoCloud.
+                        Your existing followers won't be affected</p>
                 </div>
                 <mat-slide-toggle color="primary" [(ngModel)]="currentUser.isPrivate" [checked]="currentUser.isPrivate" (change)='invertAccountPrivateStatus($event)' [disabled]="!currentUser.isActive"></mat-slide-toggle>
             </div>
-            <div class="item" fxLayout="row" fxLayoutAlign="space-between start">
+            <div class="settings__item" fxLayout="row" fxLayoutAlign="space-between start">
                 <div>
                     <span class="body-1" [ngClass]="{ 'disabled' : !currentUser.isActive }">Remember me</span>
-                    <p class="edit__caption" [ngClass]="{ 'disabled' : !currentUser.isActive }">When this option is enabled system will allow you to login without password after session has expired</p>
+                    <p class="settings__caption" [ngClass]="{ 'disabled' : !currentUser.isActive }">When this option is enabled system will allow you to login without password after session has
+                        expired</p>
                 </div>
                 <mat-slide-toggle color="primary" [(ngModel)]="currentUser.isRemembered" [checked]="currentUser.isRemembered" (change)='invertRememberMe($event)' [disabled]="!currentUser.isActive"></mat-slide-toggle>
             </div>
         </div>
 
-        <div class="item" fxLayout="column" fxLayoutAlign="center start">
-            <h4>
-                Account
-            </h4>
-            <p class="edit__caption">
+        <div class="settings__item" fxLayout="column" fxLayoutAlign="center start">
+            <span class="body-1">Account</span>
+            <p class="settings__caption">
                 When you press the button below, your photos, comments and likes will be hidden until you reactivate your account by logging back in.
             </p>
             <div fxLayout="column" fxLayoutAlign="center end" style="width: 100%;">

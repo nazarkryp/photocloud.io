@@ -19,10 +19,10 @@ import { FileUploader } from 'ng2-file-upload';
 const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
 @Component({
-    templateUrl: './edit.component.html',
-    styleUrls: ['./edit.component.css']
+    templateUrl: './settings.component.html',
+    styleUrls: ['./settings.component.css']
 })
-export class EditComponent implements OnInit, AfterViewInit, AfterViewChecked {
+export class SettingsComponent implements OnInit, AfterViewInit, AfterViewChecked {
     public backup: CurrentUserViewModel = new CurrentUserViewModel();
     public currentUser: CurrentUserViewModel;
     public isInvertingAccountStatus: boolean;

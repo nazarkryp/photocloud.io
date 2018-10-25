@@ -73,7 +73,7 @@
             </p>
         </div>
     </div>
-    <div style="width: 100%; padding: .7rem;" fxLayout="row" fxLayoutAlign="end center" *ngIf="user.isActive && user.lastActive">
+    <div style="width: 100%; padding-bottom: 1.4rem;" fxLayout="row" fxLayoutAlign="end center" *ngIf="user.isActive && user.lastActive">
         <span matTooltip="{{user.lastActive | date:'fullDate'}}" matTooltipPosition="after" style="font-size: .9em; font-weight: bold; text-transform: uppercase; color: #C8C8C8;">{{user.lastActive | timeAgo}}</span>
     </div>
 </div>

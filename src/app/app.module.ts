@@ -73,7 +73,7 @@ import { environment } from '../environments/environment';
 import { AttachmentCounterComponent } from './components/shared/attachment-counter/attachment-counter.component';
 import { MediaViewComponent } from './components/media-view/media-view.component';
 import { CommentBoxComponent } from './components/shared/comment-box/comment-box.component';
-import { MediaEditComponentComponent } from './components/shared/media-edit-component/media-edit-component.component';
+import { MediaSettingsComponentComponent } from './components/shared/media-edit-component/media-edit-component.component';
 import { LightboxComponent } from './components/shared/lightbox/lightbox.component';
 import { PromptModule } from 'app/modules/prompt';
 
@@ -118,7 +118,7 @@ import { PromptModule } from 'app/modules/prompt';
         AttachmentCounterComponent,
         MediaViewComponent,
         CommentBoxComponent,
-        MediaEditComponentComponent,
+        MediaSettingsComponentComponent,
         LightboxComponent
     ],
     entryComponents: [

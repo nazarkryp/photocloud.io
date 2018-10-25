@@ -10,7 +10,7 @@ import { SharedModule } from 'app/shared/shared.module';
 
 import { SignInComponent } from './components/signin/signin.component';
 import { CreateComponent } from './components/create/create.component';
-import { EditComponent } from './components/edit/edit.component';
+import { SettingsComponent } from './components/settings/settings.component';
 import { RecoverComponent } from './components/recover/recover.component';
 import { AutoLoginComponent } from './components/auto-login/auto-login.component';
 
@@ -39,7 +39,7 @@ import { LoadingService } from './services/loading.service';
     declarations: [
         SignInComponent,
         CreateComponent,
-        EditComponent,
+        SettingsComponent,
         RecoverComponent,
         AutoLoginComponent,
         PasswordDirective,

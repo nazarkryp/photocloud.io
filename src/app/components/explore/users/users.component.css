@@ -3,23 +3,20 @@
         flex-direction: column !important;
         align-items: start !important;
     }
-    .users-header h1 {
+
+    .users-header__title {
         padding-bottom: 1.4rem;
     }
+
     .mat-button-toggle-group,
     .mat-button-toggle-standalone {
         box-shadow: 0 3px 8px -4px rgba(0, 0, 0, 0.26);
         width: 100%;
     }
+
     .mat-button-toggle {
         width: 100%;
         text-align: center;
-    }
-}
-
-@media screen and (min-width: 501px) {
-    .users-header {
-        /* border-bottom: 1px solid #eaeaea; */
     }
 }
 
@@ -29,54 +26,44 @@
     padding-bottom: 2.8rem;
 }
 
+.users-header__title {
+    font-weight: lighter;
+}
+
 .users-header button.active {
     background-color: crimson;
     color: rgba(255, 255, 255, .86);
 }
 
-.users-header h1 {
-    font-weight: lighter;
-}
-
-.users-container {
+.users__items {
     max-width: 600px;
     width: 100%;
     box-sizing: border-box;
     color: rgb(0, 0, 0, .86);
 }
 
-.user-search-header {
+.users__item {
     padding-bottom: 1.4rem;
 }
 
-.users-container>.item {
-    padding-bottom: 1.4rem;
-}
-
-.users-container .item a.link {
-    line-height: 0;
-}
-
-.users-container .item a.link img {
-    width: 60px;
-    height: 60px;
+.users__item__thumbnail {
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
     object-fit: cover;
-    outline: none;
-    cursor: pointer;
 }
 
-.users-container .item .item-details {
+.users__item__details {
     margin-left: .7rem;
     line-height: 1.5;
 }
 
-.item-details .username {
+.users__item__details__username {
     width: 110px;
     font-weight: bold;
 }
 
-.item-details .date {
+.users__item__details__date {
     margin: 0 auto 0 0;
     color: rgba(0, 0, 0, .65);
     font-weight: normal;
@@ -84,7 +71,7 @@
     cursor: pointer;
 }
 
-.item-details .date:hover {
+.users__item__details__date:hover {
     text-decoration: underline;
 }
 
@@ -96,10 +83,6 @@
 ::ng-deep .mat-button-toggle-button {
     min-width: 120px;
 }
-
-/* .mat-button-toggle {
-    font-weight: bold;
-} */
 
 .mat-button-toggle-checked {
     background-color: crimson;

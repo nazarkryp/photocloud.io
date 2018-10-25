@@ -1,14 +1,6 @@
-// The file contents for the current environment will overwrite these during build.
-// The build system defaults to the dev environment which uses `environment.ts`, but if you do
-// `ng build --env=prod` then `environment.prod.ts` will be used instead.
-// The list of which env maps to which file can be found in `.angular-cli.json`.
-
 export const environment = {
     production: false,
-    // apiUri: 'https://thephotocloud.com/v1/',
-    // loginUri: 'https://thephotocloud.com/authorize',
-    // baseAddress: 'https://thephotocloud.com'
-    apiUri: 'http://localhost:33226/v1/',
-    loginUri: 'http://localhost:33226/authorize',
-    baseAddress: 'http://localhost:33226'
+    apiUri: 'https://thephotocloud.com/v1/',
+    loginUri: 'https://thephotocloud.com/authorize',
+    baseAddress: 'https://thephotocloud.com'
 };

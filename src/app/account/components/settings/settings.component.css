@@ -1,5 +1,5 @@
 @media screen and (max-width: 500px) {
-    .edit-container .btn-default {
+    .settings-container .btn-default {
         width: 100%;
     }
 }
@@ -10,11 +10,11 @@
     padding-bottom: 2.8rem;
 }
 
-.settings-header .page-title {
+.settings-header__title {
     font-weight: lighter;
 }
 
-.edit-container {
+.settings-container {
     max-width: 600px;
     width: 100%;
     color: rgb(0, 0, 0, .86);
@@ -22,7 +22,7 @@
     position: relative;
 }
 
-.edit-container .overlay {
+.settings-container__overlay {
     position: absolute;
     width: 100%;
     height: 100%;
@@ -31,30 +31,28 @@
     border-radius: 2px;
 }
 
-.edit-container img {
+.settings-container img {
     width: 120px;
     height: 120px;
     object-fit: cover;
     border-radius: 50%;
 }
 
-.edit-container .item {
+.settings__item {
     position: relative;
     margin-top: 2rem;
     font: inherit;
 }
 
-.edit-container .disabled {
+.settings-container .disabled {
     color: rgba(0, 0, 0, 0.38);
 }
 
-.form {}
-
-.edit-container .item h4 {
-    padding-bottom: .7rem;
+.settings__item h4 {
+    padding-bottom: 1.4rem;
 }
 
-.item a {
+.settings__item a {
     color: #e91e63;
     cursor: pointer;
 }
@@ -66,10 +64,10 @@
     display: block;
 }
 
-.edit__caption {
+.settings__caption {
     color: rgb(0, 0, 0, .65);
     line-height: 1.5;
-    padding-bottom: .7rem;
+    padding-bottom: 1.4rem;
 }
 
 textarea.bio {
@@ -78,16 +76,16 @@ textarea.bio {
     text-align: justify;
 }
 
-div.edit-image {
+div.settings-image {
     box-sizing: border-box;
     position: relative;
 }
 
-div.edit-image .thumbnail-big {
+div.settings-image .thumbnail-big {
     vertical-align: bottom;
 }
 
-div.edit-image .change-overlay {
+div.settings-image .change-overlay {
     position: absolute;
     width: 100%;
     height: 100%;
@@ -103,13 +101,13 @@ div.edit-image .change-overlay {
     transition: opacity .25s ease-in-out;
 }
 
-div.edit-image:not([disabled]):hover .change-overlay {
+div.settings-image:not([disabled]):hover .change-overlay {
     cursor: pointer;
     background: rgba(0, 0, 0, .5);
     opacity: 1;
 }
 
-.edit-container .btn-deactivate {
+.settings-container .btn-deactivate {
     min-width: 200px;
     margin-top: .7rem;
 }

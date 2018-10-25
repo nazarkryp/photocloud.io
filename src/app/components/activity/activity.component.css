@@ -4,13 +4,13 @@
     padding-bottom: 2.8rem;
 }
 
-.activities-header h1 {
+.activities-header__title {
     font-weight: lighter;
 }
 
 .activities-container {
+    max-width: 600px;
     width: 100%;
-    height: 100%;
     box-sizing: border-box;
     overflow-y: hidden;
     color: rgb(0, 0, 0, .86);
@@ -22,8 +22,9 @@
     font-weight: bold;
 }
 
-.activities-container .items {
-    width: calc(600px + .7rem + .7rem);
+.activity__items {
+    max-width: 600px;
+    width: 100%;
     box-sizing: border-box;
 }
 
@@ -44,25 +45,42 @@
     background-color: rgb(243, 243, 245);
 }
 
-.activities-container .items .activity {
+.activity__item {
     width: 100%;
 }
 
-.activities-container .items .activity .user-thumbnail {
-    width: 50px;
-    height: 50px;
+.activity__avatar {
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     object-fit: cover;
 }
 
-.activities-container .items .activity .media-thumbnail {
-    width: 120px;
-    height: 100px;
-    object-fit: cover;
-    border-radius: 7px;
+.activity__comment {
+    width: 100%;
+    border-left: 3px solid #e91e63;
+    padding: .25rem .5rem;
+    box-sizing: border-box;
+    margin-top: 1.4rem;
 }
 
-.activities-container .items .activity .activity-info {
+.activity__comment__text {
+    font-weight: normal;
+    color: rgb(0, 0, 0, .65)
+}
+
+.activity__media {
+    position: relative;
+}
+
+.activity__media__thumbnail {
+    width: 135px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 2px;
+}
+
+.activity__item .activity-info {
     color: rgb(0, 0, 0, .65);
     padding-left: .7rem;
     font-size: .9em;
@@ -70,12 +88,12 @@
     width: 100%;
 }
 
-.activities-container .items .activity .activity-info a {
+.activity__item .activity-info a {
     color: rgb(0, 0, 0, .86);
     font-weight: bold;
 }
 
-.activities-container .items .activity .activity-info .date {
+.activity__date {
     color: rgb(0, 0, 0, .65);
     margin: 0 auto 0 0;
     font-weight: lighter;
@@ -91,7 +109,7 @@
     width: 100%;
 }
 
-.activity .hover {
+.activity__item .hover {
     opacity: 0;
 }
 
@@ -99,12 +117,12 @@
     opacity: 1;
 }
 
-.activities-container .items .activity .activity-info a.btn-remove {
-    color: rgb(5, 50, 100, .6);
+.activity__item .activity-info a.btn-remove {
+    color: rgba(220, 20, 60, .65);
     cursor: pointer;
     font-weight: bold;
 }
 
-.activities-container .items .activity .activity-info a.btn-remove:hover {
-    color: rgb(5, 50, 100);
+.activity__item .activity-info a.btn-remove:hover {
+    color: rgba(220, 20, 60, .5);
 }

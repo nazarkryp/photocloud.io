@@ -1,16 +1,11 @@
-import { Component, OnInit, OnDestroy, ViewContainerRef } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { MatDialog } from '@angular/material';
-import { Overlay } from '@angular/cdk/overlay';
 
 import { Subscription } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 
 import { CurrentUserService } from 'app/infrastructure/services';
-import { MediaDetailsComponent } from 'app/components/shared/media-details/media-details.component';
-import { MediaViewComponent } from 'app/components/media-view/media-view.component';
 import { Page, MediaViewModel, CurrentUserViewModel } from 'app/models/view';
-import { AccountService } from 'app/account/services';
 import { MediaService } from 'app/services';
 import { ProgressService } from 'app/shared/services';
 import { LikeService } from 'app/shared/services';
@@ -30,12 +25,10 @@ export class TagsComponent implements OnInit, OnDestroy {
     public isLoading: boolean;
 
     constructor(
-        private dialog: MatDialog,
         private route: ActivatedRoute,
         private mediaViewService: MediaViewService,
         private mediaService: MediaService,
         private currentUserService: CurrentUserService,
-        private accountService: AccountService,
         private likeService: LikeService,
         private progress: ProgressService) {
         this.currentUserSubscription = this.currentUserService.getCurrentUser()

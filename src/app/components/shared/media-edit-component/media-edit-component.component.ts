@@ -8,7 +8,7 @@ import { EditMediaService } from 'app/shared/services';
     templateUrl: './media-edit-component.component.html',
     styleUrls: ['./media-edit-component.component.css']
 })
-export class MediaEditComponentComponent implements OnInit {
+export class MediaSettingsComponentComponent implements OnInit {
     @Input() public media: MediaViewModel;
     public updateMediaModel: UpdateMediaViewModel;
 

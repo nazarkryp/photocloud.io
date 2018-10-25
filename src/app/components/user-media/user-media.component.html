@@ -3,16 +3,15 @@
         <app-user-details [user]="userMedia.user"></app-user-details>
     </header>
     <main class="content" *ngIf="!userMedia.error; else errorBox" fxLayout="column" fxLayoutAlign="center center">
-        <!-- <div class="user-media-options" fxLayout="row" fxLayoutAlign="center">
-            <button mat-button (click)="applyFilter()">ALL</button>
-            <button mat-button (click)="applyFilter(0)">PHOTOS</button>
-            <button mat-button (click)="applyFilter(1)">VIDEOS</button>
-        </div> -->
+        <div class="user-media__options" fxLayout="row" fxLayoutAlign="end center">
+            <a class="user-media__option" [ngClass]="{ 'active' : mediaType == 0 }" (click)="applyFilter(0)">all posts</a>
+            <a class="user-media__option" [ngClass]="{ 'active' : mediaType == 1 }" (click)="applyFilter(1)">videos</a>
+        </div>
         <div class="user-media" *ngIf="userMedia.page?.data?.length; else emptyFeed;" appInfiniteScroll [appScrollTriggerOnce]="true" [scrollOffset]="2000" (scrollPosition)="onPositionChange()">
             <a *ngFor="let media of userMedia.page?.data;" (click)="openPostDialog(media);">
-                <div class="user-media-item">
-                    <img class="user-media-thumbnail" src="{{media?.attachments[0].thumbnail}}" alt="media-image" *ngIf="media?.attachments[0].type !== 1">
-                    <video class="user-media-thumbnail" *ngIf="media?.attachments[0].type === 1">
+                <div class="user-media__item">
+                    <img class="user-media__thumbnail" src="{{media?.attachments[0].thumbnail}}" alt="media-image" *ngIf="media?.attachments[0].type !== 1">
+                    <video class="user-media__thumbnail" *ngIf="media?.attachments[0].type === 1">
                         <source src="{{media?.attachments[0].uri}}">
                     </video>
                     <div class="attachments-icon-container" fxLayout="row" fxLayoutAlign="start center" *ngIf="media.attachments.length > 1 || media?.attachments[0].type === 1">

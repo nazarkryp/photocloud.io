@@ -1,17 +1,15 @@
 <div class="page-container" fxLayout="column" fxLayoutAlign="start center">
     <div class="activities-header" fxLayoutAlign="space-between center">
-        <h1>Recent Activity</h1>
-        <div fxLayout="row" fxLayoutAlign="center center">
-            <button mat-button class="btn-default" *ngIf="page?.data?.length" (click)="removeAllActivities()">CLEAR ALL</button>
-        </div>
+        <h2 class="activities-header__title">Recent Activity</h2>
+        <a class="btn-text" (click)="removeAllActivities()">clear all</a>
     </div>
-    <div class="activities-container" fxLayout="column" fxLayoutAlign="start center">
-        <div class="items" fxLayout="column" fxLayoutAlign="start center" appInfiniteScroll [appScrollTriggerOnce]="true" [scrollOffset]="2000" (scrollPosition)="onPositionChange()">
+    <div class="activities-container">
+        <div class="activity__items" fxLayout="column" fxLayoutAlign="start center" appInfiniteScroll [appScrollTriggerOnce]="true" [scrollOffset]="2000" (scrollPosition)="onPositionChange()">
             <span *ngIf="!page?.data?.length && !isLoading">You have no recent activity</span>
             <div (appear)="appear($event, activity)" class="activity-container" [ngClass]="{ 'unread' : !activity.isMarkedAsRead }" *ngFor="let activity of page?.data; let index = index;">
-                <div class=" activity" fxLayout="row" fxLayoutAlign="start start">
+                <div class="activity__item" fxLayout="row" fxLayoutAlign="start start">
                     <a [routerLink]="[ '/', activity.user.username]">
-                        <img class="user-thumbnail" src="{{activity.user.pictureUri}}" alt="user-thumbnail">
+                        <img class="activity__avatar" src="{{activity.user.pictureUri}}" alt="user-thumbnail">
                     </a>
                     <div class="activity-info" fxLayout="row" fxLayoutAlign="space-between start">
                         <div fxLayout="column" fxLayoutAlign="start start">
@@ -19,21 +17,18 @@
                                 <span>
                                     <a [routerLink]="[ '/', activity.user.username]">{{activity.user.username}}</a> {{activity.activityType | activity}}
                                 </span>
-                                <span class="date" matTooltip="{{activity.date | date: 'fullDate'}}" matTooltipPosition="after">{{activity.date | timeAgo}}</span>
+                                <span class="activity__date" matTooltip="{{activity.date | date: 'fullDate'}}" matTooltipPosition="after">{{activity.date | timeAgo}}</span>
                             </div>
-                            <div *ngIf="activity.comment" style="width: 100%; border-left: 3px solid #e91e63; padding: .25rem .5rem; box-sizing: border-box; margin-top: 1.4rem;">
-                                <span style="font-weight: normal; color: rgb(0, 0, 0, .5)" [innerHTML]="activity.comment.text | truncate:100 | linkify"></span>
+                            <div class="activity__comment" *ngIf="activity.comment">
+                                <span class="activity__comment__text" [innerHTML]="activity.comment.text | truncate:100 | linkify"></span>
                             </div>
-                            <div style="margin-top: 1.4rem;">
-                                <a class="btn-remove" (click)="removeActivity(index, activity)">Remove</a>
-                            </div>
+                            <a class="btn-remove" (click)="removeActivity(index, activity)">Remove</a>
                         </div>
-                        <a [ngSwitch]="activity.media.attachments[0].type" *ngIf="activity.media" [routerLink]="[ '/p/', activity.media.id]">
-                            <img *ngSwitchCase=" '0'" class="media-thumbnail" src="{{activity.media.attachments[0].uri}}" alt="media-thumbnail">
-                            <video *ngSwitchCase=" '1'" class="media-thumbnail">
+                        <a class="activity__media" mat-ripple *ngIf="activity.media" (click)="openMedia(activity.media)">
+                            <img class="activity__media__thumbnail" *ngIf="!activity.media.attachments[0].type" src="{{activity.media.attachments[0].uri}}" alt="media">
+                            <video class="activity__media__thumbnail" *ngIf="activity.media.attachments[0].type">
                                 <source src="{{activity.media.attachments[0].uri}}">
                             </video>
-                            <img *ngSwitchDefault class="media-thumbnail" src="{{activity.media.attachments[0].uri}}" alt="media-thumbnail">
                         </a>
                     </div>
                 </div>

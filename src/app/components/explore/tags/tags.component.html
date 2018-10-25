@@ -1,30 +1,27 @@
 <div class="page-container" fxLayout="column" fxLayoutAlign="start center">
-    <!-- <header>
-        <h1>#{{tag}}</h1>
-    </header> -->
-    <div class="tags-header" fxLayout="column" fxLayoutAlign="center start">
-        <h1>#{{tag}}</h1>
-    </div>
+    <header class="tags-header" fxLayout="column" fxLayoutAlign="center start">
+        <h2 class="tags-header__title">#{{tag}}</h2>
+    </header>
     <div class="tags-empty-container" *ngIf="!isLoading && (!page?.data || !page?.data.length)" fxLayout="column" fxLayoutAlign="center center" fxFlex>
         <h2>No posts matching '{{tag}}' were found</h2>
     </div>
     <div class="tags-media" appInfiniteScroll [appScrollTriggerOnce]="true" [scrollOffset]="6000" (scrollPosition)="onPositionChange()">
         <div *ngFor="let media of page?.data;">
-            <div class="tags-media-item">
-                <img class="tags-media-thumbnail" src="{{media?.attachments[0].thumbnail}}" alt="media-image" *ngIf="media?.attachments[0].type !== 1" (click)="openPostDialog(media)">
-                <video class="tags-media-thumbnail" *ngIf="media?.attachments[0].type === 1" (click)="openPostDialog(media)">
+            <div class="tags-media__item">
+                <img class="tags-media__thumbnail" src="{{media?.attachments[0].thumbnail}}" alt="media-image" *ngIf="media?.attachments[0].type !== 1" (click)="openPostDialog(media)">
+                <video class="tags-media__thumbnail" *ngIf="media?.attachments[0].type === 1" (click)="openPostDialog(media)">
                     <source src="{{media?.attachments[0].uri}}">
                 </video>
                 <div class="attachments-icon-container" fxLayout="row" fxLayoutAlign="start center" *ngIf="media.attachments.length > 1 || media?.attachments[0].type === 1">
-                    <mat-icon class="mat-18 attachments-icon" *ngIf="media.attachments[0].type === 1">videocam</mat-icon>
-                    <mat-icon class="mat-18 attachments-icon" *ngIf="media.attachments.length > 1">layers</mat-icon>
+                    <mat-icon class="attachments-icon" *ngIf="media.attachments[0].type === 1">videocam</mat-icon>
+                    <mat-icon class="attachments-icon" *ngIf="media.attachments.length > 1">layers</mat-icon>
                 </div>
-                <div class="tags-media-item__details" fxLayout="row" fxLayoutAlign="space-between center">
+                <div class="tags-media__details" fxLayout="row" fxLayoutAlign="space-between center">
                     <div fxLayout="row" fxLayoutAlign="center center">
-                        <img class="avatar" [src]="media.user.pictureUri" alt="avatar">
-                        <a class="username" style="color: rgb(255, 255, 255, .86); font-size: .9em;" [routerLink]="['/', media.user.username]">{{media.user.username}}</a>
+                        <img class="tags-media__avatar" [src]="media.user.pictureUri" alt="avatar">
+                        <a class="tags-media__username" [routerLink]="['/', media.user.username]">{{media.user.username}}</a>
                     </div>
-                    <button mat-button class="btn-like" [ngClass]="{ 'active' : media.userHasLiked }" (click)="like(media)">
+                    <button mat-button class="btn-like" [ngClass]="{ 'btn-like--active' : media.userHasLiked }" (click)="like(media)">
                         <div fxLayout="row" fxLayoutAlign="space-between center">
                             {{media.likesCount}}
                             <mat-icon class="mat-18">favorite</mat-icon>

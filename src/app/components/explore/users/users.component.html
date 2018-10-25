@@ -1,24 +1,20 @@
 <div class="page-container" fxLayout="column" fxLayoutAlign="start center">
     <div class="users-header" fxLayoutAlign="space-between center">
-        <h1>Discover People</h1>
-        <!-- <div>
-            <button mat-button [class.active]="orderBy == 'id'" (click)="orderByNew()">NEW</button> |
-            <button mat-button [class.active]="orderBy == 'lastActive'" (click)="orderByLastActive()">LAST ACTIVE</button>
-        </div> -->
+        <h2 class="users-header__title">Discover People</h2>
         <mat-button-toggle-group name="orderBy" (change)="orderByChanged($event.value)">
             <mat-button-toggle [checked]="orderBy == 'id'" value="id">NEW</mat-button-toggle>
             <mat-button-toggle [checked]="orderBy == 'lastActive'" value="lastActive">LAST ACTIVE</mat-button-toggle>
         </mat-button-toggle-group>
     </div>
-    <div class="users-container" appInfiniteScroll [appScrollTriggerOnce]="true" [scrollOffset]="1000" (scrollPosition)="onPositionChange()">
-        <div class="item" *ngFor="let user of page.data; let index = index;" fxLayout="row" fxLayoutAlign="start center">
-            <a class="link" [routerLink]="['/', user.username]">
-                <img src="{{user.pictureUri}}" default="assets/images/user-default-image.png" alt="profile">
+    <div class="users__items" appInfiniteScroll [appScrollTriggerOnce]="true" [scrollOffset]="1000" (scrollPosition)="onPositionChange()">
+        <div class="users__item" *ngFor="let user of page.data; let index = index;" fxLayout="row" fxLayoutAlign="start center">
+            <a [routerLink]="['/', user.username]">
+                <img class="users__item__thumbnail" src="{{user.pictureUri}}" default="assets/images/user-default-image.png" alt="profile">
             </a>
-            <div class="item-details" fxLayout="row" fxLayoutAlign="space-between start" fxFlex>
+            <div class="users__item__details" fxLayout="row" fxLayoutAlign="space-between start" fxFlex>
                 <div fxLayout="column">
-                    <a class="username" [routerLink]="['/', user.username]">{{user.username}}</a>
-                    <span class="date" *ngIf="user.lastActive" matTooltip="{{ user.lastActive | date:'fullDate' }}" matTooltipPosition="after">{{user.lastActive | timeAgo | lowercase}}</span>
+                    <a class="users__item__details__username" [routerLink]="['/', user.username]">{{user.username}}</a>
+                    <span class="users__item__details__date" *ngIf="user.lastActive" matTooltip="{{ user.lastActive | date:'fullDate' }}" matTooltipPosition="after">{{user.lastActive | timeAgo | lowercase}}</span>
                 </div>
                 <button class="btn-relationships" mat-button (click)="modifyRelationship(user)" [disabled]="modifying[user.id]" *ngIf="currentUser && currentUser.isActive && currentUser.id !== user.id">
                     {{user.relationship.outgoingStatus | relationshipAction | uppercase}}

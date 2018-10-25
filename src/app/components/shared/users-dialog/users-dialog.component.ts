@@ -1,8 +1,7 @@
-import { Component, OnInit, OnDestroy, Optional, Inject, ViewEncapsulation, Input, Output, EventEmitter } from '@angular/core';
-import { MatDialogRef, MatSnackBarConfig, MatSnackBar, MAT_DIALOG_DATA } from '@angular/material';
+import { Component, OnInit, OnDestroy, Optional, Inject } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { trigger, transition, style, animate, query, stagger } from '@angular/animations';
 
-import { Observable } from 'rxjs';
 import { Subscription } from 'rxjs';
 
 import { CurrentUserViewModel, UserViewModel, Page } from 'app/models/view';
