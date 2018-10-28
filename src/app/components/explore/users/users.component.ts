@@ -1,14 +1,12 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { trigger, transition, style, animate, query, stagger } from '@angular/animations';
 
 import { Subscription } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 
 import { UserService } from 'app/services';
 import { Page, UserViewModel, CurrentUserViewModel } from 'app/models/view';
-import { RelationshipAction, RelationshipStatus } from 'app/models/shared';
-
+import { RelationshipStatus } from 'app/models/shared';
 
 import { CurrentUserService } from 'app/infrastructure/services';
 import { ProgressService } from 'app/shared/services';

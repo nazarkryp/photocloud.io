@@ -7,7 +7,7 @@
 }
 
 .users-dialog-container .users-dialog-header {
-    padding: 1.4rem .7rem;
+    padding: 1rem .75rem;
 }
 
 .users-dialog-container .search-box {
@@ -80,17 +80,12 @@
     border-top: 1px solid #efefef;
 }
 
-.user-dealog-items__footer {
-    /* padding: .7rem;
-    background: white; */
-}
-
 .user-dealog-items__footer .btn-default {
     width: 100%;
 }
 
 .user-item {
-    padding: .7rem .7rem;
+    padding: .75rem;
     box-sizing: border-box;
     position: relative;
     border-bottom: 1px solid #efefef;

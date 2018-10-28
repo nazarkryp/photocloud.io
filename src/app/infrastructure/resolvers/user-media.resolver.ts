@@ -43,7 +43,7 @@ export class UserMediaResolver implements Resolve<UserViewModel> {
                     return this.mediaService.getUserMedia(username, null)
                         .pipe(
                             map(page => {
-                                userMedia.page = page;
+                                userMedia.media = page;
                                 return userMedia;
                             }));
                 }))

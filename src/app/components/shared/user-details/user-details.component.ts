@@ -2,8 +2,7 @@ import { Component, Input, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatDialog, MatDialogRef, ProgressSpinnerMode } from '@angular/material';
 
-import { Subscription } from 'rxjs';
-import { Observable } from 'rxjs';
+import { Subscription ,  Observable } from 'rxjs';
 
 import { CurrentUserService } from 'app/infrastructure/services';
 import { CurrentUserViewModel, AttachmentViewModel, UserViewModel, Page } from 'app/models/view';

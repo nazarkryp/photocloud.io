@@ -45,19 +45,23 @@ export class UserMediaComponent implements OnInit, OnDestroy, AfterViewChecked {
             this.progress.start();
         }
 
-        this.mediaService.getUserMedia(this.userMedia.user.username, this.userMedia.page.pagination, this.mediaType)
+        if (mediaType !== null) {
+            this.userMedia.media.pagination = null;
+        }
+
+        this.mediaService.getUserMedia(this.userMedia.user.username, this.userMedia.media.pagination, this.mediaType)
             .pipe(finalize(() => {
                 this.isLoading = false;
                 this.progress.complete();
             }))
             .subscribe(page => {
-                this.userMedia.page.hasMoreItems = page.hasMoreItems;
-                this.userMedia.page.pagination = page.pagination;
+                this.userMedia.media.hasMoreItems = page.hasMoreItems;
+                this.userMedia.media.pagination = page.pagination;
 
                 if (page.data && mediaType === null) {
-                    this.userMedia.page.data = this.userMedia.page.data.concat(page.data);
+                    this.userMedia.media.data = this.userMedia.media.data.concat(page.data);
                 } else if (page.data && mediaType !== null) {
-                    this.userMedia.page.data = page.data;
+                    this.userMedia.media.data = page.data;
                 }
             }, (error: HttpErrorResponse) => {
                 if (error.status) {
@@ -122,7 +126,7 @@ export class UserMediaComponent implements OnInit, OnDestroy, AfterViewChecked {
     }
 
     public onPositionChange() {
-        if (!this.isLoading && this.userMedia && this.userMedia.page && this.userMedia.page.hasMoreItems) {
+        if (!this.isLoading && this.userMedia && this.userMedia.media && this.userMedia.media.hasMoreItems) {
             this.getMedia(false);
         }
     }
@@ -151,10 +155,10 @@ export class UserMediaComponent implements OnInit, OnDestroy, AfterViewChecked {
 
     private reset(): void {
         this.userMedia = new UserMediaViewModel();
-        this.userMedia.page = new Page<MediaViewModel>();
-        this.userMedia.page.hasMoreItems = false;
-        this.userMedia.page.pagination = null;
-        this.userMedia.page.data = [];
+        this.userMedia.media = new Page<MediaViewModel>();
+        this.userMedia.media.hasMoreItems = false;
+        this.userMedia.media.pagination = null;
+        this.userMedia.media.data = [];
         this.userMedia.error = null;
     }
 }

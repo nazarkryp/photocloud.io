@@ -5,10 +5,10 @@ import { ErrorViewModel } from './error.model';
 
 export class UserMediaViewModel {
     public user: UserViewModel;
-    public page: Page<MediaViewModel>;
+    public media: Page<MediaViewModel>;
     public error: ErrorViewModel;
 
     constructor() {
-        this.page = new Page<MediaViewModel>();
+        this.media = new Page<MediaViewModel>();
     }
 }

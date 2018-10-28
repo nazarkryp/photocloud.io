@@ -7,8 +7,8 @@
             <a class="user-media__option" [ngClass]="{ 'active' : mediaType == 0 }" (click)="applyFilter(0)">all posts</a>
             <a class="user-media__option" [ngClass]="{ 'active' : mediaType == 1 }" (click)="applyFilter(1)">videos</a>
         </div>
-        <div class="user-media" *ngIf="userMedia.page?.data?.length; else emptyFeed;" appInfiniteScroll [appScrollTriggerOnce]="true" [scrollOffset]="2000" (scrollPosition)="onPositionChange()">
-            <a *ngFor="let media of userMedia.page?.data;" (click)="openPostDialog(media);">
+        <div class="user-media" *ngIf="userMedia.media?.data?.length; else emptyFeed;" appInfiniteScroll [appScrollTriggerOnce]="true" [scrollOffset]="2000" (scrollPosition)="onPositionChange()">
+            <a *ngFor="let media of userMedia.media?.data;" (click)="openPostDialog(media);">
                 <div class="user-media__item">
                     <img class="user-media__thumbnail" src="{{media?.attachments[0].thumbnail}}" alt="media-image" *ngIf="media?.attachments[0].type !== 1">
                     <video class="user-media__thumbnail" *ngIf="media?.attachments[0].type === 1">
@@ -31,10 +31,10 @@
                 </div>
             </a>
         </div>
-        <div fxLayout="row" fxLayoutAlign="center center" *ngIf="userMedia?.page?.data.length && !userMedia?.page?.hasMoreItems" style="height: 40px;">
+        <div fxLayout="row" fxLayoutAlign="center center" *ngIf="userMedia?.media?.data.length && !userMedia?.media?.hasMoreItems" style="height: 40px;">
             <span style="font-size: .9em; color: rgb(0, 0, 0, .35);">You've reached the end of the list</span>
         </div>
-        <div fxLayout="row" fxLayoutAlign="center center" *ngIf="userMedia?.page?.hasMoreItems" style="height: 40px;">
+        <div fxLayout="row" fxLayoutAlign="center center" *ngIf="userMedia?.media?.hasMoreItems" style="height: 40px;">
             <button class="btn-primary" mat-button (click)="getMedia()" [disabled]="isLoading" *ngIf="!isLoading">Load More</button>
             <mat-spinner [diameter]="30" [strokeWidth]="2" color="primary" *ngIf="isLoading"></mat-spinner>
         </div>

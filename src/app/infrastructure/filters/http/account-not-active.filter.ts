@@ -1,8 +1,8 @@
+
+import {throwError as observableThrowError,  Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
-
-import { Observable } from 'rxjs';
 
 import { HttpStatusCode } from 'app/models/common/http';
 import { HttpErrorFilter } from './http-error.fitler';
@@ -26,7 +26,7 @@ export class AccountNotActiveFilter implements HttpErrorFilter {
                 this.currentUserService.updateCurrentUser({ isActive: false });
                 this.router.navigateByUrl('/account/edit', { skipLocationChange: true });
 
-                return Observable.throw(response);
+                return observableThrowError(response);
             }
         }
 

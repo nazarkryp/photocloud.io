@@ -10,7 +10,6 @@
 
     .mat-button-toggle-group,
     .mat-button-toggle-standalone {
-        box-shadow: 0 3px 8px -4px rgba(0, 0, 0, 0.26);
         width: 100%;
     }
 
@@ -75,11 +74,6 @@
     text-decoration: underline;
 }
 
-.mat-button-toggle-group,
-.mat-button-toggle-standalone {
-    box-shadow: 0 3px 8px -4px rgba(0, 0, 0, 0.26);
-}
-
 ::ng-deep .mat-button-toggle-button {
     min-width: 120px;
 }
@@ -87,4 +81,8 @@
 .mat-button-toggle-checked {
     background-color: crimson;
     color: rgba(255, 255, 255, .86);
+}
+
+::ng-deep .mat-button-toggle-appearance-standard .mat-button-toggle-label-content {
+    line-height: 30px !important;
 }
