@@ -10,14 +10,14 @@ export class ProgressService {
     }
 
     public get isLoading(): boolean {
-        return this.progress.isStarted();
+        return this.progress.ref().isStarted;
     }
 
     public start() {
-        this.progress.start();
+        this.progress.ref().start();
     }
 
     public complete() {
-        this.progress.complete();
+        this.progress.ref().complete();
     }
 }
