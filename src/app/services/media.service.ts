@@ -37,10 +37,7 @@ export class MediaService {
         }
 
         return this.apiService.get<PageResponse<MediaResponse>>(requestUri)
-            .pipe(map(page => {
-                const pageViewModel = this.pageMapper.mapFromResponse(page);
-                return pageViewModel;
-            }));
+            .pipe(map(this.pageMapper.mapFromResponse));
     }
 
     public getUserMedia(username: string, pagination: PaginationViewModel, mediaType?: number): Observable<Page<MediaViewModel>> {
@@ -59,9 +56,7 @@ export class MediaService {
         }
 
         return this.apiService.get<PageResponse<MediaResponse>>(requestUri)
-            .pipe(map(page => {
-                return this.pageMapper.mapFromResponse(page);
-            }));
+            .pipe(map(this.pageMapper.mapFromResponse));
     }
 
     public getMediaByTag(tag: string, pagination: PaginationViewModel) {
