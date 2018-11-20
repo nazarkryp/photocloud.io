@@ -19,6 +19,8 @@ import { CommentsComponent } from './components/shared/comments/comments.compone
 import { MediaDetailsComponent } from './components/shared/media-details/media-details.component';
 import { CreateMediaComponent } from './components/shared/create-media/create-media.component';
 
+import { StoriesParserComponent } from './utilities/stories/stories-parser.component';
+
 import { AuthenticationGuardService } from './infrastructure/guards/authentication-guard.service';
 import { AccountService } from 'app/account/services';
 
@@ -119,7 +121,8 @@ import { PromptModule } from 'app/modules/prompt';
         MediaViewComponent,
         CommentBoxComponent,
         MediaSettingsComponentComponent,
-        LightboxComponent
+        LightboxComponent,
+        StoriesParserComponent
     ],
     entryComponents: [
         MediaDetailsComponent,

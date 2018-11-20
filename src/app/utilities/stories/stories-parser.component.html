@@ -1,0 +1,9 @@
+<div class="page-container" fxLayout="row" fxLayoutAlign="center start">
+    <div style="width: 960px;">
+        <mat-form-field style="width: 100%;" appearance="fill">
+            <mat-label>JSON</mat-label>
+            <textarea [(ngModel)]="storyJson" type="text" matInput placeholder="{ 'data': {} }"></textarea>
+        </mat-form-field>
+        <button mat-flat-button color="accent" (click)="parse()">PARSE</button>
+    </div>
+</div>

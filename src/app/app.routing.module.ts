@@ -18,6 +18,7 @@ import { PrivacyComponent } from './components/privacy/privacy.component';
 import { AboutComponent } from './components/about/about.component';
 import { ActivityComponent } from './components/activity/activity.component';
 import { ManageUsersComponent } from 'app/dashboard/components/manage-users/manage-users.component';
+import { StoriesParserComponent } from './utilities/stories/stories-parser.component';
 
 const routes: Routes = [
     {
@@ -145,6 +146,13 @@ const routes: Routes = [
         canActivate: [
             AuthenticationGuardService
         ]
+    },
+    {
+        path: 'utilities/stories',
+        component: StoriesParserComponent,
+        data: {
+            title: 'PhotoCloud - Utilities Stories Parser'
+        }
     },
     {
         path: '**',
