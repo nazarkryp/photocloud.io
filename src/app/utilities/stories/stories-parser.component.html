@@ -1,9 +1,47 @@
 <div class="page-container" fxLayout="row" fxLayoutAlign="center start">
     <div style="width: 960px;">
-        <mat-form-field style="width: 100%;" appearance="fill">
-            <mat-label>JSON</mat-label>
-            <textarea [(ngModel)]="storyJson" type="text" matInput placeholder="{ 'data': {} }"></textarea>
-        </mat-form-field>
-        <button mat-flat-button color="accent" (click)="parse()">PARSE</button>
+        <div style="padding-bottom: 2.8rem;">
+            <mat-form-field style="width: 100%;" appearance="fill">
+                <mat-label>JSON</mat-label>
+                <textarea [(ngModel)]="storyJson" type="text" matInput placeholder="{ 'data': {} }" style="height: 250px;"></textarea>
+            </mat-form-field>
+            <button mat-flat-button color="accent" (click)="parse()">PARSE</button>
+        </div>
+        <div *ngIf="stories">
+            <div *ngFor="let story of stories;" style="padding-bottom: 1.4rem;">
+                <div fxLayout="row" fxLayoutAlign="start center">
+                    <img [src]="story.owner.profile_pic_url" style="width: 50px; height: 50px; object-fit: cover; border-radius: 50%;">
+                    <span style="margin-left: .75rem; font-weight: bold;">{{story.owner.username}}</span>
+                </div>
+                <div *ngFor="let item of story.items">
+                    <div style="padding: 1.4rem 0 .75rem;" fxLayout="row" fxLayoutAlign="space-between start">
+                        <div fxLayout="column">
+                            <span style="font-weight: bold;">ID {{item.id}}</span>
+                            <span>Is video: {{item.is_video}}</span>
+                            <!-- <span style="font-weight: lighter;"> {{item.taken_at_timestamp | date:'fullDate'}}</span> -->
+                        </div>
+                        <span>Best resolution: {{item.dimensions.width}}x{{item.dimensions.height}}</span>
+                    </div>
+                    <div style="padding: .25rem 0;">
+                        <span>Video Links: </span>
+                        <div *ngFor="let video of item.video_resources">
+                            <a [href]="video.src" target="_blank">{{video.config_width}}x{{video.config_height}}</a>
+                        </div>
+                    </div>
+                    <div style="display: grid; grid-gap: 30px; width: 100%; grid-template-columns: 300px 300px 300px;">
+                        <div *ngFor="let resource of item.display_resources" style="position: relative; border-radius: 2px; box-shadow: 2px 2px 2px -2px rgba(0, 0, 0, .26);">
+                            <div mat-ripple>
+                                <a [href]="resource.src" target="_blank">
+                                    <img class="dimension__image" [src]="resource.src">
+                                </a>
+                                <div style="z-index: 777; padding: .75rem; background: #222222; border-radius: 0 0 2px 2px;" fxLayout="row" fxLayoutAlign="center center">
+                                    <span style="font-weight: bold; color: rgba(255, 255, 255, .86);">{{resource.config_width}} x {{resource.config_height}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
